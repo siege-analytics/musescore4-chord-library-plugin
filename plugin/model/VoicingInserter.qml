@@ -20,33 +20,54 @@ QtObject {
         // Our convention: string 1 = high e, string 6 = low E, string 7 = low A
         // Conversion: msString = numStrings - ourString
 
-        var xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-        xml += '<FretDiagram>\n'
-        xml += '  <fretDiagramStrings>' + numStrings + '</fretDiagramStrings>\n'
-        xml += '  <fretDiagramFrets>' + (voicing.visible_frets || 4) + '</fretDiagramFrets>\n'
-        xml += '  <fretDiagramFret>' + transposedFret + '</fretDiagramFret>\n'
+        var numFrets = voicing.visible_frets || 4
 
-        // Dots
+        // Build per-string data map (MS 0-based string index)
+        var stringData = {}
+
         var dots = voicing.dots || []
         for (var d = 0; d < dots.length; d++) {
-            var msString = numStrings - dots[d].string
-            xml += '  <FretDot string="' + msString + '" fret="' + dots[d].fret + '"/>\n'
+            var msStr = numStrings - dots[d].string
+            if (!stringData[msStr]) stringData[msStr] = {}
+            stringData[msStr].dot = dots[d].fret
         }
 
-        // Muted strings (marker type "cross")
         var mutes = voicing.mutes || []
         for (var m = 0; m < mutes.length; m++) {
-            var msMuteString = numStrings - mutes[m]
-            xml += '  <FretMarker string="' + msMuteString + '" marker="cross"/>\n'
+            var msMute = numStrings - mutes[m]
+            if (!stringData[msMute]) stringData[msMute] = {}
+            stringData[msMute].marker = "cross"
         }
 
-        // Open strings (marker type "circle")
         var opens = voicing.open || []
         for (var o = 0; o < opens.length; o++) {
-            var msOpenString = numStrings - opens[o]
-            xml += '  <FretMarker string="' + msOpenString + '" marker="circle"/>\n'
+            var msOpen = numStrings - opens[o]
+            if (!stringData[msOpen]) stringData[msOpen] = {}
+            stringData[msOpen].marker = "circle"
         }
 
+        // Generate XML in correct MS4 .mscx format
+        var xml = '<FretDiagram>\n'
+        xml += '  <fretOffset>' + transposedFret + '</fretOffset>\n'
+        xml += '  <frets>' + numFrets + '</frets>\n'
+        xml += '  <strings>' + numStrings + '</strings>\n'
+        xml += '  <fretDiagram>\n'
+
+        var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
+        for (var k = 0; k < sortedKeys.length; k++) {
+            var sn = sortedKeys[k]
+            var sd = stringData[sn]
+            xml += '    <string no="' + sn + '">\n'
+            if (sd.marker) {
+                xml += '      <marker>' + sd.marker + '</marker>\n'
+            }
+            if (sd.dot !== undefined) {
+                xml += '      <dot fret="' + sd.dot + '">normal</dot>\n'
+            }
+            xml += '    </string>\n'
+        }
+
+        xml += '  </fretDiagram>\n'
         xml += '</FretDiagram>'
         return xml
     }

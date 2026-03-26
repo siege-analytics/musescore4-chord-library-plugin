@@ -41,30 +41,46 @@ def generate_snippet(voicing: dict, target_root: str = "C") -> str:
     offset = semitone_offset(voicing["root"], target_root)
     transposed_fret = voicing["fret_number"] + offset
     num_strings = voicing.get("strings", 6)
+    num_frets = voicing.get("visible_frets", 4)
 
+    # Build per-string data: dots, mutes, opens
+    # MS uses 0-based string index where 0 = highest pitched string
+    # Our convention: string 1 = high e, string 7 = low A
+    # Conversion: ms_string = num_strings - our_string
+    string_data: dict[int, dict] = {}
+
+    for dot in voicing.get("dots", []):
+        ms_str = num_strings - dot["string"]
+        string_data.setdefault(ms_str, {})["dot"] = dot["fret"]
+
+    for mute_str in voicing.get("mutes", []):
+        ms_str = num_strings - mute_str
+        string_data.setdefault(ms_str, {})["marker"] = "cross"
+
+    for open_str in voicing.get("open", []):
+        ms_str = num_strings - open_str
+        string_data.setdefault(ms_str, {})["marker"] = "circle"
+
+    # Generate XML in correct MS4 format
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         "<FretDiagram>",
-        f"  <fretDiagramStrings>{num_strings}</fretDiagramStrings>",
-        f"  <fretDiagramFrets>{voicing.get('visible_frets', 4)}</fretDiagramFrets>",
-        f"  <fretDiagramFret>{transposed_fret}</fretDiagramFret>",
+        f"  <fretOffset>{transposed_fret}</fretOffset>",
+        f"  <frets>{num_frets}</frets>",
+        f"  <strings>{num_strings}</strings>",
+        "  <fretDiagram>",
     ]
 
-    # Dots: convert our string numbering (1=high e) to MS numbering (0=highest)
-    for dot in voicing.get("dots", []):
-        ms_string = num_strings - dot["string"]
-        lines.append(f'  <FretDot string="{ms_string}" fret="{dot["fret"]}"/>')
+    for ms_str in sorted(string_data.keys()):
+        data = string_data[ms_str]
+        lines.append(f'    <string no="{ms_str}">')
+        if "marker" in data:
+            lines.append(f"      <marker>{data['marker']}</marker>")
+        if "dot" in data:
+            lines.append(f'      <dot fret="{data["dot"]}">normal</dot>')
+        lines.append("    </string>")
 
-    # Muted strings
-    for mute_str in voicing.get("mutes", []):
-        ms_string = num_strings - mute_str
-        lines.append(f'  <FretMarker string="{ms_string}" marker="cross"/>')
-
-    # Open strings
-    for open_str in voicing.get("open", []):
-        ms_string = num_strings - open_str
-        lines.append(f'  <FretMarker string="{ms_string}" marker="circle"/>')
-
+    lines.append("  </fretDiagram>")
     lines.append("</FretDiagram>")
     return "\n".join(lines)
 
