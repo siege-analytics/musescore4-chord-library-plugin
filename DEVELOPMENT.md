@@ -29,6 +29,7 @@ Additionally, native palettes cannot be updated remotely — sharing requires ma
 ## Architecture
 
 ### Components
+
 musescore4-chord-library-plugin/
 ├── plugin/
 │   ├── ChordLibrary.qml
@@ -123,3 +124,125 @@ Each voicing in the library is a JSON object with the following structure:
 | `CM7` | Chord Melody, 7-string (Van Eps tuning: low A) |
 | `CV6` | Comping/Vocal, 6-string |
 | `CV7` | Comping/Vocal, 7-string |
+
+---
+
+## Plugin UI
+
+### Panel layout
+┌─────────────────────────────┐
+│ Search voicings...          │
+├─────────────────────────────┤
+│ Context: CM6 CM7 CV6 CV7    │
+│ Quality: maj7 dom7 min7 ... │
+│ Type:  Shell Drop2 Drop3 .. │
+│ Strings: 6  7               │
+├─────────────────────────────┤
+│ ┌────┐ ┌────┐ ┌────┐        │
+│ │    │ │    │ │    │        │
+│ │ C7 │ │Cm7 │ │Cma7│        │
+│ └────┘ └────┘ └────┘        │
+│ Shell  Shell  Shell         │
+└─────────────────────────────┘
+
+### Interaction model
+
+- Selecting a note in the score enables the insert action
+- Single click on a voicing card previews it (highlights the card)
+- Double click inserts it at the selected note
+- The plugin transposes automatically — if the selected note's chord symbol is F7 and you click a C7 voicing, the fret number adjusts by +5 semitones
+
+### Transposition logic
+
+All voicings are stored with root C. On insert:
+
+1. Read the chord symbol attached to the selected note
+2. Parse the root note from the chord symbol
+3. Calculate semitone offset from C to target root
+4. Add offset to `fret_number`
+5. Insert diagram with adjusted fret number, same dot pattern
+
+---
+
+## MuseScore 4 plugin API — key methods
+```javascript
+// Access current score
+var score = curScore
+
+// Get selected element
+var element = score.selection.elements[0]
+
+// Add fretboard diagram to a note
+var diagram = newElement(Element.FRETBOARD_DIAGRAM)
+diagram.fretOffset = fretNumber - 1  // 0-indexed
+// set dot positions via diagram.setDot(string, fret, finger)
+// set mutes via diagram.setDot(string, 0, -1)
+
+// Insert into score
+var cursor = score.newCursor()
+cursor.rewindToSelection()
+cursor.add(diagram)
+```
+
+Note: the exact API for fretboard diagram manipulation needs verification against the MuseScore 4 plugin API docs — the above is based on MuseScore 3 patterns and may need updating.
+
+---
+
+## Development phases
+
+### Phase 1 — JSON schema and data
+- [ ] Finalise JSON schema
+- [ ] Write schema validator (Python)
+- [ ] Enter initial voicings: CM7 Shell set (7 shapes)
+- [ ] Publish `voicings.json` to GitHub
+
+### Phase 2 — Plugin scaffold
+- [ ] Basic QML plugin structure
+- [ ] Panel window opens from Plugins menu
+- [ ] Fetch and parse `voicings.json` from GitHub
+- [ ] Display raw list of voicing names
+
+### Phase 3 — UI
+- [ ] Filter bar (context, quality, type, strings)
+- [ ] Search bar
+- [ ] Voicing card grid with fretboard thumbnail rendering
+- [ ] Selected state on card
+
+### Phase 4 — Score insertion
+- [ ] Read selected note and chord symbol
+- [ ] Transpose voicing to target key
+- [ ] Insert fretboard diagram at selected note
+- [ ] Error handling (no note selected, no chord symbol, out of range)
+
+### Phase 5 — Polish
+- [ ] Offline fallback (cache last fetched JSON locally)
+- [ ] User-defined JSON URL (point to a fork)
+- [ ] Contributing guide
+- [ ] Release v1.0
+
+---
+
+## Open questions
+
+- Does MuseScore 4's plugin API expose enough of the fretboard diagram object to set individual dot positions programmatically? Needs verification.
+- What is the correct QML network fetch pattern for MuseScore 4 specifically?
+- Should the plugin support multiple JSON sources (e.g. a community library alongside the official one)?
+- Fretboard thumbnail rendering in QML — draw from dot data directly, or use MuseScore's rendering engine?
+
+---
+
+## References
+
+- [MuseScore 4 Plugin API](https://musescore.org/en/handbook/4/plugins)
+- [MuseScore Plugin development forum](https://musescore.org/en/forum/7)
+- [Qt QML Network documentation](https://doc.qt.io/qt-6/qtnetwork-index.html)
+- Laukens, Dirk. *Jazz Guitar Chord Dictionary*. jazzguitar.be.
+- Taylor, Martin. *Complete Jazz Guitar Method*. Alfred Music.
+
+---
+
+## License
+
+Licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+You are free to use, share, and adapt this material for any purpose, provided you credit **Dheeraj Chand** and link to this repository.
