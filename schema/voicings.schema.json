@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jazz Guitar Voicing Library",
+  "description": "Schema for jazz guitar chord voicings used by the MuseScore 4 Chord Library Plugin",
+  "type": "object",
+  "required": ["voicings"],
+  "properties": {
+    "voicings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/voicing"
+      }
+    }
+  },
+  "$defs": {
+    "voicing": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "chord_quality",
+        "root",
+        "category",
+        "context",
+        "strings",
+        "fret_number",
+        "visible_frets",
+        "dots",
+        "mutes",
+        "open",
+        "notes",
+        "intervals",
+        "tags"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "Unique identifier, lowercase with hyphens"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name, e.g. 'C7 — Shell 137 — E str'"
+        },
+        "chord_quality": {
+          "type": "string",
+          "enum": [
+            "maj7",
+            "dom7",
+            "min7",
+            "min7b5",
+            "maj6",
+            "min6",
+            "dim7",
+            "aug7",
+            "dom7alt",
+            "dom7sharp5",
+            "dom7flat5",
+            "min-maj7",
+            "dom9",
+            "maj9",
+            "min9",
+            "dom13",
+            "sus4",
+            "sus2"
+          ],
+          "description": "Chord quality identifier"
+        },
+        "root": {
+          "type": "string",
+          "enum": ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"],
+          "description": "Root note (all voicings stored as C for transposition)"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["shell", "drop2", "drop3", "extended", "altered", "quartal"],
+          "description": "Voicing category"
+        },
+        "context": {
+          "type": "string",
+          "enum": ["CM6", "CM7", "CV6", "CV7"],
+          "description": "Texture context and string count"
+        },
+        "strings": {
+          "type": "integer",
+          "enum": [6, 7],
+          "description": "6-string standard or 7-string Van Eps tuning"
+        },
+        "fret_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24,
+          "description": "Starting fret position for the diagram"
+        },
+        "visible_frets": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 6,
+          "description": "Number of frets shown in the diagram"
+        },
+        "dots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["string", "fret"],
+            "properties": {
+              "string": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7,
+                "description": "String number (1=high e, 6=low E, 7=low A)"
+              },
+              "fret": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 6,
+                "description": "Fret position relative to fret_number (row 1 = fret_number)"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "Fingered positions on the fretboard"
+        },
+        "mutes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "description": "Muted string numbers"
+        },
+        "open": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "description": "Open string numbers"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Note names in the voicing"
+        },
+        "intervals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Interval labels (e.g. '1', 'b7', '3')"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Searchable tags"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

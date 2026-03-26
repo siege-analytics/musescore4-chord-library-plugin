@@ -1,0 +1,25 @@
+{
+  "voicings": [
+    {
+      "id": "c7-shell-137-e-str-7",
+      "name": "C7 — Shell 137 — E str",
+      "chord_quality": "dom7",
+      "root": "C",
+      "category": "shell",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {"string": 6, "fret": 1},
+        {"string": 4, "fret": 1},
+        {"string": 3, "fret": 2}
+      ],
+      "mutes": [7, 5, 2, 1],
+      "open": [],
+      "notes": ["C", "Bb", "E"],
+      "intervals": ["1", "b7", "3"],
+      "tags": ["shell", "guide-tone", "e-string-root"]
+    }
+  ]
+}
