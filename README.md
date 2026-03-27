@@ -1,60 +1,91 @@
 # MuseScore 4 Chord Library Plugin
 
-A MuseScore 4 plugin that adds a floating panel for browsing, filtering, and inserting jazz guitar chord voicings directly into your score. The voicing library is hosted as JSON on GitHub — no manual palette management required.
+A MuseScore Studio 4.6+ plugin for browsing, filtering, and inserting jazz guitar chord voicings directly into your score. The voicing library is hosted as JSON on GitHub — no manual palette management required.
 
 ## The problem this solves
 
-MuseScore's native palette system is flat. There is no way to nest or group palettes beyond a single level, which makes a comprehensive jazz guitar voicing library — spanning chord melody vs comping contexts, 6 and 7 string guitar, and multiple voicing types — essentially unmanageable. Sharing palettes requires manual `.mpal` file distribution, and the library can't be updated remotely.
+MuseScore's native palette system is flat — no nesting, no sub-palettes. A comprehensive jazz guitar voicing library spanning chord melody vs comping contexts, 6 and 7 string guitar, and multiple voicing types is unmanageable as palettes. Sharing requires manual `.mpal` file distribution, and the library can't be updated remotely.
 
-This plugin replaces that workflow with a panel UI driven by a JSON library that lives online, updates automatically, and can be forked and extended by anyone.
+This plugin replaces that workflow: a dialog UI driven by a JSON library that lives online, updates automatically, and can be forked by anyone.
 
 ## Features
 
-- Floating panel with filter by context, chord quality, voicing type, and string count
+- Dialog panel with filters for context, chord quality, and voicing type
 - Full text search across voicing names and tags
-- Click to insert a fretboard diagram at the selected note
-- Automatic transposition — voicings are stored in C and adjusted to the target key on insert
-- Library hosted on GitHub, fetched at runtime — always up to date
+- Double-click to insert a fretboard diagram at any selected note or rest
+- Automatic transposition — voicings stored in C, adjusted to target key based on chord symbols in the score
+- Library hosted on GitHub, fetched at runtime
 - Point the plugin at your own fork for a custom library
 
-## Status
+## Current status: v0.3.0
 
-Early development. See [DEVELOPMENT.md](DEVELOPMENT.md) for the full architecture, JSON schema, and build phases.
+- Plugin loads in MuseScore Studio 4.6.x
+- 27 voicings: shells (E/A string, 6/7 string), Drop 2 (E/A string), Drop 3 (E string)
+- Inserts fretboard diagram grids at the correct position with correct fret offset
+- Chord symbol auto-transposition reads HARMONY annotations from the score
 
-Current phase: **Phase 1 — JSON schema and initial data entry**
+**Known limitation:** MuseScore 4's plugin API does not expose `setDot()`, `setMarker()`, or `setBarre()` for fretboard diagrams. Inserted grids have correct dimensions and fret offset but no dot markers. Filed [musescore/MuseScore#32798](https://github.com/musescore/MuseScore/issues/32798). The `.mscx` XML snippet with full dot data is logged to the MuseScore console for manual use.
+
+## Installation
+
+1. Clone or download this repository
+2. Create `~/Documents/MuseScore4/Plugins/chordlibrary/`
+3. Copy `plugin/ChordLibrary.qml` into that folder as `chordlibrary.qml`
+4. Copy `plugin/model/` and `plugin/ui/` into the same folder
+5. Restart MuseScore Studio
+6. Go to **Plugins** and enable **Chord Library**
+
+## Usage
+
+1. Open a score in MuseScore Studio
+2. Select a note or rest where you want the diagram
+3. Open **Plugins → Chord Library**
+4. Filter or search for a voicing
+5. Double-click a voicing card to insert
+
+The plugin reads chord symbols at the selected position and transposes automatically. No chord symbol = no transposition (inserts in C).
 
 ## The voicing library
 
-All voicings live in `data/voicings.json`. They are organised by:
+All voicings live in `data/voicings.json`. Organised by:
 
-- **Context**: chord melody (CM) or comping/vocal (CV)
-- **String count**: 6 or 7 string (7-string uses Van Eps tuning — low A)
-- **Voicing type**: shell, drop 2, drop 3, extended, altered, quartal
+| Axis | Values | Meaning |
+|------|--------|---------|
+| **Context** | CM6, CM7, CV6, CV7 | Chord Melody vs Comping/Vocal × 6 vs 7 string |
+| **Category** | shell, drop2, drop3, extended, altered, quartal | Voicing type |
+| **Quality** | maj7, dom7, min7, min7b5, maj6, min6, dim7, ... | Chord quality |
 
-All shapes are stored with root C and are fully moveable — the plugin handles transposition to any key on insert.
+All shapes stored with root C. Fully moveable.
+
+## Scripts
+
+```bash
+# Validate voicings against schema
+python scripts/validate.py -v
+
+# Generate .mscx XML snippet for a voicing transposed to F
+python scripts/generate_mscx_snippet.py --voicing c7-shell-137-e-str-7 --root F
+
+# Generate all voicings transposed to Bb
+python scripts/generate_mscx_snippet.py --all --root Bb --output snippets/
+```
 
 ## Contributing
 
-Contributions to the voicing library are welcome. See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to add voicings, validate the JSON, and submit a pull request.
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md). All voicings must be verified against [Oolimo](https://www.oolimo.com/) before entry.
 
-If you find errors in voicing data, please open an issue.
+## References
 
-## Related repositories
+- Laukens, Dirk. *Jazz Guitar Chord Dictionary*. jazzguitar.be
+- Taylor, Martin. *Complete Jazz Guitar Method*. Alfred Music
+- Greene, Ted. *Chord Chemistry*
 
-- [siege-analytics/jazz-guitar-palette](https://github.com/siege-analytics/jazz-guitar-palette) — the MuseScore `.mpal` palette files this plugin is designed to replace
-- [siege-analytics/jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — chord melody arrangements using this library
+## Related
 
-## Background
-
-This plugin grew out of work on jazz guitar chord melody arrangements documented on [Learning Jazz From The Masters](https://learningjazzguitar.substack.com), using Martin Taylor's *Complete Jazz Guitar Method* and Dirk Laukens' *Jazz Guitar Chord Dictionary* as primary references.
-
-## Requirements
-
-- MuseScore Studio 4.x
-- Internet connection for library fetch (offline fallback planned for Phase 5)
+- [siege-analytics/jazz-guitar-palette](https://github.com/siege-analytics/jazz-guitar-palette) — `.mpal` palette files (predecessor)
+- [siege-analytics/jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — chord melody arrangements
+- [Learning Jazz From The Masters](https://learningjazzguitar.substack.com) — Dheeraj Chand's Substack
 
 ## License
 
-Licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
-
-You are free to use, share, and adapt this material for any purpose, provided you credit **Dheeraj Chand** and link to this repository.
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Free to use, share, and adapt with attribution to Dheeraj Chand.
