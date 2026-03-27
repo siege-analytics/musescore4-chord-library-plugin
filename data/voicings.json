@@ -161,7 +161,7 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [7, 6, 4, 1],
       "open": [],
@@ -182,7 +182,7 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 2},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [7, 6, 4, 1],
       "open": [],
@@ -203,7 +203,7 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 1}
+        {"string": 2, "fret": 2}
       ],
       "mutes": [7, 6, 4, 1],
       "open": [],
@@ -226,7 +226,7 @@
         {"string": 6, "fret": 1},
         {"string": 4, "fret": 1},
         {"string": 3, "fret": 2},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 1}
       ],
       "mutes": [5, 1],
       "open": [],
@@ -312,14 +312,14 @@
       "visible_frets": 4,
       "dots": [
         {"string": 5, "fret": 1},
-        {"string": 4, "fret": 1},
+        {"string": 4, "fret": 3},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [6, 1],
       "open": [],
-      "notes": ["C", "E", "Bb", "E"],
-      "intervals": ["1", "3", "b7", "3"],
+      "notes": ["C", "G", "Bb", "E"],
+      "intervals": ["1", "5", "b7", "3"],
       "tags": ["drop2", "a-string-root", "needs_verification"]
     },
     {
@@ -334,9 +334,9 @@
       "visible_frets": 4,
       "dots": [
         {"string": 5, "fret": 1},
-        {"string": 4, "fret": 2},
+        {"string": 4, "fret": 3},
         {"string": 3, "fret": 2},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [6, 1],
       "open": [],
@@ -356,9 +356,9 @@
       "visible_frets": 4,
       "dots": [
         {"string": 5, "fret": 1},
-        {"string": 4, "fret": 1},
+        {"string": 4, "fret": 3},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 1}
+        {"string": 2, "fret": 2}
       ],
       "mutes": [6, 1],
       "open": [],
@@ -385,9 +385,9 @@
       ],
       "mutes": [5, 2],
       "open": [],
-      "notes": ["C", "Bb", "E", "G"],
-      "intervals": ["1", "b7", "3", "5"],
-      "tags": ["drop3", "e-string-root", "needs_verification"]
+      "notes": ["C", "Bb", "E", "C"],
+      "intervals": ["1", "b7", "3", "1"],
+      "tags": ["drop3", "e-string-root", "needs_rework"]
     },
     {
       "id": "cmaj7-drop3-e-str-6",
@@ -407,9 +407,9 @@
       ],
       "mutes": [5, 2],
       "open": [],
-      "notes": ["C", "B", "E", "G"],
-      "intervals": ["1", "7", "3", "5"],
-      "tags": ["drop3", "e-string-root", "needs_verification"]
+      "notes": ["C", "B", "E", "C"],
+      "intervals": ["1", "7", "3", "1"],
+      "tags": ["drop3", "e-string-root", "needs_rework"]
     },
     {
       "id": "cm7-drop3-e-str-6",
@@ -429,9 +429,9 @@
       ],
       "mutes": [5, 2],
       "open": [],
-      "notes": ["C", "Bb", "Eb", "G"],
-      "intervals": ["1", "b7", "b3", "5"],
-      "tags": ["drop3", "e-string-root", "needs_verification"]
+      "notes": ["C", "Bb", "Eb", "C"],
+      "intervals": ["1", "b7", "b3", "1"],
+      "tags": ["drop3", "e-string-root", "needs_rework"]
     },
     {
       "id": "cm7b5-drop3-e-str-6",
@@ -532,7 +532,7 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [6, 4, 1],
       "open": [],
@@ -553,7 +553,7 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 2},
-        {"string": 2, "fret": 2}
+        {"string": 2, "fret": 3}
       ],
       "mutes": [6, 4, 1],
       "open": [],
@@ -574,13 +574,104 @@
       "dots": [
         {"string": 5, "fret": 1},
         {"string": 3, "fret": 1},
-        {"string": 2, "fret": 1}
+        {"string": 2, "fret": 2}
       ],
       "mutes": [6, 4, 1],
       "open": [],
       "notes": ["C", "Bb", "Eb"],
       "intervals": ["1", "b7", "b3"],
       "tags": ["shell", "guide-tone", "a-string-root", "needs_verification"]
+    },
+
+    {
+      "id": "c7b9-drop2-e-str-6",
+      "name": "C7b9 — Drop 2 + b9 — E str",
+      "chord_quality": "dom7b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {"string": 6, "fret": 1},
+        {"string": 4, "fret": 1},
+        {"string": 3, "fret": 2},
+        {"string": 2, "fret": 1},
+        {"string": 1, "fret": 2}
+      ],
+      "mutes": [5],
+      "open": [],
+      "notes": ["C", "Bb", "E", "G", "Db"],
+      "intervals": ["1", "b7", "3", "5", "b9"],
+      "tags": ["altered", "e-string-root", "laukens-p37", "needs_verification"]
+    },
+    {
+      "id": "c7b9-drop2-a-str-6",
+      "name": "C7b9 — A str",
+      "chord_quality": "dom7b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {"string": 5, "fret": 2},
+        {"string": 4, "fret": 4},
+        {"string": 3, "fret": 2},
+        {"string": 2, "fret": 1}
+      ],
+      "mutes": [6, 1],
+      "open": [],
+      "notes": ["C", "G", "Bb", "Db"],
+      "intervals": ["1", "5", "b7", "b9"],
+      "tags": ["altered", "a-string-root", "needs_verification"]
+    },
+
+    {
+      "id": "c7sharp5-drop2-e-str-6",
+      "name": "C7#5 — Drop 2 — E str",
+      "chord_quality": "dom7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {"string": 6, "fret": 1},
+        {"string": 4, "fret": 1},
+        {"string": 3, "fret": 2},
+        {"string": 2, "fret": 2}
+      ],
+      "mutes": [5, 1],
+      "open": [],
+      "notes": ["C", "Bb", "E", "Ab"],
+      "intervals": ["1", "b7", "3", "#5"],
+      "tags": ["altered", "e-string-root", "needs_verification"]
+    },
+    {
+      "id": "c7sharp5-drop2-a-str-6",
+      "name": "C7#5 — Drop 2 — A str",
+      "chord_quality": "dom7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {"string": 5, "fret": 1},
+        {"string": 4, "fret": 4},
+        {"string": 3, "fret": 1},
+        {"string": 2, "fret": 3}
+      ],
+      "mutes": [6, 1],
+      "open": [],
+      "notes": ["C", "Ab", "Bb", "E"],
+      "intervals": ["1", "#5", "b7", "3"],
+      "tags": ["altered", "a-string-root", "needs_verification"]
     }
   ]
 }
