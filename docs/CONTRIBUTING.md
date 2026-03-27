@@ -132,11 +132,135 @@ Add your voicing to `data/voicings.json`. Every string must appear in exactly on
 python scripts/validate.py -v
 ```
 
-Fix any errors before submitting. The validator checks required fields, enum values, string/fret ranges, and consistency between dots/notes counts.
+The validator runs three levels of checks:
 
-### Step 6: Submit a pull request
+1. **Schema validation** — required fields, enum values, string/fret ranges
+2. **Consistency checks** — every string accounted for in dots/mutes/open, no overlaps, notes/dots count match
+3. **Note-computation verification** — computes the actual note at each fret position using tuning-aware MIDI math and compares against declared `notes` and `intervals` arrays
+
+If the validator reports a note mismatch, your fret positions or declared notes are wrong. Fix before proceeding.
+
+To validate with a non-standard tuning:
+
+```bash
+python scripts/validate.py -v --tuning config/tunings/7string-low-b.json
+```
+
+### Step 6: Cross-reference with Oolimo
+
+Generate verification URLs for visual spot-checking:
+
+```bash
+python scripts/oolimo_urls.py
+python scripts/oolimo_urls.py --format markdown   # for a checklist
+```
+
+This outputs direct links to Oolimo chord pages for every quality in the library. Open the link, find your voicing shape among the displayed diagrams, and confirm it matches.
+
+### Step 7: Submit a pull request
 
 Include the source (book + page number) and confirmation that you checked with Oolimo.
+
+---
+
+## Managing tunings
+
+Tuning configurations live in `config/tunings/` as JSON files. The validator uses these to compute correct notes at fret positions.
+
+### Tuning file format
+
+```json
+{
+  "name": "Standard + Van Eps 7th (Low A)",
+  "description": "Standard 6-string with optional 7th string tuned to low A.",
+  "strings": {
+    "1": 64,
+    "2": 59,
+    "3": 55,
+    "4": 50,
+    "5": 45,
+    "6": 40,
+    "7": 33
+  },
+  "notes": {
+    "1": "E4",
+    "2": "B3",
+    "3": "G3",
+    "4": "D3",
+    "5": "A2",
+    "6": "E2",
+    "7": "A1"
+  },
+  "reference": "MIDI note numbers. Middle C (C4) = 60. A440 (A4) = 69."
+}
+```
+
+The `strings` object maps string number to the MIDI note number of the open string. The `notes` object is for human readability — only `strings` is used by the validator.
+
+### MIDI note reference
+
+| Note | MIDI | Note | MIDI | Note | MIDI |
+|------|------|------|------|------|------|
+| A1   | 33   | E2   | 40   | B2   | 47   |
+| B1   | 35   | F2   | 41   | C3   | 48   |
+| C2   | 36   | G2   | 43   | D3   | 50   |
+| D2   | 38   | A2   | 45   | G3   | 55   |
+| Eb2  | 39   | Bb2  | 46   | B3   | 59   |
+
+### Adding a tuning
+
+1. Create a new JSON file in `config/tunings/` (e.g., `open-g.json`)
+2. Set the `strings` object with MIDI note numbers for each open string
+3. Add a human-readable `notes` object
+4. Test it: `python scripts/validate.py -v --tuning config/tunings/open-g.json`
+
+### Editing a tuning
+
+Edit the `strings` values in the JSON file. To change the 7th string from low A (33) to low B (35), update `"7": 35` and the corresponding note to `"B1"`.
+
+### Shipped tunings
+
+| File | Description |
+|------|-------------|
+| `standard.json` | Standard 6-string + Van Eps 7th (low A). **Default.** |
+| `7string-low-b.json` | Standard 7-string with low B |
+| `dadgad.json` | DADGAD alternate tuning |
+| `all-fourths.json` | All-fourths tuning (E A D G C F) |
+
+---
+
+## Managing voicings (CRUD)
+
+### Create
+
+Follow the "Adding a voicing" steps above. Key rules:
+- Root is always `C`
+- Every string must appear in exactly one of `dots`, `mutes`, or `open`
+- Run `validate.py` — it will catch note/interval errors automatically
+
+### Read
+
+```bash
+# List all voicings with their Oolimo verification status
+python scripts/oolimo_urls.py
+
+# Show summary by quality/context/category
+python scripts/validate.py -v
+```
+
+### Update
+
+Edit the voicing entry in `data/voicings.json` directly. After any change:
+
+```bash
+python scripts/validate.py -v
+```
+
+The note-computation validator will catch any fret/note mismatches introduced by the edit.
+
+### Delete
+
+Remove the voicing object from `data/voicings.json`. Run `validate.py` to confirm the file is still valid JSON.
 
 ---
 
@@ -162,7 +286,7 @@ Include the source (book + page number) and confirmation that you checked with O
 
 ### Chord quality values
 
-`maj7`, `dom7`, `min7`, `min7b5`, `maj6`, `min6`, `dim7`, `aug7`, `dom7alt`, `dom7sharp5`, `dom7flat5`, `min-maj7`, `dom9`, `maj9`, `min9`, `dom13`, `sus4`, `sus2`
+`maj7`, `dom7`, `min7`, `min7b5`, `maj6`, `min6`, `dim7`, `aug7`, `dom7alt`, `dom7sharp5`, `dom7flat5`, `dom7b9`, `min-maj7`, `dom9`, `maj9`, `min9`, `dom13`, `sus4`, `sus2`
 
 ### ID format
 

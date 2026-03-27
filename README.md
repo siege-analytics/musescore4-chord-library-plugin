@@ -20,20 +20,65 @@ This plugin replaces that workflow: a dialog UI driven by a JSON library that li
 ## Current status: v0.3.0
 
 - Plugin loads in MuseScore Studio 4.6.x
-- 27 voicings: shells (E/A string, 6/7 string), Drop 2 (E/A string), Drop 3 (E string)
+- 31 voicings: shells (E/A string, 6/7 string), Drop 2 (E/A string), Drop 3 (E string), altered (dom7b9, dom7#5)
 - Inserts fretboard diagram grids at the correct position with correct fret offset
 - Chord symbol auto-transposition reads HARMONY annotations from the score
+- Note-computation validator catches fret/note mismatches automatically
+- Configurable tuning system (standard, Van Eps 7-string, low B 7-string, DADGAD, all-fourths)
+- Oolimo URL generator for visual cross-referencing of voicings
 
 **Known limitation:** MuseScore 4's plugin API does not expose `setDot()`, `setMarker()`, or `setBarre()` for fretboard diagrams. Inserted grids have correct dimensions and fret offset but no dot markers. Filed [musescore/MuseScore#32798](https://github.com/musescore/MuseScore/issues/32798). The `.mscx` XML snippet with full dot data is logged to the MuseScore console for manual use.
 
-## Installation
+## Download and test
 
-1. Clone or download this repository
-2. Create `~/Documents/MuseScore4/Plugins/chordlibrary/`
-3. Copy `plugin/ChordLibrary.qml` into that folder as `chordlibrary.qml`
-4. Copy `plugin/model/` and `plugin/ui/` into the same folder
-5. Restart MuseScore Studio
-6. Go to **Plugins** and enable **Chord Library**
+### Prerequisites
+
+- Python 3.10+ with `pip install jsonschema`
+- MuseScore Studio 4.6+ (for plugin use)
+- Git
+
+### Quick start
+
+```bash
+# Clone the repository
+git clone https://github.com/siege-analytics/musescore4-chord-library-plugin.git
+cd musescore4-chord-library-plugin
+
+# Set up Python environment
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+pip install jsonschema
+
+# Validate all voicings
+python scripts/validate.py -v
+
+# Generate Oolimo cross-reference URLs
+python scripts/oolimo_urls.py
+```
+
+### Project structure
+
+```
+├── config/tunings/         # Tuning configs (standard, 7-string low B, DADGAD, etc.)
+├── data/voicings.json      # The chord voicing library (all shapes in C)
+├── docs/CONTRIBUTING.md    # How to add voicings, manage tunings, CRUD operations
+├── plugin/                 # QML plugin source for MuseScore
+├── schema/                 # JSON schema for voicings
+├── scripts/
+│   ├── validate.py         # Schema + consistency + note-computation validator
+│   ├── oolimo_urls.py      # Oolimo verification URL generator
+│   ├── generate_from_mscz.py
+│   └── generate_mscz_snippet.py
+└── README.md
+```
+
+### Install the plugin
+
+1. Create `~/Documents/MuseScore4/Plugins/chordlibrary/`
+2. Copy `plugin/ChordLibrary.qml` into that folder as `chordlibrary.qml`
+3. Copy `plugin/model/` and `plugin/ui/` into the same folder
+4. Restart MuseScore Studio
+5. Go to **Plugins** and enable **Chord Library**
 
 ## Usage
 
@@ -60,8 +105,17 @@ All shapes stored with root C. Fully moveable.
 ## Scripts
 
 ```bash
-# Validate voicings against schema
+# Validate voicings (schema + consistency + note verification)
 python scripts/validate.py -v
+
+# Validate with a specific tuning
+python scripts/validate.py -v --tuning config/tunings/7string-low-b.json
+
+# Generate Oolimo verification URLs for all voicings
+python scripts/oolimo_urls.py
+
+# Generate Oolimo checklist as markdown
+python scripts/oolimo_urls.py --format markdown
 
 # Generate .mscx XML snippet for a voicing transposed to F
 python scripts/generate_mscx_snippet.py --voicing c7-shell-137-e-str-7 --root F
