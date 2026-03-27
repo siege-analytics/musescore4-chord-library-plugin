@@ -1,28 +1,19 @@
 import QtQuick 2.15
-import MuseScore 3.0
 import "Transposer.js" as Transposer
 
 QtObject {
     id: inserter
 
+    // Must be set by parent to the root MuseScore plugin object
+    property var pluginRoot: null
+
     // Generate .mscx XML for a FretDiagram element
-    // voicing: object from voicings.json
-    // targetRoot: string like "F", "Bb", etc.
     function generateMscxSnippet(voicing, targetRoot) {
         var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
         var transposedFret = voicing.fret_number + offset
         var numStrings = voicing.strings || 6
-
-        // MuseScore uses 0-indexed strings, bottom-up:
-        //   MS string 0 = highest (our string 1 = high e)
-        //   MS string 5 = lowest  (our string 6 = low E)
-        //   MS string 6 = lowest  (our string 7 = low A, 7-string)
-        // Our convention: string 1 = high e, string 6 = low E, string 7 = low A
-        // Conversion: msString = numStrings - ourString
-
         var numFrets = voicing.visible_frets || 4
 
-        // Build per-string data map (MS 0-based string index)
         var stringData = {}
 
         var dots = voicing.dots || []
@@ -46,7 +37,6 @@ QtObject {
             stringData[msOpen].marker = "circle"
         }
 
-        // Generate XML in correct MS4 .mscx format
         var xml = '<FretDiagram>\n'
         xml += '  <fretOffset>' + transposedFret + '</fretOffset>\n'
         xml += '  <frets>' + numFrets + '</frets>\n'
@@ -72,78 +62,84 @@ QtObject {
         return xml
     }
 
-    // Attempt to insert a voicing at the current cursor position
-    // Returns: { success: bool, message: string }
-    function insertAtCursor(voicing, curScore) {
-        if (!curScore) {
+    // Insert a voicing at the current cursor position
+    // pluginRef: the root MuseScore plugin object (has newElement, curScore, etc.)
+    function insertAtCursor(voicing, pluginRef) {
+        var score = pluginRef ? pluginRef.curScore : null
+        if (!score) {
             return { success: false, message: "No score is open" }
         }
 
-        // Get current selection
-        var selection = curScore.selection
+        var selection = score.selection
         if (!selection || !selection.elements || selection.elements.length === 0) {
-            return { success: false, message: "No note selected. Click a note first." }
+            return { success: false, message: "Select a note or rest first." }
         }
 
-        // Try to find a chord symbol on the selected element
+        // Find the segment for the selected element (works for notes AND rests)
         var targetRoot = null
         var selectedElement = selection.elements[0]
+        var segment = null
 
-        // Walk up to find chord symbol attached to this beat
         if (selectedElement.type === Element.NOTE) {
+            // Note → parent is Chord → parent is Segment
             var chord = selectedElement.parent
-            if (chord && chord.parent) {
-                var segment = chord.parent
-                var annotations = segment.annotations
-                if (annotations) {
-                    for (var a = 0; a < annotations.length; a++) {
-                        if (annotations[a].type === Element.HARMONY) {
-                            var harmonyText = annotations[a].text
-                            targetRoot = Transposer.extractRoot(harmonyText)
-                            break
-                        }
-                    }
+            if (chord) segment = chord.parent
+        } else if (selectedElement.type === Element.REST) {
+            // Rest → parent is Segment directly
+            segment = selectedElement.parent
+        } else if (selectedElement.type === Element.CHORD) {
+            segment = selectedElement.parent
+        }
+
+        // Search the segment's annotations for a chord symbol (Harmony)
+        if (segment && segment.annotations) {
+            for (var a = 0; a < segment.annotations.length; a++) {
+                if (segment.annotations[a].type === Element.HARMONY) {
+                    var harmonyText = segment.annotations[a].text
+                    targetRoot = Transposer.extractRoot(harmonyText)
+                    break
                 }
             }
         }
 
         if (!targetRoot) {
-            // Default to C (no transposition) if no chord symbol found
             targetRoot = voicing.root
             console.log("No chord symbol found — inserting in original key (" + targetRoot + ")")
         }
 
         var xml = generateMscxSnippet(voicing, targetRoot)
-
-        // Write to temp file for potential manual import
-        // (The actual programmatic insertion requires the API extension from musescore/MuseScore#32798)
-        console.log("Generated .mscx snippet for " + voicing.name + " transposed to " + targetRoot + ":")
+        console.log("Generated .mscx snippet for " + voicing.name + " → " + targetRoot + ":")
         console.log(xml)
 
-        // Attempt 1: Try creating a FretDiagram element and setting basic properties
-        // (This creates an empty diagram — dots/markers cannot be set via current API)
-        var cursor = curScore.newCursor()
-        cursor.rewindToSelection()
-
+        // Create FretDiagram element via the plugin root's newElement
         try {
-            var fd = newElement(Element.FRET_DIAGRAM)
+            score.startCmd()
+
+            var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
+
+            // Set grid properties (these ARE exposed in the plugin API)
             fd.fretStrings = voicing.strings || 6
             fd.fretFrets = voicing.visible_frets || 4
             var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-            fd.fretOffset = voicing.fret_number + offset - 1  // fretOffset is 0-based display offset
+            fd.fretOffset = voicing.fret_number + offset - 1
+
+            // Position cursor at selection and add element
+            var cursor = score.newCursor()
+            cursor.rewind(1)  // 1 = SELECTION_START
             cursor.add(fd)
+
+            score.endCmd()
 
             return {
                 success: true,
-                message: "Inserted fretboard grid for " + voicing.name + " → " + targetRoot
-                    + "\nNote: Dots and markers require MuseScore API extension (issue #32798)."
-                    + "\nThe .mscx XML snippet has been logged to the console for manual use."
+                message: "Inserted diagram for " + voicing.name + " → " + targetRoot
+                    + "\n(Empty grid — dots pending API extension #32798)"
             }
         } catch (e) {
+            try { score.endCmd() } catch (ignore) {}
             return {
                 success: false,
-                message: "Could not insert element: " + e
-                    + "\nThe .mscx XML snippet has been logged to the console."
+                message: "Insert failed: " + e + "\nXML logged to console."
             }
         }
     }
