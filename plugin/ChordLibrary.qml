@@ -633,6 +633,59 @@ MuseScore {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+
+                // --- About ---
+                Label {
+                    text: "ABOUT"
+                    font.pixelSize: 11
+                    font.bold: true
+                    color: "#333"
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Chord Library v0.3.1"
+                    font.pixelSize: 12
+                    font.bold: true
+                    color: "#333"
+                }
+
+                Label {
+                    text: "Author: Dheeraj Chand"
+                    font.pixelSize: 11
+                    color: "#555"
+                }
+
+                Label {
+                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin">GitHub Repository</a>'
+                    font.pixelSize: 11
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
+                }
+
+                Label {
+                    text: '<a href="https://siegeanalytics.com">Siege Analytics</a>'
+                    font.pixelSize: 11
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
+                }
+
+                Label {
+                    text: "Licensed under CC BY 4.0"
+                    font.pixelSize: 10
+                    color: "#888"
+                }
             }
         }
 
