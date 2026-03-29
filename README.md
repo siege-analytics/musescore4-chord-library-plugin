@@ -29,7 +29,35 @@ This plugin replaces that workflow: a dialog UI driven by a JSON library that li
 
 **Known limitation:** MuseScore 4's plugin API does not expose `setDot()`, `setMarker()`, or `setBarre()` for fretboard diagrams. Inserted grids have correct dimensions and fret offset but no dot markers. Filed [musescore/MuseScore#32798](https://github.com/musescore/MuseScore/issues/32798). The `.mscx` XML snippet with full dot data is logged to the MuseScore console for manual use.
 
-## Download and test
+## Install (no programming required)
+
+Download the installer for your platform from the [latest release](https://github.com/siege-analytics/musescore4-chord-library-plugin/releases):
+
+### Mac
+
+1. Download **ChordLibrary-0.3.0-mac.zip**
+2. Unzip it (double-click the zip)
+3. Double-click **Install Chord Library.command**
+4. Restart MuseScore Studio and enable **Chord Library** under Plugins
+
+Also available as **ChordLibrary-0.3.0.pkg** — a standard macOS installer package.
+
+### Windows
+
+1. Download **ChordLibrary-0.3.0-win.zip**
+2. Extract it (right-click → Extract All)
+3. Double-click **Install Chord Library.bat**
+4. Restart MuseScore Studio and enable **Chord Library** under Plugins
+
+### Uninstall
+
+Each download includes an uninstaller: **Uninstall Chord Library.command** (Mac) or **Uninstall Chord Library.bat** (Windows).
+
+The installers automatically back up any existing installation before overwriting.
+
+---
+
+## Developer setup
 
 ### Prerequisites
 
@@ -40,20 +68,16 @@ This plugin replaces that workflow: a dialog UI driven by a JSON library that li
 ### Quick start
 
 ```bash
-# Clone the repository
 git clone https://github.com/siege-analytics/musescore4-chord-library-plugin.git
 cd musescore4-chord-library-plugin
 
-# Set up Python environment
 python -m venv .venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install jsonschema
 
-# Validate all voicings
-python scripts/validate.py -v
-
-# Generate Oolimo cross-reference URLs
-python scripts/oolimo_urls.py
+python scripts/validate.py -v          # validate all voicings
+python scripts/oolimo_urls.py          # generate Oolimo cross-reference URLs
+python scripts/build_installer.py      # build Mac + Windows installers in dist/
 ```
 
 ### Project structure
@@ -67,12 +91,13 @@ python scripts/oolimo_urls.py
 ├── scripts/
 │   ├── validate.py         # Schema + consistency + note-computation validator
 │   ├── oolimo_urls.py      # Oolimo verification URL generator
+│   ├── build_installer.py  # Mac/Windows installer builder
 │   ├── generate_from_mscz.py
-│   └── generate_mscz_snippet.py
+│   └── generate_mscx_snippet.py
 └── README.md
 ```
 
-### Install the plugin
+### Manual install (without installer)
 
 1. Create `~/Documents/MuseScore4/Plugins/chordlibrary/`
 2. Copy `plugin/ChordLibrary.qml` into that folder as `chordlibrary.qml`
@@ -116,6 +141,10 @@ python scripts/oolimo_urls.py
 
 # Generate Oolimo checklist as markdown
 python scripts/oolimo_urls.py --format markdown
+
+# Build Mac + Windows installers
+python scripts/build_installer.py
+python scripts/build_installer.py --pkg  # also build macOS .pkg
 
 # Generate .mscx XML snippet for a voicing transposed to F
 python scripts/generate_mscx_snippet.py --voicing c7-shell-137-e-str-7 --root F
