@@ -35,7 +35,8 @@ ColumnLayout {
 
     ComboBox {
         id: qualityFilter
-        model: ["All Qualities", "maj7", "dom7", "min7", "min7b5", "maj6", "min6", "dim7"]
+        model: ["All Qualities", "maj7", "dom7", "min7", "min7b5", "maj6", "min6", "dim7",
+                "dom7b9", "dom7sharp5", "dom7alt", "dom9", "sus4"]
         Layout.fillWidth: true
         onCurrentTextChanged: {
             qualityChanged(currentText === "All Qualities" ? "" : currentText)

@@ -115,6 +115,21 @@ python scripts/build_installer.py      # build Mac + Windows installers in dist/
 
 The plugin reads chord symbols at the selected position and transposes automatically. No chord symbol = no transposition (inserts in C).
 
+### Settings
+
+Click **Settings** in the plugin header to access:
+
+- **Voicing Source URL** — Point the plugin at your own fork or a local file for a custom voicing library. Changes persist between sessions.
+- **Diagram Placement** — Choose whether fretboard diagrams appear above (default) or below the staff.
+- **Export Voicings** — Save the current voicing library to a local JSON file.
+- **Import Voicings** — Load voicings from a JSON file. Validates required fields and merges with the current library (duplicates are skipped by ID).
+
+### Score-top chord diagram section
+
+MuseScore can display all unique chord diagrams in a row between the title and the first system. This works with Chord Library diagrams since they use MuseScore's standard `FretDiagram` element.
+
+To enable: **Format → Style → Fretboard Diagrams → "Show chord diagrams at top of first page"**
+
 ## The voicing library
 
 All voicings live in `data/voicings.json`. Organised by:

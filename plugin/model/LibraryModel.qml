@@ -8,6 +8,8 @@ QtObject {
     property bool loading: false
     property string error: ""
 
+    // URL is set by the parent plugin via Settings persistence.
+    // Default is the official repo; users can override in plugin settings.
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
 
     // Filter state
