@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtQuick.Dialogs
 import MuseScore 3.0
 import FileIO 3.0
 import "ui"
@@ -228,6 +229,32 @@ MuseScore {
         statusMsg.text = "Inserted " + voicing.name + " → " + targetRoot
             + " (" + diagramPlacement + " staff)"
         statusMsg.color = "#060"
+    }
+
+    // === File dialogs (Qt6 style) ===
+
+    FileDialog {
+        id: exportFileDialog
+        title: "Export Voicings"
+        fileMode: FileDialog.SaveFile
+        nameFilters: ["JSON files (*.json)"]
+        onAccepted: {
+            var path = selectedFile.toString().replace("file://", "")
+            exportPathField.text = path
+            doExport()
+        }
+    }
+
+    FileDialog {
+        id: importFileDialog
+        title: "Import Voicings"
+        fileMode: FileDialog.OpenFile
+        nameFilters: ["JSON files (*.json)"]
+        onAccepted: {
+            var path = selectedFile.toString().replace("file://", "")
+            importPathField.text = path
+            doImport()
+        }
     }
 
     // === Export/Import ===
@@ -458,12 +485,22 @@ MuseScore {
                     color: "#555"
                 }
 
-                TextField {
-                    id: exportPathField
+                RowLayout {
                     Layout.fillWidth: true
-                    font.pixelSize: 11
-                    text: homePath() + "/Documents/chord-library-export.json"
-                    selectByMouse: true
+                    spacing: 4
+
+                    TextField {
+                        id: exportPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        text: homePath() + "/Documents/chord-library-export.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: exportFileDialog.open()
+                    }
                 }
 
                 Button {
@@ -489,12 +526,22 @@ MuseScore {
                     color: "#555"
                 }
 
-                TextField {
-                    id: importPathField
+                RowLayout {
                     Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "/path/to/voicings.json"
-                    selectByMouse: true
+                    spacing: 4
+
+                    TextField {
+                        id: importPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "/path/to/voicings.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: importFileDialog.open()
+                    }
                 }
 
                 Button {
