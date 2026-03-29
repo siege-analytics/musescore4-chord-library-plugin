@@ -44,28 +44,8 @@
         },
         "chord_quality": {
           "type": "string",
-          "enum": [
-            "maj7",
-            "dom7",
-            "min7",
-            "min7b5",
-            "maj6",
-            "min6",
-            "dim7",
-            "aug7",
-            "dom7alt",
-            "dom7sharp5",
-            "dom7flat5",
-            "dom7b9",
-            "min-maj7",
-            "dom9",
-            "maj9",
-            "min9",
-            "dom13",
-            "sus4",
-            "sus2"
-          ],
-          "description": "Chord quality identifier"
+          "minLength": 1,
+          "description": "Chord quality identifier (e.g. maj7, dom7, min7, dom7b9, dom7sharp5). Free-text — imports can introduce new qualities."
         },
         "root": {
           "type": "string",
@@ -74,13 +54,13 @@
         },
         "category": {
           "type": "string",
-          "enum": ["shell", "drop2", "drop3", "extended", "altered", "quartal", "caged"],
-          "description": "Voicing category"
+          "minLength": 1,
+          "description": "Voicing category (e.g. shell, drop2, drop3, extended, altered, quartal, caged). Free-text — imports can introduce new categories."
         },
         "context": {
           "type": "string",
-          "enum": ["CM6", "CM7", "CV6", "CV7"],
-          "description": "Texture context and string count"
+          "minLength": 1,
+          "description": "Texture context (e.g. CM6, CM7, CV6, CV7). Free-text — imports can introduce new contexts."
         },
         "strings": {
           "type": "integer",
