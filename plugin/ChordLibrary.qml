@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs
 import MuseScore 3.0
 import FileIO 3.0
 import "ui"
@@ -231,30 +230,54 @@ MuseScore {
         statusMsg.color = "#060"
     }
 
-    // === File dialogs (Qt6 style) ===
+    // === File browser (dynamic loading to avoid import issues) ===
 
-    FileDialog {
-        id: exportFileDialog
-        title: "Export Voicings"
-        fileMode: FileDialog.SaveFile
-        nameFilters: ["JSON files (*.json)"]
-        onAccepted: {
-            var path = selectedFile.toString().replace("file://", "")
-            exportPathField.text = path
-            doExport()
-        }
-    }
+    property var _fileDialogComponent: null
 
-    FileDialog {
-        id: importFileDialog
-        title: "Import Voicings"
-        fileMode: FileDialog.OpenFile
-        nameFilters: ["JSON files (*.json)"]
-        onAccepted: {
-            var path = selectedFile.toString().replace("file://", "")
-            importPathField.text = path
-            doImport()
+    function openFileBrowser(mode, targetField, callback) {
+        // Try to dynamically create a FileDialog from QtQuick.Dialogs
+        // If it fails (MuseScore doesn't support it), show a message
+        if (!_fileDialogComponent) {
+            try {
+                _fileDialogComponent = Qt.createQmlObject(
+                    'import QtQuick.Dialogs; FileDialog { }',
+                    chordLibrary, "dynamicFileDialog"
+                )
+                if (_fileDialogComponent) _fileDialogComponent.destroy()
+                _fileDialogComponent = "supported"
+            } catch (e) {
+                _fileDialogComponent = "unsupported"
+                console.log("FileDialog not available: " + e)
+            }
         }
+
+        if (_fileDialogComponent === "supported") {
+            try {
+                var dlg = Qt.createQmlObject(
+                    'import QtQuick.Dialogs\n'
+                    + 'FileDialog {\n'
+                    + '  title: "' + (mode === "save" ? "Export Voicings" : "Import Voicings") + '"\n'
+                    + '  fileMode: FileDialog.' + (mode === "save" ? "SaveFile" : "OpenFile") + '\n'
+                    + '  nameFilters: ["JSON files (*.json)"]\n'
+                    + '}',
+                    chordLibrary, "fileBrowser"
+                )
+                dlg.onAccepted.connect(function() {
+                    var path = dlg.selectedFile.toString().replace("file://", "")
+                    targetField.text = path
+                    dlg.destroy()
+                    if (callback) callback()
+                })
+                dlg.onRejected.connect(function() { dlg.destroy() })
+                dlg.open()
+                return
+            } catch (e) {
+                _fileDialogComponent = "unsupported"
+            }
+        }
+
+        statusMsg.text = "File browser not available in this MuseScore version. Type the path manually."
+        statusMsg.color = "#888"
     }
 
     // === Export/Import ===
@@ -499,7 +522,7 @@ MuseScore {
 
                     Button {
                         text: "Browse"
-                        onClicked: exportFileDialog.open()
+                        onClicked: openFileBrowser("save", exportPathField, null)
                     }
                 }
 
@@ -540,7 +563,7 @@ MuseScore {
 
                     Button {
                         text: "Browse"
-                        onClicked: importFileDialog.open()
+                        onClicked: openFileBrowser("open", importPathField, null)
                     }
                 }
 
