@@ -1,9 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
-import Qt.labs.settings 1.0
 import MuseScore 3.0
+import FileIO 3.0
 import "ui"
 import "model"
 import "model/Transposer.js" as Transposer
@@ -20,17 +19,26 @@ MuseScore {
     width: 420
     height: 750
 
-    // === Settings (persisted between sessions) ===
-    Settings {
-        id: persistedSettings
-        category: "ChordLibrary"
-        property string voicingUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
-        property string diagramPlacement: "above"  // "above" or "below"
-        property string lastExportPath: ""
-        property string lastImportPath: ""
+    // === Persistent settings via FileIO ===
+    // MuseScore 4 plugins don't support Qt.labs.settings,
+    // so we persist to a JSON file in the plugin directory.
+    FileIO {
+        id: settingsFile
+        source: Qt.resolvedUrl("settings.json")
     }
 
-    property string jsonUrl: persistedSettings.voicingUrl
+    FileIO {
+        id: exportFile
+    }
+
+    FileIO {
+        id: importFile
+    }
+
+    // Default settings
+    property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
+    property string diagramPlacement: "above"  // "above" or "below"
+
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
@@ -43,9 +51,35 @@ MuseScore {
     property string searchText: ""
 
     onRun: {
+        loadSettings()
         if (!dataLoaded) {
             fetchVoicings()
         }
+    }
+
+    // === Settings persistence ===
+
+    function loadSettings() {
+        try {
+            var raw = settingsFile.read()
+            if (raw && raw.length > 0) {
+                var s = JSON.parse(raw)
+                if (s.voicingUrl) jsonUrl = s.voicingUrl
+                if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
+                console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement)
+            }
+        } catch (e) {
+            console.log("No saved settings found, using defaults")
+        }
+    }
+
+    function saveSettings() {
+        var s = {
+            voicingUrl: jsonUrl,
+            diagramPlacement: diagramPlacement
+        }
+        settingsFile.write(JSON.stringify(s, null, 2))
+        console.log("Settings saved")
     }
 
     // === Data fetching ===
@@ -64,18 +98,14 @@ MuseScore {
                         applyFilters()
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
                         statusMsg.color = "#060"
-                        console.log("Loaded " + voicingsData.length + " voicings from " + jsonUrl)
                     } catch (e) {
-                        console.error("Failed to parse voicings JSON: " + e)
                         statusMsg.text = "Failed to parse voicings: " + e
                         statusMsg.color = "#c00"
                     }
                 } else if (xhr.status === 0) {
-                    // Likely a local file:// URL or network error
-                    statusMsg.text = "Could not reach URL. Check your connection or URL."
+                    statusMsg.text = "Could not reach URL. Check connection or URL."
                     statusMsg.color = "#c00"
                 } else {
-                    console.error("Failed to fetch voicings: HTTP " + xhr.status)
                     statusMsg.text = "Failed to fetch: HTTP " + xhr.status
                     statusMsg.color = "#c00"
                 }
@@ -174,10 +204,12 @@ MuseScore {
         fd.fretOffset = voicing.fret_number + offset - 1
 
         // Set placement based on user preference
-        if (persistedSettings.diagramPlacement === "below") {
-            fd.placement = Placement.BELOW
-        } else {
-            fd.placement = Placement.ABOVE
+        if (typeof Placement !== "undefined") {
+            if (diagramPlacement === "below") {
+                fd.placement = Placement.BELOW
+            } else {
+                fd.placement = Placement.ABOVE
+            }
         }
 
         var cursor = curScore.newCursor()
@@ -194,78 +226,85 @@ MuseScore {
         curScore.endCmd()
 
         statusMsg.text = "Inserted " + voicing.name + " → " + targetRoot
-            + " (" + persistedSettings.diagramPlacement + " staff)"
+            + " (" + diagramPlacement + " staff)"
         statusMsg.color = "#060"
     }
 
     // === Export/Import ===
 
-    function exportVoicings(fileUrl) {
-        var path = fileUrl.toString().replace("file://", "")
+    function doExport() {
+        var path = exportPathField.text.trim()
+        if (!path) {
+            statusMsg.text = "Enter an export file path"
+            statusMsg.color = "#c00"
+            return
+        }
         var data = JSON.stringify({ voicings: voicingsData }, null, 2)
-        var xhr = new XMLHttpRequest()
-        xhr.open("PUT", fileUrl)
-        xhr.send(data)
-        persistedSettings.lastExportPath = fileUrl.toString()
-        statusMsg.text = "Exported " + voicingsData.length + " voicings"
+        exportFile.source = path
+        exportFile.write(data)
+        statusMsg.text = "Exported " + voicingsData.length + " voicings to " + path
         statusMsg.color = "#060"
     }
 
-    function importVoicings(fileUrl) {
-        var xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                try {
-                    var data = JSON.parse(xhr.responseText)
-                    var imported = data.voicings || []
+    function doImport() {
+        var path = importPathField.text.trim()
+        if (!path) {
+            statusMsg.text = "Enter an import file path"
+            statusMsg.color = "#c00"
+            return
+        }
+        importFile.source = path
+        try {
+            var raw = importFile.read()
+            if (!raw || raw.length === 0) {
+                statusMsg.text = "Import failed: file is empty or not found"
+                statusMsg.color = "#c00"
+                return
+            }
+            var data = JSON.parse(raw)
+            var imported = data.voicings || []
 
-                    if (!Array.isArray(imported) || imported.length === 0) {
-                        statusMsg.text = "Import failed: no voicings found in file"
-                        statusMsg.color = "#c00"
-                        return
-                    }
+            if (!Array.isArray(imported) || imported.length === 0) {
+                statusMsg.text = "Import failed: no voicings found in file"
+                statusMsg.color = "#c00"
+                return
+            }
 
-                    // Validate required fields
-                    var errors = validateImport(imported)
-                    if (errors.length > 0) {
-                        statusMsg.text = "Import failed: " + errors[0]
-                        statusMsg.color = "#c00"
-                        console.error("Import validation errors: " + errors.join("; "))
-                        return
-                    }
+            // Validate required fields
+            var errors = validateImport(imported)
+            if (errors.length > 0) {
+                statusMsg.text = "Import failed: " + errors[0]
+                statusMsg.color = "#c00"
+                return
+            }
 
-                    // Merge: add imported voicings, skip duplicates by ID
-                    var existingIds = {}
-                    for (var i = 0; i < voicingsData.length; i++) {
-                        existingIds[voicingsData[i].id] = true
-                    }
+            // Merge: add imported voicings, skip duplicates by ID
+            var existingIds = {}
+            for (var i = 0; i < voicingsData.length; i++) {
+                existingIds[voicingsData[i].id] = true
+            }
 
-                    var added = 0
-                    var skipped = 0
-                    var merged = voicingsData.slice()
-                    for (var j = 0; j < imported.length; j++) {
-                        if (existingIds[imported[j].id]) {
-                            skipped++
-                        } else {
-                            merged.push(imported[j])
-                            added++
-                        }
-                    }
-
-                    voicingsData = merged
-                    applyFilters()
-                    persistedSettings.lastImportPath = fileUrl.toString()
-                    statusMsg.text = "Imported " + added + " voicings"
-                        + (skipped > 0 ? " (" + skipped + " duplicates skipped)" : "")
-                    statusMsg.color = "#060"
-                } catch (e) {
-                    statusMsg.text = "Import failed: invalid JSON — " + e
-                    statusMsg.color = "#c00"
+            var added = 0
+            var skipped = 0
+            var merged = voicingsData.slice()
+            for (var j = 0; j < imported.length; j++) {
+                if (existingIds[imported[j].id]) {
+                    skipped++
+                } else {
+                    merged.push(imported[j])
+                    added++
                 }
             }
+
+            voicingsData = merged
+            applyFilters()
+            statusMsg.text = "Imported " + added + " voicings"
+                + (skipped > 0 ? " (" + skipped + " duplicates skipped)" : "")
+            statusMsg.color = "#060"
+        } catch (e) {
+            statusMsg.text = "Import failed: " + e
+            statusMsg.color = "#c00"
         }
-        xhr.open("GET", fileUrl)
-        xhr.send()
     }
 
     function validateImport(voicings) {
@@ -282,28 +321,10 @@ MuseScore {
                 }
             }
             if (v.root && v.root !== "C") {
-                errors.push("Voicing " + v.id + " has root '" + v.root + "' — all voicings must have root C")
+                errors.push("Voicing " + v.id + " root is '" + v.root + "' — must be C")
             }
         }
         return errors
-    }
-
-    // === File dialogs ===
-
-    FileDialog {
-        id: exportDialog
-        title: "Export Voicings"
-        selectExisting: false
-        nameFilters: ["JSON files (*.json)"]
-        onAccepted: exportVoicings(fileUrl)
-    }
-
-    FileDialog {
-        id: importDialog
-        title: "Import Voicings"
-        selectExisting: true
-        nameFilters: ["JSON files (*.json)"]
-        onAccepted: importVoicings(fileUrl)
     }
 
     // === UI ===
@@ -360,7 +381,7 @@ MuseScore {
                     TextField {
                         id: urlField
                         Layout.fillWidth: true
-                        text: persistedSettings.voicingUrl
+                        text: jsonUrl
                         font.pixelSize: 11
                         placeholderText: "https://..."
                         selectByMouse: true
@@ -373,33 +394,29 @@ MuseScore {
                             text: "Apply URL"
                             font.pixelSize: 11
                             onClicked: {
-                                persistedSettings.voicingUrl = urlField.text
                                 jsonUrl = urlField.text
                                 dataLoaded = false
+                                saveSettings()
                                 fetchVoicings()
                             }
                         }
 
                         Button {
-                            text: "Reset to Default"
+                            text: "Reset Default"
                             font.pixelSize: 11
                             onClicked: {
                                 var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
                                 urlField.text = defaultUrl
-                                persistedSettings.voicingUrl = defaultUrl
                                 jsonUrl = defaultUrl
                                 dataLoaded = false
+                                saveSettings()
                                 fetchVoicings()
                             }
                         }
                     }
 
                     // --- Diagram placement ---
-                    Rectangle {
-                        Layout.fillWidth: true
-                        height: 1
-                        color: "#ddd"
-                    }
+                    Rectangle { Layout.fillWidth: true; height: 1; color: "#ddd" }
 
                     Label {
                         text: "Diagram Placement"
@@ -413,60 +430,79 @@ MuseScore {
                         RadioButton {
                             id: placementAbove
                             text: "Above staff"
-                            checked: persistedSettings.diagramPlacement === "above"
+                            checked: diagramPlacement === "above"
                             onCheckedChanged: {
-                                if (checked) persistedSettings.diagramPlacement = "above"
+                                if (checked) {
+                                    diagramPlacement = "above"
+                                    saveSettings()
+                                }
                             }
                         }
 
                         RadioButton {
                             text: "Below staff"
-                            checked: persistedSettings.diagramPlacement === "below"
+                            checked: diagramPlacement === "below"
                             onCheckedChanged: {
-                                if (checked) persistedSettings.diagramPlacement = "below"
+                                if (checked) {
+                                    diagramPlacement = "below"
+                                    saveSettings()
+                                }
                             }
                         }
                     }
 
                     Label {
-                        text: "Tip: MuseScore can also show all chord diagrams at the top of the first page via Format > Style > Fretboard Diagrams."
+                        text: "Tip: Show all diagrams at top of page via Format > Style > Fretboard Diagrams."
                         font.pixelSize: 10
                         color: "#888"
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                     }
 
-                    // --- Export / Import ---
-                    Rectangle {
-                        Layout.fillWidth: true
-                        height: 1
-                        color: "#ddd"
-                    }
+                    // --- Export ---
+                    Rectangle { Layout.fillWidth: true; height: 1; color: "#ddd" }
 
                     Label {
-                        text: "Library Management"
+                        text: "Export / Import"
                         font.pixelSize: 12
                         font.bold: true
                     }
 
                     RowLayout {
                         spacing: 4
-
-                        Button {
-                            text: "Export Voicings"
+                        Label { text: "Export to:"; font.pixelSize: 11 }
+                        TextField {
+                            id: exportPathField
+                            Layout.fillWidth: true
                             font.pixelSize: 11
-                            onClicked: exportDialog.open()
+                            placeholderText: "/path/to/my-voicings.json"
+                            text: homePath() + "/Documents/chord-library-export.json"
                         }
+                    }
+                    Button {
+                        text: "Export Voicings"
+                        font.pixelSize: 11
+                        onClicked: doExport()
+                    }
 
-                        Button {
-                            text: "Import Voicings"
+                    RowLayout {
+                        spacing: 4
+                        Label { text: "Import from:"; font.pixelSize: 11 }
+                        TextField {
+                            id: importPathField
+                            Layout.fillWidth: true
                             font.pixelSize: 11
-                            onClicked: importDialog.open()
+                            placeholderText: "/path/to/voicings.json"
                         }
+                    }
+                    Button {
+                        text: "Import & Merge"
+                        font.pixelSize: 11
+                        onClicked: doImport()
                     }
 
                     Label {
-                        text: "Export saves the current library to a JSON file. Import merges a JSON file into the current library (duplicates are skipped by ID)."
+                        text: "Import merges new voicings into the library. Duplicates (same ID) are skipped."
                         font.pixelSize: 10
                         color: "#888"
                         wrapMode: Text.WordWrap
@@ -476,7 +512,7 @@ MuseScore {
             }
         }
 
-        // === Main panel (hidden when settings are open) ===
+        // === Main panel (hidden when settings open) ===
         TextField {
             visible: !showSettings
             id: searchField
@@ -593,5 +629,17 @@ MuseScore {
             color: "#666"
             text: ""
         }
+    }
+
+    // Helper to get home directory path for default export location
+    function homePath() {
+        var url = Qt.resolvedUrl(".")
+        // Extract up to /Users/username or /home/username
+        var str = url.toString().replace("file://", "")
+        var parts = str.split("/")
+        if (parts.length >= 3) {
+            return "/" + parts[1] + "/" + parts[2]
+        }
+        return "~"
     }
 }
