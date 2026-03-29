@@ -283,48 +283,57 @@ MuseScore {
     // === Export/Import ===
 
     function doExport() {
+        exportStatus.text = ""
         var path = exportPathField.text.trim()
         if (!path) {
-            statusMsg.text = "Enter an export file path"
-            statusMsg.color = "#c00"
+            exportStatus.text = "Enter a file path"
+            exportStatus.color = "#c00"
             return
         }
-        var data = JSON.stringify({ voicings: voicingsData }, null, 2)
-        exportFile.source = path
-        exportFile.write(data)
-        statusMsg.text = "Exported " + voicingsData.length + " voicings to " + path
-        statusMsg.color = "#060"
+        try {
+            var data = JSON.stringify({ voicings: voicingsData }, null, 2)
+            exportFile.source = path
+            exportFile.write(data)
+            exportStatus.text = "Exported " + voicingsData.length + " voicings"
+            exportStatus.color = "#060"
+        } catch (e) {
+            exportStatus.text = "Export failed: " + e
+            exportStatus.color = "#c00"
+        }
     }
 
     function doImport() {
+        importStatus.text = "Loading..."
+        importStatus.color = "#888"
+
         var path = importPathField.text.trim()
         if (!path) {
-            statusMsg.text = "Enter an import file path"
-            statusMsg.color = "#c00"
+            importStatus.text = "Enter a file path"
+            importStatus.color = "#c00"
             return
         }
         importFile.source = path
         try {
             var raw = importFile.read()
             if (!raw || raw.length === 0) {
-                statusMsg.text = "Import failed: file is empty or not found"
-                statusMsg.color = "#c00"
+                importStatus.text = "FAILED: file is empty or not found"
+                importStatus.color = "#c00"
                 return
             }
             var data = JSON.parse(raw)
             var imported = data.voicings || []
 
             if (!Array.isArray(imported) || imported.length === 0) {
-                statusMsg.text = "Import failed: no voicings found in file"
-                statusMsg.color = "#c00"
+                importStatus.text = "FAILED: no voicings array found in file"
+                importStatus.color = "#c00"
                 return
             }
 
             // Validate required fields
             var errors = validateImport(imported)
             if (errors.length > 0) {
-                statusMsg.text = "Import failed: " + errors[0]
-                statusMsg.color = "#c00"
+                importStatus.text = "FAILED: " + errors[0]
+                importStatus.color = "#c00"
                 return
             }
 
@@ -348,12 +357,19 @@ MuseScore {
 
             voicingsData = merged
             applyFilters()
-            statusMsg.text = "Imported " + added + " voicings"
-                + (skipped > 0 ? " (" + skipped + " duplicates skipped)" : "")
-            statusMsg.color = "#060"
+
+            if (added > 0) {
+                importStatus.text = "SUCCESS: " + added + " voicings added"
+                    + (skipped > 0 ? ", " + skipped + " duplicates skipped" : "")
+                    + " (" + voicingsData.length + " total)"
+                importStatus.color = "#060"
+            } else {
+                importStatus.text = "No new voicings — all " + skipped + " were duplicates"
+                importStatus.color = "#888"
+            }
         } catch (e) {
-            statusMsg.text = "Import failed: " + e
-            statusMsg.color = "#c00"
+            importStatus.text = "FAILED: " + e
+            importStatus.color = "#c00"
         }
     }
 
@@ -531,6 +547,15 @@ MuseScore {
                     onClicked: doExport()
                 }
 
+                Label {
+                    id: exportStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
 
@@ -570,6 +595,15 @@ MuseScore {
                 Button {
                     text: "Import & Merge"
                     onClicked: doImport()
+                }
+
+                Label {
+                    id: importStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
                 }
             }
         }
