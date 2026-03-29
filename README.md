@@ -17,15 +17,21 @@ This plugin replaces that workflow: a dialog UI driven by a JSON library that li
 - Library hosted on GitHub, fetched at runtime
 - Point the plugin at your own fork for a custom library
 
-## Current status: v0.3.0
+## Current status: v0.3.1
 
 - Plugin loads in MuseScore Studio 4.6.x
-- 31 voicings: shells (E/A string, 6/7 string), Drop 2 (E/A string), Drop 3 (E string), altered (dom7b9, dom7#5)
-- Inserts fretboard diagram grids at the correct position with correct fret offset
-- Chord symbol auto-transposition reads HARMONY annotations from the score
+- 31 voicings in the base library: shells, Drop 2, Drop 3, altered (dom7b9, dom7#5)
+- **Settings panel** with persistent configuration (survives MuseScore restarts)
+- **Configurable voicing source URL** — point to your own fork or custom library
+- **Diagram placement toggle** — above (default) or below staff
+- **Export/Import** — save/load voicing libraries as JSON files with validation and merge
+- **Dynamic filter dropdowns** — adapt automatically to imported data (new categories, qualities appear in filters)
+- **Responsive context labels** — full names when wide ("Chord Melody 6-str"), abbreviations when narrow ("CM6")
+- **CAGED voicing generator** — script generates all CAGED shapes mathematically with note verification
 - Note-computation validator catches fret/note mismatches automatically
 - Configurable tuning system (standard, Van Eps 7-string, low B 7-string, DADGAD, all-fourths)
 - Oolimo URL generator for visual cross-referencing of voicings
+- Mac and Windows installers for non-programmers
 
 **Known limitation:** MuseScore 4's plugin API does not expose `setDot()`, `setMarker()`, or `setBarre()` for fretboard diagrams. Inserted grids have correct dimensions and fret offset but no dot markers. Filed [musescore/MuseScore#32798](https://github.com/musescore/MuseScore/issues/32798). The `.mscx` XML snippet with full dot data is logged to the MuseScore console for manual use.
 
@@ -35,16 +41,16 @@ Download the installer for your platform from the [latest release](https://githu
 
 ### Mac
 
-1. Download **ChordLibrary-0.3.0-mac.zip**
+1. Download **ChordLibrary-0.3.1-mac.zip**
 2. Unzip it (double-click the zip)
 3. Double-click **Install Chord Library.command**
 4. Restart MuseScore Studio and enable **Chord Library** under Plugins
 
-Also available as **ChordLibrary-0.3.0.pkg** — a standard macOS installer package.
+Also available as **ChordLibrary-0.3.1.pkg** — a standard macOS installer package.
 
 ### Windows
 
-1. Download **ChordLibrary-0.3.0-win.zip**
+1. Download **ChordLibrary-0.3.1-win.zip**
 2. Extract it (right-click → Extract All)
 3. Double-click **Install Chord Library.bat**
 4. Restart MuseScore Studio and enable **Chord Library** under Plugins
@@ -91,6 +97,7 @@ python scripts/build_installer.py      # build Mac + Windows installers in dist/
 ├── scripts/
 │   ├── validate.py         # Schema + consistency + note-computation validator
 │   ├── oolimo_urls.py      # Oolimo verification URL generator
+│   ├── generate_caged.py   # CAGED voicing generator (E/A/D shapes)
 │   ├── build_installer.py  # Mac/Windows installer builder
 │   ├── generate_from_mscz.py
 │   └── generate_mscx_snippet.py
@@ -137,7 +144,7 @@ All voicings live in `data/voicings.json`. Organised by:
 | Axis | Values | Meaning |
 |------|--------|---------|
 | **Context** | CM6, CM7, CV6, CV7 | Chord Melody vs Comping/Vocal × 6 vs 7 string |
-| **Category** | shell, drop2, drop3, extended, altered, quartal | Voicing type |
+| **Category** | shell, drop2, drop3, extended, altered, quartal, caged | Voicing type |
 | **Quality** | maj7, dom7, min7, min7b5, maj6, min6, dim7, ... | Chord quality |
 
 All shapes stored with root C. Fully moveable.
@@ -156,6 +163,10 @@ python scripts/oolimo_urls.py
 
 # Generate Oolimo checklist as markdown
 python scripts/oolimo_urls.py --format markdown
+
+# Generate CAGED voicings (E/A/D shapes × all qualities)
+python scripts/generate_caged.py                          # output to Desktop
+python scripts/generate_caged.py -o data/voicings-caged.json  # custom output
 
 # Build Mac + Windows installers
 python scripts/build_installer.py
