@@ -465,7 +465,7 @@ MuseScore {
                     text: "VOICING SOURCE URL"
                     font.pixelSize: 11
                     font.bold: true
-                    color: "#333"
+                    
                     Layout.fillWidth: true
                 }
 
@@ -504,14 +504,14 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
 
                 // --- Diagram placement ---
                 Label {
                     text: "DIAGRAM PLACEMENT"
                     font.pixelSize: 11
                     font.bold: true
-                    color: "#333"
+                    
                     Layout.fillWidth: true
                 }
 
@@ -529,27 +529,27 @@ MuseScore {
                 Label {
                     text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
                     font.pixelSize: 10
-                    color: "#666"
+                    
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
 
                 // --- Export ---
                 Label {
                     text: "EXPORT VOICINGS"
                     font.pixelSize: 11
                     font.bold: true
-                    color: "#333"
+                    
                     Layout.fillWidth: true
                 }
 
                 Label {
                     text: "Save current library to a file:"
                     font.pixelSize: 11
-                    color: "#555"
+                    
                 }
 
                 RowLayout {
@@ -585,21 +585,21 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
 
                 // --- Import ---
                 Label {
                     text: "IMPORT VOICINGS"
                     font.pixelSize: 11
                     font.bold: true
-                    color: "#333"
+                    
                     Layout.fillWidth: true
                 }
 
                 Label {
                     text: "Merge voicings from a JSON file (duplicates skipped):"
                     font.pixelSize: 11
-                    color: "#555"
+                    
                 }
 
                 RowLayout {
@@ -635,14 +635,14 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
 
                 // --- About ---
                 Label {
                     text: "ABOUT"
                     font.pixelSize: 11
                     font.bold: true
-                    color: "#333"
+                    
                     Layout.fillWidth: true
                 }
 
@@ -650,13 +650,13 @@ MuseScore {
                     text: "Chord Library v0.3.1"
                     font.pixelSize: 12
                     font.bold: true
-                    color: "#333"
+                    
                 }
 
                 Label {
                     text: "Author: Dheeraj Chand"
                     font.pixelSize: 11
-                    color: "#555"
+                    
                 }
 
                 Label {
@@ -684,7 +684,7 @@ MuseScore {
                 Label {
                     text: "Licensed under CC BY 4.0"
                     font.pixelSize: 10
-                    color: "#888"
+                    
                 }
             }
         }
@@ -747,7 +747,7 @@ MuseScore {
             visible: !showSettings
             text: filteredData.length + " of " + voicingsData.length + " voicings"
             font.pixelSize: 11
-            color: "#666"
+            
         }
 
         ListView {
@@ -763,8 +763,8 @@ MuseScore {
                 width: voicingList.width
                 height: 68
                 radius: 4
-                color: ma.containsMouse ? "#d0d0d0" : "#f0f0f0"
-                border.color: "#bbb"
+                color: ma.containsMouse ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
+                border.color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
                 border.width: 1
 
                 property var v: filteredData[index] || {}
@@ -785,20 +785,20 @@ MuseScore {
                         text: v.name || ""
                         font.pixelSize: 13
                         font.bold: true
-                        color: "#111"
+                        
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
                     Label {
                         text: (v.intervals || []).join(" ") + "  |  " + (v.context || "") + "  |  Fret " + (v.fret_number || "?")
                         font.pixelSize: 11
-                        color: "#444"
+                        
                         Layout.fillWidth: true
                     }
                     Label {
                         text: (v.tags || []).join(", ")
                         font.pixelSize: 10
-                        color: "#777"
+                        
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
@@ -811,7 +811,7 @@ MuseScore {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
             font.pixelSize: 10
-            color: "#666"
+            
             text: ""
         }
     }
