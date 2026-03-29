@@ -50,6 +50,32 @@ MuseScore {
     property string filterQuality: ""
     property string searchText: ""
 
+    // Dynamic filter lists (rebuilt when data changes)
+    property var contextList: ["All Contexts"]
+    property var categoryList: ["All Types"]
+    property var qualityList: ["All Qualities"]
+
+    // Context display names (responsive: full when wide, abbreviation when narrow)
+    property var contextLabels: {
+        "CM6": "Chord Melody 6-str",
+        "CM7": "Chord Melody 7-str",
+        "CV6": "Comping/Vocal 6-str",
+        "CV7": "Comping/Vocal 7-str"
+    }
+
+    function rebuildFilterLists() {
+        var contexts = {}, categories = {}, qualities = {}
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            if (v.context) contexts[v.context] = true
+            if (v.category) categories[v.category] = true
+            if (v.chord_quality) qualities[v.chord_quality] = true
+        }
+        contextList = ["All Contexts"].concat(Object.keys(contexts).sort())
+        categoryList = ["All Types"].concat(Object.keys(categories).sort())
+        qualityList = ["All Qualities"].concat(Object.keys(qualities).sort())
+    }
+
     onRun: {
         loadSettings()
         if (!dataLoaded) {
@@ -95,6 +121,7 @@ MuseScore {
                         var data = JSON.parse(xhr.responseText)
                         voicingsData = data.voicings || []
                         dataLoaded = true
+                        rebuildFilterLists()
                         applyFilters()
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
                         statusMsg.color = "#060"
@@ -356,6 +383,7 @@ MuseScore {
             }
 
             voicingsData = merged
+            rebuildFilterLists()
             applyFilters()
 
             if (added > 0) {
@@ -626,15 +654,23 @@ MuseScore {
             spacing: 4
 
             ComboBox {
-                model: ["All Contexts", "CM6", "CM7", "CV6", "CV7"]
+                id: contextCombo
+                model: contextList
                 Layout.fillWidth: true
+                // Show full labels when window is wide enough
+                displayText: {
+                    if (currentText === "All Contexts") return currentText
+                    var wide = chordLibrary.width > 500
+                    return wide ? (contextLabels[currentText] || currentText) : currentText
+                }
                 onCurrentTextChanged: {
                     filterContext = currentText === "All Contexts" ? "" : currentText
                     applyFilters()
                 }
             }
             ComboBox {
-                model: ["All Types", "shell", "drop2", "drop3", "extended", "altered", "quartal"]
+                id: categoryCombo
+                model: categoryList
                 Layout.fillWidth: true
                 onCurrentTextChanged: {
                     filterCategory = currentText === "All Types" ? "" : currentText
@@ -645,8 +681,8 @@ MuseScore {
 
         ComboBox {
             visible: !showSettings
-            model: ["All Qualities", "maj7", "dom7", "min7", "min7b5", "maj6", "min6", "dim7",
-                    "dom7b9", "dom7sharp5", "dom7alt", "dom9", "sus4"]
+            id: qualityCombo
+            model: qualityList
             Layout.fillWidth: true
             onCurrentTextChanged: {
                 filterQuality = currentText === "All Qualities" ? "" : currentText

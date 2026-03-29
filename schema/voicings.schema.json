@@ -74,7 +74,7 @@
         },
         "category": {
           "type": "string",
-          "enum": ["shell", "drop2", "drop3", "extended", "altered", "quartal"],
+          "enum": ["shell", "drop2", "drop3", "extended", "altered", "quartal", "caged"],
           "description": "Voicing category"
         },
         "context": {
