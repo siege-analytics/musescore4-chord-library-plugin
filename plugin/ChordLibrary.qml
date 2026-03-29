@@ -353,161 +353,153 @@ MuseScore {
         }
 
         // === Settings panel ===
-        ColumnLayout {
+        Flickable {
             visible: showSettings
             Layout.fillWidth: true
-            spacing: 8
+            Layout.fillHeight: true
+            contentHeight: settingsColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
 
-            Rectangle {
-                Layout.fillWidth: true
-                height: settingsContent.implicitHeight + 16
-                radius: 4
-                color: "#f8f8f0"
-                border.color: "#ddd"
+            ColumnLayout {
+                id: settingsColumn
+                width: parent.width
+                spacing: 12
 
-                ColumnLayout {
-                    id: settingsContent
-                    anchors.fill: parent
-                    anchors.margins: 8
-                    spacing: 8
+                // --- Source URL ---
+                Label {
+                    text: "VOICING SOURCE URL"
+                    font.pixelSize: 11
+                    font.bold: true
+                    color: "#333"
+                    Layout.fillWidth: true
+                }
 
-                    // --- Source URL ---
-                    Label {
-                        text: "Voicing Source URL"
-                        font.pixelSize: 12
-                        font.bold: true
-                    }
+                TextField {
+                    id: urlField
+                    Layout.fillWidth: true
+                    text: jsonUrl
+                    font.pixelSize: 11
+                    selectByMouse: true
+                }
 
-                    TextField {
-                        id: urlField
-                        Layout.fillWidth: true
-                        text: jsonUrl
-                        font.pixelSize: 11
-                        placeholderText: "https://..."
-                        selectByMouse: true
-                    }
+                RowLayout {
+                    spacing: 6
 
-                    RowLayout {
-                        spacing: 4
-
-                        Button {
-                            text: "Apply URL"
-                            font.pixelSize: 11
-                            onClicked: {
-                                jsonUrl = urlField.text
-                                dataLoaded = false
-                                saveSettings()
-                                fetchVoicings()
-                            }
-                        }
-
-                        Button {
-                            text: "Reset Default"
-                            font.pixelSize: 11
-                            onClicked: {
-                                var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
-                                urlField.text = defaultUrl
-                                jsonUrl = defaultUrl
-                                dataLoaded = false
-                                saveSettings()
-                                fetchVoicings()
-                            }
-                        }
-                    }
-
-                    // --- Diagram placement ---
-                    Rectangle { Layout.fillWidth: true; height: 1; color: "#ddd" }
-
-                    Label {
-                        text: "Diagram Placement"
-                        font.pixelSize: 12
-                        font.bold: true
-                    }
-
-                    RowLayout {
-                        spacing: 8
-
-                        RadioButton {
-                            id: placementAbove
-                            text: "Above staff"
-                            checked: diagramPlacement === "above"
-                            onCheckedChanged: {
-                                if (checked) {
-                                    diagramPlacement = "above"
-                                    saveSettings()
-                                }
-                            }
-                        }
-
-                        RadioButton {
-                            text: "Below staff"
-                            checked: diagramPlacement === "below"
-                            onCheckedChanged: {
-                                if (checked) {
-                                    diagramPlacement = "below"
-                                    saveSettings()
-                                }
-                            }
-                        }
-                    }
-
-                    Label {
-                        text: "Tip: Show all diagrams at top of page via Format > Style > Fretboard Diagrams."
-                        font.pixelSize: 10
-                        color: "#888"
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                    }
-
-                    // --- Export ---
-                    Rectangle { Layout.fillWidth: true; height: 1; color: "#ddd" }
-
-                    Label {
-                        text: "Export / Import"
-                        font.pixelSize: 12
-                        font.bold: true
-                    }
-
-                    RowLayout {
-                        spacing: 4
-                        Label { text: "Export to:"; font.pixelSize: 11 }
-                        TextField {
-                            id: exportPathField
-                            Layout.fillWidth: true
-                            font.pixelSize: 11
-                            placeholderText: "/path/to/my-voicings.json"
-                            text: homePath() + "/Documents/chord-library-export.json"
-                        }
-                    }
                     Button {
-                        text: "Export Voicings"
-                        font.pixelSize: 11
-                        onClicked: doExport()
-                    }
-
-                    RowLayout {
-                        spacing: 4
-                        Label { text: "Import from:"; font.pixelSize: 11 }
-                        TextField {
-                            id: importPathField
-                            Layout.fillWidth: true
-                            font.pixelSize: 11
-                            placeholderText: "/path/to/voicings.json"
+                        text: "Apply URL"
+                        onClicked: {
+                            jsonUrl = urlField.text
+                            dataLoaded = false
+                            saveSettings()
+                            fetchVoicings()
                         }
                     }
-                    Button {
-                        text: "Import & Merge"
-                        font.pixelSize: 11
-                        onClicked: doImport()
-                    }
 
-                    Label {
-                        text: "Import merges new voicings into the library. Duplicates (same ID) are skipped."
-                        font.pixelSize: 10
-                        color: "#888"
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
+                    Button {
+                        text: "Reset Default"
+                        onClicked: {
+                            var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
+                            urlField.text = defaultUrl
+                            jsonUrl = defaultUrl
+                            dataLoaded = false
+                            saveSettings()
+                            fetchVoicings()
+                        }
                     }
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+
+                // --- Diagram placement ---
+                Label {
+                    text: "DIAGRAM PLACEMENT"
+                    font.pixelSize: 11
+                    font.bold: true
+                    color: "#333"
+                    Layout.fillWidth: true
+                }
+
+                ComboBox {
+                    id: placementCombo
+                    model: ["Above staff (default)", "Below staff"]
+                    Layout.fillWidth: true
+                    currentIndex: diagramPlacement === "below" ? 1 : 0
+                    onCurrentIndexChanged: {
+                        diagramPlacement = currentIndex === 1 ? "below" : "above"
+                        saveSettings()
+                    }
+                }
+
+                Label {
+                    text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
+                    font.pixelSize: 10
+                    color: "#666"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+
+                // --- Export ---
+                Label {
+                    text: "EXPORT VOICINGS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    color: "#333"
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Save current library to a file:"
+                    font.pixelSize: 11
+                    color: "#555"
+                }
+
+                TextField {
+                    id: exportPathField
+                    Layout.fillWidth: true
+                    font.pixelSize: 11
+                    text: homePath() + "/Documents/chord-library-export.json"
+                    selectByMouse: true
+                }
+
+                Button {
+                    text: "Export"
+                    onClicked: doExport()
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: "#ccc" }
+
+                // --- Import ---
+                Label {
+                    text: "IMPORT VOICINGS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    color: "#333"
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Merge voicings from a JSON file (duplicates skipped):"
+                    font.pixelSize: 11
+                    color: "#555"
+                }
+
+                TextField {
+                    id: importPathField
+                    Layout.fillWidth: true
+                    font.pixelSize: 11
+                    placeholderText: "/path/to/voicings.json"
+                    selectByMouse: true
+                }
+
+                Button {
+                    text: "Import & Merge"
+                    onClicked: doImport()
                 }
             }
         }
