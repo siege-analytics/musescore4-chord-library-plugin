@@ -353,6 +353,106 @@ def generate_all(qualities_filter=None):
             if v:
                 voicings.append(v)
 
+    # Quartal voicings (stacked 4ths from C Dorian scale)
+    # Two string sets as per Laukens: 5-4-3-2 and 4-3-2-1
+    quartal_voicings = generate_quartal()
+    voicings.extend(quartal_voicings)
+
+    return voicings
+
+
+def generate_quartal():
+    """Generate quartal voicings (stacked 4ths) from C Dorian scale.
+
+    C Dorian: C D Eb F G A Bb
+    Quartal = stacking 4ths from each scale degree.
+    Two string sets: 5-4-3-2 (A shape) and 4-3-2-1 (D shape).
+    """
+    # C Dorian scale degrees as semitones from C
+    dorian = [0, 2, 3, 5, 7, 9, 10]
+    dorian_names = ["C", "D", "Eb", "F", "G", "A", "Bb"]
+
+    voicings = []
+
+    # Generate quartal voicing for each scale degree
+    for degree_idx in range(len(dorian)):
+        root_pc = dorian[degree_idx]
+        root_name = dorian_names[degree_idx]
+
+        # Stack 3 fourths from this degree (4 notes total)
+        pcs = []
+        names = []
+        for stack in range(4):
+            idx = (degree_idx + stack * 3) % len(dorian)  # every 3rd scale degree = ~4th
+            # Actually, stacking diatonic 4ths means going up by scale degrees
+            # 4th above = 3 scale steps in the Dorian mode
+            note_idx = (degree_idx + stack) % len(dorian)
+            # But quartal = literal 4ths, not scale steps. Let me compute properly.
+            pass
+
+        # Simpler: stack literal perfect 4ths (5 semitones each) from root,
+        # adjusted to fit C Dorian. This gives the "So What" voicing family.
+
+        # Standard quartal: root, P4 above, P4 above that, P4 above that
+        intervals = [0, 5, 10, 15]  # semitones: root, P4, m7, m3(octave+)
+        interval_names = ["1", "4", "b7", "b3"]
+
+        # Only generate for C root (our standard)
+        if root_pc != 0:
+            continue
+
+        for string_set_name, strings in [("A", [5, 4, 3, 2]), ("D", [4, 3, 2, 1])]:
+            target_fret = 3 if string_set_name == "A" else 10
+
+            frets_used = []
+            notes = []
+            valid = True
+
+            for idx, string in enumerate(strings):
+                target_pc = (ROOT_PC + intervals[idx]) % 12
+                best_fret = None
+                for f in range(max(0, target_fret - 4), target_fret + 6):
+                    if (TUNING[string] + f) % 12 == target_pc:
+                        best_fret = f
+                        break
+                if best_fret is None:
+                    valid = False
+                    break
+                frets_used.append(best_fret)
+                notes.append(midi_to_note(TUNING[string] + best_fret))
+
+            if not valid:
+                continue
+
+            min_fret = min(frets_used)
+            max_fret = max(frets_used)
+            if max_fret - min_fret > 4:
+                continue
+
+            fret_number = min_fret
+            dots = [{"string": strings[i], "fret": frets_used[i] - fret_number + 1}
+                    for i in range(len(strings))]
+            mutes = sorted(set(range(1, 7)) - set(strings))
+
+            voicings.append({
+                "id": f"c-quartal-{string_set_name.lower()}-shape-6",
+                "name": f"C Quartal — {string_set_name} shape",
+                "chord_quality": "quartal",
+                "root": "C",
+                "category": "quartal",
+                "context": "CV6",
+                "strings": 6,
+                "fret_number": fret_number,
+                "visible_frets": 4,
+                "dots": dots,
+                "mutes": mutes,
+                "open": [],
+                "notes": notes,
+                "intervals": interval_names[:len(notes)],
+                "tags": [f"caged-{string_set_name.lower()}", "quartal",
+                         "stacked-4ths", "dorian", "needs_verification"],
+            })
+
     return voicings
 
 
