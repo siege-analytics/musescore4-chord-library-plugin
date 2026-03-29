@@ -30,7 +30,19 @@ QUALITIES = {
     "min7b5":     {"intervals": [0, 3, 6, 10], "names": ["1", "b3", "b5", "b7"]},
     "dim7":       {"intervals": [0, 3, 6, 9],  "names": ["1", "b3", "b5", "bb7"]},
     "dom7sharp5": {"intervals": [0, 4, 8, 10], "names": ["1", "3", "#5", "b7"]},
+    "dom7flat5":  {"intervals": [0, 4, 6, 10], "names": ["1", "3", "b5", "b7"]},
+    "dom7alt":    {"intervals": [0, 4, 8, 10], "names": ["1", "3", "#5", "b7"]},  # same as 7#5 for basic shape
     "dom7b9":     {"intervals": [0, 4, 7, 10, 1], "names": ["1", "3", "5", "b7", "b9"]},
+    "dom9":       {"intervals": [0, 4, 7, 10, 2], "names": ["1", "3", "5", "b7", "9"]},
+    "maj6":       {"intervals": [0, 4, 7, 9],  "names": ["1", "3", "5", "6"]},
+    "min6":       {"intervals": [0, 3, 7, 9],  "names": ["1", "b3", "5", "6"]},
+    "min-maj7":   {"intervals": [0, 3, 7, 11], "names": ["1", "b3", "5", "7"]},
+    "aug7":       {"intervals": [0, 4, 8, 11], "names": ["1", "3", "#5", "7"]},
+    "sus4":       {"intervals": [0, 5, 7, 10], "names": ["1", "4", "5", "b7"]},
+    "sus2":       {"intervals": [0, 2, 7, 10], "names": ["1", "2", "5", "b7"]},
+    "maj9":       {"intervals": [0, 4, 7, 11, 2], "names": ["1", "3", "5", "7", "9"]},
+    "min9":       {"intervals": [0, 3, 7, 10, 2], "names": ["1", "b3", "5", "b7", "9"]},
+    "dom13":      {"intervals": [0, 4, 10, 9], "names": ["1", "3", "b7", "13"]},  # 4-note rootless-ish
 }
 
 # CAGED string groups for Drop 2 voicings
@@ -315,8 +327,11 @@ def generate_all(qualities_filter=None):
                 if v:
                     voicings.append(v)
 
-        # Shell voicings (3-note: root, 3rd, 7th — skip 5-note and dim7)
-        if quality_name not in ("dom7b9", "dom7sharp5", "dim7"):
+        # Shell voicings (3-note: root, 3rd/4th/2nd, 7th/6th)
+        # Skip qualities where shells don't make sense
+        skip_shells = ("dom7b9", "dom7sharp5", "dom7flat5", "dom7alt",
+                       "dim7", "dom9", "maj9", "min9", "dom13")
+        if quality_name not in skip_shells and not is_5note:
             shell_def = {
                 "intervals": [quality_def["intervals"][i] for i in [0, 1, 3]],
                 "names": [quality_def["names"][i] for i in [0, 1, 3]],

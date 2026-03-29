@@ -28,6 +28,11 @@ MuseScore {
     }
 
     FileIO {
+        id: localCacheFile
+        source: Qt.resolvedUrl("voicings-cache.json")
+    }
+
+    FileIO {
         id: exportFile
     }
 
@@ -79,8 +84,40 @@ MuseScore {
     onRun: {
         loadSettings()
         if (!dataLoaded) {
-            fetchVoicings()
+            // Try local cache first (contains imports), fall back to URL
+            if (!loadFromCache()) {
+                fetchVoicings()
+            }
         }
+    }
+
+    function loadFromCache() {
+        try {
+            var raw = localCacheFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                var cached = data.voicings || []
+                if (cached.length > 0) {
+                    voicingsData = cached
+                    dataLoaded = true
+                    rebuildFilterLists()
+                    applyFilters()
+                    statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
+                    statusMsg.color = "#060"
+                    console.log("Loaded " + cached.length + " voicings from local cache")
+                    return true
+                }
+            }
+        } catch (e) {
+            console.log("No local cache, fetching from URL")
+        }
+        return false
+    }
+
+    function saveToCache() {
+        var data = JSON.stringify({ voicings: voicingsData }, null, 2)
+        localCacheFile.write(data)
+        console.log("Saved " + voicingsData.length + " voicings to local cache")
     }
 
     // === Settings persistence ===
@@ -123,6 +160,7 @@ MuseScore {
                         dataLoaded = true
                         rebuildFilterLists()
                         applyFilters()
+                        saveToCache()
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
                         statusMsg.color = "#060"
                     } catch (e) {
@@ -385,6 +423,7 @@ MuseScore {
             voicingsData = merged
             rebuildFilterLists()
             applyFilters()
+            saveToCache()
 
             if (added > 0) {
                 importStatus.text = "SUCCESS: " + added + " voicings added"
@@ -498,6 +537,14 @@ MuseScore {
                             jsonUrl = defaultUrl
                             dataLoaded = false
                             saveSettings()
+                            fetchVoicings()
+                        }
+                    }
+
+                    Button {
+                        text: "Refresh"
+                        onClicked: {
+                            dataLoaded = false
                             fetchVoicings()
                         }
                     }
