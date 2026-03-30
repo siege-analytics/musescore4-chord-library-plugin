@@ -420,13 +420,29 @@ MuseScore {
 
     // === Filtering ===
 
+    // String count for each tuning (used for filtering)
+    property var tuningStringCount: {
+        "standard": 7,       // standard supports both 6 and 7
+        "7string-low-b": 7,
+        "dadgad": 6,
+        "all-fourths": 6
+    }
+
     function applyFilters() {
+        // Determine max string count for the selected tuning
+        var maxStrings = tuningStringCount[selectedTuning] || 7
+
         var result = []
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
             if (filterContext && v.context !== filterContext) continue
             if (filterCategory && v.category !== filterCategory) continue
             if (filterQuality && v.chord_quality !== filterQuality) continue
+
+            // Filter by string count: hide voicings that need more strings than the tuning has
+            var voicingStrings = v.strings || 6
+            if (voicingStrings > maxStrings) continue
+
             if (searchText) {
                 var q = searchText.toLowerCase()
                 var match = v.name.toLowerCase().indexOf(q) >= 0
@@ -1276,6 +1292,7 @@ MuseScore {
                     if (currentText !== selectedTuning) {
                         selectedTuning = currentText
                         saveSettings()
+                        applyFilters()
                     }
                 }
             }
