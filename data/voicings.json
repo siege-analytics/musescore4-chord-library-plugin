@@ -7449,6 +7449,823 @@
         "7-string",
         "van-eps"
       ]
+    },
+    {
+      "id": "cdim7-shell-e-shape-7",
+      "name": "Cdim7 — E shape — Shell",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "shell",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        7,
+        5,
+        4,
+        1
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Bbb"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "bb7"
+      ],
+      "tags": [
+        "shell",
+        "e-string-root"
+      ]
+    },
+    {
+      "id": "cm7-shell-e-shape-6",
+      "name": "Cm7 — E shape — Shell",
+      "chord_quality": "min7",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        5,
+        2,
+        1
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Bb",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "b7",
+        "b3"
+      ],
+      "tags": [
+        "shell",
+        "guide-tone",
+        "e-string-root"
+      ]
+    },
+    {
+      "id": "caug7-shell-e-shape-6",
+      "name": "Caug7 — E shape — Shell",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        2,
+        5
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "shell",
+        "e-string-root"
+      ]
+    },
+    {
+      "id": "caug7-shell-a-shape-6",
+      "name": "Caug7 — A shape — Shell",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        1,
+        4,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "shell",
+        "a-string-root"
+      ]
+    },
+    {
+      "id": "cmaj7-shell-d-shape-6",
+      "name": "Cmaj7 — D shape — Shell",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 9,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 4
+        }
+      ],
+      "mutes": [
+        1,
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "B"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "7"
+      ],
+      "tags": [
+        "caged-d",
+        "shell",
+        "d-string-root"
+      ]
+    },
+    {
+      "id": "cm7b5-shell-a-shape-6",
+      "name": "Cm7b5 — A shape — Shell",
+      "chord_quality": "min7b5",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        4,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Bb",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "b7",
+        "b3"
+      ],
+      "tags": [
+        "caged-a",
+        "shell",
+        "a-string-root"
+      ]
+    },
+    {
+      "id": "cm7b5-shell-d-shape-6",
+      "name": "Cm7b5 — D shape — Shell",
+      "chord_quality": "min7b5",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 4
+        }
+      ],
+      "mutes": [
+        1,
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7"
+      ],
+      "tags": [
+        "caged-d",
+        "shell",
+        "d-string-root"
+      ]
+    },
+    {
+      "id": "c7alt-drop2-e-shape-6",
+      "name": "C7alt — E shape — Drop 2",
+      "chord_quality": "dom7alt",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        5
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Bb",
+        "E",
+        "Ab"
+      ],
+      "intervals": [
+        "1",
+        "b7",
+        "3",
+        "#5"
+      ],
+      "tags": [
+        "caged-e",
+        "drop2",
+        "e-string-root"
+      ]
+    },
+    {
+      "id": "c7alt-drop2-a-shape-6",
+      "name": "C7alt — A shape — Drop 2",
+      "chord_quality": "dom7alt",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Ab",
+        "Bb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "#5",
+        "b7",
+        "3"
+      ],
+      "tags": [
+        "caged-a",
+        "drop2",
+        "a-string-root"
+      ]
+    },
+    {
+      "id": "c7alt-drop2-d-shape-6",
+      "name": "C7alt — D shape — Drop 2",
+      "chord_quality": "dom7alt",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 10,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 4
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Ab",
+        "Bb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "#5",
+        "b7",
+        "3"
+      ],
+      "tags": [
+        "caged-d",
+        "drop2",
+        "d-string-root"
+      ]
+    },
+    {
+      "id": "c7s11-ext-a-shape-6",
+      "name": "C7#11 — A shape — Extended",
+      "chord_quality": "dom7sharp11",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Gb",
+        "Bb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "#11",
+        "b7",
+        "3"
+      ],
+      "tags": [
+        "extended",
+        "a-string-root"
+      ]
+    },
+    {
+      "id": "c7b13-ext-e-shape-6",
+      "name": "C7b13 — E shape — Extended",
+      "chord_quality": "dom7b13",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        5
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Bb",
+        "E",
+        "Ab"
+      ],
+      "intervals": [
+        "1",
+        "b7",
+        "3",
+        "b13"
+      ],
+      "tags": [
+        "extended",
+        "e-string-root"
+      ]
+    },
+    {
+      "id": "c7-cm6-drop2-3top-6",
+      "name": "C7 — Drop 2 — 3rd on top",
+      "chord_quality": "dom7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 10,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "Bb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "b7",
+        "3"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-3rd"
+      ]
+    },
+    {
+      "id": "cmaj7-cm6-drop2-3top-6",
+      "name": "Cmaj7 — Drop 2 — 3rd on top",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 10,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-3rd"
+      ]
+    },
+    {
+      "id": "cm7-cm6-drop2-b3top-6",
+      "name": "Cm7 — Drop 2 — b3 on top",
+      "chord_quality": "min7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 10,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "Bb",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "b7",
+        "b3"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-b3"
+      ]
+    },
+    {
+      "id": "cm6-cv7-shell-7str-7",
+      "name": "Cm6 — 7-str root — Shell",
+      "chord_quality": "min6",
+      "root": "C",
+      "category": "shell",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "6"
+      ],
+      "tags": [
+        "shell",
+        "7-string",
+        "van-eps"
+      ]
+    },
+    {
+      "id": "c7alt-cv7-shell-7str-7",
+      "name": "C7alt — 7-str root — Shell",
+      "chord_quality": "dom7alt",
+      "root": "C",
+      "category": "shell",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 4
+        }
+      ],
+      "mutes": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Bb",
+        "Gb"
+      ],
+      "intervals": [
+        "1",
+        "b7",
+        "b5"
+      ],
+      "tags": [
+        "shell",
+        "7-string",
+        "van-eps"
+      ]
     }
   ]
 }
