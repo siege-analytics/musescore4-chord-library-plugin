@@ -7624,6 +7624,414 @@
         "van-eps",
         "needs_verification"
       ]
+    },
+    {
+      "id": "cdim7-cm6-drop2-bb7top-6",
+      "name": "Cdim7 — Drop 2 — bb7 on top",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 4,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "Gb",
+        "C",
+        "Eb",
+        "A"
+      ],
+      "intervals": [
+        "b5",
+        "1",
+        "b3",
+        "bb7"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-bb7",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "cdim7-cm6-drop2-1top-6",
+      "name": "Cdim7 — Drop 2 — root on top",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "A",
+        "Eb",
+        "Gb",
+        "C"
+      ],
+      "intervals": [
+        "bb7",
+        "b3",
+        "b5",
+        "1"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-root",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "c6-cm6-drop2-6top-6",
+      "name": "C6 — Drop 2 — 6th on top",
+      "chord_quality": "maj6",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-6th",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "c6-cm6-drop2-1top-6",
+      "name": "C6 — Drop 2 — root on top",
+      "chord_quality": "maj6",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "A",
+        "E",
+        "G",
+        "C"
+      ],
+      "intervals": [
+        "6",
+        "3",
+        "5",
+        "1"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-root",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "cm6-cm6-drop2-6top-6",
+      "name": "Cm6 — Drop 2 — 6th on top",
+      "chord_quality": "min6",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "Eb",
+        "A"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "b3",
+        "6"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-6th",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "cm6-cm6-drop2-1top-6",
+      "name": "Cm6 — Drop 2 — root on top",
+      "chord_quality": "min6",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "A",
+        "Eb",
+        "G",
+        "C"
+      ],
+      "intervals": [
+        "6",
+        "b3",
+        "5",
+        "1"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-root",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "caug7-cm6-drop2-b7top-6",
+      "name": "Caug7 — Drop 2 — b7 on top",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "Ab",
+        "C",
+        "E",
+        "Bb"
+      ],
+      "intervals": [
+        "#5",
+        "1",
+        "3",
+        "b7"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-b7",
+        "needs_verification"
+      ]
+    },
+    {
+      "id": "caug7-cm6-drop2-1top-6",
+      "name": "Caug7 — Drop 2 — root on top",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "Bb",
+        "E",
+        "Ab",
+        "C"
+      ],
+      "intervals": [
+        "b7",
+        "3",
+        "#5",
+        "1"
+      ],
+      "tags": [
+        "chord-melody",
+        "melody-root",
+        "needs_verification"
+      ]
     }
   ]
 }
