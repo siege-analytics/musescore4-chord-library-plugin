@@ -1,6 +1,18 @@
 {
-  "name": "Banjo (Open G)",
-  "description": "Standard 5-string banjo tuning. Open G: gDGBD. 5th string is a short drone.",
-  "strings": {"1": 62, "2": 59, "3": 55, "4": 50, "5": 67},
-  "notes": {"1": "D4", "2": "B3", "3": "G3", "4": "D3", "5": "G4"}
+  "name": "Banjo Open G",
+  "description": "Standard 5-string banjo (open G). Short 5th string is high G. gDGBD.",
+  "strings": {
+    "1": 62,
+    "2": 59,
+    "3": 55,
+    "4": 50,
+    "5": 67
+  },
+  "notes": {
+    "1": "D4",
+    "2": "B3",
+    "3": "G3",
+    "4": "D3",
+    "5": "G4"
+  }
 }

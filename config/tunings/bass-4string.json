@@ -1,6 +1,16 @@
 {
-  "name": "Bass (4-String)",
-  "description": "Standard 4-string bass guitar tuning. E1-A1-D2-G2.",
-  "strings": {"1": 43, "2": 38, "3": 33, "4": 28},
-  "notes": {"1": "G2", "2": "D2", "3": "A1", "4": "E1"}
+  "name": "Bass 4-String",
+  "description": "Standard 4-string bass guitar. E1-A1-D2-G2.",
+  "strings": {
+    "1": 43,
+    "2": 38,
+    "3": 33,
+    "4": 28
+  },
+  "notes": {
+    "1": "G2",
+    "2": "D2",
+    "3": "A1",
+    "4": "E1"
+  }
 }
