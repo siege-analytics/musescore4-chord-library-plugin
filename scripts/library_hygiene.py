@@ -68,17 +68,39 @@ def shape_fingerprint(voicing: dict) -> tuple:
 def identify_chord_quality(pcs: frozenset[int]) -> list[tuple[str, str]]:
     """Identify possible chord qualities from a pitch class set."""
     qualities = {
+        # Triads
         "maj": frozenset({0, 4, 7}),
         "min": frozenset({0, 3, 7}),
+        "dim": frozenset({0, 3, 6}),
+        "aug": frozenset({0, 4, 8}),
+        "sus4": frozenset({0, 5, 7}),
+        "sus2": frozenset({0, 2, 7}),
+        # 7th chords
         "dom7": frozenset({0, 4, 7, 10}),
         "maj7": frozenset({0, 4, 7, 11}),
         "min7": frozenset({0, 3, 7, 10}),
         "min7b5": frozenset({0, 3, 6, 10}),
         "dim7": frozenset({0, 3, 6, 9}),
+        "min-maj7": frozenset({0, 3, 7, 11}),
+        "aug7": frozenset({0, 4, 8, 10}),
+        # 6th chords
         "maj6": frozenset({0, 4, 7, 9}),
         "min6": frozenset({0, 3, 7, 9}),
-        "sus4": frozenset({0, 5, 7}),
-        "sus2": frozenset({0, 2, 7}),
+        # Altered dominants (match with subset — these omit the 5th)
+        "dom7sharp5": frozenset({0, 4, 8, 10}),
+        "dom7flat5": frozenset({0, 4, 6, 10}),
+        "dom7b9": frozenset({0, 1, 4, 10}),
+        "dom7sharp11": frozenset({0, 4, 6, 10}),
+        "dom7b13": frozenset({0, 4, 8, 10}),
+        # Extensions (match with core tones — 5th often omitted)
+        "dom9": frozenset({0, 2, 4, 10}),
+        "maj9": frozenset({0, 2, 4, 11}),
+        "min9": frozenset({0, 2, 3, 10}),
+        "dom13": frozenset({0, 4, 9, 10}),
+        "maj13": frozenset({0, 4, 9, 11}),
+        "min11": frozenset({0, 3, 5, 10}),
+        "maj69": frozenset({0, 2, 4, 9}),
+        "maj7sharp11": frozenset({0, 4, 6, 11}),
     }
     results = []
     for root_pc in range(12):
@@ -97,6 +119,7 @@ def audit(data: dict, tuning: dict[int, int]) -> dict:
         "enharmonic_equivalents": [],
         "cross_context": [],
         "cross_type": [],
+        "suspicious_names": [],
         "total": len(voicings),
     }
 
@@ -175,6 +198,70 @@ def audit(data: dict, tuning: dict[int, int]) -> dict:
                 "categories": sorted(categories),
             })
 
+    # 5. Suspicious names: declared quality doesn't match detected quality
+    # Map our quality names to the identify_chord_quality names
+    quality_aliases = {
+        "dom7": "dom7", "maj7": "maj7", "min7": "min7",
+        "min7b5": "min7b5", "dim7": "dim7",
+        "maj6": "maj6", "min6": "min6",
+        "dom7sharp5": "dom7",  # shell might not have #5
+        "dom7flat5": "dom7",   # shell might not have b5
+        "dom7alt": "dom7",     # alt is dom7 with alterations
+        "dom7b9": "dom7",      # dom7 with b9
+        "dom7sharp11": "dom7", # dom7 with #11
+        "dom7b13": "dom7",     # dom7 with b13
+        "aug7": "maj7",        # aug7 shell without #5 looks like maj7
+        "dom9": "dom7",        # dom9 is dom7 + 9
+        "maj9": "maj7",        # maj9 is maj7 + 9
+        "min9": "min7",        # min9 is min7 + 9
+        "dom13": "dom7",       # dom13 is dom7 + 13
+        "min11": "min7",       # min11 is min7 + 11
+        "min-maj7": "min-maj7",
+        "sus4": "sus4", "sus2": "sus2",
+        "quartal": None,       # quartal is ambiguous by definition
+        "maj69": "maj6",       # 6/9 is maj6 + 9
+        "maj13": "maj7",       # maj13 is maj7 + 13
+        "maj7sharp11": "maj7", # maj7#11 is maj7 + #11
+    }
+
+    for v in voicings:
+        pcs = pitch_class_set(v, tuning)
+        if not pcs or len(pcs) < 3:
+            continue
+
+        declared = v["chord_quality"]
+        if declared == "quartal":
+            continue  # quartal voicings are intentionally ambiguous
+
+        # Shell voicings (3 notes) deliberately omit distinguishing tones
+        # (e.g., dom7 shell = 1-3-b7, no 5th — can't distinguish from dom7#5)
+        # Only flag 4+ note voicings
+        sounding_count = len(v.get("dots", [])) + len(v.get("open", []))
+        if sounding_count <= 3:
+            continue
+
+        # What does identify_chord_quality think this is?
+        detected = identify_chord_quality(pcs)
+        detected_with_c_root = {q for r, q in detected if r == "C"}
+
+        # What should it match?
+        expected_base = quality_aliases.get(declared)
+        if expected_base is None:
+            continue
+
+        # Check if the detected qualities include the expected base
+        if expected_base not in detected_with_c_root:
+            # Also check if the declared quality itself matches
+            if declared not in detected_with_c_root:
+                report["suspicious_names"].append({
+                    "id": v["id"],
+                    "name": v["name"],
+                    "declared_quality": declared,
+                    "detected_qualities": sorted(detected_with_c_root),
+                    "pitch_classes": [CHROMATIC[pc] for pc in sorted(pcs)],
+                    "notes": v.get("notes", []),
+                })
+
     return report
 
 
@@ -212,8 +299,16 @@ def print_report(report: dict):
         ids = [f"{v['id']}({v['category']})" for v in x["voicings"]]
         print(f"   {' | '.join(ids)}")
 
+    # Suspicious names
+    suspect = report.get("suspicious_names", [])
+    print(f"\n5. Suspicious Names (declared quality ≠ detected): {len(suspect)}")
+    for s in suspect:
+        detected = ", ".join(s["detected_qualities"]) or "unknown"
+        print(f"   {s['id']}: declared '{s['declared_quality']}', detected [{detected}]")
+        print(f"      notes: {' '.join(s['notes'])}, pcs: {' '.join(s['pitch_classes'])}")
+
     # Summary
-    total_issues = len(dupes) + len(enharm) + len(xctx) + len(xtype)
+    total_issues = len(dupes) + len(enharm) + len(xctx) + len(xtype) + len(suspect)
     if total_issues == 0:
         print("\nLibrary is clean.")
     else:
