@@ -44,6 +44,11 @@ MuseScore {
         id: tempDiagramFile
     }
 
+    FileIO {
+        id: contextsConfigFile
+        source: Qt.resolvedUrl("../config/contexts.json")
+    }
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
@@ -64,18 +69,40 @@ MuseScore {
     property var categoryList: ["All Types"]
     property var qualityList: ["All Qualities"]
 
-    // Context display names
-    property var contextLabels: {
-        "CM6": "Chord Melody — 6 string",
-        "CM7": "Chord Melody — 7 string",
-        "CV6": "Comping/Vocal — 6 string",
-        "CV7": "Comping/Vocal — 7 string"
-    }
-    property var contextLabelsShort: {
-        "CM6": "CM 6-str",
-        "CM7": "CM 7-str",
-        "CV6": "CV 6-str",
-        "CV7": "CV 7-str"
+    // Context display names — loaded from config/contexts.json, extensible
+    property var contextLabels: ({})
+    property var contextLabelsShort: ({})
+
+    function loadContextLabels() {
+        // Defaults (used if config file not found)
+        var labels = {
+            "CM6": "Chord Melody — 6 string",
+            "CM7": "Chord Melody — 7 string",
+            "CV6": "Comping/Vocal — 6 string",
+            "CV7": "Comping/Vocal — 7 string"
+        }
+        var shorts = {
+            "CM6": "CM 6-str", "CM7": "CM 7-str",
+            "CV6": "CV 6-str", "CV7": "CV 7-str"
+        }
+
+        try {
+            var raw = contextsConfigFile.read()
+            if (raw && raw.length > 2) {
+                var config = JSON.parse(raw)
+                var ctxs = config.contexts || {}
+                for (var code in ctxs) {
+                    if (ctxs[code].name) labels[code] = ctxs[code].name
+                    if (ctxs[code].short) shorts[code] = ctxs[code].short
+                }
+                console.log("Loaded context labels from config (" + Object.keys(ctxs).length + " contexts)")
+            }
+        } catch (e) {
+            console.log("Using default context labels: " + e)
+        }
+
+        contextLabels = labels
+        contextLabelsShort = shorts
     }
 
     function rebuildFilterLists() {
@@ -92,6 +119,7 @@ MuseScore {
     }
 
     onRun: {
+        loadContextLabels()
         loadSettings()
         if (!dataLoaded) {
             // Try local cache first (contains imports), fall back to URL

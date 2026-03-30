@@ -1,0 +1,32 @@
+{
+  "contexts": {
+    "CM6": {
+      "name": "Chord Melody — 6 string",
+      "short": "CM 6-str",
+      "description": "Chord melody / fingerstyle voicings on standard 6-string guitar. Melody note on top (strings 1-2).",
+      "tuning": "standard",
+      "strings": 6
+    },
+    "CM7": {
+      "name": "Chord Melody — 7 string",
+      "short": "CM 7-str",
+      "description": "Chord melody voicings on 7-string guitar (Van Eps tuning, low A). Fuller bass support with melody on top.",
+      "tuning": "standard",
+      "strings": 7
+    },
+    "CV6": {
+      "name": "Comping/Vocal — 6 string",
+      "short": "CV 6-str",
+      "description": "Comping and accompaniment voicings on standard 6-string. Melody carried by voice or another instrument.",
+      "tuning": "standard",
+      "strings": 6
+    },
+    "CV7": {
+      "name": "Comping/Vocal — 7 string",
+      "short": "CV 7-str",
+      "description": "Comping voicings on 7-string guitar (Van Eps tuning, low A). Extended bass range for harmonic support.",
+      "tuning": "standard",
+      "strings": 7
+    }
+  }
+}
