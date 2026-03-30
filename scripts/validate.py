@@ -276,6 +276,74 @@ def _check_consistency(data: dict) -> list[str]:
                 f"({len(v['dots'])}) count mismatch"
             )
 
+        # --- Chord quality ↔ interval consistency ---
+        quality = v.get("chord_quality", "")
+        interval_set = set(v.get("intervals", []))
+
+        # Define required intervals for each quality family
+        quality_rules: dict[str, tuple[set[str], set[str]]] = {
+            # quality: (must_have, must_not_have)
+            "dom7":       ({"3", "b7"}, {"7", "b3"}),
+            "maj7":       ({"3", "7"}, {"b7", "b3"}),
+            "min7":       ({"b3", "b7"}, {"3", "7"}),
+            "min7b5":     ({"b3", "b5", "b7"}, {"3", "5", "7"}),
+            "dim7":       ({"b3", "b5", "bb7"}, {"3", "5", "7", "b7"}),
+            "maj6":       ({"3", "6"}, {"b3"}),
+            "min6":       ({"b3", "6"}, {"3"}),
+            "dom7b9":     ({"3", "b7"}, {"7", "b3"}),
+            "dom7sharp5": ({"3", "#5", "b7"}, {"5", "7"}),
+            "dom7flat5":  ({"3", "b5", "b7"}, {"5", "7"}),
+            "dom7alt":    ({"3", "b7"}, {"7"}),
+            "dom9":       ({"3", "b7"}, {"7", "b3"}),
+            "maj9":       ({"3", "7"}, {"b7", "b3"}),
+            "min9":       ({"b3", "b7"}, {"3", "7"}),
+            "dom13":      ({"3", "b7"}, {"7", "b3"}),
+            "min-maj7":   ({"b3", "7"}, {"3", "b7"}),
+            "aug7":       ({"3", "#5"}, {"5", "b3"}),
+            "sus4":       ({"4"}, {"3", "b3"}),
+            "sus2":       ({"9"}, {"3", "b3"}),
+        }
+
+        if quality in quality_rules:
+            must_have, must_not = quality_rules[quality]
+
+            # Expand interval_set with equivalences (2=9, 4=11, 6=13)
+            expanded = set(interval_set)
+            equiv = {"2": "9", "9": "2", "4": "11", "11": "4", "6": "13", "13": "6"}
+            for iv in interval_set:
+                if iv in equiv:
+                    expanded.add(equiv[iv])
+
+            # Shell voicings have only 3 notes — relax must_have rules
+            category = v.get("category", "")
+            is_shell = category == "shell" or len(v.get("dots", [])) <= 3
+
+            missing = must_have - expanded
+            bad = must_not & expanded
+
+            # For shells, only warn about must_not violations (wrong tones),
+            # not missing tones (shells deliberately omit notes)
+            if missing and not is_shell:
+                warnings.append(
+                    f"{vid}: quality '{quality}' expects intervals "
+                    f"{sorted(missing)} but they're missing"
+                )
+            if bad:
+                warnings.append(
+                    f"{vid}: quality '{quality}' should NOT have "
+                    f"intervals {sorted(bad)}"
+                )
+
+        # --- Playability check: max fret stretch ---
+        fret_positions = [d["fret"] for d in v.get("dots", [])]
+        if len(fret_positions) >= 2:
+            stretch = max(fret_positions) - min(fret_positions)
+            if stretch > 4:
+                warnings.append(
+                    f"{vid}: fret stretch of {stretch} may be unplayable "
+                    f"(max recommended: 4)"
+                )
+
     return warnings
 
 
