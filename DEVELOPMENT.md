@@ -193,7 +193,7 @@ Note: the exact API for fretboard diagram manipulation needs verification agains
 ### Phase 1 — JSON schema and data (complete)
 - [x] JSON schema with extensible strings (4-12), free-text category/quality/context
 - [x] Note-computation validator with per-voicing tuning support
-- [x] 153 voicings across 26 qualities, 6 categories, 4 contexts
+- [x] 176 voicings across 26 qualities, 6 categories, 4 contexts
 - [x] Published to GitHub, fetched at runtime
 
 ### Phase 2 — Plugin scaffold (complete)
@@ -206,7 +206,7 @@ Note: the exact API for fretboard diagram manipulation needs verification agains
 - [x] Search bar with name, quality, and tag matching
 - [x] Tuning selector on main panel
 - [x] Context labels from config/contexts.json (extensible)
-- [ ] Fretboard thumbnail canvas on voicing cards (not yet wired in)
+- [x] Fretboard thumbnail canvas on voicing cards with interval color coding
 
 ### Phase 4 — Score insertion (complete)
 - [x] Read selected note and chord symbol
@@ -229,7 +229,7 @@ Note: the exact API for fretboard diagram manipulation needs verification agains
 - **Does MuseScore 4's plugin API expose setDot()?** No. Workaround: write diagram XML to macOS pasteboard via a Swift CLI tool (`ms-clipboard`), then call `cmd("paste")` from the plugin. Filed [PR #32848](https://github.com/musescore/MuseScore/pull/32848) to add `setDot()` upstream.
 - **QML network fetch pattern?** Standard `XMLHttpRequest` works in MuseScore's QML engine.
 - **Multiple JSON sources?** Supported via import/merge. The plugin merges imported voicings into the local cache, skipping duplicates by ID.
-- **Fretboard thumbnail rendering?** `VoicingCard.qml` exists with a Canvas renderer but is not yet wired into the main plugin (which uses inline UI). Planned for a future release.
+- **Fretboard thumbnail rendering?** Canvas renderer is inline in the main plugin delegate. Each voicing card shows a mini fretboard diagram with dots color-coded by interval (root=red, 3rd=blue, 5th=green, 7th=orange, 9th=purple, 4th/11th=teal, 6th/13th=gold). Adapts to dark/light mode.
 
 ---
 
