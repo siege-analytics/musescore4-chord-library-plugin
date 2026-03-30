@@ -22,7 +22,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_DIR = REPO_ROOT / "plugin"
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 PLUGIN_NAME = "chordlibrary"
 
 # Files to include in the distribution

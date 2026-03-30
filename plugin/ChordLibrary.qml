@@ -11,7 +11,7 @@ MuseScore {
     id: chordLibrary
     title: "Chord Library"
     description: "Jazz guitar chord voicing library with filtering and auto-transposition"
-    version: "1.1.0"
+    version: "1.2.0"
     pluginType: "dialog"
     requiresScore: true
     categoryCode: "composing-arranging-tools"
