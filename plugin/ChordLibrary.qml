@@ -19,6 +19,9 @@ MuseScore {
     width: 460
     height: 750
 
+    // System palette for dark mode detection
+    SystemPalette { id: palette }
+
     // === Persistent settings via FileIO ===
     // MuseScore 4 plugins don't support Qt.labs.settings,
     // so we persist to a JSON file in the plugin directory.
@@ -1331,8 +1334,15 @@ MuseScore {
                             var ss = (width - 2 * mg) / (ns - 1)
                             var fs = (height - tm - mg) / nf
 
+                            // Detect dark mode from system palette
+                            var bgColor = palette.window.color || Qt.rgba(1,1,1,1)
+                            var isDark = (bgColor.r + bgColor.g + bgColor.b) / 3 < 0.5
+                            var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
+                            var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
+                            var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
+
                             // Strings
-                            ctx.strokeStyle = Qt.rgba(0.5, 0.5, 0.5, 0.6)
+                            ctx.strokeStyle = gridColor
                             ctx.lineWidth = 0.5
                             for (var s = 0; s < ns; s++) {
                                 ctx.beginPath()
@@ -1353,34 +1363,34 @@ MuseScore {
 
                             // Fret number label
                             if ((v.fret_number || 0) > 1) {
-                                ctx.fillStyle = Qt.rgba(0.5, 0.5, 0.5, 0.8)
+                                ctx.fillStyle = textColor
                                 ctx.font = "7px sans-serif"
                                 ctx.textAlign = "right"
                                 ctx.fillText(v.fret_number, mg - 1, tm + fs * 0.6)
                             }
 
-                            // Dots — color-coded by interval
+                            // Dots — color-coded by interval (brighter in dark mode)
                             var dots = v.dots || []
                             var ivs = v.intervals || []
                             for (var d = 0; d < dots.length; d++) {
                                 var iv = (d < ivs.length) ? ivs[d] : ""
                                 // Color by interval family
                                 if (iv === "1")
-                                    ctx.fillStyle = "#D32F2F"       // root — red
+                                    ctx.fillStyle = isDark ? "#EF5350" : "#D32F2F"       // root — red
                                 else if (iv === "3" || iv === "b3")
-                                    ctx.fillStyle = "#1976D2"       // 3rd — blue
+                                    ctx.fillStyle = isDark ? "#42A5F5" : "#1976D2"       // 3rd — blue
                                 else if (iv === "5" || iv === "b5" || iv === "#5")
-                                    ctx.fillStyle = "#388E3C"       // 5th — green
+                                    ctx.fillStyle = isDark ? "#66BB6A" : "#388E3C"       // 5th — green
                                 else if (iv === "7" || iv === "b7" || iv === "bb7")
-                                    ctx.fillStyle = "#F57C00"       // 7th — orange
+                                    ctx.fillStyle = isDark ? "#FFA726" : "#F57C00"       // 7th — orange
                                 else if (iv === "6" || iv === "13" || iv === "b13")
-                                    ctx.fillStyle = "#FBC02D"       // 6th/13th — gold
+                                    ctx.fillStyle = isDark ? "#FFEE58" : "#FBC02D"       // 6th/13th — gold
                                 else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
-                                    ctx.fillStyle = "#7B1FA2"       // 9th — purple
+                                    ctx.fillStyle = isDark ? "#CE93D8" : "#7B1FA2"       // 9th — purple
                                 else if (iv === "4" || iv === "11" || iv === "#11")
-                                    ctx.fillStyle = "#00897B"       // 4th/11th — teal
+                                    ctx.fillStyle = isDark ? "#4DB6AC" : "#00897B"       // 4th/11th — teal
                                 else
-                                    ctx.fillStyle = Qt.rgba(0.3, 0.3, 0.3, 0.9)
+                                    ctx.fillStyle = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.9) : Qt.rgba(0.3, 0.3, 0.3, 0.9)
 
                                 var dx = mg + (ns - dots[d].string) * ss
                                 var dy = tm + (dots[d].fret - 0.5) * fs
@@ -1390,7 +1400,7 @@ MuseScore {
                             }
 
                             // Mute markers (×)
-                            ctx.fillStyle = Qt.rgba(0.5, 0.5, 0.5, 0.7)
+                            ctx.fillStyle = muteColor
                             ctx.font = "9px sans-serif"
                             ctx.textAlign = "center"
                             var mutes = v.mutes || []
@@ -1399,7 +1409,7 @@ MuseScore {
                             }
 
                             // Open markers (○)
-                            ctx.strokeStyle = Qt.rgba(0.5, 0.5, 0.5, 0.7)
+                            ctx.strokeStyle = muteColor
                             ctx.lineWidth = 1
                             var opens = v.open || []
                             for (var o = 0; o < opens.length; o++) {
