@@ -40,6 +40,10 @@ MuseScore {
         id: importFile
     }
 
+    FileIO {
+        id: tempDiagramFile
+    }
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
@@ -60,12 +64,18 @@ MuseScore {
     property var categoryList: ["All Types"]
     property var qualityList: ["All Qualities"]
 
-    // Context display names (responsive: full when wide, abbreviation when narrow)
+    // Context display names
     property var contextLabels: {
-        "CM6": "Chord Melody 6-str",
-        "CM7": "Chord Melody 7-str",
-        "CV6": "Comping/Vocal 6-str",
-        "CV7": "Comping/Vocal 7-str"
+        "CM6": "Chord Melody — 6 string",
+        "CM7": "Chord Melody — 7 string",
+        "CV6": "Comping/Vocal — 6 string",
+        "CV7": "Comping/Vocal — 7 string"
+    }
+    property var contextLabelsShort: {
+        "CM6": "CM 6-str",
+        "CM7": "CM 7-str",
+        "CV6": "CV 6-str",
+        "CV7": "CV 7-str"
     }
 
     function rebuildFilterLists() {
@@ -293,6 +303,177 @@ MuseScore {
         statusMsg.text = "Inserted " + voicing.name + " → " + targetRoot
             + " (" + diagramPlacement + " staff)"
         statusMsg.color = "#060"
+    }
+
+    // === Temp .mscx diagram file (workaround for missing setDot API) ===
+
+    property var _selectedVoicing: null
+
+    function generateDiagramFile(voicing) {
+        // Determine target root from score selection, or default to C
+        var targetRoot = voicing.root
+        if (curScore) {
+            var sel = curScore.selection
+            if (sel && sel.elements && sel.elements.length > 0) {
+                var elem = sel.elements[0]
+                var seg = null
+                if (elem.type === Element.NOTE && elem.parent)
+                    seg = elem.parent.parent
+                else if (elem.type === Element.REST || elem.type === Element.CHORD)
+                    seg = elem.parent
+                if (seg && seg.annotations) {
+                    for (var a = 0; a < seg.annotations.length; a++) {
+                        if (seg.annotations[a].type === Element.HARMONY) {
+                            var parsed = Transposer.extractRoot(seg.annotations[a].text)
+                            if (parsed) targetRoot = parsed
+                            break
+                        }
+                    }
+                }
+            }
+        }
+
+        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
+        var transposedFret = voicing.fret_number + offset
+        var numStrings = voicing.strings || 6
+        var numFrets = voicing.visible_frets || 4
+        var displayName = voicing.name
+        if (targetRoot !== "C")
+            displayName = displayName.replace(/^C/, targetRoot)
+
+        // Build fretboard diagram XML with dots and markers
+        var stringData = {}
+        var dots = voicing.dots || []
+        for (var d = 0; d < dots.length; d++) {
+            var msStr = numStrings - dots[d].string  // MS4 uses 0-based, 0=highest
+            if (!stringData[msStr]) stringData[msStr] = {}
+            stringData[msStr].dot = dots[d].fret
+        }
+        var mutes = voicing.mutes || []
+        for (var m = 0; m < mutes.length; m++) {
+            var msMute = numStrings - mutes[m]
+            if (!stringData[msMute]) stringData[msMute] = {}
+            stringData[msMute].marker = "cross"
+        }
+        var opens = voicing.open || []
+        for (var o = 0; o < opens.length; o++) {
+            var msOpen = numStrings - opens[o]
+            if (!stringData[msOpen]) stringData[msOpen] = {}
+            stringData[msOpen].marker = "circle"
+        }
+
+        var fretOffset = transposedFret - 1  // MS4 uses 0-indexed
+
+        // Build <FretDiagram> element
+        var fdXml = "          <FretDiagram>\n"
+        if (fretOffset > 0)
+            fdXml += "            <fretOffset>" + fretOffset + "</fretOffset>\n"
+        if (numFrets !== 4)
+            fdXml += "            <frets>" + numFrets + "</frets>\n"
+        if (numStrings !== 6)
+            fdXml += "            <strings>" + numStrings + "</strings>\n"
+        fdXml += "            <fretDiagram>\n"
+
+        var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
+        for (var k = 0; k < sortedKeys.length; k++) {
+            var sn = sortedKeys[k]
+            var sd = stringData[sn]
+            fdXml += '              <string no="' + sn + '">\n'
+            if (sd.marker)
+                fdXml += '                <marker>' + sd.marker + '</marker>\n'
+            if (sd.dot !== undefined)
+                fdXml += '                <dot fret="' + sd.dot + '">normal</dot>\n'
+            fdXml += '              </string>\n'
+        }
+        fdXml += "            </fretDiagram>\n"
+        fdXml += "          </FretDiagram>"
+
+        // Guitar string tuning data
+        var tuningXml
+        if (numStrings === 7) {
+            tuningXml = '          <StringData>\n'
+                + '            <frets>24</frets>\n'
+                + '            <string>33</string><string>40</string>'
+                + '<string>45</string><string>50</string>'
+                + '<string>55</string><string>59</string><string>64</string>\n'
+                + '          </StringData>'
+        } else {
+            tuningXml = '          <StringData>\n'
+                + '            <frets>24</frets>\n'
+                + '            <string>40</string><string>45</string>'
+                + '<string>50</string><string>55</string>'
+                + '<string>59</string><string>64</string>\n'
+                + '          </StringData>'
+        }
+
+        // MIDI pitch for the root note
+        var midiC4 = 60
+        var midiPitch = midiC4 + offset
+        var tpc = 14 + offset
+        if (tpc > 25) tpc -= 12
+
+        // Complete .mscx score
+        var mscx = '<?xml version="1.0" encoding="UTF-8"?>\n'
+            + '<museScore version="4.60">\n'
+            + '  <programVersion>4.6.5</programVersion>\n'
+            + '  <Score>\n'
+            + '    <Division>480</Division>\n'
+            + '    <showInvisible>1</showInvisible>\n'
+            + '    <showUnprintable>1</showUnprintable>\n'
+            + '    <showFrames>1</showFrames>\n'
+            + '    <showMargins>0</showMargins>\n'
+            + '    <metaTag name="workTitle">' + displayName + '</metaTag>\n'
+            + '    <Part id="1">\n'
+            + '      <Staff>\n'
+            + '        <StaffType group="pitched"><name>stdNormal</name></StaffType>\n'
+            + '      </Staff>\n'
+            + '      <trackName>Guitar</trackName>\n'
+            + '      <Instrument id="electric-guitar">\n'
+            + '        <longName>Electric Guitar</longName>\n'
+            + '        <shortName>E.Guit.</shortName>\n'
+            + '        <trackName>Electric Guitar</trackName>\n'
+            + '        <transposeDiatonic>-7</transposeDiatonic>\n'
+            + '        <transposeChromatic>-12</transposeChromatic>\n'
+            + tuningXml + '\n'
+            + '        <Channel name="open"><program value="27"/></Channel>\n'
+            + '      </Instrument>\n'
+            + '    </Part>\n'
+            + '    <Staff id="1">\n'
+            + '      <VBox>\n'
+            + '        <height>10</height>\n'
+            + '        <Text><style>title</style><text>' + displayName + '</text></Text>\n'
+            + '      </VBox>\n'
+            + '      <Measure>\n'
+            + '        <voice>\n'
+            + '          <TimeSig><sigN>4</sigN><sigD>4</sigD></TimeSig>\n'
+            + fdXml + '\n'
+            + '          <Chord>\n'
+            + '            <durationType>whole</durationType>\n'
+            + '            <Note>\n'
+            + '              <pitch>' + midiPitch + '</pitch>\n'
+            + '              <tpc>' + tpc + '</tpc>\n'
+            + '            </Note>\n'
+            + '          </Chord>\n'
+            + '        </voice>\n'
+            + '      </Measure>\n'
+            + '    </Staff>\n'
+            + '  </Score>\n'
+            + '</museScore>\n'
+
+        // Write to temp file in plugin directory
+        var slug = voicing.id.replace(/[^a-z0-9-]/g, "-")
+        var filename = "temp-diagram-" + slug + "-" + targetRoot + ".mscx"
+        var filePath = Qt.resolvedUrl(filename)
+        tempDiagramFile.source = filePath
+        try {
+            tempDiagramFile.write(mscx)
+            Qt.openUrlExternally(filePath)
+            statusMsg.text = "Opened " + displayName + " — copy the diagram into your score"
+            statusMsg.color = "#060"
+        } catch (e) {
+            statusMsg.text = "Failed to write diagram file: " + e
+            statusMsg.color = "#c00"
+        }
     }
 
     // === File browser (dynamic loading to avoid import issues) ===
@@ -757,11 +938,11 @@ MuseScore {
                 id: contextCombo
                 model: contextList
                 Layout.fillWidth: true
-                // Show full labels when window is wide enough
                 displayText: {
                     if (currentText === "All Contexts") return currentText
-                    var wide = chordLibrary.width > 500
-                    return wide ? (contextLabels[currentText] || currentText) : currentText
+                    var wide = chordLibrary.width > 360
+                    return wide ? (contextLabels[currentText] || currentText)
+                                : (contextLabelsShort[currentText] || currentText)
                 }
                 onCurrentTextChanged: {
                     filterContext = currentText === "All Contexts" ? "" : currentText
@@ -808,7 +989,7 @@ MuseScore {
 
             delegate: Rectangle {
                 width: voicingList.width
-                height: 68
+                height: 80
                 radius: 4
                 color: ma.containsMouse ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
                 border.color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
@@ -820,34 +1001,45 @@ MuseScore {
                     id: ma
                     anchors.fill: parent
                     hoverEnabled: true
-                    onDoubleClicked: insertVoicing(v)
+                    onDoubleClicked: generateDiagramFile(v)
                 }
 
-                ColumnLayout {
+                RowLayout {
                     anchors.fill: parent
                     anchors.margins: 8
-                    spacing: 2
+                    spacing: 6
 
-                    Label {
-                        text: v.name || ""
-                        font.pixelSize: 13
-                        font.bold: true
-                        
-                        elide: Text.ElideRight
+                    ColumnLayout {
                         Layout.fillWidth: true
+                        spacing: 2
+
+                        Label {
+                            text: v.name || ""
+                            font.pixelSize: 13
+                            font.bold: true
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
+                        Label {
+                            text: (v.intervals || []).join(" ") + "  |  " + (v.context || "") + "  |  Fret " + (v.fret_number || "?")
+                            font.pixelSize: 11
+                            Layout.fillWidth: true
+                        }
+                        Label {
+                            text: (v.tags || []).filter(function(t) { return t !== "needs_verification" && t !== "needs_rework" }).join(", ")
+                            font.pixelSize: 10
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
                     }
-                    Label {
-                        text: (v.intervals || []).join(" ") + "  |  " + (v.context || "") + "  |  Fret " + (v.fret_number || "?")
-                        font.pixelSize: 11
-                        
-                        Layout.fillWidth: true
-                    }
-                    Label {
-                        text: (v.tags || []).join(", ")
+
+                    Button {
+                        text: "Open"
                         font.pixelSize: 10
-                        
-                        elide: Text.ElideRight
-                        Layout.fillWidth: true
+                        implicitWidth: 48
+                        onClicked: generateDiagramFile(v)
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Open diagram file (copy-paste into your score)"
                     }
                 }
             }

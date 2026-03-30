@@ -18,6 +18,19 @@ ColumnLayout {
             id: contextFilter
             model: ["All Contexts", "CM6", "CM7", "CV6", "CV7"]
             Layout.fillWidth: true
+
+            property var contextLabels: {
+                "CM6": "Chord Melody — 6 string",
+                "CM7": "Chord Melody — 7 string",
+                "CV6": "Comping/Vocal — 6 string",
+                "CV7": "Comping/Vocal — 7 string"
+            }
+
+            displayText: {
+                if (currentText === "All Contexts") return currentText
+                return contextLabels[currentText] || currentText
+            }
+
             onCurrentTextChanged: {
                 contextChanged(currentText === "All Contexts" ? "" : currentText)
             }
