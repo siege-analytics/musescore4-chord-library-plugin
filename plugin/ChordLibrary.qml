@@ -121,23 +121,248 @@ MuseScore {
         contextLabelsShort = shorts
     }
 
+    // === Paste infrastructure ===
+
     // Timer to paste after launchd agent writes diagram data to clipboard
     Timer {
         id: pasteTimer
         interval: 1000
         repeat: false
         onTriggered: {
-            console.log("pasteTimer fired — calling cmd('paste')")
             try {
                 cmd("paste")
-                console.log("cmd('paste') completed")
                 statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
             } catch (e) {
-                console.log("cmd('paste') error: " + e)
                 statusMsg.text = "Paste failed: " + e + " — try Cmd+V manually"
                 statusMsg.color = "#c00"
             }
+            // If batch queue has more items, process next
+            if (batchQueue.length > 0) {
+                batchProcessNext()
+            }
         }
+    }
+
+    // === Batch insert ===
+
+    property var batchQueue: []
+    property int batchTotal: 0
+
+    // Map chord quality strings from MuseScore Harmony to our quality IDs
+    property var qualityMap: {
+        "7": "dom7", "maj7": "maj7", "Maj7": "maj7", "M7": "maj7",
+        "m7": "min7", "min7": "min7", "-7": "min7",
+        "m7b5": "min7b5", "-7b5": "min7b5", "ø7": "min7b5",
+        "dim7": "dim7", "o7": "dim7",
+        "6": "maj6", "m6": "min6", "-6": "min6",
+        "9": "dom9", "maj9": "maj9", "m9": "min9",
+        "13": "dom13",
+        "7b9": "dom7b9", "7#5": "dom7sharp5", "7b5": "dom7flat5",
+        "7alt": "dom7alt", "alt": "dom7alt",
+        "sus4": "sus4", "sus2": "sus2",
+        "aug7": "aug7", "+7": "aug7",
+        "mMaj7": "min-maj7", "m(maj7)": "min-maj7",
+        "": "dom7",  // bare "C" = major, but with 7th context we default to dom7
+    }
+
+    function parseChordSymbol(text) {
+        // Extract root and quality from a chord symbol like "Fmaj7", "Bb7", "D-7b5"
+        if (!text || text.length === 0) return null
+        var root = Transposer.extractRoot(text)
+        if (!root) return null
+        var suffix = text.substring(root.length)
+        // Clean up common notation
+        suffix = suffix.replace(/^\s*/, "").replace("Δ", "maj").replace("△", "maj")
+            .replace("°", "dim").replace("ø", "m7b5").replace("+", "aug")
+            .replace("−", "-")
+        var quality = qualityMap[suffix] || null
+        // If no exact match, try partial matches
+        if (!quality) {
+            if (suffix.indexOf("maj7") >= 0) quality = "maj7"
+            else if (suffix.indexOf("m7b5") >= 0 || suffix.indexOf("-7b5") >= 0) quality = "min7b5"
+            else if (suffix.indexOf("m7") >= 0 || suffix.indexOf("-7") >= 0) quality = "min7"
+            else if (suffix.indexOf("dim") >= 0) quality = "dim7"
+            else if (suffix.indexOf("7") >= 0) quality = "dom7"
+            else if (suffix.indexOf("m") >= 0 || suffix.indexOf("-") >= 0) quality = "min7"
+            else quality = "maj7"  // bare letter = major
+        }
+        return { root: root, quality: quality }
+    }
+
+    function findBestVoicing(targetRoot, quality) {
+        // Find the best matching voicing from the current data
+        // Prefer: current filter context > shell > drop2, and E-shape first
+        var candidates = []
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            if (v.chord_quality !== quality) continue
+            // Filter by string count for current tuning
+            if ((v.strings || 6) > tuningMaxStrings) continue
+            candidates.push(v)
+        }
+        if (candidates.length === 0) {
+            // Fallback: try dom7 if the specific quality isn't found
+            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7")
+            return null
+        }
+
+        // Prefer: filterContext match > shell > drop2 > others
+        candidates.sort(function(a, b) {
+            var scoreA = 0, scoreB = 0
+            if (filterContext && a.context === filterContext) scoreA += 100
+            if (filterContext && b.context === filterContext) scoreB += 100
+            if (a.category === "shell") scoreA += 10
+            else if (a.category === "drop2") scoreA += 5
+            if (b.category === "shell") scoreB += 10
+            else if (b.category === "drop2") scoreB += 5
+            return scoreB - scoreA
+        })
+        return candidates[0]
+    }
+
+    function generateXmlForVoicing(voicing, targetRoot) {
+        // Generate EngravingItem XML for a voicing transposed to targetRoot
+        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
+        var transposedFret = voicing.fret_number + offset
+        var numStrings = voicing.strings || 6
+        var numFrets = voicing.visible_frets || 4
+
+        var stringData = {}
+        var dots = voicing.dots || []
+        for (var d = 0; d < dots.length; d++) {
+            var msStr = numStrings - dots[d].string
+            if (!stringData[msStr]) stringData[msStr] = {}
+            stringData[msStr].dot = dots[d].fret
+        }
+        var mutes = voicing.mutes || []
+        for (var m = 0; m < mutes.length; m++) {
+            var msMute = numStrings - mutes[m]
+            if (!stringData[msMute]) stringData[msMute] = {}
+            stringData[msMute].marker = "cross"
+        }
+        var opens = voicing.open || []
+        for (var o = 0; o < opens.length; o++) {
+            var msOpen = numStrings - opens[o]
+            if (!stringData[msOpen]) stringData[msOpen] = {}
+            stringData[msOpen].marker = "circle"
+        }
+
+        var fretOffset = transposedFret - 1
+        var xml = '<EngravingItem>\n  <FretDiagram>\n'
+        if (fretOffset > 0) xml += '    <fretOffset>' + fretOffset + '</fretOffset>\n'
+        if (numFrets !== 4) xml += '    <frets>' + numFrets + '</frets>\n'
+        if (numStrings !== 6) xml += '    <strings>' + numStrings + '</strings>\n'
+        xml += '    <fretDiagram>\n'
+
+        var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
+        for (var k = 0; k < sortedKeys.length; k++) {
+            var sn = sortedKeys[k]
+            var sd = stringData[sn]
+            xml += '      <string no="' + sn + '">\n'
+            if (sd.marker) xml += '        <marker>' + sd.marker + '</marker>\n'
+            if (sd.dot !== undefined) xml += '        <dot fret="' + sd.dot + '">normal</dot>\n'
+            xml += '      </string>\n'
+        }
+        xml += '    </fretDiagram>\n  </FretDiagram>\n</EngravingItem>'
+        return xml
+    }
+
+    function batchInsert() {
+        if (!curScore) {
+            statusMsg.text = "No score open"
+            statusMsg.color = "#c00"
+            return
+        }
+
+        // Scan the entire score for chord symbols
+        var queue = []
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+
+        while (cursor.segment) {
+            var seg = cursor.segment
+            if (seg.annotations) {
+                for (var a = 0; a < seg.annotations.length; a++) {
+                    if (seg.annotations[a].type === Element.HARMONY) {
+                        var text = seg.annotations[a].text
+                        var parsed = parseChordSymbol(text)
+                        if (parsed) {
+                            var voicing = findBestVoicing(parsed.root, parsed.quality)
+                            if (voicing) {
+                                queue.push({
+                                    tick: seg.tick,
+                                    root: parsed.root,
+                                    quality: parsed.quality,
+                                    voicing: voicing,
+                                    chordText: text,
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+            cursor.next()
+        }
+
+        if (queue.length === 0) {
+            statusMsg.text = "No chord symbols found in the score"
+            statusMsg.color = "#c00"
+            return
+        }
+
+        batchQueue = queue
+        batchTotal = queue.length
+        statusMsg.text = "Batch: inserting " + batchTotal + " diagrams..."
+        statusMsg.color = "#060"
+
+        // Start processing
+        batchProcessNext()
+    }
+
+    function batchProcessNext() {
+        if (batchQueue.length === 0) {
+            statusMsg.text = "Batch complete: " + batchTotal + " diagrams inserted"
+            statusMsg.color = "#060"
+            return
+        }
+
+        var item = batchQueue.shift()
+        var remaining = batchQueue.length
+        statusMsg.text = "Batch: " + (batchTotal - remaining) + " of " + batchTotal
+            + " — " + item.chordText
+        statusMsg.color = "#060"
+
+        // Move cursor to this chord's position
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+        while (cursor.segment && cursor.tick < item.tick) {
+            cursor.next()
+        }
+        // Select the element at this position so paste targets it
+        if (cursor.segment && cursor.element) {
+            curScore.selection.select(cursor.element)
+        }
+
+        // Generate and write clipboard XML
+        var xml = generateXmlForVoicing(item.voicing, item.root)
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try {
+            tempDiagramFile.write(xml)
+        } catch (e) {
+            statusMsg.text = "Batch error: " + e
+            statusMsg.color = "#c00"
+            batchQueue = []
+            return
+        }
+
+        // The launchd agent writes to clipboard, then pasteTimer fires cmd("paste")
+        // pasteTimer.onTriggered checks batchQueue and calls batchProcessNext()
+        pasteTimer.start()
     }
 
     function rebuildFilterLists() {
@@ -640,60 +865,10 @@ MuseScore {
         }
 
         var transposed = Transposer.transposeVoicing(voicing, targetRoot)
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-        var transposedFret = transposed.fret_number
-        var numStrings = voicing.strings || 6
-        var numFrets = voicing.visible_frets || 4
         var displayName = transposed.name
 
-        // Build fretboard diagram XML with dots and markers
-        var stringData = {}
-        var dots = voicing.dots || []
-        for (var d = 0; d < dots.length; d++) {
-            var msStr = numStrings - dots[d].string  // MS4 uses 0-based, 0=highest
-            if (!stringData[msStr]) stringData[msStr] = {}
-            stringData[msStr].dot = dots[d].fret
-        }
-        var mutes = voicing.mutes || []
-        for (var m = 0; m < mutes.length; m++) {
-            var msMute = numStrings - mutes[m]
-            if (!stringData[msMute]) stringData[msMute] = {}
-            stringData[msMute].marker = "cross"
-        }
-        var opens = voicing.open || []
-        for (var o = 0; o < opens.length; o++) {
-            var msOpen = numStrings - opens[o]
-            if (!stringData[msOpen]) stringData[msOpen] = {}
-            stringData[msOpen].marker = "circle"
-        }
-
-        var fretOffset = transposedFret - 1  // MS4 uses 0-indexed
-
-        // Build <EngravingItem> XML in MuseScore's clipboard format
-        var xml = '<EngravingItem>\n'
-            + '  <FretDiagram>\n'
-        if (fretOffset > 0)
-            xml += '    <fretOffset>' + fretOffset + '</fretOffset>\n'
-        if (numFrets !== 4)
-            xml += '    <frets>' + numFrets + '</frets>\n'
-        if (numStrings !== 6)
-            xml += '    <strings>' + numStrings + '</strings>\n'
-        xml += '    <fretDiagram>\n'
-
-        var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
-        for (var k = 0; k < sortedKeys.length; k++) {
-            var sn = sortedKeys[k]
-            var sd = stringData[sn]
-            xml += '      <string no="' + sn + '">\n'
-            if (sd.marker)
-                xml += '        <marker>' + sd.marker + '</marker>\n'
-            if (sd.dot !== undefined)
-                xml += '        <dot fret="' + sd.dot + '">normal</dot>\n'
-            xml += '      </string>\n'
-        }
-        xml += '    </fretDiagram>\n'
-        xml += '  </FretDiagram>\n'
-        xml += '</EngravingItem>'
+        // Generate the clipboard XML using the shared function
+        var xml = generateXmlForVoicing(voicing, targetRoot)
 
         // Write the clipboard XML to a file that ms-clipboard will read
         var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
@@ -1238,7 +1413,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Chord Library v0.3.1"
+                    text: "Chord Library v1.1.0"
                     font.pixelSize: 12
                     font.bold: true
                     
@@ -1375,6 +1550,21 @@ MuseScore {
             Label {
                 text: filteredData.length + " of " + voicingsData.length
                 font.pixelSize: 11
+            }
+
+            Button {
+                text: batchQueue.length > 0 ? "Stop" : "Batch"
+                font.pixelSize: 10
+                implicitWidth: 48
+                onClicked: {
+                    if (batchQueue.length > 0) {
+                        batchQueue = []
+                        statusMsg.text = "Batch stopped"
+                        statusMsg.color = "#888"
+                    } else {
+                        batchInsert()
+                    }
+                }
             }
         }
 
