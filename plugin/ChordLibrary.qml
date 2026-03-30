@@ -1359,10 +1359,29 @@ MuseScore {
                                 ctx.fillText(v.fret_number, mg - 1, tm + fs * 0.6)
                             }
 
-                            // Dots
+                            // Dots — color-coded by interval
                             var dots = v.dots || []
-                            ctx.fillStyle = Qt.rgba(0.2, 0.2, 0.2, 0.9)
+                            var ivs = v.intervals || []
                             for (var d = 0; d < dots.length; d++) {
+                                var iv = (d < ivs.length) ? ivs[d] : ""
+                                // Color by interval family
+                                if (iv === "1")
+                                    ctx.fillStyle = "#D32F2F"       // root — red
+                                else if (iv === "3" || iv === "b3")
+                                    ctx.fillStyle = "#1976D2"       // 3rd — blue
+                                else if (iv === "5" || iv === "b5" || iv === "#5")
+                                    ctx.fillStyle = "#388E3C"       // 5th — green
+                                else if (iv === "7" || iv === "b7" || iv === "bb7")
+                                    ctx.fillStyle = "#F57C00"       // 7th — orange
+                                else if (iv === "6" || iv === "13" || iv === "b13")
+                                    ctx.fillStyle = "#FBC02D"       // 6th/13th — gold
+                                else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
+                                    ctx.fillStyle = "#7B1FA2"       // 9th — purple
+                                else if (iv === "4" || iv === "11" || iv === "#11")
+                                    ctx.fillStyle = "#00897B"       // 4th/11th — teal
+                                else
+                                    ctx.fillStyle = Qt.rgba(0.3, 0.3, 0.3, 0.9)
+
                                 var dx = mg + (ns - dots[d].string) * ss
                                 var dy = tm + (dots[d].fret - 0.5) * fs
                                 ctx.beginPath()
