@@ -23,7 +23,7 @@ except ImportError:
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCHEMA = REPO_ROOT / "schema" / "voicings.schema.json"
 DEFAULT_DATA = REPO_ROOT / "data" / "voicings.json"
-DEFAULT_TUNING = REPO_ROOT / "config" / "tunings" / "standard.json"
+DEFAULT_TUNING = REPO_ROOT / "config" / "tunings" / "7string-van-eps.json"
 
 # Chromatic note names (using sharps and flats consistently)
 CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]

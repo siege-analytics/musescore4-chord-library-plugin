@@ -11,7 +11,7 @@ MuseScore {
     id: chordLibrary
     title: "Chord Library"
     description: "Jazz guitar chord voicing library with filtering and auto-transposition"
-    version: "0.3.1"
+    version: "1.1.0"
     pluginType: "dialog"
     requiresScore: true
     categoryCode: "composing-arranging-tools"
@@ -1104,6 +1104,19 @@ MuseScore {
                 Label {
                     text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
                     font.pixelSize: 10
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
+                }
+
+                Label {
+                    text: '<a href="https://gtdb.org">Guitar Tuning Database (gtdb.org)</a> — reference for string pitches'
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
                     onLinkActivated: Qt.openUrlExternally(link)
                     MouseArea {
                         anchors.fill: parent
