@@ -67,23 +67,42 @@ def write_clipboard_macos(data: bytes) -> bool:
 
 
 def write_clipboard_windows(data: bytes) -> bool:
-    """Write to Windows clipboard using ctypes."""
+    """Write to Windows clipboard using ctypes.
+
+    NOTE: The exact clipboard format name MuseScore uses on Windows is
+    speculative. Qt on Windows maps MIME types to clipboard format names
+    differently than macOS. If MuseScore's cmd("paste") doesn't pick up
+    the data, try running MuseScore, copying a fretboard diagram (Ctrl+C),
+    then use scripts/sniff_clipboard_win.py to discover the format name.
+
+    Known possibilities:
+    - "application/musescore/symbol" (our MIME type)
+    - Qt's internal format: "application/x-qt-windows-mime;value=..."
+    - A numeric format registered by Qt at runtime
+    """
     try:
         import ctypes
-        from ctypes import wintypes
 
         user32 = ctypes.windll.user32
         kernel32 = ctypes.windll.kernel32
 
-        # Register a custom clipboard format for MuseScore
-        fmt = user32.RegisterClipboardFormatW(MUSESCORE_MIME)
+        # Try multiple format names — Qt on Windows may use any of these
+        format_names = [
+            MUSESCORE_MIME,
+            "application/x-qt-windows-mime;value=\"" + MUSESCORE_MIME + "\"",
+            "MuseScore Symbol",
+        ]
+
+        fmt = 0
+        for name in format_names:
+            fmt = user32.RegisterClipboardFormatW(name)
+            if fmt:
+                print(f"Registered clipboard format: {name} → {fmt}", file=sys.stderr)
+                break
+
         if not fmt:
-            # Fallback: try the Qt-style format name
-            fmt = user32.RegisterClipboardFormatW(
-                "application/x-qt-windows-mime;value=\"" + MUSESCORE_MIME + "\""
-            )
-        if not fmt:
-            print("Failed to register clipboard format", file=sys.stderr)
+            print("Failed to register any clipboard format", file=sys.stderr)
+            print("Tried: " + ", ".join(format_names), file=sys.stderr)
             return False
 
         if not user32.OpenClipboard(0):
