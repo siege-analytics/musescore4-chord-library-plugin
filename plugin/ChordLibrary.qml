@@ -958,21 +958,66 @@ MuseScore {
         var path = auditReportPath.text.trim()
         if (!path) { hygieneResult.text = "Enter a file path"; return }
 
-        var report = "Chord Library Audit Report\n"
-            + "Date: " + new Date().toISOString() + "\n"
+        var report = "CHORD LIBRARY AUDIT REPORT\n"
+            + "=" .repeat(60) + "\n"
+            + "Date:     " + new Date().toISOString().split("T")[0] + "\n"
             + "Voicings: " + voicingsData.length + "\n"
-            + "Tuning: " + (tuningLabels[selectedTuning] || selectedTuning) + "\n"
+            + "Tuning:   " + (tuningLabels[selectedTuning] || selectedTuning) + "\n"
+            + "Dismissed: " + hygieneIgnoreList.length + " findings suppressed\n"
             + "=".repeat(60) + "\n\n"
 
-        for (var i = 0; i < lastAuditResults.length; i++)
-            report += lastAuditResults[i] + "\n"
+        // Group results by type
+        var dups = [], enhs = [], ctxs = []
+        for (var i = 0; i < lastAuditResults.length; i++) {
+            var r = lastAuditResults[i]
+            if (r.indexOf("DUP:") === 0) dups.push(r)
+            else if (r.indexOf("ENHARMONIC:") === 0) enhs.push(r)
+            else if (r.indexOf("CROSS-CTX:") === 0) ctxs.push(r)
+        }
 
-        report += "\n" + hygieneResult.text + "\n"
+        if (dups.length > 0) {
+            report += "EXACT DUPLICATES (" + dups.length + ")\n"
+                + "-".repeat(40) + "\n"
+                + "Same dots + fret + context + quality. The second one can be removed.\n\n"
+            for (var d = 0; d < dups.length; d++)
+                report += "  " + dups[d] + "\n"
+            report += "\n"
+        }
+
+        if (enhs.length > 0) {
+            report += "ENHARMONIC EQUIVALENTS (" + enhs.length + ")\n"
+                + "-".repeat(40) + "\n"
+                + "Same pitch classes, different chord quality name.\n"
+                + "These are usually legitimate (e.g., C6 and Am7 share the same notes).\n"
+                + "Review: if both names make sense in context, dismiss this finding.\n\n"
+            for (var e = 0; e < enhs.length; e++)
+                report += "  " + enhs[e] + "\n"
+            report += "\n"
+        }
+
+        if (ctxs.length > 0) {
+            report += "CROSS-CONTEXT MATCHES (" + ctxs.length + ")\n"
+                + "-".repeat(40) + "\n"
+                + "Same physical shape appears in different contexts (e.g., CM6 and CV6).\n"
+                + "This is expected — same shape, different musical purpose. Informational only.\n\n"
+            for (var c = 0; c < ctxs.length; c++)
+                report += "  " + ctxs[c] + "\n"
+            report += "\n"
+        }
+
+        if (lastAuditResults.length === 0) {
+            report += "No issues found. Library is clean.\n"
+        }
+
+        report += "\n" + "=".repeat(60) + "\n"
+            + "To dismiss a finding: note the finding text, then in the plugin\n"
+            + "Settings > Library Health, the dismiss system will suppress it\n"
+            + "in future audits.\n"
 
         tempDiagramFile.source = path
         try {
             tempDiagramFile.write(report)
-            hygieneResult.text = hygieneResult.text + "\nReport saved to " + path
+            hygieneResult.text = hygieneResult.text + "\nReport opened"
         } catch (e) {
             hygieneResult.text = "Failed to save report: " + e
             hygieneResult.color = "#c00"
@@ -1988,32 +2033,6 @@ MuseScore {
                     Layout.fillWidth: true
                     spacing: 4
 
-                    Button {
-                        text: "Run Audit"
-                        font.pixelSize: 10
-                        onClicked: runHygieneAudit()
-                    }
-
-                    Button {
-                        text: "Save Report"
-                        font.pixelSize: 10
-                        visible: auditResultsModel.count > 0
-                        onClicked: saveAuditReport()
-                    }
-
-                    Button {
-                        text: "Reset Dismissed"
-                        font.pixelSize: 10
-                        visible: hygieneIgnoreList.length > 0
-                        onClicked: clearDismissals()
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-                    visible: auditResultsModel.count > 0
-
                     TextField {
                         id: auditReportPath
                         Layout.fillWidth: true
@@ -2029,100 +2048,34 @@ MuseScore {
                     }
                 }
 
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Run Audit"
+                        font.pixelSize: 10
+                        onClicked: {
+                            runHygieneAudit()
+                            saveAuditReport()
+                            Qt.openUrlExternally(auditReportPath.text)
+                        }
+                    }
+
+                    Button {
+                        text: "Reset Dismissed"
+                        font.pixelSize: 10
+                        visible: hygieneIgnoreList.length > 0
+                        onClicked: clearDismissals()
+                    }
+                }
+
                 Label {
                     id: hygieneResult
                     visible: text.length > 0
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
-                }
-
-                // Scrollable audit results with review checkboxes
-                Flickable {
-                    id: auditFlickable
-                    visible: auditResultsModel.count > 0
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Math.min(auditResultsModel.count * 30, 200)
-                    contentHeight: auditColumn.implicitHeight
-                    clip: true
-                    flickableDirection: Flickable.VerticalFlick
-
-                    Column {
-                        id: auditColumn
-                        width: parent.width
-                        spacing: 2
-
-                        Repeater {
-                            model: auditResultsModel
-                            delegate: RowLayout {
-                                width: auditColumn.width
-                                spacing: 4
-
-                                CheckBox {
-                                    id: findingCheck
-                                    checked: false
-                                    implicitWidth: 20
-                                    implicitHeight: 20
-                                }
-
-                                Label {
-                                    text: modelData
-                                    font.pixelSize: 9
-                                    wrapMode: Text.WordWrap
-                                    Layout.fillWidth: true
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Apply actions for checked findings
-                RowLayout {
-                    visible: auditResultsModel.count > 0
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Dismiss Checked"
-                        font.pixelSize: 10
-                        onClicked: {
-                            // Iterate checked items and dismiss them
-                            var count = 0
-                            for (var i = 0; i < auditColumn.children.length; i++) {
-                                var row = auditColumn.children[i]
-                                if (row && row.children && row.children[0] && row.children[0].checked) {
-                                    var t = lastAuditResults[i] || ""
-                                    var key = ""
-                                    if (t.indexOf("DUP:") === 0)
-                                        key = "DUP:" + t.substring(5).replace(/ /g, "")
-                                    else if (t.indexOf("ENHARMONIC:") === 0)
-                                        key = "ENH:" + t.substring(12, 30)
-                                    else if (t.indexOf("CROSS-CTX:") === 0)
-                                        key = "CTX:" + t.substring(11, 30)
-                                    else
-                                        key = t.substring(0, 40)
-                                    if (key) {
-                                        dismissFinding(key)
-                                        count++
-                                    }
-                                }
-                            }
-                            if (count > 0) runHygieneAudit()
-                            else hygieneResult.text = "Check the findings you want to dismiss first"
-                        }
-                    }
-
-                    Button {
-                        text: "Select All"
-                        font.pixelSize: 10
-                        onClicked: {
-                            for (var i = 0; i < auditColumn.children.length; i++) {
-                                var row = auditColumn.children[i]
-                                if (row && row.children && row.children[0] && row.children[0].hasOwnProperty("checked"))
-                                    row.children[0].checked = true
-                            }
-                        }
-                    }
                 }
 
                 // --- Divider ---
