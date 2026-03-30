@@ -105,6 +105,25 @@ MuseScore {
         contextLabelsShort = shorts
     }
 
+    // Timer to paste after launchd agent writes diagram data to clipboard
+    Timer {
+        id: pasteTimer
+        interval: 1000
+        repeat: false
+        onTriggered: {
+            console.log("pasteTimer fired — calling cmd('paste')")
+            try {
+                cmd("paste")
+                console.log("cmd('paste') completed")
+                statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
+            } catch (e) {
+                console.log("cmd('paste') error: " + e)
+                statusMsg.text = "Paste failed: " + e + " — try Cmd+V manually"
+                statusMsg.color = "#c00"
+            }
+        }
+    }
+
     function rebuildFilterLists() {
         var contexts = {}, categories = {}, qualities = {}
         for (var i = 0; i < voicingsData.length; i++) {
@@ -393,122 +412,49 @@ MuseScore {
 
         var fretOffset = transposedFret - 1  // MS4 uses 0-indexed
 
-        // Build <FretDiagram> element
-        var fdXml = "          <FretDiagram>\n"
+        // Build <EngravingItem> XML in MuseScore's clipboard format
+        var xml = '<EngravingItem>\n'
+            + '  <FretDiagram>\n'
         if (fretOffset > 0)
-            fdXml += "            <fretOffset>" + fretOffset + "</fretOffset>\n"
+            xml += '    <fretOffset>' + fretOffset + '</fretOffset>\n'
         if (numFrets !== 4)
-            fdXml += "            <frets>" + numFrets + "</frets>\n"
+            xml += '    <frets>' + numFrets + '</frets>\n'
         if (numStrings !== 6)
-            fdXml += "            <strings>" + numStrings + "</strings>\n"
-        fdXml += "            <fretDiagram>\n"
+            xml += '    <strings>' + numStrings + '</strings>\n'
+        xml += '    <fretDiagram>\n'
 
         var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
         for (var k = 0; k < sortedKeys.length; k++) {
             var sn = sortedKeys[k]
             var sd = stringData[sn]
-            fdXml += '              <string no="' + sn + '">\n'
+            xml += '      <string no="' + sn + '">\n'
             if (sd.marker)
-                fdXml += '                <marker>' + sd.marker + '</marker>\n'
+                xml += '        <marker>' + sd.marker + '</marker>\n'
             if (sd.dot !== undefined)
-                fdXml += '                <dot fret="' + sd.dot + '">normal</dot>\n'
-            fdXml += '              </string>\n'
+                xml += '        <dot fret="' + sd.dot + '">normal</dot>\n'
+            xml += '      </string>\n'
         }
-        fdXml += "            </fretDiagram>\n"
-        fdXml += "          </FretDiagram>"
+        xml += '    </fretDiagram>\n'
+        xml += '  </FretDiagram>\n'
+        xml += '</EngravingItem>'
 
-        // Guitar string tuning data
-        var tuningXml
-        if (numStrings === 7) {
-            tuningXml = '          <StringData>\n'
-                + '            <frets>24</frets>\n'
-                + '            <string>33</string><string>40</string>'
-                + '<string>45</string><string>50</string>'
-                + '<string>55</string><string>59</string><string>64</string>\n'
-                + '          </StringData>'
-        } else {
-            tuningXml = '          <StringData>\n'
-                + '            <frets>24</frets>\n'
-                + '            <string>40</string><string>45</string>'
-                + '<string>50</string><string>55</string>'
-                + '<string>59</string><string>64</string>\n'
-                + '          </StringData>'
-        }
-
-        // MIDI pitch for the root note
-        var midiC4 = 60
-        var midiPitch = midiC4 + offset
-        var tpc = 14 + offset
-        if (tpc > 25) tpc -= 12
-
-        // Complete .mscx score
-        var mscx = '<?xml version="1.0" encoding="UTF-8"?>\n'
-            + '<museScore version="4.60">\n'
-            + '  <programVersion>4.6.5</programVersion>\n'
-            + '  <Score>\n'
-            + '    <Division>480</Division>\n'
-            + '    <showInvisible>1</showInvisible>\n'
-            + '    <showUnprintable>1</showUnprintable>\n'
-            + '    <showFrames>1</showFrames>\n'
-            + '    <showMargins>0</showMargins>\n'
-            + '    <metaTag name="workTitle">' + displayName + '</metaTag>\n'
-            + '    <Part id="1">\n'
-            + '      <Staff>\n'
-            + '        <StaffType group="pitched"><name>stdNormal</name></StaffType>\n'
-            + '      </Staff>\n'
-            + '      <trackName>Guitar</trackName>\n'
-            + '      <Instrument id="electric-guitar">\n'
-            + '        <longName>Electric Guitar</longName>\n'
-            + '        <shortName>E.Guit.</shortName>\n'
-            + '        <trackName>Electric Guitar</trackName>\n'
-            + '        <transposeDiatonic>-7</transposeDiatonic>\n'
-            + '        <transposeChromatic>-12</transposeChromatic>\n'
-            + tuningXml + '\n'
-            + '        <Channel name="open"><program value="27"/></Channel>\n'
-            + '      </Instrument>\n'
-            + '    </Part>\n'
-            + '    <Staff id="1">\n'
-            + '      <VBox>\n'
-            + '        <height>10</height>\n'
-            + '        <Text><style>title</style><text>' + displayName + '</text></Text>\n'
-            + '      </VBox>\n'
-            + '      <Measure>\n'
-            + '        <voice>\n'
-            + '          <TimeSig><sigN>4</sigN><sigD>4</sigD></TimeSig>\n'
-            + fdXml + '\n'
-            + '          <Chord>\n'
-            + '            <durationType>whole</durationType>\n'
-            + '            <Note>\n'
-            + '              <pitch>' + midiPitch + '</pitch>\n'
-            + '              <tpc>' + tpc + '</tpc>\n'
-            + '            </Note>\n'
-            + '          </Chord>\n'
-            + '        </voice>\n'
-            + '      </Measure>\n'
-            + '    </Staff>\n'
-            + '  </Score>\n'
-            + '</museScore>\n'
-
-        // Write request file for Python automation
-        var request = JSON.stringify({
-            voicing_id: voicing.id,
-            root: targetRoot,
-            score_title: curScore ? curScore.title : ""
-        }, null, 2)
-
-        var requestPath = Qt.resolvedUrl("paste-request.json")
-        tempDiagramFile.source = requestPath
+        // Write the clipboard XML to a file that ms-clipboard will read
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
         try {
-            tempDiagramFile.write(request)
+            tempDiagramFile.write(xml)
         } catch (e) {
-            statusMsg.text = "Failed to write request: " + e
+            statusMsg.text = "Failed to write clipboard XML: " + e
             statusMsg.color = "#c00"
             return
         }
 
-        // Launch helper app — runs Python silently, no Terminal, no Dock icon
-        var appPath = Qt.resolvedUrl("Chord Library Helper.app")
-        Qt.openUrlExternally(appPath)
+        // A launchd agent (com.siegeanalytics.chord-library-clipboard) watches
+        // paste-clipboard.xml for changes and runs ms-clipboard to write to
+        // the macOS pasteboard. No Terminal, no visible windows.
+        // The Timer then fires cmd("paste") to insert the diagram with dots.
+        pasteTimer.start()
+
         statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
         statusMsg.color = "#060"
     }
