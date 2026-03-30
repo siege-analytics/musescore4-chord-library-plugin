@@ -64,6 +64,22 @@ Restart MuseScore Studio and enable **Chord Library** under Plugins.
 
 If no chord symbol is present at the cursor, the voicing inserts in its stored key (C).
 
+### Fretboard diagram colors
+
+Each voicing card shows a mini fretboard diagram with dots color-coded by interval:
+
+| Color | Interval |
+|-------|----------|
+| Red | Root (1) |
+| Blue | 3rd (3, b3) |
+| Green | 5th (5, b5, #5) |
+| Orange | 7th (7, b7, bb7) |
+| Purple | 9th (9, b9, #9) |
+| Teal | 4th / 11th (#11) |
+| Gold | 6th / 13th (b13) |
+
+A compact legend is shown between the filter controls and the voicing list. Colors adapt to dark/light mode.
+
 ### Contexts
 
 The library organises voicings along two axes:

@@ -1303,6 +1303,38 @@ MuseScore {
             }
         }
 
+        // Color legend for fretboard dot intervals
+        Flow {
+            visible: !showSettings
+            Layout.fillWidth: true
+            spacing: 8
+
+            Repeater {
+                model: [
+                    {label: "R", color: "#D32F2F"},
+                    {label: "3", color: "#1976D2"},
+                    {label: "5", color: "#388E3C"},
+                    {label: "7", color: "#F57C00"},
+                    {label: "9", color: "#7B1FA2"},
+                    {label: "4/11", color: "#00897B"},
+                    {label: "6/13", color: "#FBC02D"}
+                ]
+
+                Row {
+                    spacing: 2
+                    Rectangle {
+                        width: 8; height: 8; radius: 4
+                        color: modelData.color
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Label {
+                        text: modelData.label
+                        font.pixelSize: 9
+                    }
+                }
+            }
+        }
+
         ListView {
             visible: !showSettings
             id: voicingList
