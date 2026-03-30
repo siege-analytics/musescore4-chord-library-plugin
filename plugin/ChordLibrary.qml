@@ -950,7 +950,10 @@ MuseScore {
 
     // === Voicing preview (MIDI playback via ms-audio) ===
 
-    function playVoicing(voicing) {
+    function playVoicing(voicing, mode) {
+        // mode: "chord" (all at once) or "arp" (strum low to high)
+        if (!mode) mode = "chord"
+
         // Compute MIDI note numbers for this voicing in the current tuning
         var midiNotes = []
         var dots = voicing.dots || []
@@ -976,6 +979,7 @@ MuseScore {
         var request = JSON.stringify({
             notes: midiNotes,
             duration: 1.5,
+            mode: mode,
         })
         try {
             audioFile.write(request)
@@ -1873,16 +1877,27 @@ MuseScore {
 
                         Button {
                             text: "Open"
-                            font.pixelSize: 10
-                            implicitWidth: 48
+                            font.pixelSize: 9
+                            implicitWidth: 44
                             onClicked: generateDiagramFile(v)
                         }
 
-                        Button {
-                            text: "Play"
-                            font.pixelSize: 9
-                            implicitWidth: 48
-                            onClicked: playVoicing(v)
+                        RowLayout {
+                            spacing: 1
+
+                            Button {
+                                text: "\u266B"  // beamed eighth notes — chord strum
+                                font.pixelSize: 11
+                                implicitWidth: 22
+                                onClicked: playVoicing(v, "chord")
+                            }
+
+                            Button {
+                                text: "\u2191"  // up arrow — arpeggio
+                                font.pixelSize: 11
+                                implicitWidth: 22
+                                onClicked: playVoicing(v, "arp")
+                            }
                         }
                     }
                 }

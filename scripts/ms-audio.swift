@@ -1,13 +1,11 @@
 // ms-audio: Play a chord voicing as MIDI notes.
 // Usage: ms-audio <json-file>
-// JSON format: {"notes": [60, 64, 67, 70], "duration": 1.5}
-// Notes are MIDI note numbers. Duration in seconds.
+// JSON format: {"notes": [60, 64, 67, 70], "duration": 1.5, "mode": "chord"}
+// Modes: "chord" (all at once), "arp" (low to high, strum-like)
 
 import Foundation
 import AVFoundation
-import CoreMIDI
 
-// Simple MIDI note player using AVAudioEngine + AVAudioUnitSampler
 class ChordPlayer {
     let engine = AVAudioEngine()
     let sampler = AVAudioUnitSampler()
@@ -19,20 +17,33 @@ class ChordPlayer {
     }
 
     func playChord(notes: [UInt8], velocity: UInt8 = 80, duration: Double = 1.5) {
-        // Start all notes
         for note in notes {
             sampler.startNote(note, withVelocity: velocity, onChannel: 0)
         }
-
-        // Hold for duration
         Thread.sleep(forTimeInterval: duration)
-
-        // Stop all notes
         for note in notes {
             sampler.stopNote(note, onChannel: 0)
         }
+        Thread.sleep(forTimeInterval: 0.2)
+    }
 
-        // Brief tail
+    func playArpeggio(notes: [UInt8], velocity: UInt8 = 80, noteDelay: Double = 0.12, holdDuration: Double = 1.5) {
+        // Sort low to high (like strumming from bass string up)
+        let sorted = notes.sorted()
+
+        // Strum: start each note with a slight delay, let them ring
+        for note in sorted {
+            sampler.startNote(note, withVelocity: velocity, onChannel: 0)
+            Thread.sleep(forTimeInterval: noteDelay)
+        }
+
+        // Hold all notes ringing
+        Thread.sleep(forTimeInterval: holdDuration)
+
+        // Stop all
+        for note in sorted {
+            sampler.stopNote(note, onChannel: 0)
+        }
         Thread.sleep(forTimeInterval: 0.2)
     }
 
@@ -41,7 +52,6 @@ class ChordPlayer {
     }
 }
 
-// Read input
 guard CommandLine.arguments.count > 1 else {
     fputs("Usage: ms-audio <json-file>\n", stderr)
     exit(1)
@@ -56,8 +66,13 @@ guard let data = FileManager.default.contents(atPath: path),
 }
 
 let duration = (json["duration"] as? Double) ?? 1.5
+let mode = (json["mode"] as? String) ?? "chord"
 let notes = noteNumbers.map { UInt8(max(0, min(127, $0))) }
 
 let player = ChordPlayer()
-player.playChord(notes: notes, duration: duration)
+if mode == "arp" {
+    player.playArpeggio(notes: notes, holdDuration: duration)
+} else {
+    player.playChord(notes: notes, duration: duration)
+}
 player.stop()
