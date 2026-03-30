@@ -60,9 +60,10 @@ MuseScore {
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
     property string selectedTuning: "standard"  // matches config/tunings/<name>.json
-    property var tuningList: ["standard", "7string-low-b", "dadgad", "all-fourths"]
+    property var tuningList: ["standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths"]
     property var tuningLabels: {
-        "standard": "Standard + Van Eps 7th (Low A)",
+        "standard": "Standard 6-String",
+        "7string-van-eps": "7-String Van Eps (Low A)",
         "7string-low-b": "7-String Low B",
         "dadgad": "DADGAD",
         "all-fourths": "All Fourths"

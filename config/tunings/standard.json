@@ -1,14 +1,13 @@
 {
-  "name": "Standard + Van Eps 7th (Low A)",
-  "description": "Standard 6-string tuning with optional 7th string tuned to low A (George Van Eps tuning).",
+  "name": "Standard 6-String",
+  "description": "Standard 6-string guitar tuning. E-A-D-G-B-E.",
   "strings": {
     "1": 64,
     "2": 59,
     "3": 55,
     "4": 50,
     "5": 45,
-    "6": 40,
-    "7": 33
+    "6": 40
   },
   "notes": {
     "1": "E4",
@@ -16,8 +15,6 @@
     "3": "G3",
     "4": "D3",
     "5": "A2",
-    "6": "E2",
-    "7": "A1"
-  },
-  "reference": "MIDI note numbers. Middle C (C4) = 60. A440 (A4) = 69."
+    "6": "E2"
+  }
 }
