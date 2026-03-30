@@ -1311,28 +1311,108 @@ MuseScore {
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.margins: 8
+                    anchors.margins: 6
                     spacing: 6
 
+                    // Fretboard thumbnail
+                    Canvas {
+                        id: fretCanvas
+                        Layout.preferredWidth: 50
+                        Layout.preferredHeight: 66
+
+                        onPaint: {
+                            var ctx = getContext("2d")
+                            ctx.clearRect(0, 0, width, height)
+                            if (!v || !v.dots) return
+
+                            var ns = v.strings || 6
+                            var nf = v.visible_frets || 4
+                            var mg = 5, tm = 12
+                            var ss = (width - 2 * mg) / (ns - 1)
+                            var fs = (height - tm - mg) / nf
+
+                            // Strings
+                            ctx.strokeStyle = Qt.rgba(0.5, 0.5, 0.5, 0.6)
+                            ctx.lineWidth = 0.5
+                            for (var s = 0; s < ns; s++) {
+                                ctx.beginPath()
+                                ctx.moveTo(mg + s * ss, tm)
+                                ctx.lineTo(mg + s * ss, height - mg)
+                                ctx.stroke()
+                            }
+
+                            // Frets
+                            for (var f = 0; f <= nf; f++) {
+                                ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                                var fy = tm + f * fs
+                                ctx.beginPath()
+                                ctx.moveTo(mg, fy)
+                                ctx.lineTo(width - mg, fy)
+                                ctx.stroke()
+                            }
+
+                            // Fret number label
+                            if ((v.fret_number || 0) > 1) {
+                                ctx.fillStyle = Qt.rgba(0.5, 0.5, 0.5, 0.8)
+                                ctx.font = "7px sans-serif"
+                                ctx.textAlign = "right"
+                                ctx.fillText(v.fret_number, mg - 1, tm + fs * 0.6)
+                            }
+
+                            // Dots
+                            var dots = v.dots || []
+                            ctx.fillStyle = Qt.rgba(0.2, 0.2, 0.2, 0.9)
+                            for (var d = 0; d < dots.length; d++) {
+                                var dx = mg + (ns - dots[d].string) * ss
+                                var dy = tm + (dots[d].fret - 0.5) * fs
+                                ctx.beginPath()
+                                ctx.arc(dx, dy, 3.5, 0, 2 * Math.PI)
+                                ctx.fill()
+                            }
+
+                            // Mute markers (×)
+                            ctx.fillStyle = Qt.rgba(0.5, 0.5, 0.5, 0.7)
+                            ctx.font = "9px sans-serif"
+                            ctx.textAlign = "center"
+                            var mutes = v.mutes || []
+                            for (var m = 0; m < mutes.length; m++) {
+                                ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
+                            }
+
+                            // Open markers (○)
+                            ctx.strokeStyle = Qt.rgba(0.5, 0.5, 0.5, 0.7)
+                            ctx.lineWidth = 1
+                            var opens = v.open || []
+                            for (var o = 0; o < opens.length; o++) {
+                                ctx.beginPath()
+                                ctx.arc(mg + (ns - opens[o]) * ss, tm - 5, 3, 0, 2 * Math.PI)
+                                ctx.stroke()
+                            }
+                        }
+
+                        Component.onCompleted: requestPaint()
+                    }
+
+                    // Text info
                     ColumnLayout {
                         Layout.fillWidth: true
                         spacing: 2
 
                         Label {
                             text: v.name || ""
-                            font.pixelSize: 13
+                            font.pixelSize: 12
                             font.bold: true
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
                         Label {
                             text: (v.intervals || []).join(" ") + "  |  " + (v.context || "") + "  |  Fret " + (v.fret_number || "?")
-                            font.pixelSize: 11
+                            font.pixelSize: 10
                             Layout.fillWidth: true
                         }
                         Label {
-                            text: (v.tags || []).filter(function(t) { return t !== "needs_verification" && t !== "needs_rework" }).join(", ")
-                            font.pixelSize: 10
+                            text: (v.notes || []).join(" ")
+                            font.pixelSize: 9
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
