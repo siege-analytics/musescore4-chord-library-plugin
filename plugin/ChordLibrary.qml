@@ -2037,12 +2037,12 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                // Scrollable audit results with checkboxes
+                // Scrollable audit results with review checkboxes
                 Flickable {
                     id: auditFlickable
                     visible: auditResultsModel.count > 0
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Math.min(auditResultsModel.count * 24, 180)
+                    Layout.preferredHeight: Math.min(auditResultsModel.count * 30, 200)
                     contentHeight: auditColumn.implicitHeight
                     clip: true
                     flickableDirection: Flickable.VerticalFlick
@@ -2050,40 +2050,76 @@ MuseScore {
                     Column {
                         id: auditColumn
                         width: parent.width
-                        spacing: 1
+                        spacing: 2
 
                         Repeater {
                             model: auditResultsModel
-                            delegate: Row {
+                            delegate: RowLayout {
                                 width: auditColumn.width
                                 spacing: 4
+
+                                CheckBox {
+                                    id: findingCheck
+                                    checked: false
+                                    implicitWidth: 20
+                                    implicitHeight: 20
+                                }
 
                                 Label {
                                     text: modelData
                                     font.pixelSize: 9
                                     wrapMode: Text.WordWrap
-                                    width: parent.width - dismissBtn.width - 8
+                                    Layout.fillWidth: true
                                 }
+                            }
+                        }
+                    }
+                }
 
-                                Label {
-                                    id: dismissBtn
-                                    text: '<a href="#">dismiss</a>'
-                                    font.pixelSize: 8
-                                    onLinkActivated: {
-                                        // Extract key from the finding text
-                                        var t = modelData
-                                        var key = ""
-                                        if (t.indexOf("DUP:") === 0)
-                                            key = "DUP:" + t.substring(5).replace(/ /g, "")
-                                        else if (t.indexOf("ENHARMONIC:") === 0)
-                                            key = "ENH:" + t.substring(12, 30)
-                                        else if (t.indexOf("CROSS-CTX:") === 0)
-                                            key = "CTX:" + t.substring(11, 30)
-                                        else
-                                            key = t.substring(0, 40)
+                // Apply actions for checked findings
+                RowLayout {
+                    visible: auditResultsModel.count > 0
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Dismiss Checked"
+                        font.pixelSize: 10
+                        onClicked: {
+                            // Iterate checked items and dismiss them
+                            var count = 0
+                            for (var i = 0; i < auditColumn.children.length; i++) {
+                                var row = auditColumn.children[i]
+                                if (row && row.children && row.children[0] && row.children[0].checked) {
+                                    var t = lastAuditResults[i] || ""
+                                    var key = ""
+                                    if (t.indexOf("DUP:") === 0)
+                                        key = "DUP:" + t.substring(5).replace(/ /g, "")
+                                    else if (t.indexOf("ENHARMONIC:") === 0)
+                                        key = "ENH:" + t.substring(12, 30)
+                                    else if (t.indexOf("CROSS-CTX:") === 0)
+                                        key = "CTX:" + t.substring(11, 30)
+                                    else
+                                        key = t.substring(0, 40)
+                                    if (key) {
                                         dismissFinding(key)
+                                        count++
                                     }
                                 }
+                            }
+                            if (count > 0) runHygieneAudit()
+                            else hygieneResult.text = "Check the findings you want to dismiss first"
+                        }
+                    }
+
+                    Button {
+                        text: "Select All"
+                        font.pixelSize: 10
+                        onClicked: {
+                            for (var i = 0; i < auditColumn.children.length; i++) {
+                                var row = auditColumn.children[i]
+                                if (row && row.children && row.children[0] && row.children[0].hasOwnProperty("checked"))
+                                    row.children[0].checked = true
                             }
                         }
                     }
