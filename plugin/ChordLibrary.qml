@@ -2284,7 +2284,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Siege Analytics Chord Library v1.1.0"
+                    text: "Siege Analytics Chord Library v1.2.0"
                     font.pixelSize: 12
                     font.bold: true
                     
