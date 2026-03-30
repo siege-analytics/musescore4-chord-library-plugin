@@ -229,6 +229,31 @@ MuseScore {
         return map
     }
 
+    // Parse a note name like "E4", "Bb3", "F#2" to MIDI number
+    // Returns -1 if not a valid note name (caller falls back to parseInt)
+    property var noteToMidiMap: {
+        "C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11
+    }
+    function noteNameToMidi(str) {
+        str = str.trim()
+        // Try as plain integer first
+        var asInt = parseInt(str)
+        if (!isNaN(asInt) && str.match(/^\d+$/)) return asInt
+
+        // Parse note name: letter + optional accidental + octave
+        var match = str.match(/^([A-Ga-g])(#|b|)(\d)$/)
+        if (!match) return -1
+        var letter = match[1].toUpperCase()
+        var accidental = match[2]
+        var octave = parseInt(match[3])
+        var base = noteToMidiMap[letter]
+        if (base === undefined) return -1
+        var midi = (octave + 1) * 12 + base
+        if (accidental === "#") midi += 1
+        else if (accidental === "b") midi -= 1
+        return midi
+    }
+
     function addTuningToList(slug, name) {
         // Add to the runtime lists if not already present
         var list = tuningList.slice()
@@ -291,7 +316,17 @@ MuseScore {
         }
 
         var pitchStr = tuningPitchesField.text.trim()
-        var pitches = pitchStr.split(",").map(function(s) { return parseInt(s.trim()) })
+        var rawParts = pitchStr.split(",")
+        var pitches = []
+        for (var p = 0; p < rawParts.length; p++) {
+            var midi = noteNameToMidi(rawParts[p])
+            if (midi < 0) {
+                tuningImportStatus.text = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
+                tuningImportStatus.color = "#c00"
+                return
+            }
+            pitches.push(midi)
+        }
         var numStrings = tuningStringCount.value
 
         if (pitches.length < numStrings) {
@@ -303,8 +338,8 @@ MuseScore {
 
         // Validate pitches are reasonable MIDI values
         for (var i = 0; i < pitches.length; i++) {
-            if (isNaN(pitches[i]) || pitches[i] < 20 || pitches[i] > 100) {
-                tuningImportStatus.text = "Invalid MIDI pitch: " + pitches[i] + " (expected 20-100)"
+            if (pitches[i] < 20 || pitches[i] > 100) {
+                tuningImportStatus.text = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
                 tuningImportStatus.color = "#c00"
                 return
             }
@@ -966,7 +1001,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "String pitches (MIDI, high to low, comma-separated):"
+                    text: "String pitches (high to low, note names or MIDI):"
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -976,9 +1011,9 @@ MuseScore {
                     id: tuningPitchesField
                     Layout.fillWidth: true
                     font.pixelSize: 11
-                    placeholderText: "64, 59, 55, 50, 45, 40"
+                    placeholderText: "E4, B3, G3, D3, A2, E2"
                     selectByMouse: true
-                    text: "64, 59, 55, 50, 45, 40"
+                    text: "E4, B3, G3, D3, A2, E2"
                 }
 
                 Button {
