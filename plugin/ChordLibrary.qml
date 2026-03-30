@@ -954,6 +954,38 @@ MuseScore {
     // Store last audit results for report export
     property var lastAuditResults: []
 
+    function fixDuplicates() {
+        // Remove exact duplicates (same dots + fret + context + quality)
+        var seen = {}
+        var removed = 0
+        var cleaned = []
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            var dots = []
+            for (var d = 0; d < v.dots.length; d++)
+                dots.push(v.dots[d].string + ":" + v.dots[d].fret)
+            dots.sort()
+            var fp = v.strings + "|" + v.fret_number + "|" + dots.join(",") + "|" + v.context + "|" + v.chord_quality
+            if (seen[fp]) {
+                removed++
+            } else {
+                seen[fp] = v.id
+                cleaned.push(v)
+            }
+        }
+        if (removed > 0) {
+            voicingsData = cleaned
+            rebuildFilterLists()
+            applyFilters()
+            saveToCache()
+            hygieneResult.text = "Removed " + removed + " duplicates. " + voicingsData.length + " voicings remain."
+            hygieneResult.color = "#060"
+        } else {
+            hygieneResult.text = "No duplicates found."
+            hygieneResult.color = "#060"
+        }
+    }
+
     function saveAuditReport() {
         var path = auditReportPath.text.trim()
         if (!path) { hygieneResult.text = "Enter a file path"; return }
@@ -978,31 +1010,38 @@ MuseScore {
         if (dups.length > 0) {
             report += "EXACT DUPLICATES (" + dups.length + ")\n"
                 + "-".repeat(40) + "\n"
-                + "Same dots + fret + context + quality. The second one can be removed.\n\n"
-            for (var d = 0; d < dups.length; d++)
+                + "Same dots + fret + context + quality. Click 'Fix Duplicates' in the\n"
+                + "plugin to remove these automatically.\n\n"
+            for (var d = 0; d < dups.length; d++) {
+                var dupKey = "DUP:" + dups[d].substring(5).replace(/ /g, "")
                 report += "  " + dups[d] + "\n"
-            report += "\n"
+                report += "    DISMISS KEY: " + dupKey + "\n\n"
+            }
         }
 
         if (enhs.length > 0) {
             report += "ENHARMONIC EQUIVALENTS (" + enhs.length + ")\n"
                 + "-".repeat(40) + "\n"
                 + "Same pitch classes, different chord quality name.\n"
-                + "These are usually legitimate (e.g., C6 and Am7 share the same notes).\n"
-                + "Review: if both names make sense in context, dismiss this finding.\n\n"
-            for (var e = 0; e < enhs.length; e++)
+                + "Usually legitimate (e.g., C6 and Am7 share the same notes).\n"
+                + "If both names make sense, dismiss the finding.\n\n"
+            for (var e = 0; e < enhs.length; e++) {
+                var enhKey = "ENH:" + enhs[e].substring(12, 30).replace(/ /g, "")
                 report += "  " + enhs[e] + "\n"
-            report += "\n"
+                report += "    DISMISS KEY: " + enhKey + "\n\n"
+            }
         }
 
         if (ctxs.length > 0) {
             report += "CROSS-CONTEXT MATCHES (" + ctxs.length + ")\n"
                 + "-".repeat(40) + "\n"
-                + "Same physical shape appears in different contexts (e.g., CM6 and CV6).\n"
-                + "This is expected — same shape, different musical purpose. Informational only.\n\n"
-            for (var c = 0; c < ctxs.length; c++)
+                + "Same shape in different contexts (CM6 vs CV6). Expected — same shape,\n"
+                + "different musical purpose. Informational only.\n\n"
+            for (var c = 0; c < ctxs.length; c++) {
+                var ctxKey = "CTX:" + ctxs[c].substring(11, 30).replace(/ /g, "")
                 report += "  " + ctxs[c] + "\n"
-            report += "\n"
+                report += "    DISMISS KEY: " + ctxKey + "\n\n"
+            }
         }
 
         if (lastAuditResults.length === 0) {
@@ -1010,9 +1049,12 @@ MuseScore {
         }
 
         report += "\n" + "=".repeat(60) + "\n"
-            + "To dismiss a finding: note the finding text, then in the plugin\n"
-            + "Settings > Library Health, the dismiss system will suppress it\n"
-            + "in future audits.\n"
+            + "HOW TO ACT ON FINDINGS\n"
+            + "-".repeat(40) + "\n"
+            + "DUPLICATES: Click 'Fix Duplicates' in the plugin to auto-remove.\n"
+            + "DISMISS:    Copy a DISMISS KEY from above, paste it into the\n"
+            + "            'Dismiss' field in Settings > Library Health, click Dismiss.\n"
+            + "RESET:      Click 'Reset All Dismissed' to un-suppress everything.\n"
 
         tempDiagramFile.source = path
         try {
@@ -2048,25 +2090,13 @@ MuseScore {
                     }
                 }
 
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Run Audit"
-                        font.pixelSize: 10
-                        onClicked: {
-                            runHygieneAudit()
-                            saveAuditReport()
-                            Qt.openUrlExternally(auditReportPath.text)
-                        }
-                    }
-
-                    Button {
-                        text: "Reset Dismissed"
-                        font.pixelSize: 10
-                        visible: hygieneIgnoreList.length > 0
-                        onClicked: clearDismissals()
+                Button {
+                    text: "Run Audit"
+                    font.pixelSize: 10
+                    onClicked: {
+                        runHygieneAudit()
+                        saveAuditReport()
+                        Qt.openUrlExternally(auditReportPath.text)
                     }
                 }
 
@@ -2076,6 +2106,61 @@ MuseScore {
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                }
+
+                // --- Dismiss / Fix actions ---
+                Label {
+                    visible: lastAuditResults.length > 0
+                    text: "Paste a DISMISS KEY from the report to suppress it:"
+                    font.pixelSize: 9
+                }
+
+                RowLayout {
+                    visible: lastAuditResults.length > 0
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: dismissKeyField
+                        Layout.fillWidth: true
+                        font.pixelSize: 10
+                        placeholderText: "e.g. ENH:0,4,9,11"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Dismiss"
+                        font.pixelSize: 10
+                        onClicked: {
+                            var key = dismissKeyField.text.trim()
+                            if (key) {
+                                dismissFinding(key)
+                                dismissKeyField.text = ""
+                                hygieneResult.text = "Dismissed. Run audit again to see updated results."
+                                hygieneResult.color = "#060"
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    visible: lastAuditResults.length > 0 || hygieneIgnoreList.length > 0
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Fix Duplicates"
+                        font.pixelSize: 10
+                        visible: lastAuditResults.some(function(r) { return r.indexOf("DUP:") === 0 })
+                        onClicked: fixDuplicates()
+                    }
+
+                    Button {
+                        text: "Reset All Dismissed"
+                        font.pixelSize: 10
+                        visible: hygieneIgnoreList.length > 0
+                        onClicked: clearDismissals()
+                    }
                 }
 
                 // --- Divider ---
