@@ -789,12 +789,63 @@ MuseScore {
 
     // === Library hygiene audit ===
 
+    FileIO {
+        id: hygieneIgnoreFile
+        source: Qt.resolvedUrl("hygiene-ignore.json")
+    }
+
+    property var hygieneIgnoreList: []
+
+    function loadHygieneIgnoreList() {
+        try {
+            var raw = hygieneIgnoreFile.read()
+            if (raw && raw.length > 2) {
+                hygieneIgnoreList = JSON.parse(raw)
+                console.log("Loaded " + hygieneIgnoreList.length + " hygiene dismissals")
+            }
+        } catch (e) {
+            hygieneIgnoreList = []
+        }
+    }
+
+    function saveHygieneIgnoreList() {
+        hygieneIgnoreFile.write(JSON.stringify(hygieneIgnoreList, null, 2))
+    }
+
+    function dismissFinding(key) {
+        // Add to ignore list and save
+        for (var i = 0; i < hygieneIgnoreList.length; i++) {
+            if (hygieneIgnoreList[i].key === key) return  // already dismissed
+        }
+        var list = hygieneIgnoreList.slice()
+        list.push({ key: key, date: new Date().toISOString().split("T")[0] })
+        hygieneIgnoreList = list
+        saveHygieneIgnoreList()
+        // Re-run audit to refresh the display
+        runHygieneAudit()
+    }
+
+    function isIgnored(key) {
+        for (var i = 0; i < hygieneIgnoreList.length; i++) {
+            if (hygieneIgnoreList[i].key === key) return true
+        }
+        return false
+    }
+
+    function clearDismissals() {
+        hygieneIgnoreList = []
+        saveHygieneIgnoreList()
+        runHygieneAudit()
+    }
+
     function runHygieneAudit() {
+        loadHygieneIgnoreList()
         auditResultsModel.clear()
         var results = []
         var duplicates = 0
         var enharmonic = 0
         var crossCtx = 0
+        var dismissed = 0
 
         // 1. Exact duplicates: same dots + fret + strings + context + quality
         var fpMap = {}
@@ -806,8 +857,11 @@ MuseScore {
             dots.sort()
             var fp = v.strings + "|" + v.fret_number + "|" + dots.join(",") + "|" + v.context + "|" + v.chord_quality
             if (fpMap[fp]) {
-                results.push("DUP: " + v.id + " = " + fpMap[fp])
-                duplicates++
+                var dupKey = "DUP:" + v.id + "=" + fpMap[fp]
+                if (isIgnored(dupKey)) { dismissed++; } else {
+                    results.push("DUP: " + v.id + " = " + fpMap[fp])
+                    duplicates++
+                }
             } else {
                 fpMap[fp] = v.id
             }
@@ -844,8 +898,11 @@ MuseScore {
                 for (var g = 0; g < group.length; g++) quals[group[g].quality] = true
                 if (Object.keys(quals).length > 1) {
                     var ids = group.map(function(x) { return x.id + "(" + x.quality + ")" })
-                    results.push("ENHARMONIC: " + ids.join(" = "))
-                    enharmonic++
+                    var enhKey = "ENH:" + pk
+                    if (isIgnored(enhKey)) { dismissed++; } else {
+                        results.push("ENHARMONIC: " + ids.join(" = "))
+                        enharmonic++
+                    }
                 }
             }
         }
@@ -869,18 +926,24 @@ MuseScore {
                 for (var sg = 0; sg < sgroup.length; sg++) ctxs[sgroup[sg].context] = true
                 if (Object.keys(ctxs).length > 1) {
                     var sids = sgroup.map(function(x) { return x.id + "(" + x.context + ")" })
-                    results.push("CROSS-CTX: " + sids.join(" | "))
-                    crossCtx++
+                    var ctxKey = "CTX:" + sk
+                    if (isIgnored(ctxKey)) { dismissed++; } else {
+                        results.push("CROSS-CTX: " + sids.join(" | "))
+                        crossCtx++
+                    }
                 }
             }
         }
 
         // Summary
         var total = duplicates + enharmonic + crossCtx
-        hygieneResult.text = voicingsData.length + " voicings audited\n"
-            + duplicates + " exact duplicates, "
-            + enharmonic + " enharmonic groups, "
+        var summary = voicingsData.length + " voicings audited\n"
+            + duplicates + " duplicates, "
+            + enharmonic + " enharmonic, "
             + crossCtx + " cross-context"
+        if (dismissed > 0)
+            summary += "\n(" + dismissed + " dismissed findings hidden)"
+        hygieneResult.text = summary
         hygieneResult.color = duplicates > 0 ? "#c00" : "#060"
 
         lastAuditResults = results
@@ -1937,6 +2000,13 @@ MuseScore {
                         visible: auditResultsModel.count > 0
                         onClicked: saveAuditReport()
                     }
+
+                    Button {
+                        text: "Reset Dismissed"
+                        font.pixelSize: 10
+                        visible: hygieneIgnoreList.length > 0
+                        onClicked: clearDismissals()
+                    }
                 }
 
                 RowLayout {
@@ -1984,11 +2054,36 @@ MuseScore {
 
                         Repeater {
                             model: auditResultsModel
-                            delegate: Label {
-                                text: modelData
-                                font.pixelSize: 9
-                                wrapMode: Text.WordWrap
+                            delegate: Row {
                                 width: auditColumn.width
+                                spacing: 4
+
+                                Label {
+                                    text: modelData
+                                    font.pixelSize: 9
+                                    wrapMode: Text.WordWrap
+                                    width: parent.width - dismissBtn.width - 8
+                                }
+
+                                Label {
+                                    id: dismissBtn
+                                    text: '<a href="#">dismiss</a>'
+                                    font.pixelSize: 8
+                                    onLinkActivated: {
+                                        // Extract key from the finding text
+                                        var t = modelData
+                                        var key = ""
+                                        if (t.indexOf("DUP:") === 0)
+                                            key = "DUP:" + t.substring(5).replace(/ /g, "")
+                                        else if (t.indexOf("ENHARMONIC:") === 0)
+                                            key = "ENH:" + t.substring(12, 30)
+                                        else if (t.indexOf("CROSS-CTX:") === 0)
+                                            key = "CTX:" + t.substring(11, 30)
+                                        else
+                                            key = t.substring(0, 40)
+                                        dismissFinding(key)
+                                    }
+                                }
                             }
                         }
                     }
