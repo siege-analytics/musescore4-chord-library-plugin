@@ -646,6 +646,106 @@ MuseScore {
         }
     }
 
+    // === Library hygiene audit ===
+
+    function runHygieneAudit() {
+        auditResultsModel.clear()
+        var results = []
+        var duplicates = 0
+        var enharmonic = 0
+        var crossCtx = 0
+
+        // 1. Exact duplicates: same dots + fret + strings + context + quality
+        var fpMap = {}
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            var dots = []
+            for (var d = 0; d < v.dots.length; d++)
+                dots.push(v.dots[d].string + ":" + v.dots[d].fret)
+            dots.sort()
+            var fp = v.strings + "|" + v.fret_number + "|" + dots.join(",") + "|" + v.context + "|" + v.chord_quality
+            if (fpMap[fp]) {
+                results.push("DUP: " + v.id + " = " + fpMap[fp])
+                duplicates++
+            } else {
+                fpMap[fp] = v.id
+            }
+        }
+
+        // 2. Enharmonic equivalents: same pitch class set, different quality
+        // Compute pitch classes for each voicing
+        var pcsMap = {}
+        for (var j = 0; j < voicingsData.length; j++) {
+            var vv = voicingsData[j]
+            var pcs = []
+            for (var dd = 0; dd < vv.dots.length; dd++) {
+                var strNum = vv.dots[dd].string
+                var strMidi = tuningMidi[String(strNum)]
+                if (strMidi !== undefined) {
+                    var absFret = vv.fret_number + (vv.dots[dd].fret - 1)
+                    pcs.push((strMidi + absFret) % 12)
+                }
+            }
+            // Add open strings
+            for (var oo = 0; oo < (vv.open || []).length; oo++) {
+                var openMidi = tuningMidi[String(vv.open[oo])]
+                if (openMidi !== undefined) pcs.push(openMidi % 12)
+            }
+            pcs.sort()
+            var pcsKey = pcs.join(",")
+            if (!pcsMap[pcsKey]) pcsMap[pcsKey] = []
+            pcsMap[pcsKey].push({ id: vv.id, quality: vv.chord_quality })
+        }
+        for (var pk in pcsMap) {
+            var group = pcsMap[pk]
+            if (group.length > 1) {
+                var quals = {}
+                for (var g = 0; g < group.length; g++) quals[group[g].quality] = true
+                if (Object.keys(quals).length > 1) {
+                    var ids = group.map(function(x) { return x.id + "(" + x.quality + ")" })
+                    results.push("ENHARMONIC: " + ids.join(" = "))
+                    enharmonic++
+                }
+            }
+        }
+
+        // 3. Cross-context: same shape in different contexts
+        var shapeMap = {}
+        for (var k = 0; k < voicingsData.length; k++) {
+            var vvv = voicingsData[k]
+            var sdots = []
+            for (var sd = 0; sd < vvv.dots.length; sd++)
+                sdots.push(vvv.dots[sd].string + ":" + vvv.dots[sd].fret)
+            sdots.sort()
+            var shapeFp = vvv.strings + "|" + sdots.join(",")
+            if (!shapeMap[shapeFp]) shapeMap[shapeFp] = []
+            shapeMap[shapeFp].push({ id: vvv.id, context: vvv.context })
+        }
+        for (var sk in shapeMap) {
+            var sgroup = shapeMap[sk]
+            if (sgroup.length > 1) {
+                var ctxs = {}
+                for (var sg = 0; sg < sgroup.length; sg++) ctxs[sgroup[sg].context] = true
+                if (Object.keys(ctxs).length > 1) {
+                    var sids = sgroup.map(function(x) { return x.id + "(" + x.context + ")" })
+                    results.push("CROSS-CTX: " + sids.join(" | "))
+                    crossCtx++
+                }
+            }
+        }
+
+        // Summary
+        var total = duplicates + enharmonic + crossCtx
+        hygieneResult.text = voicingsData.length + " voicings audited\n"
+            + duplicates + " exact duplicates, "
+            + enharmonic + " enharmonic groups, "
+            + crossCtx + " cross-context"
+        hygieneResult.color = duplicates > 0 ? "#c00" : "#060"
+
+        for (var r = 0; r < results.length; r++)
+            auditResultsModel.append({ "modelData": results[r] })
+    }
+
     // === Data fetching ===
 
     function fetchVoicings() {
@@ -1496,6 +1596,60 @@ MuseScore {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+
+                // --- Library Health ---
+                Label {
+                    text: "LIBRARY HEALTH"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Run Audit"
+                    font.pixelSize: 10
+                    onClicked: runHygieneAudit()
+                }
+
+                Label {
+                    id: hygieneResult
+                    visible: text.length > 0
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // Scrollable audit results
+                Flickable {
+                    id: auditFlickable
+                    visible: auditResultsModel.count > 0
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Math.min(auditResultsModel.count * 28, 200)
+                    contentHeight: auditColumn.implicitHeight
+                    clip: true
+                    flickableDirection: Flickable.VerticalFlick
+
+                    Column {
+                        id: auditColumn
+                        width: parent.width
+                        spacing: 2
+
+                        Repeater {
+                            model: auditResultsModel
+                            delegate: Label {
+                                text: modelData
+                                font.pixelSize: 9
+                                wrapMode: Text.WordWrap
+                                width: auditColumn.width
+                            }
+                        }
+                    }
+                }
+
+                ListModel { id: auditResultsModel }
 
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
