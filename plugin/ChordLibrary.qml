@@ -60,13 +60,24 @@ MuseScore {
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
     property string selectedTuning: "standard"  // matches config/tunings/<name>.json
-    property var tuningList: ["standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths"]
+    property var tuningList: [
+        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
+        "baritone", "ukulele", "ukulele-low-g", "mandolin", "banjo-open-g",
+        "bass-4string", "bass-5string"
+    ]
     property var tuningLabels: {
         "standard": "Standard 6-String",
         "7string-van-eps": "7-String Van Eps (Low A)",
         "7string-low-b": "7-String Low B",
         "dadgad": "DADGAD",
-        "all-fourths": "All Fourths"
+        "all-fourths": "All Fourths",
+        "baritone": "Baritone Guitar",
+        "ukulele": "Ukulele (Standard)",
+        "ukulele-low-g": "Ukulele (Low G)",
+        "mandolin": "Mandolin",
+        "banjo-open-g": "Banjo (Open G)",
+        "bass-4string": "Bass (4-String)",
+        "bass-5string": "Bass (5-String)"
     }
 
     property var voicingsData: []
