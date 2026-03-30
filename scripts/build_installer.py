@@ -22,7 +22,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_DIR = REPO_ROOT / "plugin"
-VERSION = "0.3.1"
+VERSION = "1.0.0"
 PLUGIN_NAME = "chordlibrary"
 
 # Files to include in the distribution
@@ -36,6 +36,13 @@ PLUGIN_FILES = [
     "plugin/ui/SearchBar.qml",
     "plugin/ui/VoicingCard.qml",
     "plugin/ui/VoicingGrid.qml",
+    "config/contexts.json",
+    "config/tunings/standard.json",
+    "config/tunings/7string-low-b.json",
+    "config/tunings/dadgad.json",
+    "config/tunings/all-fourths.json",
+    "scripts/ms-clipboard.swift",
+    "scripts/generate_mscz.py",
 ]
 
 MAC_INSTALL_SCRIPT = r'''#!/bin/bash
@@ -108,6 +115,70 @@ cp "$SOURCE_DIR/ChordLibrary.qml" "$TARGET/chordlibrary.qml"
 cp "$SOURCE_DIR/model/"* "$TARGET/model/"
 cp "$SOURCE_DIR/ui/"* "$TARGET/ui/"
 
+# Copy tuning configs
+mkdir -p "$TARGET/tunings"
+if [ -d "$SCRIPT_DIR/config/tunings" ]; then
+    cp "$SCRIPT_DIR/config/tunings/"*.json "$TARGET/tunings/"
+fi
+if [ -f "$SCRIPT_DIR/config/contexts.json" ]; then
+    mkdir -p "$DEST_DIR/../config"
+    cp "$SCRIPT_DIR/config/contexts.json" "$DEST_DIR/../config/"
+fi
+
+# Copy helper scripts
+mkdir -p "$TARGET/scripts"
+if [ -f "$SCRIPT_DIR/scripts/generate_mscz.py" ]; then
+    cp "$SCRIPT_DIR/scripts/generate_mscz.py" "$TARGET/scripts/"
+fi
+
+# Compile ms-clipboard (Swift CLI for clipboard paste)
+if [ -f "$SCRIPT_DIR/scripts/ms-clipboard.swift" ]; then
+    echo "Compiling ms-clipboard (diagram clipboard writer)..."
+    if swiftc -o "$TARGET/ms-clipboard" "$SCRIPT_DIR/scripts/ms-clipboard.swift" -framework AppKit 2>/dev/null; then
+        echo "  ms-clipboard compiled successfully."
+    else
+        echo "  WARNING: Could not compile ms-clipboard."
+        echo "  Diagram insertion with dots requires Xcode Command Line Tools."
+        echo "  Install with: xcode-select --install"
+    fi
+fi
+
+# Install launchd agent for clipboard bridge
+PLIST_NAME="com.siegeanalytics.chord-library-clipboard"
+PLIST_DIR="$HOME/Library/LaunchAgents"
+PLIST_PATH="$PLIST_DIR/$PLIST_NAME.plist"
+
+if [ -f "$TARGET/ms-clipboard" ]; then
+    echo "Installing clipboard bridge agent..."
+    mkdir -p "$PLIST_DIR"
+    cat > "$PLIST_PATH" << PLIST_EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>$PLIST_NAME</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>$TARGET/ms-clipboard</string>
+        <string>$TARGET/paste-clipboard.xml</string>
+    </array>
+    <key>WatchPaths</key>
+    <array>
+        <string>$TARGET/paste-clipboard.xml</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/tmp/chord-library-clipboard.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/chord-library-clipboard.log</string>
+</dict>
+</plist>
+PLIST_EOF
+    launchctl unload "$PLIST_PATH" 2>/dev/null || true
+    launchctl load "$PLIST_PATH"
+    echo "  Clipboard bridge agent installed and loaded."
+fi
+
 echo ""
 echo "Installation complete!"
 echo ""
@@ -155,6 +226,17 @@ done
 
 if [ $FOUND -eq 0 ]; then
     echo "No installation found."
+fi
+
+# Remove launchd agent
+PLIST_NAME="com.siegeanalytics.chord-library-clipboard"
+PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_NAME.plist"
+if [ -f "$PLIST_PATH" ]; then
+    echo ""
+    echo "Removing clipboard bridge agent..."
+    launchctl unload "$PLIST_PATH" 2>/dev/null || true
+    rm -f "$PLIST_PATH"
+    echo "  Removed."
 fi
 
 echo ""
