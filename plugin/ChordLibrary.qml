@@ -506,8 +506,8 @@ MuseScore {
             return
         }
 
-        // Launch PasteDiagram.app — runs Python silently, no Terminal
-        var appPath = Qt.resolvedUrl("PasteDiagram.app")
+        // Launch helper app — runs Python silently, no Terminal, no Dock icon
+        var appPath = Qt.resolvedUrl("Chord Library Helper.app")
         Qt.openUrlExternally(appPath)
         statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
         statusMsg.color = "#060"
