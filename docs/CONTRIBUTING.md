@@ -104,13 +104,13 @@ Add your voicing to `data/voicings.json`. Every string must appear in exactly on
 
 ```json
 {
-  "id": "c7-shell-137-e-str-7",
-  "name": "C7 — Shell 137 — E str",
+  "id": "c7-shell-e-shape-6",
+  "name": "C7 — E shape — Shell",
   "chord_quality": "dom7",
   "root": "C",
   "category": "shell",
-  "context": "CM7",
-  "strings": 7,
+  "context": "CV6",
+  "strings": 6,
   "fret_number": 8,
   "visible_frets": 4,
   "dots": [
@@ -118,7 +118,7 @@ Add your voicing to `data/voicings.json`. Every string must appear in exactly on
     {"string": 4, "fret": 1},
     {"string": 3, "fret": 2}
   ],
-  "mutes": [7, 5, 2, 1],
+  "mutes": [5, 2, 1],
   "open": [],
   "notes": ["C", "Bb", "E"],
   "intervals": ["1", "b7", "3"],
@@ -286,20 +286,32 @@ Remove the voicing object from `data/voicings.json`. Run `validate.py` to confir
 
 ### Chord quality values
 
-`maj7`, `dom7`, `min7`, `min7b5`, `maj6`, `min6`, `dim7`, `aug7`, `dom7alt`, `dom7sharp5`, `dom7flat5`, `dom7b9`, `min-maj7`, `dom9`, `maj9`, `min9`, `dom13`, `sus4`, `sus2`
+`maj7`, `dom7`, `min7`, `min7b5`, `maj6`, `maj69`, `min6`, `dim7`, `aug7`, `dom7alt`, `dom7sharp5`, `dom7flat5`, `dom7b9`, `dom7sharp11`, `dom7b13`, `min-maj7`, `dom9`, `maj9`, `maj13`, `maj7sharp11`, `min9`, `min11`, `dom13`, `sus4`, `sus2`, `quartal`
+
+Free-text field — imports can introduce new qualities. The plugin's filter dropdowns adapt automatically.
+
+### Name format
+
+All voicings follow the pattern: `[Chord] — [CAGED shape] — [Type]`
+
+Examples:
+- `C7 — E shape — Shell`
+- `Cmaj7 — A shape — Drop 2`
+- `Cm7 — Drop 2 — b7 on top` (CM6 chord melody voicings include melody note)
 
 ### ID format
 
 ```
-{root}{quality}-{category}-{intervals}-{root-string}-{string-count}
+{quality}-{category}-{shape}-{string-count}
 ```
 
 Examples:
-- `c7-shell-137-e-str-7` — C7, shell, intervals 1-3-7, E string root, 7-string
-- `cmaj7-drop2-e-str-6` — Cmaj7, drop 2, E string root, 6-string
-- `cm7b5-shell-1b5b7-e-str-7` — Cm7b5, shell, E string root, 7-string
+- `c7-shell-e-shape-6` — C7, shell, E shape, 6-string
+- `cmaj7-drop2-a-shape-6` — Cmaj7, drop 2, A shape, 6-string
+- `cm7b5-drop3-a-shape-6` — Cm7b5, drop 3, A shape, 6-string
+- `c7-cm6-drop2-b7top-6` — C7, chord melody drop 2, b7 on top, 6-string
 
-Lowercase. Use `b` for flat, `bb` for double flat. Use the string letter in the ID, not the number.
+Lowercase. Use `b` for flat, `s` for sharp in IDs (e.g., `c7s5` for C7#5).
 
 ## CAGED position → voicing type map
 

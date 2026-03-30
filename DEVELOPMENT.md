@@ -190,44 +190,46 @@ Note: the exact API for fretboard diagram manipulation needs verification agains
 
 ## Development phases
 
-### Phase 1 — JSON schema and data
-- [ ] Finalise JSON schema
-- [ ] Write schema validator (Python)
-- [ ] Enter initial voicings: CM7 Shell set (7 shapes)
-- [ ] Publish `voicings.json` to GitHub
+### Phase 1 — JSON schema and data (complete)
+- [x] JSON schema with extensible strings (4-12), free-text category/quality/context
+- [x] Note-computation validator with per-voicing tuning support
+- [x] 153 voicings across 26 qualities, 6 categories, 4 contexts
+- [x] Published to GitHub, fetched at runtime
 
-### Phase 2 — Plugin scaffold
-- [ ] Basic QML plugin structure
-- [ ] Panel window opens from Plugins menu
-- [ ] Fetch and parse `voicings.json` from GitHub
-- [ ] Display raw list of voicing names
+### Phase 2 — Plugin scaffold (complete)
+- [x] QML plugin loads in MuseScore Studio 4.6.5
+- [x] Fetches and parses voicings.json from GitHub
+- [x] Local voicing cache persists between sessions
 
-### Phase 3 — UI
-- [ ] Filter bar (context, quality, type, strings)
-- [ ] Search bar
-- [ ] Voicing card grid with fretboard thumbnail rendering
-- [ ] Selected state on card
+### Phase 3 — UI (complete)
+- [x] Filter dropdowns: context, quality, type (dynamically rebuilt from data)
+- [x] Search bar with name, quality, and tag matching
+- [x] Tuning selector on main panel
+- [x] Context labels from config/contexts.json (extensible)
+- [ ] Fretboard thumbnail canvas on voicing cards (not yet wired in)
 
-### Phase 4 — Score insertion
-- [ ] Read selected note and chord symbol
-- [ ] Transpose voicing to target key
-- [ ] Insert fretboard diagram at selected note
-- [ ] Error handling (no note selected, no chord symbol, out of range)
+### Phase 4 — Score insertion (complete)
+- [x] Read selected note and chord symbol
+- [x] Key-aware transposition with correct enharmonic spelling
+- [x] Insert fretboard diagram with complete dot/marker data via clipboard paste
+- [x] Diagram placement above/below staff (configurable)
 
-### Phase 5 — Polish
-- [ ] Offline fallback (cache last fetched JSON locally)
-- [ ] User-defined JSON URL (point to a fork)
-- [ ] Contributing guide
-- [ ] Release v1.0
+### Phase 5 — Polish (complete)
+- [x] Offline fallback via local voicing cache
+- [x] User-defined JSON URL
+- [x] Configurable tuning system with import and create
+- [x] Export/import voicings as JSON
+- [x] Contributing guide
+- [x] v1.0.0 release
 
 ---
 
-## Open questions
+## Resolved questions
 
-- Does MuseScore 4's plugin API expose enough of the fretboard diagram object to set individual dot positions programmatically? Needs verification.
-- What is the correct QML network fetch pattern for MuseScore 4 specifically?
-- Should the plugin support multiple JSON sources (e.g. a community library alongside the official one)?
-- Fretboard thumbnail rendering in QML — draw from dot data directly, or use MuseScore's rendering engine?
+- **Does MuseScore 4's plugin API expose setDot()?** No. Workaround: write diagram XML to macOS pasteboard via a Swift CLI tool (`ms-clipboard`), then call `cmd("paste")` from the plugin. Filed [PR #32848](https://github.com/musescore/MuseScore/pull/32848) to add `setDot()` upstream.
+- **QML network fetch pattern?** Standard `XMLHttpRequest` works in MuseScore's QML engine.
+- **Multiple JSON sources?** Supported via import/merge. The plugin merges imported voicings into the local cache, skipping duplicates by ID.
+- **Fretboard thumbnail rendering?** `VoicingCard.qml` exists with a Canvas renderer but is not yet wired into the main plugin (which uses inline UI). Planned for a future release.
 
 ---
 

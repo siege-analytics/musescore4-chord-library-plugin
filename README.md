@@ -1,75 +1,173 @@
 # MuseScore 4 Chord Library Plugin
 
-A MuseScore Studio 4.6+ plugin for browsing, filtering, and inserting jazz guitar chord voicings directly into your score. The voicing library is hosted as JSON on GitHub — no manual palette management required.
+A MuseScore Studio 4.6+ plugin that replaces MuseScore's flat palette system with a searchable, filterable chord voicing library for jazz guitar. 153 voicings across 26 chord qualities, with fretboard diagrams that insert directly into your score — dots and all.
 
-## The problem this solves
+## What it does
 
-MuseScore's native palette system is flat — no nesting, no sub-palettes. A comprehensive jazz guitar voicing library spanning chord melody vs comping contexts, 6 and 7 string guitar, and multiple voicing types is unmanageable as palettes. Sharing requires manual `.mpal` file distribution, and the library can't be updated remotely.
+1. Open the Chord Library panel alongside your score
+2. Filter by context (chord melody / comping), quality, voicing type, and tuning
+3. Click **Open** on a voicing
+4. A fretboard diagram appears at the selected note, transposed to the correct key, with complete dot and marker data
 
-This plugin replaces that workflow: a dialog UI driven by a JSON library that lives online, updates automatically, and can be forked by anyone.
+All voicings are stored in the key of C and transposed automatically based on the chord symbol at the cursor position. The library is hosted as JSON on GitHub and can be pointed at your own fork.
 
-## Features
+## Install
 
-- Dialog panel with filters for context, chord quality, and voicing type
-- Full text search across voicing names and tags
-- Double-click to insert a fretboard diagram at any selected note or rest
-- Automatic transposition — voicings stored in C, adjusted to target key based on chord symbols in the score
-- Library hosted on GitHub, fetched at runtime
-- Point the plugin at your own fork for a custom library
+### Mac (recommended)
 
-## Current status: v0.3.1
+Download the installer from the [latest release](https://github.com/siege-analytics/musescore4-chord-library-plugin/releases):
 
-- Plugin loads in MuseScore Studio 4.6.x
-- 31 voicings in the base library: shells, Drop 2, Drop 3, altered (dom7b9, dom7#5)
-- **Settings panel** with persistent configuration (survives MuseScore restarts)
-- **Configurable voicing source URL** — point to your own fork or custom library
-- **Diagram placement toggle** — above (default) or below staff
-- **Export/Import** — save/load voicing libraries as JSON files with validation and merge
-- **Dynamic filter dropdowns** — adapt automatically to imported data (new categories, qualities appear in filters)
-- **Responsive context labels** — full names when wide ("Chord Melody 6-str"), abbreviations when narrow ("CM6")
-- **CAGED voicing generator** — script generates all CAGED shapes mathematically with note verification
-- Note-computation validator catches fret/note mismatches automatically
-- Configurable tuning system (standard, Van Eps 7-string, low B 7-string, DADGAD, all-fourths)
-- Oolimo URL generator for visual cross-referencing of voicings
-- Mac and Windows installers for non-programmers
+1. Download **ChordLibrary-mac.zip** and unzip it
+2. Double-click **Install Chord Library.command**
+3. Restart MuseScore Studio
+4. Enable **Chord Library** under **Plugins**
 
-**Known limitation:** MuseScore 4's plugin API does not expose `setDot()`, `setMarker()`, or `setBarre()` for fretboard diagrams. Inserted grids have correct dimensions and fret offset but no dot markers. Filed [musescore/MuseScore#32798](https://github.com/musescore/MuseScore/issues/32798). The `.mscx` XML snippet with full dot data is logged to the MuseScore console for manual use.
-
-## Install (no programming required)
-
-Download the installer for your platform from the [latest release](https://github.com/siege-analytics/musescore4-chord-library-plugin/releases):
-
-### Mac
-
-1. Download **ChordLibrary-0.3.1-mac.zip**
-2. Unzip it (double-click the zip)
-3. Double-click **Install Chord Library.command**
-4. Restart MuseScore Studio and enable **Chord Library** under Plugins
-
-Also available as **ChordLibrary-0.3.1.pkg** — a standard macOS installer package.
+Also available as a `.pkg` installer.
 
 ### Windows
 
-1. Download **ChordLibrary-0.3.1-win.zip**
-2. Extract it (right-click → Extract All)
-3. Double-click **Install Chord Library.bat**
-4. Restart MuseScore Studio and enable **Chord Library** under Plugins
+1. Download **ChordLibrary-win.zip** and extract it
+2. Double-click **Install Chord Library.bat**
+3. Restart MuseScore Studio
+4. Enable **Chord Library** under **Plugins**
 
-### Uninstall
+### Manual install
 
-Each download includes an uninstaller: **Uninstall Chord Library.command** (Mac) or **Uninstall Chord Library.bat** (Windows).
+```bash
+mkdir -p ~/Documents/MuseScore4/Plugins/chordlibrary
+cp plugin/ChordLibrary.qml ~/Documents/MuseScore4/Plugins/chordlibrary/chordlibrary.qml
+cp -r plugin/model plugin/ui ~/Documents/MuseScore4/Plugins/chordlibrary/
+```
 
-The installers automatically back up any existing installation before overwriting.
+For diagram insertion with dots (macOS), you also need the clipboard helper:
 
----
+```bash
+# Build the Swift clipboard writer
+swiftc -o ~/Documents/MuseScore4/Plugins/chordlibrary/ms-clipboard scripts/ms-clipboard.swift -framework AppKit
+
+# Install the launchd agent that bridges the plugin to the clipboard
+cp install/com.siegeanalytics.chord-library-clipboard.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.siegeanalytics.chord-library-clipboard.plist
+```
+
+Restart MuseScore Studio and enable **Chord Library** under Plugins.
+
+## Usage
+
+### Inserting voicings
+
+1. Open a score and select a note or rest
+2. Open **Plugins > Chord Library**
+3. Use the dropdowns to filter by context, type, quality, and tuning
+4. Click **Open** on a voicing card
+5. The fretboard diagram appears at the cursor with correct dots, transposed to the chord symbol's key
+
+If no chord symbol is present at the cursor, the voicing inserts in its stored key (C).
+
+### Contexts
+
+The library organises voicings along two axes:
+
+| Code | Name | What it means |
+|------|------|---------------|
+| **CV6** | Comping/Vocal — 6 string | Guitar provides harmony while another instrument carries the melody |
+| **CV7** | Comping/Vocal — 7 string | Same, using Van Eps 7-string (low A) for extended bass range |
+| **CM6** | Chord Melody — 6 string | Guitar carries both melody and harmony; melody note is on top |
+| **CM7** | Chord Melody — 7 string | Same, with 7-string for bass independence |
+
+### Voicing types
+
+| Type | Description |
+|------|-------------|
+| **Shell** | Root + 3rd + 7th (no 5th). Freddie Green / guide tone chords. |
+| **Drop 2** | 4-note close voicing with 2nd voice dropped an octave. The workhorse of jazz guitar. |
+| **Drop 3** | 4-note close voicing with 3rd voice dropped. Wider spread, good for chord melody. |
+| **Extended** | 9ths, 11ths, 13ths, #11, b13 — the colorful chords. |
+| **Altered** | Dominant chords with b9, #9, b5, #5 tensions. |
+| **Quartal** | Stacked 4ths. McCoy Tyner / Bill Evans sound. |
+
+### Chord qualities
+
+26 qualities: dom7, maj7, min7, min7b5, dim7, dom7#5, dom7b5, dom7alt, dom7b9, dom9, dom13, dom7#11, dom7b13, maj6, maj69, maj9, maj13, maj7#11, min6, min9, min11, min-maj7, aug7, sus4, sus2, quartal.
+
+### Settings
+
+Click **Settings** in the plugin header:
+
+- **Voicing Source URL** — point to your own fork or local file
+- **Diagram Placement** — above (default) or below staff
+- **Tuning** — select from built-in tunings or import/create your own
+- **Export/Import** — save or load voicing libraries as JSON
+- **About** — links to GitHub, documentation, and the CC BY 4.0 license
+
+## Tunings
+
+The plugin supports configurable tunings. Four are included:
+
+| Tuning | Strings | Open pitches |
+|--------|---------|-------------|
+| **Standard + Van Eps** | 7 | E4-B3-G3-D3-A2-E2-A1 |
+| **7-String Low B** | 7 | E4-B3-G3-D3-A2-E2-B1 |
+| **DADGAD** | 6 | D4-A3-G3-D3-A2-D2 |
+| **All Fourths** | 6 | F4-C4-G3-D3-A2-E2 |
+
+### Selecting a tuning
+
+The tuning dropdown is on the main panel, next to the voicing count. Select your tuning and it persists between sessions.
+
+### Importing a tuning
+
+In Settings > Tuning, enter the path to a tuning JSON file and click Import.
+
+### Creating a custom tuning
+
+In Settings > Tuning:
+
+1. Enter a name (e.g. "Open G")
+2. Set the string count
+3. Enter pitches from high to low — note names (`E4, B3, G3, D3, A2, E2`) or MIDI numbers (`64, 59, 55, 50, 45, 40`)
+4. Click **Create Tuning**
+
+Custom tunings are saved to the plugin's `tunings/` directory and appear in the dropdown immediately.
+
+### Tuning JSON format
+
+```json
+{
+  "name": "Open G",
+  "description": "Open G tuning for slide guitar",
+  "strings": {
+    "1": 62, "2": 59, "3": 50,
+    "4": 43, "5": 47, "6": 38
+  },
+  "notes": {
+    "1": "D4", "2": "B3", "3": "D3",
+    "4": "G2", "5": "B2", "6": "D2"
+  }
+}
+```
+
+The `strings` values are MIDI note numbers (Middle C = 60). The `notes` field is for human readability.
+
+## How diagram insertion works
+
+MuseScore 4's plugin API does not expose `setDot()` for fretboard diagrams ([issue #32798](https://github.com/musescore/MuseScore/issues/32798), [PR #32848](https://github.com/musescore/MuseScore/pull/32848)). This plugin works around that limitation:
+
+1. The plugin generates the fretboard diagram as XML in MuseScore's internal clipboard format
+2. A `launchd` agent detects the file write and runs a compiled Swift tool (`ms-clipboard`) that puts the XML on the macOS pasteboard
+3. The plugin calls `cmd("paste")` to insert the diagram from the pasteboard
+
+This produces complete fretboard diagrams with dots, markers, and fret offsets — identical to what you'd get from MuseScore's built-in palette. No Terminal windows, no extra MuseScore tabs, no Accessibility permissions required.
+
+When PR #32848 is accepted into MuseScore, the plugin will switch to direct `setDot()` calls and this workaround becomes unnecessary.
 
 ## Developer setup
 
 ### Prerequisites
 
 - Python 3.10+ with `pip install jsonschema`
-- MuseScore Studio 4.6+ (for plugin use)
-- Git
+- Xcode Command Line Tools (for `swiftc` — macOS only)
+- MuseScore Studio 4.6+
 
 ### Quick start
 
@@ -77,111 +175,68 @@ The installers automatically back up any existing installation before overwritin
 git clone https://github.com/siege-analytics/musescore4-chord-library-plugin.git
 cd musescore4-chord-library-plugin
 
-python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+python -m venv .venv && source .venv/bin/activate
 pip install jsonschema
 
-python scripts/validate.py -v          # validate all voicings
-python scripts/oolimo_urls.py          # generate Oolimo cross-reference URLs
-python scripts/build_installer.py      # build Mac + Windows installers in dist/
+python scripts/validate.py -v          # validate all 153 voicings
+python scripts/build_installer.py      # build Mac + Windows installers
 ```
 
 ### Project structure
 
 ```
-├── config/tunings/         # Tuning configs (standard, 7-string low B, DADGAD, etc.)
-├── data/voicings.json      # The chord voicing library (all shapes in C)
-├── docs/CONTRIBUTING.md    # How to add voicings, manage tunings, CRUD operations
-├── plugin/                 # QML plugin source for MuseScore
-├── schema/                 # JSON schema for voicings
-├── scripts/
-│   ├── validate.py         # Schema + consistency + note-computation validator
-│   ├── oolimo_urls.py      # Oolimo verification URL generator
-│   ├── generate_caged.py   # CAGED voicing generator (E/A/D shapes)
-│   ├── build_installer.py  # Mac/Windows installer builder
-│   ├── generate_from_mscz.py
-│   └── generate_mscx_snippet.py
-└── README.md
+config/
+  contexts.json              # Context display labels (extensible)
+  tunings/                   # Tuning configs (standard, 7-string, DADGAD, etc.)
+data/
+  voicings.json              # The 153-voicing chord library (all in key of C)
+docs/
+  CONTRIBUTING.md            # How to add voicings and tunings
+plugin/
+  ChordLibrary.qml           # Main plugin source
+  model/
+    Transposer.js            # Key-aware transposition and note respelling
+    VoicingInserter.qml      # Insertion logic and .mscx snippet generation
+  ui/                        # Modular UI components (planned refactor)
+schema/
+  voicings.schema.json       # JSON schema (strings 4-12, free-text categories)
+scripts/
+  validate.py                # Schema + consistency + note-computation validator
+  generate_mscz.py           # Generate .mscz files with complete diagrams
+  generate_caged.py          # CAGED voicing generator (E/A/D shapes x qualities)
+  ms-clipboard.swift         # Swift pasteboard writer for macOS
+  paste_diagram.py           # AppleScript automation (legacy, replaced by clipboard)
+  build_installer.py         # Mac/Windows installer builder
+  oolimo_urls.py             # Oolimo verification URL generator
 ```
 
-### Manual install (without installer)
-
-1. Create `~/Documents/MuseScore4/Plugins/chordlibrary/`
-2. Copy `plugin/ChordLibrary.qml` into that folder as `chordlibrary.qml`
-3. Copy `plugin/model/` and `plugin/ui/` into the same folder
-4. Restart MuseScore Studio
-5. Go to **Plugins** and enable **Chord Library**
-
-## Usage
-
-1. Open a score in MuseScore Studio
-2. Select a note or rest where you want the diagram
-3. Open **Plugins → Chord Library**
-4. Filter or search for a voicing
-5. Double-click a voicing card to insert
-
-The plugin reads chord symbols at the selected position and transposes automatically. No chord symbol = no transposition (inserts in C).
-
-### Settings
-
-Click **Settings** in the plugin header to access:
-
-- **Voicing Source URL** — Point the plugin at your own fork or a local file for a custom voicing library. Changes persist between sessions.
-- **Diagram Placement** — Choose whether fretboard diagrams appear above (default) or below the staff.
-- **Export Voicings** — Save the current voicing library to a local JSON file.
-- **Import Voicings** — Load voicings from a JSON file. Validates required fields and merges with the current library (duplicates are skipped by ID).
-
-### Score-top chord diagram section
-
-MuseScore can display all unique chord diagrams in a row between the title and the first system. This works with Chord Library diagrams since they use MuseScore's standard `FretDiagram` element.
-
-To enable: **Format → Style → Fretboard Diagrams → "Show chord diagrams at top of first page"**
-
-## The voicing library
-
-All voicings live in `data/voicings.json`. Organised by:
-
-| Axis | Values | Meaning |
-|------|--------|---------|
-| **Context** | CM6, CM7, CV6, CV7 | Chord Melody vs Comping/Vocal × 6 vs 7 string |
-| **Category** | shell, drop2, drop3, extended, altered, quartal, caged | Voicing type |
-| **Quality** | maj7, dom7, min7, min7b5, maj6, min6, dim7, ... | Chord quality |
-
-All shapes stored with root C. Fully moveable.
-
-## Scripts
+### Scripts
 
 ```bash
 # Validate voicings (schema + consistency + note verification)
 python scripts/validate.py -v
 
 # Validate with a specific tuning
-python scripts/validate.py -v --tuning config/tunings/7string-low-b.json
+python scripts/validate.py -v --tuning config/tunings/dadgad.json
 
-# Generate Oolimo verification URLs for all voicings
-python scripts/oolimo_urls.py
+# Generate a .mscz file for a voicing transposed to F
+python scripts/generate_mscz.py --voicing c7-drop2-e-shape-6 --root F
 
-# Generate Oolimo checklist as markdown
-python scripts/oolimo_urls.py --format markdown
+# Generate .mscz files for ALL voicings in Bb
+python scripts/generate_mscz.py --all --root Bb --output diagrams/
 
-# Generate CAGED voicings (E/A/D shapes × all qualities)
-python scripts/generate_caged.py                          # output to Desktop
-python scripts/generate_caged.py -o data/voicings-caged.json  # custom output
+# Generate CAGED voicings
+python scripts/generate_caged.py
 
-# Build Mac + Windows installers
-python scripts/build_installer.py
-python scripts/build_installer.py --pkg  # also build macOS .pkg
-
-# Generate .mscx XML snippet for a voicing transposed to F
-python scripts/generate_mscx_snippet.py --voicing c7-shell-137-e-str-7 --root F
-
-# Generate all voicings transposed to Bb
-python scripts/generate_mscx_snippet.py --all --root Bb --output snippets/
+# Build installers
+python scripts/build_installer.py --pkg
 ```
 
 ## Contributing
 
-See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md). All voicings must be verified against [Oolimo](https://www.oolimo.com/) before entry.
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on adding voicings, creating tunings, and the validation workflow.
+
+Short version: all voicings must be in C, verified by the note-computation validator, and cross-referenced with [Oolimo](https://www.oolimo.com/).
 
 ## References
 
@@ -189,12 +244,13 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md). All voicings must be verified 
 - Taylor, Martin. *Complete Jazz Guitar Method*. Alfred Music
 - Greene, Ted. *Chord Chemistry*
 
-## Related
+## Related projects
 
-- [siege-analytics/jazz-guitar-palette](https://github.com/siege-analytics/jazz-guitar-palette) — `.mpal` palette files (predecessor)
-- [siege-analytics/jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — chord melody arrangements
-- [Learning Jazz From The Masters](https://learningjazzguitar.substack.com) — Dheeraj Chand's Substack
+- [siege-analytics/jazz-guitar-palette](https://github.com/siege-analytics/jazz-guitar-palette) — `.mpal` palette files (predecessor to this plugin)
+- [siege-analytics/jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — chord melody arrangements using this library
 
 ## License
 
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Free to use, share, and adapt with attribution to Dheeraj Chand.
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+
+Free to use, share, and adapt with attribution to **Dheeraj Chand**.
