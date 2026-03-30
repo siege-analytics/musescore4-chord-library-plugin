@@ -64,3 +64,47 @@ function transposeNote(noteName, offset, preferFlats) {
     var newSemitone = (semitone + offset) % 12
     return preferFlats ? NOTE_NAMES_FLAT[newSemitone] : NOTE_NAMES_SHARP[newSemitone]
 }
+
+// Keys that use flats in their key signature (and their chord symbols)
+// Sharp keys: C, G, D, A, E, B, F#/Gb (we treat F# as sharp, Gb as flat)
+// Flat keys: F, Bb, Eb, Ab, Db, Gb
+var FLAT_KEYS = { "F": true, "Bb": true, "Eb": true, "Ab": true, "Db": true, "Gb": true }
+
+// Determine whether a target root prefers flats or sharps
+function prefersFlats(targetRoot) {
+    return FLAT_KEYS[targetRoot] === true
+}
+
+// Transpose a note name to a target key with correct enharmonic spelling.
+// E.g., transposeNoteToKey("E", "C", "F") → "A" (not "A", but correct)
+//       transposeNoteToKey("Bb", "C", "F#") → "E" (sharp key, no flats)
+function transposeNoteToKey(noteName, sourceRoot, targetRoot) {
+    var offset = semitoneOffset(sourceRoot, targetRoot)
+    return transposeNote(noteName, offset, prefersFlats(targetRoot))
+}
+
+// Transpose an entire voicing's notes and name to a target key.
+// Returns { name, notes, fret_number } with respelled values.
+function transposeVoicing(voicing, targetRoot) {
+    var offset = semitoneOffset(voicing.root, targetRoot)
+    var useFlats = prefersFlats(targetRoot)
+
+    var newNotes = []
+    for (var i = 0; i < voicing.notes.length; i++) {
+        newNotes.push(transposeNote(voicing.notes[i], offset, useFlats))
+    }
+
+    // Respell the chord name: replace leading "C" with target root
+    var newName = voicing.name
+    if (targetRoot !== voicing.root) {
+        // Replace the chord root at the start of the name
+        // Handle both "C7" and "Cmaj7" style prefixes
+        newName = newName.replace(/^C(?=[^a-z]|maj|min|dim|aug|sus|m[^a-z]|$)/, targetRoot)
+    }
+
+    return {
+        name: newName,
+        notes: newNotes,
+        fret_number: voicing.fret_number + offset
+    }
+}

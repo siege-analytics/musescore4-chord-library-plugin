@@ -328,7 +328,9 @@ MuseScore {
 
         curScore.endCmd()
 
-        statusMsg.text = "Inserted " + voicing.name + " → " + targetRoot
+        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
+        statusMsg.text = "Inserted " + transposed.name
+            + " [" + transposed.notes.join(" ") + "]"
             + " (" + diagramPlacement + " staff)"
         statusMsg.color = "#060"
     }
@@ -361,13 +363,12 @@ MuseScore {
             }
         }
 
+        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
         var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-        var transposedFret = voicing.fret_number + offset
+        var transposedFret = transposed.fret_number
         var numStrings = voicing.strings || 6
         var numFrets = voicing.visible_frets || 4
-        var displayName = voicing.name
-        if (targetRoot !== "C")
-            displayName = displayName.replace(/^C/, targetRoot)
+        var displayName = transposed.name
 
         // Build fretboard diagram XML with dots and markers
         var stringData = {}
@@ -496,7 +497,7 @@ MuseScore {
         try {
             tempDiagramFile.write(mscx)
             Qt.openUrlExternally(filePath)
-            statusMsg.text = "Opened " + displayName + " — copy the diagram into your score"
+            statusMsg.text = "Opened " + displayName + " [" + transposed.notes.join(" ") + "] — copy into your score"
             statusMsg.color = "#060"
         } catch (e) {
             statusMsg.text = "Failed to write diagram file: " + e

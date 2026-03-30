@@ -103,6 +103,31 @@ def _note_to_pitch_class(name: str) -> int:
         return -1
 
 
+def _resolve_tuning(
+    voicing: dict,
+    default_tuning: dict[int, int],
+    tuning_cache: dict[str, dict[int, int]],
+) -> dict[int, int]:
+    """Resolve the tuning for a voicing: use its 'tuning' field if present,
+    otherwise fall back to the default tuning."""
+    tuning_name = voicing.get("tuning")
+    if not tuning_name or tuning_name == "standard":
+        return default_tuning
+
+    if tuning_name in tuning_cache:
+        return tuning_cache[tuning_name]
+
+    # Try to load from config/tunings/<name>.json
+    tuning_path = REPO_ROOT / "config" / "tunings" / f"{tuning_name}.json"
+    if tuning_path.exists():
+        loaded = _load_tuning(tuning_path)
+        tuning_cache[tuning_name] = loaded
+        return loaded
+
+    # Fall back to default
+    return default_tuning
+
+
 def _verify_notes(data: dict, tuning: dict[int, int]) -> list[str]:
     """Verify that declared notes/intervals match actual fret positions.
 
@@ -110,8 +135,10 @@ def _verify_notes(data: dict, tuning: dict[int, int]) -> list[str]:
         actual_note = tuning[string] + fret_number + (fret - 1)
 
     Then compares against the declared notes and intervals arrays.
+    If a voicing has a 'tuning' field, loads that tuning config instead.
     """
     errors = []
+    tuning_cache: dict[str, dict[int, int]] = {}
 
     for i, v in enumerate(data.get("voicings", [])):
         vid = v.get("id", f"<index {i}>")
@@ -121,6 +148,7 @@ def _verify_notes(data: dict, tuning: dict[int, int]) -> list[str]:
         dots = v.get("dots", [])
         declared_notes = v.get("notes", [])
         declared_intervals = v.get("intervals", [])
+        voicing_tuning = _resolve_tuning(v, tuning, tuning_cache)
 
         if len(dots) != len(declared_notes):
             # Already caught by consistency check, skip note verification
@@ -130,7 +158,7 @@ def _verify_notes(data: dict, tuning: dict[int, int]) -> list[str]:
             string_num = dot["string"]
             fret = dot["fret"]
 
-            if string_num not in tuning:
+            if string_num not in voicing_tuning:
                 errors.append(
                     f"{vid}: string {string_num} not in tuning config"
                 )
@@ -138,7 +166,7 @@ def _verify_notes(data: dict, tuning: dict[int, int]) -> list[str]:
 
             # Compute actual note at this position
             absolute_fret = fret_number + (fret - 1)
-            midi = tuning[string_num] + absolute_fret
+            midi = voicing_tuning[string_num] + absolute_fret
             computed_note = _midi_to_note(midi)
             computed_pc = _note_to_pitch_class(computed_note)
 
