@@ -49,6 +49,10 @@ MuseScore {
         source: Qt.resolvedUrl("../config/contexts.json")
     }
 
+    FileIO {
+        id: tuningFile
+    }
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
@@ -210,6 +214,135 @@ MuseScore {
         }
         settingsFile.write(JSON.stringify(s, null, 2))
         console.log("Settings saved")
+    }
+
+    // === Tuning import/create ===
+
+    // MIDI note to name for display
+    property var midiNoteNames: {
+        var names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+        var map = {}
+        for (var midi = 21; midi <= 108; midi++) {
+            var octave = Math.floor(midi / 12) - 1
+            map[midi] = names[midi % 12] + octave
+        }
+        return map
+    }
+
+    function addTuningToList(slug, name) {
+        // Add to the runtime lists if not already present
+        var list = tuningList.slice()
+        if (list.indexOf(slug) < 0) {
+            list.push(slug)
+            tuningList = list
+        }
+        var labels = {}
+        for (var k in tuningLabels) labels[k] = tuningLabels[k]
+        labels[slug] = name
+        tuningLabels = labels
+    }
+
+    function importTuning() {
+        var path = tuningImportPath.text.trim()
+        if (!path) {
+            tuningImportStatus.text = "Enter a file path"
+            tuningImportStatus.color = "#c00"
+            return
+        }
+        tuningFile.source = path
+        try {
+            var raw = tuningFile.read()
+            if (!raw || raw.length === 0) {
+                tuningImportStatus.text = "File not found or empty"
+                tuningImportStatus.color = "#c00"
+                return
+            }
+            var tuning = JSON.parse(raw)
+            if (!tuning.name || !tuning.strings) {
+                tuningImportStatus.text = "Invalid tuning: needs 'name' and 'strings' fields"
+                tuningImportStatus.color = "#c00"
+                return
+            }
+
+            // Save to plugin directory as custom tuning
+            var slug = tuning.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+            var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
+            tuningFile.source = destPath
+            tuningFile.write(raw)
+
+            addTuningToList(slug, tuning.name)
+            selectedTuning = slug
+            saveSettings()
+
+            tuningImportStatus.text = "Imported: " + tuning.name
+            tuningImportStatus.color = "#060"
+        } catch (e) {
+            tuningImportStatus.text = "Failed: " + e
+            tuningImportStatus.color = "#c00"
+        }
+    }
+
+    function createTuning() {
+        var name = tuningNameField.text.trim()
+        if (!name) {
+            tuningImportStatus.text = "Enter a tuning name"
+            tuningImportStatus.color = "#c00"
+            return
+        }
+
+        var pitchStr = tuningPitchesField.text.trim()
+        var pitches = pitchStr.split(",").map(function(s) { return parseInt(s.trim()) })
+        var numStrings = tuningStringCount.value
+
+        if (pitches.length < numStrings) {
+            tuningImportStatus.text = "Need " + numStrings + " pitches, got " + pitches.length
+            tuningImportStatus.color = "#c00"
+            return
+        }
+        pitches = pitches.slice(0, numStrings)
+
+        // Validate pitches are reasonable MIDI values
+        for (var i = 0; i < pitches.length; i++) {
+            if (isNaN(pitches[i]) || pitches[i] < 20 || pitches[i] > 100) {
+                tuningImportStatus.text = "Invalid MIDI pitch: " + pitches[i] + " (expected 20-100)"
+                tuningImportStatus.color = "#c00"
+                return
+            }
+        }
+
+        // Build the tuning JSON
+        var strings = {}
+        var notes = {}
+        for (var s = 0; s < pitches.length; s++) {
+            var strNum = s + 1
+            strings[strNum] = pitches[s]
+            notes[strNum] = midiNoteNames[pitches[s]] || ("?" + pitches[s])
+        }
+
+        var tuning = {
+            name: name,
+            description: "Custom tuning created in Chord Library",
+            strings: strings,
+            notes: notes
+        }
+
+        var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
+        tuningFile.source = destPath
+        try {
+            tuningFile.write(JSON.stringify(tuning, null, 2))
+            addTuningToList(slug, name)
+            selectedTuning = slug
+            saveSettings()
+
+            // Show the note names as feedback
+            var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
+            tuningImportStatus.text = "Created: " + name + " (" + noteStr + ")"
+            tuningImportStatus.color = "#060"
+        } catch (e) {
+            tuningImportStatus.text = "Failed to save: " + e
+            tuningImportStatus.color = "#c00"
+        }
     }
 
     // === Data fetching ===
@@ -766,29 +899,96 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                ComboBox {
-                    id: tuningCombo
-                    model: tuningList
+                Label {
+                    text: "Active: " + (tuningLabels[selectedTuning] || selectedTuning)
+                    font.pixelSize: 11
+                }
+
+                // --- Import tuning ---
+                Label {
+                    text: "Import a tuning JSON file:"
+                    font.pixelSize: 10
+                }
+
+                RowLayout {
                     Layout.fillWidth: true
-                    displayText: tuningLabels[currentText] || currentText
-                    currentIndex: Math.max(0, tuningList.indexOf(selectedTuning))
-                    onCurrentTextChanged: {
-                        if (currentText !== selectedTuning) {
-                            selectedTuning = currentText
-                            saveSettings()
-                        }
+                    spacing: 4
+
+                    TextField {
+                        id: tuningImportPath
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "/path/to/tuning.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Import"
+                        font.pixelSize: 10
+                        onClicked: importTuning()
                     }
                 }
 
                 Label {
-                    text: "Affects string numbering and note verification.\nCustom tunings: add a JSON file to config/tunings/"
+                    id: tuningImportStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // --- Quick create ---
+                Label {
+                    text: "Or create a tuning:"
+                    font.pixelSize: 10
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: tuningNameField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "Name (e.g. Open G)"
+                        selectByMouse: true
+                    }
+
+                    SpinBox {
+                        id: tuningStringCount
+                        from: 4
+                        to: 12
+                        value: 6
+                        implicitWidth: 80
+                    }
+                }
+
+                Label {
+                    text: "String pitches (MIDI, high to low, comma-separated):"
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
 
+                TextField {
+                    id: tuningPitchesField
+                    Layout.fillWidth: true
+                    font.pixelSize: 11
+                    placeholderText: "64, 59, 55, 50, 45, 40"
+                    selectByMouse: true
+                    text: "64, 59, 55, 50, 45, 40"
+                }
+
+                Button {
+                    text: "Create Tuning"
+                    font.pixelSize: 10
+                    onClicked: createTuning()
+                }
+
                 Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning configs</a>'
+                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
                     font.pixelSize: 10
                     onLinkActivated: Qt.openUrlExternally(link)
                     MouseArea {
@@ -1023,11 +1223,29 @@ MuseScore {
             }
         }
 
-        Label {
+        RowLayout {
             visible: !showSettings
-            text: filteredData.length + " of " + voicingsData.length + " voicings"
-            font.pixelSize: 11
-            
+            Layout.fillWidth: true
+            spacing: 4
+
+            ComboBox {
+                id: tuningMainCombo
+                model: tuningList
+                Layout.fillWidth: true
+                displayText: tuningLabels[currentText] || currentText
+                currentIndex: Math.max(0, tuningList.indexOf(selectedTuning))
+                onCurrentTextChanged: {
+                    if (currentText !== selectedTuning) {
+                        selectedTuning = currentText
+                        saveSettings()
+                    }
+                }
+            }
+
+            Label {
+                text: filteredData.length + " of " + voicingsData.length
+                font.pixelSize: 11
+            }
         }
 
         ListView {
