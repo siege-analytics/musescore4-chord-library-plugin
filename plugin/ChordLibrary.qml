@@ -646,6 +646,144 @@ MuseScore {
         }
     }
 
+    // === Save to Library ===
+
+    function saveVoicingToLibrary() {
+        saveStatus.text = ""
+
+        // Parse fret number
+        var fretNum = parseInt(saveFretField.text.trim())
+        if (isNaN(fretNum) || fretNum < 0 || fretNum > 24) {
+            saveStatus.text = "Invalid fret number"; saveStatus.color = "#c00"; return
+        }
+
+        // Parse dots: "6:1, 4:1, 3:2" → [{string:6, fret:1}, ...]
+        var dotsStr = saveDotsField.text.trim()
+        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = "#c00"; return }
+        var dotParts = dotsStr.split(",")
+        var dots = []
+        for (var d = 0; d < dotParts.length; d++) {
+            var pair = dotParts[d].trim().split(":")
+            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = "#c00"; return }
+            dots.push({ string: parseInt(pair[0]), fret: parseInt(pair[1]) })
+        }
+
+        // Parse mutes: "5, 2, 1" → [5, 2, 1]
+        var mutesStr = saveMutesField.text.trim()
+        var mutes = []
+        if (mutesStr) {
+            mutes = mutesStr.split(",").map(function(s) { return parseInt(s.trim()) })
+        }
+
+        var numStrings = saveStringsCount.value
+        var quality = saveQualityCombo.currentText
+        var category = saveCategoryCombo.currentText
+        var context = saveContextCombo.currentText
+
+        // Determine current key from score chord symbol
+        var targetRoot = "C"
+        if (curScore) {
+            var sel = curScore.selection
+            if (sel && sel.elements && sel.elements.length > 0) {
+                var elem = sel.elements[0]
+                var seg = null
+                if (elem.type === Element.NOTE && elem.parent) seg = elem.parent.parent
+                else if (elem.type === Element.REST || elem.type === Element.CHORD) seg = elem.parent
+                if (seg && seg.annotations) {
+                    for (var a = 0; a < seg.annotations.length; a++) {
+                        if (seg.annotations[a].type === Element.HARMONY) {
+                            var parsed = Transposer.extractRoot(seg.annotations[a].text)
+                            if (parsed) targetRoot = parsed
+                            break
+                        }
+                    }
+                }
+            }
+        }
+
+        // Reproject to C: subtract transposition offset from fret number
+        var offset = Transposer.semitoneOffset("C", targetRoot)
+        var cFretNum = fretNum - offset
+        if (cFretNum < 0) cFretNum += 12  // wrap around
+
+        // Compute notes and intervals in C position using tuning
+        var noteNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"]
+        var intervalLabels = {0:"1",1:"b9",2:"9",3:"b3",4:"3",5:"4",6:"b5",7:"5",8:"#5",9:"6",10:"b7",11:"7"}
+        var notes = []
+        var intervals = []
+        for (var i = 0; i < dots.length; i++) {
+            var strMidi = tuningMidi[String(dots[i].string)]
+            if (strMidi !== undefined) {
+                var absFret = cFretNum + (dots[i].fret - 1)
+                var midi = strMidi + absFret
+                var noteName = noteNames[midi % 12]
+                notes.push(noteName)
+                var semitones = midi % 12  // C = 0
+                intervals.push(intervalLabels[semitones] || "?")
+            }
+        }
+
+        // Compute open strings
+        var allStrings = []
+        for (var s = 1; s <= numStrings; s++) allStrings.push(s)
+        var dottedStrings = dots.map(function(d) { return d.string })
+        var opens = allStrings.filter(function(s) {
+            return dottedStrings.indexOf(s) < 0 && mutes.indexOf(s) < 0
+        })
+
+        // Generate ID
+        var qSlug = quality.toLowerCase().replace("#", "s").replace(/[^a-z0-9]/g, "")
+        var id = "c" + qSlug + "-" + category + "-custom-" + numStrings + "-f" + cFretNum
+
+        // Check for duplicate
+        for (var j = 0; j < voicingsData.length; j++) {
+            if (voicingsData[j].id === id) {
+                saveStatus.text = "ID already exists: " + id
+                saveStatus.color = "#c00"
+                return
+            }
+        }
+
+        // Build the voicing
+        var chordPrefix = {
+            "dom7":"C7","maj7":"Cmaj7","min7":"Cm7","min7b5":"Cm7b5","dim7":"Cdim7",
+            "maj6":"C6","min6":"Cm6","dom7b9":"C7b9","dom7sharp5":"C7#5",
+            "dom7alt":"C7alt","dom9":"C9","dom13":"C13","sus4":"Csus4","sus2":"Csus2",
+            "aug7":"Caug7","min-maj7":"CmMaj7","augMaj7":"CaugMaj7"
+        }
+        var prefix = chordPrefix[quality] || ("C" + quality)
+
+        var voicing = {
+            id: id,
+            name: prefix + " — Custom — " + category.charAt(0).toUpperCase() + category.slice(1),
+            chord_quality: quality,
+            root: "C",
+            category: category,
+            context: context,
+            strings: numStrings,
+            fret_number: cFretNum,
+            visible_frets: 4,
+            dots: dots,
+            mutes: mutes.sort(),
+            open: opens.sort(),
+            notes: notes,
+            intervals: intervals,
+            tags: ["custom", category]
+        }
+
+        // Add to library and save
+        var merged = voicingsData.slice()
+        merged.push(voicing)
+        voicingsData = merged
+        rebuildFilterLists()
+        applyFilters()
+        saveToCache()
+
+        var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
+        saveStatus.text = "Saved: " + voicing.name + keyNote
+        saveStatus.color = "#060"
+    }
+
     // === Library hygiene audit ===
 
     function runHygieneAudit() {
@@ -1590,6 +1728,106 @@ MuseScore {
 
                 Label {
                     id: importStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+
+                // --- Save to Library ---
+                Label {
+                    text: "SAVE TO LIBRARY"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Enter a voicing to add to the library.\nDots: string:fret pairs (e.g. 6:1,4:1,3:2)"
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    ComboBox {
+                        id: saveQualityCombo
+                        model: ["dom7","maj7","min7","min7b5","dim7","maj6","min6",
+                                "dom7b9","dom7sharp5","dom7alt","dom9","dom13",
+                                "sus4","sus2","aug7","min-maj7","augMaj7"]
+                        Layout.fillWidth: true
+                    }
+
+                    ComboBox {
+                        id: saveCategoryCombo
+                        model: ["shell","drop2","drop3","extended","altered","quartal"]
+                        implicitWidth: 90
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    ComboBox {
+                        id: saveContextCombo
+                        model: ["CV6","CV7","CM6","CM7"]
+                        implicitWidth: 70
+                    }
+
+                    TextField {
+                        id: saveFretField
+                        placeholderText: "Fret#"
+                        implicitWidth: 50
+                        font.pixelSize: 11
+                        selectByMouse: true
+                    }
+
+                    SpinBox {
+                        id: saveStringsCount
+                        from: 4; to: 12; value: 6
+                        implicitWidth: 75
+                    }
+                }
+
+                TextField {
+                    id: saveDotsField
+                    Layout.fillWidth: true
+                    font.pixelSize: 11
+                    placeholderText: "Dots: 6:1, 4:1, 3:2"
+                    selectByMouse: true
+                }
+
+                TextField {
+                    id: saveMutesField
+                    Layout.fillWidth: true
+                    font.pixelSize: 11
+                    placeholderText: "Mutes: 5, 2, 1"
+                    selectByMouse: true
+                }
+
+                Label {
+                    text: "Enter positions as played. The plugin will reproject to C."
+                    font.pixelSize: 9
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Save Voicing"
+                    font.pixelSize: 10
+                    onClicked: saveVoicingToLibrary()
+                }
+
+                Label {
+                    id: saveStatus
                     visible: text.length > 0
                     font.pixelSize: 11
                     font.bold: true
