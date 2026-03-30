@@ -1951,6 +1951,12 @@ MuseScore {
                         text: homePath() + "/Documents/chord-library-audit.txt"
                         selectByMouse: true
                     }
+
+                    Button {
+                        text: "Browse"
+                        font.pixelSize: 10
+                        onClicked: openFileBrowser("save", auditReportPath, null)
+                    }
                 }
 
                 Label {
