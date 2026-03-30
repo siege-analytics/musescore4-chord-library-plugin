@@ -1,4 +1,4 @@
-# MuseScore 4 Chord Library Plugin — Development Document
+# Siege Analytics Chord Library — Development Document
 
 ## Overview
 

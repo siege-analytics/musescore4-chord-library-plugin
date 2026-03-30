@@ -9,7 +9,7 @@ import "model/Transposer.js" as Transposer
 
 MuseScore {
     id: chordLibrary
-    title: "Chord Library"
+    title: "Siege Analytics Chord Library"
     description: "Jazz guitar chord voicing library with filtering and auto-transposition"
     version: "1.2.0"
     pluginType: "dialog"
@@ -1707,7 +1707,7 @@ MuseScore {
             Layout.fillWidth: true
 
             Label {
-                text: "Chord Library"
+                text: "Siege Analytics Chord Library"
                 font.pixelSize: 16
                 font.bold: true
                 Layout.fillWidth: true
@@ -2284,7 +2284,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Chord Library v1.1.0"
+                    text: "Siege Analytics Chord Library v1.1.0"
                     font.pixelSize: 12
                     font.bold: true
                     

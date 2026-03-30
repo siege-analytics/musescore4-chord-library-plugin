@@ -1,4 +1,4 @@
-# Contributing to the Jazz Guitar Chord Library
+# Contributing to the Siege Analytics Chord Library
 
 This document covers how to use the voicing library from the plugin and how to add voicings to it.
 

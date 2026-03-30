@@ -46,7 +46,7 @@ PLUGIN_FILES = [
 ]
 
 MAC_INSTALL_SCRIPT = r'''#!/bin/bash
-# Chord Library Plugin Installer for macOS
+# Siege Analytics Chord Library Installer for macOS
 # Double-click this file to install the plugin into MuseScore Studio.
 
 set -e
@@ -80,7 +80,7 @@ fi
 TARGET="$DEST_DIR/$PLUGIN_NAME"
 
 echo "======================================"
-echo "  Chord Library Plugin Installer"
+echo "  Siege Analytics Chord Library Installer"
 echo "======================================"
 echo ""
 echo "Source:  $SOURCE_DIR"
@@ -185,13 +185,13 @@ echo ""
 echo "Next steps:"
 echo "  1. Open (or restart) MuseScore Studio"
 echo "  2. Go to Plugins menu"
-echo "  3. Enable 'Chord Library'"
+echo "  3. Enable 'Siege Analytics Chord Library'"
 echo ""
 read -p "Press Enter to close..."
 '''
 
 MAC_UNINSTALL_SCRIPT = r'''#!/bin/bash
-# Chord Library Plugin Uninstaller for macOS
+# Siege Analytics Chord Library Uninstaller for macOS
 # Double-click this file to remove the plugin from MuseScore Studio.
 
 set -e
@@ -204,7 +204,7 @@ MS_DIRS=(
 )
 
 echo "======================================"
-echo "  Chord Library Plugin Uninstaller"
+echo "  Siege Analytics Chord Library Uninstaller"
 echo "======================================"
 echo ""
 
@@ -246,7 +246,7 @@ read -p "Press Enter to close..."
 '''
 
 WIN_INSTALL_SCRIPT = r'''@echo off
-REM Chord Library Plugin Installer for Windows
+REM Siege Analytics Chord Library Installer for Windows
 REM Double-click this file to install the plugin into MuseScore Studio.
 
 setlocal enabledelayedexpansion
@@ -256,7 +256,7 @@ set SCRIPT_DIR=%~dp0
 set SOURCE_DIR=%SCRIPT_DIR%plugin
 
 echo ======================================
-echo   Chord Library Plugin Installer
+echo   Siege Analytics Chord Library Installer
 echo ======================================
 echo.
 
@@ -312,13 +312,13 @@ echo.
 echo Next steps:
 echo   1. Open (or restart) MuseScore Studio
 echo   2. Go to Plugins menu
-echo   3. Enable 'Chord Library'
+echo   3. Enable 'Siege Analytics Chord Library'
 echo.
 pause
 '''
 
 WIN_UNINSTALL_SCRIPT = r'''@echo off
-REM Chord Library Plugin Uninstaller for Windows
+REM Siege Analytics Chord Library Uninstaller for Windows
 REM Double-click this file to remove the plugin from MuseScore Studio.
 
 setlocal enabledelayedexpansion
@@ -326,7 +326,7 @@ setlocal enabledelayedexpansion
 set PLUGIN_NAME=chordlibrary
 
 echo ======================================
-echo   Chord Library Plugin Uninstaller
+echo   Siege Analytics Chord Library Uninstaller
 echo ======================================
 echo.
 

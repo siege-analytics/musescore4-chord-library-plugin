@@ -1,10 +1,10 @@
-# MuseScore 4 Chord Library Plugin
+# Siege Analytics Chord Library
 
 A MuseScore Studio 4.6+ plugin that replaces MuseScore's flat palette system with a searchable, filterable chord voicing library for jazz guitar. 153 voicings across 26 chord qualities, with fretboard diagrams that insert directly into your score — dots and all.
 
 ## What it does
 
-1. Open the Chord Library panel alongside your score
+1. Open the Siege Analytics Chord Library panel alongside your score
 2. Filter by context (chord melody / comping), quality, voicing type, and tuning
 3. Click **Open** on a voicing
 4. A fretboard diagram appears at the selected note, transposed to the correct key, with complete dot and marker data
@@ -20,7 +20,7 @@ Download the installer from the [latest release](https://github.com/siege-analyt
 1. Download **ChordLibrary-mac.zip** and unzip it
 2. Double-click **Install Chord Library.command**
 3. Restart MuseScore Studio
-4. Enable **Chord Library** under **Plugins**
+4. Enable **Siege Analytics Chord Library** under **Plugins**
 
 Also available as a `.pkg` installer.
 
@@ -29,7 +29,7 @@ Also available as a `.pkg` installer.
 1. Download **ChordLibrary-win.zip** and extract it
 2. Double-click **Install Chord Library.bat**
 3. Restart MuseScore Studio
-4. Enable **Chord Library** under **Plugins**
+4. Enable **Siege Analytics Chord Library** under **Plugins**
 
 ### Manual install
 
