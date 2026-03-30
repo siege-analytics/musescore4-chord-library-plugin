@@ -155,6 +155,7 @@ MuseScore {
     onRun: {
         loadContextLabels()
         loadSettings()
+        loadTuningStringCount()
         if (!dataLoaded) {
             // Try local cache first (contains imports), fall back to URL
             if (!loadFromCache()) {
@@ -420,17 +421,36 @@ MuseScore {
 
     // === Filtering ===
 
-    // String count for each tuning (used for filtering)
-    property var tuningStringCount: {
-        "standard": 7,       // standard supports both 6 and 7
-        "7string-low-b": 7,
-        "dadgad": 6,
-        "all-fourths": 6
+    // Current tuning's max string count (updated when tuning changes)
+    property int tuningMaxStrings: 7
+
+    function loadTuningStringCount() {
+        // Read the selected tuning's JSON to get its string count
+        var paths = [
+            Qt.resolvedUrl("tunings/" + selectedTuning + ".json"),
+            Qt.resolvedUrl("../config/tunings/" + selectedTuning + ".json")
+        ]
+        for (var p = 0; p < paths.length; p++) {
+            tuningFile.source = paths[p]
+            try {
+                var raw = tuningFile.read()
+                if (raw && raw.length > 2) {
+                    var t = JSON.parse(raw)
+                    var count = Object.keys(t.strings || {}).length
+                    if (count > 0) {
+                        tuningMaxStrings = count
+                        console.log("Tuning " + selectedTuning + ": " + count + " strings")
+                        return
+                    }
+                }
+            } catch (e) {}
+        }
+        // Fallback: standard = 7 (supports both 6 and 7)
+        tuningMaxStrings = 7
     }
 
     function applyFilters() {
-        // Determine max string count for the selected tuning
-        var maxStrings = tuningStringCount[selectedTuning] || 7
+        var maxStrings = tuningMaxStrings
 
         var result = []
         for (var i = 0; i < voicingsData.length; i++) {
@@ -1288,9 +1308,11 @@ MuseScore {
                 Layout.fillWidth: true
                 displayText: tuningLabels[currentText] || currentText
                 currentIndex: Math.max(0, tuningList.indexOf(selectedTuning))
-                onCurrentTextChanged: {
-                    if (currentText !== selectedTuning) {
-                        selectedTuning = currentText
+                onCurrentIndexChanged: {
+                    var newTuning = tuningList[currentIndex]
+                    if (newTuning && newTuning !== selectedTuning) {
+                        selectedTuning = newTuning
+                        loadTuningStringCount()
                         saveSettings()
                         applyFilters()
                     }
