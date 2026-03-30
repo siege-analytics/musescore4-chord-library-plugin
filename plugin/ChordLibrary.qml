@@ -22,6 +22,9 @@ MuseScore {
     // System palette for dark mode detection
     SystemPalette { id: palette }
 
+    // Data model for hygiene audit results
+    ListModel { id: auditResultsModel }
+
     // === Persistent settings via FileIO ===
     // MuseScore 4 plugins don't support Qt.labs.settings,
     // so we persist to a JSON file in the plugin directory.
@@ -1886,8 +1889,6 @@ MuseScore {
                         }
                     }
                 }
-
-                ListModel { id: auditResultsModel }
 
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
