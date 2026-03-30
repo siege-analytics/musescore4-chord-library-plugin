@@ -883,8 +883,69 @@ MuseScore {
             + crossCtx + " cross-context"
         hygieneResult.color = duplicates > 0 ? "#c00" : "#060"
 
+        lastAuditResults = results
         for (var r = 0; r < results.length; r++)
             auditResultsModel.append({ "modelData": results[r] })
+    }
+
+    // Store last audit results for report export
+    property var lastAuditResults: []
+
+    function saveAuditReport() {
+        var path = auditReportPath.text.trim()
+        if (!path) { hygieneResult.text = "Enter a file path"; return }
+
+        var report = "Chord Library Audit Report\n"
+            + "Date: " + new Date().toISOString() + "\n"
+            + "Voicings: " + voicingsData.length + "\n"
+            + "Tuning: " + (tuningLabels[selectedTuning] || selectedTuning) + "\n"
+            + "=".repeat(60) + "\n\n"
+
+        for (var i = 0; i < lastAuditResults.length; i++)
+            report += lastAuditResults[i] + "\n"
+
+        report += "\n" + hygieneResult.text + "\n"
+
+        tempDiagramFile.source = path
+        try {
+            tempDiagramFile.write(report)
+            hygieneResult.text = hygieneResult.text + "\nReport saved to " + path
+        } catch (e) {
+            hygieneResult.text = "Failed to save report: " + e
+            hygieneResult.color = "#c00"
+        }
+    }
+
+    // Pre-fill Save to Library from a selected FretDiagram in the score
+    function captureFromScore() {
+        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = "#c00"; return }
+
+        var sel = curScore.selection
+        if (!sel || !sel.elements || sel.elements.length === 0) {
+            saveStatus.text = "Select a fretboard diagram first"
+            saveStatus.color = "#c00"
+            return
+        }
+
+        var elem = sel.elements[0]
+
+        // Check if it's a FretDiagram or if a note is selected with a diagram nearby
+        if (elem.type === Element.FRET_DIAGRAM) {
+            // Read what we can from the API
+            var strings = elem.fretStrings || 6
+            var frets = elem.fretFrets || 4
+            var fretOff = elem.fretOffset || 0
+
+            saveStringsCount.value = strings
+            saveFretField.text = String(fretOff + 1)  // convert 0-indexed back
+
+            saveStatus.text = "Captured: " + strings + " strings, fret " + (fretOff + 1)
+                + "\nDots not readable from API — enter them manually."
+            saveStatus.color = "#060"
+        } else {
+            saveStatus.text = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
+            saveStatus.color = "#c00"
+        }
     }
 
     // === Data fetching ===
@@ -1750,10 +1811,21 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Enter a voicing to add to the library.\nDots: string:fret pairs (e.g. 6:1,4:1,3:2)"
+                    text: "Enter a voicing or capture from the score."
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Capture from Score"
+                    font.pixelSize: 10
+                    onClicked: captureFromScore()
+                }
+
+                Label {
+                    text: "Dots: string:fret pairs (e.g. 6:1,4:1,3:2)"
+                    font.pixelSize: 9
                 }
 
                 RowLayout {
@@ -1849,10 +1921,36 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                Button {
-                    text: "Run Audit"
-                    font.pixelSize: 10
-                    onClicked: runHygieneAudit()
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Run Audit"
+                        font.pixelSize: 10
+                        onClicked: runHygieneAudit()
+                    }
+
+                    Button {
+                        text: "Save Report"
+                        font.pixelSize: 10
+                        visible: auditResultsModel.count > 0
+                        onClicked: saveAuditReport()
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+                    visible: auditResultsModel.count > 0
+
+                    TextField {
+                        id: auditReportPath
+                        Layout.fillWidth: true
+                        font.pixelSize: 10
+                        text: homePath() + "/Documents/chord-library-audit.txt"
+                        selectByMouse: true
+                    }
                 }
 
                 Label {
@@ -1863,12 +1961,12 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                // Scrollable audit results
+                // Scrollable audit results with checkboxes
                 Flickable {
                     id: auditFlickable
                     visible: auditResultsModel.count > 0
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Math.min(auditResultsModel.count * 28, 200)
+                    Layout.preferredHeight: Math.min(auditResultsModel.count * 24, 180)
                     contentHeight: auditColumn.implicitHeight
                     clip: true
                     flickableDirection: Flickable.VerticalFlick
@@ -1876,7 +1974,7 @@ MuseScore {
                     Column {
                         id: auditColumn
                         width: parent.width
-                        spacing: 2
+                        spacing: 1
 
                         Repeater {
                             model: auditResultsModel
