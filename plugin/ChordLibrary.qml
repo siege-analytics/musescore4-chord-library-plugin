@@ -80,6 +80,10 @@ MuseScore {
     property string filterQuality: ""
     property string searchText: ""
 
+    // Voice leading state
+    property var lastInsertedVoicing: null  // tracks fret position for proximity sort
+    property bool sortByProximity: false    // when true, sort filtered results by distance
+
     // Dynamic filter lists (rebuilt when data changes)
     property var contextList: ["All Contexts"]
     property var categoryList: ["All Types"]
@@ -123,6 +127,8 @@ MuseScore {
 
     // === Paste infrastructure ===
 
+    property var _pendingVoicing: null  // voicing being pasted (for tracking)
+
     // Timer to paste after launchd agent writes diagram data to clipboard
     Timer {
         id: pasteTimer
@@ -132,6 +138,12 @@ MuseScore {
             try {
                 cmd("paste")
                 statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
+                // Track for voice leading
+                if (_pendingVoicing) {
+                    lastInsertedVoicing = _pendingVoicing
+                    _pendingVoicing = null
+                    if (sortByProximity) applyFilters()
+                }
             } catch (e) {
                 statusMsg.text = "Paste failed: " + e + " — try Cmd+V manually"
                 statusMsg.color = "#c00"
@@ -206,7 +218,8 @@ MuseScore {
             return null
         }
 
-        // Prefer: filterContext match > shell > drop2 > others
+        // Score: context match + category preference + voice leading proximity
+        var ref = lastInsertedVoicing
         candidates.sort(function(a, b) {
             var scoreA = 0, scoreB = 0
             if (filterContext && a.context === filterContext) scoreA += 100
@@ -215,6 +228,11 @@ MuseScore {
             else if (a.category === "drop2") scoreA += 5
             if (b.category === "shell") scoreB += 10
             else if (b.category === "drop2") scoreB += 5
+            // Voice leading: prefer voicings close to the last inserted one
+            if (ref) {
+                scoreA -= voicingDistance(ref, a) * 2
+                scoreB -= voicingDistance(ref, b) * 2
+            }
             return scoreB - scoreA
         })
         return candidates[0]
@@ -360,6 +378,8 @@ MuseScore {
             return
         }
 
+        // Track for voice leading (batch uses this for next voicing selection too)
+        _pendingVoicing = item.voicing
         // The launchd agent writes to clipboard, then pasteTimer fires cmd("paste")
         // pasteTimer.onTriggered checks batchQueue and calls batchProcessNext()
         pasteTimer.start()
@@ -714,6 +734,16 @@ MuseScore {
         tuningMidi = {"1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33}
     }
 
+    // Calculate "distance" between two voicings (lower = closer hand position)
+    function voicingDistance(a, b) {
+        if (!a || !b) return 999
+        // Primary: fret position distance
+        var fretDist = Math.abs((a.fret_number || 0) - (b.fret_number || 0))
+        // Secondary: different number of strings sounding (penalize big shape changes)
+        var dotDist = Math.abs((a.dots || []).length - (b.dots || []).length)
+        return fretDist * 3 + dotDist
+    }
+
     function applyFilters() {
         var maxStrings = tuningMaxStrings
 
@@ -724,7 +754,7 @@ MuseScore {
             if (filterCategory && v.category !== filterCategory) continue
             if (filterQuality && v.chord_quality !== filterQuality) continue
 
-            // Filter by string count: hide voicings that need more strings than the tuning has
+            // Filter by string count
             var voicingStrings = v.strings || 6
             if (voicingStrings > maxStrings) continue
 
@@ -737,6 +767,15 @@ MuseScore {
             }
             result.push(v)
         }
+
+        // Sort by proximity to last inserted voicing
+        if (sortByProximity && lastInsertedVoicing) {
+            var ref = lastInsertedVoicing
+            result.sort(function(a, b) {
+                return voicingDistance(ref, a) - voicingDistance(ref, b)
+            })
+        }
+
         filteredData = result
     }
 
@@ -884,6 +923,8 @@ MuseScore {
         // A launchd agent (com.siegeanalytics.chord-library-clipboard) watches
         // paste-clipboard.xml for changes and runs ms-clipboard to write to
         // the macOS pasteboard. No Terminal, no visible windows.
+        // Track for voice leading
+        _pendingVoicing = voicing
         // The Timer then fires cmd("paste") to insert the diagram with dots.
         pasteTimer.start()
 
@@ -1564,6 +1605,20 @@ MuseScore {
                     } else {
                         batchInsert()
                     }
+                }
+            }
+
+            Button {
+                text: sortByProximity ? "Nearest" : "Default"
+                font.pixelSize: 10
+                implicitWidth: 56
+                onClicked: {
+                    sortByProximity = !sortByProximity
+                    applyFilters()
+                    statusMsg.text = sortByProximity
+                        ? "Sorting by proximity to last voicing"
+                        : "Default sort order"
+                    statusMsg.color = "#888"
                 }
             }
         }
