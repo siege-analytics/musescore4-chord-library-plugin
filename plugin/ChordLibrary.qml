@@ -1512,6 +1512,96 @@ MuseScore {
         }
     }
 
+    function exportMusicXML() {
+        exportStatus.text = "Generating MusicXML..."
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+        var path = basePath + ".musicxml"
+
+        // Build MusicXML with frame elements for each voicing
+        var xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+            + '<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">\n'
+            + '<score-partwise version="4.0">\n'
+            + '  <part-list><score-part id="P1"><part-name>Guitar</part-name></score-part></part-list>\n'
+            + '  <part id="P1">\n'
+
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            var ns = v.strings || 6
+            xml += '    <measure number="' + (i + 1) + '">\n'
+            xml += '      <attributes><divisions>1</divisions>'
+            if (i === 0) xml += '<time><beats>4</beats><beat-type>4</beat-type></time>'
+            xml += '</attributes>\n'
+
+            // Harmony + frame (chord diagram)
+            xml += '      <harmony>\n'
+            xml += '        <root><root-step>C</root-step></root>\n'
+            xml += '        <kind text="' + v.chord_quality + '">other</kind>\n'
+            xml += '        <frame>\n'
+            xml += '          <frame-strings>' + ns + '</frame-strings>\n'
+            xml += '          <frame-frets>' + (v.visible_frets || 4) + '</frame-frets>\n'
+            if (v.fret_number > 1)
+                xml += '          <first-fret>' + v.fret_number + '</first-fret>\n'
+
+            for (var d = 0; d < v.dots.length; d++) {
+                var absFret = v.fret_number + (v.dots[d].fret - 1)
+                xml += '          <frame-note><string>' + v.dots[d].string + '</string><fret>' + absFret + '</fret></frame-note>\n'
+            }
+            for (var o = 0; o < (v.open || []).length; o++)
+                xml += '          <frame-note><string>' + v.open[o] + '</string><fret>0</fret></frame-note>\n'
+
+            xml += '        </frame>\n      </harmony>\n'
+            xml += '      <note><pitch><step>C</step><octave>4</octave></pitch><duration>4</duration><type>whole</type></note>\n'
+            xml += '    </measure>\n'
+        }
+
+        xml += '  </part>\n</score-partwise>\n'
+
+        exportFile.source = path
+        try {
+            exportFile.write(xml)
+            exportStatus.text = "MusicXML: " + voicingsData.length + " voicings → " + path
+            exportStatus.color = "#060"
+            Qt.openUrlExternally(path)
+        } catch (e) {
+            exportStatus.text = "MusicXML export failed: " + e
+            exportStatus.color = "#c00"
+        }
+    }
+
+    function exportGP5() {
+        exportStatus.text = "Generating GP5 (requires Python + PyGuitarPro)..."
+
+        // Write the current voicings to a temp file for the Python script to read
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+        var scriptPath = pluginDir + "/scripts/export_gp5.py"
+        var dataPath = pluginDir + "/voicings-cache.json"
+        var outDir = basePath.replace(/\/[^/]+$/, "")  // parent directory
+
+        // Write a .command script that runs the GP5 exporter
+        var cmd = '#!/bin/bash\n'
+            + 'python3 "' + scriptPath + '" --data "' + dataPath + '" -o "' + outDir + '"\n'
+            + 'echo "GP5 files generated in ' + outDir + '"\n'
+            + 'echo "Press any key to close..."\n'
+            + 'read -n 1\n'
+            + 'exit 0\n'
+
+        var cmdPath = Qt.resolvedUrl("export-gp5.command")
+        tempDiagramFile.source = cmdPath
+        try {
+            tempDiagramFile.write(cmd)
+            Qt.openUrlExternally(cmdPath)
+            exportStatus.text = "GP5 export launched — check Terminal for progress"
+            exportStatus.color = "#060"
+        } catch (e) {
+            exportStatus.text = "GP5 export failed: " + e
+            exportStatus.color = "#c00"
+        }
+    }
+
     function doImport() {
         importStatus.text = "Loading..."
         importStatus.color = "#888"
@@ -1885,9 +1975,27 @@ MuseScore {
                     }
                 }
 
-                Button {
-                    text: "Export"
-                    onClicked: doExport()
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Export JSON"
+                        font.pixelSize: 10
+                        onClicked: doExport()
+                    }
+
+                    Button {
+                        text: "Export MusicXML"
+                        font.pixelSize: 10
+                        onClicked: exportMusicXML()
+                    }
+
+                    Button {
+                        text: "Export GP5"
+                        font.pixelSize: 10
+                        onClicked: exportGP5()
+                    }
                 }
 
                 Label {
