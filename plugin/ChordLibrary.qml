@@ -52,6 +52,14 @@ MuseScore {
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
+    property string selectedTuning: "standard"  // matches config/tunings/<name>.json
+    property var tuningList: ["standard", "7string-low-b", "dadgad", "all-fourths"]
+    property var tuningLabels: {
+        "standard": "Standard + Van Eps 7th (Low A)",
+        "7string-low-b": "7-String Low B",
+        "dadgad": "DADGAD",
+        "all-fourths": "All Fourths"
+    }
 
     property var voicingsData: []
     property var filteredData: []
@@ -186,7 +194,8 @@ MuseScore {
                 var s = JSON.parse(raw)
                 if (s.voicingUrl) jsonUrl = s.voicingUrl
                 if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
-                console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement)
+                if (s.tuning) selectedTuning = s.tuning
+                console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
             }
         } catch (e) {
             console.log("No saved settings found, using defaults")
@@ -196,7 +205,8 @@ MuseScore {
     function saveSettings() {
         var s = {
             voicingUrl: jsonUrl,
-            diagramPlacement: diagramPlacement
+            diagramPlacement: diagramPlacement,
+            tuning: selectedTuning
         }
         settingsFile.write(JSON.stringify(s, null, 2))
         console.log("Settings saved")
@@ -748,6 +758,49 @@ MuseScore {
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
 
+                // --- Tuning ---
+                Label {
+                    text: "TUNING"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                ComboBox {
+                    id: tuningCombo
+                    model: tuningList
+                    Layout.fillWidth: true
+                    displayText: tuningLabels[currentText] || currentText
+                    currentIndex: Math.max(0, tuningList.indexOf(selectedTuning))
+                    onCurrentTextChanged: {
+                        if (currentText !== selectedTuning) {
+                            selectedTuning = currentText
+                            saveSettings()
+                        }
+                    }
+                }
+
+                Label {
+                    text: "Affects string numbering and note verification.\nCustom tunings: add a JSON file to config/tunings/"
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning configs</a>'
+                    font.pixelSize: 10
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+
                 // --- Export ---
                 Label {
                     text: "EXPORT VOICINGS"
@@ -893,9 +946,25 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Licensed under CC BY 4.0"
+                    text: '<a href="https://creativecommons.org/licenses/by/4.0/">Licensed under CC BY 4.0</a>'
                     font.pixelSize: 10
-                    
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
+                }
+
+                Label {
+                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/blob/main/DEVELOPMENT.md">Documentation</a>'
+                    font.pixelSize: 11
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.NoButton
+                    }
                 }
             }
         }
