@@ -421,11 +421,47 @@ MuseScore {
 
     // === Filtering ===
 
-    // Current tuning's max string count (updated when tuning changes)
+    // Current tuning data (updated when tuning changes)
     property int tuningMaxStrings: 7
+    property var tuningMidi: {  // string number → MIDI note of open string
+        "1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33
+    }
+
+    // MIDI → note name lookup
+    property var midiNoteTable: {
+        var names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+        var t = {}
+        for (var m = 0; m < 128; m++) t[m] = names[m % 12]
+        return t
+    }
+
+    // Compute actual notes for a voicing in the current tuning
+    function computeNotesForTuning(voicing) {
+        var result = []
+        var dots = voicing.dots || []
+        for (var d = 0; d < dots.length; d++) {
+            var strMidi = tuningMidi[String(dots[d].string)]
+            if (strMidi !== undefined) {
+                var absFret = voicing.fret_number + (dots[d].fret - 1)
+                var midi = strMidi + absFret
+                result.push(midiNoteTable[midi] || "?")
+            } else {
+                result.push("?")
+            }
+        }
+        // Add open strings
+        var opens = voicing.open || []
+        for (var o = 0; o < opens.length; o++) {
+            var openMidi = tuningMidi[String(opens[o])]
+            if (openMidi !== undefined) {
+                result.push(midiNoteTable[openMidi] || "?")
+            }
+        }
+        return result
+    }
 
     function loadTuningStringCount() {
-        // Read the selected tuning's JSON to get its string count
+        // Read the selected tuning's JSON to get its string count and MIDI values
         var paths = [
             Qt.resolvedUrl("tunings/" + selectedTuning + ".json"),
             Qt.resolvedUrl("../config/tunings/" + selectedTuning + ".json")
@@ -436,17 +472,20 @@ MuseScore {
                 var raw = tuningFile.read()
                 if (raw && raw.length > 2) {
                     var t = JSON.parse(raw)
-                    var count = Object.keys(t.strings || {}).length
+                    var strings = t.strings || {}
+                    var count = Object.keys(strings).length
                     if (count > 0) {
                         tuningMaxStrings = count
-                        console.log("Tuning " + selectedTuning + ": " + count + " strings")
+                        tuningMidi = strings
+                        console.log("Tuning " + selectedTuning + ": " + count + " strings, MIDI loaded")
                         return
                     }
                 }
             } catch (e) {}
         }
-        // Fallback: standard = 7 (supports both 6 and 7)
+        // Fallback: standard tuning
         tuningMaxStrings = 7
+        tuningMidi = {"1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33}
     }
 
     function applyFilters() {
@@ -1511,7 +1550,7 @@ MuseScore {
                             Layout.fillWidth: true
                         }
                         Label {
-                            text: (v.notes || []).join(" ")
+                            text: computeNotesForTuning(v).join(" ")
                             font.pixelSize: 9
                             elide: Text.ElideRight
                             Layout.fillWidth: true
