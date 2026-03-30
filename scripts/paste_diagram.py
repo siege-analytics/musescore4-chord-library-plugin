@@ -30,6 +30,26 @@ from generate_mscz import generate_mscz, semitone_offset
 MUSESCORE_BUNDLE = "org.musescore.MuseScore"
 
 
+def _check_accessibility() -> bool:
+    """Check if we have Accessibility permissions (needed for System Events keystrokes).
+    If not, open System Preferences to the right pane."""
+    # Quick check: try a harmless System Events query
+    result = subprocess.run(
+        ["osascript", "-e",
+         'tell application "System Events" to get name of first process'],
+        capture_output=True, text=True, timeout=5,
+    )
+    if result.returncode != 0 and "not allowed" in result.stderr.lower():
+        print("Accessibility permission required.", file=sys.stderr)
+        print("Opening System Preferences...", file=sys.stderr)
+        subprocess.run([
+            "open",
+            "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
+        ])
+        return False
+    return True
+
+
 def _get_musescore_process_name() -> str:
     """Detect the MuseScore process name from System Events."""
     try:
