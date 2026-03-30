@@ -56,6 +56,11 @@ MuseScore {
         id: tuningFile
     }
 
+    FileIO {
+        id: audioFile
+        source: Qt.resolvedUrl("play-chord.json")
+    }
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
@@ -943,6 +948,42 @@ MuseScore {
         statusMsg.color = "#060"
     }
 
+    // === Voicing preview (MIDI playback via ms-audio) ===
+
+    function playVoicing(voicing) {
+        // Compute MIDI note numbers for this voicing in the current tuning
+        var midiNotes = []
+        var dots = voicing.dots || []
+        for (var d = 0; d < dots.length; d++) {
+            var strMidi = tuningMidi[String(dots[d].string)]
+            if (strMidi !== undefined) {
+                var absFret = voicing.fret_number + (dots[d].fret - 1)
+                midiNotes.push(strMidi + absFret)
+            }
+        }
+        // Add open strings
+        var opens = voicing.open || []
+        for (var o = 0; o < opens.length; o++) {
+            var openMidi = tuningMidi[String(opens[o])]
+            if (openMidi !== undefined) {
+                midiNotes.push(openMidi)
+            }
+        }
+
+        if (midiNotes.length === 0) return
+
+        // Write JSON that the launchd agent + ms-audio will pick up
+        var request = JSON.stringify({
+            notes: midiNotes,
+            duration: 1.5,
+        })
+        try {
+            audioFile.write(request)
+        } catch (e) {
+            console.log("Audio playback failed: " + e)
+        }
+    }
+
     // === File browser (dynamic loading to avoid import issues) ===
 
     property var _fileDialogComponent: null
@@ -1827,11 +1868,22 @@ MuseScore {
                         }
                     }
 
-                    Button {
-                        text: "Open"
-                        font.pixelSize: 10
-                        implicitWidth: 48
-                        onClicked: generateDiagramFile(v)
+                    ColumnLayout {
+                        spacing: 2
+
+                        Button {
+                            text: "Open"
+                            font.pixelSize: 10
+                            implicitWidth: 48
+                            onClicked: generateDiagramFile(v)
+                        }
+
+                        Button {
+                            text: "Play"
+                            font.pixelSize: 9
+                            implicitWidth: 48
+                            onClicked: playVoicing(v)
+                        }
                     }
                 }
             }
