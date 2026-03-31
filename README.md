@@ -1,6 +1,6 @@
 # Siege Analytics Chord Library
 
-A MuseScore Studio 4.6+ plugin that replaces MuseScore's flat palette system with a searchable, filterable chord voicing library for jazz guitar. 153 voicings across 26 chord qualities, with fretboard diagrams that insert directly into your score — dots and all.
+A MuseScore Studio 4.6+ plugin that replaces MuseScore's flat palette system with a searchable, filterable chord voicing library for jazz guitar. 737 voicings across 27 chord qualities, with fretboard diagrams that insert directly into your score — dots and all.
 
 ## What it does
 
