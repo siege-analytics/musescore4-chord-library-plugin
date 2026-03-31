@@ -153,31 +153,41 @@ def _draw_header(c, page_width, margin, title, subtitle):
     y = page_height = letter[1]
     header_top = y - margin * 0.5
 
-    # Logo (left side)
+    # Logo (left side) — links to siegeanalytics.com
     logo_height = 22
     logo_y = header_top - logo_height - 2
+    logo_width = logo_height * 5.9  # fallback aspect ratio
     if LOGO_PATH.exists():
         try:
             logo = ImageReader(str(LOGO_PATH))
             iw, ih = logo.getSize()
-            aspect = iw / ih
-            logo_width = logo_height * aspect
+            logo_width = logo_height * (iw / ih)
             c.drawImage(
                 logo, margin, logo_y,
                 width=logo_width, height=logo_height,
                 preserveAspectRatio=True, mask="auto",
             )
         except Exception:
-            # Fallback: text logo
             c.setFont("Helvetica-Bold", 10)
             c.setFillColor(BRAND_DARK)
             c.drawString(margin, logo_y + 6, "SIEGE ANALYTICS")
+            logo_width = 100
 
-    # "Chord Library for MuseScore" (right side, smaller)
+    # Make logo clickable → siegeanalytics.com
+    c.linkURL("https://www.siegeanalytics.com",
+              (margin, logo_y, margin + logo_width, logo_y + logo_height))
+
+    # "Made by Siege Analytics Chord Library for MuseScore" (right side)
+    # Links to GitHub repo
+    link_text = "Made by Siege Analytics Chord Library for MuseScore"
     c.setFont("Helvetica", 8)
-    c.setFillColor(BRAND_GRAY)
-    c.drawRightString(page_width - margin, logo_y + 12, "Chord Library for MuseScore")
-    c.drawRightString(page_width - margin, logo_y + 2, "Dheeraj Chand")
+    c.setFillColor(BRAND_GREEN)
+    text_width = c.stringWidth(link_text, "Helvetica", 8)
+    text_x = page_width - margin - text_width
+    text_y = logo_y + 6
+    c.drawString(text_x, text_y, link_text)
+    c.linkURL(GITHUB_URL,
+              (text_x, text_y - 2, page_width - margin, text_y + 10))
 
     # Green accent line under header
     accent_y = logo_y - 6
@@ -219,19 +229,18 @@ def _draw_footer(c, page_width, margin, page_num, total_pages, generated_date):
     c.line(margin, footer_y + 14, page_width - margin, footer_y + 14)
 
     c.setFont("Helvetica", 7)
+
+    # Left: GitHub link (clickable)
+    link_text = "github.com/siege-analytics/musescore4-chord-library-plugin"
+    c.setFillColor(BRAND_GREEN)
+    c.drawString(margin, footer_y, link_text)
+    link_width = c.stringWidth(link_text, "Helvetica", 7)
+    c.linkURL(GITHUB_URL, (margin, footer_y - 2, margin + link_width, footer_y + 8))
+
+    # Right: page number
     c.setFillColor(BRAND_GRAY)
-
-    # Left: attribution
-    c.drawString(margin, footer_y,
-                 f"Siege Analytics Chord Library for MuseScore (Dheeraj Chand)")
-
-    # Center: GitHub link
-    c.drawCentredString(page_width / 2, footer_y,
-                        "github.com/siege-analytics/musescore4-chord-library-plugin")
-
-    # Right: page number and date
     c.drawRightString(page_width - margin, footer_y,
-                      f"Page {page_num}/{total_pages}  |  {generated_date}")
+                      f"Page {page_num}/{total_pages}")
 
 
 def generate_chord_sheet_pdf(
