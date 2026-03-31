@@ -1699,6 +1699,98 @@ MuseScore {
         }
     }
 
+    function exportChordSheet() {
+        exportStatus.text = "Generating PDF chord sheet..."
+
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+        var outPath = basePath + "-chord-sheet.pdf"
+
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+        var scriptPath = pluginDir + "/scripts/generate_chord_sheet.py"
+        var dataPath = pluginDir + "/voicings-cache.json"
+
+        // Build filter args based on current UI state
+        var filterArgs = ""
+        if (selectedQuality && selectedQuality !== "All Qualities")
+            filterArgs += ' --quality "' + selectedQuality + '"'
+        if (selectedContext && selectedContext !== "All Contexts")
+            filterArgs += ' --context "' + selectedContext + '"'
+        if (selectedCategory && selectedCategory !== "All Types")
+            filterArgs += ' --category "' + selectedCategory + '"'
+
+        var title = "Chord Reference Sheet"
+        if (selectedQuality && selectedQuality !== "All Qualities")
+            title = selectedQuality + " Voicings"
+        if (selectedContext && selectedContext !== "All Contexts")
+            title += " (" + selectedContext + ")"
+
+        var cmd = '#!/bin/bash\n'
+            + 'cd "' + pluginDir + '"\n'
+            + 'python3 "' + scriptPath + '" --data "' + dataPath + '"'
+            + filterArgs
+            + ' --title "' + title + '"'
+            + ' -o "' + outPath + '"\n'
+            + 'echo ""\n'
+            + 'echo "Chord sheet saved to ' + outPath + '"\n'
+            + 'open "' + outPath + '"\n'
+            + 'exit 0\n'
+
+        var cmdPath = Qt.resolvedUrl("export-chord-sheet.command")
+        tempDiagramFile.source = cmdPath
+        try {
+            tempDiagramFile.write(cmd)
+            Qt.openUrlExternally(cmdPath)
+            exportStatus.text = "Chord sheet export launched — PDF will open when ready"
+            exportStatus.color = "#060"
+        } catch (e) {
+            exportStatus.text = "Chord sheet export failed: " + e
+            exportStatus.color = "#c00"
+        }
+    }
+
+    function exportDiagramsSVG() {
+        exportStatus.text = "Exporting SVG diagrams..."
+
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+        var outDir = basePath + "-diagrams"
+
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+        var scriptPath = pluginDir + "/scripts/fretboard_renderer.py"
+        var dataPath = pluginDir + "/voicings-cache.json"
+
+        var filterArgs = ""
+        if (selectedQuality && selectedQuality !== "All Qualities")
+            filterArgs += ' --quality "' + selectedQuality + '"'
+        if (selectedContext && selectedContext !== "All Contexts")
+            filterArgs += ' --context "' + selectedContext + '"'
+        if (selectedCategory && selectedCategory !== "All Types")
+            filterArgs += ' --category "' + selectedCategory + '"'
+
+        var cmd = '#!/bin/bash\n'
+            + 'mkdir -p "' + outDir + '"\n'
+            + 'python3 "' + scriptPath + '" --data "' + dataPath + '"'
+            + filterArgs
+            + ' -o "' + outDir + '"\n'
+            + 'echo ""\n'
+            + 'echo "SVG diagrams saved to ' + outDir + '"\n'
+            + 'open "' + outDir + '"\n'
+            + 'exit 0\n'
+
+        var cmdPath = Qt.resolvedUrl("export-diagrams.command")
+        tempDiagramFile.source = cmdPath
+        try {
+            tempDiagramFile.write(cmd)
+            Qt.openUrlExternally(cmdPath)
+            exportStatus.text = "SVG export launched — folder will open when ready"
+            exportStatus.color = "#060"
+        } catch (e) {
+            exportStatus.text = "SVG export failed: " + e
+            exportStatus.color = "#c00"
+        }
+    }
+
     function doImport() {
         importStatus.text = "Loading..."
         importStatus.color = "#888"
@@ -2092,6 +2184,18 @@ MuseScore {
                         text: "Export GP5"
                         font.pixelSize: 10
                         onClicked: exportGP5()
+                    }
+
+                    Button {
+                        text: "Chord Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportChordSheet()
+                    }
+
+                    Button {
+                        text: "Diagrams (SVG)"
+                        font.pixelSize: 10
+                        onClicked: exportDiagramsSVG()
                     }
                 }
 

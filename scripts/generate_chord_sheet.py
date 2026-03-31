@@ -1,25 +1,22 @@
 #!/usr/bin/env python3
 """Generate print-ready PDF chord reference sheets.
 
-Produces Neck Diagrams-style chord sheets: song metadata header,
-fretboard diagrams in a grid, color-coded by interval, with chord
-names, fret numbers, and mute/open markers.
+Produces Neck Diagrams-style chord sheets: a header with song metadata,
+followed by a grid of fretboard diagrams for each chord used. Reads chord
+symbols from a MuseScore file (.mscx/.mscz) or takes a list of voicing IDs.
 
 Usage:
-    # From a MuseScore file (extracts chord symbols)
-    python generate_chord_sheet.py score.mscz -o chord-sheet.pdf
+    # From a MuseScore file (extracts chord symbols, matches to library voicings)
+    python generate_chord_sheet.py arrangement.mscz -o chord-sheet.pdf
 
-    # From the voicing library with filters
-    python generate_chord_sheet.py --library data/voicings.json --quality dom7 -o dom7-sheet.pdf
+    # From a list of voicing IDs
+    python generate_chord_sheet.py --voicings c7-shell-e-shape-6,cmaj7-drop2-a-shape-6
 
-    # All shell voicings
-    python generate_chord_sheet.py --library data/voicings.json --category shell -o shells.pdf
+    # All voicings matching a filter
+    python generate_chord_sheet.py --quality dom7 --context CV6 -o dom7-comping.pdf
 
-    # Custom title and layout
-    python generate_chord_sheet.py --library data/voicings.json --quality maj7 \
-        --title "Major 7 Voicings" --cols 4 -o maj7.pdf
-
-Requires: cairosvg (pip install cairosvg)
+    # Custom title and metadata
+    python generate_chord_sheet.py arrangement.mscz --title "Autumn Leaves" --key Gm
 """
 
 import argparse
@@ -30,222 +27,257 @@ import zipfile
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-from fretboard_svg import render_voicing_svg
-
-# Page dimensions (US Letter in points, 72 pts/inch)
-PAGE_W = 612
-PAGE_H = 792
-MARGIN = 36
+from fretboard_renderer import render_fretboard_svg
 
 
-def extract_chords_from_mscz(path: Path) -> list[str]:
-    """Extract chord symbol text from a .mscz or .mscx file."""
-    if path.suffix == ".mscz":
-        with zipfile.ZipFile(path) as zf:
+def extract_chords_from_mscx(mscx_path):
+    """Extract song metadata and chord symbols from a MuseScore file."""
+    if mscx_path.suffix == ".mscz":
+        with zipfile.ZipFile(mscx_path) as zf:
             mscx_names = [n for n in zf.namelist() if n.endswith(".mscx")]
             if not mscx_names:
-                print(f"No .mscx found inside {path}", file=sys.stderr)
-                return []
-            content = zf.read(mscx_names[0]).decode("utf-8")
+                raise ValueError(f"No .mscx file found inside {mscx_path}")
+            xml_data = zf.read(mscx_names[0])
+            root = ET.fromstring(xml_data)
     else:
-        content = path.read_text()
+        tree = ET.parse(str(mscx_path))
+        root = tree.getroot()
 
-    root = ET.fromstring(content)
+    title = ""
+    composer = ""
+    for meta in root.iter("metaTag"):
+        name = meta.get("name", "")
+        if name == "workTitle":
+            title = meta.text or ""
+        elif name == "composer":
+            composer = meta.text or ""
+
     chords = []
-    # Search for Harmony elements
+    seen = set()
     for harmony in root.iter("Harmony"):
-        # Get the text representation
-        name_el = harmony.find("name")
-        root_el = harmony.find("root")
-        if name_el is not None and name_el.text:
-            chords.append(name_el.text)
-        elif root_el is not None:
-            # Build from root + quality
-            root_case = root_el.find("rootCase")
-            chord_text = root_case.text if root_case is not None and root_case.text else ""
-            chords.append(chord_text)
+        chord_text = None
+        root_elem = harmony.find("root")
+        name_elem = harmony.find("name")
 
-    # Also try text-based harmony
-    for harmony in root.iter():
-        if harmony.tag == "Harmony" or (hasattr(harmony, "get") and "Harmony" in harmony.tag):
-            text = harmony.get("text", "")
-            if text and text not in chords:
-                chords.append(text)
-
-    return list(dict.fromkeys(chords))  # deduplicate preserving order
-
-
-def generate_pdf(
-    voicings: list[dict],
-    output: Path,
-    title: str = "Chord Reference Sheet",
-    subtitle: str = "",
-    cols: int = 5,
-    cell_w: int = 110,
-    cell_h: int = 145,
-):
-    """Generate a multi-page PDF chord sheet."""
-    try:
-        import cairosvg
-    except ImportError:
-        print("PDF generation requires cairosvg: pip install cairosvg", file=sys.stderr)
-        sys.exit(1)
-
-    try:
-        from reportlab.lib.pagesizes import letter
-        from reportlab.lib.units import inch
-        from reportlab.pdfgen import canvas as rl_canvas
-    except ImportError:
-        print("PDF generation requires reportlab: pip install reportlab", file=sys.stderr)
-        sys.exit(1)
-
-    c = rl_canvas.Canvas(str(output), pagesize=letter)
-    page_w, page_h = letter
-
-    padding = 8
-    usable_w = page_w - 2 * MARGIN
-    usable_h = page_h - 2 * MARGIN
-
-    # Header height
-    header_h = 60 if title else 20
-
-    # Calculate grid layout
-    actual_cols = min(cols, int(usable_w / (cell_w + padding)))
-    grid_w = actual_cols * (cell_w + padding)
-    start_x = MARGIN + (usable_w - grid_w) / 2
-
-    items_per_page = actual_cols * int((usable_h - header_h) / (cell_h + padding))
-
-    page_num = 0
-    item_idx = 0
-
-    while item_idx < len(voicings):
-        page_num += 1
-
-        # Header (first page only, or every page)
-        y_cursor = page_h - MARGIN
-
-        if page_num == 1 and title:
-            c.setFont("Helvetica-Bold", 18)
-            c.drawCentredString(page_w / 2, y_cursor - 18, title)
-            y_cursor -= 24
-            if subtitle:
-                c.setFont("Helvetica", 10)
-                c.drawCentredString(page_w / 2, y_cursor - 12, subtitle)
-                y_cursor -= 16
-            y_cursor -= 20
+        if root_elem is not None:
+            root_val = int(root_elem.text or "0")
+            chromatic = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+            chord_root = chromatic[root_val % 12]
+            suffix = ""
+            if name_elem is not None:
+                suffix = name_elem.text or ""
+            chord_text = chord_root + suffix
         else:
-            y_cursor -= 20
+            text = harmony.text or harmony.get("text", "")
+            if text:
+                chord_text = text
 
-        # Grid of diagrams
-        col = 0
-        while item_idx < len(voicings) and y_cursor - cell_h > MARGIN:
-            v = voicings[item_idx]
+        if chord_text and chord_text not in seen:
+            chords.append(chord_text)
+            seen.add(chord_text)
 
-            # Render SVG
-            svg_str = render_voicing_svg(
-                v, width=cell_w, height=cell_h,
-                show_notes=False, show_intervals=True,
-            )
+    return {"title": title, "composer": composer, "chords": chords}
 
-            # Convert SVG to PNG in memory
-            png_data = cairosvg.svg2png(
-                bytestring=svg_str.encode("utf-8"),
-                dpi=200,
-            )
 
-            # Draw on PDF
-            from reportlab.lib.utils import ImageReader
-            img = ImageReader(io.BytesIO(png_data))
-            x = start_x + col * (cell_w + padding)
-            y = y_cursor - cell_h
+def match_chord_to_voicings(chord_text, voicings, context="CV6"):
+    """Find voicings that match a chord symbol."""
+    chromatic = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+    root = None
+    for r in sorted(chromatic, key=len, reverse=True):
+        if chord_text.startswith(r):
+            root = r
+            break
+    if not root:
+        return []
 
-            c.drawImage(img, x, y, width=cell_w, height=cell_h)
+    suffix = chord_text[len(root):]
+    quality_map = {
+        "7": "dom7", "maj7": "maj7", "M7": "maj7",
+        "m7": "min7", "-7": "min7", "min7": "min7",
+        "m7b5": "min7b5", "-7b5": "min7b5",
+        "dim7": "dim7", "o7": "dim7",
+        "6": "maj6", "m6": "min6",
+        "9": "dom9", "maj9": "maj9", "m9": "min9",
+        "13": "dom13", "7b9": "dom7b9", "7#9": "dom7sharp9",
+        "7#11": "dom7sharp11", "7b13": "dom7b13",
+        "sus4": "sus4", "sus2": "sus2", "": "dom7",
+    }
 
-            col += 1
-            item_idx += 1
+    quality = quality_map.get(suffix)
+    if not quality:
+        for k, v in sorted(quality_map.items(), key=lambda x: -len(x[0])):
+            if k and suffix.startswith(k):
+                quality = v
+                break
+    if not quality:
+        return []
 
-            if col >= actual_cols:
-                col = 0
-                y_cursor -= (cell_h + padding)
+    return [v for v in voicings
+            if v["chord_quality"] == quality
+            and (v["context"] == context or context == "all")][:3]
 
-        # Page footer
-        c.setFont("Helvetica", 7)
-        c.setFillColorRGB(0.5, 0.5, 0.5)
-        c.drawCentredString(page_w / 2, MARGIN - 10, f"Page {page_num}")
-        c.setFillColorRGB(0, 0, 0)
 
-        if item_idx < len(voicings):
+def svg_to_pdf_drawing(svg_string):
+    """Convert an SVG string to a ReportLab drawing."""
+    try:
+        from svglib.svglib import svg2rlg
+        svg_io = io.BytesIO(svg_string.encode("utf-8"))
+        return svg2rlg(svg_io)
+    except ImportError:
+        return None
+
+
+def generate_chord_sheet_pdf(
+    output_path,
+    voicings_to_render,
+    title="Chord Reference Sheet",
+    subtitle="",
+    columns=5,
+    diagram_width=140,
+):
+    """Generate a PDF chord sheet with a grid of fretboard diagrams."""
+    from reportlab.graphics import renderPDF
+
+    page_width, page_height = letter
+    margin = 0.75 * inch
+    usable_width = page_width - 2 * margin
+    col_width = usable_width / columns
+    row_height = diagram_width * 1.4
+
+    c = canvas.Canvas(str(output_path), pagesize=letter)
+    c.setTitle(title)
+
+    # Header
+    y = page_height - margin
+    c.setFont("Helvetica-Bold", 18)
+    c.drawCentredString(page_width / 2, y, title)
+    y -= 22
+
+    if subtitle:
+        c.setFont("Helvetica", 11)
+        c.drawCentredString(page_width / 2, y, subtitle)
+        y -= 16
+
+    y -= 8
+    c.setStrokeColorRGB(0.7, 0.7, 0.7)
+    c.line(margin, y, page_width - margin, y)
+    y -= 20
+
+    col = 0
+    row_y = y
+
+    for voicing in voicings_to_render:
+        if row_y - row_height < margin:
             c.showPage()
+            row_y = page_height - margin - 20
+            col = 0
 
+        x = margin + col * col_width
+
+        dwg = render_fretboard_svg(
+            voicing,
+            width=int(diagram_width * 0.85),
+            show_labels=True,
+            show_title=True,
+            show_intervals=True,
+        )
+
+        svg_string = dwg.tostring()
+        drawing = svg_to_pdf_drawing(svg_string)
+
+        if drawing:
+            scale = min(col_width / drawing.width, row_height / drawing.height) * 0.9
+            drawing.width *= scale
+            drawing.height *= scale
+            drawing.scale(scale, scale)
+            renderPDF.draw(drawing, c, x + (col_width - drawing.width) / 2, row_y - drawing.height)
+
+        col += 1
+        if col >= columns:
+            col = 0
+            row_y -= row_height
+
+    c.setFont("Helvetica", 8)
+    c.setFillColorRGB(0.5, 0.5, 0.5)
+    c.drawCentredString(page_width / 2, margin / 2,
+                        "Generated by Siege Analytics Chord Library")
     c.save()
-    print(f"Saved {page_num}-page PDF with {len(voicings)} diagrams to {output}")
+    print(f"Saved chord sheet: {output_path}")
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate print-ready PDF chord reference sheets"
+        description="Generate PDF chord reference sheets"
     )
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("score", nargs="?", type=Path, help="MuseScore file (.mscz/.mscx)")
-    group.add_argument("--library", type=Path, help="Voicings JSON file")
-
+    parser.add_argument("score", nargs="?", type=Path,
+                        help="MuseScore file (.mscx/.mscz) to analyze")
+    parser.add_argument("--voicings", help="Comma-separated voicing IDs")
     parser.add_argument("--quality", help="Filter by chord quality")
-    parser.add_argument("--context", help="Filter by context")
+    parser.add_argument("--context", default="CV6", help="Context filter")
     parser.add_argument("--category", help="Filter by category")
-    parser.add_argument("--title", help="Sheet title")
-    parser.add_argument("--subtitle", help="Sheet subtitle (composer, key, etc.)")
-    parser.add_argument("--cols", type=int, default=5, help="Diagrams per row (default: 5)")
-    parser.add_argument("-o", "--output", type=Path, required=True, help="Output PDF path")
+    parser.add_argument("--title", help="Override sheet title")
+    parser.add_argument("--key", help="Key for subtitle")
+    parser.add_argument("--columns", type=int, default=5)
+    parser.add_argument("-o", "--output", type=Path, default=Path("chord-sheet.pdf"))
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
     args = parser.parse_args()
 
+    with open(args.data) as f:
+        all_voicings = json.load(f)["voicings"]
+
+    voicings_to_render = []
+    title = args.title or "Chord Reference Sheet"
+    subtitle = ""
+
     if args.score:
-        # Extract chords from score and match to library
-        chords = extract_chords_from_mscz(args.score)
-        if not chords:
-            print(f"No chord symbols found in {args.score}", file=sys.stderr)
-            sys.exit(1)
+        info = extract_chords_from_mscx(args.score)
+        title = args.title or info["title"] or args.score.stem
+        parts = []
+        if info["composer"]:
+            parts.append(info["composer"])
+        if args.key:
+            parts.append(f"Key: {args.key}")
+        subtitle = " — ".join(parts)
 
-        print(f"Found {len(chords)} unique chords: {', '.join(chords)}")
-
-        # Load library and find matching voicings
-        lib_path = REPO_ROOT / "data" / "voicings.json"
-        with open(lib_path) as f:
-            library = json.load(f)["voicings"]
-
-        # Simple matching: for each chord, find voicings by quality
-        # TODO: proper chord symbol parsing with root transposition
-        matched = []
-        for v in library:
-            if v.get("context") in ("CV6", "CM6"):  # prefer 6-string
-                matched.append(v)
-
-        title = args.title or args.score.stem
-        generate_pdf(matched[:50], args.output, title=title, subtitle=args.subtitle or "", cols=args.cols)
-
-    elif args.library:
-        with open(args.library) as f:
-            data = json.load(f)
-        voicings = data.get("voicings", [])
-
+        for chord_text in info["chords"]:
+            matches = match_chord_to_voicings(chord_text, all_voicings, args.context)
+            if matches:
+                voicings_to_render.append(matches[0])
+            else:
+                print(f"Warning: no voicing for '{chord_text}'", file=sys.stderr)
+    elif args.voicings:
+        for vid in args.voicings.split(","):
+            vid = vid.strip()
+            matches = [v for v in all_voicings if v["id"] == vid]
+            if matches:
+                voicings_to_render.append(matches[0])
+            else:
+                print(f"Warning: '{vid}' not found", file=sys.stderr)
+    else:
+        voicings_to_render = all_voicings
         if args.quality:
-            voicings = [v for v in voicings if v.get("chord_quality") == args.quality]
-        if args.context:
-            voicings = [v for v in voicings if v.get("context") == args.context]
+            voicings_to_render = [v for v in voicings_to_render if v["chord_quality"] == args.quality]
+        if args.context and args.context != "all":
+            voicings_to_render = [v for v in voicings_to_render if v["context"] == args.context]
         if args.category:
-            voicings = [v for v in voicings if v.get("category") == args.category]
+            voicings_to_render = [v for v in voicings_to_render if v["category"] == args.category]
+        title = args.title or f"Chord Library — {args.quality or 'All'} ({args.context})"
 
-        if not voicings:
-            print("No voicings match the filter", file=sys.stderr)
-            sys.exit(1)
+    if not voicings_to_render:
+        print("No voicings to render", file=sys.stderr)
+        sys.exit(1)
 
-        title = args.title or "Chord Reference Sheet"
-        subtitle = args.subtitle or f"{len(voicings)} voicings"
-
-        generate_pdf(voicings, args.output, title=title, subtitle=subtitle, cols=args.cols)
+    generate_chord_sheet_pdf(
+        args.output, voicings_to_render,
+        title=title, subtitle=subtitle, columns=args.columns,
+    )
 
 
 if __name__ == "__main__":
