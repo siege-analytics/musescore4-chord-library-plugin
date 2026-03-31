@@ -27,14 +27,28 @@ import zipfile
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
+from datetime import date
+
+from reportlab.lib.colors import HexColor
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+ASSETS_DIR = REPO_ROOT / "assets"
+LOGO_PATH = ASSETS_DIR / "siege-logo-black.png"
+GITHUB_URL = "https://github.com/siege-analytics/musescore4-chord-library-plugin"
+
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from fretboard_renderer import render_fretboard_svg
+
+# Siege Analytics brand colors (from website)
+BRAND_GREEN = HexColor("#6B8E23")      # olive green accent
+BRAND_DARK = HexColor("#212121")       # near-black text
+BRAND_GRAY = HexColor("#757575")       # secondary text
+BRAND_LIGHT = HexColor("#E0E0E0")      # divider lines
 
 
 def extract_chords_from_mscx(mscx_path):
@@ -134,6 +148,92 @@ def svg_to_pdf_drawing(svg_string):
         return None
 
 
+def _draw_header(c, page_width, margin, title, subtitle):
+    """Draw the branded header on the current page."""
+    y = page_height = letter[1]
+    header_top = y - margin * 0.5
+
+    # Logo (left side)
+    logo_height = 22
+    logo_y = header_top - logo_height - 2
+    if LOGO_PATH.exists():
+        try:
+            logo = ImageReader(str(LOGO_PATH))
+            iw, ih = logo.getSize()
+            aspect = iw / ih
+            logo_width = logo_height * aspect
+            c.drawImage(
+                logo, margin, logo_y,
+                width=logo_width, height=logo_height,
+                preserveAspectRatio=True, mask="auto",
+            )
+        except Exception:
+            # Fallback: text logo
+            c.setFont("Helvetica-Bold", 10)
+            c.setFillColor(BRAND_DARK)
+            c.drawString(margin, logo_y + 6, "SIEGE ANALYTICS")
+
+    # "Chord Library for MuseScore" (right side, smaller)
+    c.setFont("Helvetica", 8)
+    c.setFillColor(BRAND_GRAY)
+    c.drawRightString(page_width - margin, logo_y + 12, "Chord Library for MuseScore")
+    c.drawRightString(page_width - margin, logo_y + 2, "Dheeraj Chand")
+
+    # Green accent line under header
+    accent_y = logo_y - 6
+    c.setStrokeColor(BRAND_GREEN)
+    c.setLineWidth(2)
+    c.line(margin, accent_y, page_width - margin, accent_y)
+    c.setLineWidth(1)
+
+    # Title
+    title_y = accent_y - 26
+    c.setFont("Helvetica-Bold", 20)
+    c.setFillColor(BRAND_DARK)
+    c.drawCentredString(page_width / 2, title_y, title)
+
+    # Subtitle
+    content_y = title_y - 6
+    if subtitle:
+        content_y -= 16
+        c.setFont("Helvetica", 11)
+        c.setFillColor(BRAND_GRAY)
+        c.drawCentredString(page_width / 2, title_y - 18, subtitle)
+
+    # Thin divider
+    content_y -= 10
+    c.setStrokeColor(BRAND_LIGHT)
+    c.setLineWidth(0.5)
+    c.line(margin, content_y, page_width - margin, content_y)
+
+    return content_y - 15  # return Y position for content start
+
+
+def _draw_footer(c, page_width, margin, page_num, total_pages, generated_date):
+    """Draw the branded footer on the current page."""
+    footer_y = margin * 0.4
+
+    # Green accent line above footer
+    c.setStrokeColor(BRAND_GREEN)
+    c.setLineWidth(1)
+    c.line(margin, footer_y + 14, page_width - margin, footer_y + 14)
+
+    c.setFont("Helvetica", 7)
+    c.setFillColor(BRAND_GRAY)
+
+    # Left: attribution
+    c.drawString(margin, footer_y,
+                 f"Siege Analytics Chord Library for MuseScore (Dheeraj Chand)")
+
+    # Center: GitHub link
+    c.drawCentredString(page_width / 2, footer_y,
+                        "github.com/siege-analytics/musescore4-chord-library-plugin")
+
+    # Right: page number and date
+    c.drawRightString(page_width - margin, footer_y,
+                      f"Page {page_num}/{total_pages}  |  {generated_date}")
+
+
 def generate_chord_sheet_pdf(
     output_path,
     voicings_to_render,
@@ -142,7 +242,7 @@ def generate_chord_sheet_pdf(
     columns=5,
     diagram_width=140,
 ):
-    """Generate a PDF chord sheet with a grid of fretboard diagrams."""
+    """Generate a branded PDF chord sheet with Siege Analytics header/footer."""
     from reportlab.graphics import renderPDF
 
     page_width, page_height = letter
@@ -150,32 +250,52 @@ def generate_chord_sheet_pdf(
     usable_width = page_width - 2 * margin
     col_width = usable_width / columns
     row_height = diagram_width * 1.4
+    footer_space = margin * 0.8
+    generated_date = date.today().strftime("%B %d, %Y")
 
+    # First pass: calculate total pages
+    # (we need this for "Page X/Y" in the footer)
+    content_start_y = page_height - margin * 0.5 - 22 - 6 - 26 - 6 - 10 - 15
+    if subtitle:
+        content_start_y -= 16
+
+    diagrams_per_first_page = 0
+    test_y = content_start_y
+    while test_y - row_height > footer_space:
+        diagrams_per_first_page += columns
+        test_y -= row_height
+
+    # Continuation pages have more room (no big title)
+    cont_start_y = page_height - margin - 20
+    diagrams_per_cont_page = 0
+    test_y = cont_start_y
+    while test_y - row_height > footer_space:
+        diagrams_per_cont_page += columns
+        test_y -= row_height
+
+    total_voicings = len(voicings_to_render)
+    if total_voicings <= diagrams_per_first_page:
+        total_pages = 1
+    else:
+        remaining = total_voicings - diagrams_per_first_page
+        total_pages = 1 + max(1, -(-remaining // diagrams_per_cont_page))  # ceil division
+
+    # Second pass: render
     c = canvas.Canvas(str(output_path), pagesize=letter)
     c.setTitle(title)
+    c.setAuthor("Dheeraj Chand / Siege Analytics")
+    c.setSubject("Chord Reference Sheet")
 
-    # Header
-    y = page_height - margin
-    c.setFont("Helvetica-Bold", 18)
-    c.drawCentredString(page_width / 2, y, title)
-    y -= 22
-
-    if subtitle:
-        c.setFont("Helvetica", 11)
-        c.drawCentredString(page_width / 2, y, subtitle)
-        y -= 16
-
-    y -= 8
-    c.setStrokeColorRGB(0.7, 0.7, 0.7)
-    c.line(margin, y, page_width - margin, y)
-    y -= 20
-
+    page_num = 1
+    row_y = _draw_header(c, page_width, margin, title, subtitle)
     col = 0
-    row_y = y
 
-    for voicing in voicings_to_render:
-        if row_y - row_height < margin:
+    for i, voicing in enumerate(voicings_to_render):
+        if row_y - row_height < footer_space:
+            # Draw footer on current page, start new page
+            _draw_footer(c, page_width, margin, page_num, total_pages, generated_date)
             c.showPage()
+            page_num += 1
             row_y = page_height - margin - 20
             col = 0
 
@@ -204,12 +324,10 @@ def generate_chord_sheet_pdf(
             col = 0
             row_y -= row_height
 
-    c.setFont("Helvetica", 8)
-    c.setFillColorRGB(0.5, 0.5, 0.5)
-    c.drawCentredString(page_width / 2, margin / 2,
-                        "Generated by Siege Analytics Chord Library")
+    # Draw footer on final page
+    _draw_footer(c, page_width, margin, page_num, total_pages, generated_date)
     c.save()
-    print(f"Saved chord sheet: {output_path}")
+    print(f"Saved chord sheet: {output_path} ({total_pages} pages)")
 
 
 def main():
