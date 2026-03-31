@@ -1791,6 +1791,80 @@ MuseScore {
         }
     }
 
+    // === Tools (launch Python scripts via .command) ===
+
+    function launchTool(scriptName, args, statusLabel, successMsg) {
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+        var scriptPath = pluginDir + "/scripts/" + scriptName
+        var dataPath = pluginDir + "/voicings-cache.json"
+
+        var cmd = '#!/bin/bash\n'
+            + 'cd "' + pluginDir + '"\n'
+            + 'python3 "' + scriptPath + '" ' + args.replace("DATA_PATH", dataPath) + '\n'
+            + 'echo ""\necho "Press any key to close..."\nread -n 1\nexit 0\n'
+
+        var cmdPath = Qt.resolvedUrl("run-tool.command")
+        tempDiagramFile.source = cmdPath
+        try {
+            tempDiagramFile.write(cmd)
+            Qt.openUrlExternally(cmdPath)
+            statusLabel.text = successMsg
+            statusLabel.color = "#060"
+        } catch (e) {
+            statusLabel.text = "Failed: " + e
+            statusLabel.color = "#c00"
+        }
+    }
+
+    function analyzeCurrentScore() {
+        if (!curScore) {
+            toolStatus.text = "No score open"
+            toolStatus.color = "#c00"
+            return
+        }
+        var scorePath = curScore.path || ""
+        if (!scorePath) {
+            toolStatus.text = "Save the score first"
+            toolStatus.color = "#c00"
+            return
+        }
+        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+        launchTool("analyze_score.py",
+            '"' + scorePath + '" --context ' + ctx + ' --data DATA_PATH',
+            toolStatus, "Score analysis launched — check Terminal")
+    }
+
+    function runVoiceLeading() {
+        if (!curScore) {
+            toolStatus.text = "No score open"
+            toolStatus.color = "#c00"
+            return
+        }
+        var scorePath = curScore.path || ""
+        if (!scorePath) {
+            toolStatus.text = "Save the score first"
+            toolStatus.color = "#c00"
+            return
+        }
+        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+        var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
+        launchTool("voice_leading.py",
+            '--score "' + scorePath + '" --context ' + ctx + catArg + ' --top 3 --data DATA_PATH',
+            toolStatus, "Voice leading analysis launched — check Terminal")
+    }
+
+    function suggestFingerings() {
+        var filterArgs = " --data DATA_PATH"
+        if (selectedQuality && selectedQuality !== "All Qualities")
+            filterArgs += ' --quality "' + selectedQuality + '"'
+        if (selectedContext && selectedContext !== "All Contexts")
+            filterArgs += ' --context "' + selectedContext + '"'
+        if (selectedCategory && selectedCategory !== "All Types")
+            filterArgs += ' --category "' + selectedCategory + '"'
+        launchTool("suggest_fingerings.py", filterArgs,
+            toolStatus, "Fingering suggestions launched — check Terminal")
+    }
+
     function doImport() {
         importStatus.text = "Loading..."
         importStatus.color = "#888"
@@ -2251,6 +2325,62 @@ MuseScore {
 
                 Label {
                     id: importStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+
+                // --- Tools ---
+                Label {
+                    text: "TOOLS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Analysis and utility tools (open in Terminal):"
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Analyze Score"
+                        font.pixelSize: 10
+                        onClicked: analyzeCurrentScore()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Show which chords in the score are covered by the library"
+                    }
+
+                    Button {
+                        text: "Voice Leading"
+                        font.pixelSize: 10
+                        onClicked: runVoiceLeading()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Find optimal voicing paths for the score's chord progression"
+                    }
+
+                    Button {
+                        text: "Suggest Fingerings"
+                        font.pixelSize: 10
+                        onClicked: suggestFingerings()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Generate finger assignments for current filter"
+                    }
+                }
+
+                Label {
+                    id: toolStatus
                     visible: text.length > 0
                     font.pixelSize: 11
                     font.bold: true
