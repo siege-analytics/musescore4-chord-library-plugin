@@ -108,11 +108,15 @@ def voicing_to_gp_chord(voicing: dict, target_root: str) -> gp.models.Chord:
         # Our format: string 1 = high e, string 6 = low E
         # GP format: index 0 = high e, index 5 = low E
         gp_idx = dot["string"] - 1
+        if gp_idx >= num_strings:
+            continue  # skip strings beyond declared count
         absolute_fret = voicing["fret_number"] + (dot["fret"] - 1) + offset
         strings[gp_idx] = absolute_fret
 
     for open_str in voicing.get("open", []):
         gp_idx = open_str - 1
+        if gp_idx >= num_strings:
+            continue
         strings[gp_idx] = 0
 
     # Muted strings stay as -1 (default)

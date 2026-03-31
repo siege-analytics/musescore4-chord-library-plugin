@@ -384,7 +384,20 @@ MuseScore {
             curScore.selection.select(cursor.element)
         }
 
-        // Generate and write clipboard XML
+        // Try direct insertion via setDot() API first (instant, no timer delay)
+        if (insertDirect(item.voicing, item.root)) {
+            lastInsertedVoicing = item.voicing
+            // Immediately process next item (no timer delay needed)
+            if (batchQueue.length > 0) {
+                batchProcessNext()
+            } else {
+                statusMsg.text = "Batch complete: " + batchTotal + " diagrams inserted"
+                statusMsg.color = "#060"
+            }
+            return
+        }
+
+        // Fall back to clipboard workaround
         var xml = generateXmlForVoicing(item.voicing, item.root)
         var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
         tempDiagramFile.source = xmlPath
@@ -1350,9 +1363,78 @@ MuseScore {
         statusMsg.color = "#060"
     }
 
-    // === Temp .mscx diagram file (workaround for missing setDot API) ===
+    // === Diagram insertion (setDot API or clipboard workaround) ===
 
+    // Cached result of setDot() availability (null = not yet tested)
+    property var _hasSetDot: null
     property var _selectedVoicing: null
+
+    function hasSetDotApi() {
+        if (_hasSetDot !== null) return _hasSetDot
+        try {
+            var fd = newElement(Element.FRET_DIAGRAM)
+            _hasSetDot = (typeof fd.setDot === "function")
+            if (_hasSetDot)
+                console.log("setDot() API detected — using direct insertion")
+            else
+                console.log("setDot() not available — using clipboard workaround")
+        } catch (e) {
+            console.log("Could not probe setDot(): " + e)
+            _hasSetDot = false
+        }
+        return _hasSetDot
+    }
+
+    // Insert a voicing directly via setDot() API (no clipboard needed).
+    // Returns true if successful, false if setDot() not available or insert failed.
+    function insertDirect(voicing, targetRoot) {
+        if (!hasSetDotApi()) return false
+        if (!curScore) return false
+
+        var numStrings = voicing.strings || 6
+        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
+
+        try {
+            curScore.startCmd()
+
+            var fd = newElement(Element.FRET_DIAGRAM)
+            fd.fretStrings = numStrings
+            fd.fretFrets = voicing.visible_frets || 4
+            fd.fretOffset = voicing.fret_number + offset - 1
+
+            // Set dots via setDot(string, fret, fingerNumber)
+            // MuseScore uses 0-based string index (0 = leftmost in diagram)
+            var dots = voicing.dots || []
+            for (var d = 0; d < dots.length; d++) {
+                var msStr = numStrings - dots[d].string
+                fd.setDot(msStr, dots[d].fret, 0)
+            }
+
+            // Set mutes and open strings via setMarker
+            var mutes = voicing.mutes || []
+            for (var m = 0; m < mutes.length; m++) {
+                var msMute = numStrings - mutes[m]
+                fd.setMarker(msMute, 1)  // 1 = cross/muted
+            }
+            var opens = voicing.open || []
+            for (var o = 0; o < opens.length; o++) {
+                var msOpen = numStrings - opens[o]
+                fd.setMarker(msOpen, 2)  // 2 = circle/open
+            }
+
+            var cursor = curScore.newCursor()
+            cursor.rewind(1)  // SELECTION_START
+            cursor.add(fd)
+
+            curScore.endCmd()
+            return true
+        } catch (e) {
+            try { curScore.endCmd() } catch (ignore) {}
+            console.log("setDot() insert failed: " + e + " — falling back to clipboard")
+            _hasSetDot = null  // reset cache so clipboard path is used
+            return false
+        }
+    }
 
     function generateDiagramFile(voicing) {
         // Determine target root from score selection, or default to C
@@ -1381,10 +1463,19 @@ MuseScore {
         var transposed = Transposer.transposeVoicing(voicing, targetRoot)
         var displayName = transposed.name
 
-        // Generate the clipboard XML using the shared function
+        // Try direct insertion via setDot() API first (instant, no clipboard)
+        if (insertDirect(voicing, targetRoot)) {
+            lastInsertedVoicing = voicing
+            if (sortByProximity) applyFilters()
+            statusMsg.text = "Inserted " + displayName
+                + " [" + transposed.notes.join(" ") + "]"
+            statusMsg.color = "#060"
+            return
+        }
+
+        // Fall back to clipboard workaround
         var xml = generateXmlForVoicing(voicing, targetRoot)
 
-        // Write the clipboard XML to a file that ms-clipboard will read
         var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
         tempDiagramFile.source = xmlPath
         try {
@@ -1398,7 +1489,6 @@ MuseScore {
         // A launchd agent (com.siegeanalytics.chord-library-clipboard) watches
         // paste-clipboard.xml for changes and runs ms-clipboard to write to
         // the macOS pasteboard. No Terminal, no visible windows.
-        // Track for voice leading
         _pendingVoicing = voicing
         // The Timer then fires cmd("paste") to insert the diagram with dots.
         pasteTimer.start()

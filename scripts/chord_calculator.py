@@ -29,20 +29,44 @@ CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
 
 # Chord quality definitions: name → (required semitones, display name, min notes)
 CHORD_QUALITIES = {
-    "maj":      (frozenset({0, 4, 7}), "maj", 3),
-    "min":      (frozenset({0, 3, 7}), "min", 3),
-    "dom7":     (frozenset({0, 4, 7, 10}), "7", 3),
-    "maj7":     (frozenset({0, 4, 7, 11}), "maj7", 3),
-    "min7":     (frozenset({0, 3, 7, 10}), "m7", 3),
-    "min7b5":   (frozenset({0, 3, 6, 10}), "m7b5", 3),
-    "dim7":     (frozenset({0, 3, 6, 9}), "dim7", 3),
-    "dom7b9":   (frozenset({0, 1, 4, 10}), "7b9", 4),
-    "sus4":     (frozenset({0, 5, 7}), "sus4", 3),
-    "sus2":     (frozenset({0, 2, 7}), "sus2", 3),
-    "maj6":     (frozenset({0, 4, 7, 9}), "6", 3),
-    "min6":     (frozenset({0, 3, 7, 9}), "m6", 3),
-    "aug":      (frozenset({0, 4, 8}), "aug", 3),
-    "dim":      (frozenset({0, 3, 6}), "dim", 3),
+    # Triads
+    "maj":        (frozenset({0, 4, 7}), "maj", 3),
+    "min":        (frozenset({0, 3, 7}), "min", 3),
+    "aug":        (frozenset({0, 4, 8}), "aug", 3),
+    "dim":        (frozenset({0, 3, 6}), "dim", 3),
+    "sus4":       (frozenset({0, 5, 7}), "sus4", 3),
+    "sus2":       (frozenset({0, 2, 7}), "sus2", 3),
+    # 7th chords
+    "dom7":       (frozenset({0, 4, 7, 10}), "7", 3),
+    "maj7":       (frozenset({0, 4, 7, 11}), "maj7", 3),
+    "min7":       (frozenset({0, 3, 7, 10}), "m7", 3),
+    "min7b5":     (frozenset({0, 3, 6, 10}), "m7b5", 3),
+    "dim7":       (frozenset({0, 3, 6, 9}), "dim7", 3),
+    "min-maj7":   (frozenset({0, 3, 7, 11}), "m(maj7)", 3),
+    "maj7sharp5": (frozenset({0, 4, 8, 11}), "maj7#5", 3),
+    # 6th chords
+    "maj6":       (frozenset({0, 4, 7, 9}), "6", 3),
+    "min6":       (frozenset({0, 3, 7, 9}), "m6", 3),
+    # Extended
+    "dom9":       (frozenset({0, 2, 4, 10}), "9", 4),
+    "maj9":       (frozenset({0, 2, 4, 11}), "maj9", 4),
+    "min9":       (frozenset({0, 2, 3, 10}), "m9", 4),
+    "min-maj9":   (frozenset({0, 2, 3, 11}), "m(maj9)", 4),
+    "dom13":      (frozenset({0, 4, 9, 10}), "13", 4),
+    "9sus4":      (frozenset({0, 2, 5, 10}), "9sus4", 4),
+    "13sus4":     (frozenset({0, 5, 9, 10}), "13sus4", 4),
+    # Altered dominants
+    "dom7b9":     (frozenset({0, 1, 4, 10}), "7b9", 4),
+    "dom7sharp9": (frozenset({0, 3, 4, 10}), "7#9", 4),
+    "7b9sus4":    (frozenset({0, 1, 5, 10}), "7b9sus4", 4),
+    "13b9":       (frozenset({0, 1, 4, 9, 10}), "13b9", 4),
+    "13sharp9":   (frozenset({0, 3, 4, 9, 10}), "13#9", 4),
+    "dom7sharp11": (frozenset({0, 4, 6, 10}), "7#11", 4),
+    "dom7b13":    (frozenset({0, 4, 8, 10}), "7b13", 4),
+    "7b5b9":      (frozenset({0, 1, 4, 6, 10}), "7b5(b9)", 4),
+    "7b5sharp9":  (frozenset({0, 3, 4, 6, 10}), "7b5(#9)", 4),
+    "7sharp5b9":  (frozenset({0, 1, 4, 8, 10}), "7#5(b9)", 4),
+    "7sharp5sharp9": (frozenset({0, 3, 4, 8, 10}), "7#5(#9)", 4),
 }
 
 MAX_FRET = 15

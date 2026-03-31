@@ -5,6 +5,7 @@ Tests all Python logic without requiring MuseScore. Run with:
 """
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -382,3 +383,98 @@ class TestSchema:
         # tuning should NOT be in required
         required = schema["$defs"]["voicing"]["required"]
         assert "tuning" not in required
+
+
+# === Clipboard Tests ===
+
+class TestClipboard:
+    """Tests for ms-clipboard.py cross-platform clipboard logic."""
+
+    def test_clipboard_script_exists(self):
+        assert (SCRIPTS / "ms-clipboard.py").exists()
+
+    def test_clipboard_script_imports(self):
+        """Verify the module can be imported without platform-specific errors."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "ms_clipboard", str(SCRIPTS / "ms-clipboard.py")
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        assert hasattr(mod, "write_clipboard")
+        assert hasattr(mod, "MUSESCORE_MIME")
+        assert hasattr(mod, "MACOS_UTI")
+
+    def test_mime_type_matches_musescore(self):
+        """Verify our MIME type matches MuseScore's mscore.h constant."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "ms_clipboard", str(SCRIPTS / "ms-clipboard.py")
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        assert mod.MUSESCORE_MIME == "application/musescore/symbol"
+
+    def test_macos_uti_follows_qt_convention(self):
+        """Verify macOS UTI follows Qt's MIME → UTI conversion pattern.
+
+        Qt converts MIME types to UTIs by replacing '/' with '--' and
+        '.' with '-', prefixed with 'com.trolltech.anymime.'.
+        """
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "ms_clipboard", str(SCRIPTS / "ms-clipboard.py")
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        # Verify the UTI follows Qt convention
+        expected_uti = "com.trolltech.anymime." + mod.MUSESCORE_MIME.replace("/", "--")
+        assert mod.MACOS_UTI == expected_uti
+
+    def test_clipboard_cli_rejects_missing_file(self):
+        """Verify the script exits with error for nonexistent file."""
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS / "ms-clipboard.py"), "/nonexistent/file.xml"],
+            capture_output=True, text=True,
+        )
+        assert result.returncode != 0
+        assert "not found" in result.stderr.lower() or "no such file" in result.stderr.lower()
+
+    def test_clipboard_cli_rejects_empty_file(self):
+        """Verify the script exits with error for empty file."""
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".xml", delete=False, mode="w") as f:
+            f.write("")  # empty
+            tmp = f.name
+        try:
+            result = subprocess.run(
+                [sys.executable, str(SCRIPTS / "ms-clipboard.py"), tmp],
+                capture_output=True, text=True,
+            )
+            assert result.returncode != 0
+            assert "empty" in result.stderr.lower()
+        finally:
+            os.unlink(tmp)
+
+    def test_clipboard_cli_no_args(self):
+        """Verify the script shows usage when called with no arguments."""
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS / "ms-clipboard.py")],
+            capture_output=True, text=True,
+        )
+        assert result.returncode != 0
+        assert "usage" in result.stderr.lower()
+
+    def test_sniff_script_exists(self):
+        assert (SCRIPTS / "sniff_clipboard_win.py").exists()
+
+    def test_sniff_script_rejects_non_windows(self):
+        """On non-Windows, sniff_clipboard_win.py should exit immediately."""
+        if sys.platform == "win32":
+            pytest.skip("This test is for non-Windows platforms")
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS / "sniff_clipboard_win.py")],
+            capture_output=True, text=True,
+        )
+        assert result.returncode != 0
+        assert "windows only" in result.stdout.lower()

@@ -9,12 +9,17 @@ Usage:
     python ms-clipboard.py paste-clipboard.xml
 
 Platform support:
-    macOS:   Uses pyobjc (AppKit.NSPasteboard) or falls back to pbcopy
-    Windows: Uses ctypes + win32clipboard
+    macOS:   Uses pyobjc (AppKit.NSPasteboard) or falls back to compiled Swift tool
+    Windows: Uses ctypes (Win32 API)
     Linux:   Uses xclip with custom MIME type
 
-MuseScore clipboard type:
-    com.trolltech.anymime.application--musescore--symbol
+MuseScore MIME type (src/engraving/dom/mscore.h):
+    application/musescore/symbol
+
+Platform-specific clipboard format names:
+    macOS:   com.trolltech.anymime.application--musescore--symbol (Qt UTI conversion)
+    Windows: "application/musescore/symbol" (RegisterClipboardFormat name)
+    Linux:   application/musescore/symbol (X11 atom via xclip)
 """
 
 import os
@@ -69,62 +74,96 @@ def write_clipboard_macos(data: bytes) -> bool:
 def write_clipboard_windows(data: bytes) -> bool:
     """Write to Windows clipboard using ctypes.
 
-    NOTE: The exact clipboard format name MuseScore uses on Windows is
-    speculative. Qt on Windows maps MIME types to clipboard format names
-    differently than macOS. If MuseScore's cmd("paste") doesn't pick up
-    the data, try running MuseScore, copying a fretboard diagram (Ctrl+C),
-    then use scripts/sniff_clipboard_win.py to discover the format name.
+    Qt on Windows registers custom MIME types as clipboard format names
+    via RegisterClipboardFormat, using the MIME type string as the format
+    name. MuseScore's internal constant is "application/musescore/symbol"
+    (defined in src/engraving/dom/mscore.h as mimeSymbolFormat).
 
-    Known possibilities:
-    - "application/musescore/symbol" (our MIME type)
-    - Qt's internal format: "application/x-qt-windows-mime;value=..."
-    - A numeric format registered by Qt at runtime
+    We register all plausible format names and write data to each, since
+    RegisterClipboardFormat always succeeds (it returns the existing ID if
+    already registered, or creates a new one). This ensures we match
+    whichever format Qt actually registered at runtime.
+
+    If MuseScore's cmd("paste") doesn't pick up the data, use
+    scripts/sniff_clipboard_win.py to discover the actual format name.
     """
     try:
         import ctypes
+        import ctypes.wintypes
 
         user32 = ctypes.windll.user32
         kernel32 = ctypes.windll.kernel32
 
-        # Try multiple format names — Qt on Windows may use any of these
+        # Set proper return/argument types for safety
+        user32.RegisterClipboardFormatW.argtypes = [ctypes.wintypes.LPCWSTR]
+        user32.RegisterClipboardFormatW.restype = ctypes.wintypes.UINT
+        user32.OpenClipboard.argtypes = [ctypes.wintypes.HWND]
+        user32.OpenClipboard.restype = ctypes.wintypes.BOOL
+        user32.EmptyClipboard.restype = ctypes.wintypes.BOOL
+        user32.SetClipboardData.argtypes = [ctypes.wintypes.UINT, ctypes.wintypes.HANDLE]
+        user32.SetClipboardData.restype = ctypes.wintypes.HANDLE
+        user32.CloseClipboard.restype = ctypes.wintypes.BOOL
+        kernel32.GlobalAlloc.argtypes = [ctypes.wintypes.UINT, ctypes.c_size_t]
+        kernel32.GlobalAlloc.restype = ctypes.wintypes.HGLOBAL
+        kernel32.GlobalLock.argtypes = [ctypes.wintypes.HGLOBAL]
+        kernel32.GlobalLock.restype = ctypes.wintypes.LPVOID
+        kernel32.GlobalUnlock.argtypes = [ctypes.wintypes.HGLOBAL]
+        kernel32.GlobalUnlock.restype = ctypes.wintypes.BOOL
+
+        GMEM_MOVEABLE = 0x0002
+        GMEM_ZEROINIT = 0x0040
+
+        # Register all plausible format names. Qt's default behavior maps
+        # custom MIME types to Windows clipboard formats using the MIME
+        # string itself. The primary format is what MuseScore defines in
+        # mscore.h; the others are fallbacks in case Qt wraps it.
         format_names = [
-            MUSESCORE_MIME,
-            "application/x-qt-windows-mime;value=\"" + MUSESCORE_MIME + "\"",
-            "MuseScore Symbol",
+            MUSESCORE_MIME,                                                     # primary: matches mscore.h
+            "application/x-qt-windows-mime;value=\"" + MUSESCORE_MIME + "\"",   # Qt wrapper variant
         ]
 
-        fmt = 0
+        registered = []
         for name in format_names:
             fmt = user32.RegisterClipboardFormatW(name)
             if fmt:
-                print(f"Registered clipboard format: {name} → {fmt}", file=sys.stderr)
-                break
+                registered.append((name, fmt))
+                print(f"Registered clipboard format: {name} -> {fmt}", file=sys.stderr)
 
-        if not fmt:
+        if not registered:
             print("Failed to register any clipboard format", file=sys.stderr)
-            print("Tried: " + ", ".join(format_names), file=sys.stderr)
             return False
 
-        if not user32.OpenClipboard(0):
+        if not user32.OpenClipboard(None):
             print("Failed to open clipboard", file=sys.stderr)
             return False
 
         try:
             user32.EmptyClipboard()
 
-            # Allocate global memory
-            size = len(data) + 1
-            hmem = kernel32.GlobalAlloc(0x0042, size)  # GMEM_MOVEABLE | GMEM_ZEROINIT
-            if not hmem:
-                print("Failed to allocate clipboard memory", file=sys.stderr)
-                return False
+            success = False
+            for name, fmt in registered:
+                # Each format needs its own GlobalAlloc (clipboard owns the memory)
+                size = len(data) + 1
+                hmem = kernel32.GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, size)
+                if not hmem:
+                    print(f"Failed to allocate memory for {name}", file=sys.stderr)
+                    continue
 
-            ptr = kernel32.GlobalLock(hmem)
-            ctypes.memmove(ptr, data, len(data))
-            kernel32.GlobalUnlock(hmem)
+                ptr = kernel32.GlobalLock(hmem)
+                if not ptr:
+                    print(f"Failed to lock memory for {name}", file=sys.stderr)
+                    continue
+                ctypes.memmove(ptr, data, len(data))
+                kernel32.GlobalUnlock(hmem)
 
-            result = user32.SetClipboardData(fmt, hmem)
-            return bool(result)
+                result = user32.SetClipboardData(fmt, hmem)
+                if result:
+                    print(f"Set clipboard data for: {name}", file=sys.stderr)
+                    success = True
+                else:
+                    print(f"SetClipboardData failed for: {name}", file=sys.stderr)
+
+            return success
         finally:
             user32.CloseClipboard()
 

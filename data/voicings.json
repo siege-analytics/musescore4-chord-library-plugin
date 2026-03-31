@@ -36423,13 +36423,13 @@
       ]
     },
     {
-      "id": "cmin11-cv6-shell-6str-6",
+      "id": "cmin11-cv7-shell-7str-6",
       "name": "Cm11 — 7-str root — Shell (4th on top)",
       "chord_quality": "min11",
       "root": "C",
       "category": "shell",
-      "context": "CV6",
-      "strings": 6,
+      "context": "CV7",
+      "strings": 7,
       "fret_number": 3,
       "visible_frets": 5,
       "dots": [
@@ -36468,13 +36468,13 @@
       ]
     },
     {
-      "id": "cmin11-cm6-shell-6str-6",
+      "id": "cmin11-cm7-shell-7str-6",
       "name": "Cm11 — 7-str root — Shell (4th on top)",
       "chord_quality": "min11",
       "root": "C",
       "category": "shell",
-      "context": "CM6",
-      "strings": 6,
+      "context": "CM7",
+      "strings": 7,
       "fret_number": 3,
       "visible_frets": 5,
       "dots": [
@@ -36510,6 +36510,2844 @@
       ],
       "tags": [
         "shell"
+      ]
+    },
+    {
+      "id": "cmaj7s5-cv6-altered-6str-1",
+      "name": "Cmaj7#5 — Calculated — Altered (3rd on top)",
+      "chord_quality": "maj7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "B",
+        "E",
+        "Ab",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "7",
+        "3",
+        "#5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmaj7s5-cm6-altered-6str-2",
+      "name": "Cmaj7#5 — Calculated — Altered (3rd on top)",
+      "chord_quality": "maj7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "B",
+        "E",
+        "Ab",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "7",
+        "3",
+        "#5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmaj7s5-cv7-altered-7str-3",
+      "name": "Cmaj7#5 — Calculated — Altered (3rd on top)",
+      "chord_quality": "maj7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        2,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "B",
+        "E",
+        "Ab",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "7",
+        "3",
+        "#5",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmaj7s5-cm7-altered-7str-4",
+      "name": "Cmaj7#5 — Calculated — Altered (3rd on top)",
+      "chord_quality": "maj7sharp5",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        2,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "B",
+        "E",
+        "Ab",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "7",
+        "3",
+        "#5",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s9-cv6-altered-6str-5",
+      "name": "C7#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 4
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb",
+        "C",
+        "E",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7",
+        "1",
+        "3",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s9-cm6-altered-6str-6",
+      "name": "C7#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 4
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb",
+        "C",
+        "E",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7",
+        "1",
+        "3",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s9-cv7-altered-7str-7",
+      "name": "C7#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Bb",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "b7",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s9-cm7-altered-7str-8",
+      "name": "C7#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Bb",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "b7",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmmaj9-cv6-extended-6str-9",
+      "name": "Cm(maj9) — Calculated — Extended (7th on top)",
+      "chord_quality": "min-maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        2,
+        4
+      ],
+      "notes": [
+        "C",
+        "Eb",
+        "D",
+        "D",
+        "B",
+        "B"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "9",
+        "9",
+        "7",
+        "7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmmaj9-cm6-extended-6str-10",
+      "name": "Cm(maj9) — Calculated — Extended (7th on top)",
+      "chord_quality": "min-maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        2,
+        4
+      ],
+      "notes": [
+        "C",
+        "Eb",
+        "D",
+        "D",
+        "B",
+        "B"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "9",
+        "9",
+        "7",
+        "7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmmaj9-cv7-extended-7str-11",
+      "name": "Cm(maj9) — Calculated — Extended (7th on top)",
+      "chord_quality": "min-maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 6,
+          "fret": 5
+        },
+        {
+          "string": 5,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 5
+        }
+      ],
+      "mutes": [],
+      "open": [
+        2,
+        4
+      ],
+      "notes": [
+        "C",
+        "B",
+        "Eb",
+        "D",
+        "B",
+        "B",
+        "B"
+      ],
+      "intervals": [
+        "1",
+        "7",
+        "b3",
+        "9",
+        "7",
+        "7",
+        "7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "cmmaj9-cm7-extended-7str-12",
+      "name": "Cm(maj9) — Calculated — Extended (7th on top)",
+      "chord_quality": "min-maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 6,
+          "fret": 5
+        },
+        {
+          "string": 5,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 5
+        }
+      ],
+      "mutes": [],
+      "open": [
+        2,
+        4
+      ],
+      "notes": [
+        "C",
+        "B",
+        "Eb",
+        "D",
+        "B",
+        "B",
+        "B"
+      ],
+      "intervals": [
+        "1",
+        "7",
+        "b3",
+        "9",
+        "7",
+        "7",
+        "7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c9sus4-cv6-extended-6str-13",
+      "name": "C9sus4 — Calculated — Extended (b7th on top)",
+      "chord_quality": "9sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        4
+      ],
+      "notes": [
+        "C",
+        "F",
+        "D",
+        "D",
+        "F",
+        "Bb"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "9",
+        "9",
+        "4",
+        "b7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c9sus4-cm6-extended-6str-14",
+      "name": "C9sus4 — Calculated — Extended (b7th on top)",
+      "chord_quality": "9sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        4
+      ],
+      "notes": [
+        "C",
+        "F",
+        "D",
+        "D",
+        "F",
+        "Bb"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "9",
+        "9",
+        "4",
+        "b7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c9sus4-cv7-extended-7str-15",
+      "name": "C9sus4 — Calculated — Extended (4th on top)",
+      "chord_quality": "9sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        4
+      ],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "D",
+        "Bb",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "9",
+        "b7",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c9sus4-cm7-extended-7str-16",
+      "name": "C9sus4 — Calculated — Extended (4th on top)",
+      "chord_quality": "9sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        4
+      ],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "D",
+        "Bb",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "9",
+        "b7",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13sus4-cv6-extended-6str-17",
+      "name": "C13sus4 — Calculated — Extended (root on top)",
+      "chord_quality": "13sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "A",
+        "C"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "6",
+        "1"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13sus4-cm6-extended-6str-18",
+      "name": "C13sus4 — Calculated — Extended (root on top)",
+      "chord_quality": "13sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 8,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "A",
+        "C"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "6",
+        "1"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13sus4-cv7-extended-7str-19",
+      "name": "C13sus4 — Calculated — Extended (4th on top)",
+      "chord_quality": "13sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "A",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "6",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13sus4-cm7-extended-7str-20",
+      "name": "C13sus4 — Calculated — Extended (4th on top)",
+      "chord_quality": "13sus4",
+      "root": "C",
+      "category": "extended",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "A",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "6",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b9sus4-cv6-altered-6str-21",
+      "name": "C7b9sus4 — Calculated — Altered (b7th on top)",
+      "chord_quality": "7b9sus4",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "Db",
+        "F",
+        "Bb"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "b9",
+        "4",
+        "b7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b9sus4-cm6-altered-6str-22",
+      "name": "C7b9sus4 — Calculated — Altered (b7th on top)",
+      "chord_quality": "7b9sus4",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "Db",
+        "F",
+        "Bb"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "b9",
+        "4",
+        "b7"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b9sus4-cv7-altered-7str-23",
+      "name": "C7b9sus4 — Calculated — Altered (4th on top)",
+      "chord_quality": "7b9sus4",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "Bb",
+        "Db",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "b7",
+        "b9",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b9sus4-cm7-altered-7str-24",
+      "name": "C7b9sus4 — Calculated — Altered (4th on top)",
+      "chord_quality": "7b9sus4",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "F",
+        "Bb",
+        "Db",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "4",
+        "b7",
+        "b9",
+        "4"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13b9-cv6-altered-6str-25",
+      "name": "C13b9 — Calculated — Altered (6th on top)",
+      "chord_quality": "13b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 4
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13b9-cm6-altered-6str-26",
+      "name": "C13b9 — Calculated — Altered (6th on top)",
+      "chord_quality": "13b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 5,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 4
+        },
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13b9-cv7-altered-7str-27",
+      "name": "C13b9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        5,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "A",
+        "E",
+        "Bb",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "6",
+        "3",
+        "b7",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13b9-cm7-altered-7str-28",
+      "name": "C13b9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        5,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "A",
+        "E",
+        "Bb",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "6",
+        "3",
+        "b7",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13s9-cv6-altered-6str-29",
+      "name": "C13#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 4
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "A",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "6",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13s9-cm6-altered-6str-30",
+      "name": "C13#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 4
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "A",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "6",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13s9-cv7-altered-7str-31",
+      "name": "C13#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "A",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "6",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c13s9-cm7-altered-7str-32",
+      "name": "C13#9 — Calculated — Altered (3rd on top)",
+      "chord_quality": "13sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "A",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "6",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5b9-cv6-altered-6str-33",
+      "name": "C7b5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "Gb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "b5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5b9-cm6-altered-6str-34",
+      "name": "C7b5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "Gb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "b5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5b9-cv7-altered-7str-35",
+      "name": "C7b5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 2
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "Gb",
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "b5",
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5b9-cm7-altered-7str-36",
+      "name": "C7b5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 2
+        },
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "Gb",
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "b5",
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5s9-cv6-altered-6str-37",
+      "name": "C7b5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Gb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "b5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5s9-cm6-altered-6str-38",
+      "name": "C7b5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Gb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "b5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5s9-cv7-altered-7str-39",
+      "name": "C7b5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "C",
+        "Gb",
+        "Bb",
+        "Eb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "1",
+        "b5",
+        "b7",
+        "b3",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7b5s9-cm7-altered-7str-40",
+      "name": "C7b5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7b5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "C",
+        "Gb",
+        "Bb",
+        "Eb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "1",
+        "b5",
+        "b7",
+        "b3",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5b9-cv6-altered-6str-41",
+      "name": "C7#5(b9) — Calculated — Altered (b9th on top)",
+      "chord_quality": "7sharp5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "E",
+        "Ab",
+        "Db"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "3",
+        "#5",
+        "b9"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5b9-cm6-altered-6str-42",
+      "name": "C7#5(b9) — Calculated — Altered (b9th on top)",
+      "chord_quality": "7sharp5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "E",
+        "Ab",
+        "Db"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "3",
+        "#5",
+        "b9"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5b9-cv7-altered-7str-43",
+      "name": "C7#5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "E",
+        "Ab",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "3",
+        "#5",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5b9-cm7-altered-7str-44",
+      "name": "C7#5(b9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5b9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "E",
+        "Ab",
+        "Db",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "3",
+        "#5",
+        "b9",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5s9-cv6-altered-6str-45",
+      "name": "C7#5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Ab",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "#5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5s9-cm6-altered-6str-46",
+      "name": "C7#5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 7,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Ab",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "#5",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5s9-cv7-altered-7str-47",
+      "name": "C7#5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CV7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Ab",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "#5",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
+      ]
+    },
+    {
+      "id": "c7s5s9-cm7-altered-7str-48",
+      "name": "C7#5(#9) — Calculated — Altered (3rd on top)",
+      "chord_quality": "7sharp5sharp9",
+      "root": "C",
+      "category": "altered",
+      "context": "CM7",
+      "strings": 7,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        6
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb",
+        "Ab",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3",
+        "#5",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "calculated",
+        "laukens-coverage"
       ]
     }
   ]
