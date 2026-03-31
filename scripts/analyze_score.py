@@ -313,24 +313,63 @@ def print_report(info, coverage):
     print(f"\n{'=' * 60}")
 
 
+def load_chords_from_json(chords_path):
+    """Load chord data from a JSON file (exported by the plugin).
+
+    The plugin extracts chords from the open score and writes them as:
+    {"title": "...", "composer": "...", "total_measures": N, "chords": [...]}
+    Each chord: {"text": "Dm7", "tick": 0, "measure": 1}
+    """
+    with open(chords_path) as f:
+        data = json.load(f)
+
+    # Parse each chord text into root + quality
+    parsed_chords = []
+    for c in data.get("chords", []):
+        result = parse_chord_symbol(c["text"])
+        if result:
+            parsed_chords.append({
+                "tick": c.get("tick", 0),
+                "measure": c.get("measure", 0),
+                "text": c["text"],
+                "root": result[0],
+                "quality": result[1],
+            })
+
+    return {
+        "title": data.get("title", ""),
+        "composer": data.get("composer", ""),
+        "total_measures": data.get("total_measures", 0),
+        "chords": parsed_chords,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Analyze a MuseScore file and report chord coverage"
     )
-    parser.add_argument("score", type=Path, help="MuseScore file (.mscx/.mscz)")
+    parser.add_argument("score", nargs="?", type=Path,
+                        help="MuseScore file (.mscx/.mscz)")
+    parser.add_argument("--chords", type=Path,
+                        help="JSON file of extracted chords (from plugin)")
     parser.add_argument("--context", default="CV6", help="Context to check coverage for")
     parser.add_argument("-o", "--output", type=Path, help="Save report as JSON")
     parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
     args = parser.parse_args()
 
-    if not args.score.exists():
-        print(f"File not found: {args.score}", file=sys.stderr)
-        sys.exit(1)
+    if not args.score and not args.chords:
+        parser.error("Provide a score file or --chords JSON file")
 
     with open(args.data) as f:
         voicings = json.load(f)["voicings"]
 
-    info = extract_progression_from_mscx(args.score)
+    if args.chords:
+        info = load_chords_from_json(args.chords)
+    else:
+        if not args.score.exists():
+            print(f"File not found: {args.score}", file=sys.stderr)
+            sys.exit(1)
+        info = extract_progression_from_mscx(args.score)
 
     if not info["chords"]:
         print("No chord symbols found in the score.", file=sys.stderr)

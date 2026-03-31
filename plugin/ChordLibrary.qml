@@ -1821,21 +1821,68 @@ MuseScore {
         }
     }
 
+    // Extract chord symbols from the open score via the plugin API
+    // and write them to a JSON file for Python scripts to consume.
+    function extractChordsToFile() {
+        if (!curScore) return null
+
+        var chords = []
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+
+        var measureNum = 0
+        while (cursor.segment) {
+            var seg = cursor.segment
+            if (seg.annotations) {
+                for (var a = 0; a < seg.annotations.length; a++) {
+                    if (seg.annotations[a].type === Element.HARMONY) {
+                        chords.push({
+                            text: seg.annotations[a].text,
+                            tick: seg.tick,
+                            measure: measureNum,
+                        })
+                    }
+                }
+            }
+            cursor.next()
+            measureNum++
+        }
+
+        var title = curScore.scoreName || curScore.title || "Untitled"
+        var composer = curScore.composer || ""
+
+        var data = JSON.stringify({
+            title: title,
+            composer: composer,
+            total_measures: measureNum,
+            chords: chords,
+        }, null, 2)
+
+        var outPath = Qt.resolvedUrl("score-chords.json")
+        tempDiagramFile.source = outPath
+        try {
+            tempDiagramFile.write(data)
+            return outPath.toString().replace("file://", "")
+        } catch (e) {
+            toolStatus.text = "Failed to extract chords: " + e
+            toolStatus.color = "#c00"
+            return null
+        }
+    }
+
     function analyzeCurrentScore() {
         if (!curScore) {
             toolStatus.text = "No score open"
             toolStatus.color = "#c00"
             return
         }
-        var scorePath = curScore.path || ""
-        if (!scorePath) {
-            toolStatus.text = "Save the score first"
-            toolStatus.color = "#c00"
-            return
-        }
+        var chordsFile = extractChordsToFile()
+        if (!chordsFile) return
         var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
         launchTool("analyze_score.py",
-            '"' + scorePath + '" --context ' + ctx + ' --data DATA_PATH',
+            '--chords "' + chordsFile + '" --context ' + ctx + ' --data DATA_PATH',
             toolStatus, "Score analysis — results opening...")
     }
 
@@ -1845,16 +1892,12 @@ MuseScore {
             toolStatus.color = "#c00"
             return
         }
-        var scorePath = curScore.path || ""
-        if (!scorePath) {
-            toolStatus.text = "Save the score first"
-            toolStatus.color = "#c00"
-            return
-        }
+        var chordsFile = extractChordsToFile()
+        if (!chordsFile) return
         var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
         var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
         launchTool("voice_leading.py",
-            '--score "' + scorePath + '" --context ' + ctx + catArg + ' --top 3 --data DATA_PATH',
+            '--chords "' + chordsFile + '" --context ' + ctx + catArg + ' --top 3 --data DATA_PATH',
             toolStatus, "Voice leading — results opening...")
     }
 

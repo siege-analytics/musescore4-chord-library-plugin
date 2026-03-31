@@ -203,8 +203,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Find optimal voice leading paths for chord progressions"
     )
-    parser.add_argument("chords", nargs="*", help="Chord symbols (e.g., Dm7 G7 Cmaj7)")
-    parser.add_argument("--score", type=Path, help="Read chords from MuseScore file")
+    parser.add_argument("chord_args", nargs="*", help="Chord symbols (e.g., Dm7 G7 Cmaj7)")
+    parser.add_argument("--score", type=Path, help="Read chords from MuseScore file (.mscz)")
+    parser.add_argument("--chords", type=Path, help="Read chords from JSON file (plugin export)")
     parser.add_argument("--context", default="CV6")
     parser.add_argument("--category", help="Filter by category (shell, drop2, etc.)")
     parser.add_argument("--top", type=int, default=3, help="Number of paths to show")
@@ -216,7 +217,15 @@ def main():
 
     chord_sequence = []
 
-    if args.score:
+    if args.chords:
+        from analyze_score import load_chords_from_json
+        info = load_chords_from_json(args.chords)
+        for c in info["chords"]:
+            parsed = parse_chord(c["text"])
+            if parsed:
+                chord_sequence.append(parsed)
+        print(f"Score: {info['title']} ({len(chord_sequence)} chords)")
+    elif args.score:
         from analyze_score import extract_progression_from_mscx
         info = extract_progression_from_mscx(args.score)
         for c in info["chords"]:
@@ -224,15 +233,15 @@ def main():
             if parsed:
                 chord_sequence.append(parsed)
         print(f"Score: {info['title']} ({len(chord_sequence)} chords)")
-    elif args.chords:
-        for chord_text in args.chords:
+    elif args.chord_args:
+        for chord_text in args.chord_args:
             parsed = parse_chord(chord_text)
             if parsed:
                 chord_sequence.append(parsed)
             else:
                 print(f"Warning: could not parse '{chord_text}'", file=sys.stderr)
     else:
-        parser.error("Provide chord symbols or --score")
+        parser.error("Provide chord symbols, --score, or --chords")
 
     if not chord_sequence:
         print("No valid chords to analyze", file=sys.stderr)
