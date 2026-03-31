@@ -1678,12 +1678,10 @@ MuseScore {
         var dataPath = pluginDir + "/voicings-cache.json"
         var outDir = basePath.replace(/\/[^/]+$/, "")  // parent directory
 
-        // Write a .command script that runs the GP5 exporter
+        // Write a .command script that runs the GP5 exporter and opens output folder
         var cmd = '#!/bin/bash\n'
-            + 'python3 "' + scriptPath + '" --data "' + dataPath + '" -o "' + outDir + '"\n'
-            + 'echo "GP5 files generated in ' + outDir + '"\n'
-            + 'echo "Press any key to close..."\n'
-            + 'read -n 1\n'
+            + 'python3 "' + scriptPath + '" --data "' + dataPath + '" -o "' + outDir + '" 2>&1\n'
+            + 'open "' + outDir + '"\n'
             + 'exit 0\n'
 
         var cmdPath = Qt.resolvedUrl("export-gp5.command")
@@ -1691,7 +1689,7 @@ MuseScore {
         try {
             tempDiagramFile.write(cmd)
             Qt.openUrlExternally(cmdPath)
-            exportStatus.text = "GP5 export launched — check Terminal for progress"
+            exportStatus.text = "GP5 export — files will open when ready"
             exportStatus.color = "#060"
         } catch (e) {
             exportStatus.text = "GP5 export failed: " + e
@@ -1791,17 +1789,24 @@ MuseScore {
         }
     }
 
-    // === Tools (launch Python scripts via .command) ===
+    // === Tools (launch Python scripts, output to file, open with default handler) ===
 
-    function launchTool(scriptName, args, statusLabel, successMsg) {
+    function launchTool(scriptName, args, statusLabel, successMsg, outputExt) {
+        // Runs a Python script silently, captures output to a temp file,
+        // and opens it with the system's default application (TextEdit for .txt,
+        // Preview for .pdf, etc.). No terminal window.
+        if (!outputExt) outputExt = "txt"
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
         var scriptPath = pluginDir + "/scripts/" + scriptName
         var dataPath = pluginDir + "/voicings-cache.json"
+        var outputPath = pluginDir + "/tool-output." + outputExt
 
         var cmd = '#!/bin/bash\n'
             + 'cd "' + pluginDir + '"\n'
-            + 'python3 "' + scriptPath + '" ' + args.replace("DATA_PATH", dataPath) + '\n'
-            + 'echo ""\necho "Press any key to close..."\nread -n 1\nexit 0\n'
+            + 'python3 "' + scriptPath + '" ' + args.replace("DATA_PATH", dataPath)
+            + ' > "' + outputPath + '" 2>&1\n'
+            + 'open "' + outputPath + '"\n'
+            + 'exit 0\n'
 
         var cmdPath = Qt.resolvedUrl("run-tool.command")
         tempDiagramFile.source = cmdPath
@@ -1831,7 +1836,7 @@ MuseScore {
         var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
         launchTool("analyze_score.py",
             '"' + scorePath + '" --context ' + ctx + ' --data DATA_PATH',
-            toolStatus, "Score analysis launched — check Terminal")
+            toolStatus, "Score analysis — results opening...")
     }
 
     function runVoiceLeading() {
@@ -1850,7 +1855,7 @@ MuseScore {
         var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
         launchTool("voice_leading.py",
             '--score "' + scorePath + '" --context ' + ctx + catArg + ' --top 3 --data DATA_PATH',
-            toolStatus, "Voice leading analysis launched — check Terminal")
+            toolStatus, "Voice leading — results opening...")
     }
 
     function suggestFingerings() {
@@ -1862,7 +1867,7 @@ MuseScore {
         if (selectedCategory && selectedCategory !== "All Types")
             filterArgs += ' --category "' + selectedCategory + '"'
         launchTool("suggest_fingerings.py", filterArgs,
-            toolStatus, "Fingering suggestions launched — check Terminal")
+            toolStatus, "Fingering suggestions — results opening...")
     }
 
     function doImport() {
@@ -2344,7 +2349,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Analysis and utility tools (open in Terminal):"
+                    text: "Analysis and utility tools:"
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
