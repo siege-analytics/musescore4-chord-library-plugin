@@ -1220,7 +1220,11 @@ MuseScore {
             var v = voicingsData[i]
             if (filterContext && v.context !== filterContext) continue
             if (filterCategory && v.category !== filterCategory) continue
-            if (filterQuality && v.chord_quality !== filterQuality) continue
+            // Quartal voicings are quality-ambiguous (stacked 4ths serve multiple
+            // harmonic functions). When filtering by category=quartal, show all
+            // quartal voicings regardless of the quality filter.
+            if (filterQuality && v.chord_quality !== filterQuality
+                && v.category !== "quartal") continue
 
             // Filter by string count
             var voicingStrings = v.strings || 6
