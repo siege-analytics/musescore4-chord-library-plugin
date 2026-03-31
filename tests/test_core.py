@@ -48,7 +48,7 @@ class TestVoicingData:
         assert isinstance(data["voicings"], list)
 
     def test_voicing_count(self, voicings):
-        assert len(voicings) >= 150, f"Expected ≥150 voicings, got {len(voicings)}"
+        assert len(voicings) >= 230, f"Expected ≥150 voicings, got {len(voicings)}"
 
     def test_all_voicings_have_required_fields(self, voicings):
         required = [
