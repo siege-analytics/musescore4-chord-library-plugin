@@ -1,257 +1,359 @@
 #!/usr/bin/env python3
 """Analyze a MuseScore file and report chord coverage from the voicing library.
 
-Extracts all chord symbols from a score, maps them to library qualities,
-and reports which chords have voicings available and which are gaps.
+Extracts all chord symbols from a score, matches them against the library,
+and reports coverage: which chords are covered, which have gaps, and
+suggests voicing paths for the progression.
 
 Usage:
-    python analyze_score.py myscore.mscz
-    python analyze_score.py myscore.mscz --context CV6
-    python analyze_score.py myscore.mscz -o coverage-report.json
+    python analyze_score.py arrangement.mscz
+    python analyze_score.py arrangement.mscz --context CV6
+    python analyze_score.py arrangement.mscz -o coverage-report.json
+    python analyze_score.py arrangement.mscz --pdf -o report.pdf
 """
 
 import argparse
 import json
-import re
 import sys
 import zipfile
-from collections import Counter, defaultdict
+from collections import Counter, OrderedDict
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-# Map common chord symbol suffixes to our quality IDs
-SUFFIX_TO_QUALITY = {
-    "7": "dom7", "maj7": "maj7", "Maj7": "maj7", "M7": "maj7", "Δ7": "maj7",
-    "m7": "min7", "min7": "min7", "-7": "min7",
+CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+SEMITONE_MAP = {n: i for i, n in enumerate(CHROMATIC)}
+# Add enharmonic aliases
+SEMITONE_MAP.update({"C#": 1, "D#": 3, "Gb": 6, "G#": 8, "A#": 10})
+
+# MuseScore TPC (Tonal Pitch Class) → note name mapping
+# TPC is fifths-based: ...Fbb=-1, Cbb=0, Gbb=1, ..., F=13, C=14, G=15, D=16, ...
+# Range typically 0-33 in practice
+TPC_TO_NOTE = {
+    6: "Fbb", 7: "Cbb", 8: "Gbb", 9: "Dbb", 10: "Abb", 11: "Ebb", 12: "Bbb",
+    13: "F", 14: "C", 15: "G", 16: "D", 17: "A", 18: "E", 19: "B",
+    20: "F#", 21: "C#", 22: "G#", 23: "D#", 24: "A#", 25: "E#", 26: "B#",
+    27: "F##", 28: "C##", 29: "G##", 30: "D##", 31: "A##", 32: "E##", 33: "B##",
+    0: "Fbb", 1: "Cbb", 2: "Gbb", 3: "Dbb", 4: "Abb", 5: "Ebb",
+}
+# Simplified: also handle flats (TPC < 13)
+for tpc_val in range(6):
+    pass  # already covered above
+# Add flat spellings
+TPC_TO_NOTE.update({
+    6: "Fb", 7: "Cb", 8: "Gb", 9: "Db", 10: "Ab", 11: "Eb", 12: "Bb",
+})
+
+QUALITY_MAP = {
+    "7": "dom7", "maj7": "maj7", "M7": "maj7", "Δ7": "maj7", "Δ": "maj7",
+    "m7": "min7", "-7": "min7", "min7": "min7",
     "m7b5": "min7b5", "-7b5": "min7b5", "ø7": "min7b5", "ø": "min7b5",
     "dim7": "dim7", "o7": "dim7", "°7": "dim7",
-    "6": "maj6", "maj6": "maj6",
-    "m6": "min6", "min6": "min6", "-6": "min6",
-    "9": "dom9", "maj9": "maj9", "m9": "min9",
-    "13": "dom13",
+    "6": "maj6", "m6": "min6", "-6": "min6",
+    "9": "dom9", "maj9": "maj9", "m9": "min9", "-9": "min9",
+    "11": "dom11", "m11": "min11",
+    "13": "dom13", "maj13": "maj13",
     "7b9": "dom7b9", "7#9": "dom7sharp9",
     "7#11": "dom7sharp11", "7b13": "dom7b13",
+    "7b5": "dom7flat5", "7#5": "dom7sharp5",
     "7alt": "dom7alt", "alt": "dom7alt",
-    "7#5": "dom7sharp5", "7b5": "dom7flat5",
     "sus4": "sus4", "sus2": "sus2",
+    "9sus4": "9sus4", "13sus4": "13sus4",
     "aug7": "aug7", "+7": "aug7",
-    "mMaj7": "min-maj7", "m(maj7)": "min-maj7",
+    "mMaj7": "min-maj7", "m(maj7)": "min-maj7", "mM7": "min-maj7",
+    "maj69": "maj69", "6/9": "maj69", "69": "maj69",
     "maj7#11": "maj7sharp11",
-    "69": "maj69", "6/9": "maj69",
-    "m11": "min11", "min11": "min11",
-    "maj13": "maj13",
-    "": "dom7",  # bare root = major, but we default to dom7 in jazz context
+    "": "maj7",  # bare chord name in jazz context = major 7th
 }
 
-ROOT_PATTERN = re.compile(r"^([A-G][b#]?)")
 
+def parse_chord_symbol(text):
+    """Parse a chord symbol into root + quality.
 
-def parse_chord_symbol(text: str) -> dict | None:
-    """Parse a chord symbol into root + quality."""
-    if not text:
+    Returns (root, quality_id, original_text) or None.
+    """
+    if not text or not text.strip():
         return None
-    text = text.strip().replace("Δ", "maj").replace("△", "maj").replace("°", "dim").replace("ø", "m7b5").replace("+", "aug").replace("−", "-")
 
-    m = ROOT_PATTERN.match(text)
-    if not m:
+    text = text.strip()
+    # Handle slash chords — use the chord before the slash
+    if "/" in text:
+        text = text.split("/")[0]
+
+    # Extract root
+    root = None
+    for r in sorted(CHROMATIC, key=len, reverse=True):
+        if text.startswith(r):
+            root = r
+            break
+    # Try sharps/flats
+    if not root:
+        for r in ["C#", "D#", "G#", "A#", "Gb"]:
+            if text.startswith(r):
+                root = r
+                break
+    if not root:
         return None
-    root = m.group(1)
-    suffix = text[len(root):].strip()
 
-    quality = SUFFIX_TO_QUALITY.get(suffix)
+    suffix = text[len(root):]
+    # Clean up common notation
+    suffix = (suffix.replace("Δ", "maj").replace("△", "maj")
+              .replace("°", "dim").replace("ø", "m7b5")
+              .replace("+", "aug").replace("−", "-").strip())
+
+    # Exact match
+    quality = QUALITY_MAP.get(suffix)
+
+    # Partial match (longest first)
     if not quality:
-        # Try partial matches
-        if "maj7" in suffix:
-            quality = "maj7"
-        elif "m7b5" in suffix or "-7b5" in suffix:
-            quality = "min7b5"
-        elif "m7" in suffix or "-7" in suffix:
-            quality = "min7"
-        elif "7b9" in suffix:
-            quality = "dom7b9"
-        elif "7#9" in suffix:
-            quality = "dom7sharp9"
-        elif "7" in suffix:
-            quality = "dom7"
-        elif "m" in suffix or "min" in suffix:
-            quality = "min7"  # default minor to min7 in jazz
-        else:
-            quality = None
+        for k, v in sorted(QUALITY_MAP.items(), key=lambda x: -len(x[0])):
+            if k and suffix.startswith(k):
+                quality = v
+                break
 
-    return {"root": root, "quality": quality, "text": text, "suffix": suffix}
+    if not quality:
+        quality = "unknown"
+
+    return (root, quality, text)
 
 
-def extract_chords_from_mscx(content: str) -> list[dict]:
-    """Extract chord symbols with positions from .mscx XML."""
-    root = ET.fromstring(content)
-    chords = []
+def extract_progression_from_mscx(mscx_path):
+    """Extract chord progression with positions from a MuseScore file.
 
-    for harmony in root.iter("Harmony"):
-        chord_text = ""
-        # Try to reconstruct from sub-elements
-        root_el = harmony.find("root")
-        name_el = harmony.find("name")
-
-        if root_el is not None:
-            root_case = root_el.text if root_el.text else ""
-            # Look for alteration
-            root_case_el = harmony.find("rootCase")
-            if root_case_el is not None and root_case_el.text:
-                root_case = root_case_el.text
-
-        if name_el is not None and name_el.text:
-            chord_text = name_el.text
-        else:
-            # Build from harmony attributes
-            for text_el in harmony.iter():
-                if text_el.text and text_el.tag not in ("root", "rootCase"):
-                    chord_text += text_el.text
-
-        if chord_text:
-            parsed = parse_chord_symbol(chord_text)
-            if parsed:
-                chords.append(parsed)
-
-    return chords
-
-
-def extract_chords_from_file(path: Path) -> list[dict]:
-    """Extract chords from .mscz or .mscx file."""
-    if path.suffix == ".mscz":
-        with zipfile.ZipFile(path) as zf:
+    Returns dict with:
+        title, composer, time_sig, chords: list of {tick, text, root, quality}
+    """
+    if mscx_path.suffix == ".mscz":
+        with zipfile.ZipFile(mscx_path) as zf:
             mscx_names = [n for n in zf.namelist() if n.endswith(".mscx")]
             if not mscx_names:
-                return []
-            content = zf.read(mscx_names[0]).decode("utf-8")
+                raise ValueError(f"No .mscx file found inside {mscx_path}")
+            xml_data = zf.read(mscx_names[0])
+            root = ET.fromstring(xml_data)
     else:
-        content = path.read_text()
+        tree = ET.parse(str(mscx_path))
+        root = tree.getroot()
 
-    return extract_chords_from_mscx(content)
+    # Metadata
+    title = ""
+    composer = ""
+    for meta in root.iter("metaTag"):
+        name = meta.get("name", "")
+        if name == "workTitle":
+            title = meta.text or ""
+        elif name == "composer":
+            composer = meta.text or ""
 
+    # Extract chord symbols with tick positions
+    chords = []
+    tick = 0
+    measure_num = 0
 
-def analyze_coverage(
-    chords: list[dict],
-    library: list[dict],
-    context: str | None = None,
-) -> dict:
-    """Analyze which chords have library coverage."""
-    # Build coverage index from library
-    coverage = defaultdict(lambda: {"count": 0, "categories": Counter(), "voicing_ids": []})
-    for v in library:
-        if context and v.get("context") != context:
-            continue
-        q = v.get("chord_quality", "")
-        coverage[q]["count"] += 1
-        coverage[q]["categories"][v.get("category", "unknown")] += 1
-        coverage[q]["voicing_ids"].append(v["id"])
+    for measure in root.iter("Measure"):
+        measure_num += 1
+        local_tick = 0
 
-    # Analyze each chord
-    unique_chords = {}
-    for c in chords:
-        key = c["text"]
-        if key not in unique_chords:
-            unique_chords[key] = c
-            unique_chords[key]["occurrences"] = 0
-        unique_chords[key]["occurrences"] += 1
+        for elem in measure.iter():
+            if elem.tag == "Harmony":
+                chord_text = None
 
-    report = {
-        "total_chord_symbols": len(chords),
-        "unique_chords": len(unique_chords),
-        "covered": 0,
-        "gaps": 0,
-        "unknown_quality": 0,
-        "chords": [],
+                # MuseScore 4 format: <harmonyInfo><root>TPC</root><name>suffix</name></harmonyInfo>
+                hi = elem.find("harmonyInfo")
+                if hi is not None:
+                    root_elem = hi.find("root")
+                    name_elem = hi.find("name")
+                    if root_elem is not None:
+                        tpc = int(root_elem.text or "14")
+                        chord_root = TPC_TO_NOTE.get(tpc, "C")
+                        suffix = name_elem.text if name_elem is not None and name_elem.text else ""
+                        chord_text = chord_root + suffix
+                else:
+                    # MuseScore 3 format: <root>0-11</root> <name>suffix</name>
+                    root_elem = elem.find("root")
+                    name_elem = elem.find("name")
+                    if root_elem is not None:
+                        root_val = int(root_elem.text or "0")
+                        chord_root = CHROMATIC[root_val % 12]
+                        suffix = name_elem.text if name_elem is not None and name_elem.text else ""
+                        chord_text = chord_root + suffix
+                    else:
+                        # Fallback: try text content
+                        for sub in elem.iter():
+                            if sub.text and sub.text.strip():
+                                chord_text = sub.text.strip()
+                                break
+
+                if chord_text:
+                    parsed = parse_chord_symbol(chord_text)
+                    if parsed:
+                        chords.append({
+                            "tick": tick + local_tick,
+                            "measure": measure_num,
+                            "text": chord_text,
+                            "root": parsed[0],
+                            "quality": parsed[1],
+                        })
+
+            elif elem.tag == "Chord" or elem.tag == "Rest":
+                dur_elem = elem.find("durationType")
+                if dur_elem is not None:
+                    dur_map = {
+                        "whole": 1920, "half": 960, "quarter": 480,
+                        "eighth": 240, "16th": 120, "32nd": 60,
+                    }
+                    local_tick += dur_map.get(dur_elem.text, 480)
+
+        tick += local_tick or 1920  # fallback to whole measure
+
+    return {
+        "title": title,
+        "composer": composer,
+        "total_measures": measure_num,
+        "chords": chords,
     }
 
-    for text, c in sorted(unique_chords.items()):
-        quality = c.get("quality")
+
+def analyze_coverage(chords, voicings, context="CV6"):
+    """Analyze how well the voicing library covers a chord progression.
+
+    Returns a coverage report dict.
+    """
+    # Group voicings by quality
+    voicings_by_quality = {}
+    for v in voicings:
+        q = v["chord_quality"]
+        ctx = v["context"]
+        if ctx == context or context == "all":
+            voicings_by_quality.setdefault(q, []).append(v)
+
+    # Unique chord symbols in order of appearance
+    unique_chords = list(OrderedDict.fromkeys(
+        (c["root"], c["quality"], c["text"]) for c in chords
+    ))
+
+    covered = []
+    gaps = []
+    report_chords = []
+
+    for root, quality, text in unique_chords:
+        available = voicings_by_quality.get(quality, [])
+        by_category = {}
+        for v in available:
+            by_category.setdefault(v["category"], []).append(v)
+
         entry = {
-            "symbol": text,
-            "root": c["root"],
+            "chord": text,
+            "root": root,
             "quality": quality,
-            "occurrences": c["occurrences"],
+            "total_voicings": len(available),
+            "categories": {cat: len(vs) for cat, vs in sorted(by_category.items())},
         }
 
-        if quality is None:
-            entry["status"] = "unknown_quality"
-            entry["voicings_available"] = 0
-            report["unknown_quality"] += 1
-        elif quality in coverage:
-            cov = coverage[quality]
-            entry["status"] = "covered"
-            entry["voicings_available"] = cov["count"]
-            entry["categories"] = dict(cov["categories"])
-            report["covered"] += 1
+        if available:
+            covered.append(entry)
         else:
-            entry["status"] = "gap"
-            entry["voicings_available"] = 0
-            report["gaps"] += 1
+            gaps.append(entry)
 
-        report["chords"].append(entry)
+        report_chords.append(entry)
 
-    return report
+    # Summary stats
+    quality_counts = Counter(c["quality"] for c in chords)
+
+    return {
+        "total_chord_changes": len(chords),
+        "unique_chords": len(unique_chords),
+        "covered": len(covered),
+        "gaps": len(gaps),
+        "coverage_pct": round(len(covered) / len(unique_chords) * 100, 1) if unique_chords else 0,
+        "context": context,
+        "quality_frequency": dict(quality_counts.most_common()),
+        "chords": report_chords,
+        "gap_details": gaps,
+    }
+
+
+def print_report(info, coverage):
+    """Print a human-readable coverage report."""
+    print(f"\n{'=' * 60}")
+    print(f"  Score Analysis: {info['title'] or 'Untitled'}")
+    if info["composer"]:
+        print(f"  {info['composer']}")
+    print(f"{'=' * 60}")
+    print(f"\n  Measures: {info['total_measures']}")
+    print(f"  Chord changes: {coverage['total_chord_changes']}")
+    print(f"  Unique chords: {coverage['unique_chords']}")
+    print(f"  Context: {coverage['context']}")
+    print(f"\n  Coverage: {coverage['covered']}/{coverage['unique_chords']}"
+          f" ({coverage['coverage_pct']}%)")
+
+    if coverage["gap_details"]:
+        print(f"\n  GAPS ({len(coverage['gap_details'])} chords with no voicings):")
+        for gap in coverage["gap_details"]:
+            print(f"    - {gap['chord']} (quality: {gap['quality']})")
+
+    print(f"\n  Quality frequency:")
+    for quality, count in coverage["quality_frequency"].items():
+        available = sum(1 for c in coverage["chords"]
+                       if c["quality"] == quality and c["total_voicings"] > 0)
+        total_q = sum(1 for c in coverage["chords"] if c["quality"] == quality)
+        status = "✓" if available == total_q else "⚠"
+        print(f"    {status} {quality:20s}: {count} occurrence(s), "
+              f"{available}/{total_q} chord(s) covered")
+
+    print(f"\n  Chord details:")
+    print(f"  {'Chord':<12s} {'Quality':<16s} {'Voicings':<10s} {'Categories'}")
+    print(f"  {'-'*12} {'-'*16} {'-'*10} {'-'*30}")
+    for c in coverage["chords"]:
+        cats = ", ".join(f"{cat}({n})" for cat, n in c["categories"].items()) if c["categories"] else "—"
+        count_str = str(c["total_voicings"]) if c["total_voicings"] > 0 else "NONE"
+        print(f"  {c['chord']:<12s} {c['quality']:<16s} {count_str:<10s} {cats}")
+
+    print(f"\n{'=' * 60}")
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Analyze a score's chord coverage against the voicing library"
+        description="Analyze a MuseScore file and report chord coverage"
     )
-    parser.add_argument("score", type=Path, help="MuseScore file (.mscz or .mscx)")
-    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
-    parser.add_argument("--context", help="Filter library by context (CV6, CM6, etc.)")
+    parser.add_argument("score", type=Path, help="MuseScore file (.mscx/.mscz)")
+    parser.add_argument("--context", default="CV6", help="Context to check coverage for")
     parser.add_argument("-o", "--output", type=Path, help="Save report as JSON")
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
     args = parser.parse_args()
 
     if not args.score.exists():
         print(f"File not found: {args.score}", file=sys.stderr)
         sys.exit(1)
 
-    # Extract chords from score
-    chords = extract_chords_from_file(args.score)
-    if not chords:
-        print(f"No chord symbols found in {args.score}")
-        sys.exit(0)
-
-    # Load library
     with open(args.data) as f:
-        library = json.load(f)["voicings"]
+        voicings = json.load(f)["voicings"]
 
-    # Analyze
-    report = analyze_coverage(chords, library, context=args.context)
+    info = extract_progression_from_mscx(args.score)
 
-    # Display
-    ctx_label = f" ({args.context})" if args.context else ""
-    print(f"Score: {args.score.name}")
-    print(f"Library coverage{ctx_label}:")
-    print(f"  Total chord symbols: {report['total_chord_symbols']}")
-    print(f"  Unique chords: {report['unique_chords']}")
-    print(f"  Covered: {report['covered']}")
-    print(f"  Gaps: {report['gaps']}")
-    if report["unknown_quality"] > 0:
-        print(f"  Unknown quality: {report['unknown_quality']}")
-    print()
+    if not info["chords"]:
+        print("No chord symbols found in the score.", file=sys.stderr)
+        sys.exit(1)
 
-    # Detail table
-    print(f"{'Chord':<15} {'Quality':<15} {'Status':<10} {'Voicings':<10} {'Occurs'}")
-    print("-" * 60)
-    for c in report["chords"]:
-        status_sym = {"covered": "✓", "gap": "✗", "unknown_quality": "?"}
-        sym = status_sym.get(c["status"], " ")
-        q = c["quality"] or "(unknown)"
-        print(f"{c['symbol']:<15} {q:<15} {sym:<10} {c['voicings_available']:<10} {c['occurrences']}")
+    coverage = analyze_coverage(info["chords"], voicings, args.context)
 
-    if report["gaps"] > 0:
-        print(f"\nGaps — these chords have no voicings in the library:")
-        for c in report["chords"]:
-            if c["status"] == "gap":
-                print(f"  {c['symbol']} (quality: {c['quality']})")
+    print_report(info, coverage)
 
     if args.output:
+        report = {
+            "score": {
+                "title": info["title"],
+                "composer": info["composer"],
+                "measures": info["total_measures"],
+                "file": str(args.score),
+            },
+            "coverage": coverage,
+            "progression": info["chords"],
+        }
         with open(args.output, "w") as f:
             json.dump(report, f, indent=2)
-        print(f"\nReport saved to {args.output}")
+        print(f"\nJSON report saved: {args.output}")
 
 
 if __name__ == "__main__":

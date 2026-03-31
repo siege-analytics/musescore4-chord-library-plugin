@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""Suggest optimal finger assignments for chord voicings.
+
+Uses heuristics based on fret position, hand span, barre detection,
+and common fingering patterns to recommend which finger plays each note.
+
+Usage:
+    python suggest_fingerings.py                           # suggest for all voicings
+    python suggest_fingerings.py --voicing c7-shell-e-shape-6
+    python suggest_fingerings.py --apply                   # write fingerings to voicings.json
+    python suggest_fingerings.py --quality dom7 --context CV6
+"""
+
+import argparse
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# Finger names for display
+FINGER_NAMES = {0: "T", 1: "1", 2: "2", 3: "3", 4: "4"}
+FINGER_LABELS = {0: "thumb", 1: "index", 2: "middle", 3: "ring", 4: "pinky"}
+
+
+def suggest_fingering(voicing):
+    """Suggest finger assignments for a voicing.
+
+    Returns a list of {"string": int, "finger": int} entries,
+    or None if no reasonable fingering can be determined.
+
+    Finger numbering: 0=thumb, 1=index, 2=middle, 3=ring, 4=pinky
+    """
+    dots = voicing.get("dots", [])
+    if not dots:
+        return []
+
+    fret_number = voicing.get("fret_number", 1)
+
+    # Convert to absolute frets
+    fretted = []
+    for dot in dots:
+        abs_fret = fret_number + (dot["fret"] - 1)
+        fretted.append({
+            "string": dot["string"],
+            "rel_fret": dot["fret"],
+            "abs_fret": abs_fret,
+        })
+
+    if not fretted:
+        return []
+
+    # Sort by fret (low to high), then by string (low to high = bass first)
+    fretted.sort(key=lambda x: (x["abs_fret"], -x["string"]))
+
+    min_fret = min(f["abs_fret"] for f in fretted)
+    max_fret = max(f["abs_fret"] for f in fretted)
+    stretch = max_fret - min_fret
+
+    # Detect barre: multiple notes on the same fret
+    fret_groups = defaultdict(list)
+    for f in fretted:
+        fret_groups[f["abs_fret"]].append(f)
+
+    # Strategy selection based on stretch and note count
+    fingering = {}
+
+    # Case 1: All notes on the same fret (barre or single fret)
+    if stretch == 0:
+        if len(fretted) == 1:
+            fingering[fretted[0]["string"]] = 1  # index
+        elif len(fretted) == 2:
+            # Two notes same fret: index barres or index + middle
+            strings = sorted([f["string"] for f in fretted], reverse=True)
+            fingering[strings[0]] = 1  # lower string = index
+            fingering[strings[1]] = 2  # higher string = middle
+        else:
+            # Barre across multiple strings
+            for f in fretted:
+                fingering[f["string"]] = 1  # index barre
+
+    # Case 2: Two-fret span
+    elif stretch == 1:
+        low_fret_notes = fret_groups[min_fret]
+        high_fret_notes = fret_groups[max_fret]
+
+        if len(low_fret_notes) >= 2:
+            # Barre on low fret
+            for f in low_fret_notes:
+                fingering[f["string"]] = 1
+            # Higher fret: assign 2, 3, 4
+            for i, f in enumerate(sorted(high_fret_notes, key=lambda x: -x["string"])):
+                fingering[f["string"]] = min(2 + i, 4)
+        else:
+            # Index on low fret, others on high fret
+            for f in low_fret_notes:
+                fingering[f["string"]] = 1
+            fingers = [2, 3, 4]
+            for i, f in enumerate(sorted(high_fret_notes, key=lambda x: -x["string"])):
+                fingering[f["string"]] = fingers[min(i, len(fingers) - 1)]
+
+    # Case 3: Three or four fret span (common jazz voicings)
+    elif stretch <= 4:
+        # Assign fingers based on fret position relative to lowest
+        # Index = lowest fret, then middle, ring, pinky for subsequent frets
+        fret_to_finger = {}
+        unique_frets = sorted(set(f["abs_fret"] for f in fretted))
+
+        if len(unique_frets) <= 4:
+            # Simple mapping: each fret gets a finger
+            finger_assignment = [1, 2, 3, 4]
+            for i, fret in enumerate(unique_frets):
+                fret_to_finger[fret] = finger_assignment[min(i, 3)]
+
+            # Check for barre: if lowest fret has multiple notes, barre with index
+            for f in fretted:
+                assigned = fret_to_finger.get(f["abs_fret"], 1)
+                fingering[f["string"]] = assigned
+        else:
+            # More than 4 unique frets — unusual, just assign sequentially
+            for i, f in enumerate(fretted):
+                fingering[f["string"]] = min(1 + i, 4)
+
+    else:
+        # Stretch > 4: likely unplayable or needs thumb
+        for i, f in enumerate(fretted):
+            fingering[f["string"]] = min(1 + i, 4)
+
+    # Build result in the same order as dots
+    result = []
+    for dot in dots:
+        finger = fingering.get(dot["string"], 1)
+        result.append({"string": dot["string"], "finger": finger})
+
+    return result
+
+
+def format_fingering(voicing, fingering):
+    """Format a fingering for human display."""
+    num_strings = voicing.get("strings", 6)
+    fret_number = voicing.get("fret_number", 1)
+
+    # Build string display
+    string_info = {}
+    for dot, fg in zip(voicing["dots"], fingering):
+        abs_fret = fret_number + (dot["fret"] - 1)
+        string_info[dot["string"]] = f"f{abs_fret}={FINGER_NAMES[fg['finger']]}"
+
+    for m in voicing.get("mutes", []):
+        string_info[m] = "X"
+    for o in voicing.get("open", []):
+        string_info[o] = "O"
+
+    parts = []
+    for s in range(num_strings, 0, -1):
+        parts.append(string_info.get(s, "·"))
+
+    return " ".join(parts)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Suggest finger assignments for chord voicings"
+    )
+    parser.add_argument("--voicing", help="Specific voicing ID")
+    parser.add_argument("--quality", help="Filter by chord quality")
+    parser.add_argument("--context", help="Filter by context")
+    parser.add_argument("--category", help="Filter by category")
+    parser.add_argument("--apply", action="store_true",
+                        help="Write fingerings to voicings.json")
+    parser.add_argument("--data", type=Path,
+                        default=REPO_ROOT / "data" / "voicings.json")
+    args = parser.parse_args()
+
+    with open(args.data) as f:
+        data = json.load(f)
+
+    voicings = data["voicings"]
+
+    # Filter
+    if args.voicing:
+        voicings = [v for v in voicings if v["id"] == args.voicing]
+    if args.quality:
+        voicings = [v for v in voicings if v["chord_quality"] == args.quality]
+    if args.context:
+        voicings = [v for v in voicings if v["context"] == args.context]
+    if args.category:
+        voicings = [v for v in voicings if v["category"] == args.category]
+
+    if not voicings:
+        print("No voicings match the filter", file=sys.stderr)
+        sys.exit(1)
+
+    applied = 0
+    for v in voicings:
+        fg = suggest_fingering(v)
+        if fg:
+            display = format_fingering(v, fg)
+            if not args.apply:
+                print(f"{v['id']:40s} {v['name'][:35]:35s} {display}")
+            else:
+                v["fingering"] = fg
+                applied += 1
+
+    if args.apply:
+        # Update the full data (not just filtered subset)
+        fingerings_by_id = {v["id"]: v.get("fingering") for v in voicings if "fingering" in v}
+        for v in data["voicings"]:
+            if v["id"] in fingerings_by_id:
+                v["fingering"] = fingerings_by_id[v["id"]]
+
+        with open(args.data, "w") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        print(f"Applied fingerings to {applied} voicings in {args.data}")
+    else:
+        print(f"\n{len(voicings)} voicings displayed. Use --apply to write to voicings.json.")
+
+
+if __name__ == "__main__":
+    main()

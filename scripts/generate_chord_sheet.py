@@ -73,25 +73,42 @@ def extract_chords_from_mscx(mscx_path):
         elif name == "composer":
             composer = meta.text or ""
 
+    # TPC (Tonal Pitch Class) → note name for MuseScore 4
+    tpc_map = {
+        8: "Gb", 9: "Db", 10: "Ab", 11: "Eb", 12: "Bb",
+        13: "F", 14: "C", 15: "G", 16: "D", 17: "A", 18: "E", 19: "B",
+        20: "F#", 21: "C#", 22: "G#", 23: "D#", 24: "A#",
+    }
+    chromatic = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+
     chords = []
     seen = set()
     for harmony in root.iter("Harmony"):
         chord_text = None
-        root_elem = harmony.find("root")
-        name_elem = harmony.find("name")
 
-        if root_elem is not None:
-            root_val = int(root_elem.text or "0")
-            chromatic = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
-            chord_root = chromatic[root_val % 12]
-            suffix = ""
-            if name_elem is not None:
-                suffix = name_elem.text or ""
-            chord_text = chord_root + suffix
+        # MuseScore 4: <harmonyInfo><root>TPC</root><name>suffix</name></harmonyInfo>
+        hi = harmony.find("harmonyInfo")
+        if hi is not None:
+            root_elem = hi.find("root")
+            name_elem = hi.find("name")
+            if root_elem is not None:
+                tpc = int(root_elem.text or "14")
+                chord_root = tpc_map.get(tpc, "C")
+                suffix = name_elem.text if name_elem is not None and name_elem.text else ""
+                chord_text = chord_root + suffix
         else:
-            text = harmony.text or harmony.get("text", "")
-            if text:
-                chord_text = text
+            # MuseScore 3: <root>0-11</root> <name>suffix</name>
+            root_elem = harmony.find("root")
+            name_elem = harmony.find("name")
+            if root_elem is not None:
+                root_val = int(root_elem.text or "0")
+                chord_root = chromatic[root_val % 12]
+                suffix = name_elem.text if name_elem is not None and name_elem.text else ""
+                chord_text = chord_root + suffix
+            else:
+                text = harmony.text or harmony.get("text", "")
+                if text:
+                    chord_text = text
 
         if chord_text and chord_text not in seen:
             chords.append(chord_text)
