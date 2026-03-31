@@ -1226,9 +1226,12 @@ MuseScore {
             if (filterQuality && v.chord_quality !== filterQuality
                 && v.category !== "quartal") continue
 
-            // Filter by string count
+            // Filter by string count — but if the user has explicitly selected
+            // a 7-string context (CV7/CM7), show all voicings in that context
+            // regardless of the tuning's string count
             var voicingStrings = v.strings || 6
-            if (voicingStrings > maxStrings) continue
+            var contextIs7 = filterContext === "CV7" || filterContext === "CM7"
+            if (!contextIs7 && voicingStrings > maxStrings) continue
 
             if (searchText) {
                 var q = searchText.toLowerCase()
