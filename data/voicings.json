@@ -36421,6 +36421,96 @@
         "7-string",
         "low-register"
       ]
+    },
+    {
+      "id": "cmin11-cv6-shell-6str-6",
+      "name": "Cm11 — 7-str root — Shell",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "shell",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 4
+        },
+        {
+          "string": 4,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "#9",
+        "4"
+      ],
+      "tags": [
+        "shell"
+      ]
+    },
+    {
+      "id": "cmin11-cm6-shell-6str-6",
+      "name": "Cm11 — 7-str root — Shell",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "shell",
+      "context": "CM6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 7,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 4
+        },
+        {
+          "string": 4,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "#9",
+        "4"
+      ],
+      "tags": [
+        "shell"
+      ]
     }
   ]
 }
