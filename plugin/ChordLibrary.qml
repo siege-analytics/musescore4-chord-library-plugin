@@ -2638,7 +2638,38 @@ MuseScore {
                             Layout.fillWidth: true
                         }
                         Label {
-                            text: (v.intervals || []).join(" ") + "  |  " + (v.context || "") + "  |  Fret " + (v.fret_number || "?")
+                            text: {
+                                // Find which interval is on top (highest-pitched sounding string)
+                                var topInterval = ""
+                                if (v.dots && v.dots.length > 0 && v.intervals) {
+                                    var minStr = 99
+                                    var topIdx = -1
+                                    for (var ti = 0; ti < v.dots.length; ti++) {
+                                        if (v.dots[ti].string < minStr) {
+                                            minStr = v.dots[ti].string
+                                            topIdx = ti
+                                        }
+                                    }
+                                    // Also check open strings (they can be the highest)
+                                    var opens = v.open || []
+                                    for (var oi = 0; oi < opens.length; oi++) {
+                                        if (opens[oi] < minStr) {
+                                            minStr = opens[oi]
+                                            topIdx = -2 // open string, interval unknown from dots
+                                        }
+                                    }
+                                    if (topIdx >= 0 && topIdx < v.intervals.length) {
+                                        var iv = v.intervals[topIdx]
+                                        var ivLabels = {"1":"root","3":"3rd","b3":"b3","5":"5th","b5":"b5","#5":"#5",
+                                            "7":"7th","b7":"b7","bb7":"bb7","9":"9th","b9":"b9","#9":"#9",
+                                            "4":"4th","11":"11th","#11":"#11","6":"6th","13":"13th","b13":"b13"}
+                                        topInterval = ivLabels[iv] || iv
+                                    }
+                                }
+                                var info = (v.intervals || []).join(" ") + "  |  Fret " + (v.fret_number || "?")
+                                if (topInterval) info += "  |  " + topInterval + " on top"
+                                return info
+                            }
                             font.pixelSize: 10
                             Layout.fillWidth: true
                         }
