@@ -1880,56 +1880,143 @@ MuseScore {
         }
     }
 
+    // === Inline tools (pure QML, no Python/terminal) ===
+
+    // Collect unique chord symbols from the open score
+    function collectScoreChords() {
+        if (!curScore) return []
+        var chords = []
+        var seen = {}
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+        while (cursor.segment) {
+            var seg = cursor.segment
+            if (seg.annotations) {
+                for (var a = 0; a < seg.annotations.length; a++) {
+                    if (seg.annotations[a].type === Element.HARMONY) {
+                        var text = seg.annotations[a].text
+                        if (!seen[text]) {
+                            seen[text] = true
+                            chords.push(text)
+                        }
+                    }
+                }
+            }
+            cursor.next()
+        }
+        return chords
+    }
+
     function analyzeCurrentScore() {
         if (!curScore) {
-            showResult("No Score", "Open a score first, then try again.", false)
+            toolStatus.text = "Open a score with chord symbols first."
+            toolStatus.color = "#c00"
             return
         }
-        var chordsFile = extractChordsToFile()
-        if (!chordsFile) return
-        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-        launchTool("analyze_score.py",
-            '--chords "' + chordsFile + '" --context ' + ctx + ' --data DATA_PATH',
-            toolStatus, "Score analysis — results opening...")
+        var chords = collectScoreChords()
+        if (chords.length === 0) {
+            toolStatus.text = "No chord symbols found in the score."
+            toolStatus.color = "#c00"
+            return
+        }
+
+        var lines = []
+        var covered = 0
+        var gaps = 0
+        for (var i = 0; i < chords.length; i++) {
+            var parsed = parseChordSymbol(chords[i])
+            if (!parsed) {
+                lines.push(chords[i] + " — could not parse")
+                gaps++
+                continue
+            }
+            // Count matching voicings
+            var matches = voicingsData.filter(function(v) {
+                return v.chord_quality === parsed.quality
+            })
+            if (matches.length > 0) {
+                lines.push("✓ " + chords[i] + " — " + matches.length + " voicings")
+                covered++
+            } else {
+                lines.push("✗ " + chords[i] + " — NO VOICINGS")
+                gaps++
+            }
+        }
+
+        var pct = Math.round(covered / chords.length * 100)
+        toolStatus.text = "Coverage: " + covered + "/" + chords.length
+            + " (" + pct + "%)"
+            + (gaps > 0 ? " — " + gaps + " gap(s)" : " — full coverage!")
+            + "\n\n" + lines.join("\n")
+        toolStatus.color = gaps > 0 ? "#c60" : "#060"
     }
 
     function runVoiceLeading() {
         if (!curScore) {
-            showResult("No Score", "Open a score first, then try again.", false)
+            toolStatus.text = "Open a score with chord symbols first."
+            toolStatus.color = "#c00"
             return
         }
-        var chordsFile = extractChordsToFile()
-        if (!chordsFile) return
-        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-        var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
-        launchTool("voice_leading.py",
-            '--chords "' + chordsFile + '" --context ' + ctx + catArg + ' --top 3 --data DATA_PATH',
-            toolStatus, "Voice leading — results opening...")
+        var chords = collectScoreChords()
+        if (chords.length === 0) {
+            toolStatus.text = "No chord symbols found in the score."
+            toolStatus.color = "#c00"
+            return
+        }
+
+        // Find best voicing for each chord (using voice leading proximity)
+        var lines = []
+        var prevVoicing = null
+        for (var i = 0; i < chords.length; i++) {
+            var parsed = parseChordSymbol(chords[i])
+            if (!parsed) {
+                lines.push(chords[i] + " — ?")
+                continue
+            }
+            var voicing = findBestVoicing(parsed.root, parsed.quality)
+            if (voicing) {
+                var name = voicing.name.split(" — ").slice(1).join(" — ")
+                lines.push(chords[i] + " → " + (name || voicing.category))
+                prevVoicing = voicing
+            } else {
+                lines.push(chords[i] + " → no match")
+            }
+        }
+
+        toolStatus.text = "Voice leading path (" + chords.length + " chords):\n\n" + lines.join("\n")
+        toolStatus.color = "#060"
     }
 
     function suggestFingerings() {
-        var args = " --data DATA_PATH"
-
-        // If a score is open, extract its chords and suggest fingerings
-        // for the matched voicings. Otherwise, use the current filter.
-        if (curScore) {
-            var chordsFile = extractChordsToFile()
-            if (chordsFile) {
-                var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-                var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
-                args += ' --chords "' + chordsFile + '" --context ' + ctx + catArg
-            }
-        } else {
-            if (selectedQuality && selectedQuality !== "All Qualities")
-                args += ' --quality "' + selectedQuality + '"'
-            if (selectedContext && selectedContext !== "All Contexts")
-                args += ' --context "' + selectedContext + '"'
-            if (selectedCategory && selectedCategory !== "All Types")
-                args += ' --category "' + selectedCategory + '"'
+        if (!curScore) {
+            toolStatus.text = "Open a score with chord symbols first."
+            toolStatus.color = "#c00"
+            return
+        }
+        var chords = collectScoreChords()
+        if (chords.length === 0) {
+            toolStatus.text = "No chord symbols found."
+            toolStatus.color = "#c00"
+            return
         }
 
-        launchTool("suggest_fingerings.py", args,
-            toolStatus, "Fingering suggestions — results opening...")
+        var lines = []
+        for (var i = 0; i < chords.length; i++) {
+            var parsed = parseChordSymbol(chords[i])
+            if (!parsed) continue
+            var voicing = findBestVoicing(parsed.root, parsed.quality)
+            if (voicing) {
+                var fg = computeFingeringString(voicing)
+                lines.push(chords[i] + ":  " + fg)
+            } else {
+                lines.push(chords[i] + ":  no voicing")
+            }
+        }
+
+        toolStatus.text = "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n")
+        toolStatus.color = "#060"
     }
 
     // Simple fingering heuristic (QML-side, for inline annotation)
@@ -2588,35 +2675,6 @@ MuseScore {
                     spacing: 4
 
                     Button {
-                        text: "Test Tool"
-                        font.pixelSize: 10
-                        onClicked: {
-                            // Diagnostic: test if .command execution works at all
-                            var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-                            var outFile = pluginDir + "/tool-output.txt"
-                            var cmd = '#!/bin/bash\n'
-                                + 'echo "Tool test successful" > "' + outFile + '"\n'
-                                + 'echo "Plugin dir: ' + pluginDir + '" >> "' + outFile + '"\n'
-                                + 'echo "Python: $(which python3)" >> "' + outFile + '"\n'
-                                + 'echo "Date: $(date)" >> "' + outFile + '"\n'
-                                + 'ls "' + pluginDir + '/scripts/" >> "' + outFile + '" 2>&1\n'
-                                + 'open "' + outFile + '"\n'
-                                + 'exit 0\n'
-                            var cmdPath = Qt.resolvedUrl("run-tool.command")
-                            tempDiagramFile.source = cmdPath
-                            try {
-                                tempDiagramFile.write(cmd)
-                                Qt.openUrlExternally(cmdPath)
-                                toolStatus.text = "Test launched — should open text file"
-                                toolStatus.color = "#060"
-                            } catch (e) {
-                                toolStatus.text = "Test FAILED: " + e
-                                toolStatus.color = "#c00"
-                            }
-                        }
-                    }
-
-                    Button {
                         text: "Analyze Score"
                         font.pixelSize: 10
                         onClicked: analyzeCurrentScore()
@@ -2655,10 +2713,15 @@ MuseScore {
                 Label {
                     id: toolStatus
                     visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
+                    font.pixelSize: 10
+                    font.family: "Menlo, Monaco, Courier New, monospace"
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                    padding: 8
+                    background: Rectangle {
+                        color: Qt.rgba(0, 0, 0, 0.05)
+                        radius: 4
+                    }
                 }
 
                 // --- Divider ---
