@@ -198,6 +198,23 @@ def format_fingering(voicing, fingering):
     return " ".join(parts)
 
 
+def match_chord_to_voicing(chord_text, all_voicings, context="CV6", category=None):
+    """Match a chord symbol to the best library voicing."""
+    from analyze_score import parse_chord_symbol
+    parsed = parse_chord_symbol(chord_text)
+    if not parsed:
+        return None
+    root, quality, _ = parsed
+    candidates = [v for v in all_voicings
+                  if v["chord_quality"] == quality
+                  and (v["context"] == context or context == "all")]
+    if category:
+        filtered = [v for v in candidates if v["category"] == category]
+        if filtered:
+            candidates = filtered
+    return candidates[0] if candidates else None
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Suggest finger assignments for chord voicings"
@@ -206,6 +223,8 @@ def main():
     parser.add_argument("--quality", help="Filter by chord quality")
     parser.add_argument("--context", help="Filter by context")
     parser.add_argument("--category", help="Filter by category")
+    parser.add_argument("--chords", type=Path,
+                        help="JSON file of extracted chords (from plugin)")
     parser.add_argument("--apply", action="store_true",
                         help="Write fingerings to voicings.json")
     parser.add_argument("--data", type=Path,
@@ -215,46 +234,81 @@ def main():
     with open(args.data) as f:
         data = json.load(f)
 
-    voicings = data["voicings"]
+    all_voicings = data["voicings"]
 
-    # Filter
-    if args.voicing:
-        voicings = [v for v in voicings if v["id"] == args.voicing]
-    if args.quality:
-        voicings = [v for v in voicings if v["chord_quality"] == args.quality]
-    if args.context:
-        voicings = [v for v in voicings if v["context"] == args.context]
-    if args.category:
-        voicings = [v for v in voicings if v["category"] == args.category]
+    # If --chords is provided, match score chords to library voicings
+    if args.chords:
+        with open(args.chords) as f:
+            chord_data = json.load(f)
 
-    if not voicings:
-        print("No voicings match the filter", file=sys.stderr)
-        sys.exit(1)
+        title = chord_data.get("title", "")
+        if title:
+            print(f"Score: {title}")
+            print(f"{'=' * 60}\n")
 
-    applied = 0
-    for v in voicings:
-        fg = suggest_fingering(v)
-        if fg:
-            display = format_fingering(v, fg)
-            if not args.apply:
-                print(f"{v['id']:40s} {v['name'][:35]:35s} {display}")
+        ctx = args.context or "CV6"
+        seen_chords = set()
+        voicings = []
+        for c in chord_data.get("chords", []):
+            text = c.get("text", "")
+            if text in seen_chords:
+                continue
+            seen_chords.add(text)
+            v = match_chord_to_voicing(text, all_voicings, ctx, args.category)
+            if v:
+                voicings.append((text, v))
             else:
-                v["fingering"] = fg
-                applied += 1
+                print(f"  {text:12s} — no matching voicing in library")
 
-    if args.apply:
-        # Update the full data (not just filtered subset)
-        fingerings_by_id = {v["id"]: v.get("fingering") for v in voicings if "fingering" in v}
-        for v in data["voicings"]:
-            if v["id"] in fingerings_by_id:
-                v["fingering"] = fingerings_by_id[v["id"]]
+        if not voicings:
+            print("No voicings matched the score's chords.", file=sys.stderr)
+            sys.exit(1)
 
-        with open(args.data, "w") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-            f.write("\n")
-        print(f"Applied fingerings to {applied} voicings in {args.data}")
+        for chord_text, v in voicings:
+            fg = suggest_fingering(v)
+            if fg:
+                display = format_fingering(v, fg)
+                print(f"  {chord_text:12s} {v['name'][:35]:35s} {display}")
+
+        print(f"\n{len(voicings)} chords with fingering suggestions.")
     else:
-        print(f"\n{len(voicings)} voicings displayed. Use --apply to write to voicings.json.")
+        # Filter mode (original behavior)
+        voicings_list = all_voicings
+        if args.voicing:
+            voicings_list = [v for v in voicings_list if v["id"] == args.voicing]
+        if args.quality:
+            voicings_list = [v for v in voicings_list if v["chord_quality"] == args.quality]
+        if args.context:
+            voicings_list = [v for v in voicings_list if v["context"] == args.context]
+        if args.category:
+            voicings_list = [v for v in voicings_list if v["category"] == args.category]
+
+        if not voicings_list:
+            print("No voicings match the filter", file=sys.stderr)
+            sys.exit(1)
+
+        applied = 0
+        for v in voicings_list:
+            fg = suggest_fingering(v)
+            if fg:
+                display = format_fingering(v, fg)
+                if not args.apply:
+                    print(f"{v['id']:40s} {v['name'][:35]:35s} {display}")
+                else:
+                    v["fingering"] = fg
+                    applied += 1
+
+        if args.apply:
+            fingerings_by_id = {v["id"]: v.get("fingering") for v in voicings_list if "fingering" in v}
+            for v in data["voicings"]:
+                if v["id"] in fingerings_by_id:
+                    v["fingering"] = fingerings_by_id[v["id"]]
+            with open(args.data, "w") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+                f.write("\n")
+            print(f"Applied fingerings to {applied} voicings in {args.data}")
+        else:
+            print(f"\n{len(voicings_list)} voicings displayed. Use --apply to write to voicings.json.")
 
 
 if __name__ == "__main__":

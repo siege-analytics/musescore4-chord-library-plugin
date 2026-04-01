@@ -1902,14 +1902,27 @@ MuseScore {
     }
 
     function suggestFingerings() {
-        var filterArgs = " --data DATA_PATH"
-        if (selectedQuality && selectedQuality !== "All Qualities")
-            filterArgs += ' --quality "' + selectedQuality + '"'
-        if (selectedContext && selectedContext !== "All Contexts")
-            filterArgs += ' --context "' + selectedContext + '"'
-        if (selectedCategory && selectedCategory !== "All Types")
-            filterArgs += ' --category "' + selectedCategory + '"'
-        launchTool("suggest_fingerings.py", filterArgs,
+        var args = " --data DATA_PATH"
+
+        // If a score is open, extract its chords and suggest fingerings
+        // for the matched voicings. Otherwise, use the current filter.
+        if (curScore) {
+            var chordsFile = extractChordsToFile()
+            if (chordsFile) {
+                var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+                var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
+                args += ' --chords "' + chordsFile + '" --context ' + ctx + catArg
+            }
+        } else {
+            if (selectedQuality && selectedQuality !== "All Qualities")
+                args += ' --quality "' + selectedQuality + '"'
+            if (selectedContext && selectedContext !== "All Contexts")
+                args += ' --context "' + selectedContext + '"'
+            if (selectedCategory && selectedCategory !== "All Types")
+                args += ' --category "' + selectedCategory + '"'
+        }
+
+        launchTool("suggest_fingerings.py", args,
             toolStatus, "Fingering suggestions — results opening...")
     }
 
