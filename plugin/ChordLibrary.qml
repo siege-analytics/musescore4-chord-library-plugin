@@ -240,15 +240,26 @@ MuseScore {
     }
 
     function findBestVoicing(targetRoot, quality) {
-        // Find the best matching voicing from the current data
-        // Prefer: current filter context > shell > drop2, and E-shape first
+        // Find the best matching voicing from the current data.
+        // Respects current filter selections: context, category, tuning.
         var candidates = []
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
             if (v.chord_quality !== quality) continue
             // Filter by string count for current tuning
             if ((v.strings || 6) > tuningMaxStrings) continue
+            // Respect category filter if set
+            if (filterCategory && v.category !== filterCategory) continue
             candidates.push(v)
+        }
+        // If category filter is too restrictive, fall back to unfiltered
+        if (candidates.length === 0 && filterCategory) {
+            for (var j = 0; j < voicingsData.length; j++) {
+                var v2 = voicingsData[j]
+                if (v2.chord_quality !== quality) continue
+                if ((v2.strings || 6) > tuningMaxStrings) continue
+                candidates.push(v2)
+            }
         }
         if (candidates.length === 0) {
             // Fallback: try dom7 if the specific quality isn't found
@@ -262,6 +273,9 @@ MuseScore {
             var scoreA = 0, scoreB = 0
             if (filterContext && a.context === filterContext) scoreA += 100
             if (filterContext && b.context === filterContext) scoreB += 100
+            // Boost matching category filter
+            if (filterCategory && a.category === filterCategory) scoreA += 50
+            if (filterCategory && b.category === filterCategory) scoreB += 50
             if (a.category === "shell") scoreA += 10
             else if (a.category === "drop2") scoreA += 5
             if (b.category === "shell") scoreB += 10
@@ -1932,35 +1946,44 @@ MuseScore {
             return
         }
 
+        var ctx = filterContext || "all"
+        var cat = filterCategory || "all"
+
         var lines = []
         var covered = 0
         var gaps = 0
         for (var i = 0; i < chords.length; i++) {
             var parsed = parseChordSymbol(chords[i])
             if (!parsed) {
-                lines.push(chords[i] + " — could not parse")
+                lines.push("  ✗  " + chords[i] + " — could not parse")
                 gaps++
                 continue
             }
-            // Count matching voicings
             var matches = voicingsData.filter(function(v) {
-                return v.chord_quality === parsed.quality
+                if (v.chord_quality !== parsed.quality) return false
+                if (ctx !== "all" && v.context !== ctx) return false
+                if (cat !== "all" && v.category !== cat) return false
+                return true
             })
             if (matches.length > 0) {
-                lines.push("✓ " + chords[i] + " — " + matches.length + " voicings")
+                var cats = {}
+                for (var m = 0; m < matches.length; m++) cats[matches[m].category] = (cats[matches[m].category] || 0) + 1
+                var catStr = Object.keys(cats).map(function(c) { return c + "(" + cats[c] + ")" }).join(", ")
+                lines.push("  ✓  " + chords[i] + " — " + matches.length + " voicings: " + catStr)
                 covered++
             } else {
-                lines.push("✗ " + chords[i] + " — NO VOICINGS")
+                lines.push("  ✗  " + chords[i] + " — NO VOICINGS")
                 gaps++
             }
         }
 
         var pct = Math.round(covered / chords.length * 100)
-        toolStatus.text = "Coverage: " + covered + "/" + chords.length
-            + " (" + pct + "%)"
-            + (gaps > 0 ? " — " + gaps + " gap(s)" : " — full coverage!")
-            + "\n\n" + lines.join("\n")
-        toolStatus.color = gaps > 0 ? "#c60" : "#060"
+        var header = "Coverage: " + covered + "/" + chords.length + " (" + pct + "%)"
+        if (gaps > 0) header += " — " + gaps + " gap(s)"
+        else header += " — full coverage!"
+        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
+
+        showResult("Score Analysis", header + "\n\n" + lines.join("\n"), true)
     }
 
     function runVoiceLeading() {
@@ -1976,27 +1999,77 @@ MuseScore {
             return
         }
 
-        // Find best voicing for each chord (using voice leading proximity)
         var lines = []
-        var prevVoicing = null
+        lastInsertedVoicing = null  // reset voice leading chain
         for (var i = 0; i < chords.length; i++) {
             var parsed = parseChordSymbol(chords[i])
             if (!parsed) {
-                lines.push(chords[i] + " — ?")
+                lines.push("  " + chords[i] + " — ?")
                 continue
             }
             var voicing = findBestVoicing(parsed.root, parsed.quality)
             if (voicing) {
-                var name = voicing.name.split(" — ").slice(1).join(" — ")
-                lines.push(chords[i] + " → " + (name || voicing.category))
-                prevVoicing = voicing
+                var nameParts = voicing.name.split(" — ")
+                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
+                var topNote = nameParts.length > 2 ? nameParts[2] : ""
+                lines.push("  " + chords[i] + "  →  " + shape + (topNote ? " — " + topNote : ""))
+                lastInsertedVoicing = voicing
             } else {
-                lines.push(chords[i] + " → no match")
+                lines.push("  " + chords[i] + "  →  no match")
             }
         }
 
-        toolStatus.text = "Voice leading path (" + chords.length + " chords):\n\n" + lines.join("\n")
-        toolStatus.color = "#060"
+        var ctx = filterContext || "all"
+        var cat = filterCategory || "all"
+        var header = "Voice leading path (" + chords.length + " chords)"
+        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
+
+        showResult("Voice Leading", header + "\n\n" + lines.join("\n"), true)
+    }
+
+    function voiceEntireScore() {
+        if (!curScore) {
+            statusMsg.text = "No score open"
+            statusMsg.color = "#c00"
+            return
+        }
+
+        var ctx = filterContext || "all"
+        var cat = filterCategory || "all"
+
+        // Preview: show what voicings will be assigned
+        var chords = collectScoreChords()
+        if (chords.length === 0) {
+            statusMsg.text = "No chord symbols found"
+            statusMsg.color = "#c00"
+            return
+        }
+
+        var lines = []
+        var matchCount = 0
+        for (var i = 0; i < chords.length; i++) {
+            var parsed = parseChordSymbol(chords[i])
+            if (!parsed) {
+                lines.push("  ✗  " + chords[i] + " — could not parse")
+                continue
+            }
+            var voicing = findBestVoicing(parsed.root, parsed.quality)
+            if (voicing) {
+                var nameParts = voicing.name.split(" — ")
+                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
+                lines.push("  ✓  " + chords[i] + "  →  " + shape + " (" + voicing.category + ")")
+                matchCount++
+            } else {
+                lines.push("  ✗  " + chords[i] + " — no matching voicing")
+            }
+        }
+
+        var header = "Ready to insert " + matchCount + " diagrams for " + chords.length + " chords"
+        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
+        header += "\n\nChange the filters on the main panel to use different voicing types."
+        header += "\nClick 'Batch' to insert these voicings into the score."
+
+        showResult("Voice Entire Score", header + "\n\n" + lines.join("\n"), true)
     }
 
     function suggestFingerings() {
@@ -2019,14 +2092,15 @@ MuseScore {
             var voicing = findBestVoicing(parsed.root, parsed.quality)
             if (voicing) {
                 var fg = computeFingeringString(voicing)
-                lines.push(chords[i] + ":  " + fg)
+                var nameParts = voicing.name.split(" — ")
+                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
+                lines.push("  " + chords[i] + "  →  " + shape + "\n     Fingering: " + fg)
             } else {
-                lines.push(chords[i] + ":  no voicing")
+                lines.push("  " + chords[i] + "  →  no voicing found")
             }
         }
 
-        toolStatus.text = "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n")
-        toolStatus.color = "#060"
+        showResult("Fingering Suggestions", "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n\n"), true)
     }
 
     // Simple fingering heuristic (QML-side, for inline annotation)
@@ -3178,6 +3252,13 @@ MuseScore {
                         batchInsert()
                     }
                 }
+            }
+
+            Button {
+                text: "Voice Score"
+                font.pixelSize: 10
+                implicitWidth: 70
+                onClicked: voiceEntireScore()
             }
 
             Button {
