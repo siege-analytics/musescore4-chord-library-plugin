@@ -92,6 +92,9 @@ MuseScore {
     property var filteredData: []
     property bool dataLoaded: false
     property bool showSettings: false
+    property bool showToolResults: false
+    property string toolResultsTitle: ""
+    property string toolResultsContent: ""
 
     // Filter state
     property string filterContext: ""
@@ -147,10 +150,17 @@ MuseScore {
     // === Tool feedback (uses toolStatus label + console) ===
 
     function showResult(title, message, isSuccess) {
-        // Show feedback via the toolStatus label in Settings
-        toolStatus.text = title + ": " + message
-        toolStatus.color = isSuccess ? "#060" : "#c00"
         console.log("[ChordLibrary] " + title + ": " + message)
+        // Short messages go in toolStatus, long ones open the results panel
+        if (message.indexOf("\n") >= 0 || message.length > 80) {
+            toolResultsTitle = title
+            toolResultsContent = message
+            showToolResults = true
+            showSettings = false
+        } else {
+            toolStatus.text = title + ": " + message
+            toolStatus.color = isSuccess ? "#060" : "#c00"
+        }
     }
 
     // === Paste infrastructure ===
@@ -2082,13 +2092,11 @@ MuseScore {
 
     function addFingeringsToScore() {
         if (!curScore) {
-            showResult("No Score", "Open a score first, then try again.", false)
+            showResult("No Score", "Open a score with chord symbols first.", false)
             return
         }
 
-        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-
-        // First pass: collect all chord positions and their ticks
+        // Collect chord positions using cursor.tick (more reliable than seg.tick in MS4)
         var chordPositions = []
         var scanCursor = curScore.newCursor()
         scanCursor.staffIdx = 0
@@ -2097,6 +2105,7 @@ MuseScore {
 
         while (scanCursor.segment) {
             var seg = scanCursor.segment
+            var currentTick = scanCursor.tick
             if (seg.annotations) {
                 for (var a = 0; a < seg.annotations.length; a++) {
                     if (seg.annotations[a].type === Element.HARMONY) {
@@ -2108,7 +2117,7 @@ MuseScore {
                                 var fingerStr = computeFingeringString(voicing)
                                 if (fingerStr) {
                                     chordPositions.push({
-                                        tick: seg.tick,
+                                        tick: currentTick,
                                         fingering: fingerStr,
                                         chord: chordText,
                                     })
@@ -2126,36 +2135,44 @@ MuseScore {
             return
         }
 
-        // Second pass: add fingering text at each position
-        curScore.startCmd()
+        // Add fingering text at each position
         var added = 0
+        var errors = []
+
+        curScore.startCmd()
 
         for (var i = 0; i < chordPositions.length; i++) {
             var pos = chordPositions[i]
+            try {
+                var cursor = curScore.newCursor()
+                cursor.staffIdx = 0
+                cursor.voice = 0
+                cursor.rewind(0)
 
-            // Position cursor at this tick
-            var cursor = curScore.newCursor()
-            cursor.staffIdx = 0
-            cursor.voice = 0
-            cursor.rewind(0)
-            while (cursor.segment && cursor.tick < pos.tick) {
-                cursor.next()
-            }
+                // Advance cursor to the target tick
+                while (cursor.segment && cursor.tick < pos.tick) {
+                    cursor.next()
+                }
 
-            if (cursor.segment) {
-                var staffText = newElement(Element.STAFF_TEXT)
-                staffText.text = pos.fingering
-                staffText.fontSize = 7
-                cursor.add(staffText)
-                added++
+                if (cursor.segment) {
+                    var staffText = newElement(Element.STAFF_TEXT)
+                    staffText.text = pos.fingering
+                    cursor.add(staffText)
+                    added++
+                }
+            } catch (e) {
+                errors.push(pos.chord + ": " + e)
             }
         }
 
         curScore.endCmd()
-        showResult("Fingerings Added",
-            "Added fingering annotations to " + added + " chord positions.\n\n"
-            + "Look for text below each chord symbol showing finger assignments "
-            + "(1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open).", true)
+
+        var msg = "Added fingerings to " + added + " of " + chordPositions.length + " chord positions."
+        if (errors.length > 0) {
+            msg += "\n\nErrors:\n" + errors.join("\n")
+        }
+        msg += "\n\nFingering format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
+        showResult("Fingerings", msg, errors.length === 0)
     }
 
     function exportFingeringSheet() {
@@ -2295,9 +2312,15 @@ MuseScore {
             }
 
             Button {
-                text: showSettings ? "Back" : "Settings"
+                text: (showSettings || showToolResults) ? "Back" : "Settings"
                 font.pixelSize: 11
-                onClicked: showSettings = !showSettings
+                onClicked: {
+                    if (showToolResults) {
+                        showToolResults = false
+                    } else {
+                        showSettings = !showSettings
+                    }
+                }
             }
         }
 
@@ -3009,9 +3032,61 @@ MuseScore {
             }
         }
 
+        // === Tool Results panel ===
+        ColumnLayout {
+            visible: showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 8
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                Label {
+                    text: toolResultsTitle
+                    font.pixelSize: 16
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    text: "Close"
+                    onClicked: {
+                        showToolResults = false
+                    }
+                }
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                height: 1
+                color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
+            }
+
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: toolResultsLabel.implicitHeight + 20
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
+
+                Label {
+                    id: toolResultsLabel
+                    text: toolResultsContent
+                    width: parent.width - 16
+                    font.pixelSize: 11
+                    font.family: "Menlo, Monaco, monospace"
+                    wrapMode: Text.WordWrap
+                    padding: 8
+                }
+            }
+        }
+
         // === Main panel (hidden when settings open) ===
         TextField {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             id: searchField
             placeholderText: "Search voicings..."
             Layout.fillWidth: true
@@ -3022,7 +3097,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3053,7 +3128,7 @@ MuseScore {
         }
 
         ComboBox {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             id: qualityCombo
             model: qualityList
             Layout.fillWidth: true
@@ -3064,7 +3139,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3122,7 +3197,7 @@ MuseScore {
 
         // Color legend for fretboard dot intervals
         Flow {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             Layout.fillWidth: true
             spacing: 8
 
@@ -3153,7 +3228,7 @@ MuseScore {
         }
 
         ListView {
-            visible: !showSettings
+            visible: !showSettings && !showToolResults
             id: voicingList
             Layout.fillWidth: true
             Layout.fillHeight: true
