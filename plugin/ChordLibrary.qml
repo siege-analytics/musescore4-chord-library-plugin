@@ -1720,35 +1720,30 @@ MuseScore {
         }
     }
 
-    function exportGP5() {
-        exportStatus.text = "Generating GP5 (requires Python + PyGuitarPro)..."
-
-        // Write the current voicings to a temp file for the Python script to read
-        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
-        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
-
-        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-        var scriptPath = pluginDir + "/scripts/export_gp5.py"
-        var dataPath = pluginDir + "/voicings-cache.json"
-        var outDir = basePath.replace(/\/[^/]+$/, "")  // parent directory
-
-        // Write a .command script that runs the GP5 exporter and opens output folder
-        var cmd = '#!/bin/bash\n'
-            + 'python3 "' + scriptPath + '" --data "' + dataPath + '" -o "' + outDir + '" 2>&1\n'
-            + 'open "' + outDir + '"\n'
-            + 'exit 0\n'
-
-        var cmdPath = Qt.resolvedUrl("export-gp5.command")
-        tempDiagramFile.source = cmdPath
+    // Write a JSON config and launch the pre-installed runner script.
+    // MuseScore's FileIO can't write .command/.sh files, but can write .json.
+    function launchExport(command) {
+        var config = JSON.stringify({ command: command })
+        var configPath = Qt.resolvedUrl("export-config.json")
+        tempDiagramFile.source = configPath
         try {
-            tempDiagramFile.write(cmd)
-            Qt.openUrlExternally(cmdPath)
-            exportStatus.text = "GP5 export — files will open when ready"
+            tempDiagramFile.write(config)
+            Qt.openUrlExternally(Qt.resolvedUrl("run-export.command"))
+            exportStatus.text = "Export launched — output will open when ready"
             exportStatus.color = "#060"
         } catch (e) {
-            exportStatus.text = "GP5 export failed: " + e
+            exportStatus.text = "Export failed: " + e
             exportStatus.color = "#c00"
         }
+    }
+
+    function exportGP5() {
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+        var outDir = basePath.replace(/\/[^/]+$/, "")
+        launchExport('python3 "' + pluginDir + '/scripts/export_gp5.py" --data "'
+            + pluginDir + '/voicings-cache.json" -o "' + outDir + '" 2>&1; open "' + outDir + '"')
     }
 
     function exportChordSheet() {
@@ -1760,7 +1755,6 @@ MuseScore {
 
     function _doExportChordSheet(outPath) {
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-        var scriptPath = pluginDir + "/scripts/generate_chord_sheet.py"
         var dataPath = pluginDir + "/voicings-cache.json"
 
         var filterArgs = ""
@@ -1777,35 +1771,15 @@ MuseScore {
         if (selectedContext && selectedContext !== "All Contexts")
             title += " (" + selectedContext + ")"
 
-        var cmd = '#!/bin/bash\n'
-            + 'cd "' + pluginDir + '"\n'
-            + 'python3 "' + scriptPath + '" --data "' + dataPath + '"'
-            + filterArgs
-            + ' --title "' + title + '"'
-            + ' -o "' + outPath + '"\n'
-            + 'open "' + outPath + '"\n'
-            + 'exit 0\n'
-
-        var cmdPath = Qt.resolvedUrl("export-chord-sheet.command")
-        tempDiagramFile.source = cmdPath
-        try {
-            tempDiagramFile.write(cmd)
-            Qt.openUrlExternally(cmdPath)
-            showResult("Exporting", "Chord sheet will open when ready.", true)
-        } catch (e) {
-            showResult("Export Failed", "Chord sheet export failed: " + e, false)
-        }
+        launchExport('cd "' + pluginDir + '"; python3 "' + pluginDir + '/scripts/generate_chord_sheet.py"'
+            + ' --data "' + dataPath + '"' + filterArgs + ' --title "' + title + '"'
+            + ' -o "' + outPath + '" 2>&1; open "' + outPath + '"')
     }
 
     function exportDiagramsSVG() {
-        // SVG export saves to a folder — use default path directly
-        // (FileDialog doesn't support folder selection well in MuseScore)
         var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
         if (!basePath) basePath = homePath() + "/Documents/chord-library-diagrams"
-        var outDir = basePath
-
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-        var scriptPath = pluginDir + "/scripts/fretboard_renderer.py"
         var dataPath = pluginDir + "/voicings-cache.json"
 
         var filterArgs = ""
@@ -1816,23 +1790,9 @@ MuseScore {
         if (selectedCategory && selectedCategory !== "All Types")
             filterArgs += ' --category "' + selectedCategory + '"'
 
-        var cmd = '#!/bin/bash\n'
-            + 'mkdir -p "' + outDir + '"\n'
-            + 'python3 "' + scriptPath + '" --data "' + dataPath + '"'
-            + filterArgs
-            + ' -o "' + outDir + '"\n'
-            + 'open "' + outDir + '"\n'
-            + 'exit 0\n'
-
-        var cmdPath = Qt.resolvedUrl("export-diagrams.command")
-        tempDiagramFile.source = cmdPath
-        try {
-            tempDiagramFile.write(cmd)
-            Qt.openUrlExternally(cmdPath)
-            showResult("Exporting", "SVG diagrams folder will open when ready.", true)
-        } catch (e) {
-            showResult("Export Failed", "SVG export failed: " + e, false)
-        }
+        launchExport('mkdir -p "' + basePath + '"; python3 "' + pluginDir
+            + '/scripts/fretboard_renderer.py" --data "' + dataPath + '"'
+            + filterArgs + ' -o "' + basePath + '" 2>&1; open "' + basePath + '"')
     }
 
     // === Tools (launch Python scripts, output to file, open with default handler) ===
@@ -1847,22 +1807,26 @@ MuseScore {
         var dataPath = pluginDir + "/voicings-cache.json"
         var outputPath = pluginDir + "/tool-output." + outputExt
 
-        var cmd = '#!/bin/bash\n'
-            + 'cd "' + pluginDir + '"\n'
-            + 'python3 "' + scriptPath + '" ' + args.replace("DATA_PATH", dataPath)
-            + ' > "' + outputPath + '" 2>&1\n'
-            + 'open "' + outputPath + '"\n'
-            + 'exit 0\n'
+        // Write the tool config as JSON (FileIO can write .json reliably)
+        var toolConfig = JSON.stringify({
+            script: scriptPath,
+            args: args.replace("DATA_PATH", dataPath),
+            output: outputPath,
+            pluginDir: pluginDir,
+        })
 
-        var cmdPath = Qt.resolvedUrl("run-tool.command")
-        tempDiagramFile.source = cmdPath
+        var configPath = Qt.resolvedUrl("tool-config.json")
+        tempDiagramFile.source = configPath
         try {
-            tempDiagramFile.write(cmd)
-            Qt.openUrlExternally(cmdPath)
-            showResult("Done", successMsg, true)
+            tempDiagramFile.write(toolConfig)
         } catch (e) {
-            showResult("Error", "Failed: " + e, false)
+            showResult("Error", "Failed to write tool config: " + e, false)
+            return
         }
+
+        // Execute via the pre-installed runner script (has +x permission)
+        Qt.openUrlExternally(Qt.resolvedUrl("run-tool.command"))
+        showResult("Done", successMsg, true)
     }
 
     // Extract chord symbols from the open score via the plugin API
@@ -2124,26 +2088,11 @@ MuseScore {
             var title = curScore.scoreName || curScore.title || "Fingering Reference"
             var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
 
-            var cmd = '#!/bin/bash\n'
-                + 'cd "' + pluginDir + '"\n'
-                + 'python3 "' + pluginDir + '/scripts/generate_fingering_sheet.py"'
-                + ' --chords "' + chordsFile + '"'
-                + ' --context ' + ctx + catArg
-                + ' --title "' + title + '"'
-                + ' --data "' + pluginDir + '/voicings-cache.json"'
-                + ' -o "' + outPath + '"\n'
-                + 'open "' + outPath + '"\n'
-                + 'exit 0\n'
-
-            var cmdPath = Qt.resolvedUrl("export-fingering-sheet.command")
-            tempDiagramFile.source = cmdPath
-            try {
-                tempDiagramFile.write(cmd)
-                Qt.openUrlExternally(cmdPath)
-                showResult("Exporting", "Fingering sheet will open when ready.", true)
-            } catch (e) {
-                showResult("Export Failed", "Fingering sheet export failed: " + e, false)
-            }
+            launchExport('cd "' + pluginDir + '"; python3 "' + pluginDir
+                + '/scripts/generate_fingering_sheet.py" --chords "' + chordsFile
+                + '" --context ' + ctx + catArg + ' --title "' + title
+                + '" --data "' + pluginDir + '/voicings-cache.json" -o "' + outPath
+                + '" 2>&1; open "' + outPath + '"')
         })
     }
 
@@ -2637,6 +2586,35 @@ MuseScore {
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 4
+
+                    Button {
+                        text: "Test Tool"
+                        font.pixelSize: 10
+                        onClicked: {
+                            // Diagnostic: test if .command execution works at all
+                            var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+                            var outFile = pluginDir + "/tool-output.txt"
+                            var cmd = '#!/bin/bash\n'
+                                + 'echo "Tool test successful" > "' + outFile + '"\n'
+                                + 'echo "Plugin dir: ' + pluginDir + '" >> "' + outFile + '"\n'
+                                + 'echo "Python: $(which python3)" >> "' + outFile + '"\n'
+                                + 'echo "Date: $(date)" >> "' + outFile + '"\n'
+                                + 'ls "' + pluginDir + '/scripts/" >> "' + outFile + '" 2>&1\n'
+                                + 'open "' + outFile + '"\n'
+                                + 'exit 0\n'
+                            var cmdPath = Qt.resolvedUrl("run-tool.command")
+                            tempDiagramFile.source = cmdPath
+                            try {
+                                tempDiagramFile.write(cmd)
+                                Qt.openUrlExternally(cmdPath)
+                                toolStatus.text = "Test launched — should open text file"
+                                toolStatus.color = "#060"
+                            } catch (e) {
+                                toolStatus.text = "Test FAILED: " + e
+                                toolStatus.color = "#c00"
+                            }
+                        }
+                    }
 
                     Button {
                         text: "Analyze Score"
