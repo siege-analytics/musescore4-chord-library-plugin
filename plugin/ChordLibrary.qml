@@ -144,21 +144,30 @@ MuseScore {
         contextLabelsShort = shorts
     }
 
-    // === Result dialog (for tool feedback) ===
+    // === Result popup (for tool feedback) ===
 
-    Dialog {
-        id: resultDialog
-        title: "Chord Library"
+    Popup {
+        id: resultPopup
         modal: true
-        standardButtons: Dialog.Ok
+        focus: true
         width: 360
-        height: 180
-        anchors.centerIn: parent
+        height: resultColumn.implicitHeight + 50
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        padding: 16
+
+        background: Rectangle {
+            color: "#FAFAFA"
+            border.color: "#BDBDBD"
+            border.width: 1
+            radius: 6
+        }
 
         ColumnLayout {
+            id: resultColumn
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 8
+            spacing: 10
 
             Label {
                 id: resultTitle
@@ -170,10 +179,15 @@ MuseScore {
 
             Label {
                 id: resultMessage
-                font.pixelSize: 12
+                font.pixelSize: 11
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+            }
+
+            Button {
+                text: "OK"
+                Layout.alignment: Qt.AlignRight
+                onClicked: resultPopup.close()
             }
         }
     }
@@ -183,7 +197,7 @@ MuseScore {
         resultTitle.color = isSuccess ? "#2E7D32" : "#C62828"
         resultMessage.text = message
         resultMessage.color = "#424242"
-        resultDialog.open()
+        resultPopup.open()
     }
 
     // === Paste infrastructure ===
@@ -1583,6 +1597,51 @@ MuseScore {
 
     property var _fileDialogComponent: null
 
+    // Open a save dialog with a specific title, filter, and default name.
+    // Calls callback(path) with the chosen file path.
+    function openSaveDialog(dialogTitle, nameFilter, defaultPath, callback) {
+        if (!_fileDialogComponent) {
+            // probe support first
+            try {
+                var probe = Qt.createQmlObject(
+                    'import QtQuick.Dialogs; FileDialog { }',
+                    chordLibrary, "probe"
+                )
+                if (probe) probe.destroy()
+                _fileDialogComponent = "supported"
+            } catch (e) {
+                _fileDialogComponent = "unsupported"
+            }
+        }
+
+        if (_fileDialogComponent === "supported") {
+            try {
+                var dlg = Qt.createQmlObject(
+                    'import QtQuick.Dialogs\n'
+                    + 'FileDialog {\n'
+                    + '  title: "' + dialogTitle + '"\n'
+                    + '  fileMode: FileDialog.SaveFile\n'
+                    + '  nameFilters: ["' + nameFilter + '"]\n'
+                    + '}',
+                    chordLibrary, "saveDialog"
+                )
+                dlg.onAccepted.connect(function() {
+                    var path = dlg.selectedFile.toString().replace("file://", "")
+                    dlg.destroy()
+                    if (callback) callback(path)
+                })
+                dlg.onRejected.connect(function() { dlg.destroy() })
+                dlg.open()
+                return
+            } catch (e) {
+                _fileDialogComponent = "unsupported"
+            }
+        }
+
+        // Fallback: use default path directly
+        if (callback) callback(defaultPath)
+    }
+
     function openFileBrowser(mode, targetField, callback) {
         // Try to dynamically create a FileDialog from QtQuick.Dialogs
         // If it fails (MuseScore doesn't support it), show a message
@@ -1740,17 +1799,17 @@ MuseScore {
     }
 
     function exportChordSheet() {
-        exportStatus.text = "Generating PDF chord sheet..."
+        var defaultName = homePath() + "/Documents/chord-sheet.pdf"
+        openSaveDialog("Save Chord Sheet", "PDF files (*.pdf)", defaultName, function(outPath) {
+            _doExportChordSheet(outPath)
+        })
+    }
 
-        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
-        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
-        var outPath = basePath + "-chord-sheet.pdf"
-
+    function _doExportChordSheet(outPath) {
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
         var scriptPath = pluginDir + "/scripts/generate_chord_sheet.py"
         var dataPath = pluginDir + "/voicings-cache.json"
 
-        // Build filter args based on current UI state
         var filterArgs = ""
         if (selectedQuality && selectedQuality !== "All Qualities")
             filterArgs += ' --quality "' + selectedQuality + '"'
@@ -1771,8 +1830,6 @@ MuseScore {
             + filterArgs
             + ' --title "' + title + '"'
             + ' -o "' + outPath + '"\n'
-            + 'echo ""\n'
-            + 'echo "Chord sheet saved to ' + outPath + '"\n'
             + 'open "' + outPath + '"\n'
             + 'exit 0\n'
 
@@ -1781,20 +1838,18 @@ MuseScore {
         try {
             tempDiagramFile.write(cmd)
             Qt.openUrlExternally(cmdPath)
-            exportStatus.text = "Chord sheet export launched — PDF will open when ready"
-            exportStatus.color = "#060"
+            showResult("Exporting", "Chord sheet will open when ready.", true)
         } catch (e) {
-            exportStatus.text = "Chord sheet export failed: " + e
-            exportStatus.color = "#c00"
+            showResult("Export Failed", "Chord sheet export failed: " + e, false)
         }
     }
 
     function exportDiagramsSVG() {
-        exportStatus.text = "Exporting SVG diagrams..."
-
+        // SVG export saves to a folder — use default path directly
+        // (FileDialog doesn't support folder selection well in MuseScore)
         var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
-        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
-        var outDir = basePath + "-diagrams"
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-diagrams"
+        var outDir = basePath
 
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
         var scriptPath = pluginDir + "/scripts/fretboard_renderer.py"
@@ -1813,8 +1868,6 @@ MuseScore {
             + 'python3 "' + scriptPath + '" --data "' + dataPath + '"'
             + filterArgs
             + ' -o "' + outDir + '"\n'
-            + 'echo ""\n'
-            + 'echo "SVG diagrams saved to ' + outDir + '"\n'
             + 'open "' + outDir + '"\n'
             + 'exit 0\n'
 
@@ -1823,11 +1876,9 @@ MuseScore {
         try {
             tempDiagramFile.write(cmd)
             Qt.openUrlExternally(cmdPath)
-            exportStatus.text = "SVG export launched — folder will open when ready"
-            exportStatus.color = "#060"
+            showResult("Exporting", "SVG diagrams folder will open when ready.", true)
         } catch (e) {
-            exportStatus.text = "SVG export failed: " + e
-            exportStatus.color = "#c00"
+            showResult("Export Failed", "SVG export failed: " + e, false)
         }
     }
 
@@ -2111,38 +2162,36 @@ MuseScore {
         var chordsFile = extractChordsToFile()
         if (!chordsFile) return
 
-        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
-        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
-        var outPath = basePath + "-fingering-sheet.pdf"
+        var scoreName = (curScore.scoreName || curScore.title || "fingerings").replace(/[^a-zA-Z0-9-_ ]/g, "")
+        var defaultPath = homePath() + "/Documents/" + scoreName + "-fingerings.pdf"
 
-        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-        var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
-        var title = curScore.scoreName || curScore.title || "Fingering Reference"
+        openSaveDialog("Save Fingering Sheet", "PDF files (*.pdf)", defaultPath, function(outPath) {
+            var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+            var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
+            var title = curScore.scoreName || curScore.title || "Fingering Reference"
+            var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
 
-        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+            var cmd = '#!/bin/bash\n'
+                + 'cd "' + pluginDir + '"\n'
+                + 'python3 "' + pluginDir + '/scripts/generate_fingering_sheet.py"'
+                + ' --chords "' + chordsFile + '"'
+                + ' --context ' + ctx + catArg
+                + ' --title "' + title + '"'
+                + ' --data "' + pluginDir + '/voicings-cache.json"'
+                + ' -o "' + outPath + '"\n'
+                + 'open "' + outPath + '"\n'
+                + 'exit 0\n'
 
-        var cmd = '#!/bin/bash\n'
-            + 'cd "' + pluginDir + '"\n'
-            + 'python3 "' + pluginDir + '/scripts/generate_fingering_sheet.py"'
-            + ' --chords "' + chordsFile + '"'
-            + ' --context ' + ctx + catArg
-            + ' --title "' + title + '"'
-            + ' --data "' + pluginDir + '/voicings-cache.json"'
-            + ' -o "' + outPath + '"\n'
-            + 'open "' + outPath + '"\n'
-            + 'exit 0\n'
-
-        var cmdPath = Qt.resolvedUrl("export-fingering-sheet.command")
-        tempDiagramFile.source = cmdPath
-        try {
-            tempDiagramFile.write(cmd)
-            Qt.openUrlExternally(cmdPath)
-            exportStatus.text = "Fingering sheet — PDF will open when ready"
-            exportStatus.color = "#060"
-        } catch (e) {
-            exportStatus.text = "Fingering sheet export failed: " + e
-            exportStatus.color = "#c00"
-        }
+            var cmdPath = Qt.resolvedUrl("export-fingering-sheet.command")
+            tempDiagramFile.source = cmdPath
+            try {
+                tempDiagramFile.write(cmd)
+                Qt.openUrlExternally(cmdPath)
+                showResult("Exporting", "Fingering sheet will open when ready.", true)
+            } catch (e) {
+                showResult("Export Failed", "Fingering sheet export failed: " + e, false)
+            }
+        })
     }
 
     function doImport() {
