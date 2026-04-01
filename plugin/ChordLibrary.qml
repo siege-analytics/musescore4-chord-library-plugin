@@ -144,6 +144,48 @@ MuseScore {
         contextLabelsShort = shorts
     }
 
+    // === Result dialog (for tool feedback) ===
+
+    Dialog {
+        id: resultDialog
+        title: "Chord Library"
+        modal: true
+        standardButtons: Dialog.Ok
+        width: 360
+        height: 180
+        anchors.centerIn: parent
+
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 12
+            spacing: 8
+
+            Label {
+                id: resultTitle
+                font.pixelSize: 14
+                font.bold: true
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            Label {
+                id: resultMessage
+                font.pixelSize: 12
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+        }
+    }
+
+    function showResult(title, message, isSuccess) {
+        resultTitle.text = title
+        resultTitle.color = isSuccess ? "#2E7D32" : "#C62828"
+        resultMessage.text = message
+        resultMessage.color = "#424242"
+        resultDialog.open()
+    }
+
     // === Paste infrastructure ===
 
     property var _pendingVoicing: null  // voicing being pasted (for tracking)
@@ -1813,11 +1855,9 @@ MuseScore {
         try {
             tempDiagramFile.write(cmd)
             Qt.openUrlExternally(cmdPath)
-            statusLabel.text = successMsg
-            statusLabel.color = "#060"
+            showResult("Done", successMsg, true)
         } catch (e) {
-            statusLabel.text = "Failed: " + e
-            statusLabel.color = "#c00"
+            showResult("Error", "Failed: " + e, false)
         }
     }
 
@@ -1874,8 +1914,7 @@ MuseScore {
 
     function analyzeCurrentScore() {
         if (!curScore) {
-            toolStatus.text = "No score open"
-            toolStatus.color = "#c00"
+            showResult("No Score", "Open a score first, then try again.", false)
             return
         }
         var chordsFile = extractChordsToFile()
@@ -1888,8 +1927,7 @@ MuseScore {
 
     function runVoiceLeading() {
         if (!curScore) {
-            toolStatus.text = "No score open"
-            toolStatus.color = "#c00"
+            showResult("No Score", "Open a score first, then try again.", false)
             return
         }
         var chordsFile = extractChordsToFile()
@@ -1989,23 +2027,21 @@ MuseScore {
 
     function addFingeringsToScore() {
         if (!curScore) {
-            toolStatus.text = "No score open"
-            toolStatus.color = "#c00"
+            showResult("No Score", "Open a score first, then try again.", false)
             return
         }
 
         var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-        var added = 0
 
-        curScore.startCmd()
+        // First pass: collect all chord positions and their ticks
+        var chordPositions = []
+        var scanCursor = curScore.newCursor()
+        scanCursor.staffIdx = 0
+        scanCursor.voice = 0
+        scanCursor.rewind(0)
 
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        while (cursor.segment) {
-            var seg = cursor.segment
+        while (scanCursor.segment) {
+            var seg = scanCursor.segment
             if (seg.annotations) {
                 for (var a = 0; a < seg.annotations.length; a++) {
                     if (seg.annotations[a].type === Element.HARMONY) {
@@ -2016,31 +2052,60 @@ MuseScore {
                             if (voicing) {
                                 var fingerStr = computeFingeringString(voicing)
                                 if (fingerStr) {
-                                    // Add staff text with fingering below the chord
-                                    var staffText = newElement(Element.STAFF_TEXT)
-                                    staffText.text = fingerStr
-                                    staffText.fontSize = 7
-                                    staffText.placement = 1  // below staff
-                                    cursor.add(staffText)
-                                    added++
+                                    chordPositions.push({
+                                        tick: seg.tick,
+                                        fingering: fingerStr,
+                                        chord: chordText,
+                                    })
                                 }
                             }
                         }
                     }
                 }
             }
-            cursor.next()
+            scanCursor.next()
+        }
+
+        if (chordPositions.length === 0) {
+            showResult("No Chords Found", "The score has no chord symbols to add fingerings to.", false)
+            return
+        }
+
+        // Second pass: add fingering text at each position
+        curScore.startCmd()
+        var added = 0
+
+        for (var i = 0; i < chordPositions.length; i++) {
+            var pos = chordPositions[i]
+
+            // Position cursor at this tick
+            var cursor = curScore.newCursor()
+            cursor.staffIdx = 0
+            cursor.voice = 0
+            cursor.rewind(0)
+            while (cursor.segment && cursor.tick < pos.tick) {
+                cursor.next()
+            }
+
+            if (cursor.segment) {
+                var staffText = newElement(Element.STAFF_TEXT)
+                staffText.text = pos.fingering
+                staffText.fontSize = 7
+                cursor.add(staffText)
+                added++
+            }
         }
 
         curScore.endCmd()
-        toolStatus.text = "Added fingerings to " + added + " chord positions"
-        toolStatus.color = "#060"
+        showResult("Fingerings Added",
+            "Added fingering annotations to " + added + " chord positions.\n\n"
+            + "Look for text below each chord symbol showing finger assignments "
+            + "(1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open).", true)
     }
 
     function exportFingeringSheet() {
         if (!curScore) {
-            toolStatus.text = "No score open"
-            toolStatus.color = "#c00"
+            showResult("No Score", "Open a score first, then try again.", false)
             return
         }
         var chordsFile = extractChordsToFile()
