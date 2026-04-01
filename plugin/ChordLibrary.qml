@@ -337,6 +337,10 @@ MuseScore {
         return xml
     }
 
+    // Batch cursor — persists across batchProcessNext() calls so we don't
+    // lose position between timer firings
+    property var _batchCursor: null
+
     function batchInsert() {
         if (!curScore) {
             statusMsg.text = "No score open"
@@ -344,7 +348,9 @@ MuseScore {
             return
         }
 
-        // Scan the entire score for chord symbols
+        // Build queue by walking cursor and collecting chord positions.
+        // Store the segment's element reference directly (not tick values,
+        // which may not work in MS4).
         var queue = []
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
@@ -361,8 +367,10 @@ MuseScore {
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
                             if (voicing) {
+                                // Store the element at this segment for later selection
+                                var elem = cursor.element
                                 queue.push({
-                                    tick: seg.tick,
+                                    element: elem,
                                     root: parsed.root,
                                     quality: parsed.quality,
                                     voicing: voicing,
@@ -384,47 +392,38 @@ MuseScore {
 
         batchQueue = queue
         batchTotal = queue.length
-        statusMsg.text = "Batch: inserting " + batchTotal + " diagrams..."
+        statusMsg.text = "Voicing: inserting " + batchTotal + " diagrams..."
         statusMsg.color = "#060"
 
-        // Start processing
         batchProcessNext()
     }
 
     function batchProcessNext() {
         if (batchQueue.length === 0) {
-            statusMsg.text = "Batch complete: " + batchTotal + " diagrams inserted"
+            statusMsg.text = "Complete: " + batchTotal + " diagrams inserted"
             statusMsg.color = "#060"
             return
         }
 
         var item = batchQueue.shift()
         var remaining = batchQueue.length
-        statusMsg.text = "Batch: " + (batchTotal - remaining) + " of " + batchTotal
+        statusMsg.text = "Voicing: " + (batchTotal - remaining) + " of " + batchTotal
             + " — " + item.chordText
         statusMsg.color = "#060"
 
-        // Move cursor to this chord's position
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-        while (cursor.segment && cursor.tick < item.tick) {
-            cursor.next()
-        }
-        // Select the element at this position so paste targets it
-        if (cursor.segment && cursor.element) {
-            curScore.selection.select(cursor.element)
+        // Select the element at this chord's position
+        // (stored during scan, more reliable than tick navigation)
+        if (item.element) {
+            curScore.selection.select(item.element)
         }
 
-        // Try direct insertion via setDot() API first (instant, no timer delay)
+        // Try direct insertion via setDot() API first
         if (insertDirect(item.voicing, item.root)) {
             lastInsertedVoicing = item.voicing
-            // Immediately process next item (no timer delay needed)
             if (batchQueue.length > 0) {
                 batchProcessNext()
             } else {
-                statusMsg.text = "Batch complete: " + batchTotal + " diagrams inserted"
+                statusMsg.text = "Complete: " + batchTotal + " diagrams inserted"
                 statusMsg.color = "#060"
             }
             return
@@ -443,10 +442,7 @@ MuseScore {
             return
         }
 
-        // Track for voice leading (batch uses this for next voicing selection too)
         _pendingVoicing = item.voicing
-        // The launchd agent writes to clipboard, then pasteTimer fires cmd("paste")
-        // pasteTimer.onTriggered checks batchQueue and calls batchProcessNext()
         pasteTimer.start()
     }
 
