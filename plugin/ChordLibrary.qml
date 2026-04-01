@@ -167,25 +167,21 @@ MuseScore {
 
     property var _pendingVoicing: null  // voicing being pasted (for tracking)
 
-    // Timer: waits for the launchd agent to write to clipboard AND auto-paste
-    // via osascript (Cmd+V). cmd("paste") does NOT work in MuseScore 4's
-    // plugin API (known issue). The launchd agent's clipboard-and-paste.sh
-    // script handles both clipboard write and keystroke injection.
+    // Timer: waits for the launchd agent to write clipboard data.
+    // Note: cmd("paste") does NOT work in MuseScore 4's plugin API.
+    // The user must press Cmd+V manually. For single "Open" clicks,
+    // the osascript in clipboard-and-paste.sh attempts auto-paste.
+    // For batch Voice Score, the guided walkthrough handles timing.
     Timer {
         id: pasteTimer
-        interval: 1500  // 1.5 sec: 0.3s for clipboard + 0.5s for osascript + buffer
+        interval: 1500
         repeat: false
         onTriggered: {
             statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
-            // Track for voice leading
             if (_pendingVoicing) {
                 lastInsertedVoicing = _pendingVoicing
                 _pendingVoicing = null
                 if (sortByProximity) applyFilters()
-            }
-            // If batch queue has more items, process next
-            if (batchQueue.length > 0) {
-                batchProcessNext()
             }
         }
     }
@@ -337,6 +333,7 @@ MuseScore {
     // Batch voicing state
     property int _batchIndex: 0
     property int _batchInserted: 0
+    property var _batchChords: []  // [{text, root, quality, voicing}, ...]
 
     function batchInsert() {
         if (!curScore) {
@@ -345,68 +342,12 @@ MuseScore {
             return
         }
 
-        // Count chord symbols
-        var total = 0
+        // Scan all chord symbols and build the voicing plan
+        var chords = []
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
         cursor.voice = 0
         cursor.rewind(0)
-        while (cursor.segment) {
-            if (cursor.segment.annotations) {
-                for (var a = 0; a < cursor.segment.annotations.length; a++) {
-                    if (cursor.segment.annotations[a].type === Element.HARMONY) {
-                        var parsed = parseChordSymbol(cursor.segment.annotations[a].text)
-                        if (parsed && findBestVoicing(parsed.root, parsed.quality)) {
-                            total++
-                        }
-                    }
-                }
-            }
-            cursor.next()
-        }
-
-        if (total === 0) {
-            statusMsg.text = "No matching chord symbols found"
-            statusMsg.color = "#c00"
-            return
-        }
-
-        // Move MuseScore's edit cursor to the very beginning of the score
-        // using cmd() which moves the ACTUAL edit cursor (not just QML selection)
-        cmd("escape")    // deselect anything
-        cmd("first-element")  // go to first element in score
-
-        batchTotal = total
-        _batchIndex = 0
-        _batchInserted = 0
-        batchQueue = [1]  // non-empty = in progress
-        statusMsg.text = "Voicing: 0 of " + batchTotal + "..."
-        statusMsg.color = "#060"
-
-        batchProcessNext()
-    }
-
-    function batchProcessNext() {
-        // Strategy: use MuseScore's own navigation commands (cmd) to move
-        // the edit cursor through the score. These commands move the ACTUAL
-        // cursor that cmd("paste") uses, unlike curScore.selection.select()
-        // which only updates the QML-visible selection.
-        //
-        // We walk a QML cursor in parallel to find the next chord symbol,
-        // count how many "next-chord" steps we need, then issue those cmds.
-
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        var chordCount = 0
-        var targetTick = -1
-        var targetText = ""
-        var targetRoot = ""
-        var targetVoicing = null
-
-        // Find the Nth chord symbol
         while (cursor.segment) {
             if (cursor.segment.annotations) {
                 for (var a = 0; a < cursor.segment.annotations.length; a++) {
@@ -416,69 +357,83 @@ MuseScore {
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
                             if (voicing) {
-                                if (chordCount === _batchIndex) {
-                                    targetTick = cursor.tick
-                                    targetText = text
-                                    targetRoot = parsed.root
-                                    targetVoicing = voicing
-                                }
-                                chordCount++
+                                chords.push({
+                                    text: text,
+                                    root: parsed.root,
+                                    quality: parsed.quality,
+                                    voicing: voicing,
+                                })
                             }
                         }
                     }
                 }
             }
-            if (targetTick >= 0) break
             cursor.next()
         }
 
-        if (!targetVoicing) {
-            batchQueue = []
-            statusMsg.text = "Complete: " + _batchInserted + " diagrams inserted"
-            statusMsg.color = "#060"
+        if (chords.length === 0) {
+            statusMsg.text = "No matching chord symbols found"
+            statusMsg.color = "#c00"
             return
         }
 
-        _batchIndex++
-        _batchInserted++
+        _batchChords = chords
+        _batchIndex = 0
+        batchTotal = chords.length
+        batchQueue = [1]  // non-empty = in progress
 
-        statusMsg.text = "Voicing: " + _batchInserted + " of " + batchTotal
-            + " — " + targetText
-        statusMsg.color = "#060"
+        // Show guided walkthrough
+        batchShowNext()
+    }
 
-        // Navigate MuseScore's edit cursor to this position.
-        // Use cmd("next-element") repeatedly from the start, or use
-        // selection API + rewindToTick if available.
-        // Simplest reliable approach: select via the cursor element
-        // AND use cmd("select-similar") workaround.
-        //
-        // Actually, the most reliable way: use cursor.rewind with
-        // SELECTION_START mode, which MuseScore uses internally.
-        var navCursor = curScore.newCursor()
-        navCursor.staffIdx = 0
-        navCursor.voice = 0
-        navCursor.rewind(0)
-        // Advance to the target tick
-        while (navCursor.segment && navCursor.tick < targetTick) {
-            navCursor.next()
-        }
-        // Use startCmd/endCmd to ensure selection is processed
-        if (navCursor.element) {
-            curScore.startCmd()
-            curScore.selection.select(navCursor.element)
-            curScore.endCmd()
-        }
-
-        // Now use generateDiagramFile which reads the current selection
-        // This is EXACTLY what the "Open" button does
-        generateDiagramFile(targetVoicing)
-
-        // Check if more to do
-        if (_batchInserted >= batchTotal) {
+    function batchShowNext() {
+        if (_batchIndex >= _batchChords.length) {
             batchQueue = []
+            showResult("Voice Score Complete",
+                "All " + batchTotal + " chord voicings have been loaded.\n\n"
+                + "Click 'Back to Library' to return to the voicing browser.", true)
+            return
         }
-        // pasteTimer will fire cmd("paste") in 1 second,
-        // then call batchProcessNext() if batchQueue is non-empty
+
+        var item = _batchChords[_batchIndex]
+        var remaining = _batchChords.length - _batchIndex
+        var nameParts = item.voicing.name.split(" — ")
+        var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
+
+        // Load the clipboard with this voicing's diagram
+        var xml = generateXmlForVoicing(item.voicing, item.root)
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try {
+            tempDiagramFile.write(xml)
+        } catch (e) {
+            showResult("Error", "Failed to write clipboard: " + e, false)
+            return
+        }
+
+        // Show the guided step
+        var stepText = "Chord " + (_batchIndex + 1) + " of " + batchTotal + ": " + item.text
+        stepText += "\nVoicing: " + shape
+        stepText += "\n\nSteps:"
+        stepText += "\n  1. Click on the note/rest at the " + item.text + " chord symbol in the score"
+        stepText += "\n  2. Press ⌘V to paste the diagram"
+        stepText += "\n  3. Click 'Next Chord' below"
+
+        if (remaining > 1) {
+            stepText += "\n\n(" + (remaining - 1) + " more chord" + (remaining > 2 ? "s" : "") + " after this)"
+        }
+
+        toolResultsTitle = "Voice Score — " + item.text
+        toolResultsContent = stepText
+        showToolResults = true
+        showSettings = false
+
+        _batchIndex++
+    }
+
+    function batchProcessNext() {
+        // Called by "Next Chord" button — advance to next chord
+        batchShowNext()
     }
 
     function rebuildFilterLists() {
@@ -3157,8 +3112,18 @@ MuseScore {
                 }
 
                 Button {
-                    text: "Back to Library"
-                    onClicked: { showToolResults = false }
+                    text: "Next Chord →"
+                    visible: batchQueue.length > 0 && _batchIndex < _batchChords.length
+                    onClicked: batchShowNext()
+                }
+
+                Button {
+                    text: batchQueue.length > 0 ? "Stop Voicing" : "Back to Library"
+                    onClicked: {
+                        batchQueue = []
+                        _batchChords = []
+                        showToolResults = false
+                    }
                 }
 
                 Button {
