@@ -205,10 +205,19 @@ def generate_fingering_sheet(output_path, entries, title, subtitle=""):
 
         x = margin + col * col_width
 
-        # Draw fretboard diagram
+        # Extract root from chord text for transposition
+        target_root = None
+        for r in sorted(["C", "Db", "D", "Eb", "E", "F", "F#", "Gb", "G", "Ab", "A", "Bb", "B",
+                          "C#", "D#", "G#", "A#"], key=len, reverse=True):
+            if chord_text.startswith(r):
+                target_root = r
+                break
+
+        # Draw fretboard diagram (transposed to actual key)
         dwg = render_fretboard_svg(
             voicing, width=int(diagram_width * 0.8),
             show_labels=True, show_title=True, show_intervals=True,
+            target_root=target_root, display_name=chord_text,
         )
         svg_string = dwg.tostring()
         drawing = svg_to_pdf_drawing(svg_string)

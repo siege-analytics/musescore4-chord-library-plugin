@@ -268,7 +268,12 @@ def generate_chord_sheet_pdf(
     columns=5,
     diagram_width=140,
 ):
-    """Generate a branded PDF chord sheet with Siege Analytics header/footer."""
+    """Generate a branded PDF chord sheet with Siege Analytics header/footer.
+
+    voicings_to_render: list of voicing dicts, OR list of (chord_text, voicing)
+    tuples for transposed display. When tuples are provided, the chord_text
+    is shown as the diagram title and the fret position is transposed.
+    """
     from reportlab.graphics import renderPDF
 
     page_width, page_height = letter
@@ -316,9 +321,23 @@ def generate_chord_sheet_pdf(
     row_y = _draw_header(c, page_width, margin, title, subtitle)
     col = 0
 
-    for i, voicing in enumerate(voicings_to_render):
+    for i, item in enumerate(voicings_to_render):
+        # Support both plain voicings and (chord_text, voicing) tuples
+        if isinstance(item, tuple):
+            chord_text, voicing = item
+            # Extract root from chord text for transposition
+            from fretboard_renderer import _semitone_offset, CHROMATIC, SEMITONE_MAP
+            target_root = None
+            for r in sorted(list(SEMITONE_MAP.keys()), key=len, reverse=True):
+                if chord_text.startswith(r) and r in CHROMATIC:
+                    target_root = r
+                    break
+        else:
+            voicing = item
+            chord_text = None
+            target_root = None
+
         if row_y - row_height < footer_space:
-            # Draw footer on current page, start new page
             _draw_footer(c, page_width, margin, page_num, total_pages, generated_date)
             c.showPage()
             page_num += 1
@@ -333,6 +352,8 @@ def generate_chord_sheet_pdf(
             show_labels=True,
             show_title=True,
             show_intervals=True,
+            target_root=target_root,
+            display_name=chord_text,
         )
 
         svg_string = dwg.tostring()
@@ -390,10 +411,14 @@ def main():
             parts.append(f"Key: {args.key}")
         subtitle = " — ".join(parts)
 
+        seen_chords = set()
         for chord_text in info["chords"]:
+            if chord_text in seen_chords:
+                continue  # unique chords only, in order of appearance
+            seen_chords.add(chord_text)
             matches = match_chord_to_voicings(chord_text, all_voicings, args.context)
             if matches:
-                voicings_to_render.append(matches[0])
+                voicings_to_render.append((chord_text, matches[0]))
             else:
                 print(f"Warning: no voicing for '{chord_text}'", file=sys.stderr)
     elif args.voicings:

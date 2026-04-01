@@ -53,6 +53,16 @@ def interval_color(interval: str) -> str:
     return INTERVAL_COLORS.get(interval, DEFAULT_DOT_COLOR)
 
 
+CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+SEMITONE_MAP = {n: i for i, n in enumerate(CHROMATIC)}
+SEMITONE_MAP.update({"C#": 1, "D#": 3, "F#": 6, "G#": 8, "A#": 10})
+
+
+def _semitone_offset(src: str, tgt: str) -> int:
+    """Calculate semitone offset from src to tgt root."""
+    return (SEMITONE_MAP.get(tgt, 0) - SEMITONE_MAP.get(src, 0)) % 12
+
+
 def render_fretboard_svg(
     voicing: dict,
     width: int = 160,
@@ -61,6 +71,7 @@ def render_fretboard_svg(
     show_intervals: bool = True,
     show_notes: bool = False,
     target_root: str | None = None,
+    display_name: str | None = None,
 ) -> svgwrite.Drawing:
     """Render a single fretboard diagram as an SVG Drawing.
 
@@ -71,7 +82,8 @@ def render_fretboard_svg(
         show_title: show chord name above diagram
         show_intervals: show interval labels inside dots
         show_notes: show note names inside dots (overrides intervals)
-        target_root: if set, transpose for display (visual only)
+        target_root: if set, transpose fret_number for display
+        display_name: if set, use this as the chord name instead of voicing name
 
     Returns:
         svgwrite.Drawing object (call .tostring() or .saveas())
@@ -84,7 +96,12 @@ def render_fretboard_svg(
     opens = voicing.get("open", [])
     intervals = voicing.get("intervals", [])
     notes = voicing.get("notes", [])
-    name = voicing.get("name", "")
+    name = display_name or voicing.get("name", "")
+
+    # Transpose fret_number if target_root is specified
+    if target_root and target_root != voicing.get("root", "C"):
+        offset = _semitone_offset(voicing.get("root", "C"), target_root)
+        fret_number = fret_number + offset
 
     # Layout constants (proportional to width)
     string_spacing = width / (num_strings + 1)
