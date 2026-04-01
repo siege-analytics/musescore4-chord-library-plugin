@@ -1926,6 +1926,160 @@ MuseScore {
             toolStatus, "Fingering suggestions — results opening...")
     }
 
+    // Simple fingering heuristic (QML-side, for inline annotation)
+    // Returns a string like "1-X-1-2-X-X" (finger per string, low to high)
+    function computeFingeringString(voicing) {
+        var dots = voicing.dots || []
+        var mutes = voicing.mutes || []
+        var opens = voicing.open || []
+        var numStrings = voicing.strings || 6
+        var fretNumber = voicing.fret_number || 1
+
+        if (dots.length === 0) return ""
+
+        // Convert to absolute frets
+        var fretted = []
+        for (var d = 0; d < dots.length; d++) {
+            fretted.push({
+                string: dots[d].string,
+                absFret: fretNumber + (dots[d].fret - 1),
+            })
+        }
+        fretted.sort(function(a, b) { return a.absFret - b.absFret })
+
+        var minFret = fretted[0].absFret
+        var maxFret = fretted[fretted.length - 1].absFret
+
+        // Group by fret for barre detection
+        var fretGroups = {}
+        for (var i = 0; i < fretted.length; i++) {
+            if (!fretGroups[fretted[i].absFret])
+                fretGroups[fretted[i].absFret] = []
+            fretGroups[fretted[i].absFret].push(fretted[i].string)
+        }
+
+        // Assign fingers: one per unique fret, 1=index for lowest
+        var uniqueFrets = Object.keys(fretGroups).sort(function(a, b) { return a - b })
+        var fretToFinger = {}
+        var fingers = [1, 2, 3, 4]
+        for (var f = 0; f < uniqueFrets.length && f < 4; f++) {
+            fretToFinger[uniqueFrets[f]] = fingers[f]
+        }
+
+        // Build per-string result
+        var result = {}
+        for (var j = 0; j < fretted.length; j++) {
+            result[fretted[j].string] = fretToFinger[fretted[j].absFret] || 1
+        }
+
+        // Build display string (low string to high)
+        var parts = []
+        for (var s = numStrings; s >= 1; s--) {
+            if (result[s] !== undefined)
+                parts.push(String(result[s]))
+            else if (mutes.indexOf(s) >= 0)
+                parts.push("X")
+            else if (opens.indexOf(s) >= 0)
+                parts.push("O")
+            else
+                parts.push("·")
+        }
+        return parts.join(" ")
+    }
+
+    function addFingeringsToScore() {
+        if (!curScore) {
+            toolStatus.text = "No score open"
+            toolStatus.color = "#c00"
+            return
+        }
+
+        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+        var added = 0
+
+        curScore.startCmd()
+
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+
+        while (cursor.segment) {
+            var seg = cursor.segment
+            if (seg.annotations) {
+                for (var a = 0; a < seg.annotations.length; a++) {
+                    if (seg.annotations[a].type === Element.HARMONY) {
+                        var chordText = seg.annotations[a].text
+                        var parsed = parseChordSymbol(chordText)
+                        if (parsed) {
+                            var voicing = findBestVoicing(parsed.root, parsed.quality)
+                            if (voicing) {
+                                var fingerStr = computeFingeringString(voicing)
+                                if (fingerStr) {
+                                    // Add staff text with fingering below the chord
+                                    var staffText = newElement(Element.STAFF_TEXT)
+                                    staffText.text = fingerStr
+                                    staffText.fontSize = 7
+                                    staffText.placement = 1  // below staff
+                                    cursor.add(staffText)
+                                    added++
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cursor.next()
+        }
+
+        curScore.endCmd()
+        toolStatus.text = "Added fingerings to " + added + " chord positions"
+        toolStatus.color = "#060"
+    }
+
+    function exportFingeringSheet() {
+        if (!curScore) {
+            toolStatus.text = "No score open"
+            toolStatus.color = "#c00"
+            return
+        }
+        var chordsFile = extractChordsToFile()
+        if (!chordsFile) return
+
+        var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
+        if (!basePath) basePath = homePath() + "/Documents/chord-library-export"
+        var outPath = basePath + "-fingering-sheet.pdf"
+
+        var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
+        var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
+        var title = curScore.scoreName || curScore.title || "Fingering Reference"
+
+        var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
+
+        var cmd = '#!/bin/bash\n'
+            + 'cd "' + pluginDir + '"\n'
+            + 'python3 "' + pluginDir + '/scripts/generate_fingering_sheet.py"'
+            + ' --chords "' + chordsFile + '"'
+            + ' --context ' + ctx + catArg
+            + ' --title "' + title + '"'
+            + ' --data "' + pluginDir + '/voicings-cache.json"'
+            + ' -o "' + outPath + '"\n'
+            + 'open "' + outPath + '"\n'
+            + 'exit 0\n'
+
+        var cmdPath = Qt.resolvedUrl("export-fingering-sheet.command")
+        tempDiagramFile.source = cmdPath
+        try {
+            tempDiagramFile.write(cmd)
+            Qt.openUrlExternally(cmdPath)
+            exportStatus.text = "Fingering sheet — PDF will open when ready"
+            exportStatus.color = "#060"
+        } catch (e) {
+            exportStatus.text = "Fingering sheet export failed: " + e
+            exportStatus.color = "#c00"
+        }
+    }
+
     function doImport() {
         importStatus.text = "Loading..."
         importStatus.color = "#888"
@@ -2436,7 +2590,23 @@ MuseScore {
                         font.pixelSize: 10
                         onClicked: suggestFingerings()
                         ToolTip.visible: hovered
-                        ToolTip.text: "Generate finger assignments for current filter"
+                        ToolTip.text: "Show fingering suggestions for the score's chords"
+                    }
+
+                    Button {
+                        text: "Add Fingerings to Score"
+                        font.pixelSize: 10
+                        onClicked: addFingeringsToScore()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Insert fingering annotations at each chord position in the score"
+                    }
+
+                    Button {
+                        text: "Fingering Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportFingeringSheet()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Export a branded PDF with chord diagrams and fingerings for this score"
                     }
                 }
 
