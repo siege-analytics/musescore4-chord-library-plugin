@@ -337,9 +337,9 @@ MuseScore {
         return xml
     }
 
-    // Batch cursor — persists across batchProcessNext() calls so we don't
-    // lose position between timer firings
-    property var _batchCursor: null
+    // Batch voicing state — tracks which chord we're processing
+    property int _batchIndex: 0        // which chord occurrence to process next
+    property int _batchInserted: 0     // how many successfully inserted
 
     function batchInsert() {
         if (!curScore) {
@@ -348,34 +348,107 @@ MuseScore {
             return
         }
 
-        // Build queue by walking cursor and collecting chord positions.
-        // Store the segment's element reference directly (not tick values,
-        // which may not work in MS4).
-        var queue = []
+        // Count total chord symbols first (quick scan, no stored refs)
+        var total = 0
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 0
+        cursor.rewind(0)
+        while (cursor.segment) {
+            if (cursor.segment.annotations) {
+                for (var a = 0; a < cursor.segment.annotations.length; a++) {
+                    if (cursor.segment.annotations[a].type === Element.HARMONY) {
+                        var parsed = parseChordSymbol(cursor.segment.annotations[a].text)
+                        if (parsed && findBestVoicing(parsed.root, parsed.quality)) {
+                            total++
+                        }
+                    }
+                }
+            }
+            cursor.next()
+        }
+
+        if (total === 0) {
+            statusMsg.text = "No matching chord symbols found"
+            statusMsg.color = "#c00"
+            return
+        }
+
+        batchTotal = total
+        _batchIndex = 0
+        _batchInserted = 0
+        batchQueue = [1]  // non-empty signals "in progress" (for Stop button)
+        statusMsg.text = "Voicing: 0 of " + batchTotal + "..."
+        statusMsg.color = "#060"
+
+        // Process the first chord
+        batchProcessNext()
+    }
+
+    function batchProcessNext() {
+        // Walk a FRESH cursor to find the Nth chord symbol that has a
+        // matching voicing. Fresh cursor avoids stale refs after paste.
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
         cursor.voice = 0
         cursor.rewind(0)
 
+        var chordIndex = 0
+        var found = false
+
         while (cursor.segment) {
-            var seg = cursor.segment
-            if (seg.annotations) {
-                for (var a = 0; a < seg.annotations.length; a++) {
-                    if (seg.annotations[a].type === Element.HARMONY) {
-                        var text = seg.annotations[a].text
+            if (cursor.segment.annotations) {
+                for (var a = 0; a < cursor.segment.annotations.length; a++) {
+                    if (cursor.segment.annotations[a].type === Element.HARMONY) {
+                        var text = cursor.segment.annotations[a].text
                         var parsed = parseChordSymbol(text)
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
                             if (voicing) {
-                                // Store the element at this segment for later selection
-                                var elem = cursor.element
-                                queue.push({
-                                    element: elem,
-                                    root: parsed.root,
-                                    quality: parsed.quality,
-                                    voicing: voicing,
-                                    chordText: text,
-                                })
+                                if (chordIndex === _batchIndex) {
+                                    // This is the chord we want to process
+                                    found = true
+
+                                    // Select the note/rest at this position
+                                    if (cursor.element) {
+                                        curScore.selection.select(cursor.element)
+                                    }
+
+                                    _batchIndex++
+                                    _batchInserted++
+
+                                    statusMsg.text = "Voicing: " + _batchInserted + " of " + batchTotal
+                                        + " — " + text
+                                    statusMsg.color = "#060"
+
+                                    // Generate clipboard XML and paste
+                                    var xml = generateXmlForVoicing(voicing, parsed.root)
+                                    var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+                                    tempDiagramFile.source = xmlPath
+                                    try {
+                                        tempDiagramFile.write(xml)
+                                    } catch (e) {
+                                        statusMsg.text = "Error at " + text + ": " + e
+                                        statusMsg.color = "#c00"
+                                        batchQueue = []
+                                        return
+                                    }
+
+                                    _pendingVoicing = voicing
+                                    lastInsertedVoicing = voicing
+
+                                    // Check if more to do
+                                    if (_batchInserted >= batchTotal) {
+                                        // This is the last one — paste and finish
+                                        batchQueue = []  // clear so timer knows we're done
+                                    }
+
+                                    // Start timer → cmd("paste") → timer checks batchQueue
+                                    // and calls batchProcessNext() if more remain
+                                    pasteTimer.start()
+                                    return
+                                }
+                                chordIndex++
                             }
                         }
                     }
@@ -384,66 +457,10 @@ MuseScore {
             cursor.next()
         }
 
-        if (queue.length === 0) {
-            statusMsg.text = "No chord symbols found in the score"
-            statusMsg.color = "#c00"
-            return
-        }
-
-        batchQueue = queue
-        batchTotal = queue.length
-        statusMsg.text = "Voicing: inserting " + batchTotal + " diagrams..."
+        // If we get here, no more chords to process
+        batchQueue = []
+        statusMsg.text = "Complete: " + _batchInserted + " diagrams inserted"
         statusMsg.color = "#060"
-
-        batchProcessNext()
-    }
-
-    function batchProcessNext() {
-        if (batchQueue.length === 0) {
-            statusMsg.text = "Complete: " + batchTotal + " diagrams inserted"
-            statusMsg.color = "#060"
-            return
-        }
-
-        var item = batchQueue.shift()
-        var remaining = batchQueue.length
-        statusMsg.text = "Voicing: " + (batchTotal - remaining) + " of " + batchTotal
-            + " — " + item.chordText
-        statusMsg.color = "#060"
-
-        // Select the element at this chord's position
-        // (stored during scan, more reliable than tick navigation)
-        if (item.element) {
-            curScore.selection.select(item.element)
-        }
-
-        // Try direct insertion via setDot() API first
-        if (insertDirect(item.voicing, item.root)) {
-            lastInsertedVoicing = item.voicing
-            if (batchQueue.length > 0) {
-                batchProcessNext()
-            } else {
-                statusMsg.text = "Complete: " + batchTotal + " diagrams inserted"
-                statusMsg.color = "#060"
-            }
-            return
-        }
-
-        // Fall back to clipboard workaround
-        var xml = generateXmlForVoicing(item.voicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            statusMsg.text = "Batch error: " + e
-            statusMsg.color = "#c00"
-            batchQueue = []
-            return
-        }
-
-        _pendingVoicing = item.voicing
-        pasteTimer.start()
     }
 
     function rebuildFilterLists() {
