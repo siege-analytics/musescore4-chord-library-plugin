@@ -337,9 +337,9 @@ MuseScore {
         return xml
     }
 
-    // Batch voicing state — tracks which chord we're processing
-    property int _batchIndex: 0        // which chord occurrence to process next
-    property int _batchInserted: 0     // how many successfully inserted
+    // Batch voicing state
+    property int _batchIndex: 0
+    property int _batchInserted: 0
 
     function batchInsert() {
         if (!curScore) {
@@ -348,7 +348,7 @@ MuseScore {
             return
         }
 
-        // Count total chord symbols first (quick scan, no stored refs)
+        // Count chord symbols
         var total = 0
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
@@ -374,28 +374,42 @@ MuseScore {
             return
         }
 
+        // Move MuseScore's edit cursor to the very beginning of the score
+        // using cmd() which moves the ACTUAL edit cursor (not just QML selection)
+        cmd("escape")    // deselect anything
+        cmd("first-element")  // go to first element in score
+
         batchTotal = total
         _batchIndex = 0
         _batchInserted = 0
-        batchQueue = [1]  // non-empty signals "in progress" (for Stop button)
+        batchQueue = [1]  // non-empty = in progress
         statusMsg.text = "Voicing: 0 of " + batchTotal + "..."
         statusMsg.color = "#060"
 
-        // Process the first chord
         batchProcessNext()
     }
 
     function batchProcessNext() {
-        // Walk a FRESH cursor to find the Nth chord symbol that has a
-        // matching voicing. Fresh cursor avoids stale refs after paste.
+        // Strategy: use MuseScore's own navigation commands (cmd) to move
+        // the edit cursor through the score. These commands move the ACTUAL
+        // cursor that cmd("paste") uses, unlike curScore.selection.select()
+        // which only updates the QML-visible selection.
+        //
+        // We walk a QML cursor in parallel to find the next chord symbol,
+        // count how many "next-chord" steps we need, then issue those cmds.
+
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
         cursor.voice = 0
         cursor.rewind(0)
 
-        var chordIndex = 0
-        var found = false
+        var chordCount = 0
+        var targetTick = -1
+        var targetText = ""
+        var targetRoot = ""
+        var targetVoicing = null
 
+        // Find the Nth chord symbol
         while (cursor.segment) {
             if (cursor.segment.annotations) {
                 for (var a = 0; a < cursor.segment.annotations.length; a++) {
@@ -405,62 +419,69 @@ MuseScore {
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
                             if (voicing) {
-                                if (chordIndex === _batchIndex) {
-                                    // This is the chord we want to process
-                                    found = true
-
-                                    // Select the note/rest at this position
-                                    if (cursor.element) {
-                                        curScore.selection.select(cursor.element)
-                                    }
-
-                                    _batchIndex++
-                                    _batchInserted++
-
-                                    statusMsg.text = "Voicing: " + _batchInserted + " of " + batchTotal
-                                        + " — " + text
-                                    statusMsg.color = "#060"
-
-                                    // Generate clipboard XML and paste
-                                    var xml = generateXmlForVoicing(voicing, parsed.root)
-                                    var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-                                    tempDiagramFile.source = xmlPath
-                                    try {
-                                        tempDiagramFile.write(xml)
-                                    } catch (e) {
-                                        statusMsg.text = "Error at " + text + ": " + e
-                                        statusMsg.color = "#c00"
-                                        batchQueue = []
-                                        return
-                                    }
-
-                                    _pendingVoicing = voicing
-                                    lastInsertedVoicing = voicing
-
-                                    // Check if more to do
-                                    if (_batchInserted >= batchTotal) {
-                                        // This is the last one — paste and finish
-                                        batchQueue = []  // clear so timer knows we're done
-                                    }
-
-                                    // Start timer → cmd("paste") → timer checks batchQueue
-                                    // and calls batchProcessNext() if more remain
-                                    pasteTimer.start()
-                                    return
+                                if (chordCount === _batchIndex) {
+                                    targetTick = cursor.tick
+                                    targetText = text
+                                    targetRoot = parsed.root
+                                    targetVoicing = voicing
                                 }
-                                chordIndex++
+                                chordCount++
                             }
                         }
                     }
                 }
             }
+            if (targetTick >= 0) break
             cursor.next()
         }
 
-        // If we get here, no more chords to process
-        batchQueue = []
-        statusMsg.text = "Complete: " + _batchInserted + " diagrams inserted"
+        if (!targetVoicing) {
+            batchQueue = []
+            statusMsg.text = "Complete: " + _batchInserted + " diagrams inserted"
+            statusMsg.color = "#060"
+            return
+        }
+
+        _batchIndex++
+        _batchInserted++
+
+        statusMsg.text = "Voicing: " + _batchInserted + " of " + batchTotal
+            + " — " + targetText
         statusMsg.color = "#060"
+
+        // Navigate MuseScore's edit cursor to this position.
+        // Use cmd("next-element") repeatedly from the start, or use
+        // selection API + rewindToTick if available.
+        // Simplest reliable approach: select via the cursor element
+        // AND use cmd("select-similar") workaround.
+        //
+        // Actually, the most reliable way: use cursor.rewind with
+        // SELECTION_START mode, which MuseScore uses internally.
+        var navCursor = curScore.newCursor()
+        navCursor.staffIdx = 0
+        navCursor.voice = 0
+        navCursor.rewind(0)
+        // Advance to the target tick
+        while (navCursor.segment && navCursor.tick < targetTick) {
+            navCursor.next()
+        }
+        // Use startCmd/endCmd to ensure selection is processed
+        if (navCursor.element) {
+            curScore.startCmd()
+            curScore.selection.select(navCursor.element)
+            curScore.endCmd()
+        }
+
+        // Now use generateDiagramFile which reads the current selection
+        // This is EXACTLY what the "Open" button does
+        generateDiagramFile(targetVoicing)
+
+        // Check if more to do
+        if (_batchInserted >= batchTotal) {
+            batchQueue = []
+        }
+        // pasteTimer will fire cmd("paste") in 1 second,
+        // then call batchProcessNext() if batchQueue is non-empty
     }
 
     function rebuildFilterLists() {
