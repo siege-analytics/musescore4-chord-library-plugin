@@ -4,6 +4,45 @@
 Uses heuristics based on fret position, hand span, barre detection,
 and common fingering patterns to recommend which finger plays each note.
 
+Algorithm
+---------
+The fingering engine applies these rules in order:
+
+1. **Absolute fret calculation**: Each dot's fret position is converted
+   from relative (within the diagram) to absolute (on the neck) by
+   adding the diagram's fret_number offset.
+
+2. **Barre detection**: If two or more notes share the same absolute
+   fret, the index finger (1) barres across those strings. This is how
+   guitarists actually play — a single finger lays flat across adjacent
+   strings at the same fret.
+
+3. **Fret-to-finger mapping**: The remaining fretted notes are assigned
+   fingers based on their position relative to the lowest fret:
+     - Index (1) → lowest fret (or barre fret)
+     - Middle (2) → next fret up
+     - Ring (3) → next fret up
+     - Pinky (4) → highest fret
+
+   This follows the "one finger per fret" principle taught in classical
+   and jazz guitar technique.
+
+4. **Stretch handling**: For voicings spanning more than 4 frets, the
+   algorithm still assigns sequentially but flags the stretch. Voicings
+   with a stretch > 4 frets are noted as potentially difficult.
+
+5. **Two-fret voicings**: When only two frets are used, the index
+   anchors the lower fret and middle/ring/pinky cover the upper fret,
+   assigned from the lowest (bass) string upward.
+
+Limitations:
+- The algorithm does not consider finger independence or strength
+- It does not detect partial barres (barre across 2-3 strings only)
+- Thumb fretting (common on some bass notes) is not suggested
+- Some voicings have multiple valid fingerings; only one is returned
+- The Uberchord API (issue #61) provides human-verified fingerings
+  that could supplement or replace these suggestions
+
 Usage:
     python suggest_fingerings.py                           # suggest for all voicings
     python suggest_fingerings.py --voicing c7-shell-e-shape-6
