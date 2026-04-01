@@ -11,13 +11,13 @@ MuseScore {
     id: chordLibrary
     title: "Siege Analytics Chord Library"
     description: "Jazz guitar chord voicing library with filtering and auto-transposition"
-    version: "1.2.0"
+    version: "1.4.0"
     pluginType: "dialog"
     requiresScore: true
     categoryCode: "composing-arranging-tools"
 
-    width: 460
-    height: 750
+    width: 560
+    height: 850
 
     // System palette for dark mode detection
     SystemPalette { id: palette }
@@ -144,60 +144,13 @@ MuseScore {
         contextLabelsShort = shorts
     }
 
-    // === Result popup (for tool feedback) ===
-
-    Popup {
-        id: resultPopup
-        modal: true
-        focus: true
-        width: 360
-        height: resultColumn.implicitHeight + 50
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-        padding: 16
-
-        background: Rectangle {
-            color: "#FAFAFA"
-            border.color: "#BDBDBD"
-            border.width: 1
-            radius: 6
-        }
-
-        ColumnLayout {
-            id: resultColumn
-            anchors.fill: parent
-            spacing: 10
-
-            Label {
-                id: resultTitle
-                font.pixelSize: 14
-                font.bold: true
-                wrapMode: Text.WordWrap
-                Layout.fillWidth: true
-            }
-
-            Label {
-                id: resultMessage
-                font.pixelSize: 11
-                wrapMode: Text.WordWrap
-                Layout.fillWidth: true
-            }
-
-            Button {
-                text: "OK"
-                Layout.alignment: Qt.AlignRight
-                onClicked: resultPopup.close()
-            }
-        }
-    }
+    // === Tool feedback (uses toolStatus label + console) ===
 
     function showResult(title, message, isSuccess) {
-        resultTitle.text = title
-        resultTitle.color = isSuccess ? "#2E7D32" : "#C62828"
-        resultMessage.text = message
-        resultMessage.color = "#424242"
-        resultPopup.open()
+        // Show feedback via the toolStatus label in Settings
+        toolStatus.text = title + ": " + message
+        toolStatus.color = isSuccess ? "#060" : "#c00"
+        console.log("[ChordLibrary] " + title + ": " + message)
     }
 
     // === Paste infrastructure ===
@@ -1957,8 +1910,8 @@ MuseScore {
             tempDiagramFile.write(data)
             return outPath.toString().replace("file://", "")
         } catch (e) {
-            toolStatus.text = "Failed to extract chords: " + e
-            toolStatus.color = "#c00"
+            console.log("Failed to extract chords: " + e)
+            showResult("Error", "Failed to extract chords: " + e, false)
             return null
         }
     }
@@ -2320,10 +2273,12 @@ MuseScore {
             contentHeight: settingsColumn.implicitHeight
             clip: true
             flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
+            boundsBehavior: Flickable.StopAtBounds
 
             ColumnLayout {
                 id: settingsColumn
-                width: parent.width
+                width: parent.width - 16  // leave room for scrollbar
                 spacing: 12
 
                 // --- Source URL ---
@@ -2673,7 +2628,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Analysis and utility tools:"
+                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -2687,40 +2642,35 @@ MuseScore {
                         text: "Analyze Score"
                         font.pixelSize: 10
                         onClicked: analyzeCurrentScore()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Show which chords in the score are covered by the library"
                     }
 
                     Button {
                         text: "Voice Leading"
                         font.pixelSize: 10
                         onClicked: runVoiceLeading()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Find optimal voicing paths for the score's chord progression"
                     }
 
                     Button {
                         text: "Suggest Fingerings"
                         font.pixelSize: 10
                         onClicked: suggestFingerings()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Show fingering suggestions for the score's chords"
                     }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
 
                     Button {
                         text: "Add Fingerings to Score"
                         font.pixelSize: 10
                         onClicked: addFingeringsToScore()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Insert fingering annotations at each chord position in the score"
                     }
 
                     Button {
                         text: "Fingering Sheet (PDF)"
                         font.pixelSize: 10
                         onClicked: exportFingeringSheet()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Export a branded PDF with chord diagrams and fingerings for this score"
                     }
                 }
 
