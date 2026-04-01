@@ -3112,13 +3112,22 @@ MuseScore {
                 }
 
                 Button {
-                    text: "Next Chord →"
+                    text: "← Prev"
+                    visible: batchQueue.length > 0 && _batchIndex > 1
+                    onClicked: {
+                        _batchIndex = _batchIndex - 2  // go back one (batchShowNext increments)
+                        batchShowNext()
+                    }
+                }
+
+                Button {
+                    text: "Next →"
                     visible: batchQueue.length > 0 && _batchIndex < _batchChords.length
                     onClicked: batchShowNext()
                 }
 
                 Button {
-                    text: batchQueue.length > 0 ? "Stop Voicing" : "Back to Library"
+                    text: batchQueue.length > 0 ? "Stop" : "Back to Library"
                     onClicked: {
                         batchQueue = []
                         _batchChords = []
