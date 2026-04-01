@@ -167,24 +167,21 @@ MuseScore {
 
     property var _pendingVoicing: null  // voicing being pasted (for tracking)
 
-    // Timer to paste after launchd agent writes diagram data to clipboard
+    // Timer: waits for the launchd agent to write to clipboard AND auto-paste
+    // via osascript (Cmd+V). cmd("paste") does NOT work in MuseScore 4's
+    // plugin API (known issue). The launchd agent's clipboard-and-paste.sh
+    // script handles both clipboard write and keystroke injection.
     Timer {
         id: pasteTimer
-        interval: 1000
+        interval: 1500  // 1.5 sec: 0.3s for clipboard + 0.5s for osascript + buffer
         repeat: false
         onTriggered: {
-            try {
-                cmd("paste")
-                statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
-                // Track for voice leading
-                if (_pendingVoicing) {
-                    lastInsertedVoicing = _pendingVoicing
-                    _pendingVoicing = null
-                    if (sortByProximity) applyFilters()
-                }
-            } catch (e) {
-                statusMsg.text = "Paste failed: " + e + " — try Cmd+V manually"
-                statusMsg.color = "#c00"
+            statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
+            // Track for voice leading
+            if (_pendingVoicing) {
+                lastInsertedVoicing = _pendingVoicing
+                _pendingVoicing = null
+                if (sortByProximity) applyFilters()
             }
             // If batch queue has more items, process next
             if (batchQueue.length > 0) {
