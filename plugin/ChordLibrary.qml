@@ -2386,15 +2386,17 @@ MuseScore {
             }
 
             Button {
-                text: (showSettings || showToolResults) ? "Back" : "Settings"
+                text: "Settings"
                 font.pixelSize: 11
-                onClicked: {
-                    if (showToolResults) {
-                        showToolResults = false
-                    } else {
-                        showSettings = !showSettings
-                    }
-                }
+                visible: !showSettings && !showToolResults
+                onClicked: { showSettings = true; showToolResults = false }
+            }
+
+            Button {
+                text: "Library"
+                font.pixelSize: 11
+                visible: showSettings || showToolResults
+                onClicked: { showSettings = false; showToolResults = false }
             }
         }
 
@@ -2795,7 +2797,7 @@ MuseScore {
                     spacing: 4
 
                     Button {
-                        text: "Add Fingerings to Score"
+                        text: "Add Fingering Text"
                         font.pixelSize: 10
                         onClicked: addFingeringsToScore()
                     }
@@ -3124,10 +3126,13 @@ MuseScore {
                 }
 
                 Button {
-                    text: "Close"
-                    onClicked: {
-                        showToolResults = false
-                    }
+                    text: "Back to Library"
+                    onClicked: { showToolResults = false }
+                }
+
+                Button {
+                    text: "Settings"
+                    onClicked: { showToolResults = false; showSettings = true }
                 }
             }
 
@@ -3240,25 +3245,18 @@ MuseScore {
             }
 
             Button {
-                text: batchQueue.length > 0 ? "Stop" : "Batch"
+                text: batchQueue.length > 0 ? "Stop Voicing" : "Voice Score"
                 font.pixelSize: 10
-                implicitWidth: 48
+                implicitWidth: 80
                 onClicked: {
                     if (batchQueue.length > 0) {
                         batchQueue = []
-                        statusMsg.text = "Batch stopped"
+                        statusMsg.text = "Voicing stopped"
                         statusMsg.color = "#888"
                     } else {
                         batchInsert()
                     }
                 }
-            }
-
-            Button {
-                text: "Voice Score"
-                font.pixelSize: 10
-                implicitWidth: 70
-                onClicked: voiceEntireScore()
             }
 
             Button {
