@@ -152,7 +152,8 @@ MuseScore {
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
-    property bool showSettings: false
+    // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Settings
+    property int currentTab: 0
     property bool showToolResults: false
     property string toolResultsTitle: ""
     property string toolResultsContent: ""
@@ -217,7 +218,6 @@ MuseScore {
             toolResultsTitle = title
             toolResultsContent = message
             showToolResults = true
-            showSettings = false
         } else {
             toolStatus.text = title + ": " + message
             toolStatus.color = isSuccess ? theme.successText : theme.errorText
@@ -487,7 +487,6 @@ MuseScore {
         toolResultsTitle = "Voice Score — " + item.text
         toolResultsContent = stepText
         showToolResults = true
-        showSettings = false
 
         _batchIndex++
     }
@@ -2421,54 +2420,215 @@ MuseScore {
         anchors.margins: 8
         spacing: 6
 
-        // Header with settings toggle
-        RowLayout {
+        // Header
+        Label {
+            text: "Siege Analytics Chord Library"
+            font.pixelSize: 16
+            font.bold: true
             Layout.fillWidth: true
-
-            Label {
-                text: "Siege Analytics Chord Library"
-                font.pixelSize: 16
-                font.bold: true
-                Layout.fillWidth: true
-            }
-
-            Button {
-                text: "Settings"
-                font.pixelSize: 11
-                visible: !showSettings && !showToolResults
-                onClicked: { showSettings = true; showToolResults = false }
-            }
-
-            Button {
-                text: "Library"
-                font.pixelSize: 11
-                visible: showSettings || showToolResults
-                onClicked: { showSettings = false; showToolResults = false }
-            }
+            visible: !showToolResults
         }
 
-        // === Settings panel ===
+        // Tab navigation
+        TabBar {
+            id: tabBar
+            Layout.fillWidth: true
+            visible: !showToolResults
+            currentIndex: currentTab
+            onCurrentIndexChanged: currentTab = currentIndex
+
+            TabButton { text: "Library"; font.pixelSize: 10 }
+            TabButton { text: "Score Tools"; font.pixelSize: 10 }
+            TabButton { text: "Export"; font.pixelSize: 10 }
+            TabButton { text: "Import"; font.pixelSize: 10 }
+            TabButton { text: "Settings"; font.pixelSize: 10 }
+        }
+
+        // === Tab 1: Score Tools ===
         Flickable {
-            visible: showSettings
+            visible: currentTab === 1 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: settingsColumn.implicitHeight
+            contentHeight: scoreToolsColumn.implicitHeight
             clip: true
             flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
             boundsBehavior: Flickable.StopAtBounds
 
             ColumnLayout {
-                id: settingsColumn
-                width: parent.width - 16  // leave room for scrollbar
+                id: scoreToolsColumn
+                width: parent.width - 16
                 spacing: 12
 
-                // --- Source URL ---
+                Label {
+                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Analyze Score"
+                        font.pixelSize: 10
+                        onClicked: analyzeCurrentScore()
+                    }
+
+                    Button {
+                        text: "Voice Leading"
+                        font.pixelSize: 10
+                        onClicked: runVoiceLeading()
+                    }
+
+                    Button {
+                        text: "Suggest Fingerings"
+                        font.pixelSize: 10
+                        onClicked: suggestFingerings()
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Add Fingering Text"
+                        font.pixelSize: 10
+                        onClicked: addFingeringsToScore()
+                    }
+
+                    Button {
+                        text: "Fingering Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportFingeringSheet()
+                    }
+                }
+
+                Label {
+                    id: toolStatus
+                    visible: text.length > 0
+                    font.pixelSize: 10
+                    font.family: "Menlo, Monaco, Courier New, monospace"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    padding: 8
+                    background: Rectangle {
+                        color: theme.consoleBg
+                        radius: 4
+                    }
+                }
+            }
+        }
+
+        // === Tab 2: Export ===
+        Flickable {
+            visible: currentTab === 2 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: exportColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: exportColumn
+                width: parent.width - 16
+                spacing: 12
+
+                Label {
+                    text: "Save current library to a file:"
+                    font.pixelSize: 11
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: exportPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        text: homePath() + "/Documents/chord-library-export.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: openFileBrowser("save", exportPathField, null)
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Export JSON"
+                        font.pixelSize: 10
+                        onClicked: doExport()
+                    }
+
+                    Button {
+                        text: "Export MusicXML"
+                        font.pixelSize: 10
+                        onClicked: exportMusicXML()
+                    }
+
+                    Button {
+                        text: "Export GP5"
+                        font.pixelSize: 10
+                        onClicked: exportGP5()
+                    }
+
+                    Button {
+                        text: "Chord Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportChordSheet()
+                    }
+
+                    Button {
+                        text: "Diagrams (SVG)"
+                        font.pixelSize: 10
+                        onClicked: exportDiagramsSVG()
+                    }
+                }
+
+                Label {
+                    id: exportStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
+        }
+
+        // === Tab 3: Import ===
+        Flickable {
+            visible: currentTab === 3 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: importColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: importColumn
+                width: parent.width - 16
+                spacing: 12
+
+                // --- Voicing Source URL ---
                 Label {
                     text: "VOICING SOURCE URL"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
@@ -2517,12 +2677,74 @@ MuseScore {
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
+                // --- Import Voicings ---
+                Label {
+                    text: "IMPORT VOICINGS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Merge voicings from a JSON file (duplicates skipped):"
+                    font.pixelSize: 11
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: importPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "/path/to/voicings.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: openFileBrowser("open", importPathField, null)
+                    }
+                }
+
+                Button {
+                    text: "Import & Merge"
+                    onClicked: doImport()
+                }
+
+                Label {
+                    id: importStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
+        }
+
+        // === Tab 4: Settings ===
+        Flickable {
+            visible: currentTab === 4 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: settingsColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: settingsColumn
+                width: parent.width - 16
+                spacing: 12
+
                 // --- Diagram placement ---
                 Label {
                     text: "DIAGRAM PLACEMENT"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
@@ -2540,7 +2762,6 @@ MuseScore {
                 Label {
                     text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
                     font.pixelSize: 10
-                    
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
@@ -2665,208 +2886,6 @@ MuseScore {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
                         acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Export ---
-                Label {
-                    text: "EXPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Save current library to a file:"
-                    font.pixelSize: 11
-                    
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: exportPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        text: homePath() + "/Documents/chord-library-export.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("save", exportPathField, null)
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Export JSON"
-                        font.pixelSize: 10
-                        onClicked: doExport()
-                    }
-
-                    Button {
-                        text: "Export MusicXML"
-                        font.pixelSize: 10
-                        onClicked: exportMusicXML()
-                    }
-
-                    Button {
-                        text: "Export GP5"
-                        font.pixelSize: 10
-                        onClicked: exportGP5()
-                    }
-
-                    Button {
-                        text: "Chord Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportChordSheet()
-                    }
-
-                    Button {
-                        text: "Diagrams (SVG)"
-                        font.pixelSize: 10
-                        onClicked: exportDiagramsSVG()
-                    }
-                }
-
-                Label {
-                    id: exportStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Import ---
-                Label {
-                    text: "IMPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Merge voicings from a JSON file (duplicates skipped):"
-                    font.pixelSize: 11
-                    
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: importPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/voicings.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("open", importPathField, null)
-                    }
-                }
-
-                Button {
-                    text: "Import & Merge"
-                    onClicked: doImport()
-                }
-
-                Label {
-                    id: importStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Tools ---
-                Label {
-                    text: "TOOLS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Analyze Score"
-                        font.pixelSize: 10
-                        onClicked: analyzeCurrentScore()
-                    }
-
-                    Button {
-                        text: "Voice Leading"
-                        font.pixelSize: 10
-                        onClicked: runVoiceLeading()
-                    }
-
-                    Button {
-                        text: "Suggest Fingerings"
-                        font.pixelSize: 10
-                        onClicked: suggestFingerings()
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Add Fingering Text"
-                        font.pixelSize: 10
-                        onClicked: addFingeringsToScore()
-                    }
-
-                    Button {
-                        text: "Fingering Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportFingeringSheet()
-                    }
-                }
-
-                Label {
-                    id: toolStatus
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    font.family: "Menlo, Monaco, Courier New, monospace"
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    padding: 8
-                    background: Rectangle {
-                        color: theme.consoleBg
-                        radius: 4
                     }
                 }
 
@@ -3092,21 +3111,18 @@ MuseScore {
                     text: "ABOUT"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
                 Label {
-                    text: "Siege Analytics Chord Library v1.2.0"
+                    text: "Siege Analytics Chord Library v1.5.0"
                     font.pixelSize: 12
                     font.bold: true
-                    
                 }
 
                 Label {
                     text: "Author: Dheeraj Chand"
                     font.pixelSize: 11
-                    
                 }
 
                 Label {
@@ -3155,7 +3171,7 @@ MuseScore {
             }
         }
 
-        // === Tool Results panel ===
+        // === Tool Results panel (overlay) ===
         ColumnLayout {
             visible: showToolResults
             Layout.fillWidth: true
@@ -3176,7 +3192,7 @@ MuseScore {
                     text: "← Prev"
                     visible: batchQueue.length > 0 && _batchIndex > 1
                     onClicked: {
-                        _batchIndex = _batchIndex - 2  // go back one (batchShowNext increments)
+                        _batchIndex = _batchIndex - 2
                         batchShowNext()
                     }
                 }
@@ -3194,11 +3210,6 @@ MuseScore {
                         _batchChords = []
                         showToolResults = false
                     }
-                }
-
-                Button {
-                    text: "Settings"
-                    onClicked: { showToolResults = false; showSettings = true }
                 }
             }
 
@@ -3229,9 +3240,9 @@ MuseScore {
             }
         }
 
-        // === Main panel (hidden when settings open) ===
+        // === Tab 0: Library (main panel) ===
         TextField {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: searchField
             placeholderText: "Search voicings..."
             Layout.fillWidth: true
@@ -3242,7 +3253,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3273,7 +3284,7 @@ MuseScore {
         }
 
         ComboBox {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: qualityCombo
             model: qualityList
             Layout.fillWidth: true
@@ -3284,7 +3295,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3342,7 +3353,7 @@ MuseScore {
 
         // Color legend for fretboard dot intervals
         Flow {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 8
 
@@ -3365,7 +3376,7 @@ MuseScore {
         }
 
         ListView {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: voicingList
             Layout.fillWidth: true
             Layout.fillHeight: true
