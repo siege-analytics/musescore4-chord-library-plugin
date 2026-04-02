@@ -204,6 +204,7 @@ MuseScore {
     property var lastInsertedVoicing: null  // tracks fret position for proximity sort
     property bool sortByProximity: false    // when true, sort filtered results by distance
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
+    property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
 
     // Dynamic filter lists (rebuilt when data changes)
     property var contextList: ["All Contexts"]
@@ -2383,6 +2384,48 @@ MuseScore {
         return parts.join(" ")
     }
 
+    // Extract fingering string from an existing FretDiagram element in the score.
+    // MuseScore 4's FretDiagram exposes: fretOffset, strings, frets, and per-string
+    // dot/marker data. We build a pseudo-voicing object and reuse computeFingeringString.
+    function fingeringFromDiagram(diagram) {
+        try {
+            var numStrings = diagram.strings || 6
+            var fretOffset = (diagram.fretOffset || 0) + 1  // fretOffset is 0-based
+            var dots = []
+            var mutes = []
+            var opens = []
+
+            for (var s = 0; s < numStrings; s++) {
+                // MuseScore string numbering: 0 = leftmost (low E), we need 1 = high E
+                var msString = numStrings - s  // our string numbering
+                var marker = diagram.marker(s)
+                var dot = diagram.dot(s)
+
+                if (marker === 1) {  // cross = muted
+                    mutes.push(msString)
+                } else if (marker === 2) {  // circle = open
+                    opens.push(msString)
+                } else if (dot && dot > 0) {
+                    dots.push({ string: msString, fret: dot })
+                }
+            }
+
+            if (dots.length === 0 && opens.length === 0) return null
+
+            var pseudoVoicing = {
+                dots: dots,
+                mutes: mutes,
+                open: opens,
+                strings: numStrings,
+                fret_number: fretOffset,
+            }
+            return computeFingeringString(pseudoVoicing)
+        } catch (e) {
+            console.log("[ChordLibrary] Could not read diagram: " + e)
+            return null
+        }
+    }
+
     function addFingeringsToScore() {
         if (!curScore) {
             showResult("No Score", "Open a score with chord symbols first.", false)
@@ -2397,27 +2440,43 @@ MuseScore {
         scanCursor.rewind(0)
 
         var skippedDiagram = 0
+        var usedDiagram = 0
         while (scanCursor.segment) {
             var seg = scanCursor.segment
             var currentTick = scanCursor.tick
             if (seg.annotations) {
-                // Check if this position already has a fretboard diagram
-                var hasDiagram = false
+                // Find existing fretboard diagram at this position (if any)
+                var existingDiagram = null
                 for (var c = 0; c < seg.annotations.length; c++) {
                     if (seg.annotations[c].type === Element.FRET_DIAGRAM) {
-                        hasDiagram = true
+                        existingDiagram = seg.annotations[c]
                         break
                     }
                 }
 
                 for (var a = 0; a < seg.annotations.length; a++) {
                     if (seg.annotations[a].type === Element.HARMONY) {
-                        // Skip if a diagram is already placed here
-                        if (hasDiagram) {
-                            skippedDiagram++
-                            continue
-                        }
                         var chordText = seg.annotations[a].text
+
+                        if (existingDiagram) {
+                            if (skipDiagramPositions) {
+                                skippedDiagram++
+                                continue
+                            }
+                            // Read fingering from the existing diagram
+                            var diagramFinger = fingeringFromDiagram(existingDiagram)
+                            if (diagramFinger) {
+                                chordPositions.push({
+                                    tick: currentTick,
+                                    fingering: diagramFinger,
+                                    chord: chordText,
+                                })
+                                usedDiagram++
+                                continue
+                            }
+                        }
+
+                        // No diagram (or couldn't read it) — pick a voicing
                         var parsed = parseChordSymbol(chordText)
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
@@ -2476,6 +2535,9 @@ MuseScore {
         curScore.endCmd()
 
         var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
+        if (usedDiagram > 0) {
+            msg += "\n" + usedDiagram + " annotation(s) derived from existing fretboard diagrams."
+        }
         if (skippedDiagram > 0) {
             msg += "\nSkipped " + skippedDiagram + " position(s) with existing fretboard diagrams."
         }
@@ -2693,7 +2755,7 @@ MuseScore {
                 }
 
                 Label {
-                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text."
+                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text.\nAt positions with existing diagrams, annotation matches the diagram."
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -2708,13 +2770,22 @@ MuseScore {
                         font.pixelSize: 10
                         onClicked: addFingeringsToScore()
                         ToolTip.visible: hovered
-                        ToolTip.text: "Adds fret notation (e.g. 1-X-1-2-X-X) as staff text above each chord symbol"
+                        ToolTip.text: "Adds fret notation as staff text — reads existing diagrams when present"
                     }
 
                     Button {
                         text: "Fingering Sheet (PDF)"
                         font.pixelSize: 10
                         onClicked: exportFingeringSheet()
+                    }
+
+                    CheckBox {
+                        text: "Skip diagrams"
+                        font.pixelSize: 9
+                        checked: skipDiagramPositions
+                        onCheckedChanged: skipDiagramPositions = checked
+                        ToolTip.visible: hovered
+                        ToolTip.text: "When checked, skip positions that already have a fretboard diagram"
                     }
                 }
 
