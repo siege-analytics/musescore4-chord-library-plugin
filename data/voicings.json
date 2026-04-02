@@ -3104,6 +3104,148 @@
       ]
     },
     {
+      "id": "caug-chordsdb-f1-6",
+      "name": "Caug \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Ab",
+        "C"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "#5",
+        "1"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 1
+        }
+      ],
+      "shape_id": "2222eee64265",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "caug-chordsdb-f3-6",
+      "name": "Caug \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "aug7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 4
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Ab",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "#5",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 4
+        },
+        {
+          "string": 3,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 3
+        }
+      ],
+      "shape_id": "3f86d88d70e7",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "caug7-cv6-drop2-b7top-6",
       "name": "Caug7 \u2014 Drop 2 \u2014 b7 on top",
       "chord_quality": "aug7",
@@ -5813,6 +5955,77 @@
       ]
     },
     {
+      "id": "cdim-chordsdb-f1-6",
+      "name": "Cdim \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        3,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "C",
+        "F#"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "1",
+        "b5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 4
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 3
+        }
+      ],
+      "shape_id": "49132f593b80",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cdim7-cv6-drop2-b5top-6",
       "name": "Cdim7 \u2014 Drop 2 \u2014 b5 on top",
       "chord_quality": "dim7",
@@ -5921,6 +6134,77 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cdim-chordsdb-f3-6",
+      "name": "Cdim \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "F#",
+        "C",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "b5",
+        "1",
+        "b3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 3
+        }
+      ],
+      "shape_id": "09acb28d52ad",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -6198,6 +6482,159 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cdim7-chordsdb-f1-6",
+      "name": "Cdim7 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "Eb",
+        "A",
+        "C",
+        "F#"
+      ],
+      "intervals": [
+        "b3",
+        "6",
+        "1",
+        "b5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "4cc306572ed6",
+      "also_contexts": [
+        "CM6"
+      ],
+      "also_qualities": []
+    },
+    {
+      "id": "cdim7-chordsdb-f2-6",
+      "name": "Cdim7 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dim7",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "F#",
+        "A",
+        "Eb",
+        "F#"
+      ],
+      "intervals": [
+        "1",
+        "b5",
+        "6",
+        "b3",
+        "b5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "cd1750279514",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -7360,6 +7797,174 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "c13-chordsdb-f2-6",
+      "name": "C13 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom13",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 4
+        },
+        {
+          "string": 1,
+          "fret": 4
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "06039496c205",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c13-chordsdb-f3-6",
+      "name": "C13 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom13",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "F",
+        "Bb",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "4",
+        "b7",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 1
+        },
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "454080ade162",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -9062,6 +9667,80 @@
       "also_qualities": []
     },
     {
+      "id": "c7-chordsdb-f1-6",
+      "name": "C7 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dom7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 1
+        }
+      ],
+      "shape_id": "5fbfd86d0677",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "c7-cv6-drop2-5top-6",
       "name": "C7 \u2014 Drop 2 \u2014 5th on top",
       "chord_quality": "dom7",
@@ -9114,6 +9793,86 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "c7-chordsdb-f3-6",
+      "name": "C7 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dom7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "Bb",
+        "E",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "b7",
+        "3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "a4bb9ce85868",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -13359,6 +14118,157 @@
       "also_qualities": []
     },
     {
+      "id": "c7b9-chordsdb-f2-6",
+      "name": "C7b9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom7b9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "1a169655f95e",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c7b9-chordsdb-f6-6",
+      "name": "C7b9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom7b9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 6,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 3
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        1,
+        2
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Db"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b9"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 3
+        },
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 4
+        },
+        {
+          "string": 3,
+          "finger": 1
+        }
+      ],
+      "shape_id": "3a4854431827",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cdom7b9-shell-a-shape-6",
       "name": "C7b9 \u2014 A shape \u2014 Shell (b9 on top)",
       "chord_quality": "dom7b9",
@@ -14255,6 +15165,77 @@
         "dom7sharp11",
         "dom7sharp5"
       ]
+    },
+    {
+      "id": "c7b5-chordsdb-f1-6",
+      "name": "C7b5 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dom7flat5",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        5,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "E",
+        "Bb",
+        "C",
+        "F#"
+      ],
+      "intervals": [
+        "3",
+        "b7",
+        "1",
+        "b5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 3
+        }
+      ],
+      "shape_id": "3811933861f0",
+      "also_contexts": [],
+      "also_qualities": []
     },
     {
       "id": "c7b5-drop2-a-shape-6",
@@ -16870,6 +17851,151 @@
       "also_qualities": []
     },
     {
+      "id": "c7s9-chordsdb-f2-6",
+      "name": "C7#9 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "b3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        }
+      ],
+      "shape_id": "f85fe50f9a92",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c7s9-chordsdb-f3-6",
+      "name": "C7#9 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "dom7sharp9",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "G",
+        "Bb",
+        "Eb",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "b7",
+        "b3",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 2
+        }
+      ],
+      "shape_id": "00e168d205ce",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "c7s9-cv7-altered-7str-7",
       "name": "C7#9 \u2014 Calculated \u2014 Altered (3rd on top)",
       "chord_quality": "dom7sharp9",
@@ -17499,6 +18625,162 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "c9-chordsdb-f2-1",
+      "name": "C9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "E",
+        "Bb",
+        "D",
+        "G"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "3",
+        "b7",
+        "9",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 2
+        },
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "5bebb6f984fa",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c9-chordsdb-f2-6",
+      "name": "C9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "dom9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        3,
+        6
+      ],
+      "notes": [
+        "E",
+        "C",
+        "E",
+        "G",
+        "D",
+        "E"
+      ],
+      "intervals": [
+        "3",
+        "1",
+        "3",
+        "5",
+        "9",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        }
+      ],
+      "shape_id": "1e4593d32999",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -19924,6 +21206,160 @@
       ]
     },
     {
+      "id": "c6-chordsdb-f1-6",
+      "name": "C6 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj6",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        1
+      ],
+      "notes": [
+        "C",
+        "E",
+        "A",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "6",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 4
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 1
+        }
+      ],
+      "shape_id": "56e4a9828ac4",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c6-chordsdb-f3-6",
+      "name": "C6 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj6",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "C",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "1",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "5e81004261ac",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "c6-shell-a-shape-6",
       "name": "C6 \u2014 A shape \u2014 Shell (3rd on top)",
       "chord_quality": "maj6",
@@ -21167,6 +22603,86 @@
       "also_qualities": []
     },
     {
+      "id": "c69-chordsdb-f2-6",
+      "name": "C69 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj69",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "A",
+        "D",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "6",
+        "9",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "dae740aa2a06",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "c69-ext-a-shape-6",
       "name": "C6/9 \u2014 A shape \u2014 Extended (9th on top)",
       "chord_quality": "maj69",
@@ -21219,6 +22735,73 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "c69-chordsdb-f3-6",
+      "name": "C69 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj69",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        3,
+        4
+      ],
+      "notes": [
+        "C",
+        "D",
+        "G",
+        "E",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "9",
+        "5",
+        "3",
+        "6"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "2553e4fc5aaf",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -22818,6 +24401,229 @@
       "also_qualities": []
     },
     {
+      "id": "cmajor-chordsdb-f1-6",
+      "name": "Cmajor \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        1,
+        3
+      ],
+      "notes": [
+        "C",
+        "E",
+        "G",
+        "C",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "5",
+        "1",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 1
+        }
+      ],
+      "shape_id": "15282183485f",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cmaj7-chordsdb-f2-6",
+      "name": "Cmaj7 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [
+        1,
+        2,
+        3
+      ],
+      "notes": [
+        "G",
+        "C",
+        "E",
+        "G",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "3",
+        "5",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 2
+        },
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 1
+        }
+      ],
+      "shape_id": "087d872f0f60",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cmaj7-chordsdb-f3-6",
+      "name": "Cmaj7 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "G",
+        "B",
+        "E",
+        "G"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "5",
+        "7",
+        "3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 1
+        },
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "4adeeeeaf95e",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cmaj7-drop2-a-shape-6",
       "name": "Cmaj7 \u2014 A shape \u2014 Drop 2 (3rd on top)",
       "chord_quality": "maj7",
@@ -22870,6 +24676,86 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cmajor-chordsdb-f3-6",
+      "name": "Cmajor \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "maj7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "C",
+        "E",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "1",
+        "3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "12f11c440bb6",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -25574,6 +27460,139 @@
       "also_qualities": []
     },
     {
+      "id": "cmaj9-chordsdb-f2-6",
+      "name": "Cmaj9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 2,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 2
+        },
+        {
+          "string": 5,
+          "fret": 2
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        }
+      ],
+      "mutes": [
+        1
+      ],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "E",
+        "B",
+        "D"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "3",
+        "7",
+        "9"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 2
+        },
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 3
+        }
+      ],
+      "shape_id": "660ca44915e7",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cmaj9-chordsdb-f3-6",
+      "name": "Cmaj9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "maj9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "notes": [
+        "C",
+        "D",
+        "G",
+        "B",
+        "E"
+      ],
+      "intervals": [
+        "1",
+        "9",
+        "5",
+        "7",
+        "3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        }
+      ],
+      "shape_id": "9b232abc8a62",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cmaj9-extended-e-shape-6",
       "name": "Cmaj9 \u2014 E shape \u2014 Extended (9th on top)",
       "chord_quality": "maj9",
@@ -28143,6 +30162,326 @@
       "also_qualities": []
     },
     {
+      "id": "c11-chordsdb-f1-6",
+      "name": "C11 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 2
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "E",
+        "Bb",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "3",
+        "b7",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "942755cb29c9",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "c11-chordsdb-f3-6",
+      "name": "C11 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "E",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 3
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "7d73a9ebce62",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cm11-chordsdb-f3-6",
+      "name": "Cm11 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "F",
+        "Bb",
+        "Eb",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "b7",
+        "b3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "62f77c39f36d",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cm11-chordsdb-f1-6",
+      "name": "Cm11 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "min11",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb",
+        "D",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7",
+        "9",
+        "4"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "b795c4f26e6c",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cm11-ext-a-shape-6",
       "name": "Cm11 \u2014 A shape \u2014 Extended (11th on top)",
       "chord_quality": "min11",
@@ -29938,6 +32277,157 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cm6-chordsdb-f1-6",
+      "name": "Cm6 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "min6",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 2
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "A",
+        "C",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "6",
+        "1",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "53f4c1d91565",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cm6-chordsdb-f3-6",
+      "name": "Cm6 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "min6",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        3,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "G",
+        "Eb",
+        "A"
+      ],
+      "intervals": [
+        "1",
+        "5",
+        "b3",
+        "6"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "de7bb38b0a21",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -32127,6 +34617,77 @@
       ]
     },
     {
+      "id": "cm7-chordsdb-f1-6",
+      "name": "Cm7 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 4
+        }
+      ],
+      "mutes": [
+        1,
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb",
+        "Eb"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7",
+        "b3"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        }
+      ],
+      "shape_id": "bb4870a04dd1",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "cm7-cv6-drop2-5top-6",
       "name": "Cm7 \u2014 Drop 2 \u2014 5th on top",
       "chord_quality": "min7",
@@ -32182,6 +34743,80 @@
       "also_qualities": [
         "maj6"
       ]
+    },
+    {
+      "id": "cminor-chordsdb-f1-6",
+      "name": "Cminor \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        3
+      ],
+      "notes": [
+        "C",
+        "Eb",
+        "G",
+        "C",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "5",
+        "1",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "af06dbf12185",
+      "also_contexts": [],
+      "also_qualities": []
     },
     {
       "id": "cm7-cv6-drop2-b7top-6",
@@ -32291,6 +34926,94 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cminor-chordsdb-f3-6",
+      "name": "Cminor \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "min7",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "G",
+        "C",
+        "Eb",
+        "G"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "5",
+        "1",
+        "b3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 1
+        },
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 3
+        },
+        {
+          "string": 3,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "a075fa6d87ba",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -36489,6 +39212,160 @@
       "also_contexts": [
         "CM6"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "cm9-chordsdb-f1-6",
+      "name": "Cm9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "min9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 3
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Bb",
+        "D",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "b3",
+        "b7",
+        "9",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 2
+        },
+        {
+          "string": 4,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "164a800866be",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "cm9-chordsdb-f3-6",
+      "name": "Cm9 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "min9",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 3,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 2
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        4
+      ],
+      "notes": [
+        "C",
+        "D",
+        "Bb",
+        "Eb",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "9",
+        "b7",
+        "b3",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 3,
+          "finger": 2
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 3
+        }
+      ],
+      "shape_id": "5220ce8013dd",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
@@ -41405,6 +44282,140 @@
       "also_qualities": []
     },
     {
+      "id": "csus2-chordsdb-f1-6",
+      "name": "Csus2 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "sus2",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 3
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        3,
+        4
+      ],
+      "notes": [
+        "C",
+        "D",
+        "G",
+        "C",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "9",
+        "5",
+        "1",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 4
+        }
+      ],
+      "shape_id": "1d4aeece5039",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "csus2-chordsdb-f3-6",
+      "name": "Csus2 \u2014 chords-db \u2014 Extended (imported)",
+      "chord_quality": "sus2",
+      "root": "C",
+      "category": "extended",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        3,
+        4
+      ],
+      "notes": [
+        "C",
+        "D",
+        "G",
+        "D",
+        "G"
+      ],
+      "intervals": [
+        "1",
+        "9",
+        "5",
+        "9",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 2,
+          "finger": 2
+        },
+        {
+          "string": 1,
+          "finger": 3
+        }
+      ],
+      "shape_id": "e860e6535cf2",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
       "id": "csus2-shell-a-shape-6",
       "name": "Csus2 \u2014 A shape \u2014 Shell (2 on top)",
       "chord_quality": "sus2",
@@ -42672,6 +45683,168 @@
       "also_contexts": [
         "CV7"
       ],
+      "also_qualities": []
+    },
+    {
+      "id": "csus4-chordsdb-f1-6",
+      "name": "Csus4 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "sus4",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 1,
+      "visible_frets": 4,
+      "dots": [
+        {
+          "string": 5,
+          "fret": 3
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 1
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [
+        6
+      ],
+      "open": [
+        3
+      ],
+      "notes": [
+        "C",
+        "F",
+        "G",
+        "C",
+        "F"
+      ],
+      "intervals": [
+        "1",
+        "4",
+        "5",
+        "1",
+        "4"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 5,
+          "finger": 3
+        },
+        {
+          "string": 4,
+          "finger": 4
+        },
+        {
+          "string": 2,
+          "finger": 1
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "23a86c55f60d",
+      "also_contexts": [],
+      "also_qualities": []
+    },
+    {
+      "id": "csus4-chordsdb-f3-6",
+      "name": "Csus4 \u2014 chords-db \u2014 Drop2 (imported)",
+      "chord_quality": "sus4",
+      "root": "C",
+      "category": "drop2",
+      "context": "CV6",
+      "strings": 6,
+      "fret_number": 3,
+      "visible_frets": 5,
+      "dots": [
+        {
+          "string": 6,
+          "fret": 1
+        },
+        {
+          "string": 5,
+          "fret": 1
+        },
+        {
+          "string": 4,
+          "fret": 3
+        },
+        {
+          "string": 3,
+          "fret": 3
+        },
+        {
+          "string": 2,
+          "fret": 4
+        },
+        {
+          "string": 1,
+          "fret": 1
+        }
+      ],
+      "mutes": [],
+      "open": [],
+      "notes": [
+        "G",
+        "C",
+        "G",
+        "C",
+        "F",
+        "G"
+      ],
+      "intervals": [
+        "5",
+        "1",
+        "5",
+        "1",
+        "4",
+        "5"
+      ],
+      "tags": [
+        "imported",
+        "chords-db"
+      ],
+      "fingering": [
+        {
+          "string": 6,
+          "finger": 1
+        },
+        {
+          "string": 5,
+          "finger": 1
+        },
+        {
+          "string": 4,
+          "finger": 2
+        },
+        {
+          "string": 3,
+          "finger": 3
+        },
+        {
+          "string": 2,
+          "finger": 4
+        },
+        {
+          "string": 1,
+          "finger": 1
+        }
+      ],
+      "shape_id": "24f547ca759b",
+      "also_contexts": [],
       "also_qualities": []
     },
     {
