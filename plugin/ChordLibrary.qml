@@ -203,6 +203,7 @@ MuseScore {
     // Voice leading state
     property var lastInsertedVoicing: null  // tracks fret position for proximity sort
     property bool sortByProximity: false    // when true, sort filtered results by distance
+    property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
 
     // Dynamic filter lists (rebuilt when data changes)
     property var contextList: ["All Contexts"]
@@ -329,18 +330,50 @@ MuseScore {
         return { root: root, quality: quality }
     }
 
-    function findBestVoicing(targetRoot, quality) {
+    // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
+    function voicingTopNoteSemitone(voicing, targetRoot) {
+        var dots = voicing.dots || []
+        var opens = voicing.open || []
+        if (dots.length === 0 && opens.length === 0) return -1
+        // Find the lowest string number (= highest pitch)
+        var minStr = 99
+        var topDotIdx = -1
+        for (var i = 0; i < dots.length; i++) {
+            if (dots[i].string < minStr) { minStr = dots[i].string; topDotIdx = i }
+        }
+        for (var j = 0; j < opens.length; j++) {
+            if (opens[j] < minStr) { minStr = opens[j]; topDotIdx = -2 }
+        }
+        // Use intervals array to get the interval, then compute semitone
+        var intervals = voicing.intervals || []
+        if (topDotIdx >= 0 && topDotIdx < intervals.length) {
+            var iv = intervals[topDotIdx]
+            var ivSemitones = {"1":0,"b2":1,"2":2,"b3":3,"3":4,"4":5,"#4":6,
+                "b5":6,"5":7,"#5":8,"6":9,"b7":10,"7":11,"bb7":9,
+                "9":2,"b9":1,"#9":3,"11":5,"#11":6,"13":9,"b13":8}
+            var rootSemitone = Transposer.SEMITONE_MAP[targetRoot] || 0
+            var ivOffset = ivSemitones[iv]
+            if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
+        }
+        return -1
+    }
+
+    function findBestVoicing(targetRoot, quality, melodyMidi) {
         // Find the best matching voicing from the current data.
         // Respects current filter selections: context, category, tuning.
+        // melodyMidi: optional MIDI note number of the melody at this position
         var candidates = []
+        var quartalCandidates = []
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
-            if (v.chord_quality !== quality) continue
-            // Filter by string count for current tuning
             if ((v.strings || 6) > tuningMaxStrings) continue
-            // Respect category filter if set
-            if (filterCategory && v.category !== filterCategory) continue
-            candidates.push(v)
+            if (v.chord_quality === quality) {
+                if (filterCategory && v.category !== filterCategory) continue
+                candidates.push(v)
+            } else if (v.category === "quartal") {
+                // Quartal voicings work over any chord quality
+                quartalCandidates.push(v)
+            }
         }
         // If category filter is too restrictive, fall back to unfiltered
         if (candidates.length === 0 && filterCategory) {
@@ -351,25 +384,42 @@ MuseScore {
                 candidates.push(v2)
             }
         }
+        // Add quartal candidates to the pool
+        for (var q = 0; q < quartalCandidates.length; q++) {
+            candidates.push(quartalCandidates[q])
+        }
         if (candidates.length === 0) {
             // Fallback: try dom7 if the specific quality isn't found
-            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7")
+            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7", melodyMidi)
             return null
         }
 
-        // Score: context match + category preference + voice leading proximity
+        // Melody-on-top: compute target semitone class from melody MIDI note
+        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0 && melodyOnTop)
+            ? melodyMidi % 12 : -1
+
+        // Score: context match + category preference + voice leading + melody match
         var ref = lastInsertedVoicing
         candidates.sort(function(a, b) {
             var scoreA = 0, scoreB = 0
+            // Exact quality match beats quartal
+            if (a.chord_quality === quality) scoreA += 20
+            if (b.chord_quality === quality) scoreB += 20
             if (filterContext && a.context === filterContext) scoreA += 100
             if (filterContext && b.context === filterContext) scoreB += 100
-            // Boost matching category filter
             if (filterCategory && a.category === filterCategory) scoreA += 50
             if (filterCategory && b.category === filterCategory) scoreB += 50
             if (a.category === "shell") scoreA += 10
             else if (a.category === "drop2") scoreA += 5
             if (b.category === "shell") scoreB += 10
             else if (b.category === "drop2") scoreB += 5
+            // Melody-on-top: big bonus if voicing's top note matches melody
+            if (melodyTarget >= 0) {
+                var topA = voicingTopNoteSemitone(a, targetRoot)
+                var topB = voicingTopNoteSemitone(b, targetRoot)
+                if (topA === melodyTarget) scoreA += 200
+                if (topB === melodyTarget) scoreB += 200
+            }
             // Voice leading: prefer voicings close to the last inserted one
             if (ref) {
                 scoreA -= voicingDistance(ref, a) * 2
@@ -514,13 +564,22 @@ MuseScore {
                         var text = cursor.segment.annotations[a].text
                         var parsed = parseChordSymbol(text)
                         if (parsed) {
-                            var voicing = findBestVoicing(parsed.root, parsed.quality)
+                            // Extract melody note (highest pitch) at this position
+                            var melodyMidi = -1
+                            if (melodyOnTop && cursor.element && cursor.element.type === Element.CHORD) {
+                                var notes = cursor.element.notes
+                                for (var n = 0; n < notes.length; n++) {
+                                    if (notes[n].pitch > melodyMidi) melodyMidi = notes[n].pitch
+                                }
+                            }
+                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
                             if (voicing) {
                                 chords.push({
                                     text: text,
                                     root: parsed.root,
                                     quality: parsed.quality,
                                     voicing: voicing,
+                                    melodyMidi: melodyMidi,
                                 })
                             }
                         }
@@ -3936,6 +3995,21 @@ MuseScore {
                     statusMsg.text = sortByProximity
                         ? "Sorting by proximity to last voicing"
                         : "Default sort order"
+                    statusMsg.color = theme.textMuted
+                }
+            }
+
+            Button {
+                text: melodyOnTop ? "Melody ✓" : "Melody"
+                font.pixelSize: 10
+                implicitWidth: 56
+                ToolTip.visible: hovered
+                ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
+                onClicked: {
+                    melodyOnTop = !melodyOnTop
+                    statusMsg.text = melodyOnTop
+                        ? "Melody on top: voicings will match the melody note"
+                        : "Melody on top: off"
                     statusMsg.color = theme.textMuted
                 }
             }
