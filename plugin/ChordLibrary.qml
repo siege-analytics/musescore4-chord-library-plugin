@@ -2396,12 +2396,27 @@ MuseScore {
         scanCursor.voice = 0
         scanCursor.rewind(0)
 
+        var skippedDiagram = 0
         while (scanCursor.segment) {
             var seg = scanCursor.segment
             var currentTick = scanCursor.tick
             if (seg.annotations) {
+                // Check if this position already has a fretboard diagram
+                var hasDiagram = false
+                for (var c = 0; c < seg.annotations.length; c++) {
+                    if (seg.annotations[c].type === Element.FRET_DIAGRAM) {
+                        hasDiagram = true
+                        break
+                    }
+                }
+
                 for (var a = 0; a < seg.annotations.length; a++) {
                     if (seg.annotations[a].type === Element.HARMONY) {
+                        // Skip if a diagram is already placed here
+                        if (hasDiagram) {
+                            skippedDiagram++
+                            continue
+                        }
                         var chordText = seg.annotations[a].text
                         var parsed = parseChordSymbol(chordText)
                         if (parsed) {
@@ -2461,6 +2476,9 @@ MuseScore {
         curScore.endCmd()
 
         var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
+        if (skippedDiagram > 0) {
+            msg += "\nSkipped " + skippedDiagram + " position(s) with existing fretboard diagrams."
+        }
         if (errors.length > 0) {
             msg += "\n\nErrors:\n" + errors.join("\n")
         }
