@@ -582,12 +582,32 @@ MuseScore {
                         var text = cursor.segment.annotations[a].text
                         var parsed = parseChordSymbol(text)
                         if (parsed) {
-                            // Extract melody note (highest pitch) at this position
+                            // Extract melody note (highest pitch) at this position.
+                            // Scan segment elements directly — cursor.element may not
+                            // point to the note when a chord symbol is on a rest voice.
                             var melodyMidi = -1
-                            if (melodyOnTop && cursor.element && cursor.element.type === Element.CHORD) {
-                                var notes = cursor.element.notes
-                                for (var n = 0; n < notes.length; n++) {
-                                    if (notes[n].pitch > melodyMidi) melodyMidi = notes[n].pitch
+                            if (melodyOnTop) {
+                                var segEl = cursor.segment
+                                // Check cursor.element first (voice 0)
+                                if (cursor.element && cursor.element.type === Element.CHORD) {
+                                    var notes0 = cursor.element.notes
+                                    for (var n0 = 0; n0 < notes0.length; n0++) {
+                                        if (notes0[n0].pitch > melodyMidi) melodyMidi = notes0[n0].pitch
+                                    }
+                                }
+                                // Also scan all annotations' parent elements for notes
+                                // (the chord symbol may be attached to a voice with notes)
+                                if (melodyMidi < 0 && segEl && segEl.elementAt) {
+                                    // Try voice 0 through 3
+                                    for (var voice = 0; voice < 4 && melodyMidi < 0; voice++) {
+                                        var el = segEl.elementAt(voice)
+                                        if (el && el.type === Element.CHORD && el.notes) {
+                                            for (var nv = 0; nv < el.notes.length; nv++) {
+                                                if (el.notes[nv].pitch > melodyMidi)
+                                                    melodyMidi = el.notes[nv].pitch
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             // Carry forward: if at a rest, use the last melody note
@@ -655,6 +675,10 @@ MuseScore {
 
         // Show the guided step with clear instructions
         var stepText = "▸ " + item.text + " — " + shape
+        if (melodyOnTop && item.melodyMidi >= 0) {
+            var noteNames = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
+            stepText += "\n  Melody: " + noteNames[item.melodyMidi % 12]
+        }
         stepText += "\n"
         stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
         stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
