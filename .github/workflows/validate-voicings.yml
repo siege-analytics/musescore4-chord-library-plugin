@@ -1,0 +1,113 @@
+name: Validate Voicings
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "data/voicings.json"
+      - "config/tunings/**"
+      - "schema/**"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Validate voicing library
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install jsonschema pytest
+
+      - name: Run schema validation
+        id: schema
+        run: |
+          set +e
+          output=$(python scripts/validate.py --verbose 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "result<<GHEOF"
+            echo "$output"
+            echo "GHEOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+
+      - name: Run library hygiene check
+        id: hygiene
+        if: always()
+        run: |
+          set +e
+          output=$(python scripts/library_hygiene.py 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "result<<GHEOF"
+            echo "$output"
+            echo "GHEOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+
+      - name: Run tests
+        id: tests
+        if: always()
+        run: |
+          set +e
+          output=$(python -m pytest tests/test_core.py -v 2>&1)
+          exit_code=$?
+          echo "$output"
+          {
+            echo "result<<GHEOF"
+            echo "$output"
+            echo "GHEOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+
+      - name: Post PR summary comment
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const schema = `${{ steps.schema.outputs.exit_code }}` === '0' ? 'PASS' : 'FAIL';
+            const hygiene = `${{ steps.hygiene.outputs.exit_code }}` === '0' ? 'PASS' : 'FAIL';
+            const tests = `${{ steps.tests.outputs.exit_code }}` === '0' ? 'PASS' : 'FAIL';
+
+            const icon = (s) => s === 'PASS' ? ':white_check_mark:' : ':x:';
+
+            let body = `## Voicing Validation Results\n\n`;
+            body += `| Check | Status |\n`;
+            body += `|-------|--------|\n`;
+            body += `| Schema validation | ${icon(schema)} ${schema} |\n`;
+            body += `| Library hygiene (duplicates) | ${icon(hygiene)} ${hygiene} |\n`;
+            body += `| Unit tests | ${icon(tests)} ${tests} |\n\n`;
+
+            if (schema === 'FAIL') {
+              body += `<details><summary>Schema validation output</summary>\n\n\`\`\`\n${{ steps.schema.outputs.result }}\n\`\`\`\n</details>\n\n`;
+            }
+            if (hygiene === 'FAIL') {
+              body += `<details><summary>Library hygiene output</summary>\n\n\`\`\`\n${{ steps.hygiene.outputs.result }}\n\`\`\`\n</details>\n\n`;
+            }
+            if (tests === 'FAIL') {
+              body += `<details><summary>Test output</summary>\n\n\`\`\`\n${{ steps.tests.outputs.result }}\n\`\`\`\n</details>\n\n`;
+            }
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
