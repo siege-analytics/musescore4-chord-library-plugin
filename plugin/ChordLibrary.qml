@@ -405,7 +405,9 @@ MuseScore {
         }
 
         // Melody-on-top: compute target semitone class from melody MIDI note
-        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0 && melodyOnTop)
+        // Use melody target whenever a valid MIDI note is provided
+        // (the caller decides when to pass it — global toggle or per-chord override)
+        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0)
             ? melodyMidi % 12 : -1
 
         // Score: context match + category preference + voice leading + melody match
@@ -710,15 +712,16 @@ MuseScore {
 
         var item = _batchChords[idx]
 
-        // Parse melody override
-        var newMidi = item.melodyMidi
-        if (melodyOnTop && stepMelodyField) {
+        // Parse melody override — always read the field, regardless of global toggle
+        var newMidi = -1
+        if (stepMelodyField) {
             var noteText = stepMelodyField.text.trim()
             if (noteText) {
                 var parsedMidi = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
                 if (parsedMidi !== undefined) newMidi = parsedMidi
             }
         }
+        if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
         item.melodyMidi = newMidi
 
         // Parse category override
@@ -4032,14 +4035,12 @@ MuseScore {
                 spacing: 6
 
                 Label {
-                    visible: melodyOnTop
                     text: "Melody:"
                     font.pixelSize: 10
                 }
 
                 TextField {
                     id: stepMelodyField
-                    visible: melodyOnTop
                     implicitWidth: 40
                     font.pixelSize: 10
                     placeholderText: "auto"
