@@ -11,7 +11,7 @@ MuseScore {
     id: chordLibrary
     title: "Siege Analytics Chord Library"
     description: "Jazz guitar chord voicing library with filtering and auto-transposition"
-    version: "1.4.0"
+    version: "1.5.0"
     pluginType: "dialog"
     requiresScore: true
     categoryCode: "composing-arranging-tools"
@@ -21,6 +21,69 @@ MuseScore {
 
     // System palette for dark mode detection
     SystemPalette { id: palette }
+
+    // Centralized theme palette — all UI colors derive from OS light/dark mode
+    QtObject {
+        id: theme
+        readonly property bool isDark: {
+            // Check windowText brightness — in dark mode, text is light
+            // More reliable than window background in MuseScore's plugin sandbox
+            var fg = palette.windowText
+            return (fg.r + fg.g + fg.b) / 3 > 0.5
+        }
+
+        // Card / surface colors
+        readonly property color cardBackground: isDark ? "#2d2d2d" : "#f5f5f5"
+        readonly property color cardHover:      isDark ? "#3a3a3a" : "#e8e8e8"
+        readonly property color cardBorder:     isDark ? "#555555" : "#dddddd"
+
+        // Text hierarchy
+        readonly property color textPrimary:   isDark ? "#e0e0e0" : "#333333"
+        readonly property color textSecondary:  isDark ? "#b0b0b0" : "#666666"
+        readonly property color textMuted:      isDark ? "#888888" : "#888888"
+        readonly property color textFaint:      isDark ? "#777777" : "#aaaaaa"
+
+        // Status colors
+        readonly property color successText: isDark ? "#4caf50" : "#006600"
+        readonly property color errorText:   isDark ? "#ef5350" : "#cc0000"
+
+        // Dividers and borders
+        readonly property color divider: Qt.rgba(0.5, 0.5, 0.5, isDark ? 0.4 : 0.3)
+
+        // Tool status console background
+        readonly property color consoleBg: isDark ? Qt.rgba(1, 1, 1, 0.08) : Qt.rgba(0, 0, 0, 0.05)
+
+        // Legend / chip backgrounds
+        readonly property color chipBackground: isDark ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
+        readonly property color chipHover:      isDark ? Qt.rgba(0.5, 0.5, 0.5, 0.3) : Qt.rgba(0.5, 0.5, 0.5, 0.2)
+        readonly property color chipBorder:     Qt.rgba(0.5, 0.5, 0.5, 0.3)
+
+        // Fretboard canvas (thumbnail in VoicingCard)
+        readonly property color fretGrid:   isDark ? "#999999" : "#999999"
+        readonly property color fretDot:    isDark ? "#e0e0e0" : "#333333"
+        readonly property color fretMute:   isDark ? "#b0b0b0" : "#999999"
+
+        // Interval dot colors — light and dark variants
+        readonly property color dotRoot:    isDark ? "#EF5350" : "#D32F2F"
+        readonly property color dotThird:   isDark ? "#42A5F5" : "#1976D2"
+        readonly property color dotFifth:   isDark ? "#66BB6A" : "#388E3C"
+        readonly property color dotSeventh: isDark ? "#FFA726" : "#F57C00"
+        readonly property color dotNinth:   isDark ? "#CE93D8" : "#7B1FA2"
+        readonly property color dotFourth:  isDark ? "#4DB6AC" : "#00897B"
+        readonly property color dotSixth:   isDark ? "#FFEE58" : "#FBC02D"
+        readonly property color dotDefault: isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.9) : Qt.rgba(0.3, 0.3, 0.3, 0.9)
+
+        // Interval legend (light mode values — used in the static legend Flow)
+        readonly property var legendColors: [
+            {label: "R",    color: dotRoot},
+            {label: "3",    color: dotThird},
+            {label: "5",    color: dotFifth},
+            {label: "7",    color: dotSeventh},
+            {label: "9",    color: dotNinth},
+            {label: "4/11", color: dotFourth},
+            {label: "6/13", color: dotSixth}
+        ]
+    }
 
     // Data model for hygiene audit results
     ListModel { id: auditResultsModel }
@@ -91,10 +154,45 @@ MuseScore {
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
-    property bool showSettings: false
+    // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
+    property int currentTab: 0
     property bool showToolResults: false
     property string toolResultsTitle: ""
     property string toolResultsContent: ""
+
+    // Practice mode state
+    property var practiceVoicing: null      // current flash card voicing
+    property bool practiceShowAnswer: false // whether answer is revealed
+    property string practiceMode: "name"   // "name" = guess name, "shape" = guess fretboard
+    property int practiceCorrect: 0
+    property int practiceTotal: 0
+
+    function practiceNext() {
+        if (voicingsData.length === 0) return
+        practiceShowAnswer = false
+        var idx = Math.floor(Math.random() * voicingsData.length)
+        practiceVoicing = voicingsData[idx]
+    }
+
+    function practiceReveal() {
+        practiceShowAnswer = true
+        practiceTotal++
+    }
+
+    function practiceMarkCorrect() {
+        practiceCorrect++
+        practiceNext()
+    }
+
+    function practiceMarkWrong() {
+        practiceNext()
+    }
+
+    function practiceReset() {
+        practiceCorrect = 0
+        practiceTotal = 0
+        practiceNext()
+    }
 
     // Filter state
     property string filterContext: ""
@@ -105,6 +203,17 @@ MuseScore {
     // Voice leading state
     property var lastInsertedVoicing: null  // tracks fret position for proximity sort
     property bool sortByProximity: false    // when true, sort filtered results by distance
+    property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
+    property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
+
+    // Returns override melody MIDI pitch (0-11) or -1 if no override set
+    function melodyOverrideMidi() {
+        if (!melodyOnTop) return -1
+        var note = melodyOverrideField ? melodyOverrideField.text.trim() : ""
+        if (!note) return -1
+        var midi = Transposer.SEMITONE_MAP[note.charAt(0).toUpperCase() + note.substring(1)]
+        return (midi !== undefined) ? midi : -1
+    }
 
     // Dynamic filter lists (rebuilt when data changes)
     property var contextList: ["All Contexts"]
@@ -156,10 +265,9 @@ MuseScore {
             toolResultsTitle = title
             toolResultsContent = message
             showToolResults = true
-            showSettings = false
         } else {
             toolStatus.text = title + ": " + message
-            toolStatus.color = isSuccess ? "#060" : "#c00"
+            toolStatus.color = isSuccess ? theme.successText : theme.errorText
         }
     }
 
@@ -232,18 +340,50 @@ MuseScore {
         return { root: root, quality: quality }
     }
 
-    function findBestVoicing(targetRoot, quality) {
+    // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
+    function voicingTopNoteSemitone(voicing, targetRoot) {
+        var dots = voicing.dots || []
+        var opens = voicing.open || []
+        if (dots.length === 0 && opens.length === 0) return -1
+        // Find the lowest string number (= highest pitch)
+        var minStr = 99
+        var topDotIdx = -1
+        for (var i = 0; i < dots.length; i++) {
+            if (dots[i].string < minStr) { minStr = dots[i].string; topDotIdx = i }
+        }
+        for (var j = 0; j < opens.length; j++) {
+            if (opens[j] < minStr) { minStr = opens[j]; topDotIdx = -2 }
+        }
+        // Use intervals array to get the interval, then compute semitone
+        var intervals = voicing.intervals || []
+        if (topDotIdx >= 0 && topDotIdx < intervals.length) {
+            var iv = intervals[topDotIdx]
+            var ivSemitones = {"1":0,"b2":1,"2":2,"b3":3,"3":4,"4":5,"#4":6,
+                "b5":6,"5":7,"#5":8,"6":9,"b7":10,"7":11,"bb7":9,
+                "9":2,"b9":1,"#9":3,"11":5,"#11":6,"13":9,"b13":8}
+            var rootSemitone = Transposer.SEMITONE_MAP[targetRoot] || 0
+            var ivOffset = ivSemitones[iv]
+            if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
+        }
+        return -1
+    }
+
+    function findBestVoicing(targetRoot, quality, melodyMidi) {
         // Find the best matching voicing from the current data.
         // Respects current filter selections: context, category, tuning.
+        // melodyMidi: optional MIDI note number of the melody at this position
         var candidates = []
+        var quartalCandidates = []
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
-            if (v.chord_quality !== quality) continue
-            // Filter by string count for current tuning
             if ((v.strings || 6) > tuningMaxStrings) continue
-            // Respect category filter if set
-            if (filterCategory && v.category !== filterCategory) continue
-            candidates.push(v)
+            if (v.chord_quality === quality) {
+                if (filterCategory && v.category !== filterCategory) continue
+                candidates.push(v)
+            } else if (v.category === "quartal") {
+                // Quartal voicings work over any chord quality
+                quartalCandidates.push(v)
+            }
         }
         // If category filter is too restrictive, fall back to unfiltered
         if (candidates.length === 0 && filterCategory) {
@@ -254,25 +394,44 @@ MuseScore {
                 candidates.push(v2)
             }
         }
+        // Add quartal candidates to the pool
+        for (var q = 0; q < quartalCandidates.length; q++) {
+            candidates.push(quartalCandidates[q])
+        }
         if (candidates.length === 0) {
             // Fallback: try dom7 if the specific quality isn't found
-            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7")
+            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7", melodyMidi)
             return null
         }
 
-        // Score: context match + category preference + voice leading proximity
+        // Melody-on-top: compute target semitone class from melody MIDI note
+        // Use melody target whenever a valid MIDI note is provided
+        // (the caller decides when to pass it — global toggle or per-chord override)
+        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0)
+            ? melodyMidi % 12 : -1
+
+        // Score: context match + category preference + voice leading + melody match
         var ref = lastInsertedVoicing
         candidates.sort(function(a, b) {
             var scoreA = 0, scoreB = 0
+            // Exact quality match beats quartal
+            if (a.chord_quality === quality) scoreA += 20
+            if (b.chord_quality === quality) scoreB += 20
             if (filterContext && a.context === filterContext) scoreA += 100
             if (filterContext && b.context === filterContext) scoreB += 100
-            // Boost matching category filter
             if (filterCategory && a.category === filterCategory) scoreA += 50
             if (filterCategory && b.category === filterCategory) scoreB += 50
             if (a.category === "shell") scoreA += 10
             else if (a.category === "drop2") scoreA += 5
             if (b.category === "shell") scoreB += 10
             else if (b.category === "drop2") scoreB += 5
+            // Melody-on-top: big bonus if voicing's top note matches melody
+            if (melodyTarget >= 0) {
+                var topA = voicingTopNoteSemitone(a, targetRoot)
+                var topB = voicingTopNoteSemitone(b, targetRoot)
+                if (topA === melodyTarget) scoreA += 200
+                if (topB === melodyTarget) scoreB += 200
+            }
             // Voice leading: prefer voicings close to the last inserted one
             if (ref) {
                 scoreA -= voicingDistance(ref, a) * 2
@@ -335,15 +494,94 @@ MuseScore {
     property int _batchInserted: 0
     property var _batchChords: []  // [{text, root, quality, voicing}, ...]
 
+    // Voice a single chord at the current cursor/selection position
+    function voiceAtCursor() {
+        if (!curScore) {
+            statusMsg.text = "No score open"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Find the chord symbol at or near the current selection
+        var sel = curScore.selection
+        if (!sel || !sel.elements || sel.elements.length === 0) {
+            statusMsg.text = "Select a note or rest at a chord symbol"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        var elem = sel.elements[0]
+        var seg = null
+        if (elem.type === Element.NOTE && elem.parent)
+            seg = elem.parent.parent
+        else if (elem.type === Element.REST || elem.type === Element.CHORD)
+            seg = elem.parent
+
+        if (!seg || !seg.annotations) {
+            statusMsg.text = "No chord symbol at selection"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Find the HARMONY annotation at this segment
+        var chordText = null
+        for (var a = 0; a < seg.annotations.length; a++) {
+            if (seg.annotations[a].type === Element.HARMONY) {
+                chordText = seg.annotations[a].text
+                break
+            }
+        }
+
+        if (!chordText) {
+            statusMsg.text = "No chord symbol at selection"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        var parsed = parseChordSymbol(chordText)
+        if (!parsed) {
+            statusMsg.text = "Could not parse: " + chordText
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Extract melody note — use override if set, else detect from selection
+        var melodyMidi = melodyOverrideMidi()
+        if (melodyMidi < 0 && melodyOnTop) {
+            var chordElem = null
+            if (elem.type === Element.NOTE && elem.parent)
+                chordElem = elem.parent
+            else if (elem.type === Element.CHORD)
+                chordElem = elem
+            if (chordElem && chordElem.notes) {
+                for (var n = 0; n < chordElem.notes.length; n++) {
+                    if (chordElem.notes[n].pitch > melodyMidi)
+                        melodyMidi = chordElem.notes[n].pitch
+                }
+            }
+        }
+
+        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
+        if (!voicing) {
+            statusMsg.text = "No voicing found for " + chordText
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Use the single voicing insertion flow (same as "Open" button)
+        generateDiagramFile(voicing)
+    }
+
     function batchInsert() {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
         // Scan all chord symbols and build the voicing plan
         var chords = []
+        var lastMelodyMidi = -1  // carry-forward: last melody note for rests
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
         cursor.voice = 0
@@ -355,13 +593,47 @@ MuseScore {
                         var text = cursor.segment.annotations[a].text
                         var parsed = parseChordSymbol(text)
                         if (parsed) {
-                            var voicing = findBestVoicing(parsed.root, parsed.quality)
+                            // Extract melody note (highest pitch) at this position.
+                            // If user set a manual override, use that for all positions.
+                            var melodyMidi = melodyOverrideMidi()
+                            if (melodyMidi < 0 && melodyOnTop) {
+                                var segEl = cursor.segment
+                                // Check cursor.element first (voice 0)
+                                if (cursor.element && cursor.element.type === Element.CHORD) {
+                                    var notes0 = cursor.element.notes
+                                    for (var n0 = 0; n0 < notes0.length; n0++) {
+                                        if (notes0[n0].pitch > melodyMidi) melodyMidi = notes0[n0].pitch
+                                    }
+                                }
+                                // Also scan all annotations' parent elements for notes
+                                // (the chord symbol may be attached to a voice with notes)
+                                if (melodyMidi < 0 && segEl && segEl.elementAt) {
+                                    // Try voice 0 through 3
+                                    for (var voice = 0; voice < 4 && melodyMidi < 0; voice++) {
+                                        var el = segEl.elementAt(voice)
+                                        if (el && el.type === Element.CHORD && el.notes) {
+                                            for (var nv = 0; nv < el.notes.length; nv++) {
+                                                if (el.notes[nv].pitch > melodyMidi)
+                                                    melodyMidi = el.notes[nv].pitch
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // Carry forward: if at a rest, use the last melody note
+                            if (melodyOnTop && melodyMidi < 0 && lastMelodyMidi >= 0) {
+                                melodyMidi = lastMelodyMidi
+                            }
+                            if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
+
+                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
                             if (voicing) {
                                 chords.push({
                                     text: text,
                                     root: parsed.root,
                                     quality: parsed.quality,
                                     voicing: voicing,
+                                    melodyMidi: melodyMidi,
                                 })
                             }
                         }
@@ -373,7 +645,7 @@ MuseScore {
 
         if (chords.length === 0) {
             statusMsg.text = "No matching chord symbols found"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -411,24 +683,80 @@ MuseScore {
             return
         }
 
-        // Show the guided step
-        var stepText = "Chord " + (_batchIndex + 1) + " of " + batchTotal + ": " + item.text
-        stepText += "\nVoicing: " + shape
-        stepText += "\n\nSteps:"
-        stepText += "\n  1. Click on the note/rest at the " + item.text + " chord symbol in the score"
-        stepText += "\n  2. Press ⌘V to paste the diagram"
-        stepText += "\n  3. Click 'Next Chord' below"
+        // Show the guided step with clear instructions
+        var stepText = "▸ " + item.text + " — " + shape
+        if (melodyOnTop && item.melodyMidi >= 0) {
+            var noteNames = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
+            stepText += "\n  Melody: " + noteNames[item.melodyMidi % 12]
+        }
+        stepText += "\n"
+        stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
+        stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
+        stepText += "\n  3. Click 'Next →' when ready"
 
         if (remaining > 1) {
-            stepText += "\n\n(" + (remaining - 1) + " more chord" + (remaining > 2 ? "s" : "") + " after this)"
+            stepText += "\n\n" + (remaining - 1) + " chord" + (remaining > 2 ? "s" : "") + " remaining"
         }
 
         toolResultsTitle = "Voice Score — " + item.text
         toolResultsContent = stepText
         showToolResults = true
-        showSettings = false
 
         _batchIndex++
+    }
+
+    // Re-voice the current walkthrough step with edited melody and/or category
+    function revoiceCurrentStep() {
+        var idx = _batchIndex - 1  // _batchIndex was already incremented
+        if (idx < 0 || idx >= _batchChords.length) return
+
+        var item = _batchChords[idx]
+
+        // Parse melody override — always read the field, regardless of global toggle
+        var newMidi = -1
+        if (stepMelodyField) {
+            var noteText = stepMelodyField.text.trim()
+            if (noteText) {
+                var parsedMidi = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
+                if (parsedMidi !== undefined) newMidi = parsedMidi
+            }
+        }
+        if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
+        item.melodyMidi = newMidi
+
+        // Parse category override
+        var catOverride = ""
+        if (stepCategoryCombo) {
+            catOverride = stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || ""
+        }
+
+        // Temporarily set the category filter for findBestVoicing
+        var savedCategory = filterCategory
+        if (catOverride) filterCategory = catOverride
+
+        // Re-select voicing
+        var newVoicing = findBestVoicing(item.root, item.quality, newMidi)
+
+        // Restore filter
+        filterCategory = savedCategory
+
+        if (!newVoicing) return
+        item.voicing = newVoicing
+
+        // Regenerate clipboard XML
+        var xml = generateXmlForVoicing(newVoicing, item.root)
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try {
+            tempDiagramFile.write(xml)
+        } catch (e) {
+            console.log("[ChordLibrary] revoice write error: " + e)
+            return
+        }
+
+        // Update the display — rewind batchIndex and re-show
+        _batchIndex = idx
+        batchShowNext()
     }
 
     function batchProcessNext() {
@@ -473,7 +801,7 @@ MuseScore {
                     rebuildFilterLists()
                     applyFilters()
                     statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
-                    statusMsg.color = "#060"
+                    statusMsg.color = theme.successText
                     console.log("Loaded " + cached.length + " voicings from local cache")
                     return true
                 }
@@ -572,7 +900,7 @@ MuseScore {
         var path = tuningImportPath.text.trim()
         if (!path) {
             tuningImportStatus.text = "Enter a file path"
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
         tuningFile.source = path
@@ -580,13 +908,13 @@ MuseScore {
             var raw = tuningFile.read()
             if (!raw || raw.length === 0) {
                 tuningImportStatus.text = "File not found or empty"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
             var tuning = JSON.parse(raw)
             if (!tuning.name || !tuning.strings) {
                 tuningImportStatus.text = "Invalid tuning: needs 'name' and 'strings' fields"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
 
@@ -601,10 +929,10 @@ MuseScore {
             saveSettings()
 
             tuningImportStatus.text = "Imported: " + tuning.name
-            tuningImportStatus.color = "#060"
+            tuningImportStatus.color = theme.successText
         } catch (e) {
             tuningImportStatus.text = "Failed: " + e
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
         }
     }
 
@@ -612,7 +940,7 @@ MuseScore {
         var name = tuningNameField.text.trim()
         if (!name) {
             tuningImportStatus.text = "Enter a tuning name"
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
 
@@ -623,7 +951,7 @@ MuseScore {
             var midi = noteNameToMidi(rawParts[p])
             if (midi < 0) {
                 tuningImportStatus.text = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
             pitches.push(midi)
@@ -632,7 +960,7 @@ MuseScore {
 
         if (pitches.length < numStrings) {
             tuningImportStatus.text = "Need " + numStrings + " pitches, got " + pitches.length
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
         pitches = pitches.slice(0, numStrings)
@@ -641,7 +969,7 @@ MuseScore {
         for (var i = 0; i < pitches.length; i++) {
             if (pitches[i] < 20 || pitches[i] > 100) {
                 tuningImportStatus.text = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
         }
@@ -674,10 +1002,10 @@ MuseScore {
             // Show the note names as feedback
             var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
             tuningImportStatus.text = "Created: " + name + " (" + noteStr + ")"
-            tuningImportStatus.color = "#060"
+            tuningImportStatus.color = theme.successText
         } catch (e) {
             tuningImportStatus.text = "Failed to save: " + e
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
         }
     }
 
@@ -689,17 +1017,17 @@ MuseScore {
         // Parse fret number
         var fretNum = parseInt(saveFretField.text.trim())
         if (isNaN(fretNum) || fretNum < 0 || fretNum > 24) {
-            saveStatus.text = "Invalid fret number"; saveStatus.color = "#c00"; return
+            saveStatus.text = "Invalid fret number"; saveStatus.color = theme.errorText; return
         }
 
         // Parse dots: "6:1, 4:1, 3:2" → [{string:6, fret:1}, ...]
         var dotsStr = saveDotsField.text.trim()
-        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = "#c00"; return }
+        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = theme.errorText; return }
         var dotParts = dotsStr.split(",")
         var dots = []
         for (var d = 0; d < dotParts.length; d++) {
             var pair = dotParts[d].trim().split(":")
-            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = "#c00"; return }
+            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = theme.errorText; return }
             dots.push({ string: parseInt(pair[0]), fret: parseInt(pair[1]) })
         }
 
@@ -774,7 +1102,7 @@ MuseScore {
         for (var j = 0; j < voicingsData.length; j++) {
             if (voicingsData[j].id === id) {
                 saveStatus.text = "ID already exists: " + id
-                saveStatus.color = "#c00"
+                saveStatus.color = theme.errorText
                 return
             }
         }
@@ -816,7 +1144,7 @@ MuseScore {
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
         saveStatus.text = "Saved: " + voicing.name + keyNote
-        saveStatus.color = "#060"
+        saveStatus.color = theme.successText
     }
 
     // === Library hygiene audit ===
@@ -976,7 +1304,7 @@ MuseScore {
         if (dismissed > 0)
             summary += "\n(" + dismissed + " dismissed findings hidden)"
         hygieneResult.text = summary
-        hygieneResult.color = duplicates > 0 ? "#c00" : "#060"
+        hygieneResult.color = duplicates > 0 ? theme.errorText : theme.successText
 
         lastAuditResults = results
         for (var r = 0; r < results.length; r++)
@@ -1011,10 +1339,10 @@ MuseScore {
             applyFilters()
             saveToCache()
             hygieneResult.text = "Removed " + removed + " duplicates. " + voicingsData.length + " voicings remain."
-            hygieneResult.color = "#060"
+            hygieneResult.color = theme.successText
         } else {
             hygieneResult.text = "No duplicates found."
-            hygieneResult.color = "#060"
+            hygieneResult.color = theme.successText
         }
     }
 
@@ -1094,18 +1422,18 @@ MuseScore {
             hygieneResult.text = hygieneResult.text + "\nReport opened"
         } catch (e) {
             hygieneResult.text = "Failed to save report: " + e
-            hygieneResult.color = "#c00"
+            hygieneResult.color = theme.errorText
         }
     }
 
     // Pre-fill Save to Library from a selected FretDiagram in the score
     function captureFromScore() {
-        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = "#c00"; return }
+        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = theme.errorText; return }
 
         var sel = curScore.selection
         if (!sel || !sel.elements || sel.elements.length === 0) {
             saveStatus.text = "Select a fretboard diagram first"
-            saveStatus.color = "#c00"
+            saveStatus.color = theme.errorText
             return
         }
 
@@ -1123,10 +1451,10 @@ MuseScore {
 
             saveStatus.text = "Captured: " + strings + " strings, fret " + (fretOff + 1)
                 + "\nDots not readable from API — enter them manually."
-            saveStatus.color = "#060"
+            saveStatus.color = theme.successText
         } else {
             saveStatus.text = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
-            saveStatus.color = "#c00"
+            saveStatus.color = theme.errorText
         }
     }
 
@@ -1134,7 +1462,7 @@ MuseScore {
 
     function fetchVoicings() {
         statusMsg.text = "Loading voicings..."
-        statusMsg.color = "#666"
+        statusMsg.color = theme.textSecondary
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -1147,17 +1475,17 @@ MuseScore {
                         applyFilters()
                         saveToCache()
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
-                        statusMsg.color = "#060"
+                        statusMsg.color = theme.successText
                     } catch (e) {
                         statusMsg.text = "Failed to parse voicings: " + e
-                        statusMsg.color = "#c00"
+                        statusMsg.color = theme.errorText
                     }
                 } else if (xhr.status === 0) {
                     statusMsg.text = "Could not reach URL. Check connection or URL."
-                    statusMsg.color = "#c00"
+                    statusMsg.color = theme.errorText
                 } else {
                     statusMsg.text = "Failed to fetch: HTTP " + xhr.status
-                    statusMsg.color = "#c00"
+                    statusMsg.color = theme.errorText
                 }
             }
         }
@@ -1252,11 +1580,11 @@ MuseScore {
             var v = voicingsData[i]
             if (filterContext && v.context !== filterContext) continue
             if (filterCategory && v.category !== filterCategory) continue
-            // Quartal voicings are quality-ambiguous (stacked 4ths serve multiple
-            // harmonic functions). When filtering by category=quartal, show all
-            // quartal voicings regardless of the quality filter.
+            // Quartal voicings work over any chord quality (stacked 4ths
+            // serve multiple harmonic functions), so they always pass
+            // the quality filter.
             if (filterQuality && v.chord_quality !== filterQuality
-                && v.category !== "quartal") continue
+                && v.chord_quality !== "quartal") continue
 
             // Filter by string count — but if the user has explicitly selected
             // a 7-string context (CV7/CM7), show all voicings in that context
@@ -1291,14 +1619,14 @@ MuseScore {
     function insertVoicing(voicing) {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
         var selection = curScore.selection
         if (!selection || !selection.elements || selection.elements.length === 0) {
             statusMsg.text = "Select a note or rest first"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1342,7 +1670,7 @@ MuseScore {
 
         if (targetTick < 0) {
             statusMsg.text = "Could not determine position. Select a note or rest."
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1379,7 +1707,7 @@ MuseScore {
         statusMsg.text = "Inserted " + transposed.name
             + " [" + transposed.notes.join(" ") + "]"
             + " (" + diagramPlacement + " staff)"
-        statusMsg.color = "#060"
+        statusMsg.color = theme.successText
     }
 
     // === Diagram insertion (setDot API or clipboard workaround) ===
@@ -1488,7 +1816,7 @@ MuseScore {
             if (sortByProximity) applyFilters()
             statusMsg.text = "Inserted " + displayName
                 + " [" + transposed.notes.join(" ") + "]"
-            statusMsg.color = "#060"
+            statusMsg.color = theme.successText
             return
         }
 
@@ -1501,7 +1829,7 @@ MuseScore {
             tempDiagramFile.write(xml)
         } catch (e) {
             statusMsg.text = "Failed to write clipboard XML: " + e
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1513,7 +1841,7 @@ MuseScore {
         pasteTimer.start()
 
         statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
-        statusMsg.color = "#060"
+        statusMsg.color = theme.successText
     }
 
     // === Voicing preview (MIDI playback via ms-audio) ===
@@ -1648,7 +1976,7 @@ MuseScore {
         }
 
         statusMsg.text = "File browser not available in this MuseScore version. Type the path manually."
-        statusMsg.color = "#888"
+        statusMsg.color = theme.textMuted
     }
 
     // === Export/Import ===
@@ -1658,7 +1986,7 @@ MuseScore {
         var path = exportPathField.text.trim()
         if (!path) {
             exportStatus.text = "Enter a file path"
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
             return
         }
         try {
@@ -1666,10 +1994,10 @@ MuseScore {
             exportFile.source = path
             exportFile.write(data)
             exportStatus.text = "Exported " + voicingsData.length + " voicings"
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
         } catch (e) {
             exportStatus.text = "Export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1722,11 +2050,11 @@ MuseScore {
         try {
             exportFile.write(xml)
             exportStatus.text = "MusicXML: " + voicingsData.length + " voicings → " + path
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
             Qt.openUrlExternally(path)
         } catch (e) {
             exportStatus.text = "MusicXML export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1740,10 +2068,10 @@ MuseScore {
             tempDiagramFile.write(config)
             Qt.openUrlExternally(Qt.resolvedUrl("run-export.command"))
             exportStatus.text = "Export launched — output will open when ready"
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
         } catch (e) {
             exportStatus.text = "Export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1922,13 +2250,13 @@ MuseScore {
     function analyzeCurrentScore() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -1946,7 +2274,8 @@ MuseScore {
                 continue
             }
             var matches = voicingsData.filter(function(v) {
-                if (v.chord_quality !== parsed.quality) return false
+                // Quartal voicings work over any chord quality
+                if (v.chord_quality !== parsed.quality && v.chord_quality !== "quartal") return false
                 if (ctx !== "all" && v.context !== ctx) return false
                 if (cat !== "all" && v.category !== cat) return false
                 return true
@@ -1975,13 +2304,13 @@ MuseScore {
     function runVoiceLeading() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -2016,7 +2345,7 @@ MuseScore {
     function voiceEntireScore() {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -2027,7 +2356,7 @@ MuseScore {
         var chords = collectScoreChords()
         if (chords.length === 0) {
             statusMsg.text = "No chord symbols found"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -2061,13 +2390,13 @@ MuseScore {
     function suggestFingerings() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -2150,6 +2479,48 @@ MuseScore {
         return parts.join(" ")
     }
 
+    // Extract fingering string from an existing FretDiagram element in the score.
+    // MuseScore 4's FretDiagram exposes: fretOffset, strings, frets, and per-string
+    // dot/marker data. We build a pseudo-voicing object and reuse computeFingeringString.
+    function fingeringFromDiagram(diagram) {
+        try {
+            var numStrings = diagram.strings || 6
+            var fretOffset = (diagram.fretOffset || 0) + 1  // fretOffset is 0-based
+            var dots = []
+            var mutes = []
+            var opens = []
+
+            for (var s = 0; s < numStrings; s++) {
+                // MuseScore string numbering: 0 = leftmost (low E), we need 1 = high E
+                var msString = numStrings - s  // our string numbering
+                var marker = diagram.marker(s)
+                var dot = diagram.dot(s)
+
+                if (marker === 1) {  // cross = muted
+                    mutes.push(msString)
+                } else if (marker === 2) {  // circle = open
+                    opens.push(msString)
+                } else if (dot && dot > 0) {
+                    dots.push({ string: msString, fret: dot })
+                }
+            }
+
+            if (dots.length === 0 && opens.length === 0) return null
+
+            var pseudoVoicing = {
+                dots: dots,
+                mutes: mutes,
+                open: opens,
+                strings: numStrings,
+                fret_number: fretOffset,
+            }
+            return computeFingeringString(pseudoVoicing)
+        } catch (e) {
+            console.log("[ChordLibrary] Could not read diagram: " + e)
+            return null
+        }
+    }
+
     function addFingeringsToScore() {
         if (!curScore) {
             showResult("No Score", "Open a score with chord symbols first.", false)
@@ -2163,13 +2534,44 @@ MuseScore {
         scanCursor.voice = 0
         scanCursor.rewind(0)
 
+        var skippedDiagram = 0
+        var usedDiagram = 0
         while (scanCursor.segment) {
             var seg = scanCursor.segment
             var currentTick = scanCursor.tick
             if (seg.annotations) {
+                // Find existing fretboard diagram at this position (if any)
+                var existingDiagram = null
+                for (var c = 0; c < seg.annotations.length; c++) {
+                    if (seg.annotations[c].type === Element.FRET_DIAGRAM) {
+                        existingDiagram = seg.annotations[c]
+                        break
+                    }
+                }
+
                 for (var a = 0; a < seg.annotations.length; a++) {
                     if (seg.annotations[a].type === Element.HARMONY) {
                         var chordText = seg.annotations[a].text
+
+                        if (existingDiagram) {
+                            if (skipDiagramPositions) {
+                                skippedDiagram++
+                                continue
+                            }
+                            // Read fingering from the existing diagram
+                            var diagramFinger = fingeringFromDiagram(existingDiagram)
+                            if (diagramFinger) {
+                                chordPositions.push({
+                                    tick: currentTick,
+                                    fingering: diagramFinger,
+                                    chord: chordText,
+                                })
+                                usedDiagram++
+                                continue
+                            }
+                        }
+
+                        // No diagram (or couldn't read it) — pick a voicing
                         var parsed = parseChordSymbol(chordText)
                         if (parsed) {
                             var voicing = findBestVoicing(parsed.root, parsed.quality)
@@ -2191,11 +2593,11 @@ MuseScore {
         }
 
         if (chordPositions.length === 0) {
-            showResult("No Chords Found", "The score has no chord symbols to add fingerings to.", false)
+            showResult("No Chords Found", "The score has no chord symbols to annotate.", false)
             return
         }
 
-        // Add fingering text at each position
+        // Add staff text annotations at each position
         var added = 0
         var errors = []
 
@@ -2227,12 +2629,18 @@ MuseScore {
 
         curScore.endCmd()
 
-        var msg = "Added fingerings to " + added + " of " + chordPositions.length + " chord positions."
+        var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
+        if (usedDiagram > 0) {
+            msg += "\n" + usedDiagram + " annotation(s) derived from existing fretboard diagrams."
+        }
+        if (skippedDiagram > 0) {
+            msg += "\nSkipped " + skippedDiagram + " position(s) with existing fretboard diagrams."
+        }
         if (errors.length > 0) {
             msg += "\n\nErrors:\n" + errors.join("\n")
         }
-        msg += "\n\nFingering format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
-        showResult("Fingerings", msg, errors.length === 0)
+        msg += "\n\nNotation format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
+        showResult("Staff Text", msg, errors.length === 0)
     }
 
     function exportFingeringSheet() {
@@ -2262,12 +2670,12 @@ MuseScore {
 
     function doImport() {
         importStatus.text = "Loading..."
-        importStatus.color = "#888"
+        importStatus.color = theme.textMuted
 
         var path = importPathField.text.trim()
         if (!path) {
             importStatus.text = "Enter a file path"
-            importStatus.color = "#c00"
+            importStatus.color = theme.errorText
             return
         }
         importFile.source = path
@@ -2275,7 +2683,7 @@ MuseScore {
             var raw = importFile.read()
             if (!raw || raw.length === 0) {
                 importStatus.text = "FAILED: file is empty or not found"
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
             var data = JSON.parse(raw)
@@ -2283,7 +2691,7 @@ MuseScore {
 
             if (!Array.isArray(imported) || imported.length === 0) {
                 importStatus.text = "FAILED: no voicings array found in file"
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
 
@@ -2291,7 +2699,7 @@ MuseScore {
             var errors = validateImport(imported)
             if (errors.length > 0) {
                 importStatus.text = "FAILED: " + errors[0]
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
 
@@ -2322,14 +2730,14 @@ MuseScore {
                 importStatus.text = "SUCCESS: " + added + " voicings added"
                     + (skipped > 0 ? ", " + skipped + " duplicates skipped" : "")
                     + " (" + voicingsData.length + " total)"
-                importStatus.color = "#060"
+                importStatus.color = theme.successText
             } else {
                 importStatus.text = "No new voicings — all " + skipped + " were duplicates"
-                importStatus.color = "#888"
+                importStatus.color = theme.textMuted
             }
         } catch (e) {
             importStatus.text = "FAILED: " + e
-            importStatus.color = "#c00"
+            importStatus.color = theme.errorText
         }
     }
 
@@ -2360,54 +2768,244 @@ MuseScore {
         anchors.margins: 8
         spacing: 6
 
-        // Header with settings toggle
-        RowLayout {
+        // Header
+        Label {
+            text: "Siege Analytics Chord Library"
+            font.pixelSize: 16
+            font.bold: true
             Layout.fillWidth: true
-
-            Label {
-                text: "Siege Analytics Chord Library"
-                font.pixelSize: 16
-                font.bold: true
-                Layout.fillWidth: true
-            }
-
-            Button {
-                text: "Settings"
-                font.pixelSize: 11
-                visible: !showSettings && !showToolResults
-                onClicked: { showSettings = true; showToolResults = false }
-            }
-
-            Button {
-                text: "Library"
-                font.pixelSize: 11
-                visible: showSettings || showToolResults
-                onClicked: { showSettings = false; showToolResults = false }
-            }
+            visible: !showToolResults
         }
 
-        // === Settings panel ===
+        // Tab navigation
+        TabBar {
+            id: tabBar
+            Layout.fillWidth: true
+            visible: !showToolResults
+            currentIndex: currentTab
+            onCurrentIndexChanged: currentTab = currentIndex
+
+            TabButton { text: "Library"; font.pixelSize: 10 }
+            TabButton { text: "Score Tools"; font.pixelSize: 10 }
+            TabButton { text: "Export"; font.pixelSize: 10 }
+            TabButton { text: "Import"; font.pixelSize: 10 }
+            TabButton { text: "Practice"; font.pixelSize: 10 }
+            TabButton { text: "Settings"; font.pixelSize: 10 }
+        }
+
+        // === Tab 1: Score Tools ===
         Flickable {
-            visible: showSettings
+            visible: currentTab === 1 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: settingsColumn.implicitHeight
+            contentHeight: scoreToolsColumn.implicitHeight
             clip: true
             flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
             boundsBehavior: Flickable.StopAtBounds
 
             ColumnLayout {
-                id: settingsColumn
-                width: parent.width - 16  // leave room for scrollbar
+                id: scoreToolsColumn
+                width: parent.width - 16
                 spacing: 12
 
-                // --- Source URL ---
+                Label {
+                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Analyze Score"
+                        font.pixelSize: 10
+                        onClicked: analyzeCurrentScore()
+                    }
+
+                    Button {
+                        text: "Voice Leading"
+                        font.pixelSize: 10
+                        onClicked: runVoiceLeading()
+                    }
+
+                    Button {
+                        text: "Suggest Fingerings"
+                        font.pixelSize: 10
+                        onClicked: suggestFingerings()
+                    }
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                Label {
+                    text: "TEXT ANNOTATIONS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text.\nAt positions with existing diagrams, annotation matches the diagram."
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Annotate Staff Text"
+                        font.pixelSize: 10
+                        onClicked: addFingeringsToScore()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Adds fret notation as staff text — reads existing diagrams when present"
+                    }
+
+                    Button {
+                        text: "Fingering Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportFingeringSheet()
+                    }
+
+                    CheckBox {
+                        text: "Skip diagrams"
+                        font.pixelSize: 9
+                        checked: skipDiagramPositions
+                        onCheckedChanged: skipDiagramPositions = checked
+                        ToolTip.visible: hovered
+                        ToolTip.text: "When checked, skip positions that already have a fretboard diagram"
+                    }
+                }
+
+                Label {
+                    id: toolStatus
+                    visible: text.length > 0
+                    font.pixelSize: 10
+                    font.family: "Menlo, Monaco, Courier New, monospace"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    padding: 8
+                    background: Rectangle {
+                        color: theme.consoleBg
+                        radius: 4
+                    }
+                }
+            }
+        }
+
+        // === Tab 2: Export ===
+        Flickable {
+            visible: currentTab === 2 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: exportColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: exportColumn
+                width: parent.width - 16
+                spacing: 12
+
+                Label {
+                    text: "Save current library to a file:"
+                    font.pixelSize: 11
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: exportPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        text: homePath() + "/Documents/chord-library-export.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: openFileBrowser("save", exportPathField, null)
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Button {
+                        text: "Export JSON"
+                        font.pixelSize: 10
+                        onClicked: doExport()
+                    }
+
+                    Button {
+                        text: "Export MusicXML"
+                        font.pixelSize: 10
+                        onClicked: exportMusicXML()
+                    }
+
+                    Button {
+                        text: "Export GP5"
+                        font.pixelSize: 10
+                        onClicked: exportGP5()
+                    }
+
+                    Button {
+                        text: "Chord Sheet (PDF)"
+                        font.pixelSize: 10
+                        onClicked: exportChordSheet()
+                    }
+
+                    Button {
+                        text: "Diagrams (SVG)"
+                        font.pixelSize: 10
+                        onClicked: exportDiagramsSVG()
+                    }
+                }
+
+                Label {
+                    id: exportStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
+        }
+
+        // === Tab 3: Import ===
+        Flickable {
+            visible: currentTab === 3 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: importColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: importColumn
+                width: parent.width - 16
+                spacing: 12
+
+                // --- Voicing Source URL ---
                 Label {
                     text: "VOICING SOURCE URL"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
@@ -2454,14 +3052,327 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                // --- Import Voicings ---
+                Label {
+                    text: "IMPORT VOICINGS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Merge voicings from a JSON file (duplicates skipped):"
+                    font.pixelSize: 11
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: importPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "/path/to/voicings.json"
+                        selectByMouse: true
+                    }
+
+                    Button {
+                        text: "Browse"
+                        onClicked: openFileBrowser("open", importPathField, null)
+                    }
+                }
+
+                Button {
+                    text: "Import & Merge"
+                    onClicked: doImport()
+                }
+
+                Label {
+                    id: importStatus
+                    visible: text.length > 0
+                    font.pixelSize: 11
+                    font.bold: true
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
+        }
+
+        // === Tab 4: Practice (Flash Cards) ===
+        Flickable {
+            visible: currentTab === 4 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: practiceColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: practiceColumn
+                width: parent.width - 16
+                spacing: 12
+
+                // Score display
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: "Score: " + practiceCorrect + " / " + practiceTotal
+                        font.pixelSize: 13
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: practiceTotal > 0
+                            ? Math.round(practiceCorrect / practiceTotal * 100) + "% correct"
+                            : ""
+                        font.pixelSize: 11
+                        color: theme.textMuted
+                    }
+
+                    Button {
+                        text: "Reset"
+                        font.pixelSize: 10
+                        onClicked: practiceReset()
+                    }
+                }
+
+                // Mode selector
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    Label {
+                        text: "Mode:"
+                        font.pixelSize: 11
+                    }
+
+                    Button {
+                        text: "Name the Chord"
+                        font.pixelSize: 10
+                        highlighted: practiceMode === "name"
+                        onClicked: { practiceMode = "name"; practiceNext() }
+                    }
+
+                    Button {
+                        text: "Find the Shape"
+                        font.pixelSize: 10
+                        highlighted: practiceMode === "shape"
+                        onClicked: { practiceMode = "shape"; practiceNext() }
+                    }
+                }
+
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                // Flash card area
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 220
+                    radius: 8
+                    color: theme.cardBackground
+                    border.color: theme.cardBorder
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 12
+                        spacing: 8
+
+                        // "Name the Chord" mode: show fretboard, hide name
+                        Label {
+                            visible: practiceMode === "name" && !practiceShowAnswer
+                            text: "What chord is this voicing?"
+                            font.pixelSize: 12
+                            color: theme.textSecondary
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        // "Find the Shape" mode: show chord name, hide fretboard
+                        Label {
+                            visible: practiceMode === "shape"
+                            text: practiceVoicing ? practiceVoicing.name || "" : ""
+                            font.pixelSize: 16
+                            font.bold: true
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        Label {
+                            visible: practiceMode === "shape" && !practiceShowAnswer
+                            text: "Visualize the fretboard shape, then reveal"
+                            font.pixelSize: 11
+                            color: theme.textMuted
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        // Fretboard preview (hidden in "shape" mode until revealed)
+                        Canvas {
+                            id: practiceCanvas
+                            Layout.preferredWidth: 120
+                            Layout.preferredHeight: 140
+                            Layout.alignment: Qt.AlignHCenter
+                            visible: practiceMode === "name" || practiceShowAnswer
+
+                            property var pv: practiceVoicing
+
+                            onPvChanged: requestPaint()
+
+                            onPaint: {
+                                var ctx = getContext("2d")
+                                ctx.clearRect(0, 0, width, height)
+                                var v = pv
+                                if (!v || !v.dots) return
+
+                                var ns = v.strings || 6
+                                var nf = v.visible_frets || 4
+                                var mg = 10, tm = 18
+                                var ss = (width - 2 * mg) / (ns - 1)
+                                var fs = (height - tm - mg) / nf
+
+                                var isDark = theme.isDark
+                                var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
+                                var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
+                                var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
+
+                                ctx.strokeStyle = gridColor
+                                ctx.lineWidth = 0.5
+                                for (var s = 0; s < ns; s++) {
+                                    ctx.beginPath()
+                                    ctx.moveTo(mg + s * ss, tm)
+                                    ctx.lineTo(mg + s * ss, height - mg)
+                                    ctx.stroke()
+                                }
+                                for (var f = 0; f <= nf; f++) {
+                                    ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                                    ctx.beginPath()
+                                    ctx.moveTo(mg, tm + f * fs)
+                                    ctx.lineTo(width - mg, tm + f * fs)
+                                    ctx.stroke()
+                                }
+                                if ((v.fret_number || 0) > 1) {
+                                    ctx.fillStyle = textColor
+                                    ctx.font = "10px sans-serif"
+                                    ctx.textAlign = "right"
+                                    ctx.fillText(v.fret_number, mg - 3, tm + fs * 0.6)
+                                }
+                                var dots = v.dots || []
+                                var ivs = v.intervals || []
+                                for (var d = 0; d < dots.length; d++) {
+                                    var iv = (d < ivs.length) ? ivs[d] : ""
+                                    if (iv === "1") ctx.fillStyle = theme.dotRoot
+                                    else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
+                                    else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
+                                    else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
+                                    else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
+                                    else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
+                                    else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
+                                    else ctx.fillStyle = theme.dotDefault
+                                    ctx.beginPath()
+                                    ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 5, 0, 2 * Math.PI)
+                                    ctx.fill()
+                                }
+                                ctx.fillStyle = muteColor
+                                ctx.font = "11px sans-serif"
+                                ctx.textAlign = "center"
+                                var mutes = v.mutes || []
+                                for (var m = 0; m < mutes.length; m++) {
+                                    ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 3)
+                                }
+                                ctx.strokeStyle = muteColor
+                                ctx.lineWidth = 1
+                                var opens = v.open || []
+                                for (var o = 0; o < opens.length; o++) {
+                                    ctx.beginPath()
+                                    ctx.arc(mg + (ns - opens[o]) * ss, tm - 7, 3.5, 0, 2 * Math.PI)
+                                    ctx.stroke()
+                                }
+                            }
+                        }
+
+                        // Answer (chord name + details)
+                        Label {
+                            visible: practiceShowAnswer && practiceMode === "name"
+                            text: practiceVoicing ? practiceVoicing.name || "" : ""
+                            font.pixelSize: 14
+                            font.bold: true
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        Label {
+                            visible: practiceShowAnswer
+                            text: practiceVoicing
+                                ? (practiceVoicing.intervals || []).join(" ")
+                                    + "  |  Fret " + (practiceVoicing.fret_number || "?")
+                                    + "  |  " + (practiceVoicing.category || "")
+                                : ""
+                            font.pixelSize: 10
+                            color: theme.textSecondary
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+                    }
+                }
+
+                // Action buttons
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 12
+
+                    Button {
+                        visible: !practiceShowAnswer
+                        text: "Reveal Answer"
+                        font.pixelSize: 12
+                        onClicked: practiceReveal()
+                    }
+
+                    Button {
+                        visible: practiceShowAnswer
+                        text: "✓ Got it"
+                        font.pixelSize: 12
+                        onClicked: practiceMarkCorrect()
+                    }
+
+                    Button {
+                        visible: practiceShowAnswer
+                        text: "✗ Missed"
+                        font.pixelSize: 12
+                        onClicked: practiceMarkWrong()
+                    }
+
+                    Button {
+                        text: "Skip"
+                        font.pixelSize: 10
+                        onClicked: practiceNext()
+                    }
+                }
+            }
+        }
+
+        // === Tab 5: Settings ===
+        Flickable {
+            visible: currentTab === 5 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: settingsColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: settingsColumn
+                width: parent.width - 16
+                spacing: 12
 
                 // --- Diagram placement ---
                 Label {
                     text: "DIAGRAM PLACEMENT"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
@@ -2479,13 +3390,12 @@ MuseScore {
                 Label {
                     text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
                     font.pixelSize: 10
-                    
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Tuning ---
                 Label {
@@ -2608,209 +3518,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
-
-                // --- Export ---
-                Label {
-                    text: "EXPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Save current library to a file:"
-                    font.pixelSize: 11
-                    
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: exportPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        text: homePath() + "/Documents/chord-library-export.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("save", exportPathField, null)
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Export JSON"
-                        font.pixelSize: 10
-                        onClicked: doExport()
-                    }
-
-                    Button {
-                        text: "Export MusicXML"
-                        font.pixelSize: 10
-                        onClicked: exportMusicXML()
-                    }
-
-                    Button {
-                        text: "Export GP5"
-                        font.pixelSize: 10
-                        onClicked: exportGP5()
-                    }
-
-                    Button {
-                        text: "Chord Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportChordSheet()
-                    }
-
-                    Button {
-                        text: "Diagrams (SVG)"
-                        font.pixelSize: 10
-                        onClicked: exportDiagramsSVG()
-                    }
-                }
-
-                Label {
-                    id: exportStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
-
-                // --- Import ---
-                Label {
-                    text: "IMPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Merge voicings from a JSON file (duplicates skipped):"
-                    font.pixelSize: 11
-                    
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: importPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/voicings.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("open", importPathField, null)
-                    }
-                }
-
-                Button {
-                    text: "Import & Merge"
-                    onClicked: doImport()
-                }
-
-                Label {
-                    id: importStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
-
-                // --- Tools ---
-                Label {
-                    text: "TOOLS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Analyze Score"
-                        font.pixelSize: 10
-                        onClicked: analyzeCurrentScore()
-                    }
-
-                    Button {
-                        text: "Voice Leading"
-                        font.pixelSize: 10
-                        onClicked: runVoiceLeading()
-                    }
-
-                    Button {
-                        text: "Suggest Fingerings"
-                        font.pixelSize: 10
-                        onClicked: suggestFingerings()
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Add Fingering Text"
-                        font.pixelSize: 10
-                        onClicked: addFingeringsToScore()
-                    }
-
-                    Button {
-                        text: "Fingering Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportFingeringSheet()
-                    }
-                }
-
-                Label {
-                    id: toolStatus
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    font.family: "Menlo, Monaco, Courier New, monospace"
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    padding: 8
-                    background: Rectangle {
-                        color: Qt.rgba(0, 0, 0, 0.05)
-                        radius: 4
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Save to Library ---
                 Label {
@@ -2921,7 +3629,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Library Health ---
                 Label {
@@ -2997,7 +3705,7 @@ MuseScore {
                                 dismissFinding(key)
                                 dismissKeyField.text = ""
                                 hygieneResult.text = "Dismissed. Run audit again to see updated results."
-                                hygieneResult.color = "#060"
+                                hygieneResult.color = theme.successText
                             }
                         }
                     }
@@ -3024,28 +3732,25 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- About ---
                 Label {
                     text: "ABOUT"
                     font.pixelSize: 11
                     font.bold: true
-                    
                     Layout.fillWidth: true
                 }
 
                 Label {
-                    text: "Siege Analytics Chord Library v1.2.0"
+                    text: "Siege Analytics Chord Library v1.5.0"
                     font.pixelSize: 12
                     font.bold: true
-                    
                 }
 
                 Label {
                     text: "Author: Dheeraj Chand"
                     font.pixelSize: 11
-                    
                 }
 
                 Label {
@@ -3094,13 +3799,14 @@ MuseScore {
             }
         }
 
-        // === Tool Results panel ===
+        // === Tool Results panel (overlay) ===
         ColumnLayout {
             visible: showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
             spacing: 8
 
+            // Header row with title and nav buttons
             RowLayout {
                 Layout.fillWidth: true
 
@@ -3115,7 +3821,7 @@ MuseScore {
                     text: "← Prev"
                     visible: batchQueue.length > 0 && _batchIndex > 1
                     onClicked: {
-                        _batchIndex = _batchIndex - 2  // go back one (batchShowNext increments)
+                        _batchIndex = _batchIndex - 2
                         batchShowNext()
                     }
                 }
@@ -3134,19 +3840,286 @@ MuseScore {
                         showToolResults = false
                     }
                 }
+            }
 
-                Button {
-                    text: "Settings"
-                    onClicked: { showToolResults = false; showSettings = true }
+            // Progress bar (only during Voice Score walkthrough)
+            ColumnLayout {
+                visible: batchQueue.length > 0
+                Layout.fillWidth: true
+                spacing: 4
+
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: "Step " + Math.min(_batchIndex, batchTotal) + " of " + batchTotal
+                        font.pixelSize: 11
+                        font.bold: true
+                    }
+
+                    Item { Layout.fillWidth: true }
+
+                    Label {
+                        text: Math.round(Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1) * 100) + "%"
+                        font.pixelSize: 11
+                        color: theme.textMuted
+                    }
+                }
+
+                // Progress bar track
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 6
+                    radius: 3
+                    color: theme.isDark ? Qt.rgba(1, 1, 1, 0.1) : Qt.rgba(0, 0, 0, 0.1)
+
+                    Rectangle {
+                        width: parent.width * Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1)
+                        height: parent.height
+                        radius: 3
+                        color: theme.successText
+
+                        Behavior on width { NumberAnimation { duration: 200 } }
+                    }
                 }
             }
 
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
-                color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
+                color: theme.divider
             }
 
+            // Mini fretboard preview (only during Voice Score walkthrough)
+            RowLayout {
+                visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                Layout.fillWidth: true
+                spacing: 12
+
+                Canvas {
+                    id: batchPreviewCanvas
+                    Layout.preferredWidth: 70
+                    Layout.preferredHeight: 90
+
+                    property var previewVoicing: {
+                        if (batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length)
+                            return _batchChords[_batchIndex - 1].voicing || null
+                        return null
+                    }
+
+                    onPreviewVoicingChanged: requestPaint()
+
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+                        var v = previewVoicing
+                        if (!v || !v.dots) return
+
+                        var ns = v.strings || 6
+                        var nf = v.visible_frets || 4
+                        var mg = 6, tm = 14
+                        var ss = (width - 2 * mg) / (ns - 1)
+                        var fs = (height - tm - mg) / nf
+
+                        var isDark = theme.isDark
+                        var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
+                        var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
+                        var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
+
+                        // Strings
+                        ctx.strokeStyle = gridColor
+                        ctx.lineWidth = 0.5
+                        for (var s = 0; s < ns; s++) {
+                            ctx.beginPath()
+                            ctx.moveTo(mg + s * ss, tm)
+                            ctx.lineTo(mg + s * ss, height - mg)
+                            ctx.stroke()
+                        }
+
+                        // Frets
+                        for (var f = 0; f <= nf; f++) {
+                            ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                            ctx.beginPath()
+                            ctx.moveTo(mg, tm + f * fs)
+                            ctx.lineTo(width - mg, tm + f * fs)
+                            ctx.stroke()
+                        }
+
+                        // Fret number
+                        if ((v.fret_number || 0) > 1) {
+                            ctx.fillStyle = textColor
+                            ctx.font = "9px sans-serif"
+                            ctx.textAlign = "right"
+                            ctx.fillText(v.fret_number, mg - 2, tm + fs * 0.6)
+                        }
+
+                        // Dots with interval coloring
+                        var dots = v.dots || []
+                        var ivs = v.intervals || []
+                        for (var d = 0; d < dots.length; d++) {
+                            var iv = (d < ivs.length) ? ivs[d] : ""
+                            if (iv === "1") ctx.fillStyle = theme.dotRoot
+                            else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
+                            else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
+                            else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
+                            else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
+                            else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
+                            else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
+                            else ctx.fillStyle = theme.dotDefault
+
+                            ctx.beginPath()
+                            ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 4, 0, 2 * Math.PI)
+                            ctx.fill()
+                        }
+
+                        // Mutes
+                        ctx.fillStyle = muteColor
+                        ctx.font = "10px sans-serif"
+                        ctx.textAlign = "center"
+                        var mutes = v.mutes || []
+                        for (var m = 0; m < mutes.length; m++) {
+                            ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
+                        }
+
+                        // Opens
+                        ctx.strokeStyle = muteColor
+                        ctx.lineWidth = 1
+                        var opens = v.open || []
+                        for (var o = 0; o < opens.length; o++) {
+                            ctx.beginPath()
+                            ctx.arc(mg + (ns - opens[o]) * ss, tm - 6, 3, 0, 2 * Math.PI)
+                            ctx.stroke()
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Label {
+                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                        text: {
+                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                                var item = _batchChords[_batchIndex - 1]
+                                return item.voicing.name || item.text
+                            }
+                            return ""
+                        }
+                        font.pixelSize: 13
+                        font.bold: true
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                        text: {
+                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                                var item = _batchChords[_batchIndex - 1]
+                                return (item.voicing.intervals || []).join(" ") + "  |  Fret " + (item.voicing.fret_number || "?")
+                            }
+                            return ""
+                        }
+                        font.pixelSize: 10
+                        color: theme.textSecondary
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+
+            // Per-chord voicing controls (melody + category override)
+            RowLayout {
+                visible: batchQueue.length > 0
+                Layout.fillWidth: true
+                spacing: 6
+
+                Label {
+                    text: "Melody:"
+                    font.pixelSize: 10
+                }
+
+                TextField {
+                    id: stepMelodyField
+                    implicitWidth: 40
+                    font.pixelSize: 10
+                    placeholderText: "auto"
+                    selectByMouse: true
+                    text: {
+                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                            var midi = _batchChords[_batchIndex - 1].melodyMidi
+                            if (midi >= 0) {
+                                var names = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
+                                return names[midi % 12]
+                            }
+                        }
+                        return ""
+                    }
+                    onAccepted: revoiceCurrentStep()
+                }
+
+                Label {
+                    text: "Type:"
+                    font.pixelSize: 10
+                }
+
+                ComboBox {
+                    id: stepCategoryCombo
+                    implicitWidth: 100
+                    font.pixelSize: 10
+                    model: ["Any", "Shell", "Drop 2", "Drop 3", "Extended", "Altered", "Quartal"]
+                    property var categoryMap: ({"Any":"", "Shell":"shell", "Drop 2":"drop2", "Drop 3":"drop3", "Extended":"extended", "Altered":"altered", "Quartal":"quartal"})
+                    currentIndex: {
+                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                            var cat = _batchChords[_batchIndex - 1].voicing.category || ""
+                            var labels = ["Any","Shell","Drop 2","Drop 3","Extended","Altered","Quartal"]
+                            var values = ["","shell","drop2","drop3","extended","altered","quartal"]
+                            var idx = values.indexOf(cat)
+                            return idx >= 0 ? idx : 0
+                        }
+                        return 0
+                    }
+                }
+
+                Button {
+                    text: "Re-voice"
+                    font.pixelSize: 10
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Re-select voicing with edited melody and/or category"
+                    onClicked: revoiceCurrentStep()
+                }
+            }
+
+            // Keyboard shortcut hint
+            Rectangle {
+                visible: batchQueue.length > 0
+                Layout.fillWidth: true
+                height: pasteHintRow.implicitHeight + 12
+                radius: 4
+                color: theme.consoleBg
+
+                RowLayout {
+                    id: pasteHintRow
+                    anchors.fill: parent
+                    anchors.margins: 6
+                    spacing: 8
+
+                    Label {
+                        text: "⌘V"
+                        font.pixelSize: 16
+                        font.bold: true
+                    }
+
+                    Label {
+                        text: "to paste diagram after clicking the target note"
+                        font.pixelSize: 11
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+
+            // Content area (step instructions or general results)
             Flickable {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -3168,9 +4141,9 @@ MuseScore {
             }
         }
 
-        // === Main panel (hidden when settings open) ===
+        // === Tab 0: Library (main panel) ===
         TextField {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: searchField
             placeholderText: "Search voicings..."
             Layout.fillWidth: true
@@ -3181,7 +4154,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3212,7 +4185,7 @@ MuseScore {
         }
 
         ComboBox {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: qualityCombo
             model: qualityList
             Layout.fillWidth: true
@@ -3223,7 +4196,7 @@ MuseScore {
         }
 
         RowLayout {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 4
 
@@ -3250,14 +4223,25 @@ MuseScore {
             }
 
             Button {
-                text: batchQueue.length > 0 ? "Stop Voicing" : "Voice Score"
+                text: "Voice Here"
                 font.pixelSize: 10
-                implicitWidth: 80
+                implicitWidth: 64
+                ToolTip.visible: hovered
+                ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
+                onClicked: voiceAtCursor()
+            }
+
+            Button {
+                text: batchQueue.length > 0 ? "Stop" : "Voice All"
+                font.pixelSize: 10
+                implicitWidth: 64
+                ToolTip.visible: hovered
+                ToolTip.text: "Voice all chord symbols in the score"
                 onClicked: {
                     if (batchQueue.length > 0) {
                         batchQueue = []
                         statusMsg.text = "Voicing stopped"
-                        statusMsg.color = "#888"
+                        statusMsg.color = theme.textMuted
                     } else {
                         batchInsert()
                     }
@@ -3274,27 +4258,45 @@ MuseScore {
                     statusMsg.text = sortByProximity
                         ? "Sorting by proximity to last voicing"
                         : "Default sort order"
-                    statusMsg.color = "#888"
+                    statusMsg.color = theme.textMuted
                 }
+            }
+
+            Button {
+                text: melodyOnTop ? "Melody ✓" : "Melody"
+                font.pixelSize: 10
+                implicitWidth: 56
+                ToolTip.visible: hovered
+                ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
+                onClicked: {
+                    melodyOnTop = !melodyOnTop
+                    statusMsg.text = melodyOnTop
+                        ? "Melody on top: voicings will match the melody note"
+                        : "Melody on top: off"
+                    statusMsg.color = theme.textMuted
+                }
+            }
+
+            TextField {
+                id: melodyOverrideField
+                visible: melodyOnTop
+                implicitWidth: 36
+                font.pixelSize: 10
+                placeholderText: "auto"
+                selectByMouse: true
+                ToolTip.visible: hovered
+                ToolTip.text: "Override melody note (e.g. E, Bb, F#). Leave blank for auto-detect."
             }
         }
 
         // Color legend for fretboard dot intervals
         Flow {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             spacing: 8
 
             Repeater {
-                model: [
-                    {label: "R", color: "#D32F2F"},
-                    {label: "3", color: "#1976D2"},
-                    {label: "5", color: "#388E3C"},
-                    {label: "7", color: "#F57C00"},
-                    {label: "9", color: "#7B1FA2"},
-                    {label: "4/11", color: "#00897B"},
-                    {label: "6/13", color: "#FBC02D"}
-                ]
+                model: theme.legendColors
 
                 Row {
                     spacing: 2
@@ -3312,7 +4314,7 @@ MuseScore {
         }
 
         ListView {
-            visible: !showSettings && !showToolResults
+            visible: currentTab === 0 && !showToolResults
             id: voicingList
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -3324,8 +4326,8 @@ MuseScore {
                 width: voicingList.width
                 height: 80
                 radius: 4
-                color: ma.containsMouse ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
-                border.color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
+                color: ma.containsMouse ? theme.chipHover : theme.chipBackground
+                border.color: theme.divider
                 border.width: 1
 
                 property var v: filteredData[index] || {}
@@ -3359,9 +4361,8 @@ MuseScore {
                             var ss = (width - 2 * mg) / (ns - 1)
                             var fs = (height - tm - mg) / nf
 
-                            // Detect dark mode from system palette
-                            var bgColor = palette.window.color || Qt.rgba(1,1,1,1)
-                            var isDark = (bgColor.r + bgColor.g + bgColor.b) / 3 < 0.5
+                            // Dark mode colors from centralized theme
+                            var isDark = theme.isDark
                             var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
                             var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
                             var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
@@ -3399,23 +4400,23 @@ MuseScore {
                             var ivs = v.intervals || []
                             for (var d = 0; d < dots.length; d++) {
                                 var iv = (d < ivs.length) ? ivs[d] : ""
-                                // Color by interval family
+                                // Color by interval family (from theme palette)
                                 if (iv === "1")
-                                    ctx.fillStyle = isDark ? "#EF5350" : "#D32F2F"       // root — red
+                                    ctx.fillStyle = theme.dotRoot
                                 else if (iv === "3" || iv === "b3")
-                                    ctx.fillStyle = isDark ? "#42A5F5" : "#1976D2"       // 3rd — blue
+                                    ctx.fillStyle = theme.dotThird
                                 else if (iv === "5" || iv === "b5" || iv === "#5")
-                                    ctx.fillStyle = isDark ? "#66BB6A" : "#388E3C"       // 5th — green
+                                    ctx.fillStyle = theme.dotFifth
                                 else if (iv === "7" || iv === "b7" || iv === "bb7")
-                                    ctx.fillStyle = isDark ? "#FFA726" : "#F57C00"       // 7th — orange
+                                    ctx.fillStyle = theme.dotSeventh
                                 else if (iv === "6" || iv === "13" || iv === "b13")
-                                    ctx.fillStyle = isDark ? "#FFEE58" : "#FBC02D"       // 6th/13th — gold
+                                    ctx.fillStyle = theme.dotSixth
                                 else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
-                                    ctx.fillStyle = isDark ? "#CE93D8" : "#7B1FA2"       // 9th — purple
+                                    ctx.fillStyle = theme.dotNinth
                                 else if (iv === "4" || iv === "11" || iv === "#11")
-                                    ctx.fillStyle = isDark ? "#4DB6AC" : "#00897B"       // 4th/11th — teal
+                                    ctx.fillStyle = theme.dotFourth
                                 else
-                                    ctx.fillStyle = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.9) : Qt.rgba(0.3, 0.3, 0.3, 0.9)
+                                    ctx.fillStyle = theme.dotDefault
 
                                 var dx = mg + (ns - dots[d].string) * ss
                                 var dy = tm + (dots[d].fret - 0.5) * fs

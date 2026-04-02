@@ -6,8 +6,8 @@ Rectangle {
     id: card
     height: 80
     radius: 4
-    color: mouseArea.containsMouse ? "#e8e8e8" : "#f5f5f5"
-    border.color: "#ddd"
+    color: mouseArea.containsMouse ? theme.cardHover : theme.cardBackground
+    border.color: theme.cardBorder
     border.width: 1
 
     property var voicing: ({})
@@ -54,7 +54,7 @@ Rectangle {
                 var fretSpacing = (h - topMargin - margin) / numFrets
 
                 // Draw strings
-                ctx.strokeStyle = "#999"
+                ctx.strokeStyle = theme.fretGrid
                 ctx.lineWidth = 0.5
                 for (var s = 0; s < numStrings; s++) {
                     var x = margin + s * stringSpacing
@@ -75,7 +75,7 @@ Rectangle {
                 }
 
                 // Draw dots
-                ctx.fillStyle = "#333"
+                ctx.fillStyle = theme.fretDot
                 var dots = voicing.dots || []
                 for (var d = 0; d < dots.length; d++) {
                     // Convert string number (1=high e) to x position (left=low)
@@ -89,7 +89,7 @@ Rectangle {
 
                 // Draw mute markers
                 var mutes = voicing.mutes || []
-                ctx.fillStyle = "#999"
+                ctx.fillStyle = theme.fretMute
                 ctx.font = "8px sans-serif"
                 ctx.textAlign = "center"
                 for (var m = 0; m < mutes.length; m++) {
@@ -105,7 +105,7 @@ Rectangle {
                     var openX = margin + openIdx * stringSpacing
                     ctx.beginPath()
                     ctx.arc(openX, topMargin - 5, 3, 0, 2 * Math.PI)
-                    ctx.strokeStyle = "#999"
+                    ctx.strokeStyle = theme.fretGrid
                     ctx.lineWidth = 1
                     ctx.stroke()
                 }
@@ -128,21 +128,21 @@ Rectangle {
             Label {
                 text: (voicing.intervals || []).join(" ") + "  |  " + (voicing.context || "")
                 font.pixelSize: 11
-                color: "#666"
+                color: theme.textSecondary
                 Layout.fillWidth: true
             }
 
             Label {
                 text: "Fret " + (voicing.fret_number || "?") + "  |  " + (voicing.notes || []).join(" ")
                 font.pixelSize: 10
-                color: "#888"
+                color: theme.textMuted
                 Layout.fillWidth: true
             }
 
             Label {
                 text: (voicing.tags || []).join(", ")
                 font.pixelSize: 9
-                color: "#aaa"
+                color: theme.textFaint
                 elide: Text.ElideRight
                 Layout.fillWidth: true
             }
