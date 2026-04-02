@@ -22,6 +22,67 @@ MuseScore {
     // System palette for dark mode detection
     SystemPalette { id: palette }
 
+    // Centralized theme palette — all UI colors derive from OS light/dark mode
+    QtObject {
+        id: theme
+        readonly property bool isDark: {
+            var bg = palette.window
+            return (bg.r + bg.g + bg.b) / 3 < 0.5
+        }
+
+        // Card / surface colors
+        readonly property color cardBackground: isDark ? "#2d2d2d" : "#f5f5f5"
+        readonly property color cardHover:      isDark ? "#3a3a3a" : "#e8e8e8"
+        readonly property color cardBorder:     isDark ? "#555555" : "#dddddd"
+
+        // Text hierarchy
+        readonly property color textPrimary:   isDark ? "#e0e0e0" : "#333333"
+        readonly property color textSecondary:  isDark ? "#b0b0b0" : "#666666"
+        readonly property color textMuted:      isDark ? "#888888" : "#888888"
+        readonly property color textFaint:      isDark ? "#777777" : "#aaaaaa"
+
+        // Status colors
+        readonly property color successText: isDark ? "#4caf50" : "#006600"
+        readonly property color errorText:   isDark ? "#ef5350" : "#cc0000"
+
+        // Dividers and borders
+        readonly property color divider: Qt.rgba(0.5, 0.5, 0.5, isDark ? 0.4 : 0.3)
+
+        // Tool status console background
+        readonly property color consoleBg: isDark ? Qt.rgba(1, 1, 1, 0.08) : Qt.rgba(0, 0, 0, 0.05)
+
+        // Legend / chip backgrounds
+        readonly property color chipBackground: isDark ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
+        readonly property color chipHover:      isDark ? Qt.rgba(0.5, 0.5, 0.5, 0.3) : Qt.rgba(0.5, 0.5, 0.5, 0.2)
+        readonly property color chipBorder:     Qt.rgba(0.5, 0.5, 0.5, 0.3)
+
+        // Fretboard canvas (thumbnail in VoicingCard)
+        readonly property color fretGrid:   isDark ? "#999999" : "#999999"
+        readonly property color fretDot:    isDark ? "#e0e0e0" : "#333333"
+        readonly property color fretMute:   isDark ? "#b0b0b0" : "#999999"
+
+        // Interval dot colors — light and dark variants
+        readonly property color dotRoot:    isDark ? "#EF5350" : "#D32F2F"
+        readonly property color dotThird:   isDark ? "#42A5F5" : "#1976D2"
+        readonly property color dotFifth:   isDark ? "#66BB6A" : "#388E3C"
+        readonly property color dotSeventh: isDark ? "#FFA726" : "#F57C00"
+        readonly property color dotNinth:   isDark ? "#CE93D8" : "#7B1FA2"
+        readonly property color dotFourth:  isDark ? "#4DB6AC" : "#00897B"
+        readonly property color dotSixth:   isDark ? "#FFEE58" : "#FBC02D"
+        readonly property color dotDefault: isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.9) : Qt.rgba(0.3, 0.3, 0.3, 0.9)
+
+        // Interval legend (light mode values — used in the static legend Flow)
+        readonly property var legendColors: [
+            {label: "R",    color: dotRoot},
+            {label: "3",    color: dotThird},
+            {label: "5",    color: dotFifth},
+            {label: "7",    color: dotSeventh},
+            {label: "9",    color: dotNinth},
+            {label: "4/11", color: dotFourth},
+            {label: "6/13", color: dotSixth}
+        ]
+    }
+
     // Data model for hygiene audit results
     ListModel { id: auditResultsModel }
 
@@ -159,7 +220,7 @@ MuseScore {
             showSettings = false
         } else {
             toolStatus.text = title + ": " + message
-            toolStatus.color = isSuccess ? "#060" : "#c00"
+            toolStatus.color = isSuccess ? theme.successText : theme.errorText
         }
     }
 
@@ -338,7 +399,7 @@ MuseScore {
     function batchInsert() {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -373,7 +434,7 @@ MuseScore {
 
         if (chords.length === 0) {
             statusMsg.text = "No matching chord symbols found"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -473,7 +534,7 @@ MuseScore {
                     rebuildFilterLists()
                     applyFilters()
                     statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
-                    statusMsg.color = "#060"
+                    statusMsg.color = theme.successText
                     console.log("Loaded " + cached.length + " voicings from local cache")
                     return true
                 }
@@ -572,7 +633,7 @@ MuseScore {
         var path = tuningImportPath.text.trim()
         if (!path) {
             tuningImportStatus.text = "Enter a file path"
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
         tuningFile.source = path
@@ -580,13 +641,13 @@ MuseScore {
             var raw = tuningFile.read()
             if (!raw || raw.length === 0) {
                 tuningImportStatus.text = "File not found or empty"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
             var tuning = JSON.parse(raw)
             if (!tuning.name || !tuning.strings) {
                 tuningImportStatus.text = "Invalid tuning: needs 'name' and 'strings' fields"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
 
@@ -601,10 +662,10 @@ MuseScore {
             saveSettings()
 
             tuningImportStatus.text = "Imported: " + tuning.name
-            tuningImportStatus.color = "#060"
+            tuningImportStatus.color = theme.successText
         } catch (e) {
             tuningImportStatus.text = "Failed: " + e
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
         }
     }
 
@@ -612,7 +673,7 @@ MuseScore {
         var name = tuningNameField.text.trim()
         if (!name) {
             tuningImportStatus.text = "Enter a tuning name"
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
 
@@ -623,7 +684,7 @@ MuseScore {
             var midi = noteNameToMidi(rawParts[p])
             if (midi < 0) {
                 tuningImportStatus.text = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
             pitches.push(midi)
@@ -632,7 +693,7 @@ MuseScore {
 
         if (pitches.length < numStrings) {
             tuningImportStatus.text = "Need " + numStrings + " pitches, got " + pitches.length
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
             return
         }
         pitches = pitches.slice(0, numStrings)
@@ -641,7 +702,7 @@ MuseScore {
         for (var i = 0; i < pitches.length; i++) {
             if (pitches[i] < 20 || pitches[i] > 100) {
                 tuningImportStatus.text = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
-                tuningImportStatus.color = "#c00"
+                tuningImportStatus.color = theme.errorText
                 return
             }
         }
@@ -674,10 +735,10 @@ MuseScore {
             // Show the note names as feedback
             var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
             tuningImportStatus.text = "Created: " + name + " (" + noteStr + ")"
-            tuningImportStatus.color = "#060"
+            tuningImportStatus.color = theme.successText
         } catch (e) {
             tuningImportStatus.text = "Failed to save: " + e
-            tuningImportStatus.color = "#c00"
+            tuningImportStatus.color = theme.errorText
         }
     }
 
@@ -689,17 +750,17 @@ MuseScore {
         // Parse fret number
         var fretNum = parseInt(saveFretField.text.trim())
         if (isNaN(fretNum) || fretNum < 0 || fretNum > 24) {
-            saveStatus.text = "Invalid fret number"; saveStatus.color = "#c00"; return
+            saveStatus.text = "Invalid fret number"; saveStatus.color = theme.errorText; return
         }
 
         // Parse dots: "6:1, 4:1, 3:2" → [{string:6, fret:1}, ...]
         var dotsStr = saveDotsField.text.trim()
-        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = "#c00"; return }
+        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = theme.errorText; return }
         var dotParts = dotsStr.split(",")
         var dots = []
         for (var d = 0; d < dotParts.length; d++) {
             var pair = dotParts[d].trim().split(":")
-            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = "#c00"; return }
+            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = theme.errorText; return }
             dots.push({ string: parseInt(pair[0]), fret: parseInt(pair[1]) })
         }
 
@@ -774,7 +835,7 @@ MuseScore {
         for (var j = 0; j < voicingsData.length; j++) {
             if (voicingsData[j].id === id) {
                 saveStatus.text = "ID already exists: " + id
-                saveStatus.color = "#c00"
+                saveStatus.color = theme.errorText
                 return
             }
         }
@@ -816,7 +877,7 @@ MuseScore {
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
         saveStatus.text = "Saved: " + voicing.name + keyNote
-        saveStatus.color = "#060"
+        saveStatus.color = theme.successText
     }
 
     // === Library hygiene audit ===
@@ -976,7 +1037,7 @@ MuseScore {
         if (dismissed > 0)
             summary += "\n(" + dismissed + " dismissed findings hidden)"
         hygieneResult.text = summary
-        hygieneResult.color = duplicates > 0 ? "#c00" : "#060"
+        hygieneResult.color = duplicates > 0 ? theme.errorText : theme.successText
 
         lastAuditResults = results
         for (var r = 0; r < results.length; r++)
@@ -1011,10 +1072,10 @@ MuseScore {
             applyFilters()
             saveToCache()
             hygieneResult.text = "Removed " + removed + " duplicates. " + voicingsData.length + " voicings remain."
-            hygieneResult.color = "#060"
+            hygieneResult.color = theme.successText
         } else {
             hygieneResult.text = "No duplicates found."
-            hygieneResult.color = "#060"
+            hygieneResult.color = theme.successText
         }
     }
 
@@ -1094,18 +1155,18 @@ MuseScore {
             hygieneResult.text = hygieneResult.text + "\nReport opened"
         } catch (e) {
             hygieneResult.text = "Failed to save report: " + e
-            hygieneResult.color = "#c00"
+            hygieneResult.color = theme.errorText
         }
     }
 
     // Pre-fill Save to Library from a selected FretDiagram in the score
     function captureFromScore() {
-        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = "#c00"; return }
+        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = theme.errorText; return }
 
         var sel = curScore.selection
         if (!sel || !sel.elements || sel.elements.length === 0) {
             saveStatus.text = "Select a fretboard diagram first"
-            saveStatus.color = "#c00"
+            saveStatus.color = theme.errorText
             return
         }
 
@@ -1123,10 +1184,10 @@ MuseScore {
 
             saveStatus.text = "Captured: " + strings + " strings, fret " + (fretOff + 1)
                 + "\nDots not readable from API — enter them manually."
-            saveStatus.color = "#060"
+            saveStatus.color = theme.successText
         } else {
             saveStatus.text = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
-            saveStatus.color = "#c00"
+            saveStatus.color = theme.errorText
         }
     }
 
@@ -1134,7 +1195,7 @@ MuseScore {
 
     function fetchVoicings() {
         statusMsg.text = "Loading voicings..."
-        statusMsg.color = "#666"
+        statusMsg.color = theme.textSecondary
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -1147,17 +1208,17 @@ MuseScore {
                         applyFilters()
                         saveToCache()
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
-                        statusMsg.color = "#060"
+                        statusMsg.color = theme.successText
                     } catch (e) {
                         statusMsg.text = "Failed to parse voicings: " + e
-                        statusMsg.color = "#c00"
+                        statusMsg.color = theme.errorText
                     }
                 } else if (xhr.status === 0) {
                     statusMsg.text = "Could not reach URL. Check connection or URL."
-                    statusMsg.color = "#c00"
+                    statusMsg.color = theme.errorText
                 } else {
                     statusMsg.text = "Failed to fetch: HTTP " + xhr.status
-                    statusMsg.color = "#c00"
+                    statusMsg.color = theme.errorText
                 }
             }
         }
@@ -1291,14 +1352,14 @@ MuseScore {
     function insertVoicing(voicing) {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
         var selection = curScore.selection
         if (!selection || !selection.elements || selection.elements.length === 0) {
             statusMsg.text = "Select a note or rest first"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1342,7 +1403,7 @@ MuseScore {
 
         if (targetTick < 0) {
             statusMsg.text = "Could not determine position. Select a note or rest."
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1379,7 +1440,7 @@ MuseScore {
         statusMsg.text = "Inserted " + transposed.name
             + " [" + transposed.notes.join(" ") + "]"
             + " (" + diagramPlacement + " staff)"
-        statusMsg.color = "#060"
+        statusMsg.color = theme.successText
     }
 
     // === Diagram insertion (setDot API or clipboard workaround) ===
@@ -1488,7 +1549,7 @@ MuseScore {
             if (sortByProximity) applyFilters()
             statusMsg.text = "Inserted " + displayName
                 + " [" + transposed.notes.join(" ") + "]"
-            statusMsg.color = "#060"
+            statusMsg.color = theme.successText
             return
         }
 
@@ -1501,7 +1562,7 @@ MuseScore {
             tempDiagramFile.write(xml)
         } catch (e) {
             statusMsg.text = "Failed to write clipboard XML: " + e
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -1513,7 +1574,7 @@ MuseScore {
         pasteTimer.start()
 
         statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
-        statusMsg.color = "#060"
+        statusMsg.color = theme.successText
     }
 
     // === Voicing preview (MIDI playback via ms-audio) ===
@@ -1648,7 +1709,7 @@ MuseScore {
         }
 
         statusMsg.text = "File browser not available in this MuseScore version. Type the path manually."
-        statusMsg.color = "#888"
+        statusMsg.color = theme.textMuted
     }
 
     // === Export/Import ===
@@ -1658,7 +1719,7 @@ MuseScore {
         var path = exportPathField.text.trim()
         if (!path) {
             exportStatus.text = "Enter a file path"
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
             return
         }
         try {
@@ -1666,10 +1727,10 @@ MuseScore {
             exportFile.source = path
             exportFile.write(data)
             exportStatus.text = "Exported " + voicingsData.length + " voicings"
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
         } catch (e) {
             exportStatus.text = "Export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1722,11 +1783,11 @@ MuseScore {
         try {
             exportFile.write(xml)
             exportStatus.text = "MusicXML: " + voicingsData.length + " voicings → " + path
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
             Qt.openUrlExternally(path)
         } catch (e) {
             exportStatus.text = "MusicXML export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1740,10 +1801,10 @@ MuseScore {
             tempDiagramFile.write(config)
             Qt.openUrlExternally(Qt.resolvedUrl("run-export.command"))
             exportStatus.text = "Export launched — output will open when ready"
-            exportStatus.color = "#060"
+            exportStatus.color = theme.successText
         } catch (e) {
             exportStatus.text = "Export failed: " + e
-            exportStatus.color = "#c00"
+            exportStatus.color = theme.errorText
         }
     }
 
@@ -1922,13 +1983,13 @@ MuseScore {
     function analyzeCurrentScore() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -1975,13 +2036,13 @@ MuseScore {
     function runVoiceLeading() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -2016,7 +2077,7 @@ MuseScore {
     function voiceEntireScore() {
         if (!curScore) {
             statusMsg.text = "No score open"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -2027,7 +2088,7 @@ MuseScore {
         var chords = collectScoreChords()
         if (chords.length === 0) {
             statusMsg.text = "No chord symbols found"
-            statusMsg.color = "#c00"
+            statusMsg.color = theme.errorText
             return
         }
 
@@ -2061,13 +2122,13 @@ MuseScore {
     function suggestFingerings() {
         if (!curScore) {
             toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
             toolStatus.text = "No chord symbols found."
-            toolStatus.color = "#c00"
+            toolStatus.color = theme.errorText
             return
         }
 
@@ -2262,12 +2323,12 @@ MuseScore {
 
     function doImport() {
         importStatus.text = "Loading..."
-        importStatus.color = "#888"
+        importStatus.color = theme.textMuted
 
         var path = importPathField.text.trim()
         if (!path) {
             importStatus.text = "Enter a file path"
-            importStatus.color = "#c00"
+            importStatus.color = theme.errorText
             return
         }
         importFile.source = path
@@ -2275,7 +2336,7 @@ MuseScore {
             var raw = importFile.read()
             if (!raw || raw.length === 0) {
                 importStatus.text = "FAILED: file is empty or not found"
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
             var data = JSON.parse(raw)
@@ -2283,7 +2344,7 @@ MuseScore {
 
             if (!Array.isArray(imported) || imported.length === 0) {
                 importStatus.text = "FAILED: no voicings array found in file"
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
 
@@ -2291,7 +2352,7 @@ MuseScore {
             var errors = validateImport(imported)
             if (errors.length > 0) {
                 importStatus.text = "FAILED: " + errors[0]
-                importStatus.color = "#c00"
+                importStatus.color = theme.errorText
                 return
             }
 
@@ -2322,14 +2383,14 @@ MuseScore {
                 importStatus.text = "SUCCESS: " + added + " voicings added"
                     + (skipped > 0 ? ", " + skipped + " duplicates skipped" : "")
                     + " (" + voicingsData.length + " total)"
-                importStatus.color = "#060"
+                importStatus.color = theme.successText
             } else {
                 importStatus.text = "No new voicings — all " + skipped + " were duplicates"
-                importStatus.color = "#888"
+                importStatus.color = theme.textMuted
             }
         } catch (e) {
             importStatus.text = "FAILED: " + e
-            importStatus.color = "#c00"
+            importStatus.color = theme.errorText
         }
     }
 
@@ -2454,7 +2515,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Diagram placement ---
                 Label {
@@ -2485,7 +2546,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Tuning ---
                 Label {
@@ -2608,7 +2669,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Export ---
                 Label {
@@ -2688,7 +2749,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Import ---
                 Label {
@@ -2738,7 +2799,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Tools ---
                 Label {
@@ -2804,13 +2865,13 @@ MuseScore {
                     Layout.fillWidth: true
                     padding: 8
                     background: Rectangle {
-                        color: Qt.rgba(0, 0, 0, 0.05)
+                        color: theme.consoleBg
                         radius: 4
                     }
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Save to Library ---
                 Label {
@@ -2921,7 +2982,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- Library Health ---
                 Label {
@@ -2997,7 +3058,7 @@ MuseScore {
                                 dismissFinding(key)
                                 dismissKeyField.text = ""
                                 hygieneResult.text = "Dismissed. Run audit again to see updated results."
-                                hygieneResult.color = "#060"
+                                hygieneResult.color = theme.successText
                             }
                         }
                     }
@@ -3024,7 +3085,7 @@ MuseScore {
                 }
 
                 // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: Qt.rgba(0.5, 0.5, 0.5, 0.3) }
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
                 // --- About ---
                 Label {
@@ -3144,7 +3205,7 @@ MuseScore {
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
-                color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
+                color: theme.divider
             }
 
             Flickable {
@@ -3257,7 +3318,7 @@ MuseScore {
                     if (batchQueue.length > 0) {
                         batchQueue = []
                         statusMsg.text = "Voicing stopped"
-                        statusMsg.color = "#888"
+                        statusMsg.color = theme.textMuted
                     } else {
                         batchInsert()
                     }
@@ -3274,7 +3335,7 @@ MuseScore {
                     statusMsg.text = sortByProximity
                         ? "Sorting by proximity to last voicing"
                         : "Default sort order"
-                    statusMsg.color = "#888"
+                    statusMsg.color = theme.textMuted
                 }
             }
         }
@@ -3286,15 +3347,7 @@ MuseScore {
             spacing: 8
 
             Repeater {
-                model: [
-                    {label: "R", color: "#D32F2F"},
-                    {label: "3", color: "#1976D2"},
-                    {label: "5", color: "#388E3C"},
-                    {label: "7", color: "#F57C00"},
-                    {label: "9", color: "#7B1FA2"},
-                    {label: "4/11", color: "#00897B"},
-                    {label: "6/13", color: "#FBC02D"}
-                ]
+                model: theme.legendColors
 
                 Row {
                     spacing: 2
@@ -3324,8 +3377,8 @@ MuseScore {
                 width: voicingList.width
                 height: 80
                 radius: 4
-                color: ma.containsMouse ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : Qt.rgba(0.5, 0.5, 0.5, 0.1)
-                border.color: Qt.rgba(0.5, 0.5, 0.5, 0.3)
+                color: ma.containsMouse ? theme.chipHover : theme.chipBackground
+                border.color: theme.divider
                 border.width: 1
 
                 property var v: filteredData[index] || {}
@@ -3359,9 +3412,8 @@ MuseScore {
                             var ss = (width - 2 * mg) / (ns - 1)
                             var fs = (height - tm - mg) / nf
 
-                            // Detect dark mode from system palette
-                            var bgColor = palette.window.color || Qt.rgba(1,1,1,1)
-                            var isDark = (bgColor.r + bgColor.g + bgColor.b) / 3 < 0.5
+                            // Dark mode colors from centralized theme
+                            var isDark = theme.isDark
                             var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
                             var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
                             var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
@@ -3399,23 +3451,23 @@ MuseScore {
                             var ivs = v.intervals || []
                             for (var d = 0; d < dots.length; d++) {
                                 var iv = (d < ivs.length) ? ivs[d] : ""
-                                // Color by interval family
+                                // Color by interval family (from theme palette)
                                 if (iv === "1")
-                                    ctx.fillStyle = isDark ? "#EF5350" : "#D32F2F"       // root — red
+                                    ctx.fillStyle = theme.dotRoot
                                 else if (iv === "3" || iv === "b3")
-                                    ctx.fillStyle = isDark ? "#42A5F5" : "#1976D2"       // 3rd — blue
+                                    ctx.fillStyle = theme.dotThird
                                 else if (iv === "5" || iv === "b5" || iv === "#5")
-                                    ctx.fillStyle = isDark ? "#66BB6A" : "#388E3C"       // 5th — green
+                                    ctx.fillStyle = theme.dotFifth
                                 else if (iv === "7" || iv === "b7" || iv === "bb7")
-                                    ctx.fillStyle = isDark ? "#FFA726" : "#F57C00"       // 7th — orange
+                                    ctx.fillStyle = theme.dotSeventh
                                 else if (iv === "6" || iv === "13" || iv === "b13")
-                                    ctx.fillStyle = isDark ? "#FFEE58" : "#FBC02D"       // 6th/13th — gold
+                                    ctx.fillStyle = theme.dotSixth
                                 else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
-                                    ctx.fillStyle = isDark ? "#CE93D8" : "#7B1FA2"       // 9th — purple
+                                    ctx.fillStyle = theme.dotNinth
                                 else if (iv === "4" || iv === "11" || iv === "#11")
-                                    ctx.fillStyle = isDark ? "#4DB6AC" : "#00897B"       // 4th/11th — teal
+                                    ctx.fillStyle = theme.dotFourth
                                 else
-                                    ctx.fillStyle = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.9) : Qt.rgba(0.3, 0.3, 0.3, 0.9)
+                                    ctx.fillStyle = theme.dotDefault
 
                                 var dx = mg + (ns - dots[d].string) * ss
                                 var dy = tm + (dots[d].fret - 0.5) * fs

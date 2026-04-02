@@ -56,7 +56,7 @@ ColumnLayout {
             return libraryModel.filteredVoicings.length + " of " + libraryModel.voicings.length + " voicings"
         }
         font.pixelSize: 11
-        color: libraryModel.error ? "#c00" : "#666"
+        color: libraryModel.error ? theme.errorText : theme.textSecondary
     }
 
     // Voicing list

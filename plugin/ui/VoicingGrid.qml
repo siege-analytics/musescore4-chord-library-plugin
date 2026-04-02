@@ -24,7 +24,7 @@ ListView {
         anchors.centerIn: parent
         visible: voicingGrid.voicings.length === 0
         text: "No voicings match filters"
-        color: "#999"
+        color: theme.textMuted
         font.pixelSize: 12
     }
 }
