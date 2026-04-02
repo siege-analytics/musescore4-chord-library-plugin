@@ -20,6 +20,7 @@ copy_sources() {
     cp "$REPO/plugin/model/LibraryModel.qml" "$DEST/model/LibraryModel.qml"
     cp "$REPO/plugin/model/Transposer.js" "$DEST/model/Transposer.js"
     cp "$REPO/plugin/model/MelodyEngine.js" "$DEST/model/MelodyEngine.js"
+    cp "$REPO/plugin/model/VoicingCalculator.js" "$DEST/model/VoicingCalculator.js"
 
     # Data file
     cp "$REPO/data/voicings.json" "$DEST/voicings-cache.json"

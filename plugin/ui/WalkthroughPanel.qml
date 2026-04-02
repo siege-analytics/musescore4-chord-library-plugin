@@ -24,7 +24,7 @@ ColumnLayout {
     signal prevClicked()
     signal nextClicked()
     signal stopClicked()
-    signal revoiceRequested(string melodyNote, string category)
+    signal revoiceRequested(string melodyNote, string bassNote, string category)
 
     // Convenience: current item (read-only)
     readonly property var currentItem: {
@@ -232,7 +232,7 @@ ColumnLayout {
         }
     }
 
-    // Per-chord voicing controls (melody + category override)
+    // Per-chord voicing controls (melody + bass + category override)
     RowLayout {
         visible: batchActive
         Layout.fillWidth: true
@@ -252,7 +252,24 @@ ColumnLayout {
             text: currentItem && currentItem.melodyMidi >= 0
                 ? MelodyEngine.melodyNoteName(currentItem.melodyMidi)
                 : ""
-            onAccepted: walkthroughPanel.revoiceRequested(stepMelodyField.text, stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || "")
+            onAccepted: emitRevoice()
+        }
+
+        Label {
+            text: "Bass:"
+            font.pixelSize: 10
+        }
+
+        TextField {
+            id: stepBassField
+            implicitWidth: 40
+            font.pixelSize: 10
+            placeholderText: "root"
+            selectByMouse: true
+            text: currentItem && currentItem.bassMidi >= 0
+                ? MelodyEngine.melodyNoteName(currentItem.bassMidi)
+                : ""
+            onAccepted: emitRevoice()
         }
 
         Label {
@@ -262,11 +279,10 @@ ColumnLayout {
 
         ComboBox {
             id: stepCategoryCombo
-            implicitWidth: 100
+            implicitWidth: 90
             font.pixelSize: 10
             model: ["Any", "Shell", "Drop 2", "Drop 3", "Extended", "Altered", "Quartal"]
             property var categoryMap: ({"Any":"", "Shell":"shell", "Drop 2":"drop2", "Drop 3":"drop3", "Extended":"extended", "Altered":"altered", "Quartal":"quartal"})
-            // Set from voicing category only when the step changes (not on every binding eval)
             property int lastStepIndex: -1
             function syncToStep() {
                 if (!currentItem) return
@@ -275,7 +291,6 @@ ColumnLayout {
                 var idx = values.indexOf(cat)
                 currentIndex = idx >= 0 ? idx : 0
             }
-            // Reset combo when moving to a new step
             Connections {
                 target: walkthroughPanel
                 function onBatchIndexChanged() {
@@ -289,9 +304,18 @@ ColumnLayout {
             text: "Re-voice"
             font.pixelSize: 10
             ToolTip.visible: hovered
-            ToolTip.text: "Re-select voicing with edited melody and/or category"
-            onClicked: walkthroughPanel.revoiceRequested(stepMelodyField.text, stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || "")
+            ToolTip.text: "Re-select voicing with melody, bass note, and/or category override"
+            onClicked: emitRevoice()
         }
+    }
+
+    // Helper to emit revoice signal with all current overrides
+    function emitRevoice() {
+        revoiceRequested(
+            stepMelodyField.text,
+            stepBassField.text,
+            stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || ""
+        )
     }
 
     // Keyboard shortcut hint

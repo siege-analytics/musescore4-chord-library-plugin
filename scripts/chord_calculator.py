@@ -316,16 +316,17 @@ def export_as_voicings_json(voicings: list[dict], tuning_name: str, normalize_to
         # {Root}{Quality} — {Shape} — {Category} ({top note} on top)
         top_note = v["intervals"][0] if v["intervals"] else "?"
         sounding = v["sounding"]
-        name = f"C{display_name} — Fret {v['fret_number']} — Calculated ({top_note} on top)"
+        root = "C" if normalize_to_c else v["root"]
+        name = f"{root}{display_name} — Fret {v['fret_number']} — Calculated ({top_note} on top)"
 
-        slug = f"c{display_name.lower()}-calc-f{v['fret_number']}-{v['strings']}str"
+        slug = f"{root.lower()}{display_name.lower()}-calc-f{v['fret_number']}-{v['strings']}str"
         slug = slug.replace("#", "s").replace(" ", "-").replace("(", "").replace(")", "")
 
         exported.append({
             "id": slug,
             "name": name,
             "chord_quality": quality,
-            "root": "C",
+            "root": root,
             "category": "calculated",
             "context": "CM6" if sounding >= 4 else "CV6",
             "strings": v["strings"],
@@ -387,7 +388,10 @@ def main():
 
     if args.output:
         if args.export:
-            out = export_as_voicings_json(voicings, tuning_name)
+            # Only normalize to root C when generating the full library (no --root flag).
+            # When a specific root is requested, keep that root's voicings as-is.
+            normalize = args.root is None
+            out = export_as_voicings_json(voicings, tuning_name, normalize_to_c=normalize)
         else:
             out = {
                 "tuning": tuning_name,

@@ -46,6 +46,60 @@ function voicingTopNoteSemitone(voicing, targetRoot, semitoneMap) {
     return -1
 }
 
+// Get the bass (lowest-pitched) note of a voicing as a semitone class (0-11).
+// Mirror of voicingTopNoteSemitone but finds the HIGHEST string number (= lowest pitch).
+//
+// @param voicing    — voicing object with dots[], open[], intervals[]
+// @param targetRoot — root note string (e.g. "F", "Bb") for transposition context
+// @param semitoneMap — Transposer.SEMITONE_MAP lookup table
+function voicingBassNoteSemitone(voicing, targetRoot, semitoneMap) {
+    var dots = voicing.dots || []
+    var opens = voicing.open || []
+    if (dots.length === 0 && opens.length === 0) return -1
+
+    // Find the highest string number (= lowest pitch on guitar)
+    var maxStr = 0
+    var bassDotIdx = -1
+    for (var i = 0; i < dots.length; i++) {
+        if (dots[i].string > maxStr) { maxStr = dots[i].string; bassDotIdx = i }
+    }
+    for (var j = 0; j < opens.length; j++) {
+        if (opens[j] > maxStr) { maxStr = opens[j]; bassDotIdx = -2 }
+    }
+
+    // Use intervals array to get the interval, then compute semitone
+    var intervals = voicing.intervals || []
+    if (bassDotIdx >= 0 && bassDotIdx < intervals.length) {
+        var iv = intervals[bassDotIdx]
+        var rootSemitone = semitoneMap[targetRoot] || 0
+        var ivOffset = INTERVAL_SEMITONES[iv]
+        if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
+    }
+    // For open strings as bass: the last interval corresponds to the bass
+    // (intervals are ordered high-to-low in the voicing data)
+    if (bassDotIdx === -2 && intervals.length > 0) {
+        var bassIv = intervals[intervals.length - 1]
+        var rootSemi = semitoneMap[targetRoot] || 0
+        var bassOffset = INTERVAL_SEMITONES[bassIv]
+        if (bassOffset !== undefined) return (rootSemi + bassOffset) % 12
+    }
+    return -1
+}
+
+// Suggest a bass note for a chord quality.
+// Returns the chord root semitone by default (root in bass is standard).
+// For slash chords or inversions, this could be extended.
+//
+// @param targetRoot — root note string
+// @param quality    — chord quality string
+// @param semitoneMap — Transposer.SEMITONE_MAP lookup table
+function suggestBassNote(targetRoot, quality, semitoneMap) {
+    var rootSemitone = semitoneMap[targetRoot]
+    if (rootSemitone === undefined) return -1
+    // Default: root in bass
+    return rootSemitone
+}
+
 // Calculate "distance" between two voicings (lower = closer hand position).
 // Used for voice leading — prefer smooth transitions between chord shapes.
 //

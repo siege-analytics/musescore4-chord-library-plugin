@@ -7,6 +7,7 @@ import "ui"
 import "model"
 import "model/Transposer.js" as Transposer
 import "model/MelodyEngine.js" as MelodyEngine
+import "model/VoicingCalculator.js" as VoicingCalculator
 
 MuseScore {
     id: chordLibrary
@@ -228,6 +229,14 @@ MuseScore {
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
 
+    // Voicing calculator constraints (defaults, overridable per chord in walkthrough)
+    property int calcMaxFret: 12           // highest fret to consider
+    property int calcMaxStretch: 4         // max fret span in one voicing
+    property bool calcAllowOpen: true      // allow open strings in voicings
+    property bool calcRootInBass: true     // require root as lowest note
+    property int calcMinNotes: 3           // minimum sounding strings
+    property int calcMaxMuted: 3           // maximum muted strings
+
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
         if (!melodyOnTop) return -1
@@ -370,10 +379,11 @@ MuseScore {
         return MelodyEngine.voicingTopNoteSemitone(voicing, targetRoot, Transposer.SEMITONE_MAP)
     }
 
-    function findBestVoicing(targetRoot, quality, melodyMidi) {
+    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
         // Find the best matching voicing from the current data.
         // Respects current filter selections: context, category, tuning.
         // melodyMidi: optional MIDI note number of the melody at this position
+        // bassMidi: optional MIDI semitone class (0-11) for preferred bass note
         var maxStrings = tuningMaxStrings
         if (filterContext && contextStringCounts[filterContext] !== undefined) {
             var contextMax = contextStringCounts[filterContext]
@@ -407,17 +417,19 @@ MuseScore {
         }
         if (candidates.length === 0) {
             // Fallback: try dom7 if the specific quality isn't found
-            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7", melodyMidi)
+            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7", melodyMidi, bassMidi)
             return null
         }
 
         // Melody-on-top: compute target semitone class from melody MIDI note
-        // Use melody target whenever a valid MIDI note is provided
-        // (the caller decides when to pass it — global toggle or per-chord override)
         var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0)
             ? melodyMidi % 12 : -1
 
-        // Score: context match + category preference + voice leading + melody match
+        // Bass note: compute target semitone class (0-11)
+        var bassTarget = (bassMidi !== undefined && bassMidi >= 0)
+            ? bassMidi % 12 : -1
+
+        // Score: context match + category preference + voice leading + melody + bass
         var ref = lastInsertedVoicing
         candidates.sort(function(a, b) {
             var scoreA = 0, scoreB = 0
@@ -438,6 +450,13 @@ MuseScore {
                 var topB = voicingTopNoteSemitone(b, targetRoot)
                 if (topA === melodyTarget) scoreA += 200
                 if (topB === melodyTarget) scoreB += 200
+            }
+            // Bass note: bonus if voicing's lowest note matches target bass
+            if (bassTarget >= 0) {
+                var bassA = MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP)
+                var bassB = MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP)
+                if (bassA === bassTarget) scoreA += 150
+                if (bassB === bassTarget) scoreB += 150
             }
             // Voice leading: prefer voicings close to the last inserted one
             if (ref) {
@@ -638,7 +657,10 @@ MuseScore {
                             }
                             if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
 
-                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
+                            // Suggest bass note (default: chord root)
+                            var bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
+
+                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
                             if (voicing) {
                                 chords.push({
                                     text: text,
@@ -646,6 +668,7 @@ MuseScore {
                                     quality: parsed.quality,
                                     voicing: voicing,
                                     melodyMidi: melodyMidi,
+                                    bassMidi: bassMidi,
                                 })
                             }
                         }
@@ -700,6 +723,9 @@ MuseScore {
         if (melodyOnTop && item.melodyMidi >= 0) {
             stepText += "\n  Melody: " + MelodyEngine.melodyNoteName(item.melodyMidi)
         }
+        if (item.bassMidi >= 0) {
+            stepText += "\n  Bass: " + MelodyEngine.melodyNoteName(item.bassMidi)
+        }
         stepText += "\n"
         stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
         stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
@@ -718,7 +744,7 @@ MuseScore {
 
     // Re-voice the current walkthrough step with melody note name and category override.
     // Called from WalkthroughPanel's revoiceRequested signal.
-    function revoiceCurrentStepWith(melodyNoteText, categoryOverride) {
+    function revoiceCurrentStepWith(melodyNoteText, bassNoteText, categoryOverride) {
         var idx = _batchIndex - 1  // _batchIndex was already incremented
         if (idx < 0 || idx >= _batchChords.length) return
 
@@ -729,17 +755,36 @@ MuseScore {
         if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
         item.melodyMidi = newMidi
 
-        // Temporarily set the category filter for findBestVoicing.
-        // Always apply the override (even "" for "Any") so the user's
-        // selection is respected — don't let the previous voicing's
-        // category stick.
+        // Parse bass note override
+        var newBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
+        if (newBass < 0) newBass = MelodyEngine.suggestBassNote(item.root, item.quality, Transposer.SEMITONE_MAP)
+        item.bassMidi = newBass
+
+        // Temporarily set the category filter for findBestVoicing
         var savedCategory = filterCategory
         filterCategory = categoryOverride  // "" means "Any" (no filter)
 
-        // Re-select voicing
-        var newVoicing = findBestVoicing(item.root, item.quality, newMidi)
+        // If using calculated voicings and bass note differs from root,
+        // recalculate with relaxed constraints to get inversions
+        var rootSemitone = Transposer.SEMITONE_MAP[item.root]
+        var bassIsNonRoot = (newBass >= 0 && rootSemitone !== undefined && newBass !== rootSemitone)
+        var savedVoicings = null
+        if (usingTuningVoicings && bassIsNonRoot) {
+            savedVoicings = voicingsData
+            var relaxedConstraints = calcConstraints()
+            relaxedConstraints.requireRootInBass = false
+            var extra = VoicingCalculator.calculateForQuality(tuningMidi, item.quality, relaxedConstraints)
+            if (extra.length > 0) {
+                // Temporarily add inversion voicings to the pool
+                voicingsData = voicingsData.concat(extra)
+            }
+        }
 
-        // Restore filter
+        // Re-select voicing
+        var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass)
+
+        // Restore voicings and filter
+        if (savedVoicings) voicingsData = savedVoicings
         filterCategory = savedCategory
 
         if (!newVoicing) return
@@ -842,6 +887,14 @@ MuseScore {
                     }
                     console.log("Restored " + s.customTunings.length + " custom tuning(s)")
                 }
+                // Restore voicing calculator constraints
+                if (s.calcMaxFret !== undefined) calcMaxFret = s.calcMaxFret
+                if (s.calcMaxStretch !== undefined) calcMaxStretch = s.calcMaxStretch
+                if (s.calcAllowOpen !== undefined) calcAllowOpen = s.calcAllowOpen
+                if (s.calcRootInBass !== undefined) calcRootInBass = s.calcRootInBass
+                if (s.calcMinNotes !== undefined) calcMinNotes = s.calcMinNotes
+                if (s.calcMaxMuted !== undefined) calcMaxMuted = s.calcMaxMuted
+
                 console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
             }
         } catch (e) {
@@ -866,7 +919,13 @@ MuseScore {
             voicingUrl: jsonUrl,
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
-            customTunings: getCustomTuningsList()
+            customTunings: getCustomTuningsList(),
+            calcMaxFret: calcMaxFret,
+            calcMaxStretch: calcMaxStretch,
+            calcAllowOpen: calcAllowOpen,
+            calcRootInBass: calcRootInBass,
+            calcMinNotes: calcMinNotes,
+            calcMaxMuted: calcMaxMuted,
         }
         settingsFile.write(JSON.stringify(s, null, 2))
         console.log("Settings saved")
@@ -1701,43 +1760,62 @@ MuseScore {
     // Load tuning-specific voicings if available (e.g., tunings/a-standard-voicings.json).
     // These are geometrically correct shapes calculated by chord_calculator.py.
     // Falls back to the standard library when no tuning-specific file exists.
+    // Build the current calculator constraints object from properties
+    function calcConstraints() {
+        return {
+            maxFret: calcMaxFret,
+            maxStretch: calcMaxStretch,
+            allowOpenStrings: calcAllowOpen,
+            requireRootInBass: calcRootInBass,
+            minSoundingNotes: calcMinNotes,
+            maxMutedStrings: calcMaxMuted,
+        }
+    }
+
+    // Generate voicings for the current tuning using the runtime calculator.
+    // For standard tuning, uses the pre-built 820-voicing library (much richer).
+    // For all other tunings, calculates geometrically correct voicings on the fly.
     function loadTuningVoicings() {
         // Save the standard library on first call so we can restore it
         if (standardVoicingsData.length === 0 && voicingsData.length > 0 && !usingTuningVoicings) {
             standardVoicingsData = voicingsData
         }
 
-        var voicingPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
-        tuningFile.source = voicingPath
-        try {
-            var raw = tuningFile.read()
-            if (raw && raw.length > 10) {
-                var data = JSON.parse(raw)
-                var tuningVoicings = data.voicings || []
-                if (tuningVoicings.length > 0) {
-                    voicingsData = tuningVoicings
-                    usingTuningVoicings = true
-                    rebuildFilterLists()
-                    applyFilters()
-                    console.log("Loaded " + tuningVoicings.length + " tuning-specific voicings for " + selectedTuning)
-                    statusMsg.text = "Loaded " + tuningVoicings.length + " voicings for " + (tuningLabels[selectedTuning] || selectedTuning)
-                    statusMsg.color = theme.successText
-                    return
-                }
+        // Standard tuning uses the pre-built library (820 hand-curated voicings)
+        if (selectedTuning === "standard") {
+            if (usingTuningVoicings && standardVoicingsData.length > 0) {
+                voicingsData = standardVoicingsData
+                usingTuningVoicings = false
+                rebuildFilterLists()
+                applyFilters()
+                console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
+                statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
+                statusMsg.color = theme.successText
             }
-        } catch (e) {
-            // No tuning-specific voicings — use standard library
+            return
         }
 
-        // Fall back to the standard library
-        if (usingTuningVoicings && standardVoicingsData.length > 0) {
-            voicingsData = standardVoicingsData
-            usingTuningVoicings = false
+        // Non-standard tuning: calculate voicings from the tuning geometry
+        console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
+        var calculated = VoicingCalculator.generateAll(tuningMidi, calcConstraints())
+
+        if (calculated.length > 0) {
+            voicingsData = calculated
+            usingTuningVoicings = true
             rebuildFilterLists()
             applyFilters()
-            console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
-            statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
+            console.log("Calculated " + calculated.length + " voicings for " + selectedTuning)
+            statusMsg.text = calculated.length + " voicings calculated for " + (tuningLabels[selectedTuning] || selectedTuning)
             statusMsg.color = theme.successText
+        } else {
+            // Fallback to standard library with offset if calculation produced nothing
+            console.log("No voicings calculated — falling back to standard library")
+            if (standardVoicingsData.length > 0) {
+                voicingsData = standardVoicingsData
+                usingTuningVoicings = false
+                rebuildFilterLists()
+                applyFilters()
+            }
         }
     }
 
@@ -3018,6 +3096,108 @@ MuseScore {
                 // --- Divider ---
                 Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
+                // --- Voicing Calculator Constraints ---
+                Label {
+                    text: "VOICING CONSTRAINTS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Controls how voicings are generated for non-standard tunings. These are defaults — override per chord in the walkthrough."
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                GridLayout {
+                    Layout.fillWidth: true
+                    columns: 4
+                    columnSpacing: 8
+                    rowSpacing: 6
+
+                    Label { text: "Max fret:"; font.pixelSize: 10 }
+                    SpinBox {
+                        id: calcMaxFretSpin
+                        from: 7; to: 24; value: calcMaxFret
+                        implicitWidth: 70
+                        onValueChanged: {
+                            if (value !== calcMaxFret) {
+                                calcMaxFret = value
+                                if (usingTuningVoicings) loadTuningVoicings()
+                            }
+                        }
+                    }
+
+                    Label { text: "Max stretch:"; font.pixelSize: 10 }
+                    SpinBox {
+                        id: calcMaxStretchSpin
+                        from: 2; to: 7; value: calcMaxStretch
+                        implicitWidth: 70
+                        onValueChanged: {
+                            if (value !== calcMaxStretch) {
+                                calcMaxStretch = value
+                                if (usingTuningVoicings) loadTuningVoicings()
+                            }
+                        }
+                    }
+
+                    Label { text: "Min notes:"; font.pixelSize: 10 }
+                    SpinBox {
+                        id: calcMinNotesSpin
+                        from: 2; to: 6; value: calcMinNotes
+                        implicitWidth: 70
+                        onValueChanged: {
+                            if (value !== calcMinNotes) {
+                                calcMinNotes = value
+                                if (usingTuningVoicings) loadTuningVoicings()
+                            }
+                        }
+                    }
+
+                    Label { text: "Max muted:"; font.pixelSize: 10 }
+                    SpinBox {
+                        id: calcMaxMutedSpin
+                        from: 0; to: 4; value: calcMaxMuted
+                        implicitWidth: 70
+                        onValueChanged: {
+                            if (value !== calcMaxMuted) {
+                                calcMaxMuted = value
+                                if (usingTuningVoicings) loadTuningVoicings()
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 12
+
+                    CheckBox {
+                        text: "Open strings"
+                        font.pixelSize: 10
+                        checked: calcAllowOpen
+                        onCheckedChanged: {
+                            calcAllowOpen = checked
+                            if (usingTuningVoicings) loadTuningVoicings()
+                        }
+                    }
+
+                    CheckBox {
+                        text: "Root in bass"
+                        font.pixelSize: 10
+                        checked: calcRootInBass
+                        onCheckedChanged: {
+                            calcRootInBass = checked
+                            if (usingTuningVoicings) loadTuningVoicings()
+                        }
+                    }
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
                 Label {
                     text: "TEXT ANNOTATIONS"
                     font.pixelSize: 11
@@ -4026,8 +4206,8 @@ MuseScore {
                 _batchChords = []
                 showToolResults = false
             }
-            onRevoiceRequested: function(melodyNote, category) {
-                revoiceCurrentStepWith(melodyNote, category)
+            onRevoiceRequested: function(melodyNote, bassNote, category) {
+                revoiceCurrentStepWith(melodyNote, bassNote, category)
             }
         }
 
