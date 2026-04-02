@@ -570,6 +570,7 @@ MuseScore {
 
         // Scan all chord symbols and build the voicing plan
         var chords = []
+        var lastMelodyMidi = -1  // carry-forward: last melody note for rests
         var cursor = curScore.newCursor()
         cursor.staffIdx = 0
         cursor.voice = 0
@@ -589,6 +590,12 @@ MuseScore {
                                     if (notes[n].pitch > melodyMidi) melodyMidi = notes[n].pitch
                                 }
                             }
+                            // Carry forward: if at a rest, use the last melody note
+                            if (melodyOnTop && melodyMidi < 0 && lastMelodyMidi >= 0) {
+                                melodyMidi = lastMelodyMidi
+                            }
+                            if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
+
                             var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
                             if (voicing) {
                                 chords.push({
