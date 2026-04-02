@@ -165,9 +165,12 @@ Then **quit and reopen MuseScore 4** (it caches QML).
 
 ### Chord Melody Workflow
 - **Second-staff melody reading** — Read melody from a separate staff (common in chord melody arrangements where melody and chords are on different staves). This would make melody-on-top work automatically without manual overrides.
+- **Bass note suggestions** — Per-chord bass note selector in the walkthrough, similar to the melody override. The plugin suggests a bass note based on the chord quality and voice leading context (e.g. root, 3rd for smooth bass lines, 5th for inversions). The user can override per chord. This feeds into voicing selection — prefer voicings whose lowest sounding string matches the target bass note. Combined with melody-on-top, this gives full control: melody on top, bass on bottom, inner voices handled by the voicing category.
+- **Bass line path visualization** — Like voice leading path but for the bass voice. Show root movement, guide tones (3rds and 7ths), and chromatic approaches.
+- **Walking bass integration** — For solo guitar arrangements, suggest bass notes that create walking bass lines between chord changes (chromatic approach, scale-wise, arpeggiated). This is the Joe Pass / Martin Taylor solo guitar approach where the thumb plays a bass line while fingers play chord melody above.
 - **Reharm suggestions** — At each chord position, suggest alternative chord qualities (e.g. at G-7 → C7, suggest tritone sub Gb7 → C7, or backdoor ii-V Abm7 → Db7 → C).
 - **Voice leading path visualization** — Show the top-note path as a line across the score, so you can see if the melody voice is smooth or has jumps.
-- **Export chord melody arrangement** — Generate a new staff with the voicings written as actual notes (not just diagrams), playable in MuseScore's mixer.
+- **Export chord melody arrangement** — Generate a new staff with the voicings written as actual notes (not just diagrams), playable in MuseScore's mixer. Include bass notes as a separate voice or staff.
 
 ### Integration Ideas
 - **iGigBook import** — iGigBook has a huge library of lead sheets with chord symbols. Importing from iGigBook (probably via MusicXML or their API) would give instant access to thousands of standards for chord melody arrangement. **This could be a separate plugin or a script that converts iGigBook exports into MuseScore format with chord symbols intact.** iGigBook supports MusicXML export on iPad/Mac.
