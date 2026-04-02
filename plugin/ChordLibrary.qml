@@ -6,6 +6,7 @@ import FileIO 3.0
 import "ui"
 import "model"
 import "model/Transposer.js" as Transposer
+import "model/MelodyEngine.js" as MelodyEngine
 
 MuseScore {
     id: chordLibrary
@@ -150,10 +151,31 @@ MuseScore {
         "bass-4string": "Bass (4-String)",
         "bass-5string": "Bass (5-String)"
     }
+    // String count per tuning — used to filter tuning combo by context
+    property var tuningStringCounts: {
+        "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
+        "dadgad": 6, "all-fourths": 6, "baritone": 6,
+        "ukulele": 4, "ukulele-low-g": 4, "mandolin": 4,
+        "banjo-open-g": 5, "bass-4string": 4, "bass-5string": 5
+    }
+    // Filtered tuning list — respects context string count ceiling
+    property var filteredTuningList: {
+        if (!filterContext || !contextStringCounts[filterContext]) return tuningList
+        var maxStrings = contextStringCounts[filterContext]
+        var result = []
+        for (var i = 0; i < tuningList.length; i++) {
+            var slug = tuningList[i]
+            var strCount = tuningStringCounts[slug] || 6
+            if (strCount <= maxStrings) result.push(slug)
+        }
+        return result
+    }
 
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
+    property var standardVoicingsData: []  // backup of the standard library for tuning switches
+    property bool usingTuningVoicings: false  // true when tuning-specific voicings are loaded
     // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
     property int currentTab: 0
     property bool showToolResults: false
@@ -209,10 +231,8 @@ MuseScore {
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
         if (!melodyOnTop) return -1
-        var note = melodyOverrideField ? melodyOverrideField.text.trim() : ""
-        if (!note) return -1
-        var midi = Transposer.SEMITONE_MAP[note.charAt(0).toUpperCase() + note.substring(1)]
-        return (midi !== undefined) ? midi : -1
+        var noteText = melodyOverrideField ? melodyOverrideField.text : ""
+        return MelodyEngine.parseNoteToSemitone(noteText, Transposer.SEMITONE_MAP)
     }
 
     // Dynamic filter lists (rebuilt when data changes)
@@ -223,6 +243,8 @@ MuseScore {
     // Context display names — loaded from config/contexts.json, extensible
     property var contextLabels: ({})
     property var contextLabelsShort: ({})
+    // Context string counts — enforced as a ceiling on voicing selection
+    property var contextStringCounts: ({"CM6": 6, "CM7": 7, "CV6": 6, "CV7": 7})
 
     function loadContextLabels() {
         // Defaults (used if config file not found)
@@ -236,6 +258,7 @@ MuseScore {
             "CM6": "CM 6-str", "CM7": "CM 7-str",
             "CV6": "CV 6-str", "CV7": "CV 7-str"
         }
+        var strCounts = {"CM6": 6, "CM7": 7, "CV6": 6, "CV7": 7}
 
         try {
             var raw = contextsConfigFile.read()
@@ -245,6 +268,7 @@ MuseScore {
                 for (var code in ctxs) {
                     if (ctxs[code].name) labels[code] = ctxs[code].name
                     if (ctxs[code].short) shorts[code] = ctxs[code].short
+                    if (ctxs[code].strings) strCounts[code] = ctxs[code].strings
                 }
                 console.log("Loaded context labels from config (" + Object.keys(ctxs).length + " contexts)")
             }
@@ -254,6 +278,7 @@ MuseScore {
 
         contextLabels = labels
         contextLabelsShort = shorts
+        contextStringCounts = strCounts
     }
 
     // === Tool feedback (uses toolStatus label + console) ===
@@ -342,41 +367,23 @@ MuseScore {
 
     // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
     function voicingTopNoteSemitone(voicing, targetRoot) {
-        var dots = voicing.dots || []
-        var opens = voicing.open || []
-        if (dots.length === 0 && opens.length === 0) return -1
-        // Find the lowest string number (= highest pitch)
-        var minStr = 99
-        var topDotIdx = -1
-        for (var i = 0; i < dots.length; i++) {
-            if (dots[i].string < minStr) { minStr = dots[i].string; topDotIdx = i }
-        }
-        for (var j = 0; j < opens.length; j++) {
-            if (opens[j] < minStr) { minStr = opens[j]; topDotIdx = -2 }
-        }
-        // Use intervals array to get the interval, then compute semitone
-        var intervals = voicing.intervals || []
-        if (topDotIdx >= 0 && topDotIdx < intervals.length) {
-            var iv = intervals[topDotIdx]
-            var ivSemitones = {"1":0,"b2":1,"2":2,"b3":3,"3":4,"4":5,"#4":6,
-                "b5":6,"5":7,"#5":8,"6":9,"b7":10,"7":11,"bb7":9,
-                "9":2,"b9":1,"#9":3,"11":5,"#11":6,"13":9,"b13":8}
-            var rootSemitone = Transposer.SEMITONE_MAP[targetRoot] || 0
-            var ivOffset = ivSemitones[iv]
-            if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
-        }
-        return -1
+        return MelodyEngine.voicingTopNoteSemitone(voicing, targetRoot, Transposer.SEMITONE_MAP)
     }
 
     function findBestVoicing(targetRoot, quality, melodyMidi) {
         // Find the best matching voicing from the current data.
         // Respects current filter selections: context, category, tuning.
         // melodyMidi: optional MIDI note number of the melody at this position
+        var maxStrings = tuningMaxStrings
+        if (filterContext && contextStringCounts[filterContext] !== undefined) {
+            var contextMax = contextStringCounts[filterContext]
+            if (contextMax < maxStrings) maxStrings = contextMax
+        }
         var candidates = []
         var quartalCandidates = []
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
-            if ((v.strings || 6) > tuningMaxStrings) continue
+            if ((v.strings || 6) > maxStrings) continue
             if (v.chord_quality === quality) {
                 if (filterCategory && v.category !== filterCategory) continue
                 candidates.push(v)
@@ -390,7 +397,7 @@ MuseScore {
             for (var j = 0; j < voicingsData.length; j++) {
                 var v2 = voicingsData[j]
                 if (v2.chord_quality !== quality) continue
-                if ((v2.strings || 6) > tuningMaxStrings) continue
+                if ((v2.strings || 6) > maxStrings) continue
                 candidates.push(v2)
             }
         }
@@ -443,9 +450,14 @@ MuseScore {
     }
 
     function generateXmlForVoicing(voicing, targetRoot) {
-        // Generate EngravingItem XML for a voicing transposed to targetRoot
+        // Generate EngravingItem XML for a voicing transposed to targetRoot.
+        // When using tuning-specific voicings (from chord_calculator), the shapes
+        // are already geometrically correct — no tuning offset needed.
+        // For the standard library on non-standard tunings, apply the offset.
         var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-        var transposedFret = voicing.fret_number + offset
+        var effectiveOffset = usingTuningVoicings ? 0 : tuningOffset
+        var transposedFret = voicing.fret_number + offset - effectiveOffset
+        if (transposedFret < 0) transposedFret += 12  // wrap around
         var numStrings = voicing.strings || 6
         var numFrets = voicing.visible_frets || 4
 
@@ -686,8 +698,7 @@ MuseScore {
         // Show the guided step with clear instructions
         var stepText = "▸ " + item.text + " — " + shape
         if (melodyOnTop && item.melodyMidi >= 0) {
-            var noteNames = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
-            stepText += "\n  Melody: " + noteNames[item.melodyMidi % 12]
+            stepText += "\n  Melody: " + MelodyEngine.melodyNoteName(item.melodyMidi)
         }
         stepText += "\n"
         stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
@@ -705,34 +716,25 @@ MuseScore {
         _batchIndex++
     }
 
-    // Re-voice the current walkthrough step with edited melody and/or category
-    function revoiceCurrentStep() {
+    // Re-voice the current walkthrough step with melody note name and category override.
+    // Called from WalkthroughPanel's revoiceRequested signal.
+    function revoiceCurrentStepWith(melodyNoteText, categoryOverride) {
         var idx = _batchIndex - 1  // _batchIndex was already incremented
         if (idx < 0 || idx >= _batchChords.length) return
 
         var item = _batchChords[idx]
 
-        // Parse melody override — always read the field, regardless of global toggle
-        var newMidi = -1
-        if (stepMelodyField) {
-            var noteText = stepMelodyField.text.trim()
-            if (noteText) {
-                var parsedMidi = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
-                if (parsedMidi !== undefined) newMidi = parsedMidi
-            }
-        }
+        // Parse melody override
+        var newMidi = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
         if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
         item.melodyMidi = newMidi
 
-        // Parse category override
-        var catOverride = ""
-        if (stepCategoryCombo) {
-            catOverride = stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || ""
-        }
-
-        // Temporarily set the category filter for findBestVoicing
+        // Temporarily set the category filter for findBestVoicing.
+        // Always apply the override (even "" for "Any") so the user's
+        // selection is respected — don't let the previous voicing's
+        // category stick.
         var savedCategory = filterCategory
-        if (catOverride) filterCategory = catOverride
+        filterCategory = categoryOverride  // "" means "Any" (no filter)
 
         // Re-select voicing
         var newVoicing = findBestVoicing(item.root, item.quality, newMidi)
@@ -787,6 +789,8 @@ MuseScore {
                 fetchVoicings()
             }
         }
+        // After loading the standard library, check for tuning-specific voicings
+        loadTuningVoicings()
     }
 
     function loadFromCache() {
@@ -828,6 +832,16 @@ MuseScore {
                 if (s.voicingUrl) jsonUrl = s.voicingUrl
                 if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
                 if (s.tuning) selectedTuning = s.tuning
+                // Restore custom tunings that were added via Create/Import
+                if (s.customTunings && Array.isArray(s.customTunings)) {
+                    for (var i = 0; i < s.customTunings.length; i++) {
+                        var ct = s.customTunings[i]
+                        if (ct.slug && ct.name) {
+                            addTuningToList(ct.slug, ct.name, ct.strings || 6)
+                        }
+                    }
+                    console.log("Restored " + s.customTunings.length + " custom tuning(s)")
+                }
                 console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
             }
         } catch (e) {
@@ -835,11 +849,24 @@ MuseScore {
         }
     }
 
+    // Build the custom tunings list (non-built-in tunings) for persistence
+    function getCustomTuningsList() {
+        var customs = []
+        for (var i = 0; i < tuningList.length; i++) {
+            var slug = tuningList[i]
+            if (builtInTunings.indexOf(slug) < 0) {
+                customs.push({ slug: slug, name: tuningLabels[slug] || slug, strings: tuningStringCounts[slug] || 6 })
+            }
+        }
+        return customs
+    }
+
     function saveSettings() {
         var s = {
             voicingUrl: jsonUrl,
             diagramPlacement: diagramPlacement,
-            tuning: selectedTuning
+            tuning: selectedTuning,
+            customTunings: getCustomTuningsList()
         }
         settingsFile.write(JSON.stringify(s, null, 2))
         console.log("Settings saved")
@@ -883,7 +910,7 @@ MuseScore {
         return midi
     }
 
-    function addTuningToList(slug, name) {
+    function addTuningToList(slug, name, stringCount) {
         // Add to the runtime lists if not already present
         var list = tuningList.slice()
         if (list.indexOf(slug) < 0) {
@@ -894,6 +921,13 @@ MuseScore {
         for (var k in tuningLabels) labels[k] = tuningLabels[k]
         labels[slug] = name
         tuningLabels = labels
+        // Record string count for combo filtering
+        if (stringCount) {
+            var counts = {}
+            for (var c in tuningStringCounts) counts[c] = tuningStringCounts[c]
+            counts[slug] = stringCount
+            tuningStringCounts = counts
+        }
     }
 
     function importTuning() {
@@ -924,8 +958,9 @@ MuseScore {
             tuningFile.source = destPath
             tuningFile.write(raw)
 
-            addTuningToList(slug, tuning.name)
+            addTuningToList(slug, tuning.name, Object.keys(tuning.strings || {}).length || 6)
             selectedTuning = slug
+            loadTuningStringCount()
             saveSettings()
 
             tuningImportStatus.text = "Imported: " + tuning.name
@@ -995,8 +1030,9 @@ MuseScore {
         tuningFile.source = destPath
         try {
             tuningFile.write(JSON.stringify(tuning, null, 2))
-            addTuningToList(slug, name)
+            addTuningToList(slug, name, numStrings)
             selectedTuning = slug
+            loadTuningStringCount()
             saveSettings()
 
             // Show the note names as feedback
@@ -1007,6 +1043,95 @@ MuseScore {
             tuningImportStatus.text = "Failed to save: " + e
             tuningImportStatus.color = theme.errorText
         }
+    }
+
+    // The built-in tunings that ship with the plugin (cannot be deleted)
+    property var builtInTunings: [
+        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
+        "baritone", "ukulele", "ukulele-low-g", "mandolin", "banjo-open-g",
+        "bass-4string", "bass-5string"
+    ]
+
+    // Load a tuning's data into the create/edit form fields for editing
+    function editTuning(slug) {
+        if (!slug) return
+        var paths = [
+            Qt.resolvedUrl("tunings/" + slug + ".json"),
+            Qt.resolvedUrl("../config/tunings/" + slug + ".json")
+        ]
+        for (var p = 0; p < paths.length; p++) {
+            tuningFile.source = paths[p]
+            try {
+                var raw = tuningFile.read()
+                if (raw && raw.length > 2) {
+                    var t = JSON.parse(raw)
+                    tuningNameField.text = t.name || slug
+                    var strings = t.strings || {}
+                    var count = Object.keys(strings).length
+                    tuningStringCount.value = count > 0 ? count : 6
+
+                    // Convert MIDI values back to note names for display
+                    var pitchParts = []
+                    for (var s = 1; s <= count; s++) {
+                        var midi = strings[String(s)]
+                        if (midi !== undefined) {
+                            pitchParts.push(midiNoteNames[midi] || String(midi))
+                        }
+                    }
+                    tuningPitchesField.text = pitchParts.join(", ")
+                    tuningImportStatus.text = "Editing: " + (t.name || slug) + " — change values and click Save"
+                    tuningImportStatus.color = theme.textSecondary
+                    return
+                }
+            } catch (e) {}
+        }
+        tuningImportStatus.text = "Could not load tuning: " + slug
+        tuningImportStatus.color = theme.errorText
+    }
+
+    // Delete a custom tuning (built-in tunings cannot be deleted)
+    function deleteTuning(slug) {
+        if (!slug) return
+        if (builtInTunings.indexOf(slug) >= 0) {
+            tuningImportStatus.text = "Cannot delete built-in tuning"
+            tuningImportStatus.color = theme.errorText
+            return
+        }
+
+        // Remove from tuning list
+        var list = tuningList.slice()
+        var idx = list.indexOf(slug)
+        if (idx >= 0) {
+            list.splice(idx, 1)
+            tuningList = list
+        }
+
+        // Remove from labels
+        var labels = {}
+        for (var k in tuningLabels) {
+            if (k !== slug) labels[k] = tuningLabels[k]
+        }
+        tuningLabels = labels
+
+        // If we just deleted the active tuning, switch to standard
+        if (selectedTuning === slug) {
+            selectedTuning = "standard"
+            loadTuningStringCount()
+            applyFilters()
+        }
+        saveSettings()
+
+        // Delete the tuning file (write empty string — FileIO can't delete)
+        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
+        tuningFile.source = destPath
+        try {
+            tuningFile.write("")
+        } catch (e) {
+            // File may not exist in writable location — that's OK
+        }
+
+        tuningImportStatus.text = "Deleted: " + slug
+        tuningImportStatus.color = theme.successText
     }
 
     // === Save to Library ===
@@ -1497,6 +1622,7 @@ MuseScore {
 
     // Current tuning data (updated when tuning changes)
     property int tuningMaxStrings: 7
+    property int tuningOffset: 0  // semitones from standard (positive = higher, negative = lower)
     property var tuningMidi: {  // string number → MIDI note of open string
         "1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33
     }
@@ -1534,6 +1660,10 @@ MuseScore {
         return result
     }
 
+    // Standard tuning reference MIDI values (for computing tuning offset)
+    // 6-string: E4=64, 7-string: E4=64 (1st string is always the reference)
+    readonly property int standardFirstStringMidi: 64
+
     function loadTuningStringCount() {
         // Read the selected tuning's JSON to get its string count and MIDI values
         var paths = [
@@ -1551,7 +1681,12 @@ MuseScore {
                     if (count > 0) {
                         tuningMaxStrings = count
                         tuningMidi = strings
-                        console.log("Tuning " + selectedTuning + ": " + count + " strings, MIDI loaded")
+                        // Compute tuning offset: how many semitones the 1st string
+                        // differs from standard E4 (MIDI 64). This offset adjusts
+                        // fret transposition so chord shapes land on the correct pitch.
+                        var firstMidi = strings["1"] || 64
+                        tuningOffset = firstMidi - standardFirstStringMidi
+                        console.log("Tuning " + selectedTuning + ": " + count + " strings, offset=" + tuningOffset)
                         return
                     }
                 }
@@ -1559,21 +1694,65 @@ MuseScore {
         }
         // Fallback: standard tuning
         tuningMaxStrings = 7
+        tuningOffset = 0
         tuningMidi = {"1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33}
+    }
+
+    // Load tuning-specific voicings if available (e.g., tunings/a-standard-voicings.json).
+    // These are geometrically correct shapes calculated by chord_calculator.py.
+    // Falls back to the standard library when no tuning-specific file exists.
+    function loadTuningVoicings() {
+        // Save the standard library on first call so we can restore it
+        if (standardVoicingsData.length === 0 && voicingsData.length > 0 && !usingTuningVoicings) {
+            standardVoicingsData = voicingsData
+        }
+
+        var voicingPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
+        tuningFile.source = voicingPath
+        try {
+            var raw = tuningFile.read()
+            if (raw && raw.length > 10) {
+                var data = JSON.parse(raw)
+                var tuningVoicings = data.voicings || []
+                if (tuningVoicings.length > 0) {
+                    voicingsData = tuningVoicings
+                    usingTuningVoicings = true
+                    rebuildFilterLists()
+                    applyFilters()
+                    console.log("Loaded " + tuningVoicings.length + " tuning-specific voicings for " + selectedTuning)
+                    statusMsg.text = "Loaded " + tuningVoicings.length + " voicings for " + (tuningLabels[selectedTuning] || selectedTuning)
+                    statusMsg.color = theme.successText
+                    return
+                }
+            }
+        } catch (e) {
+            // No tuning-specific voicings — use standard library
+        }
+
+        // Fall back to the standard library
+        if (usingTuningVoicings && standardVoicingsData.length > 0) {
+            voicingsData = standardVoicingsData
+            usingTuningVoicings = false
+            rebuildFilterLists()
+            applyFilters()
+            console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
+            statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
+            statusMsg.color = theme.successText
+        }
     }
 
     // Calculate "distance" between two voicings (lower = closer hand position)
     function voicingDistance(a, b) {
-        if (!a || !b) return 999
-        // Primary: fret position distance
-        var fretDist = Math.abs((a.fret_number || 0) - (b.fret_number || 0))
-        // Secondary: different number of strings sounding (penalize big shape changes)
-        var dotDist = Math.abs((a.dots || []).length - (b.dots || []).length)
-        return fretDist * 3 + dotDist
+        return MelodyEngine.voicingDistance(a, b)
     }
 
     function applyFilters() {
+        // Use the smaller of tuning string count and context string count as ceiling
         var maxStrings = tuningMaxStrings
+        if (filterContext && contextStringCounts[filterContext] !== undefined) {
+            var contextMax = contextStringCounts[filterContext]
+            if (contextMax < maxStrings) maxStrings = contextMax
+        }
 
         var result = []
         for (var i = 0; i < voicingsData.length; i++) {
@@ -1586,12 +1765,9 @@ MuseScore {
             if (filterQuality && v.chord_quality !== filterQuality
                 && v.chord_quality !== "quartal") continue
 
-            // Filter by string count — but if the user has explicitly selected
-            // a 7-string context (CV7/CM7), show all voicings in that context
-            // regardless of the tuning's string count
+            // Filter by string count — context string count is the ceiling
             var voicingStrings = v.strings || 6
-            var contextIs7 = filterContext === "CV7" || filterContext === "CM7"
-            if (!contextIs7 && voicingStrings > maxStrings) continue
+            if (voicingStrings > maxStrings) continue
 
             if (searchText) {
                 var q = searchText.toLowerCase()
@@ -3405,9 +3581,34 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                Label {
-                    text: "Active: " + (tuningLabels[selectedTuning] || selectedTuning)
-                    font.pixelSize: 11
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 6
+
+                    Label {
+                        text: "Active: " + (tuningLabels[selectedTuning] || selectedTuning)
+                        font.pixelSize: 11
+                        Layout.fillWidth: true
+                    }
+
+                    Button {
+                        text: "Edit"
+                        font.pixelSize: 10
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Load this tuning into the form below for editing"
+                        onClicked: editTuning(selectedTuning)
+                    }
+
+                    Button {
+                        text: "Delete"
+                        font.pixelSize: 10
+                        enabled: builtInTunings.indexOf(selectedTuning) < 0
+                        ToolTip.visible: hovered
+                        ToolTip.text: builtInTunings.indexOf(selectedTuning) >= 0
+                            ? "Built-in tunings cannot be deleted"
+                            : "Delete this custom tuning"
+                        onClicked: deleteTuning(selectedTuning)
+                    }
                 }
 
                 // --- Import tuning ---
@@ -3444,9 +3645,9 @@ MuseScore {
                     Layout.fillWidth: true
                 }
 
-                // --- Quick create ---
+                // --- Create / edit tuning ---
                 Label {
-                    text: "Or create a tuning:"
+                    text: "Create or edit a tuning:"
                     font.pixelSize: 10
                 }
 
@@ -3488,8 +3689,10 @@ MuseScore {
                 }
 
                 Button {
-                    text: "Create Tuning"
+                    text: "Save Tuning"
                     font.pixelSize: 10
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Create a new tuning or save changes to an existing one"
                     onClicked: createTuning()
                 }
 
@@ -3799,345 +4002,32 @@ MuseScore {
             }
         }
 
-        // === Tool Results panel (overlay) ===
-        ColumnLayout {
+        // === Tool Results panel (overlay) — extracted to WalkthroughPanel.qml ===
+        WalkthroughPanel {
+            id: walkthroughPanel
             visible: showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 8
 
-            // Header row with title and nav buttons
-            RowLayout {
-                Layout.fillWidth: true
+            batchChords: _batchChords
+            batchIndex: _batchIndex
+            batchTotal: chordLibrary.batchTotal
+            batchActive: batchQueue.length > 0
+            resultsTitle: toolResultsTitle
+            resultsContent: toolResultsContent
 
-                Label {
-                    text: toolResultsTitle
-                    font.pixelSize: 16
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "← Prev"
-                    visible: batchQueue.length > 0 && _batchIndex > 1
-                    onClicked: {
-                        _batchIndex = _batchIndex - 2
-                        batchShowNext()
-                    }
-                }
-
-                Button {
-                    text: "Next →"
-                    visible: batchQueue.length > 0 && _batchIndex < _batchChords.length
-                    onClicked: batchShowNext()
-                }
-
-                Button {
-                    text: batchQueue.length > 0 ? "Stop" : "Back to Library"
-                    onClicked: {
-                        batchQueue = []
-                        _batchChords = []
-                        showToolResults = false
-                    }
-                }
+            onPrevClicked: {
+                _batchIndex = _batchIndex - 2
+                batchShowNext()
             }
-
-            // Progress bar (only during Voice Score walkthrough)
-            ColumnLayout {
-                visible: batchQueue.length > 0
-                Layout.fillWidth: true
-                spacing: 4
-
-                RowLayout {
-                    Layout.fillWidth: true
-
-                    Label {
-                        text: "Step " + Math.min(_batchIndex, batchTotal) + " of " + batchTotal
-                        font.pixelSize: 11
-                        font.bold: true
-                    }
-
-                    Item { Layout.fillWidth: true }
-
-                    Label {
-                        text: Math.round(Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1) * 100) + "%"
-                        font.pixelSize: 11
-                        color: theme.textMuted
-                    }
-                }
-
-                // Progress bar track
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 6
-                    radius: 3
-                    color: theme.isDark ? Qt.rgba(1, 1, 1, 0.1) : Qt.rgba(0, 0, 0, 0.1)
-
-                    Rectangle {
-                        width: parent.width * Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1)
-                        height: parent.height
-                        radius: 3
-                        color: theme.successText
-
-                        Behavior on width { NumberAnimation { duration: 200 } }
-                    }
-                }
+            onNextClicked: batchShowNext()
+            onStopClicked: {
+                batchQueue = []
+                _batchChords = []
+                showToolResults = false
             }
-
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: theme.divider
-            }
-
-            // Mini fretboard preview (only during Voice Score walkthrough)
-            RowLayout {
-                visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
-                Layout.fillWidth: true
-                spacing: 12
-
-                Canvas {
-                    id: batchPreviewCanvas
-                    Layout.preferredWidth: 70
-                    Layout.preferredHeight: 90
-
-                    property var previewVoicing: {
-                        if (batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length)
-                            return _batchChords[_batchIndex - 1].voicing || null
-                        return null
-                    }
-
-                    onPreviewVoicingChanged: requestPaint()
-
-                    onPaint: {
-                        var ctx = getContext("2d")
-                        ctx.clearRect(0, 0, width, height)
-                        var v = previewVoicing
-                        if (!v || !v.dots) return
-
-                        var ns = v.strings || 6
-                        var nf = v.visible_frets || 4
-                        var mg = 6, tm = 14
-                        var ss = (width - 2 * mg) / (ns - 1)
-                        var fs = (height - tm - mg) / nf
-
-                        var isDark = theme.isDark
-                        var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
-                        var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
-                        var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
-
-                        // Strings
-                        ctx.strokeStyle = gridColor
-                        ctx.lineWidth = 0.5
-                        for (var s = 0; s < ns; s++) {
-                            ctx.beginPath()
-                            ctx.moveTo(mg + s * ss, tm)
-                            ctx.lineTo(mg + s * ss, height - mg)
-                            ctx.stroke()
-                        }
-
-                        // Frets
-                        for (var f = 0; f <= nf; f++) {
-                            ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
-                            ctx.beginPath()
-                            ctx.moveTo(mg, tm + f * fs)
-                            ctx.lineTo(width - mg, tm + f * fs)
-                            ctx.stroke()
-                        }
-
-                        // Fret number
-                        if ((v.fret_number || 0) > 1) {
-                            ctx.fillStyle = textColor
-                            ctx.font = "9px sans-serif"
-                            ctx.textAlign = "right"
-                            ctx.fillText(v.fret_number, mg - 2, tm + fs * 0.6)
-                        }
-
-                        // Dots with interval coloring
-                        var dots = v.dots || []
-                        var ivs = v.intervals || []
-                        for (var d = 0; d < dots.length; d++) {
-                            var iv = (d < ivs.length) ? ivs[d] : ""
-                            if (iv === "1") ctx.fillStyle = theme.dotRoot
-                            else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
-                            else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
-                            else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
-                            else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
-                            else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
-                            else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
-                            else ctx.fillStyle = theme.dotDefault
-
-                            ctx.beginPath()
-                            ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 4, 0, 2 * Math.PI)
-                            ctx.fill()
-                        }
-
-                        // Mutes
-                        ctx.fillStyle = muteColor
-                        ctx.font = "10px sans-serif"
-                        ctx.textAlign = "center"
-                        var mutes = v.mutes || []
-                        for (var m = 0; m < mutes.length; m++) {
-                            ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
-                        }
-
-                        // Opens
-                        ctx.strokeStyle = muteColor
-                        ctx.lineWidth = 1
-                        var opens = v.open || []
-                        for (var o = 0; o < opens.length; o++) {
-                            ctx.beginPath()
-                            ctx.arc(mg + (ns - opens[o]) * ss, tm - 6, 3, 0, 2 * Math.PI)
-                            ctx.stroke()
-                        }
-                    }
-                }
-
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Label {
-                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
-                        text: {
-                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
-                                var item = _batchChords[_batchIndex - 1]
-                                return item.voicing.name || item.text
-                            }
-                            return ""
-                        }
-                        font.pixelSize: 13
-                        font.bold: true
-                        wrapMode: Text.Wrap
-                        Layout.fillWidth: true
-                    }
-
-                    Label {
-                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
-                        text: {
-                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
-                                var item = _batchChords[_batchIndex - 1]
-                                return (item.voicing.intervals || []).join(" ") + "  |  Fret " + (item.voicing.fret_number || "?")
-                            }
-                            return ""
-                        }
-                        font.pixelSize: 10
-                        color: theme.textSecondary
-                        Layout.fillWidth: true
-                    }
-                }
-            }
-
-            // Per-chord voicing controls (melody + category override)
-            RowLayout {
-                visible: batchQueue.length > 0
-                Layout.fillWidth: true
-                spacing: 6
-
-                Label {
-                    text: "Melody:"
-                    font.pixelSize: 10
-                }
-
-                TextField {
-                    id: stepMelodyField
-                    implicitWidth: 40
-                    font.pixelSize: 10
-                    placeholderText: "auto"
-                    selectByMouse: true
-                    text: {
-                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
-                            var midi = _batchChords[_batchIndex - 1].melodyMidi
-                            if (midi >= 0) {
-                                var names = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
-                                return names[midi % 12]
-                            }
-                        }
-                        return ""
-                    }
-                    onAccepted: revoiceCurrentStep()
-                }
-
-                Label {
-                    text: "Type:"
-                    font.pixelSize: 10
-                }
-
-                ComboBox {
-                    id: stepCategoryCombo
-                    implicitWidth: 100
-                    font.pixelSize: 10
-                    model: ["Any", "Shell", "Drop 2", "Drop 3", "Extended", "Altered", "Quartal"]
-                    property var categoryMap: ({"Any":"", "Shell":"shell", "Drop 2":"drop2", "Drop 3":"drop3", "Extended":"extended", "Altered":"altered", "Quartal":"quartal"})
-                    currentIndex: {
-                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
-                            var cat = _batchChords[_batchIndex - 1].voicing.category || ""
-                            var labels = ["Any","Shell","Drop 2","Drop 3","Extended","Altered","Quartal"]
-                            var values = ["","shell","drop2","drop3","extended","altered","quartal"]
-                            var idx = values.indexOf(cat)
-                            return idx >= 0 ? idx : 0
-                        }
-                        return 0
-                    }
-                }
-
-                Button {
-                    text: "Re-voice"
-                    font.pixelSize: 10
-                    ToolTip.visible: hovered
-                    ToolTip.text: "Re-select voicing with edited melody and/or category"
-                    onClicked: revoiceCurrentStep()
-                }
-            }
-
-            // Keyboard shortcut hint
-            Rectangle {
-                visible: batchQueue.length > 0
-                Layout.fillWidth: true
-                height: pasteHintRow.implicitHeight + 12
-                radius: 4
-                color: theme.consoleBg
-
-                RowLayout {
-                    id: pasteHintRow
-                    anchors.fill: parent
-                    anchors.margins: 6
-                    spacing: 8
-
-                    Label {
-                        text: "⌘V"
-                        font.pixelSize: 16
-                        font.bold: true
-                    }
-
-                    Label {
-                        text: "to paste diagram after clicking the target note"
-                        font.pixelSize: 11
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                    }
-                }
-            }
-
-            // Content area (step instructions or general results)
-            Flickable {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                contentHeight: toolResultsLabel.implicitHeight + 20
-                clip: true
-                flickableDirection: Flickable.VerticalFlick
-                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-                boundsBehavior: Flickable.StopAtBounds
-
-                Label {
-                    id: toolResultsLabel
-                    text: toolResultsContent
-                    width: parent.width - 16
-                    font.pixelSize: 11
-                    font.family: "Menlo, Monaco, monospace"
-                    wrapMode: Text.WordWrap
-                    padding: 8
-                }
+            onRevoiceRequested: function(melodyNote, category) {
+                revoiceCurrentStepWith(melodyNote, category)
             }
         }
 
@@ -4202,17 +4092,17 @@ MuseScore {
 
             ComboBox {
                 id: tuningMainCombo
-                model: tuningList
+                model: filteredTuningList
                 Layout.fillWidth: true
                 displayText: tuningLabels[currentText] || currentText
-                currentIndex: Math.max(0, tuningList.indexOf(selectedTuning))
+                currentIndex: Math.max(0, filteredTuningList.indexOf(selectedTuning))
                 onCurrentIndexChanged: {
-                    var newTuning = tuningList[currentIndex]
+                    var newTuning = filteredTuningList[currentIndex]
                     if (newTuning && newTuning !== selectedTuning) {
                         selectedTuning = newTuning
                         loadTuningStringCount()
+                        loadTuningVoicings()
                         saveSettings()
-                        applyFilters()
                     }
                 }
             }

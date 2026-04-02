@@ -287,24 +287,50 @@ def find_practical_voicings(
     return results
 
 
-def export_as_voicings_json(voicings: list[dict], tuning_name: str) -> dict:
-    """Convert calculator output to voicings.json format."""
+def export_as_voicings_json(voicings: list[dict], tuning_name: str, normalize_to_c: bool = True) -> dict:
+    """Convert calculator output to voicings.json format.
+
+    When normalize_to_c=True, all voicings are transposed back to root C
+    so they work with the plugin's standard transposition pipeline.
+    Only the C voicings are exported (one shape per quality), since the
+    plugin transposes from C to any target root at runtime.
+    """
     exported = []
+    seen_shapes = set()  # deduplicate by quality + dot pattern
+
     for v in voicings:
-        slug = v["display"].lower().replace("#", "s").replace("/", "-")
-        slug = slug.replace(" ", "-")
-        vid = f"{slug}-calc-{v['fret_number']}-{v['strings']}"
+        if normalize_to_c and v["root"] != "C":
+            continue  # Only keep the C voicings — plugin transposes the rest
+
+        quality = v["quality"]
+        display_name = CHORD_QUALITIES[quality][1] if quality in CHORD_QUALITIES else quality
+
+        # Build a shape fingerprint for deduplication
+        dot_fp = tuple((d["string"], d["fret"]) for d in v["dots"])
+        shape_key = (quality, dot_fp, tuple(v["open"]), tuple(v["mutes"]))
+        if shape_key in seen_shapes:
+            continue
+        seen_shapes.add(shape_key)
+
+        # Build descriptive name following the naming convention:
+        # {Root}{Quality} — {Shape} — {Category} ({top note} on top)
+        top_note = v["intervals"][0] if v["intervals"] else "?"
+        sounding = v["sounding"]
+        name = f"C{display_name} — Fret {v['fret_number']} — Calculated ({top_note} on top)"
+
+        slug = f"c{display_name.lower()}-calc-f{v['fret_number']}-{v['strings']}str"
+        slug = slug.replace("#", "s").replace(" ", "-").replace("(", "").replace(")", "")
 
         exported.append({
-            "id": vid,
-            "name": f"{v['display']} — Fret {v['fret_number']}",
-            "chord_quality": v["quality"],
-            "root": "C" if v["root"] == "C" else v["root"],
+            "id": slug,
+            "name": name,
+            "chord_quality": quality,
+            "root": "C",
             "category": "calculated",
-            "context": "CV6",
+            "context": "CM6" if sounding >= 4 else "CV6",
             "strings": v["strings"],
             "fret_number": v["fret_number"],
-            "visible_frets": 4,
+            "visible_frets": max(4, max((d["fret"] for d in v["dots"]), default=4)),
             "dots": v["dots"],
             "mutes": v["mutes"],
             "open": v["open"],
@@ -312,6 +338,7 @@ def export_as_voicings_json(voicings: list[dict], tuning_name: str) -> dict:
             "intervals": v["intervals"],
             "tags": ["calculated", tuning_name.lower().replace(" ", "-")],
         })
+
     return {"voicings": exported}
 
 

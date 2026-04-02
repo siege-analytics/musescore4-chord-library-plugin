@@ -83,6 +83,21 @@ function transposeNoteToKey(noteName, sourceRoot, targetRoot) {
     return transposeNote(noteName, offset, prefersFlats(targetRoot))
 }
 
+// Transpose a voicing name from its stored root (C) to a target root.
+// E.g., "Cmaj7 — A shape — Shell" with targetRoot "G" → "Gmaj7 — A shape — Shell"
+// Quartal voicings drop the root prefix entirely since they're quality-agnostic.
+function transposeName(name, sourceRoot, targetRoot) {
+    if (!name) return name
+    // Quartal voicings: strip the root prefix (e.g., "Cquartal" → "Quartal")
+    var quartalPattern = new RegExp("^" + sourceRoot + "quartal")
+    if (quartalPattern.test(name)) {
+        return name.replace(quartalPattern, "Quartal")
+    }
+    if (sourceRoot === targetRoot) return name
+    var pattern = new RegExp("^" + sourceRoot + "(?=[^a-z]|maj|min|dim|aug|sus|m[^a-z]|$)")
+    return name.replace(pattern, targetRoot)
+}
+
 // Transpose an entire voicing's notes and name to a target key.
 // Returns { name, notes, fret_number } with respelled values.
 function transposeVoicing(voicing, targetRoot) {
@@ -94,11 +109,12 @@ function transposeVoicing(voicing, targetRoot) {
         newNotes.push(transposeNote(voicing.notes[i], offset, useFlats))
     }
 
-    // Respell the chord name: replace leading "C" with target root
+    // Respell the chord name: replace leading root with target root
+    // Quartal voicings drop the root prefix since they're quality-agnostic
     var newName = voicing.name
-    if (targetRoot !== voicing.root) {
-        // Replace the chord root at the start of the name
-        // Handle both "C7" and "Cmaj7" style prefixes
+    if (newName && newName.indexOf(voicing.root + "quartal") === 0) {
+        newName = newName.replace(voicing.root + "quartal", "Quartal")
+    } else if (targetRoot !== voicing.root) {
         newName = newName.replace(/^C(?=[^a-z]|maj|min|dim|aug|sus|m[^a-z]|$)/, targetRoot)
     }
 
