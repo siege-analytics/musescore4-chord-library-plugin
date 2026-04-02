@@ -533,7 +533,23 @@ MuseScore {
             return
         }
 
-        var voicing = findBestVoicing(parsed.root, parsed.quality)
+        // Extract melody note if melody-on-top is enabled
+        var melodyMidi = -1
+        if (melodyOnTop) {
+            var chordElem = null
+            if (elem.type === Element.NOTE && elem.parent)
+                chordElem = elem.parent
+            else if (elem.type === Element.CHORD)
+                chordElem = elem
+            if (chordElem && chordElem.notes) {
+                for (var n = 0; n < chordElem.notes.length; n++) {
+                    if (chordElem.notes[n].pitch > melodyMidi)
+                        melodyMidi = chordElem.notes[n].pitch
+                }
+            }
+        }
+
+        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
         if (!voicing) {
             statusMsg.text = "No voicing found for " + chordText
             statusMsg.color = theme.errorText
@@ -1468,11 +1484,11 @@ MuseScore {
             var v = voicingsData[i]
             if (filterContext && v.context !== filterContext) continue
             if (filterCategory && v.category !== filterCategory) continue
-            // Quartal voicings are quality-ambiguous (stacked 4ths serve multiple
-            // harmonic functions). When filtering by category=quartal, show all
-            // quartal voicings regardless of the quality filter.
+            // Quartal voicings work over any chord quality (stacked 4ths
+            // serve multiple harmonic functions), so they always pass
+            // the quality filter.
             if (filterQuality && v.chord_quality !== filterQuality
-                && v.category !== "quartal") continue
+                && v.chord_quality !== "quartal") continue
 
             // Filter by string count — but if the user has explicitly selected
             // a 7-string context (CV7/CM7), show all voicings in that context
