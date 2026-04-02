@@ -19,6 +19,7 @@ ColumnLayout {
     property bool batchActive: false  // True when walkthrough is in progress
     property string resultsTitle: ""
     property string resultsContent: ""
+    property var availableCategories: ["All Types"]  // dynamic from parent's categoryList
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -281,15 +282,24 @@ ColumnLayout {
             id: stepCategoryCombo
             implicitWidth: 90
             font.pixelSize: 10
-            model: ["Any", "Shell", "Drop 2", "Drop 3", "Extended", "Altered", "Quartal"]
-            property var categoryMap: ({"Any":"", "Shell":"shell", "Drop 2":"drop2", "Drop 3":"drop3", "Extended":"extended", "Altered":"altered", "Quartal":"quartal"})
+            // Dynamic: uses the same category list as the Library tab
+            model: availableCategories
+            // Map display names to slug values — "All Types" → ""
+            function categoryToSlug(displayName) {
+                if (displayName === "All Types") return ""
+                return displayName.toLowerCase().replace(/ /g, "")
+            }
             property int lastStepIndex: -1
             function syncToStep() {
                 if (!currentItem) return
                 var cat = currentItem.voicing.category || ""
-                var values = ["","shell","drop2","drop3","extended","altered","quartal"]
-                var idx = values.indexOf(cat)
-                currentIndex = idx >= 0 ? idx : 0
+                for (var i = 0; i < availableCategories.length; i++) {
+                    if (categoryToSlug(availableCategories[i]) === cat) {
+                        currentIndex = i
+                        return
+                    }
+                }
+                currentIndex = 0  // "All Types"
             }
             Connections {
                 target: walkthroughPanel
@@ -314,7 +324,7 @@ ColumnLayout {
         revoiceRequested(
             stepMelodyField.text,
             stepBassField.text,
-            stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || ""
+            stepCategoryCombo.categoryToSlug(stepCategoryCombo.currentText)
         )
     }
 

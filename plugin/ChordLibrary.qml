@@ -764,30 +764,18 @@ MuseScore {
         var savedCategory = filterCategory
         filterCategory = categoryOverride  // "" means "Any" (no filter)
 
-        // If using calculated voicings and bass note differs from root,
-        // recalculate with relaxed constraints to get inversions
-        var rootSemitone = Transposer.SEMITONE_MAP[item.root]
-        var bassIsNonRoot = (newBass >= 0 && rootSemitone !== undefined && newBass !== rootSemitone)
-        var savedVoicings = null
-        if (usingTuningVoicings && bassIsNonRoot) {
-            savedVoicings = voicingsData
-            var relaxedConstraints = calcConstraints()
-            relaxedConstraints.requireRootInBass = false
-            var extra = VoicingCalculator.calculateForQuality(tuningMidi, item.quality, relaxedConstraints)
-            if (extra.length > 0) {
-                // Temporarily add inversion voicings to the pool
-                voicingsData = voicingsData.concat(extra)
-            }
-        }
-
-        // Re-select voicing
+        // Re-select voicing (inversions are pre-calculated at load time)
         var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass)
 
-        // Restore voicings and filter
-        if (savedVoicings) voicingsData = savedVoicings
+        // Restore filter
         filterCategory = savedCategory
 
-        if (!newVoicing) return
+        if (!newVoicing) {
+            toolResultsContent = "No voicing found for " + item.text
+                + " with these settings.\n\nTry changing the Type, Bass note,"
+                + " or adjust Voicing Constraints in Score Tools."
+            return
+        }
         item.voicing = newVoicing
 
         // Regenerate clipboard XML
@@ -4195,6 +4183,7 @@ MuseScore {
             batchActive: batchQueue.length > 0
             resultsTitle: toolResultsTitle
             resultsContent: toolResultsContent
+            availableCategories: categoryList
 
             onPrevClicked: {
                 _batchIndex = _batchIndex - 2

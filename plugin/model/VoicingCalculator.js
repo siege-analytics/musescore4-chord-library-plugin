@@ -44,6 +44,15 @@ var CHORD_QUALITIES = {
     "dom7b13":    { intervals: [0, 4, 8, 10], display: "7b13", minNotes: 4 },
 }
 
+// Quartal voicings — stacked perfect 4ths, defined as pitch class sets.
+// These are chord-quality-agnostic: they work over any harmony.
+// Multiple sizes: 3-note, 4-note, 5-note quartal stacks.
+var QUARTAL_QUALITIES = {
+    "quartal3": { intervals: [0, 5, 10], display: "quartal", minNotes: 3 },        // C-F-Bb
+    "quartal4": { intervals: [0, 5, 10, 3], display: "quartal", minNotes: 4 },     // C-F-Bb-Eb
+    "quartal5": { intervals: [0, 5, 10, 3, 8], display: "quartal", minNotes: 5 },  // C-F-Bb-Eb-Ab
+}
+
 // Default calculation constraints
 var DEFAULT_CONSTRAINTS = {
     maxFret: 12,
@@ -62,7 +71,7 @@ var DEFAULT_CONSTRAINTS = {
 // @param constraints     — override object (merged with DEFAULT_CONSTRAINTS)
 // @returns array of voicing objects
 function calculateForQuality(tuningMidi, qualityId, constraints) {
-    var quality = CHORD_QUALITIES[qualityId]
+    var quality = CHORD_QUALITIES[qualityId] || QUARTAL_QUALITIES[qualityId]
     if (!quality) return []
 
     var cfg = {}
@@ -241,18 +250,22 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                 if (!isLowest) continue
             }
 
-            // Deduplicate by shape: quality + fret position + bass string + sounding strings
-            // This keeps multiple voicings per quality at different positions/inversions
-            var fretGroup = (fretted.length > 0) ? Math.min.apply(null, fretted) : 0
-            var dedupKey = qualityId + ":f" + fretGroup + ":b" + bassString + ":n" + allNotes.length
+            // Deduplicate by the actual physical shape on the fretboard:
+            // quality + which strings are fretted/open/muted + relative fret positions
+            // This avoids near-duplicates while keeping genuinely different shapes
+            var shapeFingerprint = []
+            for (var si2 = 0; si2 < allNotes.length; si2++) {
+                shapeFingerprint.push(allNotes[si2][0] + ":" + allNotes[si2][1])
+            }
+            var dedupKey = qualityId + "|" + shapeFingerprint.sort().join(",")
 
             var stretch = 0
             if (fretted.length > 0) stretch = maxF - minF
             var score = nMuted * 10 + stretch
 
-            // Skip worse versions of the same shape
-            var firstCtxKey = dedupKey + ":" + (numStrings >= 7 ? "CV7" : "CV6")
-            if (bestVoicings[firstCtxKey] && bestVoicings[firstCtxKey]._score <= score) continue
+            // Skip worse versions of the same shape (check any context variant)
+            var anyExists = bestVoicings[dedupKey + "|CV" + (numStrings >= 7 ? "7" : "6")]
+            if (anyExists && anyExists._score <= score) continue
 
             // Build voicing in plugin format
             var fn = (fretted.length > 0) ? minF : 1
@@ -324,16 +337,14 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                 tags: ["calculated"],
                 _score: score
             }
-            bestVoicings[dedupKey + ":" + ctx] = voicing
+            bestVoicings[dedupKey + "|" + ctx] = voicing
             } // end contexts loop
         }
     }
 
-    // Collect results
+    // Collect results (keep _score for caller sorting — cleaned up in generateAll)
     for (var key in bestVoicings) {
-        var v = bestVoicings[key]
-        delete v._score
-        results.push(v)
+        results.push(bestVoicings[key])
     }
     return results
 }
@@ -349,6 +360,8 @@ function generateAll(tuningMidi, constraints) {
     for (var qid in CHORD_QUALITIES) {
         defaultQualities.push(qid)
     }
+
+    // Pass 1: root-in-bass voicings (standard)
     for (var i = 0; i < defaultQualities.length; i++) {
         var voicings = calculateForQuality(tuningMidi, defaultQualities[i], constraints)
         for (var j = 0; j < voicings.length; j++) {
@@ -356,108 +369,51 @@ function generateAll(tuningMidi, constraints) {
         }
     }
 
-    // Generate quartal voicings (stacked 4ths — work over any chord quality)
-    var quartalVoicings = generateQuartalVoicings(tuningMidi, constraints)
-    for (var q = 0; q < quartalVoicings.length; q++) {
-        allVoicings.push(quartalVoicings[q])
+    // Pass 2: inversions (non-root bass) for the core jazz qualities.
+    // Capped to top 5 per quality to avoid combinatorial explosion.
+    var MAX_INVERSIONS_PER_QUALITY = 5
+    var inversionQualities = ["dom7", "maj7", "min7", "min7b5", "dim7", "maj6", "min6"]
+    var invConstraints = {}
+    for (var dk in DEFAULT_CONSTRAINTS) invConstraints[dk] = DEFAULT_CONSTRAINTS[dk]
+    if (constraints) { for (var ck in constraints) invConstraints[ck] = constraints[ck] }
+    invConstraints.requireRootInBass = false
+    for (var ii = 0; ii < inversionQualities.length; ii++) {
+        var invVoicings = calculateForQuality(tuningMidi, inversionQualities[ii], invConstraints)
+        // Keep only the best N (lowest score = fewest mutes + smallest stretch)
+        invVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+        var kept = 0
+        for (var ij = 0; ij < invVoicings.length && kept < MAX_INVERSIONS_PER_QUALITY; ij++) {
+            allVoicings.push(invVoicings[ij])
+            kept++
+        }
+    }
+
+    // Pass 3: quartal voicings — use the same geometry engine with quartal pitch classes.
+    // Root-in-bass relaxed for quartals since they're not root-oriented.
+    var quartalConstraints = {}
+    for (var qdk in DEFAULT_CONSTRAINTS) quartalConstraints[qdk] = DEFAULT_CONSTRAINTS[qdk]
+    if (constraints) { for (var qck in constraints) quartalConstraints[qck] = constraints[qck] }
+    quartalConstraints.requireRootInBass = false
+    for (var qid in QUARTAL_QUALITIES) {
+        var qVoicings = calculateForQuality(tuningMidi, qid, quartalConstraints)
+        // Cap quartal voicings to top 10 per size
+        qVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+        var qKept = 0
+        for (var qi2 = 0; qi2 < qVoicings.length && qKept < 10; qi2++) {
+            // Override the category and chord_quality for quartal voicings
+            qVoicings[qi2].category = "quartal"
+            qVoicings[qi2].chord_quality = "quartal"
+            allVoicings.push(qVoicings[qi2])
+            qKept++
+        }
+    }
+
+    // Clean up internal scores
+    for (var ci = 0; ci < allVoicings.length; ci++) {
+        delete allVoicings[ci]._score
     }
 
     return allVoicings
-}
-
-// Generate quartal voicings — stacked perfect 4ths (5 semitones apart).
-// These are quality-agnostic and work over any chord.
-function generateQuartalVoicings(tuningMidi, constraints) {
-    var cfg = {}
-    for (var dk in DEFAULT_CONSTRAINTS) cfg[dk] = DEFAULT_CONSTRAINTS[dk]
-    if (constraints) { for (var ck in constraints) cfg[ck] = constraints[ck] }
-
-    var strings = []
-    for (var sk in tuningMidi) strings.push(parseInt(sk))
-    strings.sort(function(a, b) { return a - b })
-    var numStrings = strings.length
-    var results = []
-
-    // For each starting fret position, find groups of adjacent strings
-    // where notes are ~5 semitones apart (perfect 4th)
-    for (var startFret = 0; startFret <= cfg.maxFret; startFret++) {
-        // Try building quartal stacks on consecutive strings
-        for (var startStr = 0; startStr < strings.length - 2; startStr++) {
-            var stack = []
-            for (var si = startStr; si < Math.min(startStr + 5, strings.length); si++) {
-                var s = strings[si]
-                var midi = tuningMidi[String(s)] + startFret
-                stack.push({ string: s, fret: startFret, midi: midi, pc: midi % 12 })
-            }
-            if (stack.length < 3) continue
-
-            // Check if intervals are approximately quartal (4ths = 5 semitones)
-            var isQuartal = true
-            for (var qi = 1; qi < stack.length; qi++) {
-                var interval = (stack[qi].midi - stack[qi - 1].midi + 12) % 12
-                // Allow perfect 4th (5) or tritone (6) — both common in quartal harmony
-                if (interval !== 5 && interval !== 6) { isQuartal = false; break }
-            }
-            if (!isQuartal) continue
-
-            // Check stretch (all same fret = 0 stretch, which is fine)
-            // Build the voicing
-            var fn = startFret > 0 ? startFret : 1
-            var dots = []
-            var notes = []
-            var intervals = []
-            var opens = []
-            var mutes = []
-
-            // Mute strings not in the stack
-            for (var mi = 0; mi < strings.length; mi++) {
-                var inStack = false
-                for (var ci = 0; ci < stack.length; ci++) {
-                    if (stack[ci].string === strings[mi]) { inStack = true; break }
-                }
-                if (!inStack) mutes.push(strings[mi])
-            }
-            if (mutes.length > cfg.maxMutedStrings) continue
-
-            // Build note data (low to high)
-            for (var ni = stack.length - 1; ni >= 0; ni--) {
-                notes.push(CHROMATIC[stack[ni].pc])
-                intervals.push(INTERVAL_LABELS[(stack[ni].pc) % 12] || "?")
-                if (stack[ni].fret === 0 && cfg.allowOpenStrings) {
-                    opens.push(stack[ni].string)
-                } else if (stack[ni].fret > 0) {
-                    dots.push({ string: stack[ni].string, fret: stack[ni].fret - fn + 1 })
-                }
-            }
-
-            var topInterval = intervals.length > 0 ? intervals[intervals.length - 1] : "?"
-            var strRange = stack[0].string + "-" + stack[stack.length - 1].string
-            var strSuffix = numStrings >= 7 ? "7" : "6"
-
-            // Emit for both CM and CV contexts
-            var contexts = ["CM" + strSuffix, "CV" + strSuffix]
-            for (var cti = 0; cti < contexts.length; cti++) {
-                results.push({
-                    id: "calc-quartal-f" + fn + "-str" + strRange + "-" + contexts[cti],
-                    name: "Quartal — Str " + strRange + " — Quartal (" + topInterval + " on top)",
-                    chord_quality: "quartal",
-                    root: "C",
-                    category: "quartal",
-                    context: contexts[cti],
-                    strings: numStrings,
-                    fret_number: fn,
-                    visible_frets: 4,
-                    dots: dots,
-                    mutes: mutes,
-                    open: opens,
-                    notes: notes,
-                    intervals: intervals,
-                    tags: ["calculated", "quartal"],
-                })
-            }
-        }
-    }
-    return results
 }
 
 // Cartesian product of filtered options (replaces itertools.product)
