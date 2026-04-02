@@ -703,6 +703,46 @@ MuseScore {
         _batchIndex++
     }
 
+    // Re-voice the current walkthrough step with an edited melody note
+    function revoiceCurrentStep() {
+        var idx = _batchIndex - 1  // _batchIndex was already incremented
+        if (idx < 0 || idx >= _batchChords.length) return
+
+        var item = _batchChords[idx]
+        var noteText = stepMelodyField ? stepMelodyField.text.trim() : ""
+
+        // Parse the note name to a MIDI pitch class
+        var newMidi = -1
+        if (noteText) {
+            var parsed = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
+            if (parsed !== undefined) newMidi = parsed
+        }
+        if (newMidi < 0) return  // invalid note, do nothing
+
+        // Update the melody MIDI for this step
+        item.melodyMidi = newMidi
+
+        // Re-select voicing with the new melody target
+        var newVoicing = findBestVoicing(item.root, item.quality, newMidi)
+        if (!newVoicing) return
+        item.voicing = newVoicing
+
+        // Regenerate clipboard XML
+        var xml = generateXmlForVoicing(newVoicing, item.root)
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try {
+            tempDiagramFile.write(xml)
+        } catch (e) {
+            console.log("[ChordLibrary] revoice write error: " + e)
+            return
+        }
+
+        // Update the display — rewind batchIndex and re-show
+        _batchIndex = idx
+        batchShowNext()
+    }
+
     function batchProcessNext() {
         // Called by "Next Chord" button — advance to next chord
         batchShowNext()
@@ -3969,6 +4009,52 @@ MuseScore {
                         color: theme.textSecondary
                         Layout.fillWidth: true
                     }
+                }
+            }
+
+            // Per-chord melody override
+            RowLayout {
+                visible: batchQueue.length > 0 && melodyOnTop
+                Layout.fillWidth: true
+                spacing: 6
+
+                Label {
+                    text: "Melody:"
+                    font.pixelSize: 11
+                    font.bold: true
+                }
+
+                TextField {
+                    id: stepMelodyField
+                    implicitWidth: 44
+                    font.pixelSize: 11
+                    placeholderText: "auto"
+                    selectByMouse: true
+                    text: {
+                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                            var midi = _batchChords[_batchIndex - 1].melodyMidi
+                            if (midi >= 0) {
+                                var names = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
+                                return names[midi % 12]
+                            }
+                        }
+                        return ""
+                    }
+                    onAccepted: revoiceCurrentStep()
+                }
+
+                Button {
+                    text: "Re-voice"
+                    font.pixelSize: 10
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Re-select voicing with the edited melody note on top"
+                    onClicked: revoiceCurrentStep()
+                }
+
+                Label {
+                    text: "(edit + Enter to reharm)"
+                    font.pixelSize: 9
+                    color: theme.textMuted
                 }
             }
 
