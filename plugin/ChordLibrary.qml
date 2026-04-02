@@ -472,16 +472,15 @@ MuseScore {
             return
         }
 
-        // Show the guided step
-        var stepText = "Chord " + (_batchIndex + 1) + " of " + batchTotal + ": " + item.text
-        stepText += "\nVoicing: " + shape
-        stepText += "\n\nSteps:"
-        stepText += "\n  1. Click on the note/rest at the " + item.text + " chord symbol in the score"
-        stepText += "\n  2. Press ⌘V to paste the diagram"
-        stepText += "\n  3. Click 'Next Chord' below"
+        // Show the guided step with clear instructions
+        var stepText = "▸ " + item.text + " — " + shape
+        stepText += "\n"
+        stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
+        stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
+        stepText += "\n  3. Click 'Next →' when ready"
 
         if (remaining > 1) {
-            stepText += "\n\n(" + (remaining - 1) + " more chord" + (remaining > 2 ? "s" : "") + " after this)"
+            stepText += "\n\n" + (remaining - 1) + " chord" + (remaining > 2 ? "s" : "") + " remaining"
         }
 
         toolResultsTitle = "Voice Score — " + item.text
@@ -3197,6 +3196,7 @@ MuseScore {
             Layout.fillHeight: true
             spacing: 8
 
+            // Header row with title and nav buttons
             RowLayout {
                 Layout.fillWidth: true
 
@@ -3232,12 +3232,222 @@ MuseScore {
                 }
             }
 
+            // Progress bar (only during Voice Score walkthrough)
+            ColumnLayout {
+                visible: batchQueue.length > 0
+                Layout.fillWidth: true
+                spacing: 4
+
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: "Step " + Math.min(_batchIndex, batchTotal) + " of " + batchTotal
+                        font.pixelSize: 11
+                        font.bold: true
+                    }
+
+                    Item { Layout.fillWidth: true }
+
+                    Label {
+                        text: Math.round(Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1) * 100) + "%"
+                        font.pixelSize: 11
+                        color: theme.textMuted
+                    }
+                }
+
+                // Progress bar track
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 6
+                    radius: 3
+                    color: theme.isDark ? Qt.rgba(1, 1, 1, 0.1) : Qt.rgba(0, 0, 0, 0.1)
+
+                    Rectangle {
+                        width: parent.width * Math.min(_batchIndex, batchTotal) / Math.max(batchTotal, 1)
+                        height: parent.height
+                        radius: 3
+                        color: theme.successText
+
+                        Behavior on width { NumberAnimation { duration: 200 } }
+                    }
+                }
+            }
+
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
                 color: theme.divider
             }
 
+            // Mini fretboard preview (only during Voice Score walkthrough)
+            RowLayout {
+                visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                Layout.fillWidth: true
+                spacing: 12
+
+                Canvas {
+                    id: batchPreviewCanvas
+                    Layout.preferredWidth: 70
+                    Layout.preferredHeight: 90
+
+                    property var previewVoicing: {
+                        if (batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length)
+                            return _batchChords[_batchIndex - 1].voicing || null
+                        return null
+                    }
+
+                    onPreviewVoicingChanged: requestPaint()
+
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+                        var v = previewVoicing
+                        if (!v || !v.dots) return
+
+                        var ns = v.strings || 6
+                        var nf = v.visible_frets || 4
+                        var mg = 6, tm = 14
+                        var ss = (width - 2 * mg) / (ns - 1)
+                        var fs = (height - tm - mg) / nf
+
+                        var isDark = theme.isDark
+                        var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
+                        var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
+                        var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
+
+                        // Strings
+                        ctx.strokeStyle = gridColor
+                        ctx.lineWidth = 0.5
+                        for (var s = 0; s < ns; s++) {
+                            ctx.beginPath()
+                            ctx.moveTo(mg + s * ss, tm)
+                            ctx.lineTo(mg + s * ss, height - mg)
+                            ctx.stroke()
+                        }
+
+                        // Frets
+                        for (var f = 0; f <= nf; f++) {
+                            ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                            ctx.beginPath()
+                            ctx.moveTo(mg, tm + f * fs)
+                            ctx.lineTo(width - mg, tm + f * fs)
+                            ctx.stroke()
+                        }
+
+                        // Fret number
+                        if ((v.fret_number || 0) > 1) {
+                            ctx.fillStyle = textColor
+                            ctx.font = "9px sans-serif"
+                            ctx.textAlign = "right"
+                            ctx.fillText(v.fret_number, mg - 2, tm + fs * 0.6)
+                        }
+
+                        // Dots with interval coloring
+                        var dots = v.dots || []
+                        var ivs = v.intervals || []
+                        for (var d = 0; d < dots.length; d++) {
+                            var iv = (d < ivs.length) ? ivs[d] : ""
+                            if (iv === "1") ctx.fillStyle = theme.dotRoot
+                            else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
+                            else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
+                            else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
+                            else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
+                            else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
+                            else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
+                            else ctx.fillStyle = theme.dotDefault
+
+                            ctx.beginPath()
+                            ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 4, 0, 2 * Math.PI)
+                            ctx.fill()
+                        }
+
+                        // Mutes
+                        ctx.fillStyle = muteColor
+                        ctx.font = "10px sans-serif"
+                        ctx.textAlign = "center"
+                        var mutes = v.mutes || []
+                        for (var m = 0; m < mutes.length; m++) {
+                            ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
+                        }
+
+                        // Opens
+                        ctx.strokeStyle = muteColor
+                        ctx.lineWidth = 1
+                        var opens = v.open || []
+                        for (var o = 0; o < opens.length; o++) {
+                            ctx.beginPath()
+                            ctx.arc(mg + (ns - opens[o]) * ss, tm - 6, 3, 0, 2 * Math.PI)
+                            ctx.stroke()
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    Label {
+                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                        text: {
+                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                                var item = _batchChords[_batchIndex - 1]
+                                return item.voicing.name || item.text
+                            }
+                            return ""
+                        }
+                        font.pixelSize: 13
+                        font.bold: true
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        visible: batchQueue.length > 0 && _batchIndex > 0 && _batchIndex <= _batchChords.length
+                        text: {
+                            if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                                var item = _batchChords[_batchIndex - 1]
+                                return (item.voicing.intervals || []).join(" ") + "  |  Fret " + (item.voicing.fret_number || "?")
+                            }
+                            return ""
+                        }
+                        font.pixelSize: 10
+                        color: theme.textSecondary
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+
+            // Keyboard shortcut hint
+            Rectangle {
+                visible: batchQueue.length > 0
+                Layout.fillWidth: true
+                height: pasteHintRow.implicitHeight + 12
+                radius: 4
+                color: theme.consoleBg
+
+                RowLayout {
+                    id: pasteHintRow
+                    anchors.fill: parent
+                    anchors.margins: 6
+                    spacing: 8
+
+                    Label {
+                        text: "⌘V"
+                        font.pixelSize: 16
+                        font.bold: true
+                    }
+
+                    Label {
+                        text: "to paste diagram after clicking the target note"
+                        font.pixelSize: 11
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+
+            // Content area (step instructions or general results)
             Flickable {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
