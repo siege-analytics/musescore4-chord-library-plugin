@@ -145,12 +145,39 @@ Then **quit and reopen MuseScore 4** (it caches QML).
 
 ---
 
-## What to Work On Next
+## Immediate Next Steps (Testing & Polish)
 
 1. **Symlink deploy** — Replace manual copy with symlink from `~/Documents/MuseScore4/Plugins/chordlibrary/` to the repo's `plugin/` directory.
 2. **Test fingeringFromDiagram** — Place a diagram manually, run Annotate Staff Text, verify text matches.
 3. **Test dark mode toggle** — Verify appearance changes after macOS theme switch.
 4. **Voice leading + melody interaction** — Verify 200-point melody bonus dominates proximity scoring in real arrangements.
-5. **More voicings** — 820 is good but altered dominants, diminished passing chords, and tritone subs need better coverage.
-6. **Second-staff melody reading** — Read melody from a separate staff (common in chord melody arrangements where melody and chords are on different staves).
-7. **Auto-advance after paste** — Listen for score modification events to auto-advance the walkthrough (blocked on setDot() PR #32848, but worth checking if MS4 has other events).
+
+---
+
+## Feature Ideas
+
+### Voicing Library Expansion
+- **More altered dominants** — 7alt, 7#9, 7b9#11, tritone subs. Jazz standards need these constantly.
+- **Diminished passing chords** — Ascending/descending dim7 voicings for chromatic movement (e.g. Cdim7 → C#dim7 passing between I and ii).
+- **Slash chords / bass note voicings** — Support for C/E, Dm/F, etc. where the bass note is specified.
+- **Cluster voicings** — Close-voiced chords for modern jazz (Kurt Rosenwinkel, Ben Monder style).
+- **Chord-scale association** — Tag voicings with compatible scales (e.g. dom7 → mixolydian, lydian dominant, altered).
+
+### Chord Melody Workflow
+- **Second-staff melody reading** — Read melody from a separate staff (common in chord melody arrangements where melody and chords are on different staves). This would make melody-on-top work automatically without manual overrides.
+- **Reharm suggestions** — At each chord position, suggest alternative chord qualities (e.g. at G-7 → C7, suggest tritone sub Gb7 → C7, or backdoor ii-V Abm7 → Db7 → C).
+- **Voice leading path visualization** — Show the top-note path as a line across the score, so you can see if the melody voice is smooth or has jumps.
+- **Export chord melody arrangement** — Generate a new staff with the voicings written as actual notes (not just diagrams), playable in MuseScore's mixer.
+
+### Integration Ideas
+- **iGigBook import** — iGigBook has a huge library of lead sheets with chord symbols. Importing from iGigBook (probably via MusicXML or their API) would give instant access to thousands of standards for chord melody arrangement. **This could be a separate plugin or a script that converts iGigBook exports into MuseScore format with chord symbols intact.** iGigBook supports MusicXML export on iPad/Mac.
+- **iReal Pro import** — iReal Pro chord charts are widely shared in the jazz community. Import iReal Pro format (HTML-based chord charts) and create MuseScore lead sheets with chord symbols.
+- **Soundslice integration** — Export voicings as Soundslice-compatible tab for interactive online playback.
+
+### UX Improvements
+- **Auto-advance after paste** — Listen for score modification events to auto-advance the walkthrough (blocked on setDot() PR #32848, but worth checking if MS4 has other events).
+- **Undo per voicing** — Let the user undo the last pasted diagram without undoing the whole Voice Score session.
+- **Voicing comparison** — Side-by-side view of 2-3 voicings for the same chord, so you can hear/see the differences before choosing.
+- **Audio preview** — Play the voicing as a strummed chord or arpeggio before pasting (the `ms-audio` binary exists but isn't wired into the walkthrough yet).
+- **Fretboard range constraint** — Let the user set a max fret (e.g. "only voicings below fret 7") for playability in a specific position.
+- **Save arrangement as preset** — After walking through a full score with reharm choices, save the per-chord voicing selections as a named preset that can be re-applied.
