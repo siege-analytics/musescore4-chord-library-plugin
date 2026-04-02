@@ -152,11 +152,45 @@ MuseScore {
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
-    // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Settings
+    // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
     property int currentTab: 0
     property bool showToolResults: false
     property string toolResultsTitle: ""
     property string toolResultsContent: ""
+
+    // Practice mode state
+    property var practiceVoicing: null      // current flash card voicing
+    property bool practiceShowAnswer: false // whether answer is revealed
+    property string practiceMode: "name"   // "name" = guess name, "shape" = guess fretboard
+    property int practiceCorrect: 0
+    property int practiceTotal: 0
+
+    function practiceNext() {
+        if (voicingsData.length === 0) return
+        practiceShowAnswer = false
+        var idx = Math.floor(Math.random() * voicingsData.length)
+        practiceVoicing = voicingsData[idx]
+    }
+
+    function practiceReveal() {
+        practiceShowAnswer = true
+        practiceTotal++
+    }
+
+    function practiceMarkCorrect() {
+        practiceCorrect++
+        practiceNext()
+    }
+
+    function practiceMarkWrong() {
+        practiceNext()
+    }
+
+    function practiceReset() {
+        practiceCorrect = 0
+        practiceTotal = 0
+        practiceNext()
+    }
 
     // Filter state
     property string filterContext: ""
@@ -395,6 +429,68 @@ MuseScore {
     property int _batchIndex: 0
     property int _batchInserted: 0
     property var _batchChords: []  // [{text, root, quality, voicing}, ...]
+
+    // Voice a single chord at the current cursor/selection position
+    function voiceAtCursor() {
+        if (!curScore) {
+            statusMsg.text = "No score open"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Find the chord symbol at or near the current selection
+        var sel = curScore.selection
+        if (!sel || !sel.elements || sel.elements.length === 0) {
+            statusMsg.text = "Select a note or rest at a chord symbol"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        var elem = sel.elements[0]
+        var seg = null
+        if (elem.type === Element.NOTE && elem.parent)
+            seg = elem.parent.parent
+        else if (elem.type === Element.REST || elem.type === Element.CHORD)
+            seg = elem.parent
+
+        if (!seg || !seg.annotations) {
+            statusMsg.text = "No chord symbol at selection"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Find the HARMONY annotation at this segment
+        var chordText = null
+        for (var a = 0; a < seg.annotations.length; a++) {
+            if (seg.annotations[a].type === Element.HARMONY) {
+                chordText = seg.annotations[a].text
+                break
+            }
+        }
+
+        if (!chordText) {
+            statusMsg.text = "No chord symbol at selection"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        var parsed = parseChordSymbol(chordText)
+        if (!parsed) {
+            statusMsg.text = "Could not parse: " + chordText
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        var voicing = findBestVoicing(parsed.root, parsed.quality)
+        if (!voicing) {
+            statusMsg.text = "No voicing found for " + chordText
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        // Use the single voicing insertion flow (same as "Open" button)
+        generateDiagramFile(voicing)
+    }
 
     function batchInsert() {
         if (!curScore) {
@@ -2440,6 +2536,7 @@ MuseScore {
             TabButton { text: "Score Tools"; font.pixelSize: 10 }
             TabButton { text: "Export"; font.pixelSize: 10 }
             TabButton { text: "Import"; font.pixelSize: 10 }
+            TabButton { text: "Practice"; font.pixelSize: 10 }
             TabButton { text: "Settings"; font.pixelSize: 10 }
         }
 
@@ -2742,9 +2839,260 @@ MuseScore {
             }
         }
 
-        // === Tab 4: Settings ===
+        // === Tab 4: Practice (Flash Cards) ===
         Flickable {
             visible: currentTab === 4 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: practiceColumn.implicitHeight
+            clip: true
+            flickableDirection: Flickable.VerticalFlick
+            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+            boundsBehavior: Flickable.StopAtBounds
+
+            ColumnLayout {
+                id: practiceColumn
+                width: parent.width - 16
+                spacing: 12
+
+                // Score display
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: "Score: " + practiceCorrect + " / " + practiceTotal
+                        font.pixelSize: 13
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: practiceTotal > 0
+                            ? Math.round(practiceCorrect / practiceTotal * 100) + "% correct"
+                            : ""
+                        font.pixelSize: 11
+                        color: theme.textMuted
+                    }
+
+                    Button {
+                        text: "Reset"
+                        font.pixelSize: 10
+                        onClicked: practiceReset()
+                    }
+                }
+
+                // Mode selector
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    Label {
+                        text: "Mode:"
+                        font.pixelSize: 11
+                    }
+
+                    Button {
+                        text: "Name the Chord"
+                        font.pixelSize: 10
+                        highlighted: practiceMode === "name"
+                        onClicked: { practiceMode = "name"; practiceNext() }
+                    }
+
+                    Button {
+                        text: "Find the Shape"
+                        font.pixelSize: 10
+                        highlighted: practiceMode === "shape"
+                        onClicked: { practiceMode = "shape"; practiceNext() }
+                    }
+                }
+
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                // Flash card area
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 220
+                    radius: 8
+                    color: theme.cardBackground
+                    border.color: theme.cardBorder
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 12
+                        spacing: 8
+
+                        // "Name the Chord" mode: show fretboard, hide name
+                        Label {
+                            visible: practiceMode === "name" && !practiceShowAnswer
+                            text: "What chord is this voicing?"
+                            font.pixelSize: 12
+                            color: theme.textSecondary
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        // "Find the Shape" mode: show chord name, hide fretboard
+                        Label {
+                            visible: practiceMode === "shape"
+                            text: practiceVoicing ? practiceVoicing.name || "" : ""
+                            font.pixelSize: 16
+                            font.bold: true
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        Label {
+                            visible: practiceMode === "shape" && !practiceShowAnswer
+                            text: "Visualize the fretboard shape, then reveal"
+                            font.pixelSize: 11
+                            color: theme.textMuted
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        // Fretboard preview (hidden in "shape" mode until revealed)
+                        Canvas {
+                            id: practiceCanvas
+                            Layout.preferredWidth: 120
+                            Layout.preferredHeight: 140
+                            Layout.alignment: Qt.AlignHCenter
+                            visible: practiceMode === "name" || practiceShowAnswer
+
+                            property var pv: practiceVoicing
+
+                            onPvChanged: requestPaint()
+
+                            onPaint: {
+                                var ctx = getContext("2d")
+                                ctx.clearRect(0, 0, width, height)
+                                var v = pv
+                                if (!v || !v.dots) return
+
+                                var ns = v.strings || 6
+                                var nf = v.visible_frets || 4
+                                var mg = 10, tm = 18
+                                var ss = (width - 2 * mg) / (ns - 1)
+                                var fs = (height - tm - mg) / nf
+
+                                var isDark = theme.isDark
+                                var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
+                                var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
+                                var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
+
+                                ctx.strokeStyle = gridColor
+                                ctx.lineWidth = 0.5
+                                for (var s = 0; s < ns; s++) {
+                                    ctx.beginPath()
+                                    ctx.moveTo(mg + s * ss, tm)
+                                    ctx.lineTo(mg + s * ss, height - mg)
+                                    ctx.stroke()
+                                }
+                                for (var f = 0; f <= nf; f++) {
+                                    ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                                    ctx.beginPath()
+                                    ctx.moveTo(mg, tm + f * fs)
+                                    ctx.lineTo(width - mg, tm + f * fs)
+                                    ctx.stroke()
+                                }
+                                if ((v.fret_number || 0) > 1) {
+                                    ctx.fillStyle = textColor
+                                    ctx.font = "10px sans-serif"
+                                    ctx.textAlign = "right"
+                                    ctx.fillText(v.fret_number, mg - 3, tm + fs * 0.6)
+                                }
+                                var dots = v.dots || []
+                                var ivs = v.intervals || []
+                                for (var d = 0; d < dots.length; d++) {
+                                    var iv = (d < ivs.length) ? ivs[d] : ""
+                                    if (iv === "1") ctx.fillStyle = theme.dotRoot
+                                    else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
+                                    else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
+                                    else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
+                                    else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
+                                    else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
+                                    else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
+                                    else ctx.fillStyle = theme.dotDefault
+                                    ctx.beginPath()
+                                    ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 5, 0, 2 * Math.PI)
+                                    ctx.fill()
+                                }
+                                ctx.fillStyle = muteColor
+                                ctx.font = "11px sans-serif"
+                                ctx.textAlign = "center"
+                                var mutes = v.mutes || []
+                                for (var m = 0; m < mutes.length; m++) {
+                                    ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 3)
+                                }
+                                ctx.strokeStyle = muteColor
+                                ctx.lineWidth = 1
+                                var opens = v.open || []
+                                for (var o = 0; o < opens.length; o++) {
+                                    ctx.beginPath()
+                                    ctx.arc(mg + (ns - opens[o]) * ss, tm - 7, 3.5, 0, 2 * Math.PI)
+                                    ctx.stroke()
+                                }
+                            }
+                        }
+
+                        // Answer (chord name + details)
+                        Label {
+                            visible: practiceShowAnswer && practiceMode === "name"
+                            text: practiceVoicing ? practiceVoicing.name || "" : ""
+                            font.pixelSize: 14
+                            font.bold: true
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        Label {
+                            visible: practiceShowAnswer
+                            text: practiceVoicing
+                                ? (practiceVoicing.intervals || []).join(" ")
+                                    + "  |  Fret " + (practiceVoicing.fret_number || "?")
+                                    + "  |  " + (practiceVoicing.category || "")
+                                : ""
+                            font.pixelSize: 10
+                            color: theme.textSecondary
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+                    }
+                }
+
+                // Action buttons
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 12
+
+                    Button {
+                        visible: !practiceShowAnswer
+                        text: "Reveal Answer"
+                        font.pixelSize: 12
+                        onClicked: practiceReveal()
+                    }
+
+                    Button {
+                        visible: practiceShowAnswer
+                        text: "✓ Got it"
+                        font.pixelSize: 12
+                        onClicked: practiceMarkCorrect()
+                    }
+
+                    Button {
+                        visible: practiceShowAnswer
+                        text: "✗ Missed"
+                        font.pixelSize: 12
+                        onClicked: practiceMarkWrong()
+                    }
+
+                    Button {
+                        text: "Skip"
+                        font.pixelSize: 10
+                        onClicked: practiceNext()
+                    }
+                }
+            }
+        }
+
+        // === Tab 5: Settings ===
+        Flickable {
+            visible: currentTab === 5 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
             contentHeight: settingsColumn.implicitHeight
@@ -3551,9 +3899,20 @@ MuseScore {
             }
 
             Button {
-                text: batchQueue.length > 0 ? "Stop Voicing" : "Voice Score"
+                text: "Voice Here"
                 font.pixelSize: 10
-                implicitWidth: 80
+                implicitWidth: 64
+                ToolTip.visible: hovered
+                ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
+                onClicked: voiceAtCursor()
+            }
+
+            Button {
+                text: batchQueue.length > 0 ? "Stop" : "Voice All"
+                font.pixelSize: 10
+                implicitWidth: 64
+                ToolTip.visible: hovered
+                ToolTip.text: "Voice all chord symbols in the score"
                 onClicked: {
                     if (batchQueue.length > 0) {
                         batchQueue = []
