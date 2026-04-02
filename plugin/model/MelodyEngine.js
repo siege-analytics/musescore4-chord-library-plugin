@@ -87,8 +87,7 @@ function voicingBassNoteSemitone(voicing, targetRoot, semitoneMap) {
 }
 
 // Suggest a bass note for a chord quality.
-// Returns the chord root semitone by default (root in bass is standard).
-// For slash chords or inversions, this could be extended.
+// Returns the chord root semitone by default.
 //
 // @param targetRoot — root note string
 // @param quality    — chord quality string
@@ -96,8 +95,63 @@ function voicingBassNoteSemitone(voicing, targetRoot, semitoneMap) {
 function suggestBassNote(targetRoot, quality, semitoneMap) {
     var rootSemitone = semitoneMap[targetRoot]
     if (rootSemitone === undefined) return -1
-    // Default: root in bass
     return rootSemitone
+}
+
+// Suggest smart bass notes considering voice leading context.
+// Returns array of { semitone, name, reason } suggestions.
+//
+// @param targetRoot  — current chord root
+// @param quality     — current chord quality
+// @param prevRoot    — previous chord root (or null)
+// @param nextRoot    — next chord root (or null)
+// @param semitoneMap — Transposer.SEMITONE_MAP
+function suggestBassNotes(targetRoot, quality, prevRoot, nextRoot, semitoneMap) {
+    var suggestions = []
+    var root = semitoneMap[targetRoot]
+    if (root === undefined) return suggestions
+
+    // 1. Root in bass (always the default)
+    suggestions.push({ semitone: root, name: NOTE_NAMES[root], reason: "Root" })
+
+    // 2. Third in bass (first inversion) — smooth for maj7, min7
+    if (quality === "maj7" || quality === "min7" || quality === "dom7" || quality === "maj6") {
+        var third = quality === "min7" ? (root + 3) % 12 : (root + 4) % 12
+        suggestions.push({ semitone: third, name: NOTE_NAMES[third], reason: "3rd (1st inv)" })
+    }
+
+    // 3. Fifth in bass (second inversion)
+    var fifth = (root + 7) % 12
+    suggestions.push({ semitone: fifth, name: NOTE_NAMES[fifth], reason: "5th (2nd inv)" })
+
+    // 4. Walking bass: chromatic approach to next chord root
+    if (nextRoot) {
+        var nextSemi = semitoneMap[nextRoot]
+        if (nextSemi !== undefined) {
+            var halfBelow = (nextSemi - 1 + 12) % 12
+            var halfAbove = (nextSemi + 1) % 12
+            if (halfBelow !== root) {
+                suggestions.push({ semitone: halfBelow, name: NOTE_NAMES[halfBelow], reason: "Chromatic → " + nextRoot })
+            }
+            if (halfAbove !== root) {
+                suggestions.push({ semitone: halfAbove, name: NOTE_NAMES[halfAbove], reason: "Chromatic ↗ " + nextRoot })
+            }
+        }
+    }
+
+    // 5. Stepwise from previous chord
+    if (prevRoot) {
+        var prevSemi = semitoneMap[prevRoot]
+        if (prevSemi !== undefined) {
+            var stepUp = (prevSemi + 2) % 12  // whole step up
+            var stepDown = (prevSemi - 2 + 12) % 12  // whole step down
+            if (stepUp !== root && suggestions.every(function(s) { return s.semitone !== stepUp })) {
+                suggestions.push({ semitone: stepUp, name: NOTE_NAMES[stepUp], reason: "Step from " + prevRoot })
+            }
+        }
+    }
+
+    return suggestions
 }
 
 // Calculate "distance" between two voicings (lower = closer hand position).
@@ -205,4 +259,52 @@ function scoreVoicing(voicing, quality, targetRoot, melodyTarget, filterContext,
 function melodyNoteName(melodyMidi) {
     if (melodyMidi < 0) return ""
     return NOTE_NAMES[melodyMidi % 12]
+}
+
+// Build a voice leading path visualization from batch chord data.
+// Shows top note, bass note, and motion direction for each chord.
+// Returns a formatted string for display in the walkthrough panel.
+//
+// @param batchChords — array of {text, root, voicing, melodyMidi, bassMidi}
+// @param currentIndex — current step index (1-based, after increment)
+// @param semitoneMap — Transposer.SEMITONE_MAP
+function buildVoiceLeadingPath(batchChords, currentIndex, semitoneMap) {
+    if (!batchChords || batchChords.length === 0) return ""
+
+    var lines = []
+    var prevTop = -1
+
+    // Show a window of chords around the current position
+    var windowStart = Math.max(0, currentIndex - 3)
+    var windowEnd = Math.min(batchChords.length, currentIndex + 4)
+
+    for (var i = windowStart; i < windowEnd; i++) {
+        var item = batchChords[i]
+        var topSemi = voicingTopNoteSemitone(item.voicing, item.root, semitoneMap)
+        var topName = topSemi >= 0 ? NOTE_NAMES[topSemi] : "?"
+        var bassSemi = voicingBassNoteSemitone(item.voicing, item.root, semitoneMap)
+        var bassName = bassSemi >= 0 ? NOTE_NAMES[bassSemi] : "?"
+
+        // Direction arrow from previous top note
+        var arrow = ""
+        if (prevTop >= 0 && topSemi >= 0) {
+            var diff = topSemi - prevTop
+            // Normalize to shortest distance (-6 to +5)
+            if (diff > 6) diff -= 12
+            if (diff < -6) diff += 12
+            if (diff > 0) arrow = "↗"
+            else if (diff < 0) arrow = "↘"
+            else arrow = "→"
+        }
+
+        var marker = (i === currentIndex - 1) ? "▸ " : "  "
+        var chordLabel = item.text
+        // Pad to 6 chars for alignment
+        while (chordLabel.length < 6) chordLabel += " "
+
+        lines.push(marker + chordLabel + " " + arrow + " top:" + topName + "  bass:" + bassName)
+        prevTop = topSemi
+    }
+
+    return lines.join("\n")
 }

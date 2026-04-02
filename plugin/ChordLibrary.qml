@@ -8,6 +8,7 @@ import "model"
 import "model/Transposer.js" as Transposer
 import "model/MelodyEngine.js" as MelodyEngine
 import "model/VoicingCalculator.js" as VoicingCalculator
+import "model/ReharmonizationEngine.js" as Reharm
 
 MuseScore {
     id: chordLibrary
@@ -228,6 +229,7 @@ MuseScore {
     property bool sortByProximity: false    // when true, sort filtered results by distance
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
+    property int melodyStaffIdx: -1  // -1 = same staff, 0+ = specific staff index for melody reading
 
     // Voicing calculator constraints (defaults, overridable per chord in walkthrough)
     property int calcMaxFret: 12           // highest fret to consider
@@ -617,6 +619,15 @@ MuseScore {
         cursor.staffIdx = 0
         cursor.voice = 0
         cursor.rewind(0)
+
+        // If reading melody from a separate staff, create a second cursor
+        var melodyCursor = null
+        if (melodyStaffIdx >= 0 && melodyOnTop) {
+            melodyCursor = curScore.newCursor()
+            melodyCursor.staffIdx = melodyStaffIdx
+            melodyCursor.voice = 0
+            melodyCursor.rewind(0)
+        }
         while (cursor.segment) {
             if (cursor.segment.annotations) {
                 for (var a = 0; a < cursor.segment.annotations.length; a++) {
@@ -627,6 +638,25 @@ MuseScore {
                             // Extract melody note (highest pitch) at this position.
                             // If user set a manual override, use that for all positions.
                             var melodyMidi = melodyOverrideMidi()
+
+                            // Try melody from a separate staff first (if configured)
+                            if (melodyMidi < 0 && melodyOnTop && melodyCursor) {
+                                // Advance melody cursor to same tick position
+                                while (melodyCursor.segment && melodyCursor.tick < cursor.tick) {
+                                    melodyCursor.next()
+                                }
+                                if (melodyCursor.segment && melodyCursor.tick === cursor.tick) {
+                                    if (melodyCursor.element && melodyCursor.element.type === Element.CHORD) {
+                                        var melNotes = melodyCursor.element.notes
+                                        for (var mn = 0; mn < melNotes.length; mn++) {
+                                            if (melNotes[mn].pitch > melodyMidi)
+                                                melodyMidi = melNotes[mn].pitch
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Fall back to same-staff melody extraction
                             if (melodyMidi < 0 && melodyOnTop) {
                                 var segEl = cursor.segment
                                 // Check cursor.element first (voice 0)
@@ -4198,6 +4228,29 @@ MuseScore {
             onRevoiceRequested: function(melodyNote, bassNote, category) {
                 revoiceCurrentStepWith(melodyNote, bassNote, category)
             }
+            onReharmSelected: function(newRoot, newQuality) {
+                // Apply the reharm suggestion: change the current chord's root/quality
+                var idx = _batchIndex - 1
+                if (idx < 0 || idx >= _batchChords.length) return
+                var item = _batchChords[idx]
+                item.root = newRoot
+                item.quality = newQuality
+                item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality)
+                // Update bass suggestion for new root
+                item.bassMidi = MelodyEngine.suggestBassNote(newRoot, newQuality, Transposer.SEMITONE_MAP)
+                // Re-voice with the new chord
+                var voicing = findBestVoicing(newRoot, newQuality, item.melodyMidi, item.bassMidi)
+                if (voicing) {
+                    item.voicing = voicing
+                    var xml = generateXmlForVoicing(voicing, newRoot)
+                    var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+                    tempDiagramFile.source = xmlPath
+                    try { tempDiagramFile.write(xml) } catch(e) {}
+                }
+                // Refresh the display
+                _batchIndex = idx
+                batchShowNext()
+            }
         }
 
         // === Tab 0: Library (main panel) ===
@@ -4345,6 +4398,19 @@ MuseScore {
                 selectByMouse: true
                 ToolTip.visible: hovered
                 ToolTip.text: "Override melody note (e.g. E, Bb, F#). Leave blank for auto-detect."
+            }
+
+            ComboBox {
+                visible: melodyOnTop
+                implicitWidth: 80
+                font.pixelSize: 10
+                model: ["Same staff", "Staff 1", "Staff 2", "Staff 3"]
+                currentIndex: melodyStaffIdx + 1  // -1 → 0 (Same staff)
+                onCurrentIndexChanged: {
+                    melodyStaffIdx = currentIndex - 1  // 0 → -1 (Same staff)
+                }
+                ToolTip.visible: hovered
+                ToolTip.text: "Which staff to read the melody from"
             }
         }
 

@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import "../model/MelodyEngine.js" as MelodyEngine
 import "../model/Transposer.js" as Transposer
+import "../model/ReharmonizationEngine.js" as Reharm
 
 // Voice Score walkthrough overlay panel.
 // Displays the guided per-chord voicing workflow with melody/category overrides.
@@ -26,6 +27,7 @@ ColumnLayout {
     signal nextClicked()
     signal stopClicked()
     signal revoiceRequested(string melodyNote, string bassNote, string category)
+    signal reharmSelected(string newRoot, string newQuality)
 
     // Convenience: current item (read-only)
     readonly property var currentItem: {
@@ -106,6 +108,24 @@ ColumnLayout {
     }
 
     Rectangle {
+        Layout.fillWidth: true
+        height: 1
+        color: theme.divider
+    }
+
+    // Voice leading path — shows melody contour across chords
+    Label {
+        visible: batchActive && batchChords.length > 1
+        Layout.fillWidth: true
+        font.pixelSize: 10
+        font.family: "Menlo, Monaco, monospace"
+        color: theme.textSecondary
+        text: MelodyEngine.buildVoiceLeadingPath(batchChords, batchIndex, Transposer.SEMITONE_MAP)
+        lineHeight: 1.3
+    }
+
+    Rectangle {
+        visible: batchActive && batchChords.length > 1
         Layout.fillWidth: true
         height: 1
         color: theme.divider
@@ -229,6 +249,59 @@ ColumnLayout {
                 font.pixelSize: 10
                 color: theme.textSecondary
                 Layout.fillWidth: true
+            }
+        }
+    }
+
+    // Reharm suggestion chips
+    Flow {
+        visible: batchActive && currentItem !== null
+        Layout.fillWidth: true
+        spacing: 4
+
+        Label {
+            text: "Reharm:"
+            font.pixelSize: 9
+            color: theme.textMuted
+        }
+
+        Repeater {
+            model: {
+                if (!currentItem) return []
+                var nextItem = (batchIndex < batchChords.length) ? batchChords[batchIndex] : null
+                return Reharm.suggest(
+                    currentItem.root,
+                    currentItem.quality,
+                    nextItem ? nextItem.root : "",
+                    nextItem ? nextItem.quality : ""
+                )
+            }
+
+            Rectangle {
+                width: chipLabel.implicitWidth + 12
+                height: chipLabel.implicitHeight + 6
+                radius: 10
+                color: chipMouse.containsMouse ? theme.chipHover : theme.chipBackground
+                border.color: theme.chipBorder
+                border.width: 1
+
+                Label {
+                    id: chipLabel
+                    anchors.centerIn: parent
+                    text: modelData.label
+                    font.pixelSize: 9
+                    color: theme.textSecondary
+                }
+
+                MouseArea {
+                    id: chipMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: walkthroughPanel.reharmSelected(modelData.root, modelData.quality)
+                }
+
+                ToolTip.visible: chipMouse.containsMouse
+                ToolTip.text: modelData.description
             }
         }
     }
