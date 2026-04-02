@@ -206,6 +206,15 @@ MuseScore {
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
 
+    // Returns override melody MIDI pitch (0-11) or -1 if no override set
+    function melodyOverrideMidi() {
+        if (!melodyOnTop) return -1
+        var note = melodyOverrideField ? melodyOverrideField.text.trim() : ""
+        if (!note) return -1
+        var midi = Transposer.SEMITONE_MAP[note.charAt(0).toUpperCase() + note.substring(1)]
+        return (midi !== undefined) ? midi : -1
+    }
+
     // Dynamic filter lists (rebuilt when data changes)
     property var contextList: ["All Contexts"]
     property var categoryList: ["All Types"]
@@ -534,9 +543,9 @@ MuseScore {
             return
         }
 
-        // Extract melody note if melody-on-top is enabled
-        var melodyMidi = -1
-        if (melodyOnTop) {
+        // Extract melody note — use override if set, else detect from selection
+        var melodyMidi = melodyOverrideMidi()
+        if (melodyMidi < 0 && melodyOnTop) {
             var chordElem = null
             if (elem.type === Element.NOTE && elem.parent)
                 chordElem = elem.parent
@@ -583,10 +592,9 @@ MuseScore {
                         var parsed = parseChordSymbol(text)
                         if (parsed) {
                             // Extract melody note (highest pitch) at this position.
-                            // Scan segment elements directly — cursor.element may not
-                            // point to the note when a chord symbol is on a rest voice.
-                            var melodyMidi = -1
-                            if (melodyOnTop) {
+                            // If user set a manual override, use that for all positions.
+                            var melodyMidi = melodyOverrideMidi()
+                            if (melodyMidi < 0 && melodyOnTop) {
                                 var segEl = cursor.segment
                                 // Check cursor.element first (voice 0)
                                 if (cursor.element && cursor.element.type === Element.CHORD) {
@@ -4149,6 +4157,17 @@ MuseScore {
                         : "Melody on top: off"
                     statusMsg.color = theme.textMuted
                 }
+            }
+
+            TextField {
+                id: melodyOverrideField
+                visible: melodyOnTop
+                implicitWidth: 36
+                font.pixelSize: 10
+                placeholderText: "auto"
+                selectByMouse: true
+                ToolTip.visible: hovered
+                ToolTip.text: "Override melody note (e.g. E, Bb, F#). Leave blank for auto-detect."
             }
         }
 
