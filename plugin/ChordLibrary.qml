@@ -2178,7 +2178,8 @@ MuseScore {
                 continue
             }
             var matches = voicingsData.filter(function(v) {
-                if (v.chord_quality !== parsed.quality) return false
+                // Quartal voicings work over any chord quality
+                if (v.chord_quality !== parsed.quality && v.chord_quality !== "quartal") return false
                 if (ctx !== "all" && v.context !== ctx) return false
                 if (cat !== "all" && v.category !== cat) return false
                 return true
