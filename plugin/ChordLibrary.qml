@@ -26,8 +26,10 @@ MuseScore {
     QtObject {
         id: theme
         readonly property bool isDark: {
-            var bg = palette.window
-            return (bg.r + bg.g + bg.b) / 3 < 0.5
+            // Check windowText brightness — in dark mode, text is light
+            // More reliable than window background in MuseScore's plugin sandbox
+            var fg = palette.windowText
+            return (fg.r + fg.g + fg.b) / 3 > 0.5
         }
 
         // Card / surface colors
