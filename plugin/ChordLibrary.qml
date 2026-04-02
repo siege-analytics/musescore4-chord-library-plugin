@@ -703,27 +703,40 @@ MuseScore {
         _batchIndex++
     }
 
-    // Re-voice the current walkthrough step with an edited melody note
+    // Re-voice the current walkthrough step with edited melody and/or category
     function revoiceCurrentStep() {
         var idx = _batchIndex - 1  // _batchIndex was already incremented
         if (idx < 0 || idx >= _batchChords.length) return
 
         var item = _batchChords[idx]
-        var noteText = stepMelodyField ? stepMelodyField.text.trim() : ""
 
-        // Parse the note name to a MIDI pitch class
-        var newMidi = -1
-        if (noteText) {
-            var parsed = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
-            if (parsed !== undefined) newMidi = parsed
+        // Parse melody override
+        var newMidi = item.melodyMidi
+        if (melodyOnTop && stepMelodyField) {
+            var noteText = stepMelodyField.text.trim()
+            if (noteText) {
+                var parsedMidi = Transposer.SEMITONE_MAP[noteText.charAt(0).toUpperCase() + noteText.substring(1)]
+                if (parsedMidi !== undefined) newMidi = parsedMidi
+            }
         }
-        if (newMidi < 0) return  // invalid note, do nothing
-
-        // Update the melody MIDI for this step
         item.melodyMidi = newMidi
 
-        // Re-select voicing with the new melody target
+        // Parse category override
+        var catOverride = ""
+        if (stepCategoryCombo) {
+            catOverride = stepCategoryCombo.categoryMap[stepCategoryCombo.currentText] || ""
+        }
+
+        // Temporarily set the category filter for findBestVoicing
+        var savedCategory = filterCategory
+        if (catOverride) filterCategory = catOverride
+
+        // Re-select voicing
         var newVoicing = findBestVoicing(item.root, item.quality, newMidi)
+
+        // Restore filter
+        filterCategory = savedCategory
+
         if (!newVoicing) return
         item.voicing = newVoicing
 
@@ -4012,22 +4025,23 @@ MuseScore {
                 }
             }
 
-            // Per-chord melody override
+            // Per-chord voicing controls (melody + category override)
             RowLayout {
-                visible: batchQueue.length > 0 && melodyOnTop
+                visible: batchQueue.length > 0
                 Layout.fillWidth: true
                 spacing: 6
 
                 Label {
+                    visible: melodyOnTop
                     text: "Melody:"
-                    font.pixelSize: 11
-                    font.bold: true
+                    font.pixelSize: 10
                 }
 
                 TextField {
                     id: stepMelodyField
-                    implicitWidth: 44
-                    font.pixelSize: 11
+                    visible: melodyOnTop
+                    implicitWidth: 40
+                    font.pixelSize: 10
                     placeholderText: "auto"
                     selectByMouse: true
                     text: {
@@ -4043,18 +4057,35 @@ MuseScore {
                     onAccepted: revoiceCurrentStep()
                 }
 
+                Label {
+                    text: "Type:"
+                    font.pixelSize: 10
+                }
+
+                ComboBox {
+                    id: stepCategoryCombo
+                    implicitWidth: 100
+                    font.pixelSize: 10
+                    model: ["Any", "Shell", "Drop 2", "Drop 3", "Extended", "Altered", "Quartal"]
+                    property var categoryMap: ({"Any":"", "Shell":"shell", "Drop 2":"drop2", "Drop 3":"drop3", "Extended":"extended", "Altered":"altered", "Quartal":"quartal"})
+                    currentIndex: {
+                        if (_batchIndex > 0 && _batchIndex <= _batchChords.length) {
+                            var cat = _batchChords[_batchIndex - 1].voicing.category || ""
+                            var labels = ["Any","Shell","Drop 2","Drop 3","Extended","Altered","Quartal"]
+                            var values = ["","shell","drop2","drop3","extended","altered","quartal"]
+                            var idx = values.indexOf(cat)
+                            return idx >= 0 ? idx : 0
+                        }
+                        return 0
+                    }
+                }
+
                 Button {
                     text: "Re-voice"
                     font.pixelSize: 10
                     ToolTip.visible: hovered
-                    ToolTip.text: "Re-select voicing with the edited melody note on top"
+                    ToolTip.text: "Re-select voicing with edited melody and/or category"
                     onClicked: revoiceCurrentStep()
-                }
-
-                Label {
-                    text: "(edit + Enter to reharm)"
-                    font.pixelSize: 9
-                    color: theme.textMuted
                 }
             }
 
