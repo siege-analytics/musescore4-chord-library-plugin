@@ -2251,11 +2251,11 @@ MuseScore {
         }
 
         if (chordPositions.length === 0) {
-            showResult("No Chords Found", "The score has no chord symbols to add fingerings to.", false)
+            showResult("No Chords Found", "The score has no chord symbols to annotate.", false)
             return
         }
 
-        // Add fingering text at each position
+        // Add staff text annotations at each position
         var added = 0
         var errors = []
 
@@ -2287,12 +2287,12 @@ MuseScore {
 
         curScore.endCmd()
 
-        var msg = "Added fingerings to " + added + " of " + chordPositions.length + " chord positions."
+        var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
         if (errors.length > 0) {
             msg += "\n\nErrors:\n" + errors.join("\n")
         }
-        msg += "\n\nFingering format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
-        showResult("Fingerings", msg, errors.length === 0)
+        msg += "\n\nNotation format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
+        showResult("Staff Text", msg, errors.length === 0)
     }
 
     function exportFingeringSheet() {
@@ -2490,14 +2490,33 @@ MuseScore {
                     }
                 }
 
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                Label {
+                    text: "TEXT ANNOTATIONS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text."
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 4
 
                     Button {
-                        text: "Add Fingering Text"
+                        text: "Annotate Staff Text"
                         font.pixelSize: 10
                         onClicked: addFingeringsToScore()
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Adds fret notation (e.g. 1-X-1-2-X-X) as staff text above each chord symbol"
                     }
 
                     Button {
