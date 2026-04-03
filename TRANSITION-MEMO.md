@@ -1,186 +1,181 @@
-# Transition Memo — Siege Analytics Chord Library v1.5.0
+# Transition Memo — ChordLibrary v2.0
 
 **Date:** 2026-04-02
-**Author:** Craft Agent (Claude Opus 4.6)
-**Owner:** Dheeraj Chand, Siege Analytics
+**Author:** Dheeraj Chand (with Craft Agent)
 **Repo:** `/Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin`
-**Branch:** `main` (merged from `ui-reorganization`, 24 commits)
-**Plugin deploy:** `~/Documents/MuseScore4/Plugins/chordlibrary/chordlibrary.qml` (manual copy, not symlinked)
+**Installed:** `~/Documents/MuseScore4/Plugins/chordlibrary/`
 
 ---
 
 ## What This Is
 
-A MuseScore 4 QML plugin for jazz guitarists. It provides a library of 820 chord voicings (stored in root C, transposed at runtime), a guided "Voice Score" walkthrough for placing fretboard diagrams on lead sheets, and a chord melody arranger with per-chord melody note and category overrides.
-
-The audience is **musicians, not programmers**. UI decisions should be evaluated from a player's perspective.
+A MuseScore 4 QML plugin for jazz guitar chord voicing — a library browser, guided walkthrough for voicing entire scores, and now a runtime voicing calculator that generates geometrically correct voicings for any guitar tuning.
 
 ---
 
-## Architecture
+## Architecture (Post-Decomposition)
 
-### Plugin Structure
-```
-plugin/
-  ChordLibrary.qml    — Main file (~4,300 lines). All UI, logic, and state.
-  ui/
-    VoicingCard.qml    — Individual voicing card with canvas fretboard thumbnail
-    VoicingGrid.qml    — ListView wrapper for voicing cards
-    SearchBar.qml      — Search input with clear button
-    FilterBar.qml      — Context/category/quality dropdowns
-    PanelView.qml      — Legacy/unused (kept for compatibility)
-  model/
-    LibraryModel.qml   — Data model
-    VoicingInserter.qml — Insertion via setDot() or clipboard
-    Transposer.js       — Semitone calculation utilities
-data/
-  voicings.json        — 820 voicings, all root C, normalized naming
-config/
-  tunings/             — Per-tuning JSON files (standard, 7-string, ukulele, etc.)
-  contexts.json        — Context labels (CM6, CM7, CV6, CV7)
-scripts/
-  validate.py          — Schema validation
-  library_hygiene.py   — Duplicate/redundancy detection
-  export_gp5.py        — Guitar Pro 5 export
-  export_tablature.py  — ASCII tab export
-  import_gtdb.py       — GTDB tuning import
-  generate_chord_sheet.py
-  generate_fingering_sheet.py
-tests/
-  test_core.py         — Unit tests (62 pass)
-  test_integration.py  — Integration tests (7 fail from missing deps)
-.github/workflows/
-  validate-voicings.yml — CI: schema validation + hygiene + tests on PR
-```
+| File | Lines | Purpose |
+|------|-------|---------|
+| `plugin/ChordLibrary.qml` | ~4,900 | Main plugin: UI, state, scoring, batch walkthrough |
+| `plugin/model/MelodyEngine.js` | ~310 | Melody/bass scoring, voice leading, note parsing |
+| `plugin/model/VoicingCalculator.js` | ~440 | Runtime voicing generation from tuning geometry |
+| `plugin/model/ReharmonizationEngine.js` | ~124 | Reharm suggestions (tritone subs, ii-V, etc.) |
+| `plugin/model/Transposer.js` | ~126 | Semitone transposition, note spelling, name transposition |
+| `plugin/ui/WalkthroughPanel.qml` | ~450 | Walkthrough overlay: preview, controls, voice leading |
+| `deploy.sh` | ~47 | Copies source files to MuseScore plugin dir |
 
 ### Key Design Decisions
-- **All voicings in root C** — transposed at runtime via Transposer.js. Keeps data small and consistent.
-- **Clipboard pipeline** — Plugin writes XML → launchd agent → Swift tool (`ms-clipboard`) → macOS pasteboard → user presses ⌘V. `cmd("paste")` does not work in MuseScore 4's plugin API.
-- **ThemePalette** — Centralized dark/light mode via `QtObject { id: theme }` with `isDark` detection from `palette.windowText` brightness (not `palette.window` — unreliable in MuseScore's sandbox).
-- **Quartal voicings are universal** — They have `chord_quality: "quartal"` in the data but are included as candidates for ALL chord qualities in `findBestVoicing`, `applyFilters`, and `analyzeCurrentScore`.
 
-### Navigation Model
-```
-currentTab: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
-showToolResults: bool (overlay for Voice Score walkthrough)
-```
-TabBar with 6 tabs. Voice Score walkthrough is an overlay panel on top of any tab.
+1. **No symlinks.** MuseScore's `FileIO` sandbox resolves symlinks and refuses to write outside the plugin directory. Use `deploy.sh` to copy files.
 
----
+2. **Harmonic geometry, not fret shifting.** Voicings for non-standard tunings are calculated from pitch class sets placed on the actual fretboard — not standard-tuning shapes with fret offsets. This is mathematically correct for any tuning including those with non-standard inter-string intervals (DADGAD, all-fourths, etc.).
 
-## What Was Done in v1.5.0
+3. **12-root generation.** Open strings can't be transposed. The calculator generates voicings for all 12 roots so open strings always produce correct chord tones. `findBestVoicing` matches by root — no transposition needed for calculated voicings.
 
-### UI Reorganization
-1. **Dark mode palette** — ThemePalette QtObject, ~100 hardcoded colors replaced across 4 QML files
-2. **Tab-based layout** — 6-tab TabBar replacing the old "Settings" mega-scroll
-3. **Renamed "Add Fingering Text"** → "Annotate Staff Text" with tooltip and subsection
-4. **Voice Score UX polish** — Progress bar, mini fretboard preview, ⌘V hint chip
-
-### Data & Infrastructure
-5. **Data model normalization** — Deduplicated voicings, added shape cross-references
-6. **chords-db merge** — Expanded voicing library
-7. **GTDB tuning import** — `scripts/import_gtdb.py` (fetches/scrapes GTDB, converts to project format)
-8. **ASCII tablature export** — `scripts/export_tablature.py` (diagram + compact modes, filtering, transposition)
-9. **GitHub Actions CI** — `validate-voicings.yml` (schema validation + hygiene + tests on PR)
-10. **Practice tab** — Flash card mode for voicing recognition
-
-### Testing Fixes
-11. **Dark mode detection** — Switched to windowText brightness (palette.window unreliable in MS4 sandbox)
-12. **Voicing name normalization** — 372 names standardized to `C7 — E shape — Shell (3rd on top)` template
-13. **Quartal voicing inclusion** — Now in library browser, Score Analysis, and voicing selection for all chord qualities
-14. **Annotations read existing diagrams** — `fingeringFromDiagram()` reads FretDiagram elements; "Skip diagrams" checkbox optional
-
-### Chord Melody Features (Martin Taylor Approach)
-15. **Melody-on-top toggle** — Global toggle for auto-detection during Voice All scan
-16. **Melody carry-forward** — Last melody note carries through rests (sustained top voice)
-17. **Per-chord melody override** — Editable text field in walkthrough, always visible, works without global toggle
-18. **Per-chord category selector** — Dropdown (Shell, Drop 2, Drop 3, Extended, Altered, Quartal, Any)
-19. **Re-voice button** — Applies melody + category changes per chord, re-selects voicing, regenerates clipboard
-20. **voicingTopNoteSemitone()** — Computes pitch class of a voicing's highest voice for melody matching (200-point scoring bonus)
-
----
-
-## Known Issues & Limitations
-
-### MuseScore 4 API Limitations
-- `cmd("paste")` is a no-op — clipboard pipeline + manual ⌘V required
-- `FileIO` is restricted — can only write to plugin directory
-- No `Dialog` or `Popup` QML types — all UI in the main panel
-- `SystemPalette.window` doesn't report background color reliably — use `windowText` brightness
-- `setDot()` API for auto-paste pending upstream PR #32848
-
-### Untested at Runtime
-- **`fingeringFromDiagram()`** — Uses `diagram.dot(s)` and `diagram.marker(s)`. Written from docs, not yet verified with actual FretDiagram elements. Falls back silently to auto-generated voicings if it fails.
-- **Melody extraction via `segment.elementAt(voice)`** — Scans voices 0-3 for notes. May miss notes in complex multi-voice arrangements.
-- **Dark mode toggle** — Detection works at plugin load; needs verification that it updates when macOS appearance changes mid-session (may require plugin close/reopen).
-
-### Pre-existing Test Failures
-7 tests fail from missing optional dependencies:
-```
-pip3 install --break-system-packages guitarpro jsonschema
-```
+4. **Standard library for standard tuning.** The 820 hand-curated voicings are still used for standard 6-string tuning. The runtime calculator only activates for non-standard tunings.
 
 ---
 
 ## Deployment
 
-NOT symlinked. After code changes:
 ```bash
-cp plugin/ChordLibrary.qml ~/Documents/MuseScore4/Plugins/chordlibrary/chordlibrary.qml
-cp plugin/ui/*.qml ~/Documents/MuseScore4/Plugins/chordlibrary/ui/
-cp data/voicings.json ~/Documents/MuseScore4/Plugins/chordlibrary/voicings-cache.json
+./deploy.sh              # Copy source → MuseScore plugin dir
+./deploy.sh --watch      # Auto-deploy on file changes (requires fswatch)
 ```
-Then **quit and reopen MuseScore 4** (it caches QML).
+
+Then **quit and relaunch MuseScore** (it caches QML).
+
+**Never** put backup copies in `~/Documents/MuseScore4/Plugins/` — MuseScore scans all subdirectories and may load the wrong copy.
+
+---
+
+## What Works (v2.0)
+
+### Voicing Calculator
+- Runtime generation from tuning geometry for any tuning
+- Configurable constraints: max fret, max stretch, open strings, root-in-bass, min notes, max muted
+- "Max per quality" setting: 0 = unlimited (Ted Greene mode), any positive number = capped
+- All 12 roots generated (open string correctness)
+- Inversions (non-root bass) for all qualities
+- Quartal voicings via harmonic pitch class sets
+- Constraints persisted in settings.json
+
+### Walkthrough (Voice Score)
+- Guided per-chord voicing with ⌘V paste workflow
+- Melody field with lock toggle (🔒 = must match, 🔓 = prefer)
+- Bass note field with lock toggle
+- Re-voice button with category override (dynamic from data)
+- Voice leading path visualization (top/bass note contour with arrows)
+- Reharm suggestion chips (tritone sub, ii-V, backdoor, dim passing, sus4, min6, Lydian)
+- Impossibility warnings inline ("No playable F7 with A in bass. Offering alternative: F in bass.")
+- Tuning indicator with scientific pitch notation (e.g., "A3-E3-C3-G2-D2-A1")
+
+### Tuning System
+- Custom tuning CRUD (create, edit, delete) in Settings tab
+- Tuning persistence in settings.json (customTunings array + tuningOrder)
+- Tuning reorder (▲/▼ buttons) with persistent order
+- Display names in tuning combo (not slugs)
+- Context-filtered tuning list (CM6 only shows 6-string tunings)
+- Tuning-specific voicing calculation on tuning change
+
+### Second-Staff Melody Reading
+- `melodyStaffIdx` property (-1 = same staff, 0+ = specific staff)
+- Selector in Library tab next to Melody toggle
+
+### Scoring System
+- Melody on top: +200 (unlocked) / +500 (locked)
+- Bass note match: +250 (unlocked) / +500 (locked)
+- Context match: +100
+- Category match: +50
+- Quality match: +20
+- Shell preference: +10, Drop 2: +5
+- Voice leading proximity: -2 × distance
+
+---
+
+## Known Issues
+
+1. **Mini fretboard preview doesn't transpose.** The canvas draws raw dot positions from the voicing data, not the transposed fret positions. The pasted diagram is correct; only the preview is wrong.
+
+2. **94k voicings in Ted Greene mode.** Uncapped generation for Baritone B produces ~94k voicings. The UI handles it but it's slow to generate. The `maxPerQuality` setting can cap this.
+
+3. **Category classification is heuristic.** Shell = 3 notes, drop2 = 4 notes with stretch ≤ 3, drop3 = 4 notes with stretch > 3, extended = 5+ notes, altered = quality name contains sharp/b9/b13/b5. Not true shape analysis.
+
+4. **2 pre-existing test failures.** Schema validation: voicings.json has extra properties (`also_contexts`, `also_qualities`, `shape_id`) not in the schema. Not caused by v2.0 changes.
+
+5. **Quartal voicings capped at 10 per size** in Pass 3 of `generateAll`. Should respect `maxPerQuality` setting.
+
+---
+
+## Unbuilt Features
+
+### Phase 1 Remaining
+- **1.5 Second voice export** — Write voicings as actual notes on a second staff/voice (not just diagrams). Uses MuseScore's `newElement(Element.NOTE)` API.
+
+### Phase 2 — Voicing Library
+- **2.3 Slash chord parsing** — Parse "C/E" chord symbols and auto-set bass to E
+- **2.5 Chord-scale tags** — Tag voicings with compatible scales
+
+### Phase 3 — Integration
+- **3.1 iReal Pro import** — Parse iReal Pro URLs into chord charts
+- **3.2 iGigBook import** — Open MusicXML from iGigBook
+- **3.3 Soundslice export** — Export to Soundslice tab format
+
+### Phase 4 — UX Polish
+- **4.2 Voicing comparison** — Side-by-side view of 2-3 voicings
+- **4.3 Audio preview** — Play voicing through `ms-audio`
+- **4.4 Save arrangement preset** — Serialize walkthrough selections
+- **4.5 Auto-advance** — Blocked on upstream MuseScore PR #32848
+
+### Bugs/Polish
+- Fix mini fretboard preview to show transposed positions
+- Quartal voicings should respect `maxPerQuality` setting
+- Better category classification (actual shape analysis vs heuristic)
 
 ---
 
 ## Dheeraj's Preferences
 
-- **Audience is musicians, not programmers.** Testing instructions, UI labels, error messages — all musical terminology.
-- **Martin Taylor chord melody approach** — Highest note of voicing = melody note. Core use case.
-- **Per-chord reharm** — User wants to make voicing decisions at each chord position, not just accept auto-selections.
-- **Quartal voicings are not quality-specific** — They work over any chord. Don't silo behind `chord_quality` matching.
-- **Naming consistency** — Template: `{Root}{Quality} — {Shape} — {Category} ({top note} on top)`
-- **Annotations should match existing diagrams** — If the user placed a diagram, the text annotation should describe that diagram, not a different voicing.
+- **Audience is musicians, not programmers.** Error messages, labels, tooltips — all musical terminology.
+- **Martin Taylor chord melody approach.** Highest note = melody. Core use case.
+- **Per-chord control.** User makes voicing decisions at each position, not just bulk auto.
+- **Quartal voicings are universal.** Work over any chord, not siloed behind quality matching.
+- **Harmonic geometry, not fret shifting.** Voicings must be mathematically correct for the tuning.
+- **Impossibility messages are critical.** When a request can't be fulfilled, explain what, why, and what's offered instead.
+- **Ted Greene mode.** Default is every playable voicing. Limiting is optional.
+- **Naming:** `{Root}{Quality} — {Shape} — {Category} ({top note} on top)`. Quartals drop the root prefix.
+- **Uses A Standard tuning** (A1-D2-G2-C3-E3-A3, MIDI 33-38-43-48-52-57) on baritone guitar.
 
 ---
 
-## Immediate Next Steps (Testing & Polish)
+## Test Suite
 
-1. **Symlink deploy** — Replace manual copy with symlink from `~/Documents/MuseScore4/Plugins/chordlibrary/` to the repo's `plugin/` directory.
-2. **Test fingeringFromDiagram** — Place a diagram manually, run Annotate Staff Text, verify text matches.
-3. **Test dark mode toggle** — Verify appearance changes after macOS theme switch.
-4. **Voice leading + melody interaction** — Verify 200-point melody bonus dominates proximity scoring in real arrangements.
+```bash
+cd /path/to/repo
+source .venv/bin/activate
+python -m pytest tests/ -q    # 67 pass, 2 pre-existing failures
+```
 
 ---
 
-## Feature Ideas
+## Git Log (Today's Commits)
 
-### Voicing Library Expansion
-- **More altered dominants** — 7alt, 7#9, 7b9#11, tritone subs. Jazz standards need these constantly.
-- **Diminished passing chords** — Ascending/descending dim7 voicings for chromatic movement (e.g. Cdim7 → C#dim7 passing between I and ii).
-- **Slash chords / bass note voicings** — Support for C/E, Dm/F, etc. where the bass note is specified.
-- **Cluster voicings** — Close-voiced chords for modern jazz (Kurt Rosenwinkel, Ben Monder style).
-- **Chord-scale association** — Tag voicings with compatible scales (e.g. dom7 → mixolydian, lydian dominant, altered).
-
-### Chord Melody Workflow
-- **Second-staff melody reading** — Read melody from a separate staff (common in chord melody arrangements where melody and chords are on different staves). This would make melody-on-top work automatically without manual overrides.
-- **Bass note suggestions** — Per-chord bass note selector in the walkthrough, similar to the melody override. The plugin suggests a bass note based on the chord quality and voice leading context (e.g. root, 3rd for smooth bass lines, 5th for inversions). The user can override per chord. This feeds into voicing selection — prefer voicings whose lowest sounding string matches the target bass note. Combined with melody-on-top, this gives full control: melody on top, bass on bottom, inner voices handled by the voicing category.
-- **Bass line path visualization** — Like voice leading path but for the bass voice. Show root movement, guide tones (3rds and 7ths), and chromatic approaches.
-- **Walking bass integration** — For solo guitar arrangements, suggest bass notes that create walking bass lines between chord changes (chromatic approach, scale-wise, arpeggiated). This is the Joe Pass / Martin Taylor solo guitar approach where the thumb plays a bass line while fingers play chord melody above.
-- **Reharm suggestions** — At each chord position, suggest alternative chord qualities (e.g. at G-7 → C7, suggest tritone sub Gb7 → C7, or backdoor ii-V Abm7 → Db7 → C).
-- **Voice leading path visualization** — Show the top-note path as a line across the score, so you can see if the melody voice is smooth or has jumps.
-- **Export chord melody arrangement** — Generate a new staff with the voicings written as actual notes (not just diagrams), playable in MuseScore's mixer. Include bass notes as a separate voice or staff.
-
-### Integration Ideas
-- **iGigBook import** — iGigBook has a huge library of lead sheets with chord symbols. Importing from iGigBook (probably via MusicXML or their API) would give instant access to thousands of standards for chord melody arrangement. **This could be a separate plugin or a script that converts iGigBook exports into MuseScore format with chord symbols intact.** iGigBook supports MusicXML export on iPad/Mac.
-- **iReal Pro import** — iReal Pro chord charts are widely shared in the jazz community. Import iReal Pro format (HTML-based chord charts) and create MuseScore lead sheets with chord symbols.
-- **Soundslice integration** — Export voicings as Soundslice-compatible tab for interactive online playback.
-
-### UX Improvements
-- **Auto-advance after paste** — Listen for score modification events to auto-advance the walkthrough (blocked on setDot() PR #32848, but worth checking if MS4 has other events).
-- **Undo per voicing** — Let the user undo the last pasted diagram without undoing the whole Voice Score session.
-- **Voicing comparison** — Side-by-side view of 2-3 voicings for the same chord, so you can hear/see the differences before choosing.
-- **Audio preview** — Play the voicing as a strummed chord or arpeggio before pasting (the `ms-audio` binary exists but isn't wired into the walkthrough yet).
-- **Fretboard range constraint** — Let the user set a max fret (e.g. "only voicings below fret 7") for playability in a specific position.
-- **Save arrangement as preset** — After walking through a full score with reharm choices, save the per-chord voicing selections as a named preset that can be re-applied.
+```
+be2fb1e feat: configurable max voicings per quality (0 = Ted Greene mode)
+b946351 feat: uncap voicing generation — digital Ted Greene mode
+5c5c932 fix: cap calculated voicings to ~36 per quality (was 45k uncapped)
+1f100f4 fix: open strings producing wrong notes after transposition
+6460ba1 feat: melody/bass priority lock toggles
+c3cc575 fix: tuning combo shows display names instead of slugs
+af16a94 feat: tuning UX improvements — pitches display, reorder, explicit names
+f630521 fix: clearer impossibility messages — explain what's offered and why
+adbadb1 fix: notify user when bass/melody request can't be fulfilled
+448d636 fix: bass note scoring too weak, increase inversion cap
+d782c05 fix: impossibility warnings shown inline, not in hidden status bar
+def91e5 fix: melody/bass scoring used wrong interval index, add tuning indicator
+9784be6 feat: Phase 1 chord melody features — voice leading, reharm, bass, melody staff
+0d75204 fix: voicing calculator — harmonic geometry, capped inversions, dynamic types
+028da55 wip: runtime voicing calculator, bass note UI, tuning-specific generation
+4fe7857 refactor: decompose ChordLibrary.qml, add tuning-aware voicing pipeline
+```
