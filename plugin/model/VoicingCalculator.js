@@ -367,11 +367,15 @@ function generateAll(tuningMidi, constraints) {
         defaultQualities.push(qid)
     }
 
-    // Pass 1: root-in-bass voicings (standard)
+    // Pass 1: root-in-bass voicings — cap per quality per root to keep total manageable
+    var MAX_PER_QUALITY = 36  // ~3 per root × 12 roots
     for (var i = 0; i < defaultQualities.length; i++) {
         var voicings = calculateForQuality(tuningMidi, defaultQualities[i], constraints)
-        for (var j = 0; j < voicings.length; j++) {
+        voicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+        var kept = 0
+        for (var j = 0; j < voicings.length && kept < MAX_PER_QUALITY; j++) {
             allVoicings.push(voicings[j])
+            kept++
         }
     }
 
