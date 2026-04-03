@@ -757,6 +757,14 @@ MuseScore {
         if (item.bassMidi >= 0) {
             stepText += "\n  Bass: " + MelodyEngine.melodyNoteName(item.bassMidi)
         }
+        // Show any warnings from unfulfilled requests (bass/melody impossibilities)
+        if (item._warnings && item._warnings.length > 0) {
+            stepText += "\n"
+            for (var w = 0; w < item._warnings.length; w++) {
+                stepText += "\n  ⚠ " + item._warnings[w]
+            }
+        }
+
         stepText += "\n"
         stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
         stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
@@ -808,30 +816,30 @@ MuseScore {
             return
         }
 
-        // Check if the bass note request was actually achieved
+        // Track what couldn't be fulfilled — shown inline in the walkthrough
+        var warnings = []
+
         var userRequestedBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
         if (userRequestedBass >= 0) {
             var actualBass = MelodyEngine.voicingBassNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
             if (actualBass >= 0 && actualBass !== userRequestedBass) {
-                var requestedName = MelodyEngine.NOTE_NAMES[userRequestedBass]
-                var actualName = MelodyEngine.NOTE_NAMES[actualBass]
-                statusMsg.text = "No " + item.text + " with " + requestedName + " in bass — using " + actualName + " instead"
-                statusMsg.color = theme.errorText
+                warnings.push("Bass " + MelodyEngine.NOTE_NAMES[userRequestedBass]
+                    + " not available — using " + MelodyEngine.NOTE_NAMES[actualBass]
+                    + " (stretch limit may prevent this combination)")
             }
         }
 
-        // Check if the melody request was actually achieved
         var userRequestedMelody = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
         if (userRequestedMelody >= 0) {
             var actualTop = MelodyEngine.voicingTopNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
             if (actualTop >= 0 && actualTop !== userRequestedMelody) {
-                var reqMelName = MelodyEngine.NOTE_NAMES[userRequestedMelody]
-                var actTopName = MelodyEngine.NOTE_NAMES[actualTop]
-                statusMsg.text = (statusMsg.text || "") + (statusMsg.text ? " | " : "")
-                    + "No " + item.text + " with " + reqMelName + " on top — using " + actTopName
-                statusMsg.color = theme.errorText
+                warnings.push("Melody " + MelodyEngine.NOTE_NAMES[userRequestedMelody]
+                    + " on top not available — using " + MelodyEngine.NOTE_NAMES[actualTop])
             }
         }
+
+        // Store warnings so batchShowNext can display them
+        item._warnings = warnings
 
         item.voicing = newVoicing
 
