@@ -4214,6 +4214,8 @@ MuseScore {
             resultsTitle: toolResultsTitle
             resultsContent: toolResultsContent
             availableCategories: categoryList
+            tuningName: tuningLabels[selectedTuning] || selectedTuning
+            calculatedVoicings: usingTuningVoicings
 
             onPrevClicked: {
                 _batchIndex = _batchIndex - 2

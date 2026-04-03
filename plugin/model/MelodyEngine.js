@@ -21,28 +21,15 @@ var NOTE_NAMES = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B
 // @param targetRoot — root note string (e.g. "F", "Bb") for transposition context
 // @param semitoneMap — Transposer.SEMITONE_MAP lookup table
 function voicingTopNoteSemitone(voicing, targetRoot, semitoneMap) {
-    var dots = voicing.dots || []
-    var opens = voicing.open || []
-    if (dots.length === 0 && opens.length === 0) return -1
-
-    // Find the lowest string number (= highest pitch on guitar)
-    var minStr = 99
-    var topDotIdx = -1
-    for (var i = 0; i < dots.length; i++) {
-        if (dots[i].string < minStr) { minStr = dots[i].string; topDotIdx = i }
-    }
-    for (var j = 0; j < opens.length; j++) {
-        if (opens[j] < minStr) { minStr = opens[j]; topDotIdx = -2 }
-    }
-
-    // Use intervals array to get the interval, then compute semitone
+    // Intervals array is ordered low-to-high pitch (string 6 first, string 1 last).
+    // The last interval is always the top (highest-pitched) note.
     var intervals = voicing.intervals || []
-    if (topDotIdx >= 0 && topDotIdx < intervals.length) {
-        var iv = intervals[topDotIdx]
-        var rootSemitone = semitoneMap[targetRoot] || 0
-        var ivOffset = INTERVAL_SEMITONES[iv]
-        if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
-    }
+    if (intervals.length === 0) return -1
+
+    var iv = intervals[intervals.length - 1]
+    var rootSemitone = semitoneMap[targetRoot] || 0
+    var ivOffset = INTERVAL_SEMITONES[iv]
+    if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
     return -1
 }
 
@@ -53,36 +40,15 @@ function voicingTopNoteSemitone(voicing, targetRoot, semitoneMap) {
 // @param targetRoot — root note string (e.g. "F", "Bb") for transposition context
 // @param semitoneMap — Transposer.SEMITONE_MAP lookup table
 function voicingBassNoteSemitone(voicing, targetRoot, semitoneMap) {
-    var dots = voicing.dots || []
-    var opens = voicing.open || []
-    if (dots.length === 0 && opens.length === 0) return -1
-
-    // Find the highest string number (= lowest pitch on guitar)
-    var maxStr = 0
-    var bassDotIdx = -1
-    for (var i = 0; i < dots.length; i++) {
-        if (dots[i].string > maxStr) { maxStr = dots[i].string; bassDotIdx = i }
-    }
-    for (var j = 0; j < opens.length; j++) {
-        if (opens[j] > maxStr) { maxStr = opens[j]; bassDotIdx = -2 }
-    }
-
-    // Use intervals array to get the interval, then compute semitone
+    // Intervals array is ordered low-to-high pitch (string 6 first, string 1 last).
+    // The first interval is always the bass (lowest-pitched) note.
     var intervals = voicing.intervals || []
-    if (bassDotIdx >= 0 && bassDotIdx < intervals.length) {
-        var iv = intervals[bassDotIdx]
-        var rootSemitone = semitoneMap[targetRoot] || 0
-        var ivOffset = INTERVAL_SEMITONES[iv]
-        if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
-    }
-    // For open strings as bass: the last interval corresponds to the bass
-    // (intervals are ordered high-to-low in the voicing data)
-    if (bassDotIdx === -2 && intervals.length > 0) {
-        var bassIv = intervals[intervals.length - 1]
-        var rootSemi = semitoneMap[targetRoot] || 0
-        var bassOffset = INTERVAL_SEMITONES[bassIv]
-        if (bassOffset !== undefined) return (rootSemi + bassOffset) % 12
-    }
+    if (intervals.length === 0) return -1
+
+    var iv = intervals[0]
+    var rootSemitone = semitoneMap[targetRoot] || 0
+    var ivOffset = INTERVAL_SEMITONES[iv]
+    if (ivOffset !== undefined) return (rootSemitone + ivOffset) % 12
     return -1
 }
 
