@@ -807,6 +807,32 @@ MuseScore {
                 + " or adjust Voicing Constraints in Score Tools."
             return
         }
+
+        // Check if the bass note request was actually achieved
+        var userRequestedBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
+        if (userRequestedBass >= 0) {
+            var actualBass = MelodyEngine.voicingBassNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
+            if (actualBass >= 0 && actualBass !== userRequestedBass) {
+                var requestedName = MelodyEngine.NOTE_NAMES[userRequestedBass]
+                var actualName = MelodyEngine.NOTE_NAMES[actualBass]
+                statusMsg.text = "No " + item.text + " with " + requestedName + " in bass — using " + actualName + " instead"
+                statusMsg.color = theme.errorText
+            }
+        }
+
+        // Check if the melody request was actually achieved
+        var userRequestedMelody = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
+        if (userRequestedMelody >= 0) {
+            var actualTop = MelodyEngine.voicingTopNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
+            if (actualTop >= 0 && actualTop !== userRequestedMelody) {
+                var reqMelName = MelodyEngine.NOTE_NAMES[userRequestedMelody]
+                var actTopName = MelodyEngine.NOTE_NAMES[actualTop]
+                statusMsg.text = (statusMsg.text || "") + (statusMsg.text ? " | " : "")
+                    + "No " + item.text + " with " + reqMelName + " on top — using " + actTopName
+                statusMsg.color = theme.errorText
+            }
+        }
+
         item.voicing = newVoicing
 
         // Regenerate clipboard XML
