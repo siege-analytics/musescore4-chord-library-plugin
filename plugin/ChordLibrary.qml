@@ -9,6 +9,7 @@ import "model/Transposer.js" as Transposer
 import "model/MelodyEngine.js" as MelodyEngine
 import "model/VoicingCalculator.js" as VoicingCalculator
 import "model/ReharmonizationEngine.js" as Reharm
+import "model/ChordScales.js" as ChordScales
 
 MuseScore {
     id: chordLibrary
@@ -18,6 +19,7 @@ MuseScore {
     pluginType: "dialog"
     requiresScore: true
     categoryCode: "composing-arranging-tools"
+    thumbnailName: "thumbnail.svg"
 
     width: 560
     height: 850
@@ -160,15 +162,16 @@ MuseScore {
         "ukulele": 4, "ukulele-low-g": 4, "mandolin": 4,
         "banjo-open-g": 5, "bass-4string": 4, "bass-5string": 5
     }
-    // Filtered tuning list — respects context string count ceiling
+    // Filtered tuning list — only shows tunings matching the context's string count.
+    // A 7-string context only shows 7-string tunings; 6-string only shows 6-string, etc.
     property var filteredTuningList: {
         if (!filterContext || !contextStringCounts[filterContext]) return tuningList
-        var maxStrings = contextStringCounts[filterContext]
+        var requiredStrings = contextStringCounts[filterContext]
         var result = []
         for (var i = 0; i < tuningList.length; i++) {
             var slug = tuningList[i]
             var strCount = tuningStringCounts[slug] || 6
-            if (strCount <= maxStrings) result.push(slug)
+            if (strCount === requiredStrings) result.push(slug)
         }
         return result
     }
@@ -238,6 +241,7 @@ MuseScore {
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
     property int melodyStaffIdx: -1  // -1 = same staff, 0+ = specific staff index for melody reading
+    property bool writeVoice2: false  // when true, write voicing pitches as notes on voice 2
 
     // Voicing calculator constraints (defaults, overridable per chord in walkthrough)
     property int calcMaxFret: 12           // highest fret to consider
@@ -363,10 +367,27 @@ MuseScore {
 
     function parseChordSymbol(text) {
         // Extract root and quality from a chord symbol like "Fmaj7", "Bb7", "D-7b5"
+        // Also handles slash chords: "C/E" → root=C, quality=..., slashBass="E"
         if (!text || text.length === 0) return null
-        var root = Transposer.extractRoot(text)
+
+        // Check for slash chord notation (e.g. "Cmaj7/E", "F/A")
+        var slashBass = null
+        var chordPart = text
+        var slashIdx = text.lastIndexOf("/")
+        if (slashIdx > 0) {
+            var afterSlash = text.substring(slashIdx + 1)
+            var bassRoot = Transposer.extractRoot(afterSlash)
+            // Only treat as slash chord if what follows the slash is a valid note name
+            // and nothing else (or just whitespace)
+            if (bassRoot && afterSlash.trim().length <= 2) {
+                slashBass = bassRoot
+                chordPart = text.substring(0, slashIdx)
+            }
+        }
+
+        var root = Transposer.extractRoot(chordPart)
         if (!root) return null
-        var suffix = text.substring(root.length)
+        var suffix = chordPart.substring(root.length)
         // Clean up common notation
         suffix = suffix.replace(/^\s*/, "").replace("Δ", "maj").replace("△", "maj")
             .replace("°", "dim").replace("ø", "m7b5").replace("+", "aug")
@@ -380,9 +401,20 @@ MuseScore {
             else if (suffix.indexOf("dim") >= 0) quality = "dim7"
             else if (suffix.indexOf("7") >= 0) quality = "dom7"
             else if (suffix.indexOf("m") >= 0 || suffix.indexOf("-") >= 0) quality = "min7"
-            else quality = "maj7"  // bare letter = major
+            else {
+                // Bare letter (e.g. "F", "Bb") — ambiguous in jazz charts.
+                // Could be major triad, maj7, or dom7 depending on context.
+                // Default to dom7 (most common in jazz/blues) but flag as ambiguous
+                // so the UI can prompt the user.
+                quality = "dom7"
+                var result2 = { root: root, quality: quality, ambiguous: true }
+                if (slashBass) result2.slashBass = slashBass
+                return result2
+            }
         }
-        return { root: root, quality: quality }
+        var result = { root: root, quality: quality }
+        if (slashBass) result.slashBass = slashBass
+        return result
     }
 
     // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
@@ -487,6 +519,145 @@ MuseScore {
         return candidates[0]
     }
 
+    // Return ALL matching voicings for a chord, sorted by score (best first).
+    // Used by the walkthrough to let users browse alternatives.
+    function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi) {
+        var maxStrings = tuningMaxStrings
+        if (filterContext && contextStringCounts[filterContext] !== undefined) {
+            var contextMax = contextStringCounts[filterContext]
+            if (contextMax < maxStrings) maxStrings = contextMax
+        }
+        var candidates = []
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            if ((v.strings || 6) > maxStrings) continue
+            if (v.root !== "C" && v.root !== targetRoot) continue
+            if (v.chord_quality === quality || v.category === "quartal") {
+                if (filterCategory && v.category !== filterCategory && v.chord_quality === quality) continue
+                candidates.push(v)
+            }
+        }
+        if (candidates.length === 0 && filterCategory) {
+            for (var j = 0; j < voicingsData.length; j++) {
+                var v2 = voicingsData[j]
+                if (v2.chord_quality !== quality && v2.category !== "quartal") continue
+                if (v2.root !== "C" && v2.root !== targetRoot) continue
+                if ((v2.strings || 6) > maxStrings) continue
+                candidates.push(v2)
+            }
+        }
+        // Sort using the same scoring as findBestVoicing
+        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0) ? melodyMidi % 12 : -1
+        var bassTarget = (bassMidi !== undefined && bassMidi >= 0) ? bassMidi % 12 : -1
+        var ref = lastInsertedVoicing
+        candidates.sort(function(a, b) {
+            var scoreA = 0, scoreB = 0
+            if (a.chord_quality === quality) scoreA += 20
+            if (b.chord_quality === quality) scoreB += 20
+            if (filterContext && a.context === filterContext) scoreA += 100
+            if (filterContext && b.context === filterContext) scoreB += 100
+            if (filterCategory && a.category === filterCategory) scoreA += 50
+            if (filterCategory && b.category === filterCategory) scoreB += 50
+            if (a.category === "shell") scoreA += 10
+            else if (a.category === "drop2") scoreA += 5
+            if (b.category === "shell") scoreB += 10
+            else if (b.category === "drop2") scoreB += 5
+            if (melodyTarget >= 0) {
+                var melodyBonus = _melodyLocked ? 500 : 200
+                if (voicingTopNoteSemitone(a, targetRoot) === melodyTarget) scoreA += melodyBonus
+                if (voicingTopNoteSemitone(b, targetRoot) === melodyTarget) scoreB += melodyBonus
+            }
+            if (bassTarget >= 0) {
+                var bassBonus = _bassLocked ? 500 : 250
+                if (MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP) === bassTarget) scoreA += bassBonus
+                if (MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP) === bassTarget) scoreB += bassBonus
+            }
+            if (ref) {
+                scoreA -= voicingDistance(ref, a) * 2
+                scoreB -= voicingDistance(ref, b) * 2
+            }
+            return scoreB - scoreA
+        })
+        return candidates
+    }
+
+    // Alternative voicing state — grouped by bass string
+    property var _altVoicings: []          // all candidates for current step
+    property int _altIndex: 0              // index in current group
+    property var _bassStringGroups: ({})   // { stringNum: [voicings] }
+    property var _bassStringList: []       // sorted list of available bass strings
+    property int _selectedBassString: -1   // currently selected bass string (-1 = auto/best)
+    property int altCount: 0               // total alternatives
+    property int altIndex: 0               // current index for display
+
+    // Build bass-string groups from alternatives.
+    // IMPORTANT: build new objects/arrays, then assign — QML bindings
+    // don't fire when you mutate in place with push() or obj[key]=val.
+    function buildBassStringGroups() {
+        var groups = {}
+        var list = []
+        for (var i = 0; i < _altVoicings.length; i++) {
+            var v = _altVoicings[i]
+            // Determine bass string: the highest string number with a dot or open
+            var bassStr = 0
+            var dots = v.dots || []
+            for (var d = 0; d < dots.length; d++) {
+                if (dots[d].string > bassStr) bassStr = dots[d].string
+            }
+            var opens = v.open || []
+            for (var o = 0; o < opens.length; o++) {
+                if (opens[o] > bassStr) bassStr = opens[o]
+            }
+            if (bassStr === 0) bassStr = v.strings || 6
+            if (!groups[bassStr]) {
+                groups[bassStr] = []
+                list.push(bassStr)
+            }
+            groups[bassStr].push(v)
+        }
+        list.sort(function(a, b) { return b - a })  // highest string number first (lowest pitch)
+        // Assign new objects to trigger QML bindings
+        _bassStringGroups = groups
+        _bassStringList = list
+    }
+
+    // Select voicings by bass string
+    function selectBassString(bassStr) {
+        _selectedBassString = bassStr
+        _altIndex = 0
+        var group = _bassStringGroups[bassStr] || []
+        if (group.length > 0) {
+            applyAlternativeVoicing(group[0])
+        }
+        altCount = group.length
+        altIndex = 0
+    }
+
+    // Cycle within the current bass string group
+    function selectAlternativeVoicing(index) {
+        var group = _bassStringGroups[_selectedBassString] || _altVoicings
+        if (index < 0 || index >= group.length) return
+        _altIndex = index
+        altIndex = index
+        applyAlternativeVoicing(group[index])
+    }
+
+    // Apply a voicing to the current walkthrough step
+    function applyAlternativeVoicing(voicing) {
+        var item = _batchChords[_batchIndex - 1]
+        if (!item) return
+        item.voicing = voicing
+
+        // Update clipboard
+        var xml = generateXmlForVoicing(voicing, item.root)
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try { tempDiagramFile.write(xml) } catch (e) {}
+
+        // Refresh display
+        walkthroughPanel.batchChords = _batchChords
+    }
+
     function generateXmlForVoicing(voicing, targetRoot) {
         // Generate EngravingItem XML for a voicing transposed to targetRoot.
         // When using tuning-specific voicings (from chord_calculator), the shapes
@@ -537,6 +708,97 @@ MuseScore {
         }
         xml += '    </fretDiagram>\n  </FretDiagram>\n</EngravingItem>'
         return xml
+    }
+
+    // === Voice 2 note export (Phase 1.5) ===
+
+    // Compute MIDI pitches for all sounding notes in a voicing, transposed to targetRoot.
+    // Returns array of MIDI pitch integers, sorted low to high.
+    function computeVoicingMidiPitches(voicing, targetRoot) {
+        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
+        var effectiveOffset = usingTuningVoicings ? 0 : tuningOffset
+        var transposedFret = voicing.fret_number + offset - effectiveOffset
+        if (transposedFret < 0) transposedFret += 12
+
+        var pitches = []
+        var dots = voicing.dots || []
+        for (var d = 0; d < dots.length; d++) {
+            var strMidi = tuningMidi[String(dots[d].string)]
+            if (strMidi !== undefined) {
+                var absFret = transposedFret + (dots[d].fret - 1)
+                pitches.push(strMidi + absFret)
+            }
+        }
+        var opens = voicing.open || []
+        for (var o = 0; o < opens.length; o++) {
+            var openMidi = tuningMidi[String(opens[o])]
+            if (openMidi !== undefined) {
+                pitches.push(openMidi)
+            }
+        }
+        pitches.sort(function(a, b) { return a - b })
+        return pitches
+    }
+
+    // Write voicing pitches as notes on voice 2 at the given tick position.
+    // Uses MuseScore's cursor API: addNote for the first pitch, then
+    // cursor.element.add(note) for additional notes in the chord.
+    function writeVoicingToVoice2(voicing, targetRoot, targetTick) {
+        if (!curScore) return false
+        var pitches = computeVoicingMidiPitches(voicing, targetRoot)
+        if (pitches.length === 0) return false
+
+        var cursor = curScore.newCursor()
+        cursor.staffIdx = 0
+        cursor.voice = 1  // voice 2 (0-indexed)
+        cursor.rewind(0)
+
+        // Navigate to target tick
+        while (cursor.segment && cursor.tick < targetTick) {
+            cursor.next()
+        }
+
+        if (!cursor.segment || cursor.tick !== targetTick) {
+            console.log("Voice2 export: could not find tick " + targetTick)
+            return false
+        }
+
+        // Match the duration of whatever is in voice 1 at this position
+        var v1cursor = curScore.newCursor()
+        v1cursor.staffIdx = 0
+        v1cursor.voice = 0
+        v1cursor.rewind(0)
+        while (v1cursor.segment && v1cursor.tick < targetTick) v1cursor.next()
+        if (v1cursor.element && v1cursor.element.duration) {
+            cursor.setDuration(v1cursor.element.duration.numerator, v1cursor.element.duration.denominator)
+        }
+
+        // Add the first note (creates the chord element)
+        cursor.addNote(pitches[0])
+
+        // Add remaining notes to the chord
+        // After addNote, cursor.prev() gets us back to the chord we just created
+        cursor.prev()
+        if (cursor.element && cursor.element.type === Element.CHORD) {
+            for (var i = 1; i < pitches.length; i++) {
+                var note = newElement(Element.NOTE)
+                note.pitch = pitches[i]
+                note.tpc1 = pitchToTpc(pitches[i])
+                note.tpc2 = note.tpc1
+                cursor.element.add(note)
+            }
+        }
+
+        return true
+    }
+
+    // Convert MIDI pitch to TPC (tonal pitch class) for MuseScore.
+    // TPC maps: C=14, D=16, E=18, F=13, G=15, A=17, B=19
+    // Flats subtract 7, sharps add 7 from natural.
+    function pitchToTpc(midiPitch) {
+        // Use sharps for white keys, natural TPC for accidentals
+        var tpcMap = [14, 21, 16, 23, 18, 13, 20, 15, 22, 17, 24, 19]  // C C# D D# E F F# G G# A A# B
+        return tpcMap[midiPitch % 12]
     }
 
     // Batch voicing state
@@ -611,7 +873,12 @@ MuseScore {
             }
         }
 
-        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi)
+        // Use slash bass if present
+        var bassMidi = parsed.slashBass
+            ? Transposer.SEMITONE_MAP[parsed.slashBass]
+            : undefined
+
+        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
         if (!voicing) {
             statusMsg.text = "No voicing found for " + chordText
             statusMsg.color = theme.errorText
@@ -704,8 +971,15 @@ MuseScore {
                             }
                             if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
 
-                            // Suggest bass note (default: chord root)
-                            var bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
+                            // Suggest bass note (default: chord root, or slash bass if present)
+                            var bassMidi
+                            if (parsed.slashBass) {
+                                // Slash chord: use specified bass note
+                                bassMidi = Transposer.SEMITONE_MAP[parsed.slashBass]
+                                if (bassMidi === undefined) bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
+                            } else {
+                                bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
+                            }
 
                             var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
                             if (voicing) {
@@ -716,6 +990,8 @@ MuseScore {
                                     voicing: voicing,
                                     melodyMidi: melodyMidi,
                                     bassMidi: bassMidi,
+                                    tick: cursor.tick,
+                                    ambiguous: parsed.ambiguous || false,
                                 })
                             }
                         }
@@ -754,6 +1030,29 @@ MuseScore {
         var nameParts = item.voicing.name.split(" — ")
         var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
 
+        // Load all alternative voicings and group by bass string
+        _altVoicings = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
+        buildBassStringGroups()
+        // Auto-select the bass string group that contains the current voicing
+        _selectedBassString = -1
+        for (var bsi = 0; bsi < _bassStringList.length; bsi++) {
+            var bsGroup = _bassStringGroups[_bassStringList[bsi]] || []
+            for (var bvi = 0; bvi < bsGroup.length; bvi++) {
+                if (bsGroup[bvi].id === item.voicing.id) {
+                    _selectedBassString = _bassStringList[bsi]
+                    _altIndex = bvi
+                    break
+                }
+            }
+            if (_selectedBassString >= 0) break
+        }
+        if (_selectedBassString < 0 && _bassStringList.length > 0) {
+            _selectedBassString = _bassStringList[0]
+            _altIndex = 0
+        }
+        altCount = (_bassStringGroups[_selectedBassString] || []).length
+        altIndex = _altIndex
+
         // Load the clipboard with this voicing's diagram
         var xml = generateXmlForVoicing(item.voicing, item.root)
         var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
@@ -765,8 +1064,22 @@ MuseScore {
             return
         }
 
+        // Write voicing as notes on voice 2 (if enabled and tick is known)
+        if (writeVoice2 && item.tick !== undefined) {
+            curScore.startCmd()
+            var v2ok = writeVoicingToVoice2(item.voicing, item.root, item.tick)
+            curScore.endCmd()
+            if (v2ok) {
+                console.log("Voice2: wrote " + item.text + " at tick " + item.tick)
+            }
+        }
+
         // Show the guided step with clear instructions
         var stepText = "▸ " + item.text + " — " + shape
+        if (item.ambiguous) {
+            stepText += "\n  ⚠ \"" + item.text + "\" is ambiguous — defaulting to " + item.root + "7."
+            stepText += "\n     Use the chips above to change quality."
+        }
         if (melodyOnTop && item.melodyMidi >= 0) {
             stepText += "\n  Melody: " + MelodyEngine.melodyNoteName(item.melodyMidi)
         }
@@ -779,6 +1092,12 @@ MuseScore {
             for (var w = 0; w < item._warnings.length; w++) {
                 stepText += "\n  ⚠ " + item._warnings[w]
             }
+        }
+
+        // Chord-scale suggestion
+        var scaleSuggestion = ChordScales.formatScaleSuggestion(item.root, item.quality)
+        if (scaleSuggestion) {
+            stepText += "\n  Scales: " + scaleSuggestion
         }
 
         stepText += "\n"
@@ -1139,6 +1458,7 @@ MuseScore {
             addTuningToList(slug, tuning.name, Object.keys(tuning.strings || {}).length || 6)
             selectedTuning = slug
             loadTuningStringCount()
+            loadTuningVoicings()
             saveSettings()
 
             tuningImportStatus.text = "Imported: " + tuning.name
@@ -1211,6 +1531,7 @@ MuseScore {
             addTuningToList(slug, name, numStrings)
             selectedTuning = slug
             loadTuningStringCount()
+            loadTuningVoicings()
             saveSettings()
 
             // Show the note names as feedback
@@ -1916,9 +2237,15 @@ MuseScore {
         // Standard tuning uses the pre-built library (820 hand-curated voicings)
         if (selectedTuning === "standard") {
             if (usingTuningVoicings && standardVoicingsData.length > 0) {
+                var savedCtx = filterContext
+                var savedCat = filterCategory
+                var savedQual = filterQuality
                 voicingsData = standardVoicingsData
                 usingTuningVoicings = false
                 rebuildFilterLists()
+                if (savedCtx && contextList.indexOf(savedCtx) >= 0) filterContext = savedCtx
+                if (savedCat && categoryList.indexOf(savedCat) >= 0) filterCategory = savedCat
+                if (savedQual && qualityList.indexOf(savedQual) >= 0) filterQuality = savedQual
                 applyFilters()
                 console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
@@ -1929,12 +2256,25 @@ MuseScore {
 
         // Non-standard tuning: calculate voicings from the tuning geometry
         console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
-        var calculated = VoicingCalculator.generateAll(tuningMidi, calcConstraints())
+
+        // capPerRoot (in VoicingCalculator) handles throttling with
+        // top-note diversity — no artificial maxPerQuality override needed.
+        var constraints = calcConstraints()
+        var calculated = VoicingCalculator.generateAll(tuningMidi, constraints)
+
+        // Preserve current filter state across tuning changes
+        var savedContext = filterContext
+        var savedCategory = filterCategory
+        var savedQuality = filterQuality
 
         if (calculated.length > 0) {
             voicingsData = calculated
             usingTuningVoicings = true
             rebuildFilterLists()
+            // Restore filter selections if they still exist in the new lists
+            if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
+            if (savedCategory && categoryList.indexOf(savedCategory) >= 0) filterCategory = savedCategory
+            if (savedQuality && qualityList.indexOf(savedQuality) >= 0) filterQuality = savedQuality
             applyFilters()
             console.log("Calculated " + calculated.length + " voicings for " + selectedTuning)
             statusMsg.text = calculated.length + " voicings calculated for " + (tuningLabels[selectedTuning] || selectedTuning)
@@ -1946,8 +2286,38 @@ MuseScore {
                 voicingsData = standardVoicingsData
                 usingTuningVoicings = false
                 rebuildFilterLists()
+                if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
+                if (savedCategory && categoryList.indexOf(savedCategory) >= 0) filterCategory = savedCategory
+                if (savedQuality && qualityList.indexOf(savedQuality) >= 0) filterQuality = savedQuality
                 applyFilters()
             }
+        }
+    }
+
+    // Copy tuning info to clipboard for manual pasting into a subtitle.
+    // The MuseScore 4 plugin API can't add elements to the title frame,
+    // so we let the user add a subtitle (Add > Text > Subtitle) and paste.
+    function copyTuningToClipboard() {
+        if (selectedTuning === "standard") {
+            statusMsg.text = "Standard tuning — nothing to copy"
+            statusMsg.color = theme.textMuted
+            return
+        }
+        var tuningLabel = tuningLabels[selectedTuning] || selectedTuning
+        var pitchStr = tuningPitchNotation
+        var text = "Tuning: " + tuningLabel
+        if (pitchStr) text += "  (" + pitchStr + ")"
+
+        // Write to a temp file and use the clipboard XML workaround
+        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
+        tempDiagramFile.source = xmlPath
+        try {
+            tempDiagramFile.write(text)
+            statusMsg.text = "Tuning copied — paste into a Subtitle (Add > Text > Subtitle)"
+            statusMsg.color = theme.successText
+        } catch (e) {
+            statusMsg.text = "Copy failed: " + e
+            statusMsg.color = theme.errorText
         }
     }
 
@@ -4370,6 +4740,18 @@ MuseScore {
             tuningName: tuningLabels[selectedTuning] || selectedTuning
             calculatedVoicings: usingTuningVoicings
             tuningPitches: tuningPitchNotation
+            tuningOffset: chordLibrary.tuningOffset
+            altCount: chordLibrary.altCount
+            altIndex: chordLibrary.altIndex
+            bassStringList: _bassStringList
+            selectedBassString: _selectedBassString
+            bassStringCounts: {
+                var counts = {}
+                for (var bs in _bassStringGroups) {
+                    counts[bs] = _bassStringGroups[bs].length
+                }
+                return counts
+            }
 
             onPrevClicked: {
                 _batchIndex = _batchIndex - 2
@@ -4381,6 +4763,12 @@ MuseScore {
                 _batchChords = []
                 showToolResults = false
             }
+            onBassStringClicked: function(bassStr) {
+                selectBassString(bassStr)
+            }
+            onAltSelected: function(index) {
+                selectAlternativeVoicing(index)
+            }
             onRevoiceRequested: function(melodyNote, melodyLocked, bassNote, bassLocked, category) {
                 revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
             }
@@ -4391,7 +4779,8 @@ MuseScore {
                 var item = _batchChords[idx]
                 item.root = newRoot
                 item.quality = newQuality
-                item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality)
+                item.ambiguous = false  // user made an explicit choice
+                item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality === "maj6" ? "6" : newQuality === "maj" ? "" : newQuality)
                 // Update bass suggestion for new root
                 item.bassMidi = MelodyEngine.suggestBassNote(newRoot, newQuality, Transposer.SEMITONE_MAP)
                 // Re-voice with the new chord
@@ -4492,6 +4881,16 @@ MuseScore {
             }
 
             Button {
+                visible: selectedTuning !== "standard"
+                text: "Copy Tuning"
+                font.pixelSize: 9
+                implicitHeight: 22
+                ToolTip.visible: hovered
+                ToolTip.text: "Copy tuning info to clipboard.\nPaste into a Subtitle (Add > Text > Subtitle)"
+                onClicked: copyTuningToClipboard()
+            }
+
+            Button {
                 text: "Voice Here"
                 font.pixelSize: 10
                 implicitWidth: 64
@@ -4568,6 +4967,21 @@ MuseScore {
                 }
                 ToolTip.visible: hovered
                 ToolTip.text: "Which staff to read the melody from"
+            }
+
+            Button {
+                text: writeVoice2 ? "Voice 2 ✓" : "Voice 2"
+                font.pixelSize: 10
+                implicitWidth: 56
+                ToolTip.visible: hovered
+                ToolTip.text: "Write voicing pitches as notes on Voice 2 during walkthrough"
+                onClicked: {
+                    writeVoice2 = !writeVoice2
+                    statusMsg.text = writeVoice2
+                        ? "Voice 2 export: voicing notes will be written to Voice 2"
+                        : "Voice 2 export: off"
+                    statusMsg.color = theme.textMuted
+                }
             }
         }
 

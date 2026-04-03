@@ -147,6 +147,47 @@
             "type": "string"
           },
           "description": "Searchable tags"
+        },
+        "also_contexts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional contexts this voicing works in (e.g. CM6 voicing also usable in CV6)"
+        },
+        "also_qualities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional chord qualities this voicing can serve (e.g. dom7 voicing also works as dom9)"
+        },
+        "shape_id": {
+          "type": "string",
+          "description": "Shape family identifier linking voicings that share the same physical fretboard shape"
+        },
+        "fingering": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["string", "finger"],
+            "properties": {
+              "string": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12,
+                "description": "String number"
+              },
+              "finger": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4,
+                "description": "Finger number (1=index, 2=middle, 3=ring, 4=pinky, 0=thumb)"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "Suggested left-hand fingering for each fretted string"
         }
       },
       "additionalProperties": false

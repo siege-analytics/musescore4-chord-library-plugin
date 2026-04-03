@@ -120,9 +120,16 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
         stringOptions[s] = opts
     }
 
-    // Find bass strings that can produce the root
+    // Find bass strings that can produce the root.
+    // Search ALL practical bass strings (bottom half of the instrument),
+    // not just the lowest one. This ensures 7-string players get all
+    // 6-string voicing shapes (bass on string 6, 5, 4) plus string-7
+    // shapes. The maxMutedStrings constraint naturally limits how many
+    // strings below the bass get muted.
     var bassCandidates = []
-    for (var bi = 0; bi < stringsLowToHigh.length; bi++) {
+    var maxBassStrings = Math.ceil(numStrings / 2)  // bottom half: strings 7,6,5,4 on 7-str; 6,5,4 on 6-str
+    var bassStringsSearched = 0
+    for (var bi = 0; bi < stringsLowToHigh.length && bassStringsSearched < maxBassStrings; bi++) {
         var bs = stringsLowToHigh[bi]
         var bOpts = stringOptions[bs]
         for (var bo = 0; bo < bOpts.length; bo++) {
@@ -130,7 +137,7 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                 bassCandidates.push([bs, bOpts[bo][0]])
             }
         }
-        if (bassCandidates.length > 0) break  // only lowest string
+        bassStringsSearched++
     }
 
     if (!cfg.requireRootInBass) {
@@ -145,7 +152,6 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                         bassCandidates.push([bs2, bOpts2[bo2][0]])
                     }
                 }
-                if (bassCandidates.length > 0) break
             }
         }
     }
@@ -220,7 +226,7 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             nMuted += mutedBelow.length
             if (nMuted > cfg.maxMutedStrings) continue
 
-            // Check stretch
+            // Check stretch and fingering feasibility
             if (fretted.length > 0) {
                 var minF = fretted[0], maxF = fretted[0]
                 for (var fi2 = 1; fi2 < fretted.length; fi2++) {
@@ -228,6 +234,17 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                     if (fretted[fi2] > maxF) maxF = fretted[fi2]
                 }
                 if (maxF - minF > cfg.maxStretch) continue
+
+                // Fingering feasibility: you have 4 fretting fingers.
+                // A barre covers one fret across multiple strings = 1 finger.
+                // So distinct non-zero fret positions must be ≤ 4.
+                var distinctFrets = {}
+                for (var df = 0; df < fretted.length; df++) {
+                    distinctFrets[fretted[df]] = true
+                }
+                var numDistinct = 0
+                for (var dfk in distinctFrets) numDistinct++
+                if (numDistinct > 4) continue
             }
 
             // Check required pitch classes present
@@ -302,15 +319,43 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             // Top note interval for naming
             var topInterval = intervals.length > 0 ? intervals[intervals.length - 1] : "?"
 
-            // Classify category by voicing shape and chord quality
+            // Classify category by interval voicing structure
             var sounding = allNotes.length
             var isAltered = qualityId.indexOf("sharp") >= 0 || qualityId.indexOf("b9") >= 0
                 || qualityId.indexOf("b13") >= 0 || qualityId.indexOf("b5") >= 0
-            var cat = "shell"  // default: 3 notes
-            if (isAltered) cat = "altered"
-            else if (sounding >= 5) cat = "extended"
-            else if (sounding === 4 && stretch <= 3) cat = "drop2"
-            else if (sounding === 4) cat = "drop3"
+
+            var cat = "shell"  // default: 3 notes or fewer
+            if (isAltered) {
+                cat = "altered"
+            } else if (sounding >= 5) {
+                cat = "extended"
+            } else if (sounding === 4) {
+                // Classify drop2 vs drop3 vs close by analyzing voice spacing.
+                // Sort sounding notes by MIDI pitch (low to high).
+                var midiNotes = []
+                for (var mn = 0; mn < allNotes.length; mn++) {
+                    midiNotes.push(tuningMidi[String(allNotes[mn][0])] + allNotes[mn][1])
+                }
+                midiNotes.sort(function(a, b) { return a - b })
+                // Intervals between adjacent voices (in semitones)
+                var gaps = []
+                for (var gi = 1; gi < midiNotes.length; gi++) {
+                    gaps.push(midiNotes[gi] - midiNotes[gi - 1])
+                }
+                // Drop 2: widest gap is between voices 2 and 3 (from top) → gaps[0] is largest
+                // Drop 3: widest gap is between voices 3 and 4 (from top) → gaps[1] is largest (when sorted bottom-up, gaps[0])
+                var maxGap = Math.max.apply(null, gaps)
+                var maxGapIdx = gaps.indexOf(maxGap)
+                if (maxGap >= 7 && maxGapIdx === gaps.length - 2) {
+                    cat = "drop2"
+                } else if (maxGap >= 7 && maxGapIdx <= gaps.length - 3) {
+                    cat = "drop3"
+                } else if (maxGap <= 5) {
+                    cat = "close"
+                } else {
+                    cat = "spread"
+                }
+            }
 
             // Assign contexts: chord melody (CM) for 4+ notes, comping (CV) for 3+
             // String count determines 6 vs 7
@@ -358,28 +403,30 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
 // Generate voicings for ALL chord qualities the plugin uses.
 // Returns a flat array of voicing objects, all root C.
 //
-// @param tuningMidi  — string→MIDI map (e.g. {"1": 57, "2": 52, ...})
-// @param constraints — optional override constraints
-function generateAll(tuningMidi, constraints) {
+// @param tuningMidi   — string→MIDI map (e.g. {"1": 57, "2": 52, ...})
+// @param constraints  — optional override constraints
+// @param progressFn   — optional callback(current, total, phase) for UI progress
+function generateAll(tuningMidi, constraints, progressFn) {
     var allVoicings = []
     var defaultQualities = []
     for (var qid in CHORD_QUALITIES) {
         defaultQualities.push(qid)
     }
 
-    // Configurable limit: 0 = unlimited (Ted Greene mode), >0 = cap per quality
+    // capPerRoot budget: user-specified cap, or 120 default (~10 per root).
+    // capPerRoot always runs to ensure top-note diversity and even root distribution.
     var cfg = {}
     for (var cdk in DEFAULT_CONSTRAINTS) cfg[cdk] = DEFAULT_CONSTRAINTS[cdk]
     if (constraints) { for (var cck in constraints) cfg[cck] = constraints[cck] }
-    var maxPerQ = cfg.maxPerQuality || 0  // 0 = no limit
+    var maxPerQ = cfg.maxPerQuality || 120  // default: ~10 per root
+
+    var totalQualities = defaultQualities.length
 
     // Pass 1: root-in-bass voicings
     for (var i = 0; i < defaultQualities.length; i++) {
+        if (progressFn) progressFn(i, totalQualities, "root-position")
         var voicings = calculateForQuality(tuningMidi, defaultQualities[i], constraints)
-        if (maxPerQ > 0) {
-            voicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
-            voicings = voicings.slice(0, maxPerQ)
-        }
+        voicings = capPerRoot(voicings, maxPerQ)
         for (var j = 0; j < voicings.length; j++) {
             allVoicings.push(voicings[j])
         }
@@ -391,11 +438,9 @@ function generateAll(tuningMidi, constraints) {
     if (constraints) { for (var ck in constraints) invConstraints[ck] = constraints[ck] }
     invConstraints.requireRootInBass = false
     for (var ii = 0; ii < defaultQualities.length; ii++) {
+        if (progressFn) progressFn(ii, totalQualities, "inversions")
         var invVoicings = calculateForQuality(tuningMidi, defaultQualities[ii], invConstraints)
-        if (maxPerQ > 0) {
-            invVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
-            invVoicings = invVoicings.slice(0, maxPerQ)
-        }
+        invVoicings = capPerRoot(invVoicings, maxPerQ)
         for (var ij = 0; ij < invVoicings.length; ij++) {
             allVoicings.push(invVoicings[ij])
         }
@@ -407,19 +452,18 @@ function generateAll(tuningMidi, constraints) {
     for (var qdk in DEFAULT_CONSTRAINTS) quartalConstraints[qdk] = DEFAULT_CONSTRAINTS[qdk]
     if (constraints) { for (var qck in constraints) quartalConstraints[qck] = constraints[qck] }
     quartalConstraints.requireRootInBass = false
+    if (progressFn) progressFn(0, 3, "quartal")
     for (var qid in QUARTAL_QUALITIES) {
         var qVoicings = calculateForQuality(tuningMidi, qid, quartalConstraints)
-        // Cap quartal voicings to top 10 per size
-        qVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
-        var qKept = 0
-        for (var qi2 = 0; qi2 < qVoicings.length && qKept < 10; qi2++) {
-            // Override the category and chord_quality for quartal voicings
+        qVoicings = capPerRoot(qVoicings, maxPerQ)
+        for (var qi2 = 0; qi2 < qVoicings.length; qi2++) {
             qVoicings[qi2].category = "quartal"
             qVoicings[qi2].chord_quality = "quartal"
             allVoicings.push(qVoicings[qi2])
-            qKept++
         }
     }
+
+    if (progressFn) progressFn(1, 1, "complete")
 
     // Clean up internal scores
     for (var ci = 0; ci < allVoicings.length; ci++) {
@@ -427,6 +471,82 @@ function generateAll(tuningMidi, constraints) {
     }
 
     return allVoicings
+}
+
+// Cap voicings per root with diversity across three dimensions:
+// 1. Top note — so melody matching works for every possible melody note
+// 2. Sounding note count — so shells, drop2s, and extended voicings all appear
+// 3. Category — so different voicing types (shell, drop2, close, etc.) are represented
+// Without this diversity, voicings using all strings (0 mutes, lowest score)
+// crowd out smaller shapes that are often more musical.
+function capPerRoot(voicings, maxPerQ) {
+    // Group by root
+    var byRoot = {}
+    for (var i = 0; i < voicings.length; i++) {
+        var r = voicings[i].root || "C"
+        if (!byRoot[r]) byRoot[r] = []
+        byRoot[r].push(voicings[i])
+    }
+    var rootKeys = Object.keys(byRoot)
+    var perRoot = Math.max(20, Math.ceil(maxPerQ / Math.max(rootKeys.length, 1)))
+
+    var result = []
+    for (var ri = 0; ri < rootKeys.length; ri++) {
+        var rootVoicings = byRoot[rootKeys[ri]]
+        rootVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+
+        var pickedSet = {}
+        var picked = []
+
+        function tryPick(v) {
+            if (pickedSet[v.id]) return false
+            pickedSet[v.id] = true
+            picked.push(v)
+            return true
+        }
+
+        // Phase 1: one voicing per distinct top note (melody diversity)
+        var seenTopNotes = {}
+        for (var ti = 0; ti < rootVoicings.length; ti++) {
+            var notes = rootVoicings[ti].notes || []
+            var topNote = notes.length > 0 ? notes[notes.length - 1] : "?"
+            if (!seenTopNotes[topNote]) {
+                seenTopNotes[topNote] = true
+                tryPick(rootVoicings[ti])
+            }
+        }
+
+        // Phase 2: one voicing per distinct sounding-note count (3, 4, 5, 6, 7)
+        // This ensures shells (3-note), drop2 (4-note), and extended (5+) all appear
+        var seenCounts = {}
+        for (var ci = 0; ci < rootVoicings.length; ci++) {
+            var noteCount = (rootVoicings[ci].notes || []).length
+            if (!seenCounts[noteCount]) {
+                seenCounts[noteCount] = true
+                tryPick(rootVoicings[ci])
+            }
+        }
+
+        // Phase 3: one voicing per distinct category
+        var seenCats = {}
+        for (var cai = 0; cai < rootVoicings.length; cai++) {
+            var cat = rootVoicings[cai].category || "other"
+            if (!seenCats[cat]) {
+                seenCats[cat] = true
+                tryPick(rootVoicings[cai])
+            }
+        }
+
+        // Phase 4: fill remaining slots with best-scoring voicings
+        for (var fi = 0; fi < rootVoicings.length && picked.length < perRoot; fi++) {
+            tryPick(rootVoicings[fi])
+        }
+
+        for (var ki = 0; ki < picked.length; ki++) {
+            result.push(picked[ki])
+        }
+    }
+    return result
 }
 
 // Cartesian product of filtered options (replaces itertools.product)

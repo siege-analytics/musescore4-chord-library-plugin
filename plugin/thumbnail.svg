@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="120" height="120" rx="16" fill="url(#bg)"/>
+  <!-- Fretboard -->
+  <g transform="translate(20, 15)">
+    <!-- Nut (thick top bar) -->
+    <rect x="0" y="0" width="80" height="3" rx="1" fill="#e0e0e0"/>
+    <!-- Strings (6 vertical lines) -->
+    <line x1="0" y1="0" x2="0" y2="90" stroke="#999" stroke-width="0.8"/>
+    <line x1="16" y1="0" x2="16" y2="90" stroke="#999" stroke-width="0.8"/>
+    <line x1="32" y1="0" x2="32" y2="90" stroke="#999" stroke-width="0.8"/>
+    <line x1="48" y1="0" x2="48" y2="90" stroke="#999" stroke-width="0.8"/>
+    <line x1="64" y1="0" x2="64" y2="90" stroke="#999" stroke-width="0.8"/>
+    <line x1="80" y1="0" x2="80" y2="90" stroke="#999" stroke-width="0.8"/>
+    <!-- Frets (horizontal lines) -->
+    <line x1="0" y1="22.5" x2="80" y2="22.5" stroke="#666" stroke-width="0.5"/>
+    <line x1="0" y1="45" x2="80" y2="45" stroke="#666" stroke-width="0.5"/>
+    <line x1="0" y1="67.5" x2="80" y2="67.5" stroke="#666" stroke-width="0.5"/>
+    <line x1="0" y1="90" x2="80" y2="90" stroke="#666" stroke-width="0.5"/>
+    <!-- Dots: Cmaj7 drop2 voicing — colored by interval -->
+    <!-- Root (C) on string 5, fret 3 — red -->
+    <circle cx="16" cy="56" r="7" fill="#e74c3c"/>
+    <!-- 3rd (E) on string 4, fret 2 — green -->
+    <circle cx="32" cy="34" r="7" fill="#2ecc71"/>
+    <!-- 7th (B) on string 3, fret 4 — orange -->
+    <circle cx="48" cy="79" r="7" fill="#f39c12"/>
+    <!-- 5th (G) on string 2, fret 0 (open) — blue -->
+    <circle cx="64" cy="-6" r="5" fill="none" stroke="#3498db" stroke-width="2"/>
+    <!-- Mute on string 6 -->
+    <text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#999">x</text>
+    <!-- Mute on string 1 -->
+    <text x="80" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#999">x</text>
+  </g>
+  <!-- "V7" label -->
+  <text x="60" y="118" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#3498db" opacity="0.7">V7</text>
+</svg>

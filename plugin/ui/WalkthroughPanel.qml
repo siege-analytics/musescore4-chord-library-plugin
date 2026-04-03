@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import "../model/MelodyEngine.js" as MelodyEngine
 import "../model/Transposer.js" as Transposer
 import "../model/ReharmonizationEngine.js" as Reharm
+import "../model/ChordScales.js" as ChordScales
 
 // Voice Score walkthrough overlay panel.
 // Displays the guided per-chord voicing workflow with melody/category overrides.
@@ -24,6 +25,12 @@ ColumnLayout {
     property string tuningName: ""  // active tuning display name
     property bool calculatedVoicings: false  // true when using runtime-calculated voicings
     property string tuningPitches: ""  // scientific pitch notation (e.g. "A3-E3-C3-G2-D2-A1")
+    property int tuningOffset: 0  // semitones from standard tuning (passed from parent)
+    property int altCount: 0     // voicings in current bass-string group
+    property int altIndex: 0     // index within current group
+    property var bassStringList: []       // available bass strings [7, 6, 5, 4]
+    property int selectedBassString: -1   // currently selected bass string
+    property var bassStringCounts: ({})   // { "7": 45, "6": 32, ... }
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -31,6 +38,8 @@ ColumnLayout {
     signal stopClicked()
     signal revoiceRequested(string melodyNote, bool melodyLocked, string bassNote, bool bassLocked, string category)
     signal reharmSelected(string newRoot, string newQuality)
+    signal altSelected(int index)
+    signal bassStringClicked(int bassStr)
 
     // Convenience: current item (read-only)
     readonly property var currentItem: {
@@ -188,12 +197,13 @@ ColumnLayout {
                     ctx.stroke()
                 }
 
-                // Fret number
-                if ((v.fret_number || 0) > 1) {
+                // Fret number (transposed to target root)
+                var displayFret = currentItem ? transposedFretNumber(v, currentItem.root) : (v.fret_number || 0)
+                if (displayFret > 1) {
                     ctx.fillStyle = textColor
                     ctx.font = "9px sans-serif"
                     ctx.textAlign = "right"
-                    ctx.fillText(v.fret_number, mg - 2, tm + fs * 0.6)
+                    ctx.fillText(displayFret, mg - 2, tm + fs * 0.6)
                 }
 
                 // Dots with interval coloring
@@ -243,7 +253,7 @@ ColumnLayout {
             Label {
                 visible: currentItem !== null
                 text: currentItem ? Transposer.transposeName(currentItem.voicing.name || currentItem.text, currentItem.voicing.root || "C", currentItem.root) : ""
-                font.pixelSize: 13
+                font.pixelSize: 14
                 font.bold: true
                 wrapMode: Text.Wrap
                 Layout.fillWidth: true
@@ -251,10 +261,143 @@ ColumnLayout {
 
             Label {
                 visible: currentItem !== null
-                text: currentItem ? ((currentItem.voicing.intervals || []).join(" ") + "  |  Fret " + (currentItem.voicing.fret_number || "?")) : ""
-                font.pixelSize: 10
-                color: theme.textSecondary
+                text: currentItem ? ((currentItem.voicing.intervals || []).join(" ") + "  |  Fret " + transposedFretNumber(currentItem.voicing, currentItem.root)) : ""
+                font.pixelSize: 12
+                font.bold: true
+                font.family: "Menlo, Monaco, monospace"
                 Layout.fillWidth: true
+            }
+
+            // Bass string + voicing navigation — single compact row
+            RowLayout {
+                visible: currentItem !== null && bassStringList.length > 0
+                spacing: 4
+
+                Label {
+                    text: "Bass str:"
+                    font.pixelSize: 10
+                    font.bold: true
+                }
+
+                ComboBox {
+                    id: bassStringCombo
+                    implicitWidth: 90
+                    font.pixelSize: 10
+                    model: {
+                        var items = []
+                        for (var i = 0; i < bassStringList.length; i++) {
+                            var bs = bassStringList[i]
+                            var count = bassStringCounts[String(bs)] || 0
+                            items.push("Str " + bs + " (" + count + ")")
+                        }
+                        return items
+                    }
+                    currentIndex: Math.max(0, bassStringList.indexOf(selectedBassString))
+                    onCurrentIndexChanged: {
+                        if (currentIndex >= 0 && currentIndex < bassStringList.length) {
+                            walkthroughPanel.bassStringClicked(bassStringList[currentIndex])
+                        }
+                    }
+                }
+
+                Button {
+                    text: "◀"
+                    font.pixelSize: 10
+                    implicitWidth: 24
+                    implicitHeight: 22
+                    enabled: altIndex > 0
+                    onClicked: walkthroughPanel.altSelected(altIndex - 1)
+                }
+
+                Label {
+                    text: (altIndex + 1) + "/" + altCount
+                    font.pixelSize: 10
+                    font.bold: true
+                }
+
+                Button {
+                    text: "▶"
+                    font.pixelSize: 10
+                    implicitWidth: 24
+                    implicitHeight: 22
+                    enabled: altIndex < altCount - 1
+                    onClicked: walkthroughPanel.altSelected(altIndex + 1)
+                }
+            }
+
+            Label {
+                visible: currentItem !== null
+                text: {
+                    if (!currentItem) return ""
+                    var scales = ChordScales.getScaleNames(currentItem.quality || currentItem.voicing.chord_quality)
+                    return scales.length > 0 ? ("Scales: " + scales.join(", ")) : ""
+                }
+                font.pixelSize: 11
+                font.italic: true
+                color: theme.successText
+                Layout.fillWidth: true
+                wrapMode: Text.Wrap
+            }
+        }
+    }
+
+    // Quality disambiguation chips — shown when chord symbol is ambiguous (e.g. bare "F")
+    Flow {
+        visible: batchActive && currentItem !== null && currentItem.ambiguous === true
+        Layout.fillWidth: true
+        spacing: 4
+
+        Label {
+            text: "⚠ \"" + (currentItem ? currentItem.text : "") + "\" — interpret as:"
+            font.pixelSize: 9
+            font.bold: true
+            color: theme.warningText || theme.textSecondary
+        }
+
+        Repeater {
+            model: {
+                if (!currentItem || !currentItem.ambiguous) return []
+                var r = currentItem.root
+                return [
+                    { label: r + "7", quality: "dom7", description: "Dominant 7 (blues/bebop)" },
+                    { label: r + "maj7", quality: "maj7", description: "Major 7" },
+                    { label: r + " triad", quality: "maj", description: "Major triad" },
+                    { label: r + "6", quality: "maj6", description: "Major 6" },
+                    { label: r + "m7", quality: "min7", description: "Minor 7" },
+                ]
+            }
+
+            Rectangle {
+                width: disambigLabel.implicitWidth + 12
+                height: disambigLabel.implicitHeight + 6
+                radius: 10
+                color: {
+                    if (currentItem && modelData.quality === currentItem.quality)
+                        return theme.chipActiveBackground || theme.successText
+                    return disambigMouse.containsMouse ? theme.chipHover : theme.chipBackground
+                }
+                border.color: theme.chipBorder
+                border.width: 1
+
+                Label {
+                    id: disambigLabel
+                    anchors.centerIn: parent
+                    text: modelData.label
+                    font.pixelSize: 9
+                    font.bold: currentItem && modelData.quality === currentItem.quality
+                    color: (currentItem && modelData.quality === currentItem.quality)
+                        ? (theme.chipActiveText || "white") : theme.textSecondary
+                }
+
+                MouseArea {
+                    id: disambigMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked: walkthroughPanel.reharmSelected(currentItem.root, modelData.quality)
+                }
+
+                ToolTip.visible: disambigMouse.containsMouse
+                ToolTip.text: modelData.description
             }
         }
     }
@@ -420,6 +563,16 @@ ColumnLayout {
             ToolTip.text: "Re-select voicing with melody, bass note, and/or category override"
             onClicked: emitRevoice()
         }
+    }
+
+    // Compute transposed fret number for preview display (mirrors generateXmlForVoicing logic)
+    function transposedFretNumber(voicing, targetRoot) {
+        if (!voicing) return 0
+        var offset = Transposer.semitoneOffset(voicing.root || "C", targetRoot)
+        var effectiveOffset = calculatedVoicings ? 0 : tuningOffset
+        var fret = (voicing.fret_number || 0) + offset - effectiveOffset
+        if (fret < 0) fret += 12
+        return fret
     }
 
     // Helper to emit revoice signal with all current overrides
