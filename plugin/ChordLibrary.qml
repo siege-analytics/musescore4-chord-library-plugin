@@ -823,9 +823,10 @@ MuseScore {
         if (userRequestedBass >= 0) {
             var actualBass = MelodyEngine.voicingBassNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
             if (actualBass >= 0 && actualBass !== userRequestedBass) {
-                warnings.push("Bass " + MelodyEngine.NOTE_NAMES[userRequestedBass]
-                    + " not available — using " + MelodyEngine.NOTE_NAMES[actualBass]
-                    + " (stretch limit may prevent this combination)")
+                warnings.push("No playable " + item.text + " with "
+                    + MelodyEngine.NOTE_NAMES[userRequestedBass] + " in bass on this tuning."
+                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualBass]
+                    + " in bass. Try adjusting stretch or mute limits in Score Tools.")
             }
         }
 
@@ -833,8 +834,10 @@ MuseScore {
         if (userRequestedMelody >= 0) {
             var actualTop = MelodyEngine.voicingTopNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
             if (actualTop >= 0 && actualTop !== userRequestedMelody) {
-                warnings.push("Melody " + MelodyEngine.NOTE_NAMES[userRequestedMelody]
-                    + " on top not available — using " + MelodyEngine.NOTE_NAMES[actualTop])
+                warnings.push("No playable " + item.text + " with "
+                    + MelodyEngine.NOTE_NAMES[userRequestedMelody] + " on top on this tuning."
+                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualTop]
+                    + " on top.")
             }
         }
 
