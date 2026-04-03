@@ -89,8 +89,12 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
     var results = []
     var bestVoicings = {}  // dedup key → voicing
 
-    // Only calculate for root C — plugin transposes to other roots
-    var rootPc = 0  // C = 0
+    // Calculate for all 12 roots — open strings are root-specific
+    // and can't be transposed. Each voicing stores its actual root.
+    var rootsToCalc = cfg.allowOpenStrings ? [0,1,2,3,4,5,6,7,8,9,10,11] : [0]
+
+  for (var rci = 0; rci < rootsToCalc.length; rci++) {
+    var rootPc = rootsToCalc[rci]
     var requiredIntervals = quality.intervals
     var targetPcs = {}
     for (var ri = 0; ri < requiredIntervals.length; ri++) {
@@ -319,11 +323,12 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             for (var ci2 = 0; ci2 < contexts.length; ci2++) {
             var ctx = contexts[ci2]
 
+            var rootName = CHROMATIC[rootPc]
             var voicing = {
-                id: "calc-" + qualityId + "-f" + fn + "-" + numStrings + "str-" + ctx + "-" + dedupKey.replace(/[,:]/g, ""),
-                name: "C" + quality.display + " — Fret " + fn + " — " + cat.charAt(0).toUpperCase() + cat.slice(1) + " (" + topInterval + " on top)",
+                id: "calc-" + qualityId + "-" + rootName + "-f" + fn + "-" + numStrings + "str-" + ctx + "-" + dedupKey.replace(/[,:]/g, ""),
+                name: rootName + quality.display + " — Fret " + fn + " — " + cat.charAt(0).toUpperCase() + cat.slice(1) + " (" + topInterval + " on top)",
                 chord_quality: qualityId,
-                root: "C",
+                root: rootName,
                 category: cat,
                 context: ctx,
                 strings: numStrings,
@@ -341,6 +346,7 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             } // end contexts loop
         }
     }
+  } // end roots loop
 
     // Collect results (keep _score for caller sorting — cleaned up in generateAll)
     for (var key in bestVoicings) {

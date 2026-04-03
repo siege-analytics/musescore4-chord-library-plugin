@@ -404,11 +404,14 @@ MuseScore {
         for (var i = 0; i < voicingsData.length; i++) {
             var v = voicingsData[i]
             if ((v.strings || 6) > maxStrings) continue
+            // For multi-root voicings (calculated), match by root too.
+            // Standard library voicings are all root C and get transposed.
+            // Calculated voicings with non-C roots must match the target root.
+            if (v.root !== "C" && v.root !== targetRoot) continue
             if (v.chord_quality === quality) {
                 if (filterCategory && v.category !== filterCategory) continue
                 candidates.push(v)
             } else if (v.category === "quartal") {
-                // Quartal voicings work over any chord quality
                 quartalCandidates.push(v)
             }
         }
@@ -417,6 +420,7 @@ MuseScore {
             for (var j = 0; j < voicingsData.length; j++) {
                 var v2 = voicingsData[j]
                 if (v2.chord_quality !== quality) continue
+                if (v2.root !== "C" && v2.root !== targetRoot) continue
                 if ((v2.strings || 6) > maxStrings) continue
                 candidates.push(v2)
             }
