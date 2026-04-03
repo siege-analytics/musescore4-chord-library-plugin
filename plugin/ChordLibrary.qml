@@ -145,7 +145,7 @@ MuseScore {
         "7string-low-b": "7-String Low B",
         "dadgad": "DADGAD",
         "all-fourths": "All Fourths",
-        "baritone": "Baritone Guitar",
+        "baritone": "Baritone B (B-E-A-D-F#-B)",
         "ukulele": "Ukulele (Standard)",
         "ukulele-low-g": "Ukulele (Low G)",
         "mandolin": "Mandolin",
@@ -943,6 +943,23 @@ MuseScore {
                     }
                     console.log("Restored " + s.customTunings.length + " custom tuning(s)")
                 }
+                // Restore tuning order (if user reordered)
+                if (s.tuningOrder && Array.isArray(s.tuningOrder)) {
+                    // Merge: use saved order, then append any new built-ins not in the saved list
+                    var ordered = []
+                    for (var oi = 0; oi < s.tuningOrder.length; oi++) {
+                        if (tuningList.indexOf(s.tuningOrder[oi]) >= 0) {
+                            ordered.push(s.tuningOrder[oi])
+                        }
+                    }
+                    for (var ti = 0; ti < tuningList.length; ti++) {
+                        if (ordered.indexOf(tuningList[ti]) < 0) {
+                            ordered.push(tuningList[ti])
+                        }
+                    }
+                    tuningList = ordered
+                }
+
                 // Restore voicing calculator constraints
                 if (s.calcMaxFret !== undefined) calcMaxFret = s.calcMaxFret
                 if (s.calcMaxStretch !== undefined) calcMaxStretch = s.calcMaxStretch
@@ -976,6 +993,7 @@ MuseScore {
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
             customTunings: getCustomTuningsList(),
+            tuningOrder: tuningList.slice(),
             calcMaxFret: calcMaxFret,
             calcMaxStretch: calcMaxStretch,
             calcAllowOpen: calcAllowOpen,
@@ -1023,6 +1041,21 @@ MuseScore {
         if (accidental === "#") midi += 1
         else if (accidental === "b") midi -= 1
         return midi
+    }
+
+    // Move a tuning up or down in the list. direction: -1 = up, +1 = down
+    function moveTuning(slug, direction) {
+        var list = tuningList.slice()
+        var idx = list.indexOf(slug)
+        if (idx < 0) return
+        var newIdx = idx + direction
+        if (newIdx < 0 || newIdx >= list.length) return
+        // Swap
+        var temp = list[newIdx]
+        list[newIdx] = list[idx]
+        list[idx] = temp
+        tuningList = list
+        saveSettings()
     }
 
     function addTuningToList(slug, name, stringCount) {
@@ -1740,6 +1773,18 @@ MuseScore {
     property int tuningOffset: 0  // semitones from standard (positive = higher, negative = lower)
     property var tuningMidi: {  // string number → MIDI note of open string
         "1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40, "7": 33
+    }
+
+    // Tuning string pitches in scientific notation (e.g. "A3-E3-C3-G2-D2-A1")
+    property string tuningPitchNotation: {
+        var parts = []
+        for (var s = 1; s <= tuningMaxStrings; s++) {
+            var midi = tuningMidi[String(s)]
+            if (midi !== undefined) {
+                parts.push(midiNoteNames[midi] || "?")
+            }
+        }
+        return parts.join("-")
     }
 
     // MIDI → note name lookup
@@ -3845,6 +3890,26 @@ MuseScore {
                             : "Delete this custom tuning"
                         onClicked: deleteTuning(selectedTuning)
                     }
+
+                    Button {
+                        text: "▲"
+                        font.pixelSize: 10
+                        implicitWidth: 28
+                        enabled: tuningList.indexOf(selectedTuning) > 0
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Move this tuning up in the list"
+                        onClicked: moveTuning(selectedTuning, -1)
+                    }
+
+                    Button {
+                        text: "▼"
+                        font.pixelSize: 10
+                        implicitWidth: 28
+                        enabled: tuningList.indexOf(selectedTuning) < tuningList.length - 1
+                        ToolTip.visible: hovered
+                        ToolTip.text: "Move this tuning down in the list"
+                        onClicked: moveTuning(selectedTuning, 1)
+                    }
                 }
 
                 // --- Import tuning ---
@@ -4254,6 +4319,7 @@ MuseScore {
             availableCategories: categoryList
             tuningName: tuningLabels[selectedTuning] || selectedTuning
             calculatedVoicings: usingTuningVoicings
+            tuningPitches: tuningPitchNotation
 
             onPrevClicked: {
                 _batchIndex = _batchIndex - 2

@@ -23,6 +23,7 @@ ColumnLayout {
     property var availableCategories: ["All Types"]  // dynamic from parent's categoryList
     property string tuningName: ""  // active tuning display name
     property bool calculatedVoicings: false  // true when using runtime-calculated voicings
+    property string tuningPitches: ""  // scientific pitch notation (e.g. "A3-E3-C3-G2-D2-A1")
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -80,6 +81,7 @@ ColumnLayout {
                 text: "Step " + Math.min(batchIndex, batchTotal) + " of " + batchTotal
                     + "  |  " + (tuningName || "Standard")
                     + (calculatedVoicings ? " ⚙" : "")
+                    + (tuningPitches ? "\n" + tuningPitches : "")
                 font.pixelSize: 11
                 font.bold: true
             }
