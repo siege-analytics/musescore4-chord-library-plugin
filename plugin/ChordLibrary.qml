@@ -162,16 +162,25 @@ MuseScore {
         "ukulele": 4, "ukulele-low-g": 4, "mandolin": 4,
         "banjo-open-g": 5, "bass-4string": 4, "bass-5string": 5
     }
-    // Filtered tuning list — only shows tunings matching the context's string count.
-    // A 7-string context only shows 7-string tunings; 6-string only shows 6-string, etc.
+    // Filtered tuning list — shows tunings compatible with the context's string count.
+    // Exact match preferred; if no exact match includes the current tuning, show all compatible (<=).
     property var filteredTuningList: {
         if (!filterContext || !contextStringCounts[filterContext]) return tuningList
         var requiredStrings = contextStringCounts[filterContext]
-        var result = []
+        // First try exact match
+        var exact = []
         for (var i = 0; i < tuningList.length; i++) {
             var slug = tuningList[i]
             var strCount = tuningStringCounts[slug] || 6
-            if (strCount === requiredStrings) result.push(slug)
+            if (strCount === requiredStrings) exact.push(slug)
+        }
+        if (exact.length > 0) return exact
+        // Fallback: show tunings with <= required strings
+        var result = []
+        for (var j = 0; j < tuningList.length; j++) {
+            var slug2 = tuningList[j]
+            var strCount2 = tuningStringCounts[slug2] || 6
+            if (strCount2 <= requiredStrings) result.push(slug2)
         }
         return result
     }
@@ -268,19 +277,25 @@ MuseScore {
     property var contextLabels: ({})
     property var contextLabelsShort: ({})
     // Context string counts — enforced as a ceiling on voicing selection
-    property var contextStringCounts: ({"CM6": 6, "CM7": 7, "CV6": 6, "CV7": 7})
+    property var contextStringCounts: ({"CM4": 4, "CV4": 4, "CM5": 5, "CV5": 5, "CM6": 6, "CV6": 6, "CM7": 7, "CV7": 7})
 
     function loadContextLabels() {
         // Defaults (used if config file not found)
         var labels = {
-            "CM6": "Chord Melody — 6 string",
-            "CM7": "Chord Melody — 7 string",
-            "CV6": "Comping/Vocal — 6 string",
-            "CV7": "Comping/Vocal — 7 string"
+            "CM6": "Chord Melody 6-String",
+            "CM7": "Chord Melody 7-String",
+            "CV6": "Chord + Voice 6-String",
+            "CV7": "Chord + Voice 7-String",
+            "CM4": "Chord Melody 4-String",
+            "CV4": "Chord + Voice 4-String",
+            "CM5": "Chord Melody 5-String",
+            "CV5": "Chord + Voice 5-String"
         }
         var shorts = {
-            "CM6": "CM 6-str", "CM7": "CM 7-str",
-            "CV6": "CV 6-str", "CV7": "CV 7-str"
+            "CM6": "CM 6", "CM7": "CM 7",
+            "CV6": "CV 6", "CV7": "CV 7",
+            "CM4": "CM 4", "CV4": "CV 4",
+            "CM5": "CM 5", "CV5": "CV 5"
         }
         var strCounts = {"CM6": 6, "CM7": 7, "CV6": 6, "CV7": 7}
 
@@ -2294,9 +2309,13 @@ MuseScore {
         }
     }
 
-    // Copy tuning info to clipboard for manual pasting into a subtitle.
-    // The MuseScore 4 plugin API can't add elements to the title frame,
-    // so we let the user add a subtitle (Add > Text > Subtitle) and paste.
+    // Hidden TextEdit used for clipboard operations
+    TextEdit {
+        id: clipboardHelper
+        visible: false
+    }
+
+    // Copy tuning info to system clipboard for pasting into a subtitle.
     function copyTuningToClipboard() {
         if (selectedTuning === "standard") {
             statusMsg.text = "Standard tuning — nothing to copy"
@@ -2308,12 +2327,12 @@ MuseScore {
         var text = "Tuning: " + tuningLabel
         if (pitchStr) text += "  (" + pitchStr + ")"
 
-        // Write to a temp file and use the clipboard XML workaround
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
+        // Copy to system clipboard via TextEdit
         try {
-            tempDiagramFile.write(text)
-            statusMsg.text = "Tuning copied — paste into a Subtitle (Add > Text > Subtitle)"
+            clipboardHelper.text = text
+            clipboardHelper.selectAll()
+            clipboardHelper.copy()
+            statusMsg.text = "Tuning copied! Paste into a Subtitle (Add > Text > Subtitle)"
             statusMsg.color = theme.successText
         } catch (e) {
             statusMsg.text = "Copy failed: " + e
@@ -4821,11 +4840,10 @@ MuseScore {
                 Layout.fillWidth: true
                 displayText: {
                     if (currentText === "All Contexts") return currentText
-                    var wide = chordLibrary.width > 360
-                    return wide ? (contextLabels[currentText] || currentText)
-                                : (contextLabelsShort[currentText] || currentText)
+                    return contextLabels[currentText] || currentText
                 }
-                onCurrentTextChanged: {
+                // onActivated fires only on user clicks, not model/binding changes
+                onActivated: {
                     filterContext = currentText === "All Contexts" ? "" : currentText
                     applyFilters()
                 }
@@ -4834,7 +4852,7 @@ MuseScore {
                 id: categoryCombo
                 model: categoryList
                 Layout.fillWidth: true
-                onCurrentTextChanged: {
+                onActivated: {
                     filterCategory = currentText === "All Types" ? "" : currentText
                     applyFilters()
                 }
@@ -4862,7 +4880,9 @@ MuseScore {
                 model: filteredTuningDisplayList
                 Layout.fillWidth: true
                 currentIndex: Math.max(0, filteredTuningList.indexOf(selectedTuning))
-                onCurrentIndexChanged: {
+                // Use onActivated (user clicks only), not onCurrentIndexChanged
+                // (which also fires from binding recalculations and causes cascades)
+                onActivated: {
                     if (currentIndex >= 0 && currentIndex < filteredTuningList.length) {
                         var newTuning = filteredTuningList[currentIndex]
                         if (newTuning && newTuning !== selectedTuning) {

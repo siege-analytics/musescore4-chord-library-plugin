@@ -358,8 +358,8 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             }
 
             // Assign contexts: chord melody (CM) for 4+ notes, comping (CV) for 3+
-            // String count determines 6 vs 7
-            var strSuffix = numStrings >= 7 ? "7" : "6"
+            // String count determines suffix (4, 5, 6, 7)
+            var strSuffix = String(numStrings)
             var contexts = []
             if (sounding >= 4) contexts.push("CM" + strSuffix)
             contexts.push("CV" + strSuffix)
