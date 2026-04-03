@@ -453,12 +453,13 @@ MuseScore {
                 if (topA === melodyTarget) scoreA += 200
                 if (topB === melodyTarget) scoreB += 200
             }
-            // Bass note: bonus if voicing's lowest note matches target bass
+            // Bass note: strong bonus if voicing's lowest note matches target bass.
+            // +250 ensures bass override beats context (+100) + quality (+20) + category (+50).
             if (bassTarget >= 0) {
                 var bassA = MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP)
                 var bassB = MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP)
-                if (bassA === bassTarget) scoreA += 150
-                if (bassB === bassTarget) scoreB += 150
+                if (bassA === bassTarget) scoreA += 250
+                if (bassB === bassTarget) scoreB += 250
             }
             // Voice leading: prefer voicings close to the last inserted one
             if (ref) {

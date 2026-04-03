@@ -371,7 +371,7 @@ function generateAll(tuningMidi, constraints) {
 
     // Pass 2: inversions (non-root bass) for the core jazz qualities.
     // Capped to top 5 per quality to avoid combinatorial explosion.
-    var MAX_INVERSIONS_PER_QUALITY = 5
+    var MAX_INVERSIONS_PER_QUALITY = 15
     var inversionQualities = ["dom7", "maj7", "min7", "min7b5", "dim7", "maj6", "min6"]
     var invConstraints = {}
     for (var dk in DEFAULT_CONSTRAINTS) invConstraints[dk] = DEFAULT_CONSTRAINTS[dk]
