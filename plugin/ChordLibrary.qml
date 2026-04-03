@@ -246,6 +246,7 @@ MuseScore {
     property bool calcRootInBass: true     // require root as lowest note
     property int calcMinNotes: 3           // minimum sounding strings
     property int calcMaxMuted: 3           // maximum muted strings
+    property int calcMaxPerQuality: 0      // max voicings per quality (0 = unlimited / Ted Greene mode)
 
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
@@ -994,6 +995,7 @@ MuseScore {
                 if (s.calcRootInBass !== undefined) calcRootInBass = s.calcRootInBass
                 if (s.calcMinNotes !== undefined) calcMinNotes = s.calcMinNotes
                 if (s.calcMaxMuted !== undefined) calcMaxMuted = s.calcMaxMuted
+                if (s.calcMaxPerQuality !== undefined) calcMaxPerQuality = s.calcMaxPerQuality
 
                 console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
             }
@@ -1027,6 +1029,7 @@ MuseScore {
             calcRootInBass: calcRootInBass,
             calcMinNotes: calcMinNotes,
             calcMaxMuted: calcMaxMuted,
+            calcMaxPerQuality: calcMaxPerQuality,
         }
         settingsFile.write(JSON.stringify(s, null, 2))
         console.log("Settings saved")
@@ -1897,6 +1900,7 @@ MuseScore {
             requireRootInBass: calcRootInBass,
             minSoundingNotes: calcMinNotes,
             maxMutedStrings: calcMaxMuted,
+            maxPerQuality: calcMaxPerQuality,
         }
     }
 
@@ -3292,6 +3296,25 @@ MuseScore {
                         onValueChanged: {
                             if (value !== calcMaxMuted) {
                                 calcMaxMuted = value
+                                if (usingTuningVoicings) loadTuningVoicings()
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    Label { text: "Max per quality:"; font.pixelSize: 10 }
+                    SpinBox {
+                        from: 0; to: 999; value: calcMaxPerQuality
+                        implicitWidth: 80
+                        ToolTip.visible: hovered
+                        ToolTip.text: "0 = unlimited (Ted Greene mode). Higher = fewer voicings, faster."
+                        onValueChanged: {
+                            if (value !== calcMaxPerQuality) {
+                                calcMaxPerQuality = value
                                 if (usingTuningVoicings) loadTuningVoicings()
                             }
                         }

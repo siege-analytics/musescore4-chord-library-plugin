@@ -367,21 +367,35 @@ function generateAll(tuningMidi, constraints) {
         defaultQualities.push(qid)
     }
 
-    // Pass 1: root-in-bass voicings — uncapped (digital Ted Greene mode)
+    // Configurable limit: 0 = unlimited (Ted Greene mode), >0 = cap per quality
+    var cfg = {}
+    for (var cdk in DEFAULT_CONSTRAINTS) cfg[cdk] = DEFAULT_CONSTRAINTS[cdk]
+    if (constraints) { for (var cck in constraints) cfg[cck] = constraints[cck] }
+    var maxPerQ = cfg.maxPerQuality || 0  // 0 = no limit
+
+    // Pass 1: root-in-bass voicings
     for (var i = 0; i < defaultQualities.length; i++) {
         var voicings = calculateForQuality(tuningMidi, defaultQualities[i], constraints)
+        if (maxPerQ > 0) {
+            voicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+            voicings = voicings.slice(0, maxPerQ)
+        }
         for (var j = 0; j < voicings.length; j++) {
             allVoicings.push(voicings[j])
         }
     }
 
-    // Pass 2: inversions (non-root bass) for all qualities — uncapped
+    // Pass 2: inversions (non-root bass) for all qualities
     var invConstraints = {}
     for (var dk in DEFAULT_CONSTRAINTS) invConstraints[dk] = DEFAULT_CONSTRAINTS[dk]
     if (constraints) { for (var ck in constraints) invConstraints[ck] = constraints[ck] }
     invConstraints.requireRootInBass = false
     for (var ii = 0; ii < defaultQualities.length; ii++) {
         var invVoicings = calculateForQuality(tuningMidi, defaultQualities[ii], invConstraints)
+        if (maxPerQ > 0) {
+            invVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
+            invVoicings = invVoicings.slice(0, maxPerQ)
+        }
         for (var ij = 0; ij < invVoicings.length; ij++) {
             allVoicings.push(invVoicings[ij])
         }
