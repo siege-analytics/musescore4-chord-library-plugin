@@ -172,6 +172,14 @@ MuseScore {
         }
         return result
     }
+    // Display names for tuning combos (shows labels instead of slugs in dropdown)
+    property var filteredTuningDisplayList: {
+        var result = []
+        for (var i = 0; i < filteredTuningList.length; i++) {
+            result.push(tuningLabels[filteredTuningList[i]] || filteredTuningList[i])
+        }
+        return result
+    }
 
     property var voicingsData: []
     property var filteredData: []
@@ -4420,17 +4428,18 @@ MuseScore {
 
             ComboBox {
                 id: tuningMainCombo
-                model: filteredTuningList
+                model: filteredTuningDisplayList
                 Layout.fillWidth: true
-                displayText: tuningLabels[currentText] || currentText
                 currentIndex: Math.max(0, filteredTuningList.indexOf(selectedTuning))
                 onCurrentIndexChanged: {
-                    var newTuning = filteredTuningList[currentIndex]
-                    if (newTuning && newTuning !== selectedTuning) {
-                        selectedTuning = newTuning
-                        loadTuningStringCount()
-                        loadTuningVoicings()
-                        saveSettings()
+                    if (currentIndex >= 0 && currentIndex < filteredTuningList.length) {
+                        var newTuning = filteredTuningList[currentIndex]
+                        if (newTuning && newTuning !== selectedTuning) {
+                            selectedTuning = newTuning
+                            loadTuningStringCount()
+                            loadTuningVoicings()
+                            saveSettings()
+                        }
                     }
                 }
             }
