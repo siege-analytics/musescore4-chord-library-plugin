@@ -367,34 +367,23 @@ function generateAll(tuningMidi, constraints) {
         defaultQualities.push(qid)
     }
 
-    // Pass 1: root-in-bass voicings — cap per quality per root to keep total manageable
-    var MAX_PER_QUALITY = 36  // ~3 per root × 12 roots
+    // Pass 1: root-in-bass voicings — uncapped (digital Ted Greene mode)
     for (var i = 0; i < defaultQualities.length; i++) {
         var voicings = calculateForQuality(tuningMidi, defaultQualities[i], constraints)
-        voicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
-        var kept = 0
-        for (var j = 0; j < voicings.length && kept < MAX_PER_QUALITY; j++) {
+        for (var j = 0; j < voicings.length; j++) {
             allVoicings.push(voicings[j])
-            kept++
         }
     }
 
-    // Pass 2: inversions (non-root bass) for the core jazz qualities.
-    // Capped to top 5 per quality to avoid combinatorial explosion.
-    var MAX_INVERSIONS_PER_QUALITY = 15
-    var inversionQualities = ["dom7", "maj7", "min7", "min7b5", "dim7", "maj6", "min6"]
+    // Pass 2: inversions (non-root bass) for all qualities — uncapped
     var invConstraints = {}
     for (var dk in DEFAULT_CONSTRAINTS) invConstraints[dk] = DEFAULT_CONSTRAINTS[dk]
     if (constraints) { for (var ck in constraints) invConstraints[ck] = constraints[ck] }
     invConstraints.requireRootInBass = false
-    for (var ii = 0; ii < inversionQualities.length; ii++) {
-        var invVoicings = calculateForQuality(tuningMidi, inversionQualities[ii], invConstraints)
-        // Keep only the best N (lowest score = fewest mutes + smallest stretch)
-        invVoicings.sort(function(a, b) { return (a._score || 0) - (b._score || 0) })
-        var kept = 0
-        for (var ij = 0; ij < invVoicings.length && kept < MAX_INVERSIONS_PER_QUALITY; ij++) {
+    for (var ii = 0; ii < defaultQualities.length; ii++) {
+        var invVoicings = calculateForQuality(tuningMidi, defaultQualities[ii], invConstraints)
+        for (var ij = 0; ij < invVoicings.length; ij++) {
             allVoicings.push(invVoicings[ij])
-            kept++
         }
     }
 
