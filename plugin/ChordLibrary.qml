@@ -2240,10 +2240,19 @@ MuseScore {
         }
     }
 
+    // Cache of calculated voicings per tuning slug — avoids re-running
+    // the expensive calculator when switching back to a previously used tuning.
+    property var _tuningVoicingCache: ({})
+    property bool _loadingTuningVoicings: false  // re-entry guard
+
     // Generate voicings for the current tuning using the runtime calculator.
     // For standard tuning, uses the pre-built 820-voicing library (much richer).
-    // For all other tunings, calculates geometrically correct voicings on the fly.
+    // For all other tunings, calculates (or loads from cache) voicings on the fly.
     function loadTuningVoicings() {
+        // Prevent re-entry from cascade (combo bindings triggering during rebuild)
+        if (_loadingTuningVoicings) return
+        _loadingTuningVoicings = true
+
         // Save the standard library on first call so we can restore it
         if (standardVoicingsData.length === 0 && voicingsData.length > 0 && !usingTuningVoicings) {
             standardVoicingsData = voicingsData
@@ -2266,37 +2275,45 @@ MuseScore {
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
                 statusMsg.color = theme.successText
             }
+            _loadingTuningVoicings = false;
             return
         }
 
-        // Non-standard tuning: calculate voicings from the tuning geometry
-        console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
-
-        // capPerRoot (in VoicingCalculator) handles throttling with
-        // top-note diversity — no artificial maxPerQuality override needed.
-        var constraints = calcConstraints()
-        var calculated = VoicingCalculator.generateAll(tuningMidi, constraints)
+        // Non-standard tuning: check cache first, then calculate
+        var calculated
+        if (_tuningVoicingCache[selectedTuning]) {
+            calculated = _tuningVoicingCache[selectedTuning]
+            console.log("Loaded " + calculated.length + " cached voicings for " + selectedTuning)
+        } else {
+            console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
+            var constraints = calcConstraints()
+            calculated = VoicingCalculator.generateAll(tuningMidi, constraints)
+            if (calculated.length > 0) {
+                // Cache for instant switching later
+                var cache = {}
+                for (var ck in _tuningVoicingCache) cache[ck] = _tuningVoicingCache[ck]
+                cache[selectedTuning] = calculated
+                _tuningVoicingCache = cache
+            }
+        }
 
         // Preserve current filter state across tuning changes
         var savedContext = filterContext
         var savedCategory = filterCategory
         var savedQuality = filterQuality
 
-        if (calculated.length > 0) {
+        if (calculated && calculated.length > 0) {
             voicingsData = calculated
             usingTuningVoicings = true
             rebuildFilterLists()
-            // Restore filter selections if they still exist in the new lists
             if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
             if (savedCategory && categoryList.indexOf(savedCategory) >= 0) filterCategory = savedCategory
             if (savedQuality && qualityList.indexOf(savedQuality) >= 0) filterQuality = savedQuality
             applyFilters()
-            console.log("Calculated " + calculated.length + " voicings for " + selectedTuning)
-            statusMsg.text = calculated.length + " voicings calculated for " + (tuningLabels[selectedTuning] || selectedTuning)
+            statusMsg.text = calculated.length + " voicings for " + (tuningLabels[selectedTuning] || selectedTuning)
             statusMsg.color = theme.successText
         } else {
-            // Fallback to standard library with offset if calculation produced nothing
-            console.log("No voicings calculated — falling back to standard library")
+            console.log("No voicings — falling back to standard library")
             if (standardVoicingsData.length > 0) {
                 voicingsData = standardVoicingsData
                 usingTuningVoicings = false
@@ -2307,6 +2324,7 @@ MuseScore {
                 applyFilters()
             }
         }
+        _loadingTuningVoicings = false
     }
 
     // Hidden TextEdit used for clipboard operations
