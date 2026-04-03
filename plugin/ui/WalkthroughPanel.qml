@@ -29,7 +29,7 @@ ColumnLayout {
     signal prevClicked()
     signal nextClicked()
     signal stopClicked()
-    signal revoiceRequested(string melodyNote, string bassNote, string category)
+    signal revoiceRequested(string melodyNote, bool melodyLocked, string bassNote, bool bassLocked, string category)
     signal reharmSelected(string newRoot, string newQuality)
 
     // Convenience: current item (read-only)
@@ -316,16 +316,16 @@ ColumnLayout {
     RowLayout {
         visible: batchActive
         Layout.fillWidth: true
-        spacing: 6
+        spacing: 4
 
         Label {
-            text: "Melody:"
+            text: "Mel:"
             font.pixelSize: 10
         }
 
         TextField {
             id: stepMelodyField
-            implicitWidth: 40
+            implicitWidth: 36
             font.pixelSize: 10
             placeholderText: "auto"
             selectByMouse: true
@@ -335,6 +335,18 @@ ColumnLayout {
             onAccepted: emitRevoice()
         }
 
+        Button {
+            id: melodyLockBtn
+            text: melodyLockBtn.checked ? "🔒" : "🔓"
+            font.pixelSize: 10
+            implicitWidth: 24
+            implicitHeight: 24
+            checkable: true
+            checked: false
+            ToolTip.visible: hovered
+            ToolTip.text: checked ? "Melody LOCKED — must match this note" : "Melody unlocked — prefer but allow alternatives"
+        }
+
         Label {
             text: "Bass:"
             font.pixelSize: 10
@@ -342,7 +354,7 @@ ColumnLayout {
 
         TextField {
             id: stepBassField
-            implicitWidth: 40
+            implicitWidth: 36
             font.pixelSize: 10
             placeholderText: "root"
             selectByMouse: true
@@ -350,6 +362,18 @@ ColumnLayout {
                 ? MelodyEngine.melodyNoteName(currentItem.bassMidi)
                 : ""
             onAccepted: emitRevoice()
+        }
+
+        Button {
+            id: bassLockBtn
+            text: bassLockBtn.checked ? "🔒" : "🔓"
+            font.pixelSize: 10
+            implicitWidth: 24
+            implicitHeight: 24
+            checkable: true
+            checked: false
+            ToolTip.visible: hovered
+            ToolTip.text: checked ? "Bass LOCKED — must match this note" : "Bass unlocked — prefer but allow alternatives"
         }
 
         Label {
@@ -402,7 +426,9 @@ ColumnLayout {
     function emitRevoice() {
         revoiceRequested(
             stepMelodyField.text,
+            melodyLockBtn.checked,
             stepBassField.text,
+            bassLockBtn.checked,
             stepCategoryCombo.categoryToSlug(stepCategoryCombo.currentText)
         )
     }

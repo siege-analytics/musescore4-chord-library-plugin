@@ -454,20 +454,23 @@ MuseScore {
             else if (a.category === "drop2") scoreA += 5
             if (b.category === "shell") scoreB += 10
             else if (b.category === "drop2") scoreB += 5
-            // Melody-on-top: big bonus if voicing's top note matches melody
+            // Melody-on-top: bonus depends on lock state
+            // Locked = +500 (must match), Unlocked = +200 (prefer)
             if (melodyTarget >= 0) {
+                var melodyBonus = _melodyLocked ? 500 : 200
                 var topA = voicingTopNoteSemitone(a, targetRoot)
                 var topB = voicingTopNoteSemitone(b, targetRoot)
-                if (topA === melodyTarget) scoreA += 200
-                if (topB === melodyTarget) scoreB += 200
+                if (topA === melodyTarget) scoreA += melodyBonus
+                if (topB === melodyTarget) scoreB += melodyBonus
             }
-            // Bass note: strong bonus if voicing's lowest note matches target bass.
-            // +250 ensures bass override beats context (+100) + quality (+20) + category (+50).
+            // Bass note: bonus depends on lock state
+            // Locked = +500 (must match), Unlocked = +250 (prefer)
             if (bassTarget >= 0) {
+                var bassBonus = _bassLocked ? 500 : 250
                 var bassA = MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP)
                 var bassB = MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP)
-                if (bassA === bassTarget) scoreA += 250
-                if (bassB === bassTarget) scoreB += 250
+                if (bassA === bassTarget) scoreA += bassBonus
+                if (bassB === bassTarget) scoreB += bassBonus
             }
             // Voice leading: prefer voicings close to the last inserted one
             if (ref) {
@@ -791,7 +794,11 @@ MuseScore {
 
     // Re-voice the current walkthrough step with melody note name and category override.
     // Called from WalkthroughPanel's revoiceRequested signal.
-    function revoiceCurrentStepWith(melodyNoteText, bassNoteText, categoryOverride) {
+    // Lock state for melody/bass priority (set by revoice, used by findBestVoicing)
+    property bool _melodyLocked: false
+    property bool _bassLocked: false
+
+    function revoiceCurrentStepWith(melodyNoteText, melodyLocked, bassNoteText, bassLocked, categoryOverride) {
         var idx = _batchIndex - 1  // _batchIndex was already incremented
         if (idx < 0 || idx >= _batchChords.length) return
 
@@ -806,6 +813,10 @@ MuseScore {
         var newBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
         if (newBass < 0) newBass = MelodyEngine.suggestBassNote(item.root, item.quality, Transposer.SEMITONE_MAP)
         item.bassMidi = newBass
+
+        // Set lock states for findBestVoicing scoring
+        _melodyLocked = melodyLocked || false
+        _bassLocked = bassLocked || false
 
         // Temporarily set the category filter for findBestVoicing
         var savedCategory = filterCategory
@@ -864,6 +875,10 @@ MuseScore {
             console.log("[ChordLibrary] revoice write error: " + e)
             return
         }
+
+        // Reset lock states after revoice (don't affect Voice All)
+        _melodyLocked = false
+        _bassLocked = false
 
         // Update the display — rewind batchIndex and re-show
         _batchIndex = idx
@@ -4339,8 +4354,8 @@ MuseScore {
                 _batchChords = []
                 showToolResults = false
             }
-            onRevoiceRequested: function(melodyNote, bassNote, category) {
-                revoiceCurrentStepWith(melodyNote, bassNote, category)
+            onRevoiceRequested: function(melodyNote, melodyLocked, bassNote, bassLocked, category) {
+                revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
             }
             onReharmSelected: function(newRoot, newQuality) {
                 // Apply the reharm suggestion: change the current chord's root/quality
