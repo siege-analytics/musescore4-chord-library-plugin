@@ -13,6 +13,9 @@ import "model/ChordScales.js" as ChordScales
 import "model/ChordSelector.js" as ChordSelector
 import "model/FilterEngine.js" as FilterEngine
 import "model/DataCache.js" as DataCache
+import "model/HygieneEngine.js" as HygieneEngine
+import "model/FingeringEngine.js" as FingeringEngine
+import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
 
 MuseScore {
@@ -471,86 +474,18 @@ MuseScore {
         walkthroughPanel.batchChords = _batchChords
     }
 
-    function generateXmlForVoicing(voicing, targetRoot) {
-        // Generate EngravingItem XML for a voicing transposed to targetRoot.
-        // When using tuning-specific voicings (from chord_calculator), the shapes
-        // are already geometrically correct — no tuning offset needed.
-        // For the standard library on non-standard tunings, apply the offset.
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-        var effectiveOffset = usingTuningVoicings ? 0 : tuningOffset
-        var transposedFret = voicing.fret_number + offset - effectiveOffset
-        if (transposedFret < 0) transposedFret += 12  // wrap around
-        var numStrings = voicing.strings || 6
-        var numFrets = voicing.visible_frets || 4
-
-        var stringData = {}
-        var dots = voicing.dots || []
-        for (var d = 0; d < dots.length; d++) {
-            var msStr = numStrings - dots[d].string
-            if (!stringData[msStr]) stringData[msStr] = {}
-            stringData[msStr].dot = dots[d].fret
-        }
-        var mutes = voicing.mutes || []
-        for (var m = 0; m < mutes.length; m++) {
-            var msMute = numStrings - mutes[m]
-            if (!stringData[msMute]) stringData[msMute] = {}
-            stringData[msMute].marker = "cross"
-        }
-        var opens = voicing.open || []
-        for (var o = 0; o < opens.length; o++) {
-            var msOpen = numStrings - opens[o]
-            if (!stringData[msOpen]) stringData[msOpen] = {}
-            stringData[msOpen].marker = "circle"
-        }
-
-        var fretOffset = transposedFret - 1
-        var xml = '<EngravingItem>\n  <FretDiagram>\n'
-        if (fretOffset > 0) xml += '    <fretOffset>' + fretOffset + '</fretOffset>\n'
-        if (numFrets !== 4) xml += '    <frets>' + numFrets + '</frets>\n'
-        if (numStrings !== 6) xml += '    <strings>' + numStrings + '</strings>\n'
-        xml += '    <fretDiagram>\n'
-
-        var sortedKeys = Object.keys(stringData).sort(function(a, b) { return a - b })
-        for (var k = 0; k < sortedKeys.length; k++) {
-            var sn = sortedKeys[k]
-            var sd = stringData[sn]
-            xml += '      <string no="' + sn + '">\n'
-            if (sd.marker) xml += '        <marker>' + sd.marker + '</marker>\n'
-            if (sd.dot !== undefined) xml += '        <dot fret="' + sd.dot + '">normal</dot>\n'
-            xml += '      </string>\n'
-        }
-        xml += '    </fretDiagram>\n  </FretDiagram>\n</EngravingItem>'
-        return xml
+    function _diagramOpts() {
+        return { usingTuningVoicings: usingTuningVoicings, tuningOffset: tuningOffset, semitoneOffsetFn: Transposer.semitoneOffset }
     }
 
-    // === Voice 2 note export (Phase 1.5) ===
+    function generateXmlForVoicing(voicing, targetRoot) {
+        return DiagramEngine.generateXmlForVoicing(voicing, targetRoot, _diagramOpts())
+    }
 
-    // Compute MIDI pitches for all sounding notes in a voicing, transposed to targetRoot.
-    // Returns array of MIDI pitch integers, sorted low to high.
     function computeVoicingMidiPitches(voicing, targetRoot) {
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-        var effectiveOffset = usingTuningVoicings ? 0 : tuningOffset
-        var transposedFret = voicing.fret_number + offset - effectiveOffset
-        if (transposedFret < 0) transposedFret += 12
-
-        var pitches = []
-        var dots = voicing.dots || []
-        for (var d = 0; d < dots.length; d++) {
-            var strMidi = tuningMidi[String(dots[d].string)]
-            if (strMidi !== undefined) {
-                var absFret = transposedFret + (dots[d].fret - 1)
-                pitches.push(strMidi + absFret)
-            }
-        }
-        var opens = voicing.open || []
-        for (var o = 0; o < opens.length; o++) {
-            var openMidi = tuningMidi[String(opens[o])]
-            if (openMidi !== undefined) {
-                pitches.push(openMidi)
-            }
-        }
-        pitches.sort(function(a, b) { return a - b })
-        return pitches
+        var opts = _diagramOpts()
+        opts.tuningMidi = tuningMidi
+        return DiagramEngine.computeVoicingMidiPitches(voicing, targetRoot, opts)
     }
 
     // Write voicing pitches as notes on voice 2 at the given tick position.
@@ -605,13 +540,8 @@ MuseScore {
         return true
     }
 
-    // Convert MIDI pitch to TPC (tonal pitch class) for MuseScore.
-    // TPC maps: C=14, D=16, E=18, F=13, G=15, A=17, B=19
-    // Flats subtract 7, sharps add 7 from natural.
     function pitchToTpc(midiPitch) {
-        // Use sharps for white keys, natural TPC for accidentals
-        var tpcMap = [14, 21, 16, 23, 18, 13, 20, 15, 22, 17, 24, 19]  // C C# D D# E F F# G G# A A# B
-        return tpcMap[midiPitch % 12]
+        return DiagramEngine.pitchToTpc(midiPitch)
     }
 
     // Batch voicing state
@@ -1585,10 +1515,7 @@ MuseScore {
     }
 
     function isIgnored(key) {
-        for (var i = 0; i < hygieneIgnoreList.length; i++) {
-            if (hygieneIgnoreList[i].key === key) return true
-        }
-        return false
+        return HygieneEngine.isIgnored(key, hygieneIgnoreList)
     }
 
     function clearDismissals() {
@@ -1600,144 +1527,34 @@ MuseScore {
     function runHygieneAudit() {
         loadHygieneIgnoreList()
         auditResultsModel.clear()
-        var results = []
-        var duplicates = 0
-        var enharmonic = 0
-        var crossCtx = 0
-        var dismissed = 0
 
-        // 1. Exact duplicates: same dots + fret + strings + context + quality
-        var fpMap = {}
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            var dots = []
-            for (var d = 0; d < v.dots.length; d++)
-                dots.push(v.dots[d].string + ":" + v.dots[d].fret)
-            dots.sort()
-            var fp = v.strings + "|" + v.fret_number + "|" + dots.join(",") + "|" + v.context + "|" + v.chord_quality
-            if (fpMap[fp]) {
-                var dupKey = "DUP:" + v.id + "=" + fpMap[fp]
-                if (isIgnored(dupKey)) { dismissed++; } else {
-                    results.push("DUP: " + v.id + " = " + fpMap[fp])
-                    duplicates++
-                }
-            } else {
-                fpMap[fp] = v.id
-            }
-        }
+        var audit = HygieneEngine.runAudit(voicingsData, tuningMidi, hygieneIgnoreList)
 
-        // 2. Enharmonic equivalents: same pitch class set, different quality
-        // Compute pitch classes for each voicing
-        var pcsMap = {}
-        for (var j = 0; j < voicingsData.length; j++) {
-            var vv = voicingsData[j]
-            var pcs = []
-            for (var dd = 0; dd < vv.dots.length; dd++) {
-                var strNum = vv.dots[dd].string
-                var strMidi = tuningMidi[String(strNum)]
-                if (strMidi !== undefined) {
-                    var absFret = vv.fret_number + (vv.dots[dd].fret - 1)
-                    pcs.push((strMidi + absFret) % 12)
-                }
-            }
-            // Add open strings
-            for (var oo = 0; oo < (vv.open || []).length; oo++) {
-                var openMidi = tuningMidi[String(vv.open[oo])]
-                if (openMidi !== undefined) pcs.push(openMidi % 12)
-            }
-            pcs.sort()
-            var pcsKey = pcs.join(",")
-            if (!pcsMap[pcsKey]) pcsMap[pcsKey] = []
-            pcsMap[pcsKey].push({ id: vv.id, quality: vv.chord_quality })
-        }
-        for (var pk in pcsMap) {
-            var group = pcsMap[pk]
-            if (group.length > 1) {
-                var quals = {}
-                for (var g = 0; g < group.length; g++) quals[group[g].quality] = true
-                if (Object.keys(quals).length > 1) {
-                    var ids = group.map(function(x) { return x.id + "(" + x.quality + ")" })
-                    var enhKey = "ENH:" + pk
-                    if (isIgnored(enhKey)) { dismissed++; } else {
-                        results.push("ENHARMONIC: " + ids.join(" = "))
-                        enharmonic++
-                    }
-                }
-            }
-        }
-
-        // 3. Cross-context: same shape in different contexts
-        var shapeMap = {}
-        for (var k = 0; k < voicingsData.length; k++) {
-            var vvv = voicingsData[k]
-            var sdots = []
-            for (var sd = 0; sd < vvv.dots.length; sd++)
-                sdots.push(vvv.dots[sd].string + ":" + vvv.dots[sd].fret)
-            sdots.sort()
-            var shapeFp = vvv.strings + "|" + sdots.join(",")
-            if (!shapeMap[shapeFp]) shapeMap[shapeFp] = []
-            shapeMap[shapeFp].push({ id: vvv.id, context: vvv.context })
-        }
-        for (var sk in shapeMap) {
-            var sgroup = shapeMap[sk]
-            if (sgroup.length > 1) {
-                var ctxs = {}
-                for (var sg = 0; sg < sgroup.length; sg++) ctxs[sgroup[sg].context] = true
-                if (Object.keys(ctxs).length > 1) {
-                    var sids = sgroup.map(function(x) { return x.id + "(" + x.context + ")" })
-                    var ctxKey = "CTX:" + sk
-                    if (isIgnored(ctxKey)) { dismissed++; } else {
-                        results.push("CROSS-CTX: " + sids.join(" | "))
-                        crossCtx++
-                    }
-                }
-            }
-        }
-
-        // Summary
-        var total = duplicates + enharmonic + crossCtx
         var summary = voicingsData.length + " voicings audited\n"
-            + duplicates + " duplicates, "
-            + enharmonic + " enharmonic, "
-            + crossCtx + " cross-context"
-        if (dismissed > 0)
-            summary += "\n(" + dismissed + " dismissed findings hidden)"
+            + audit.duplicates + " duplicates, "
+            + audit.enharmonic + " enharmonic, "
+            + audit.crossCtx + " cross-context"
+        if (audit.dismissed > 0)
+            summary += "\n(" + audit.dismissed + " dismissed findings hidden)"
         hygieneResult.text = summary
-        hygieneResult.color = duplicates > 0 ? theme.errorText : theme.successText
+        hygieneResult.color = audit.duplicates > 0 ? theme.errorText : theme.successText
 
-        lastAuditResults = results
-        for (var r = 0; r < results.length; r++)
-            auditResultsModel.append({ "modelData": results[r] })
+        lastAuditResults = audit.results
+        for (var r = 0; r < audit.results.length; r++)
+            auditResultsModel.append({ "modelData": audit.results[r] })
     }
 
     // Store last audit results for report export
     property var lastAuditResults: []
 
     function fixDuplicates() {
-        // Remove exact duplicates (same dots + fret + context + quality)
-        var seen = {}
-        var removed = 0
-        var cleaned = []
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            var dots = []
-            for (var d = 0; d < v.dots.length; d++)
-                dots.push(v.dots[d].string + ":" + v.dots[d].fret)
-            dots.sort()
-            var fp = v.strings + "|" + v.fret_number + "|" + dots.join(",") + "|" + v.context + "|" + v.chord_quality
-            if (seen[fp]) {
-                removed++
-            } else {
-                seen[fp] = v.id
-                cleaned.push(v)
-            }
-        }
-        if (removed > 0) {
-            voicingsData = cleaned
+        var result = HygieneEngine.dedup(voicingsData)
+        if (result.removed > 0) {
+            voicingsData = result.cleaned
             rebuildFilterLists()
             applyFilters()
             saveToCache()
-            hygieneResult.text = "Removed " + removed + " duplicates. " + voicingsData.length + " voicings remain."
+            hygieneResult.text = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
             hygieneResult.color = theme.successText
         } else {
             hygieneResult.text = "No duplicates found."
@@ -1749,71 +1566,8 @@ MuseScore {
         var path = auditReportPath.text.trim()
         if (!path) { hygieneResult.text = "Enter a file path"; return }
 
-        var report = "CHORD LIBRARY AUDIT REPORT\n"
-            + "=" .repeat(60) + "\n"
-            + "Date:     " + new Date().toISOString().split("T")[0] + "\n"
-            + "Voicings: " + voicingsData.length + "\n"
-            + "Tuning:   " + (tuningLabels[selectedTuning] || selectedTuning) + "\n"
-            + "Dismissed: " + hygieneIgnoreList.length + " findings suppressed\n"
-            + "=".repeat(60) + "\n\n"
-
-        // Group results by type
-        var dups = [], enhs = [], ctxs = []
-        for (var i = 0; i < lastAuditResults.length; i++) {
-            var r = lastAuditResults[i]
-            if (r.indexOf("DUP:") === 0) dups.push(r)
-            else if (r.indexOf("ENHARMONIC:") === 0) enhs.push(r)
-            else if (r.indexOf("CROSS-CTX:") === 0) ctxs.push(r)
-        }
-
-        if (dups.length > 0) {
-            report += "EXACT DUPLICATES (" + dups.length + ")\n"
-                + "-".repeat(40) + "\n"
-                + "Same dots + fret + context + quality. Click 'Fix Duplicates' in the\n"
-                + "plugin to remove these automatically.\n\n"
-            for (var d = 0; d < dups.length; d++) {
-                var dupKey = "DUP:" + dups[d].substring(5).replace(/ /g, "")
-                report += "  " + dups[d] + "\n"
-                report += "    DISMISS KEY: " + dupKey + "\n\n"
-            }
-        }
-
-        if (enhs.length > 0) {
-            report += "ENHARMONIC EQUIVALENTS (" + enhs.length + ")\n"
-                + "-".repeat(40) + "\n"
-                + "Same pitch classes, different chord quality name.\n"
-                + "Usually legitimate (e.g., C6 and Am7 share the same notes).\n"
-                + "If both names make sense, dismiss the finding.\n\n"
-            for (var e = 0; e < enhs.length; e++) {
-                var enhKey = "ENH:" + enhs[e].substring(12, 30).replace(/ /g, "")
-                report += "  " + enhs[e] + "\n"
-                report += "    DISMISS KEY: " + enhKey + "\n\n"
-            }
-        }
-
-        if (ctxs.length > 0) {
-            report += "CROSS-CONTEXT MATCHES (" + ctxs.length + ")\n"
-                + "-".repeat(40) + "\n"
-                + "Same shape in different contexts (CM6 vs CV6). Expected — same shape,\n"
-                + "different musical purpose. Informational only.\n\n"
-            for (var c = 0; c < ctxs.length; c++) {
-                var ctxKey = "CTX:" + ctxs[c].substring(11, 30).replace(/ /g, "")
-                report += "  " + ctxs[c] + "\n"
-                report += "    DISMISS KEY: " + ctxKey + "\n\n"
-            }
-        }
-
-        if (lastAuditResults.length === 0) {
-            report += "No issues found. Library is clean.\n"
-        }
-
-        report += "\n" + "=".repeat(60) + "\n"
-            + "HOW TO ACT ON FINDINGS\n"
-            + "-".repeat(40) + "\n"
-            + "DUPLICATES: Click 'Fix Duplicates' in the plugin to auto-remove.\n"
-            + "DISMISS:    Copy a DISMISS KEY from above, paste it into the\n"
-            + "            'Dismiss' field in Settings > Library Health, click Dismiss.\n"
-            + "RESET:      Click 'Reset All Dismissed' to un-suppress everything.\n"
+        var tuningLabel = tuningLabels[selectedTuning] || selectedTuning
+        var report = HygieneEngine.buildReport(voicingsData, tuningLabel, hygieneIgnoreList.length, lastAuditResults)
 
         tempDiagramFile.source = path
         try {
@@ -2947,65 +2701,8 @@ MuseScore {
         showResult("Fingering Suggestions", "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n\n"), true)
     }
 
-    // Simple fingering heuristic (QML-side, for inline annotation)
-    // Returns a string like "1-X-1-2-X-X" (finger per string, low to high)
     function computeFingeringString(voicing) {
-        var dots = voicing.dots || []
-        var mutes = voicing.mutes || []
-        var opens = voicing.open || []
-        var numStrings = voicing.strings || 6
-        var fretNumber = voicing.fret_number || 1
-
-        if (dots.length === 0) return ""
-
-        // Convert to absolute frets
-        var fretted = []
-        for (var d = 0; d < dots.length; d++) {
-            fretted.push({
-                string: dots[d].string,
-                absFret: fretNumber + (dots[d].fret - 1),
-            })
-        }
-        fretted.sort(function(a, b) { return a.absFret - b.absFret })
-
-        var minFret = fretted[0].absFret
-        var maxFret = fretted[fretted.length - 1].absFret
-
-        // Group by fret for barre detection
-        var fretGroups = {}
-        for (var i = 0; i < fretted.length; i++) {
-            if (!fretGroups[fretted[i].absFret])
-                fretGroups[fretted[i].absFret] = []
-            fretGroups[fretted[i].absFret].push(fretted[i].string)
-        }
-
-        // Assign fingers: one per unique fret, 1=index for lowest
-        var uniqueFrets = Object.keys(fretGroups).sort(function(a, b) { return a - b })
-        var fretToFinger = {}
-        var fingers = [1, 2, 3, 4]
-        for (var f = 0; f < uniqueFrets.length && f < 4; f++) {
-            fretToFinger[uniqueFrets[f]] = fingers[f]
-        }
-
-        // Build per-string result
-        var result = {}
-        for (var j = 0; j < fretted.length; j++) {
-            result[fretted[j].string] = fretToFinger[fretted[j].absFret] || 1
-        }
-
-        // Build display string (low string to high)
-        var parts = []
-        for (var s = numStrings; s >= 1; s--) {
-            if (result[s] !== undefined)
-                parts.push(String(result[s]))
-            else if (mutes.indexOf(s) >= 0)
-                parts.push("X")
-            else if (opens.indexOf(s) >= 0)
-                parts.push("O")
-            else
-                parts.push("·")
-        }
-        return parts.join(" ")
+        return FingeringEngine.computeFingeringString(voicing)
     }
 
     // Extract fingering string from an existing FretDiagram element in the score.
@@ -3497,64 +3194,8 @@ MuseScore {
         showComparison = false
     }
 
-    // === T-021: Fingering Suggestions ===
-    // Generate left-hand fingering from voicing geometry.
-    // Uses simple heuristic: lowest fretted note → index finger,
-    // higher frets assigned ascending (middle, ring, pinky).
-
     function suggestFingering(voicing) {
-        if (!voicing || !voicing.dots || voicing.dots.length === 0) return []
-
-        // Collect fretted notes, sorted by fret position (low to high)
-        var fretted = []
-        for (var i = 0; i < voicing.dots.length; i++) {
-            var d = voicing.dots[i]
-            var absFret = voicing.fret_number + (d.fret - 1)
-            if (absFret > 0) {  // skip open strings (fret 0)
-                fretted.push({ string: d.string, fret: absFret, relFret: d.fret })
-            }
-        }
-        fretted.sort(function(a, b) {
-            if (a.fret !== b.fret) return a.fret - b.fret
-            return b.string - a.string  // lower strings first at same fret
-        })
-
-        // Assign fingers: 1=index, 2=middle, 3=ring, 4=pinky
-        // If all notes on same fret → barre (all finger 1)
-        var allSameFret = fretted.length > 0
-        for (var j = 1; j < fretted.length; j++) {
-            if (fretted[j].fret !== fretted[0].fret) { allSameFret = false; break }
-        }
-        if (allSameFret) {
-            var barreResult = []
-            for (var b = 0; b < fretted.length; b++) {
-                barreResult.push({ string: fretted[b].string, finger: 1 })
-            }
-            return barreResult
-        }
-
-        // Map fret positions to finger numbers
-        var fretToFinger = {}
-        var fingerNum = 1
-        var lastFret = -1
-        for (var k = 0; k < fretted.length; k++) {
-            if (fretted[k].fret !== lastFret) {
-                if (fingerNum <= 4) {
-                    fretToFinger[fretted[k].fret] = fingerNum
-                    fingerNum++
-                    lastFret = fretted[k].fret
-                }
-            }
-        }
-
-        var result = []
-        for (var m = 0; m < fretted.length; m++) {
-            result.push({
-                string: fretted[m].string,
-                finger: fretToFinger[fretted[m].fret] || 4
-            })
-        }
-        return result
+        return FingeringEngine.suggestFingering(voicing)
     }
 
     // === UI ===
