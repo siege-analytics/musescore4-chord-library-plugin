@@ -959,7 +959,12 @@ MuseScore {
 
     function rebuildFilterLists() {
         var lists = FilterEngine.rebuildFilterLists(voicingsData)
-        contextList = lists.contextList
+        // Always include all known contexts (from contextStringCounts) so the
+        // dropdown isn't empty on non-standard tunings that only have a subset.
+        var allContexts = {}
+        for (var c in contextStringCounts) allContexts[c] = true
+        for (var i = 1; i < lists.contextList.length; i++) allContexts[lists.contextList[i]] = true
+        contextList = ["All Contexts"].concat(Object.keys(allContexts).sort())
         categoryList = lists.categoryList
         qualityList = lists.qualityList
     }
