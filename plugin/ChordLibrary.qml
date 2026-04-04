@@ -10,6 +10,9 @@ import "model/MelodyEngine.js" as MelodyEngine
 import "model/VoicingCalculator.js" as VoicingCalculator
 import "model/ReharmonizationEngine.js" as Reharm
 import "model/ChordScales.js" as ChordScales
+import "model/ChordSelector.js" as ChordSelector
+import "model/FilterEngine.js" as FilterEngine
+import "model/DataCache.js" as DataCache
 
 MuseScore {
     id: chordLibrary
@@ -363,73 +366,11 @@ MuseScore {
     property var batchQueue: []
     property int batchTotal: 0
 
-    // Map chord quality strings from MuseScore Harmony to our quality IDs
-    property var qualityMap: {
-        "7": "dom7", "maj7": "maj7", "Maj7": "maj7", "M7": "maj7",
-        "m7": "min7", "min7": "min7", "-7": "min7",
-        "m7b5": "min7b5", "-7b5": "min7b5", "ø7": "min7b5",
-        "dim7": "dim7", "o7": "dim7",
-        "6": "maj6", "m6": "min6", "-6": "min6",
-        "9": "dom9", "maj9": "maj9", "m9": "min9",
-        "13": "dom13",
-        "7b9": "dom7b9", "7#5": "dom7sharp5", "7b5": "dom7flat5",
-        "7alt": "dom7alt", "alt": "dom7alt",
-        "sus4": "sus4", "sus2": "sus2",
-        "aug7": "aug7", "+7": "aug7",
-        "mMaj7": "min-maj7", "m(maj7)": "min-maj7",
-        "": "dom7",  // bare "C" = major, but with 7th context we default to dom7
-    }
+    // Quality map delegated to ChordSelector module
+    property var qualityMap: ChordSelector.qualityMap
 
     function parseChordSymbol(text) {
-        // Extract root and quality from a chord symbol like "Fmaj7", "Bb7", "D-7b5"
-        // Also handles slash chords: "C/E" → root=C, quality=..., slashBass="E"
-        if (!text || text.length === 0) return null
-
-        // Check for slash chord notation (e.g. "Cmaj7/E", "F/A")
-        var slashBass = null
-        var chordPart = text
-        var slashIdx = text.lastIndexOf("/")
-        if (slashIdx > 0) {
-            var afterSlash = text.substring(slashIdx + 1)
-            var bassRoot = Transposer.extractRoot(afterSlash)
-            // Only treat as slash chord if what follows the slash is a valid note name
-            // and nothing else (or just whitespace)
-            if (bassRoot && afterSlash.trim().length <= 2) {
-                slashBass = bassRoot
-                chordPart = text.substring(0, slashIdx)
-            }
-        }
-
-        var root = Transposer.extractRoot(chordPart)
-        if (!root) return null
-        var suffix = chordPart.substring(root.length)
-        // Clean up common notation
-        suffix = suffix.replace(/^\s*/, "").replace("Δ", "maj").replace("△", "maj")
-            .replace("°", "dim").replace("ø", "m7b5").replace("+", "aug")
-            .replace("−", "-")
-        var quality = qualityMap[suffix] || null
-        // If no exact match, try partial matches
-        if (!quality) {
-            if (suffix.indexOf("maj7") >= 0) quality = "maj7"
-            else if (suffix.indexOf("m7b5") >= 0 || suffix.indexOf("-7b5") >= 0) quality = "min7b5"
-            else if (suffix.indexOf("m7") >= 0 || suffix.indexOf("-7") >= 0) quality = "min7"
-            else if (suffix.indexOf("dim") >= 0) quality = "dim7"
-            else if (suffix.indexOf("7") >= 0) quality = "dom7"
-            else if (suffix.indexOf("m") >= 0 || suffix.indexOf("-") >= 0) quality = "min7"
-            else {
-                // Bare letter (e.g. "F", "Bb") — ambiguous in jazz charts.
-                // Could be major triad, maj7, or dom7 depending on context.
-                // Default to dom7 (most common in jazz/blues) but flag as ambiguous
-                // so the UI can prompt the user.
-                quality = "dom7"
-                var result2 = { root: root, quality: quality, ambiguous: true }
-                if (slashBass) result2.slashBass = slashBass
-                return result2
-            }
-        }
-        var result = { root: root, quality: quality }
-        if (slashBass) result.slashBass = slashBass
-        return result
+        return ChordSelector.parseChordSymbol(text)
     }
 
     // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
@@ -437,163 +378,31 @@ MuseScore {
         return MelodyEngine.voicingTopNoteSemitone(voicing, targetRoot, Transposer.SEMITONE_MAP)
     }
 
-    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
-        // Find the best matching voicing from the current data.
-        // Respects current filter selections: context, category, tuning.
-        // melodyMidi: optional MIDI note number of the melody at this position
-        // bassMidi: optional MIDI semitone class (0-11) for preferred bass note
-        var maxStrings = tuningMaxStrings
-        if (filterContext && contextStringCounts[filterContext] !== undefined) {
-            var contextMax = contextStringCounts[filterContext]
-            if (contextMax < maxStrings) maxStrings = contextMax
+    // Build the options object for ChordSelector functions.
+    // Bundles current QML state + MelodyEngine callbacks for the .pragma library module.
+    function _selectorOpts(melodyMidi, bassMidi) {
+        return {
+            maxStrings: tuningMaxStrings,
+            filterContext: filterContext,
+            contextStringCounts: contextStringCounts,
+            filterCategory: filterCategory,
+            melodyMidi: melodyMidi,
+            bassMidi: bassMidi,
+            melodyLocked: _melodyLocked,
+            bassLocked: _bassLocked,
+            lastInsertedVoicing: lastInsertedVoicing,
+            topNoteFn: function(v, r) { return MelodyEngine.voicingTopNoteSemitone(v, r, Transposer.SEMITONE_MAP) },
+            bassNoteFn: function(v, r) { return MelodyEngine.voicingBassNoteSemitone(v, r, Transposer.SEMITONE_MAP) },
+            distanceFn: MelodyEngine.voicingDistance
         }
-        var candidates = []
-        var quartalCandidates = []
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            if ((v.strings || 6) > maxStrings) continue
-            // For multi-root voicings (calculated), match by root too.
-            // Standard library voicings are all root C and get transposed.
-            // Calculated voicings with non-C roots must match the target root.
-            if (v.root !== "C" && v.root !== targetRoot) continue
-            if (v.chord_quality === quality) {
-                if (filterCategory && v.category !== filterCategory) continue
-                candidates.push(v)
-            } else if (v.category === "quartal") {
-                quartalCandidates.push(v)
-            }
-        }
-        // If category filter is too restrictive, fall back to unfiltered
-        if (candidates.length === 0 && filterCategory) {
-            for (var j = 0; j < voicingsData.length; j++) {
-                var v2 = voicingsData[j]
-                if (v2.chord_quality !== quality) continue
-                if (v2.root !== "C" && v2.root !== targetRoot) continue
-                if ((v2.strings || 6) > maxStrings) continue
-                candidates.push(v2)
-            }
-        }
-        // Add quartal candidates to the pool
-        for (var q = 0; q < quartalCandidates.length; q++) {
-            candidates.push(quartalCandidates[q])
-        }
-        if (candidates.length === 0) {
-            // Fallback: try dom7 if the specific quality isn't found
-            if (quality !== "dom7") return findBestVoicing(targetRoot, "dom7", melodyMidi, bassMidi)
-            return null
-        }
-
-        // Melody-on-top: compute target semitone class from melody MIDI note
-        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0)
-            ? melodyMidi % 12 : -1
-
-        // Bass note: compute target semitone class (0-11)
-        var bassTarget = (bassMidi !== undefined && bassMidi >= 0)
-            ? bassMidi % 12 : -1
-
-        // Score: context match + category preference + voice leading + melody + bass
-        var ref = lastInsertedVoicing
-        candidates.sort(function(a, b) {
-            var scoreA = 0, scoreB = 0
-            // Exact quality match beats quartal
-            if (a.chord_quality === quality) scoreA += 20
-            if (b.chord_quality === quality) scoreB += 20
-            if (filterContext && a.context === filterContext) scoreA += 100
-            if (filterContext && b.context === filterContext) scoreB += 100
-            if (filterCategory && a.category === filterCategory) scoreA += 50
-            if (filterCategory && b.category === filterCategory) scoreB += 50
-            if (a.category === "shell") scoreA += 10
-            else if (a.category === "drop2") scoreA += 5
-            if (b.category === "shell") scoreB += 10
-            else if (b.category === "drop2") scoreB += 5
-            // Melody-on-top: bonus depends on lock state
-            // Locked = +500 (must match), Unlocked = +200 (prefer)
-            if (melodyTarget >= 0) {
-                var melodyBonus = _melodyLocked ? 500 : 200
-                var topA = voicingTopNoteSemitone(a, targetRoot)
-                var topB = voicingTopNoteSemitone(b, targetRoot)
-                if (topA === melodyTarget) scoreA += melodyBonus
-                if (topB === melodyTarget) scoreB += melodyBonus
-            }
-            // Bass note: bonus depends on lock state
-            // Locked = +500 (must match), Unlocked = +250 (prefer)
-            if (bassTarget >= 0) {
-                var bassBonus = _bassLocked ? 500 : 250
-                var bassA = MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP)
-                var bassB = MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP)
-                if (bassA === bassTarget) scoreA += bassBonus
-                if (bassB === bassTarget) scoreB += bassBonus
-            }
-            // Voice leading: prefer voicings close to the last inserted one
-            if (ref) {
-                scoreA -= voicingDistance(ref, a) * 2
-                scoreB -= voicingDistance(ref, b) * 2
-            }
-            return scoreB - scoreA
-        })
-        return candidates[0]
     }
 
-    // Return ALL matching voicings for a chord, sorted by score (best first).
-    // Used by the walkthrough to let users browse alternatives.
+    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
+        return ChordSelector.findBestVoicing(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
+    }
+
     function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi) {
-        var maxStrings = tuningMaxStrings
-        if (filterContext && contextStringCounts[filterContext] !== undefined) {
-            var contextMax = contextStringCounts[filterContext]
-            if (contextMax < maxStrings) maxStrings = contextMax
-        }
-        var candidates = []
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            if ((v.strings || 6) > maxStrings) continue
-            if (v.root !== "C" && v.root !== targetRoot) continue
-            if (v.chord_quality === quality || v.category === "quartal") {
-                if (filterCategory && v.category !== filterCategory && v.chord_quality === quality) continue
-                candidates.push(v)
-            }
-        }
-        if (candidates.length === 0 && filterCategory) {
-            for (var j = 0; j < voicingsData.length; j++) {
-                var v2 = voicingsData[j]
-                if (v2.chord_quality !== quality && v2.category !== "quartal") continue
-                if (v2.root !== "C" && v2.root !== targetRoot) continue
-                if ((v2.strings || 6) > maxStrings) continue
-                candidates.push(v2)
-            }
-        }
-        // Sort using the same scoring as findBestVoicing
-        var melodyTarget = (melodyMidi !== undefined && melodyMidi >= 0) ? melodyMidi % 12 : -1
-        var bassTarget = (bassMidi !== undefined && bassMidi >= 0) ? bassMidi % 12 : -1
-        var ref = lastInsertedVoicing
-        candidates.sort(function(a, b) {
-            var scoreA = 0, scoreB = 0
-            if (a.chord_quality === quality) scoreA += 20
-            if (b.chord_quality === quality) scoreB += 20
-            if (filterContext && a.context === filterContext) scoreA += 100
-            if (filterContext && b.context === filterContext) scoreB += 100
-            if (filterCategory && a.category === filterCategory) scoreA += 50
-            if (filterCategory && b.category === filterCategory) scoreB += 50
-            if (a.category === "shell") scoreA += 10
-            else if (a.category === "drop2") scoreA += 5
-            if (b.category === "shell") scoreB += 10
-            else if (b.category === "drop2") scoreB += 5
-            if (melodyTarget >= 0) {
-                var melodyBonus = _melodyLocked ? 500 : 200
-                if (voicingTopNoteSemitone(a, targetRoot) === melodyTarget) scoreA += melodyBonus
-                if (voicingTopNoteSemitone(b, targetRoot) === melodyTarget) scoreB += melodyBonus
-            }
-            if (bassTarget >= 0) {
-                var bassBonus = _bassLocked ? 500 : 250
-                if (MelodyEngine.voicingBassNoteSemitone(a, targetRoot, Transposer.SEMITONE_MAP) === bassTarget) scoreA += bassBonus
-                if (MelodyEngine.voicingBassNoteSemitone(b, targetRoot, Transposer.SEMITONE_MAP) === bassTarget) scoreB += bassBonus
-            }
-            if (ref) {
-                scoreA -= voicingDistance(ref, a) * 2
-                scoreB -= voicingDistance(ref, b) * 2
-            }
-            return scoreB - scoreA
-        })
-        return candidates
+        return ChordSelector.findAllVoicings(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
     }
 
     // Alternative voicing state — grouped by bass string
@@ -606,34 +415,11 @@ MuseScore {
     property int altIndex: 0               // current index for display
 
     // Build bass-string groups from alternatives.
-    // IMPORTANT: build new objects/arrays, then assign — QML bindings
-    // don't fire when you mutate in place with push() or obj[key]=val.
+    // IMPORTANT: assign new objects to trigger QML bindings.
     function buildBassStringGroups() {
-        var groups = {}
-        var list = []
-        for (var i = 0; i < _altVoicings.length; i++) {
-            var v = _altVoicings[i]
-            // Determine bass string: the highest string number with a dot or open
-            var bassStr = 0
-            var dots = v.dots || []
-            for (var d = 0; d < dots.length; d++) {
-                if (dots[d].string > bassStr) bassStr = dots[d].string
-            }
-            var opens = v.open || []
-            for (var o = 0; o < opens.length; o++) {
-                if (opens[o] > bassStr) bassStr = opens[o]
-            }
-            if (bassStr === 0) bassStr = v.strings || 6
-            if (!groups[bassStr]) {
-                groups[bassStr] = []
-                list.push(bassStr)
-            }
-            groups[bassStr].push(v)
-        }
-        list.sort(function(a, b) { return b - a })  // highest string number first (lowest pitch)
-        // Assign new objects to trigger QML bindings
-        _bassStringGroups = groups
-        _bassStringList = list
+        var result = ChordSelector.buildBassStringGroups(_altVoicings)
+        _bassStringGroups = result.groups
+        _bassStringList = result.list
     }
 
     // Select voicings by bass string
@@ -1230,16 +1016,10 @@ MuseScore {
     }
 
     function rebuildFilterLists() {
-        var contexts = {}, categories = {}, qualities = {}
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            if (v.context) contexts[v.context] = true
-            if (v.category) categories[v.category] = true
-            if (v.chord_quality) qualities[v.chord_quality] = true
-        }
-        contextList = ["All Contexts"].concat(Object.keys(contexts).sort())
-        categoryList = ["All Types"].concat(Object.keys(categories).sort())
-        qualityList = ["All Qualities"].concat(Object.keys(qualities).sort())
+        var lists = FilterEngine.rebuildFilterLists(voicingsData)
+        contextList = lists.contextList
+        categoryList = lists.categoryList
+        qualityList = lists.qualityList
     }
 
     onRun: {
@@ -1259,19 +1039,16 @@ MuseScore {
     function loadFromCache() {
         try {
             var raw = localCacheFile.read()
-            if (raw && raw.length > 2) {
-                var data = JSON.parse(raw)
-                var cached = data.voicings || []
-                if (cached.length > 0) {
-                    voicingsData = cached
-                    dataLoaded = true
-                    rebuildFilterLists()
-                    applyFilters()
-                    statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
-                    statusMsg.color = theme.successText
-                    console.log("Loaded " + cached.length + " voicings from local cache")
-                    return true
-                }
+            var cached = DataCache.parseCache(raw)
+            if (cached) {
+                voicingsData = cached
+                dataLoaded = true
+                rebuildFilterLists()
+                applyFilters()
+                statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
+                statusMsg.color = theme.successText
+                console.log("Loaded " + cached.length + " voicings from local cache")
+                return true
             }
         } catch (e) {
             console.log("No local cache, fetching from URL")
@@ -1280,8 +1057,7 @@ MuseScore {
     }
 
     function saveToCache() {
-        var data = JSON.stringify({ voicings: voicingsData }, null, 2)
-        localCacheFile.write(data)
+        localCacheFile.write(DataCache.serializeCache(voicingsData))
         console.log("Saved " + voicingsData.length + " voicings to local cache")
     }
 
@@ -1290,64 +1066,36 @@ MuseScore {
     function loadSettings() {
         try {
             var raw = settingsFile.read()
-            if (raw && raw.length > 0) {
-                var s = JSON.parse(raw)
-                if (s.voicingUrl) jsonUrl = s.voicingUrl
-                if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
-                if (s.tuning) selectedTuning = s.tuning
-                // Restore custom tunings that were added via Create/Import
-                if (s.customTunings && Array.isArray(s.customTunings)) {
-                    for (var i = 0; i < s.customTunings.length; i++) {
-                        var ct = s.customTunings[i]
-                        if (ct.slug && ct.name) {
-                            addTuningToList(ct.slug, ct.name, ct.strings || 6)
-                        }
+            var s = DataCache.parseSettings(raw)
+            if (s.voicingUrl) jsonUrl = s.voicingUrl
+            if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
+            if (s.tuning) selectedTuning = s.tuning
+            // Restore custom tunings that were added via Create/Import
+            if (s.customTunings.length > 0) {
+                for (var i = 0; i < s.customTunings.length; i++) {
+                    var ct = s.customTunings[i]
+                    if (ct.slug && ct.name) {
+                        addTuningToList(ct.slug, ct.name, ct.strings || 6)
                     }
-                    console.log("Restored " + s.customTunings.length + " custom tuning(s)")
                 }
-                // Restore tuning order (if user reordered)
-                if (s.tuningOrder && Array.isArray(s.tuningOrder)) {
-                    // Merge: use saved order, then append any new built-ins not in the saved list
-                    var ordered = []
-                    for (var oi = 0; oi < s.tuningOrder.length; oi++) {
-                        if (tuningList.indexOf(s.tuningOrder[oi]) >= 0) {
-                            ordered.push(s.tuningOrder[oi])
-                        }
-                    }
-                    for (var ti = 0; ti < tuningList.length; ti++) {
-                        if (ordered.indexOf(tuningList[ti]) < 0) {
-                            ordered.push(tuningList[ti])
-                        }
-                    }
-                    tuningList = ordered
-                }
-
-                // Restore voicing calculator constraints
-                if (s.calcMaxFret !== undefined) calcMaxFret = s.calcMaxFret
-                if (s.calcMaxStretch !== undefined) calcMaxStretch = s.calcMaxStretch
-                if (s.calcAllowOpen !== undefined) calcAllowOpen = s.calcAllowOpen
-                if (s.calcRootInBass !== undefined) calcRootInBass = s.calcRootInBass
-                if (s.calcMinNotes !== undefined) calcMinNotes = s.calcMinNotes
-                if (s.calcMaxMuted !== undefined) calcMaxMuted = s.calcMaxMuted
-                if (s.calcMaxPerQuality !== undefined) calcMaxPerQuality = s.calcMaxPerQuality
-
-                console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
+                console.log("Restored " + s.customTunings.length + " custom tuning(s)")
             }
+            // Restore tuning order (if user reordered)
+            if (s.tuningOrder.length > 0) {
+                tuningList = DataCache.mergeTuningOrder(s.tuningOrder, tuningList)
+            }
+            // Restore voicing calculator constraints
+            calcMaxFret = s.calcMaxFret
+            calcMaxStretch = s.calcMaxStretch
+            calcAllowOpen = s.calcAllowOpen
+            calcRootInBass = s.calcRootInBass
+            calcMinNotes = s.calcMinNotes
+            calcMaxMuted = s.calcMaxMuted
+            calcMaxPerQuality = s.calcMaxPerQuality
+            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
         } catch (e) {
             console.log("No saved settings found, using defaults")
         }
-    }
-
-    // Build the custom tunings list (non-built-in tunings) for persistence
-    function getCustomTuningsList() {
-        var customs = []
-        for (var i = 0; i < tuningList.length; i++) {
-            var slug = tuningList[i]
-            if (builtInTunings.indexOf(slug) < 0) {
-                customs.push({ slug: slug, name: tuningLabels[slug] || slug, strings: tuningStringCounts[slug] || 6 })
-            }
-        }
-        return customs
     }
 
     function saveSettings() {
@@ -1355,7 +1103,7 @@ MuseScore {
             voicingUrl: jsonUrl,
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
-            customTunings: getCustomTuningsList(),
+            customTunings: DataCache.getCustomTuningsList(tuningList, builtInTunings, tuningLabels, tuningStringCounts),
             tuningOrder: tuningList.slice(),
             calcMaxFret: calcMaxFret,
             calcMaxStretch: calcMaxStretch,
@@ -1365,7 +1113,7 @@ MuseScore {
             calcMaxMuted: calcMaxMuted,
             calcMaxPerQuality: calcMaxPerQuality,
         }
-        settingsFile.write(JSON.stringify(s, null, 2))
+        settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
     }
 
@@ -2364,47 +2112,17 @@ MuseScore {
     }
 
     function applyFilters() {
-        // Use the smaller of tuning string count and context string count as ceiling
-        var maxStrings = tuningMaxStrings
-        if (filterContext && contextStringCounts[filterContext] !== undefined) {
-            var contextMax = contextStringCounts[filterContext]
-            if (contextMax < maxStrings) maxStrings = contextMax
-        }
-
-        var result = []
-        for (var i = 0; i < voicingsData.length; i++) {
-            var v = voicingsData[i]
-            if (filterContext && v.context !== filterContext) continue
-            if (filterCategory && v.category !== filterCategory) continue
-            // Quartal voicings work over any chord quality (stacked 4ths
-            // serve multiple harmonic functions), so they always pass
-            // the quality filter.
-            if (filterQuality && v.chord_quality !== filterQuality
-                && v.chord_quality !== "quartal") continue
-
-            // Filter by string count — context string count is the ceiling
-            var voicingStrings = v.strings || 6
-            if (voicingStrings > maxStrings) continue
-
-            if (searchText) {
-                var q = searchText.toLowerCase()
-                var match = v.name.toLowerCase().indexOf(q) >= 0
-                    || v.chord_quality.toLowerCase().indexOf(q) >= 0
-                    || (v.tags && v.tags.join(" ").toLowerCase().indexOf(q) >= 0)
-                if (!match) continue
-            }
-            result.push(v)
-        }
-
-        // Sort by proximity to last inserted voicing
-        if (sortByProximity && lastInsertedVoicing) {
-            var ref = lastInsertedVoicing
-            result.sort(function(a, b) {
-                return voicingDistance(ref, a) - voicingDistance(ref, b)
-            })
-        }
-
-        filteredData = result
+        filteredData = FilterEngine.applyFilters(voicingsData, {
+            filterContext: filterContext,
+            filterCategory: filterCategory,
+            filterQuality: filterQuality,
+            searchText: searchText,
+            maxStrings: tuningMaxStrings,
+            contextStringCounts: contextStringCounts,
+            sortByProximity: sortByProximity,
+            lastInsertedVoicing: lastInsertedVoicing,
+            distanceFn: MelodyEngine.voicingDistance
+        })
     }
 
     // === Voicing insertion ===

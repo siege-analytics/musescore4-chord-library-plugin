@@ -23,6 +23,9 @@ copy_sources() {
     cp "$REPO/plugin/model/VoicingCalculator.js" "$DEST/model/VoicingCalculator.js"
     cp "$REPO/plugin/model/ReharmonizationEngine.js" "$DEST/model/ReharmonizationEngine.js"
     cp "$REPO/plugin/model/ChordScales.js" "$DEST/model/ChordScales.js"
+    cp "$REPO/plugin/model/ChordSelector.js" "$DEST/model/ChordSelector.js"
+    cp "$REPO/plugin/model/FilterEngine.js" "$DEST/model/FilterEngine.js"
+    cp "$REPO/plugin/model/DataCache.js" "$DEST/model/DataCache.js"
 
     # Assets
     cp "$REPO/plugin/thumbnail.svg" "$DEST/thumbnail.svg"
