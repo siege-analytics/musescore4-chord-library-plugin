@@ -2,7 +2,8 @@
 // Extracted from ChordLibrary.qml (Phase 1 decomposition).
 // All functions are pure — they take inputs and return results.
 
-.pragma library
+// Note: NOT .pragma library — runs in QML component context to avoid
+// cross-boundary issues with callback functions and QML property access.
 
 // Quality string normalisation table.
 // Maps common chord symbol suffixes to canonical quality IDs.
@@ -150,13 +151,13 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         else if (b.category === "drop2") scoreB += 5
         if (melodyTarget >= 0 && opts.topNoteFn) {
             var melodyBonus = opts.melodyLocked ? 500 : 200
-            if (opts.topNoteFn(a, targetRoot) === melodyTarget) scoreA += melodyBonus
-            if (opts.topNoteFn(b, targetRoot) === melodyTarget) scoreB += melodyBonus
+            if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
+            if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
         }
         if (bassTarget >= 0 && opts.bassNoteFn) {
             var bassBonus = opts.bassLocked ? 500 : 250
-            if (opts.bassNoteFn(a, targetRoot) === bassTarget) scoreA += bassBonus
-            if (opts.bassNoteFn(b, targetRoot) === bassTarget) scoreB += bassBonus
+            if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
+            if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
         }
         if (ref && opts.distanceFn) {
             scoreA -= opts.distanceFn(ref, a) * 2
@@ -216,13 +217,13 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         else if (b.category === "drop2") scoreB += 5
         if (melodyTarget >= 0 && opts.topNoteFn) {
             var melodyBonus = opts.melodyLocked ? 500 : 200
-            if (opts.topNoteFn(a, targetRoot) === melodyTarget) scoreA += melodyBonus
-            if (opts.topNoteFn(b, targetRoot) === melodyTarget) scoreB += melodyBonus
+            if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
+            if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
         }
         if (bassTarget >= 0 && opts.bassNoteFn) {
             var bassBonus = opts.bassLocked ? 500 : 250
-            if (opts.bassNoteFn(a, targetRoot) === bassTarget) scoreA += bassBonus
-            if (opts.bassNoteFn(b, targetRoot) === bassTarget) scoreB += bassBonus
+            if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
+            if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
         }
         if (ref && opts.distanceFn) {
             scoreA -= opts.distanceFn(ref, a) * 2

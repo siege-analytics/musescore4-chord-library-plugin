@@ -379,7 +379,7 @@ MuseScore {
     }
 
     // Build the options object for ChordSelector functions.
-    // Bundles current QML state + MelodyEngine callbacks for the .pragma library module.
+    // Passes direct function references (not closures) to avoid QML/JS boundary issues.
     function _selectorOpts(melodyMidi, bassMidi) {
         return {
             maxStrings: tuningMaxStrings,
@@ -391,9 +391,10 @@ MuseScore {
             melodyLocked: _melodyLocked,
             bassLocked: _bassLocked,
             lastInsertedVoicing: lastInsertedVoicing,
-            topNoteFn: function(v, r) { return MelodyEngine.voicingTopNoteSemitone(v, r, Transposer.SEMITONE_MAP) },
-            bassNoteFn: function(v, r) { return MelodyEngine.voicingBassNoteSemitone(v, r, Transposer.SEMITONE_MAP) },
-            distanceFn: MelodyEngine.voicingDistance
+            topNoteFn: MelodyEngine.voicingTopNoteSemitone,
+            bassNoteFn: MelodyEngine.voicingBassNoteSemitone,
+            distanceFn: MelodyEngine.voicingDistance,
+            semitoneMap: Transposer.SEMITONE_MAP
         }
     }
 

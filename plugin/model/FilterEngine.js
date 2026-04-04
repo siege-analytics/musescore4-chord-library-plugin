@@ -2,7 +2,8 @@
 // Extracted from ChordLibrary.qml (Phase 1 decomposition).
 // All functions are pure — they take inputs and return results.
 
-.pragma library
+// Note: NOT .pragma library — runs in QML component context to avoid
+// cross-boundary issues with callback functions.
 
 // Rebuild the dynamic filter lists from the current voicing data.
 // Returns { contextList, categoryList, qualityList } with "All ..." sentinels.

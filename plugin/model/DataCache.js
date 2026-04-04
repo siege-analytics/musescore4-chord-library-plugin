@@ -2,7 +2,8 @@
 // Extracted from ChordLibrary.qml (Phase 1 decomposition).
 // Handles parsing and serialisation only — FileIO stays in QML.
 
-.pragma library
+// Note: NOT .pragma library — runs in QML component context for
+// consistent object handling across QML/JS boundary.
 
 // Parse a voicing cache file. Returns the voicings array, or null on failure.
 function parseCache(rawJson) {
