@@ -162,7 +162,18 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         if (ref && opts.distanceFn) {
             scoreA -= opts.distanceFn(ref, a) * 2
             scoreB -= opts.distanceFn(ref, b) * 2
+            // T-022: Penalize consecutive same-shape voicings (same category + fret)
+            if (ref.category === a.category && ref.fret_number === a.fret_number) scoreA -= 15
+            if (ref.category === b.category && ref.fret_number === b.fret_number) scoreB -= 15
         }
+        // T-022: Penalize excessive mutes (prefer fuller voicings)
+        scoreA -= (a.mutes ? a.mutes.length : 0) * 5
+        scoreB -= (b.mutes ? b.mutes.length : 0) * 5
+        // T-022: Register preference — prefer mid-register voicings (frets 3-7)
+        var fretA = a.fret_number || 0
+        var fretB = b.fret_number || 0
+        if (fretA >= 3 && fretA <= 7) scoreA += 5
+        if (fretB >= 3 && fretB <= 7) scoreB += 5
         return scoreB - scoreA
     })
     return candidates[0]
@@ -228,7 +239,15 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         if (ref && opts.distanceFn) {
             scoreA -= opts.distanceFn(ref, a) * 2
             scoreB -= opts.distanceFn(ref, b) * 2
+            if (ref.category === a.category && ref.fret_number === a.fret_number) scoreA -= 15
+            if (ref.category === b.category && ref.fret_number === b.fret_number) scoreB -= 15
         }
+        scoreA -= (a.mutes ? a.mutes.length : 0) * 5
+        scoreB -= (b.mutes ? b.mutes.length : 0) * 5
+        var fretA = a.fret_number || 0
+        var fretB = b.fret_number || 0
+        if (fretA >= 3 && fretA <= 7) scoreA += 5
+        if (fretB >= 3 && fretB <= 7) scoreB += 5
         return scoreB - scoreA
     })
     return candidates

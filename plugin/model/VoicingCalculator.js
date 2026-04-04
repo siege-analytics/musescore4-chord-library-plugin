@@ -170,14 +170,21 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             else if (strings[rs] > bassString) mutedBelow.push(strings[rs])
         }
 
+        // T-020: Fret-dependent stretch limits.
+        // Lower frets are physically wider, so maxStretch is harder to achieve.
+        // Scale: frets 1-3 reduce by 1, frets 4-6 nominal, frets 7+ add 1.
+        var effectiveStretch = cfg.maxStretch
+        if (bassFret >= 1 && bassFret <= 3) effectiveStretch = Math.max(2, cfg.maxStretch - 1)
+        else if (bassFret >= 7) effectiveStretch = cfg.maxStretch + 1
+
         // Fret range based on bass position
         var fretMin, fretMax
         if (bassFret > 0) {
-            fretMin = Math.max(0, bassFret - cfg.maxStretch)
-            fretMax = bassFret + cfg.maxStretch
+            fretMin = Math.max(0, bassFret - effectiveStretch)
+            fretMax = bassFret + effectiveStretch
         } else {
             fretMin = 0
-            fretMax = cfg.maxStretch + 1
+            fretMax = effectiveStretch + 1
         }
 
         // Filter options for remaining strings

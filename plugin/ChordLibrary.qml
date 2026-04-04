@@ -13,6 +13,7 @@ import "model/ChordScales.js" as ChordScales
 import "model/ChordSelector.js" as ChordSelector
 import "model/FilterEngine.js" as FilterEngine
 import "model/DataCache.js" as DataCache
+import "model/IRealParser.js" as IRealParser
 
 MuseScore {
     id: chordLibrary
@@ -3289,6 +3290,273 @@ MuseScore {
         return errors
     }
 
+    // === T-014: Arrangement Presets ===
+
+    FileIO {
+        id: presetFile
+    }
+
+    function savePreset(path) {
+        if (_batchChords.length === 0) {
+            statusMsg.text = "No walkthrough loaded — nothing to save"
+            statusMsg.color = theme.errorText
+            return
+        }
+        var preset = {
+            version: 1,
+            tuning: selectedTuning,
+            context: filterContext,
+            category: filterCategory,
+            chords: []
+        }
+        for (var i = 0; i < _batchChords.length; i++) {
+            var item = _batchChords[i]
+            preset.chords.push({
+                text: item.text,
+                root: item.root,
+                quality: item.quality,
+                voicingId: item.voicing ? item.voicing.id : null,
+                voicingName: item.voicing ? item.voicing.name : null,
+                bassMidi: item.bassMidi,
+                melodyMidi: item.melodyMidi,
+            })
+        }
+        presetFile.source = path
+        presetFile.write(JSON.stringify(preset, null, 2))
+        statusMsg.text = "Preset saved: " + preset.chords.length + " chords → " + path.split("/").pop()
+        statusMsg.color = theme.successText
+    }
+
+    function loadPreset(path) {
+        presetFile.source = path
+        try {
+            var raw = presetFile.read()
+            if (!raw || raw.length === 0) {
+                statusMsg.text = "Preset file empty or not found"
+                statusMsg.color = theme.errorText
+                return
+            }
+            var preset = JSON.parse(raw)
+            if (!preset.chords || preset.chords.length === 0) {
+                statusMsg.text = "No chords in preset file"
+                statusMsg.color = theme.errorText
+                return
+            }
+
+            // Build voicing ID lookup for fast matching
+            var idLookup = {}
+            for (var v = 0; v < voicingsData.length; v++) {
+                idLookup[voicingsData[v].id] = voicingsData[v]
+            }
+
+            var chords = []
+            var matched = 0, fallback = 0
+            for (var i = 0; i < preset.chords.length; i++) {
+                var pc = preset.chords[i]
+                var voicing = null
+
+                // Try exact ID match first
+                if (pc.voicingId && idLookup[pc.voicingId]) {
+                    voicing = idLookup[pc.voicingId]
+                    matched++
+                } else {
+                    // Fall back to findBestVoicing
+                    voicing = findBestVoicing(pc.root, pc.quality, pc.melodyMidi, pc.bassMidi)
+                    fallback++
+                }
+
+                if (voicing) {
+                    chords.push({
+                        text: pc.text,
+                        root: pc.root,
+                        quality: pc.quality,
+                        voicing: voicing,
+                        melodyMidi: pc.melodyMidi || -1,
+                        bassMidi: pc.bassMidi || -1,
+                        tick: 0,
+                        ambiguous: false,
+                    })
+                }
+            }
+
+            if (chords.length === 0) {
+                statusMsg.text = "No voicings matched for this preset"
+                statusMsg.color = theme.errorText
+                return
+            }
+
+            _batchChords = chords
+            _batchIndex = 0
+            batchTotal = chords.length
+            batchQueue = [1]
+            batchShowNext()
+
+            statusMsg.text = "Loaded preset: " + chords.length + " chords (" + matched + " exact, " + fallback + " re-matched)"
+            statusMsg.color = theme.successText
+        } catch (e) {
+            statusMsg.text = "Failed to load preset: " + e
+            statusMsg.color = theme.errorText
+        }
+    }
+
+    // === T-010: iReal Pro Import ===
+
+    function importIRealPro(input) {
+        var chords
+        if (input.indexOf("irealb") === 0) {
+            var parsed = IRealParser.parseUrl(input)
+            if (!parsed || !parsed.chords || parsed.chords.length === 0) {
+                statusMsg.text = "Could not parse iReal Pro URL"
+                statusMsg.color = theme.errorText
+                return
+            }
+            chords = parsed.chords
+            statusMsg.text = "Parsed: " + (parsed.title || "Untitled") + " — " + chords.length + " chords"
+        } else {
+            // Plain text chord chart
+            chords = IRealParser.parsePlainText(input)
+            if (!chords || chords.length === 0) {
+                statusMsg.text = "No chords found in text"
+                statusMsg.color = theme.errorText
+                return
+            }
+        }
+
+        // Build batch chords with voicing selection
+        var batchItems = []
+        for (var i = 0; i < chords.length; i++) {
+            var c = chords[i]
+            var bassMidi = -1
+            if (c.slashBass) {
+                bassMidi = Transposer.SEMITONE_MAP[c.slashBass]
+                if (bassMidi === undefined) bassMidi = -1
+            }
+            if (bassMidi < 0) {
+                bassMidi = MelodyEngine.suggestBassNote(c.root, c.quality, Transposer.SEMITONE_MAP)
+            }
+            var voicing = findBestVoicing(c.root, c.quality, -1, bassMidi)
+            if (voicing) {
+                batchItems.push({
+                    text: c.text,
+                    root: c.root,
+                    quality: c.quality,
+                    voicing: voicing,
+                    melodyMidi: -1,
+                    bassMidi: bassMidi,
+                    tick: 0,
+                    ambiguous: false,
+                })
+            }
+        }
+
+        if (batchItems.length === 0) {
+            statusMsg.text = "No voicings found for parsed chords"
+            statusMsg.color = theme.errorText
+            return
+        }
+
+        _batchChords = batchItems
+        _batchIndex = 0
+        batchTotal = batchItems.length
+        batchQueue = [1]
+        batchShowNext()
+
+        statusMsg.text = "Loaded " + batchItems.length + " chords from import"
+        statusMsg.color = theme.successText
+    }
+
+    // === T-015: Voicing Comparison ===
+
+    property var compareVoicings: []  // up to 3 voicings for side-by-side comparison
+    property bool showComparison: false
+
+    function addToComparison(voicing) {
+        if (compareVoicings.length >= 3) {
+            statusMsg.text = "Comparison full (max 3) — clear first"
+            statusMsg.color = theme.textMuted
+            return
+        }
+        // Check for duplicates
+        for (var i = 0; i < compareVoicings.length; i++) {
+            if (compareVoicings[i].id === voicing.id) {
+                statusMsg.text = "Already in comparison"
+                statusMsg.color = theme.textMuted
+                return
+            }
+        }
+        var updated = compareVoicings.slice()
+        updated.push(voicing)
+        compareVoicings = updated
+        showComparison = true
+        statusMsg.text = "Added to comparison (" + compareVoicings.length + "/3)"
+        statusMsg.color = theme.successText
+    }
+
+    function clearComparison() {
+        compareVoicings = []
+        showComparison = false
+    }
+
+    // === T-021: Fingering Suggestions ===
+    // Generate left-hand fingering from voicing geometry.
+    // Uses simple heuristic: lowest fretted note → index finger,
+    // higher frets assigned ascending (middle, ring, pinky).
+
+    function suggestFingering(voicing) {
+        if (!voicing || !voicing.dots || voicing.dots.length === 0) return []
+
+        // Collect fretted notes, sorted by fret position (low to high)
+        var fretted = []
+        for (var i = 0; i < voicing.dots.length; i++) {
+            var d = voicing.dots[i]
+            var absFret = voicing.fret_number + (d.fret - 1)
+            if (absFret > 0) {  // skip open strings (fret 0)
+                fretted.push({ string: d.string, fret: absFret, relFret: d.fret })
+            }
+        }
+        fretted.sort(function(a, b) {
+            if (a.fret !== b.fret) return a.fret - b.fret
+            return b.string - a.string  // lower strings first at same fret
+        })
+
+        // Assign fingers: 1=index, 2=middle, 3=ring, 4=pinky
+        // If all notes on same fret → barre (all finger 1)
+        var allSameFret = fretted.length > 0
+        for (var j = 1; j < fretted.length; j++) {
+            if (fretted[j].fret !== fretted[0].fret) { allSameFret = false; break }
+        }
+        if (allSameFret) {
+            var barreResult = []
+            for (var b = 0; b < fretted.length; b++) {
+                barreResult.push({ string: fretted[b].string, finger: 1 })
+            }
+            return barreResult
+        }
+
+        // Map fret positions to finger numbers
+        var fretToFinger = {}
+        var fingerNum = 1
+        var lastFret = -1
+        for (var k = 0; k < fretted.length; k++) {
+            if (fretted[k].fret !== lastFret) {
+                if (fingerNum <= 4) {
+                    fretToFinger[fretted[k].fret] = fingerNum
+                    fingerNum++
+                    lastFret = fretted[k].fret
+                }
+            }
+        }
+
+        var result = []
+        for (var m = 0; m < fretted.length; m++) {
+            result.push({
+                string: fretted[m].string,
+                finger: fretToFinger[fretted[m].fret] || 4
+            })
+        }
+        return result
+    }
+
     // === UI ===
 
     ColumnLayout {
@@ -3746,6 +4014,98 @@ MuseScore {
                     font.bold: true
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                // --- T-010: iReal Pro / Text Import ---
+                Label {
+                    text: "IMPORT CHORD CHART"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Paste an iReal Pro URL or type chords (space/line separated):"
+                    font.pixelSize: 11
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                TextArea {
+                    id: irealInput
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 80
+                    font.pixelSize: 11
+                    placeholderText: "irealb://SongTitle=Composer=... or Dm7 G7 Cmaj7 ..."
+                    wrapMode: TextEdit.Wrap
+                    selectByMouse: true
+                }
+
+                Button {
+                    text: "Import & Voice"
+                    onClicked: importIRealPro(irealInput.text.trim())
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                // --- T-014: Arrangement Presets ---
+                Label {
+                    text: "ARRANGEMENT PRESETS"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Save/load walkthrough voicing choices:"
+                    font.pixelSize: 11
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 4
+
+                    TextField {
+                        id: presetPathField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "/path/to/preset.json"
+                        selectByMouse: true
+                    }
+                }
+
+                RowLayout {
+                    spacing: 6
+
+                    Button {
+                        text: "Save Preset"
+                        enabled: _batchChords.length > 0
+                        onClicked: {
+                            var path = presetPathField.text.trim()
+                            if (!path) {
+                                path = Qt.resolvedUrl("preset-" + Date.now() + ".json").toString().replace("file://", "")
+                                presetPathField.text = path
+                            }
+                            savePreset(path)
+                        }
+                    }
+
+                    Button {
+                        text: "Load Preset"
+                        onClicked: {
+                            var path = presetPathField.text.trim()
+                            if (!path) {
+                                statusMsg.text = "Enter a preset file path"
+                                statusMsg.color = theme.errorText
+                                return
+                            }
+                            loadPreset(path)
+                        }
+                    }
                 }
             }
         }
@@ -4999,6 +5359,15 @@ MuseScore {
                                 implicitWidth: 22
                                 onClicked: playVoicing(v, "arp")
                             }
+
+                            Button {
+                                text: "\u21CB"  // compare arrows
+                                font.pixelSize: 11
+                                implicitWidth: 22
+                                ToolTip.visible: hovered
+                                ToolTip.text: "Compare"
+                                onClicked: addToComparison(v)
+                            }
                         }
                     }
                 }
@@ -5010,8 +5379,82 @@ MuseScore {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
             font.pixelSize: 10
-            
+
             text: ""
+        }
+
+        // T-015: Voicing Comparison Panel
+        Rectangle {
+            visible: showComparison && currentTab === 0
+            Layout.fillWidth: true
+            Layout.preferredHeight: 100
+            color: theme.consoleBg
+            radius: 4
+            border.color: theme.divider
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 6
+
+                Repeater {
+                    model: compareVoicings.length
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        radius: 4
+                        color: theme.cardBackground
+                        border.color: theme.cardBorder
+
+                        property var cv: compareVoicings[index] || {}
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 4
+                            spacing: 2
+
+                            Label {
+                                text: cv.name || ""
+                                font.pixelSize: 10
+                                font.bold: true
+                                elide: Text.ElideRight
+                                Layout.fillWidth: true
+                            }
+                            Label {
+                                text: (cv.intervals || []).join(" ")
+                                font.pixelSize: 9
+                                Layout.fillWidth: true
+                            }
+                            Label {
+                                text: "Fret " + (cv.fret_number || "?") + "  |  " + (cv.notes || []).join(" ")
+                                font.pixelSize: 9
+                                color: theme.textMuted
+                                Layout.fillWidth: true
+                            }
+                            Label {
+                                text: {
+                                    var f = suggestFingering(cv)
+                                    if (f.length === 0) return ""
+                                    var parts = []
+                                    for (var i = 0; i < f.length; i++) parts.push("S" + f[i].string + ":" + f[i].finger)
+                                    return "Fingering: " + parts.join(" ")
+                                }
+                                font.pixelSize: 8
+                                color: theme.textFaint
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
+                }
+
+                Button {
+                    text: "Clear"
+                    font.pixelSize: 9
+                    implicitWidth: 40
+                    onClicked: clearComparison()
+                }
+            }
         }
     }
 

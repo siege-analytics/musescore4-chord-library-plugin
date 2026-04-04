@@ -12,6 +12,7 @@ Rectangle {
 
     property var voicing: ({})
     signal doubleClicked(var voicing)
+    signal compareClicked(var voicing)
 
     MouseArea {
         id: mouseArea
@@ -147,6 +148,21 @@ Rectangle {
                 Layout.fillWidth: true
             }
         }
+    }
+
+    // Compare button (visible on hover)
+    Button {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.margins: 2
+        text: "⇔"
+        font.pixelSize: 10
+        implicitWidth: 22
+        implicitHeight: 18
+        visible: mouseArea.containsMouse
+        ToolTip.visible: hovered
+        ToolTip.text: "Add to comparison"
+        onClicked: card.compareClicked(card.voicing)
     }
 
     Connections {

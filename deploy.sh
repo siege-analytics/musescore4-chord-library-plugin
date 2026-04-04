@@ -26,6 +26,7 @@ copy_sources() {
     cp "$REPO/plugin/model/ChordSelector.js" "$DEST/model/ChordSelector.js"
     cp "$REPO/plugin/model/FilterEngine.js" "$DEST/model/FilterEngine.js"
     cp "$REPO/plugin/model/DataCache.js" "$DEST/model/DataCache.js"
+    cp "$REPO/plugin/model/IRealParser.js" "$DEST/model/IRealParser.js"
 
     # Assets
     cp "$REPO/plugin/thumbnail.svg" "$DEST/thumbnail.svg"

@@ -9,6 +9,7 @@ ListView {
 
     property var voicings: []
     signal voicingSelected(var voicing)
+    signal voicingCompare(var voicing)
 
     model: voicings.length
 
@@ -17,6 +18,9 @@ ListView {
         voicing: voicingGrid.voicings[index] || {}
         onDoubleClicked: function(v) {
             voicingGrid.voicingSelected(v)
+        }
+        onCompareClicked: function(v) {
+            voicingGrid.voicingCompare(v)
         }
     }
 
