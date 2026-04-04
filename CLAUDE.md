@@ -159,6 +159,29 @@ Does MuseScore 4's plugin API expose fretboard diagram dot positions programmati
 - [jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — MuseScore arrangements
 - Both repos under the siege-analytics GitHub org "Music" project board
 
+## Session Notes (2026-04-03)
+
+### Mistakes to Avoid
+- **QML ComboBox cascades**: Never use `onCurrentTextChanged` or `onCurrentIndexChanged` on ComboBoxes with dynamic models. Use `onActivated` (user clicks only). Model changes trigger binding recalculations that fire these handlers spuriously, causing infinite cascades and UI freezes.
+- **QML property mutation**: Arrays and objects modified in place (`.push()`, `obj[key] = val`) don't trigger QML binding updates. Always build a new object/array and assign it.
+- **Per-quality voicing cap across roots**: Capping voicings globally across all 12 roots starves uncommon roots (F, Bb, Db). Always use `capPerRoot` to distribute evenly.
+- **MuseScore title frame**: The MS4 plugin API cannot add elements to the title frame (VBox). `setMetaTag("subtitle")` sets metadata but doesn't create visible text. `Element.POET` creation fails. System text with offset is unreliable. Best approach: clipboard copy + manual subtitle.
+- **`removeElement()` doesn't exist** in MS4 plugin API. Don't try to remove annotations — update them in place instead.
+
+### Useful Patterns
+- **Cache calculated voicings** per tuning slug to avoid recalculating on every switch. Store in a property var object, rebuild (don't mutate) to trigger bindings.
+- **capPerRoot with diversity**: Three phases — (1) one voicing per top note, (2) one per note count, (3) one per category — then fill remaining slots by score. This ensures melody matching, shape variety, and type diversity.
+- **Bass string grouping**: Group voicings by lowest sounding string number. Users think in terms of "bass on string 6" not "voicing #114 of 200".
+- **Deploy + restart**: MuseScore caches QML aggressively. Always `./deploy.sh` then quit and relaunch MuseScore. No hot reload.
+
+### MuseScore 4 Plugin API Limitations
+- No title frame access (VBox/POET/SUBTITLE creation)
+- No `removeElement()` — can only update existing elements
+- `Align` enum doesn't exist — can't set text alignment
+- `setMetaTag()` sets metadata but doesn't create visual elements
+- System text anchors at beat 1 (after clef), not at page margin
+- `WorkerScript` (threading) not available — calculations block UI thread
+
 ---
 
-*Last updated: 2026-03-26*
+*Last updated: 2026-04-03*
