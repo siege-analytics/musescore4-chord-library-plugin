@@ -293,7 +293,9 @@ ColumnLayout {
                         return items
                     }
                     currentIndex: Math.max(0, bassStringList.indexOf(selectedBassString))
-                    onCurrentIndexChanged: {
+                    // T-002: use onActivated (user clicks only), not onCurrentIndexChanged
+                    // which fires on model rebuilds and causes unwanted voicing switches
+                    onActivated: {
                         if (currentIndex >= 0 && currentIndex < bassStringList.length) {
                             walkthroughPanel.bassStringClicked(bassStringList[currentIndex])
                         }

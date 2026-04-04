@@ -276,6 +276,16 @@ MuseScore {
     property var categoryList: ["All Types"]
     property var qualityList: ["All Qualities"]
 
+    // Display names for context combos (shows full labels in dropdown)
+    property var contextDisplayList: {
+        var result = []
+        for (var i = 0; i < contextList.length; i++) {
+            var code = contextList[i]
+            result.push(code === "All Contexts" ? code : (contextLabels[code] || code))
+        }
+        return result
+    }
+
     // Context display names — loaded from config/contexts.json, extensible
     property var contextLabels: ({})
     property var contextLabelsShort: ({})
@@ -1862,6 +1872,12 @@ MuseScore {
                         rebuildFilterLists()
                         applyFilters()
                         saveToCache()
+                        // T-001: trigger tuning-specific voicings now that data is loaded.
+                        // loadTuningVoicings() in onRun ran before this async callback,
+                        // so non-standard tunings need a second call here.
+                        if (selectedTuning !== "standard") {
+                            loadTuningVoicings()
+                        }
                         statusMsg.text = "Loaded " + voicingsData.length + " voicings"
                         statusMsg.color = theme.successText
                     } catch (e) {
@@ -4573,16 +4589,16 @@ MuseScore {
 
             ComboBox {
                 id: contextCombo
-                model: contextList
+                model: contextDisplayList
                 Layout.fillWidth: true
-                displayText: {
-                    if (currentText === "All Contexts") return currentText
-                    return contextLabels[currentText] || currentText
-                }
+                currentIndex: Math.max(0, contextList.indexOf(filterContext || "All Contexts"))
                 // onActivated fires only on user clicks, not model/binding changes
                 onActivated: {
-                    filterContext = currentText === "All Contexts" ? "" : currentText
-                    applyFilters()
+                    if (currentIndex >= 0 && currentIndex < contextList.length) {
+                        var code = contextList[currentIndex]
+                        filterContext = code === "All Contexts" ? "" : code
+                        applyFilters()
+                    }
                 }
             }
             ComboBox {
