@@ -173,6 +173,15 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         var fretB = b.fret_number || 0
         if (fretA >= 3 && fretA <= 7) scoreA += 5
         if (fretB >= 3 && fretB <= 7) scoreB += 5
+        // Difficulty penalty: prefer playable shapes (#105)
+        if (opts.difficultyFn) {
+            var dA = opts.difficultyFn(a)
+            var dB = opts.difficultyFn(b)
+            if (dA.tier === "expert") scoreA -= 30
+            else if (dA.tier === "advanced") scoreA -= 10
+            if (dB.tier === "expert") scoreB -= 30
+            else if (dB.tier === "advanced") scoreB -= 10
+        }
         return scoreB - scoreA
     })
     return candidates[0]
