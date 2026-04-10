@@ -354,7 +354,7 @@ def main():
                         help="JSON file of extracted chords (from plugin)")
     parser.add_argument("--context", default="CV6", help="Context to check coverage for")
     parser.add_argument("-o", "--output", type=Path, help="Save report as JSON")
-    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     args = parser.parse_args()
 
     if not args.score and not args.chords:

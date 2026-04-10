@@ -1,9 +1,8 @@
+.pragma library
 // DataCache.js — Settings and voicing cache serialisation.
 // Extracted from ChordLibrary.qml (Phase 1 decomposition).
 // Handles parsing and serialisation only — FileIO stays in QML.
-
-// Note: NOT .pragma library — runs in QML component context for
-// consistent object handling across QML/JS boundary.
+// .pragma library: safe — no QML callbacks received.
 
 // Parse a voicing cache file. Returns the voicings array, or null on failure.
 function parseCache(rawJson) {

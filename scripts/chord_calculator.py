@@ -349,7 +349,7 @@ def main():
     )
     parser.add_argument(
         "--tuning", type=Path,
-        default=REPO_ROOT / "config" / "tunings" / "standard.json",
+        default=REPO_ROOT / "plugin" / "tunings" / "standard.json",
     )
     parser.add_argument("--root", default=None, help="Single root (e.g., D)")
     parser.add_argument("--max-fret", type=int, default=12)

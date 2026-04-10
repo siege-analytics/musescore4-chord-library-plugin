@@ -1,6 +1,8 @@
+.pragma library
 // HygieneEngine.js — Library hygiene audit: duplicate detection,
 // enharmonic equivalents, cross-context shape matching.
 // Extracted from ChordLibrary.qml (Phase 2 decomposition).
+// .pragma library: safe — no QML callbacks received.
 
 // Check if a finding key is in the ignore list.
 function isIgnored(key, ignoreList) {

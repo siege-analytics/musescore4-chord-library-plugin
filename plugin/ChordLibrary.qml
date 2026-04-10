@@ -110,7 +110,7 @@ MuseScore {
 
     FileIO {
         id: localCacheFile
-        source: Qt.resolvedUrl("voicings-cache.json")
+        source: Qt.resolvedUrl("data/voicings.json")
     }
 
     FileIO {
@@ -127,11 +127,15 @@ MuseScore {
 
     FileIO {
         id: contextsConfigFile
-        source: Qt.resolvedUrl("../config/contexts.json")
+        source: Qt.resolvedUrl("config/contexts.json")
     }
 
     FileIO {
         id: tuningFile
+    }
+
+    FileIO {
+        id: tuningCacheFile
     }
 
     FileIO {
@@ -140,13 +144,12 @@ MuseScore {
     }
 
     // Default settings
-    property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
+    property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
     property string selectedTuning: "standard"  // matches config/tunings/<name>.json
     property var tuningList: [
         "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
-        "baritone", "ukulele", "ukulele-low-g", "mandolin", "banjo-open-g",
-        "bass-4string", "bass-5string"
+        "baritone"
     ]
     property var tuningLabels: {
         "standard": "Standard 6-String",
@@ -154,20 +157,12 @@ MuseScore {
         "7string-low-b": "7-String Low B",
         "dadgad": "DADGAD",
         "all-fourths": "All Fourths",
-        "baritone": "Baritone B (B-E-A-D-F#-B)",
-        "ukulele": "Ukulele (Standard)",
-        "ukulele-low-g": "Ukulele (Low G)",
-        "mandolin": "Mandolin",
-        "banjo-open-g": "Banjo (Open G)",
-        "bass-4string": "Bass (4-String)",
-        "bass-5string": "Bass (5-String)"
+        "baritone": "Baritone B (B-E-A-D-F#-B)"
     }
     // String count per tuning — used to filter tuning combo by context
     property var tuningStringCounts: {
         "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
-        "dadgad": 6, "all-fourths": 6, "baritone": 6,
-        "ukulele": 4, "ukulele-low-g": 4, "mandolin": 4,
-        "banjo-open-g": 5, "bass-4string": 4, "bass-5string": 5
+        "dadgad": 6, "all-fourths": 6, "baritone": 6
     }
     // Filtered tuning list — shows tunings compatible with the context's string count.
     // Exact match preferred; if no exact match includes the current tuning, show all compatible (<=).
@@ -1770,6 +1765,14 @@ MuseScore {
     property var _tuningVoicingCache: ({})
     property bool _loadingTuningVoicings: false  // re-entry guard
 
+    // Build a cache key from current calculator constraints.
+    // If user changes any constraint, cached voicings are invalidated.
+    function _tuningCacheKey() {
+        return "v2|" + calcMaxFret + "|" + calcMaxStretch + "|"
+            + (calcAllowOpen ? 1 : 0) + "|" + (calcRootInBass ? 1 : 0) + "|"
+            + calcMinNotes + "|" + calcMaxMuted + "|" + calcMaxPerQuality
+    }
+
     // Generate voicings for the current tuning using the runtime calculator.
     // For standard tuning, uses the pre-built 820-voicing library (much richer).
     // For all other tunings, calculates (or loads from cache) voicings on the fly.
@@ -1804,17 +1807,52 @@ MuseScore {
             return
         }
 
-        // Non-standard tuning: check cache first, then calculate
+        // Non-standard tuning: check memory cache → disk cache → calculate
         var calculated
         if (_tuningVoicingCache[selectedTuning]) {
             calculated = _tuningVoicingCache[selectedTuning]
-            console.log("Loaded " + calculated.length + " cached voicings for " + selectedTuning)
+            console.log("Loaded " + calculated.length + " cached voicings for " + selectedTuning + " (memory)")
         } else {
-            console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
-            var constraints = calcConstraints()
-            calculated = VoicingCalculator.generateAll(tuningMidi, constraints)
-            if (calculated.length > 0) {
-                // Cache for instant switching later
+            // Try disk cache: tunings/<slug>-voicings.json
+            var cacheKey = _tuningCacheKey()
+            var diskCachePath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
+            tuningCacheFile.source = diskCachePath
+            try {
+                var raw = tuningCacheFile.read()
+                if (raw && raw.length > 2) {
+                    var diskData = JSON.parse(raw)
+                    if (diskData.cacheKey === cacheKey && diskData.voicings && diskData.voicings.length > 0) {
+                        calculated = diskData.voicings
+                        console.log("Loaded " + calculated.length + " cached voicings for " + selectedTuning + " (disk)")
+                    }
+                }
+            } catch (e) {
+                // No disk cache or stale — will recalculate
+            }
+
+            if (!calculated) {
+                console.log("Calculating voicings for tuning: " + selectedTuning + " ...")
+                var constraints = calcConstraints()
+                calculated = VoicingCalculator.generateAll(tuningMidi, constraints)
+                // Persist to disk for next startup
+                if (calculated.length > 0) {
+                    try {
+                        tuningCacheFile.source = diskCachePath
+                        tuningCacheFile.write(JSON.stringify({
+                            cacheKey: cacheKey,
+                            tuning: selectedTuning,
+                            count: calculated.length,
+                            voicings: calculated
+                        }))
+                        console.log("Saved " + calculated.length + " voicings to disk cache for " + selectedTuning)
+                    } catch (e) {
+                        console.log("Failed to write tuning cache: " + e)
+                    }
+                }
+            }
+
+            if (calculated && calculated.length > 0) {
+                // Also store in memory cache for instant switching
                 var cache = {}
                 for (var ck in _tuningVoicingCache) cache[ck] = _tuningVoicingCache[ck]
                 cache[selectedTuning] = calculated
@@ -2369,7 +2407,7 @@ MuseScore {
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
         var outDir = basePath.replace(/\/[^/]+$/, "")
         launchExport('python3 "' + pluginDir + '/scripts/export_gp5.py" --data "'
-            + pluginDir + '/voicings-cache.json" -o "' + outDir + '" 2>&1; open "' + outDir + '"')
+            + pluginDir + '/data/voicings.json" -o "' + outDir + '" 2>&1; open "' + outDir + '"')
     }
 
     function exportChordSheet() {
@@ -2381,7 +2419,7 @@ MuseScore {
 
     function _doExportChordSheet(outPath) {
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-        var dataPath = pluginDir + "/voicings-cache.json"
+        var dataPath = pluginDir + "/data/voicings.json"
 
         var filterArgs = ""
         if (selectedQuality && selectedQuality !== "All Qualities")
@@ -2406,7 +2444,7 @@ MuseScore {
         var basePath = exportPathField.text.trim().replace(/\.[^.]+$/, "")
         if (!basePath) basePath = homePath() + "/Documents/chord-library-diagrams"
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-        var dataPath = pluginDir + "/voicings-cache.json"
+        var dataPath = pluginDir + "/data/voicings.json"
 
         var filterArgs = ""
         if (selectedQuality && selectedQuality !== "All Qualities")
@@ -2430,7 +2468,7 @@ MuseScore {
         if (!outputExt) outputExt = "txt"
         var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
         var scriptPath = pluginDir + "/scripts/" + scriptName
-        var dataPath = pluginDir + "/voicings-cache.json"
+        var dataPath = pluginDir + "/data/voicings.json"
         var outputPath = pluginDir + "/tool-output." + outputExt
 
         // Write the tool config as JSON (FileIO can write .json reliably)
@@ -2894,7 +2932,7 @@ MuseScore {
             launchExport('cd "' + pluginDir + '"; python3 "' + pluginDir
                 + '/scripts/generate_fingering_sheet.py" --chords "' + chordsFile
                 + '" --context ' + ctx + catArg + ' --title "' + title
-                + '" --data "' + pluginDir + '/voicings-cache.json" -o "' + outPath
+                + '" --data "' + pluginDir + '/data/voicings.json" -o "' + outPath
                 + '" 2>&1; open "' + outPath + '"')
         })
     }
@@ -3045,10 +3083,15 @@ MuseScore {
                 return
             }
 
-            // Build voicing ID lookup for fast matching
+            // Build voicing ID lookup from both current and standard library
+            // so presets saved on one tuning can be loaded on another.
             var idLookup = {}
             for (var v = 0; v < voicingsData.length; v++) {
                 idLookup[voicingsData[v].id] = voicingsData[v]
+            }
+            for (var sv = 0; sv < standardVoicingsData.length; sv++) {
+                if (!idLookup[standardVoicingsData[sv].id])
+                    idLookup[standardVoicingsData[sv].id] = standardVoicingsData[sv]
             }
 
             var chords = []
@@ -3564,6 +3607,90 @@ MuseScore {
                 width: parent.width - 16
                 spacing: 12
 
+                // --- Initialize / Rebuild Voicings ---
+                Label {
+                    text: "VOICING DATA"
+                    font.pixelSize: 11
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "Current tuning: " + (tuningLabels[selectedTuning] || selectedTuning) + " (" + voicingsData.length + " voicings loaded)"
+                    font.pixelSize: 11
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    text: "If voicings aren't showing or you changed your tuning, click Rebuild to regenerate them."
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    color: theme.textSecondary
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 6
+
+                    Button {
+                        id: initButton
+                        text: "Rebuild Voicings"
+                        onClicked: {
+                            initButton.enabled = false
+                            initStatusLabel.text = "Calculating voicings for " + (tuningLabels[selectedTuning] || selectedTuning) + "..."
+                            initStatusLabel.color = theme.textSecondary
+                            initTimer.running = true
+                        }
+                    }
+
+                    Button {
+                        text: "Reset All Data"
+                        onClicked: {
+                            _tuningVoicingCache = {}
+                            standardVoicingsData = []
+                            usingTuningVoicings = false
+                            dataLoaded = false
+                            if (loadFromCache()) {
+                                loadTuningVoicings()
+                            }
+                            initStatusLabel.text = "Data reset. Loaded " + voicingsData.length + " voicings."
+                            initStatusLabel.color = theme.successText
+                        }
+                    }
+                }
+
+                Timer {
+                    id: initTimer
+                    interval: 50
+                    repeat: false
+                    onTriggered: {
+                        var diskPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
+                        tuningCacheFile.source = diskPath
+                        try { tuningCacheFile.write("") } catch(e) {}
+                        var cache = {}
+                        for (var ck in _tuningVoicingCache) {
+                            if (ck !== selectedTuning) cache[ck] = _tuningVoicingCache[ck]
+                        }
+                        _tuningVoicingCache = cache
+                        loadTuningVoicings()
+                        initStatusLabel.text = "Done! " + voicingsData.length + " voicings ready for " + (tuningLabels[selectedTuning] || selectedTuning) + "."
+                        initStatusLabel.color = theme.successText
+                        initButton.enabled = true
+                    }
+                }
+
+                Label {
+                    id: initStatusLabel
+                    visible: text.length > 0
+                    font.pixelSize: 10
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                // --- Divider ---
+                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
                 // --- Voicing Source URL ---
                 Label {
                     text: "VOICING SOURCE URL"
@@ -3596,7 +3723,7 @@ MuseScore {
                     Button {
                         text: "Reset Default"
                         onClicked: {
-                            var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/data/voicings.json"
+                            var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
                             urlField.text = defaultUrl
                             jsonUrl = defaultUrl
                             dataLoaded = false

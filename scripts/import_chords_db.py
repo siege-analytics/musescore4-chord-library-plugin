@@ -244,7 +244,7 @@ def main():
     parser.add_argument("--merge", action="store_true",
                         help="Merge directly into voicings.json")
     parser.add_argument("--data", type=Path,
-                        default=REPO_ROOT / "data" / "voicings.json")
+                        default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     parser.add_argument("--root", default="C",
                         help="Only import chords with this root (default: C)")
     args = parser.parse_args()

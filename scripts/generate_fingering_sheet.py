@@ -275,7 +275,7 @@ def main():
     parser.add_argument("--context", default="CV6")
     parser.add_argument("--category")
     parser.add_argument("-o", "--output", type=Path, default=Path("fingering-sheet.pdf"))
-    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     args = parser.parse_args()
 
     with open(args.data) as f:

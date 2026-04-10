@@ -29,8 +29,8 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = REPO_ROOT / "scripts"
-DATA = REPO_ROOT / "data" / "voicings.json"
-TUNINGS_DIR = REPO_ROOT / "config" / "tunings"
+DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
+TUNINGS_DIR = REPO_ROOT / "plugin" / "tunings"
 PLUGIN_DIR = Path.home() / "Documents" / "MuseScore4" / "Plugins" / "chordlibrary"
 
 IS_MACOS = platform.system() == "Darwin"

@@ -33,7 +33,7 @@ from chord_calculator import (
     note_name,
 )
 
-TUNINGS_DIR = REPO_ROOT / "config" / "tunings"
+TUNINGS_DIR = REPO_ROOT / "plugin" / "tunings"
 
 # Interval display names for voicing naming
 INTERVAL_NAMES = {
@@ -166,7 +166,7 @@ def main():
         skip = {"standard.json", "7string-van-eps.json", "7string-low-b.json"}
         tuning_files = sorted(f for f in TUNINGS_DIR.glob("*.json") if f.name not in skip)
 
-        output_dir = args.output or REPO_ROOT / "data" / "tuning-libraries"
+        output_dir = args.output or REPO_ROOT / "plugin" / "data" / "tuning-libraries"
         output_dir.mkdir(exist_ok=True)
 
         for tf in tuning_files:
@@ -196,7 +196,7 @@ def main():
         if args.output:
             out_file = args.output
         else:
-            out_file = REPO_ROOT / "data" / f"{args.tuning.stem}-library.json"
+            out_file = REPO_ROOT / "plugin" / "data" / f"{args.tuning.stem}-library.json"
 
         with open(out_file, "w") as f:
             json.dump(library, f, indent=2, ensure_ascii=False)

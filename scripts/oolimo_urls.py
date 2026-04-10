@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_DATA = REPO_ROOT / "data" / "voicings.json"
+DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
 
 # Standard tuning MIDI values (same as validate.py)
 STANDARD_TUNING = {1: 64, 2: 59, 3: 55, 4: 50, 5: 45, 6: 40, 7: 33}

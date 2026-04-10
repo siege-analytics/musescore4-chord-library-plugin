@@ -2,8 +2,7 @@
 // Extracted from ChordLibrary.qml (Phase 1 decomposition).
 // All functions are pure — they take inputs and return results.
 
-// Note: NOT .pragma library — runs in QML component context to avoid
-// cross-boundary issues with callback functions and QML property access.
+// NOT .pragma library — receives topNoteFn/bassNoteFn/distanceFn callbacks.
 
 // Quality string normalisation table.
 // Maps common chord symbol suffixes to canonical quality IDs.

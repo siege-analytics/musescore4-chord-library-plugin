@@ -1,10 +1,10 @@
+.pragma library
 // IRealParser.js — Parse iReal Pro URLs into chord charts.
 // Decodes the obfuscated URL format and extracts chord symbols,
 // bar lines, section marks, and time signatures.
 //
 // Reference: pianosnake/ireal-reader, infojunkie/ireal-musicxml
-
-// Note: NOT .pragma library — runs in QML component context.
+// .pragma library: safe — no QML callbacks received.
 
 // iReal Pro quality string → plugin quality ID mapping
 var QUALITY_MAP = {

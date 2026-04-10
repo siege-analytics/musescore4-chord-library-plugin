@@ -18,7 +18,7 @@ from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DATA_FILE = REPO_ROOT / "data" / "voicings.json"
+DATA_FILE = REPO_ROOT / "plugin" / "data" / "voicings.json"
 
 
 def shape_fingerprint(v: dict) -> str:

@@ -22,8 +22,8 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCHEMA = REPO_ROOT / "schema" / "voicings.schema.json"
-DEFAULT_DATA = REPO_ROOT / "data" / "voicings.json"
-DEFAULT_TUNING = REPO_ROOT / "config" / "tunings" / "7string-van-eps.json"
+DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
+DEFAULT_TUNING = REPO_ROOT / "plugin" / "tunings" / "7string-van-eps.json"
 
 # Chromatic note names (using sharps and flats consistently)
 CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
@@ -117,8 +117,8 @@ def _resolve_tuning(
     if tuning_name in tuning_cache:
         return tuning_cache[tuning_name]
 
-    # Try to load from config/tunings/<name>.json
-    tuning_path = REPO_ROOT / "config" / "tunings" / f"{tuning_name}.json"
+    # Try to load from plugin/tunings/<name>.json
+    tuning_path = REPO_ROOT / "plugin" / "tunings" / f"{tuning_name}.json"
     if tuning_path.exists():
         loaded = _load_tuning(tuning_path)
         tuning_cache[tuning_name] = loaded

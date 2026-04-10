@@ -228,7 +228,7 @@ def main():
     parser.add_argument("--apply", action="store_true",
                         help="Write fingerings to voicings.json")
     parser.add_argument("--data", type=Path,
-                        default=REPO_ROOT / "data" / "voicings.json")
+                        default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     args = parser.parse_args()
 
     with open(args.data) as f:

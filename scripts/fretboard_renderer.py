@@ -290,7 +290,7 @@ def main():
     parser.add_argument("--no-title", action="store_true", help="Hide chord name")
     parser.add_argument("--show-notes", action="store_true", help="Show note names instead of intervals")
     parser.add_argument("-o", "--output", type=Path, default=Path("."), help="Output file or directory")
-    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     args = parser.parse_args()
 
     with open(args.data) as f:

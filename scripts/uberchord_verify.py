@@ -108,7 +108,7 @@ def parse_uberchord_name(chord_name: str) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description="Verify voicings against Uberchord API")
-    parser.add_argument("--data", type=Path, default=REPO_ROOT / "data" / "voicings.json")
+    parser.add_argument("--data", type=Path, default=REPO_ROOT / "plugin" / "data" / "voicings.json")
     parser.add_argument("--quality", help="Filter by quality")
     parser.add_argument("--context", help="Filter by context")
     parser.add_argument("--category", help="Filter by category")

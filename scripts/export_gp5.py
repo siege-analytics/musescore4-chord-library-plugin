@@ -23,7 +23,7 @@ except ImportError:
     sys.exit(1)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_DATA = REPO_ROOT / "data" / "voicings.json"
+DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
 
 ROOTS = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
 

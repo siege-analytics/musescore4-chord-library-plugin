@@ -21,8 +21,8 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_DATA = REPO_ROOT / "data" / "voicings.json"
-TUNINGS_DIR = REPO_ROOT / "config" / "tunings"
+DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
+TUNINGS_DIR = REPO_ROOT / "plugin" / "tunings"
 
 ROOTS = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
 

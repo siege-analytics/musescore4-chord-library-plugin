@@ -15,9 +15,9 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = REPO_ROOT / "scripts"
-DATA = REPO_ROOT / "data" / "voicings.json"
+DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
 SCHEMA = REPO_ROOT / "schema" / "voicings.schema.json"
-TUNINGS_DIR = REPO_ROOT / "config" / "tunings"
+TUNINGS_DIR = REPO_ROOT / "plugin" / "tunings"
 
 sys.path.insert(0, str(SCRIPTS))
 
@@ -478,3 +478,294 @@ class TestClipboard:
         )
         assert result.returncode != 0
         assert "windows only" in result.stdout.lower()
+
+
+# === Fingering Engine Tests ===
+#
+# These tests replicate the FingeringEngine.js algorithm in Python to verify
+# correctness against known voicing shapes. The JS module runs inside QML,
+# so we can't call it directly — we test the algorithm logic instead.
+
+class TestFingeringEngine:
+    """Tests for the constraint-based fingering algorithm (GitHub #91)."""
+
+    # -- Helpers that mirror FingeringEngine.js logic --
+
+    @staticmethod
+    def _split_adjacent(strings):
+        if not strings:
+            return []
+        s = sorted(strings)
+        groups = [[s[0]]]
+        for i in range(1, len(s)):
+            if s[i] - s[i - 1] == 1:
+                groups[-1].append(s[i])
+            else:
+                groups.append([s[i]])
+        return groups
+
+    @staticmethod
+    def _suggest(voicing):
+        """Pure-Python port of suggestFingering() from FingeringEngine.js."""
+        dots = voicing.get("dots", [])
+        fret_number = voicing.get("fret_number", 1)
+        num_strings = voicing.get("strings", 6)
+        mutes = voicing.get("mutes", [])
+
+        fretted = []
+        for d in dots:
+            af = fret_number + (d["fret"] - 1)
+            if af > 0:
+                fretted.append({"string": d["string"], "fret": af})
+        if not fretted:
+            return []
+
+        min_fret = min(n["fret"] for n in fretted)
+        at_min = [n["string"] for n in fretted if n["fret"] == min_fret]
+        use_barre = len(at_min) >= 2
+
+        above = [n for n in fretted if n["fret"] > min_fret]
+        result = []
+        nf = 1  # next finger
+
+        if use_barre:
+            lo, hi = min(at_min), max(at_min)
+            for s in range(lo, hi + 1):
+                overridden = any(
+                    n["string"] == s and n["fret"] > min_fret for n in fretted
+                )
+                muted = s in mutes
+                if not overridden and not muted:
+                    result.append({"string": s, "finger": 1})
+            nf = 2
+        else:
+            result.append({"string": at_min[0], "finger": 1})
+            nf = 2
+
+        # Group above-barre notes
+        by_fret = {}
+        for n in above:
+            by_fret.setdefault(n["fret"], []).append(n["string"])
+
+        slots = []
+        for f in sorted(by_fret):
+            for g in TestFingeringEngine._split_adjacent(by_fret[f]):
+                slots.append({"fret": f, "strings": g})
+        slots.sort(key=lambda s: (s["fret"], -max(s["strings"])))
+
+        avail = 4 - nf + 1
+        if len(slots) <= avail:
+            for slot in slots:
+                for s in slot["strings"]:
+                    result.append({"string": s, "finger": nf})
+                nf += 1
+        else:
+            # Thumb fallback for bass note
+            bass_str = max(n["string"] for n in fretted)
+            if bass_str >= 5:
+                bass_fret = next(
+                    n["fret"] for n in fretted if n["string"] == bass_str
+                )
+                result = [{"string": bass_str, "finger": 0}]
+                remaining = [
+                    n
+                    for n in fretted
+                    if not (n["string"] == bass_str and n["fret"] == bass_fret)
+                ]
+                if remaining:
+                    mf2 = min(n["fret"] for n in remaining)
+                    at2 = [n for n in remaining if n["fret"] == mf2]
+                    ab2 = [n for n in remaining if n["fret"] > mf2]
+                    if len(at2) >= 2:
+                        lo2, hi2 = min(n["string"] for n in at2), max(
+                            n["string"] for n in at2
+                        )
+                        for s in range(lo2, hi2 + 1):
+                            ov = any(
+                                n["string"] == s and n["fret"] > mf2 for n in remaining
+                            )
+                            mu = s in mutes
+                            if not ov and not mu:
+                                result.append({"string": s, "finger": 1})
+                    else:
+                        result.append({"string": at2[0]["string"], "finger": 1})
+                    nf2 = 2
+                    bf2 = {}
+                    for n in ab2:
+                        bf2.setdefault(n["fret"], []).append(n["string"])
+                    for f in sorted(bf2):
+                        for g in TestFingeringEngine._split_adjacent(bf2[f]):
+                            fn = min(nf2, 4)
+                            for s in g:
+                                result.append({"string": s, "finger": fn})
+                            if nf2 <= 4:
+                                nf2 += 1
+            else:
+                # Consolidate same-fret
+                cf = {}
+                fo = []
+                for sl in slots:
+                    if sl["fret"] not in cf:
+                        cf[sl["fret"]] = []
+                        fo.append(sl["fret"])
+                    cf[sl["fret"]].extend(sl["strings"])
+                for f in fo:
+                    fn = min(nf, 4)
+                    for s in cf[f]:
+                        result.append({"string": s, "finger": fn})
+                    if nf <= 4:
+                        nf += 1
+
+        return result
+
+    @staticmethod
+    def _finger_map(voicing):
+        """Return {string: finger} dict for easy assertions."""
+        return {r["string"]: r["finger"] for r in TestFingeringEngine._suggest(voicing)}
+
+    # -- Bug regression: non-adjacent strings at same fret (#91) --
+
+    def test_non_adjacent_same_fret_get_different_treatment(self):
+        """The original bug: strings 4 and 6 at the same fret were both
+        assigned finger 4, which is physically impossible."""
+        v = {
+            "strings": 6, "fret_number": 5,
+            "dots": [
+                {"string": 6, "fret": 4}, {"string": 5, "fret": 3},
+                {"string": 4, "fret": 4}, {"string": 3, "fret": 2},
+                {"string": 2, "fret": 1}, {"string": 1, "fret": 1},
+            ],
+            "mutes": [], "open": [],
+        }
+        fm = self._finger_map(v)
+        # Strings 4 and 6 must NOT both be finger 4 (the old bug)
+        assert not (fm[4] == 4 and fm[6] == 4), (
+            "Strings 4 and 6 are non-adjacent and cannot share a finger"
+        )
+
+    # -- Barre detection --
+
+    def test_full_barre_all_same_fret(self):
+        """All fretted notes on the same fret → all finger 1."""
+        v = {
+            "strings": 6, "fret_number": 5,
+            "dots": [
+                {"string": 6, "fret": 1}, {"string": 5, "fret": 1},
+                {"string": 4, "fret": 1}, {"string": 3, "fret": 1},
+            ],
+            "mutes": [2, 1], "open": [],
+        }
+        fm = self._finger_map(v)
+        for s in [3, 4, 5, 6]:
+            assert fm[s] == 1, f"String {s} should be finger 1 (barre)"
+
+    def test_e_shape_barre_chord(self):
+        """F major (E-shape): finger 1 barres strings 1-6 at fret 1,
+        higher frets get fingers 2+."""
+        v = {
+            "strings": 6, "fret_number": 1,
+            "dots": [
+                {"string": 6, "fret": 1}, {"string": 5, "fret": 3},
+                {"string": 4, "fret": 3}, {"string": 3, "fret": 2},
+                {"string": 2, "fret": 1}, {"string": 1, "fret": 1},
+            ],
+            "mutes": [], "open": [],
+        }
+        fm = self._finger_map(v)
+        # Strings 1, 2, 6 are at fret 1 → barre (finger 1)
+        for s in [1, 2, 6]:
+            assert fm[s] == 1, f"String {s} should be finger 1 (barre)"
+        # String 3 at fret 2 → finger 2
+        assert fm[3] == 2
+        # Strings 4, 5 at fret 3 → same finger (mini-barre), finger 3
+        assert fm[4] == fm[5]
+        assert fm[4] >= 3
+
+    def test_a_shape_barre_chord(self):
+        """Bb major (A-shape): finger 1 barres strings 1-5 at fret 1,
+        strings 2-3-4 at fret 3 get finger 2 (mini-barre)."""
+        v = {
+            "strings": 6, "fret_number": 1,
+            "dots": [
+                {"string": 5, "fret": 1}, {"string": 4, "fret": 3},
+                {"string": 3, "fret": 3}, {"string": 2, "fret": 3},
+                {"string": 1, "fret": 1},
+            ],
+            "mutes": [6], "open": [],
+        }
+        fm = self._finger_map(v)
+        assert fm[1] == 1 and fm[5] == 1, "Barre strings should be finger 1"
+        # Strings 2, 3, 4 should share a finger (mini-barre)
+        assert fm[2] == fm[3] == fm[4], "Adjacent strings at same fret → same finger"
+
+    # -- Single note --
+
+    def test_single_note_gets_finger_1(self):
+        v = {
+            "strings": 6, "fret_number": 5,
+            "dots": [{"string": 3, "fret": 2}],
+            "mutes": [6, 5, 4], "open": [2, 1],
+        }
+        fm = self._finger_map(v)
+        assert fm[3] == 1
+
+    # -- Ascending frets → ascending fingers --
+
+    def test_ascending_frets_ascending_fingers(self):
+        """Four notes on four different frets → fingers 1, 2, 3, 4."""
+        v = {
+            "strings": 7, "fret_number": 2,
+            "dots": [
+                {"string": 4, "fret": 6}, {"string": 3, "fret": 4},
+                {"string": 2, "fret": 3}, {"string": 1, "fret": 1},
+            ],
+            "mutes": [5, 6, 7], "open": [],
+        }
+        fm = self._finger_map(v)
+        assert fm[1] == 1
+        assert fm[2] == 2
+        assert fm[3] == 3
+        assert fm[4] == 4
+
+    # -- Thumb usage --
+
+    def test_thumb_assigned_when_fingers_exhausted(self):
+        """When 5+ fret positions exist and bass note is on string 5+,
+        thumb (finger 0) is used for the bass note."""
+        v = {
+            "strings": 6, "fret_number": 5,
+            "dots": [
+                {"string": 6, "fret": 4}, {"string": 5, "fret": 3},
+                {"string": 4, "fret": 4}, {"string": 3, "fret": 2},
+                {"string": 2, "fret": 1}, {"string": 1, "fret": 1},
+            ],
+            "mutes": [], "open": [],
+        }
+        fm = self._finger_map(v)
+        assert fm[6] == 0, "Bass note on string 6 should use thumb (finger 0)"
+
+    # -- No finger exceeds 4 --
+
+    def test_no_finger_exceeds_4(self, voicings):
+        """For every voicing in the library, no finger assignment exceeds 4."""
+        errors = []
+        for v in voicings:
+            assignments = self._suggest(v)
+            for a in assignments:
+                if a["finger"] > 4:
+                    errors.append(f"{v['id']}: string {a['string']} got finger {a['finger']}")
+        assert not errors, f"{len(errors)} invalid fingers:\n" + "\n".join(errors[:10])
+
+    # -- Every fretted string gets an assignment --
+
+    def test_all_fretted_strings_assigned(self, voicings):
+        """Every fretted dot gets a finger assignment."""
+        errors = []
+        for v in voicings:
+            assignments = self._suggest(v)
+            assigned_strings = {a["string"] for a in assignments}
+            for d in v["dots"]:
+                af = v["fret_number"] + (d["fret"] - 1)
+                if af > 0 and d["string"] not in assigned_strings:
+                    errors.append(f"{v['id']}: string {d['string']} has no finger")
+        assert not errors, f"{len(errors)} unassigned:\n" + "\n".join(errors[:10])

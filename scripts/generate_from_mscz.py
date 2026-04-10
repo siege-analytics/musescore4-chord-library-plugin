@@ -18,7 +18,7 @@ import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_OUTPUT = REPO_ROOT / "data" / "voicings.json"
+DEFAULT_OUTPUT = REPO_ROOT / "plugin" / "data" / "voicings.json"
 
 
 def extract_mscx_from_mscz(mscz_path: Path) -> str:

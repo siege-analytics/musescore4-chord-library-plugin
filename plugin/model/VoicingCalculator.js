@@ -240,7 +240,7 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                     if (fretted[fi2] < minF) minF = fretted[fi2]
                     if (fretted[fi2] > maxF) maxF = fretted[fi2]
                 }
-                if (maxF - minF > cfg.maxStretch) continue
+                if (maxF - minF > effectiveStretch) continue
 
                 // Fingering feasibility: you have 4 fretting fingers.
                 // A barre covers one fret across multiple strings = 1 finger.
