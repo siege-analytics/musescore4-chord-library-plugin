@@ -1,187 +1,133 @@
 # musescore4-chord-library-plugin
 
-> **SESSION START**: Always read all markdown files in musescore4-chord-library-plugin repositories at session start:
-> ```
-> /Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin/CLAUDE.md
-> /Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin/*/CLAUDE.md
-> /Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin/docs/*.md
-> /Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin/ROADMAP.md
-> ```
-
-[Add additional project-specific documentation paths here]
+> **SESSION START**: Read this file and `REFERENCES.md` before making any changes.
 
 ## Working Guidelines for AI Assistants
 
 ### 1. Slow and Deliberate
 
 Always plan first, never jump to implementation:
-- Explore the whole codebase to understand context
+- Explore the codebase to understand context
 - Ask clarifying questions upfront
-- Think holistically about how changes fit the system
 - One correct solution beats sixty rushed attempts
-- Use TodoWrite to track and plan multi-step tasks
+- Use TodoWrite to track multi-step tasks
 
 ### 2. Senior Engineer Mindset
 
-Write as if proving value to a skeptical engineer evaluating whether to keep the service:
 - High-quality, maintainable code following existing patterns
-- Explicit over implicit (Zen of Python applies to all languages)
-- Proper error handling - errors should never pass silently
-- Readability counts - code should be obvious to the next person
-- Simple is better than complex - resist over-engineering
-- When in doubt, refuse to guess - ask instead
+- Explicit over implicit
+- Proper error handling — errors should never pass silently
+- Simple is better than complex — resist over-engineering
 
-### 3. Voice and Tone
+### 3. Test Before Presenting
 
-Use a conversational yet substantive voice in all output (commits, PRs, comments):
-- Direct and clear, avoiding corporate speak and hyperbole
-- Honest about trade-offs and limitations
-- Grounded in practical details over abstractions
-- Dry, understated humor when appropriate (never forced)
-- Show thinking without over-explaining
-
-### 4. No AI Attribution
-
-Never include AI assistant attribution in any output:
-- No "Generated with Claude Code" or similar
-- No "Created with [tool name]" or similar
-- No "Co-Authored-By: Claude" in commits
-- Remove any such attribution if found in existing code
-
-### 5. Test Before Presenting
-
-Always verify solutions before showing them:
-- Run tests and iterate until they pass
+- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 90 tests)
 - Only present finished, tested solutions
-- Creating testing work for the user defeats the purpose
+- **Don't push untested code** — review and fix first, push after
 
-### 6. Admit Defeat
+### 4. Attribution
 
-If stuck or unable to solve something:
-- Say so clearly and directly
-- Never try progressively worse solutions hoping something sticks
-- Better to admit limitations than cause damage
-
-## Attribution Policy
-
-**NEVER** include AI assistant attribution in commits, PRs, issues, comments, or any public-facing content. This includes:
-- No `Co-Authored-By: Claude` or similar lines in commit messages
-- No "Created with [tool name]" phrasing anywhere
-- No "Generated with [tool name]" in PR descriptions
-- No AI assistant mentions in issue comments or documentation
-- This applies to ALL repositories
+- All work must be ticketed on GitHub first (use the `create-ticket` skill)
+- Always credit researchers and open-source projects in tickets and code (see REFERENCES.md)
+- Commit co-authorship: `Co-Authored-By: Craft Agent <agents-noreply@craft.do>`
 
 ## Project Overview
 
-A MuseScore 4 plugin that replaces MuseScore's flat palette system with a hierarchical, searchable chord voicing library for jazz guitar. Fetches voicing data from a JSON file hosted on GitHub, provides filtering by context/quality/voicing type, and inserts fretboard diagrams into scores with auto-transposition.
+A MuseScore Studio 4 plugin for jazz guitar chord voicing management. 820+ curated voicings, runtime calculator for alternate tunings, physically-aware fingering engine with barre detection and difficulty scoring.
 
-**Tech stack**: QML/JavaScript (MuseScore 4 plugin API), Qt.network for JSON fetch, Python for validation/extraction scripts.
-
-**License**: CC BY 4.0 — free to use/share/adapt with attribution to Dheeraj Chand.
+**Owner**: Dheeraj Chand (Siege Analytics). Jazz guitarist, 7-string player. Will spot impossible fingerings.
+**License**: CC BY 4.0
+**Tech stack**: QML/JavaScript (MuseScore 4 plugin API), Python (scripts/tests)
 
 ## Architecture
 
-### Two-Axis Voicing Organization
+### Django-style separation
 
-**Texture axis** (melody placement):
-- CM = Chord Melody / Fingerstyle (melody on guitar)
-- CV = Comping / Vocal (melody in voice)
+- **`plugin/model/*.js`** = business logic (pure functions, no UI)
+- **`plugin/ui/*.qml`** = visual components
+- **`plugin/ChordLibrary.qml`** = state management, routing, wiring (~5100 lines)
 
-**String count axis**:
-- 6 = standard 6-string
-- 7 = 7-string Van Eps tuning (low A below standard low E)
+Decomposition into tab-level QML components is ongoing (#75, #79).
 
-**Palette naming**: `[context][strings] — [voicing type]`
-**Voicing types**: Shell · Drop 2 · Drop 3 · Extended · Altered · Quartal
-**Total**: 24 palettes (4 contexts × 6 voicing types)
+### Self-contained plugin
 
-### String Numbering Convention
+`plugin/` is the complete installable unit. Users copy it to their MuseScore Plugins directory. No scripts, no terminal. `deploy.sh` is developer-only (rsync).
 
-1 = high e, 2 = B, 3 = G, 4 = D, 5 = A, 6 = low E, 7 = low A (Van Eps)
+### `.pragma library` rules
 
-### Key Principles
+- **Safe** (no QML callbacks): HygieneEngine, FingeringEngine, DataCache, IRealParser, VoicingCalculator, Transposer, MelodyEngine, ChordScales, ReharmonizationEngine
+- **NOT safe** (receive function callbacks): ChordSelector, FilterEngine, DiagramEngine
+- **Cross-importing between `.pragma library` modules is NOT supported** in QML — use inline functions
 
-- Shell chords = root, 3rd, 7th only. No 5th (deliberately omitted).
-- All voicings stored in C — transposable by adjusting fret number.
-- Dot fret values are relative to fret_number (row 1 = fret_number, row 2 = fret_number + 1, etc.).
+### Physical hand model
 
-## Quick Reference
+- **Mersenne's Law**: `fretWidth(n) = 36mm / 2^((n-1)/12)`
+- **CombinoChord distance table** (Smith 2021, IEEE): inter-finger mm constraints
+- **Barre types**: full, hinge, tip (Ted Greene), diagonal (Van Eps, fret 10+)
+- **Difficulty scoring**: 0-100 across stretch, finger count, barre complexity, position, thumb
+- **71% exact match** against tombatossals/chords-db (3,282 voicings)
 
-### Common Commands
+### Key design decisions
+
+- `onActivated` not `onCurrentIndexChanged` for ComboBoxes (prevents cascade on model rebuild)
+- All voicings stored in key of C — transposed at runtime
+- Voicing cache per tuning, persisted to disk (`tunings/<slug>-voicings.json`)
+- All contexts always shown in dropdown — even if current tuning has zero voicings
+- Thumb (T/finger 0) offered as alternative, not default
+- Individual finger assignments preferred over mini-barres (standard pedagogy)
+
+## Key Directories
+
+```
+plugin/                    # Self-contained installable plugin
+  ChordLibrary.qml         # Main plugin source
+  config/contexts.json      # Context labels
+  data/voicings.json        # 820+ voicing library (key of C)
+  tunings/                  # 6 guitar tuning configs
+  model/                    # 12 JS business logic modules
+  ui/                       # 7 QML visual components
+docs/
+  fingering-research-report.md   # Comprehensive research
+references/databases/            # Validation datasets (MIT/CC BY 4.0)
+schema/voicings.schema.json      # Data validation schema
+scripts/                         # Python tools
+tests/                           # 90 tests (pytest)
+REFERENCES.md                    # Full credits and bibliography
+```
+
+## Common Commands
 
 ```bash
-# Validate voicings.json against schema
-python scripts/validate.py
-
-# Extract voicing data from MuseScore files
-python scripts/generate_from_mscz.py
-
-# Install plugin (copy to MuseScore plugins dir)
-cp -r plugin/ ~/Documents/MuseScore4/Plugins/ChordLibrary/
+python3 -m pytest tests/ -v              # Run all 90 tests
+python3 scripts/validate.py -v           # Validate voicing data
+bash deploy.sh                           # Deploy to local MuseScore (dev only)
+bash deploy.sh --watch                   # Auto-deploy on file changes
 ```
 
-### Key Directories
+## Open Issues (as of 2026-04-10)
 
-```
-plugin/          # QML plugin source (ChordLibrary.qml + ui/ + model/)
-schema/          # JSON schema for voicings
-data/            # voicings.json — the chord library data
-scripts/         # Python validation and extraction tools
-docs/            # Contributing guide and documentation
-```
+- **#75** — Epic: decompose ChordLibrary.qml
+- **#79** — Phase 4: extract tab UIs into QML components
+- **#92** — Fingering validation with partial barre support (phases 1-5 done)
+- **#93** — Fret-distance finger assignment (implemented, 71% validation)
 
-### Configuration
+## MuseScore 4 Plugin API Limitations
 
-- Plugin fetches `data/voicings.json` from GitHub at runtime
-- User can point plugin at a fork for custom library (configurable JSON URL)
-
-## Development Phases
-
-1. **JSON schema + initial data** ← current
-2. Plugin scaffold — QML structure, fetch JSON, display list
-3. UI — filter bar, search, voicing card grid with fretboard thumbnails
-4. Score insertion — read chord symbol, transpose, insert diagram
-5. Polish — offline cache, user-defined JSON URL, contributing guide, v1.0
-
-## Critical Open Question
-
-Does MuseScore 4's plugin API expose fretboard diagram dot positions programmatically? The `setDot(string, fret, finger)` method exists in MS3 but needs verification for MS4. **This is a blocker for Phase 4.**
+- QML caching requires quit-and-relaunch for every code change
+- No `setDot()` API — uses clipboard workaround for diagram insertion
+- No `removeElement()` — update elements in place
+- No `WorkerScript` — calculations block UI thread (use Timer deferral for progress messages)
+- No title frame access (VBox/POET/SUBTITLE creation)
+- Arrays/objects modified in place don't trigger QML bindings — always reassign
 
 ## Common Pitfalls
 
-- Always verify fret calculations against the fret reference table, do not compute from memory
-- Do not make up voicing fingerings — use the Laukens PDF as source of truth
-- Dheeraj uses Oolimo to verify chord voicings — recommend checking there when in doubt
-
-## Related Projects
-
-- [jazz-guitar-palette](https://github.com/siege-analytics/jazz-guitar-palette) — `.mpal` palette files
-- [jazz-guitar-arrangements](https://github.com/siege-analytics/jazz-guitar-arrangements) — MuseScore arrangements
-- Both repos under the siege-analytics GitHub org "Music" project board
-
-## Session Notes (2026-04-03)
-
-### Mistakes to Avoid
-- **QML ComboBox cascades**: Never use `onCurrentTextChanged` or `onCurrentIndexChanged` on ComboBoxes with dynamic models. Use `onActivated` (user clicks only). Model changes trigger binding recalculations that fire these handlers spuriously, causing infinite cascades and UI freezes.
-- **QML property mutation**: Arrays and objects modified in place (`.push()`, `obj[key] = val`) don't trigger QML binding updates. Always build a new object/array and assign it.
-- **Per-quality voicing cap across roots**: Capping voicings globally across all 12 roots starves uncommon roots (F, Bb, Db). Always use `capPerRoot` to distribute evenly.
-- **MuseScore title frame**: The MS4 plugin API cannot add elements to the title frame (VBox). `setMetaTag("subtitle")` sets metadata but doesn't create visible text. `Element.POET` creation fails. System text with offset is unreliable. Best approach: clipboard copy + manual subtitle.
-- **`removeElement()` doesn't exist** in MS4 plugin API. Don't try to remove annotations — update them in place instead.
-
-### Useful Patterns
-- **Cache calculated voicings** per tuning slug to avoid recalculating on every switch. Store in a property var object, rebuild (don't mutate) to trigger bindings.
-- **capPerRoot with diversity**: Three phases — (1) one voicing per top note, (2) one per note count, (3) one per category — then fill remaining slots by score. This ensures melody matching, shape variety, and type diversity.
-- **Bass string grouping**: Group voicings by lowest sounding string number. Users think in terms of "bass on string 6" not "voicing #114 of 200".
-- **Deploy + restart**: MuseScore caches QML aggressively. Always `./deploy.sh` then quit and relaunch MuseScore. No hot reload.
-
-### MuseScore 4 Plugin API Limitations
-- No title frame access (VBox/POET/SUBTITLE creation)
-- No `removeElement()` — can only update existing elements
-- `Align` enum doesn't exist — can't set text alignment
-- `setMetaTag()` sets metadata but doesn't create visual elements
-- System text anchors at beat 1 (after clef), not at page margin
-- `WorkerScript` (threading) not available — calculations block UI thread
+- **ComboBox cascades**: `onCurrentIndexChanged` fires on model rebuilds → use `onActivated`
+- **QML property mutation**: `.push()` doesn't trigger bindings → build new array/object and assign
+- **`.pragma library` callbacks**: modules with `.pragma library` can't receive QML closure callbacks — pass direct function references + data separately
+- **Fret calculations**: dot.fret is relative to fret_number (row 1 = fret_number). Absolute fret = fret_number + dot.fret - 1.
+- **String numbering**: 1 = high e, 6 = low E, 7 = low A (Van Eps)
 
 ---
 
-*Last updated: 2026-04-03*
+*Last updated: 2026-04-10*
