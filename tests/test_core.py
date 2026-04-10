@@ -832,3 +832,76 @@ class TestPhysicalHandModel:
         assert PAIRS["2-4"][1] > PAIRS["2-3"][1]
         # Min distances should be smallest for adjacent fingers
         assert PAIRS["1-2"][0] < PAIRS["1-3"][0] < PAIRS["1-4"][0]
+
+
+# === Difficulty Scoring Tests ===
+
+class TestDifficultyScoring:
+    """Tests for voicing difficulty scoring (ISMIR 2023 inspired)."""
+
+    GAMMA = 36.0
+    MAX_REACH = 110.0
+
+    @staticmethod
+    def _difficulty(voicing):
+        """Python approximation of computeDifficulty()."""
+        import math
+        GAMMA = 36.0
+        MAX_REACH = 110.0
+
+        dots = voicing.get("dots", [])
+        fn = voicing.get("fret_number", 1)
+        fretted = [fn + d["fret"] - 1 for d in dots if fn + d["fret"] - 1 > 0]
+        if not fretted:
+            return {"score": 0, "tier": "standard"}
+
+        min_f, max_f = min(fretted), max(fretted)
+        span_mm = sum(GAMMA / (2 ** ((f - 1) / 12)) for f in range(min_f, max_f))
+        stretch = min(30, round(span_mm / MAX_REACH * 30))
+
+        unique_frets = len(set(fretted))
+        finger_score = max(0, (min(unique_frets, 4) - 1) * 5)
+
+        if min_f <= 2: pos = 15
+        elif min_f <= 4: pos = 10
+        elif min_f <= 7: pos = 5
+        else: pos = 0
+
+        total = min(100, stretch + finger_score + pos)
+        tier = "expert" if total >= 67 else ("advanced" if total >= 34 else "standard")
+        return {"score": total, "tier": tier}
+
+    def test_open_chord_is_standard(self):
+        """A simple open chord should be 'standard' difficulty."""
+        v = {
+            "strings": 6, "fret_number": 1,
+            "dots": [
+                {"string": 4, "fret": 2}, {"string": 3, "fret": 2},
+                {"string": 2, "fret": 1},
+            ],
+            "mutes": [6], "open": [5, 1],
+        }
+        d = self._difficulty(v)
+        assert d["tier"] == "standard"
+
+    def test_wide_stretch_at_low_fret_is_harder(self):
+        """A 3-fret stretch at fret 1 should score higher than at fret 9."""
+        dots = [
+            {"string": 4, "fret": 1}, {"string": 3, "fret": 3},
+            {"string": 2, "fret": 2}, {"string": 1, "fret": 1},
+        ]
+        v_low = {"strings": 6, "fret_number": 1, "dots": dots, "mutes": [6, 5], "open": []}
+        v_high = {"strings": 6, "fret_number": 9, "dots": dots, "mutes": [6, 5], "open": []}
+        assert self._difficulty(v_low)["score"] > self._difficulty(v_high)["score"]
+
+    def test_score_between_0_and_100(self, voicings):
+        """All voicings should have difficulty scores in [0, 100]."""
+        for v in voicings:
+            d = self._difficulty(v)
+            assert 0 <= d["score"] <= 100, f"{v['id']}: score {d['score']}"
+
+    def test_tier_is_valid(self, voicings):
+        """All voicings should have a valid difficulty tier."""
+        for v in voicings:
+            d = self._difficulty(v)
+            assert d["tier"] in ("standard", "advanced", "expert")

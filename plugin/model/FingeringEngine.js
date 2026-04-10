@@ -279,13 +279,26 @@ function suggestFingering(voicing) {
     }
     aboveFretOrder.sort(function(a, b) { return a - b })
 
-    // Build above-barre slots: each group of adjacent strings at a fret = 1 finger
+    // Build above-barre slots.
+    // First, count total individual notes above the barre.
+    var totalAboveNotes = aboveNotes.length
+    var fingersAvailableForAbove = 4 - (useBarre || stringsAtMinFret.length > 0 ? 1 : 0)
+    // Prefer individual finger assignments (standard pedagogy).
+    // Only group as mini-barre when we'd exceed available fingers.
     var aboveSlots = []
-    for (var afi = 0; afi < aboveFretOrder.length; afi++) {
-        var aboveFret = aboveFretOrder[afi]
-        var groups = splitIntoAdjacentGroups(aboveByFret[aboveFret])
-        for (var g = 0; g < groups.length; g++) {
-            aboveSlots.push({ fret: aboveFret, strings: groups[g] })
+    if (totalAboveNotes <= fingersAvailableForAbove) {
+        // Enough fingers — assign each note its own finger
+        for (var ani = 0; ani < aboveNotes.length; ani++) {
+            aboveSlots.push({ fret: aboveNotes[ani].fret, strings: [aboveNotes[ani].string] })
+        }
+    } else {
+        // Not enough fingers — group adjacent strings at same fret (mini-barre)
+        for (var afi = 0; afi < aboveFretOrder.length; afi++) {
+            var aboveFret = aboveFretOrder[afi]
+            var groups = splitIntoAdjacentGroups(aboveByFret[aboveFret])
+            for (var g = 0; g < groups.length; g++) {
+                aboveSlots.push({ fret: aboveFret, strings: groups[g] })
+            }
         }
     }
 
@@ -600,4 +613,99 @@ function computeFingeringString(voicing) {
             parts.push("·")
     }
     return parts.join(" ")
+}
+
+// === Difficulty Scoring ===
+//
+// Compute a difficulty score for a voicing based on its fingering.
+// Returns { score: number (0-100), tier: "standard"|"advanced"|"expert",
+//           factors: { stretch, fingerCount, barre, position, thumb } }
+//
+// Scoring factors (informed by ISMIR 2023 "Quantifying Ease of Playing
+// Song Chords on the Guitar" + CombinoChord penalty model):
+//
+//   1. Stretch penalty    — mm distance between outermost fingers / max reach
+//   2. Finger count       — more fingers = harder
+//   3. Barre complexity   — none < full < tip < hinge < diagonal
+//   4. Fret position      — lower frets penalized (wider spacing)
+//   5. Thumb usage        — non-standard technique, adds difficulty
+//
+// Tier thresholds: 0-33 = standard, 34-66 = advanced, 67-100 = expert
+
+function computeDifficulty(voicing) {
+    var assignments = suggestFingering(voicing)
+    if (assignments.length === 0) return { score: 0, tier: "standard", factors: {} }
+
+    var fretNumber = voicing.fret_number || 1
+    var dots = voicing.dots || []
+
+    // Collect fretted absolute positions
+    var fretted = []
+    for (var i = 0; i < dots.length; i++) {
+        var af = fretNumber + (dots[i].fret - 1)
+        if (af > 0) fretted.push(af)
+    }
+
+    // 1. Stretch penalty (0-30 points)
+    var stretchScore = 0
+    if (fretted.length >= 2) {
+        var minF = Math.min.apply(null, fretted)
+        var maxF = Math.max.apply(null, fretted)
+        var spanMm = fretDistanceMm(minF, maxF)
+        var maxReach = FINGER_DISTANCE["1-4"][1]  // 110mm
+        var stretchRatio = spanMm / maxReach
+        stretchScore = Math.min(30, Math.round(stretchRatio * 30))
+    }
+
+    // 2. Finger count (0-15 points)
+    var usedFingers = {}
+    var usesThumb = false
+    for (var f = 0; f < assignments.length; f++) {
+        if (assignments[f].finger === 0) usesThumb = true
+        else usedFingers[assignments[f].finger] = true
+    }
+    var fingerCount = Object.keys(usedFingers).length
+    var fingerScore = Math.max(0, (fingerCount - 1) * 5)  // 1 finger=0, 2=5, 3=10, 4=15
+
+    // 3. Barre complexity (0-20 points)
+    var maxBarreDifficulty = 0
+    for (var b = 0; b < assignments.length; b++) {
+        if (assignments[b].barreType) {
+            var bd = BARRE_DIFFICULTY[assignments[b].barreType] || 0
+            if (bd > maxBarreDifficulty) maxBarreDifficulty = bd
+        }
+    }
+    var barreScore = maxBarreDifficulty * 5  // 0, 5, 10, 15, 20
+
+    // 4. Fret position penalty (0-15 points)
+    // Lower frets = wider spacing = harder stretches
+    var positionScore = 0
+    if (fretted.length > 0) {
+        var lowestFret = Math.min.apply(null, fretted)
+        if (lowestFret <= 2) positionScore = 15
+        else if (lowestFret <= 4) positionScore = 10
+        else if (lowestFret <= 7) positionScore = 5
+        // fret 8+ = 0 (easy reach)
+    }
+
+    // 5. Thumb usage (0-20 points)
+    var thumbScore = usesThumb ? 20 : 0
+
+    var totalScore = Math.min(100, stretchScore + fingerScore + barreScore + positionScore + thumbScore)
+
+    var tier = "standard"
+    if (totalScore >= 67) tier = "expert"
+    else if (totalScore >= 34) tier = "advanced"
+
+    return {
+        score: totalScore,
+        tier: tier,
+        factors: {
+            stretch: stretchScore,
+            fingerCount: fingerScore,
+            barre: barreScore,
+            position: positionScore,
+            thumb: thumbScore
+        }
+    }
 }
