@@ -2937,38 +2937,37 @@ MuseScore {
         })
     }
 
-    function doImport() {
-        importStatus.text = "Loading..."
-        importStatus.color = theme.textMuted
+    function doImport(path) {
+        importPanel.importMergeStatus = "Loading..."
+        importPanel.importMergeStatusColor = theme.textMuted
 
-        var path = importPathField.text.trim()
         if (!path) {
-            importStatus.text = "Enter a file path"
-            importStatus.color = theme.errorText
+            importPanel.importMergeStatus = "Enter a file path"
+            importPanel.importMergeStatusColor = theme.errorText
             return
         }
         importFile.source = path
         try {
             var raw = importFile.read()
             if (!raw || raw.length === 0) {
-                importStatus.text = "FAILED: file is empty or not found"
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: file is empty or not found"
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
             var data = JSON.parse(raw)
             var imported = data.voicings || []
 
             if (!Array.isArray(imported) || imported.length === 0) {
-                importStatus.text = "FAILED: no voicings array found in file"
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: no voicings array found in file"
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
 
             // Validate required fields
             var errors = validateImport(imported)
             if (errors.length > 0) {
-                importStatus.text = "FAILED: " + errors[0]
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: " + errors[0]
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
 
@@ -2996,17 +2995,17 @@ MuseScore {
             saveToCache()
 
             if (added > 0) {
-                importStatus.text = "SUCCESS: " + added + " voicings added"
+                importPanel.importMergeStatus = "SUCCESS: " + added + " voicings added"
                     + (skipped > 0 ? ", " + skipped + " duplicates skipped" : "")
                     + " (" + voicingsData.length + " total)"
-                importStatus.color = theme.successText
+                importPanel.importMergeStatusColor = theme.successText
             } else {
-                importStatus.text = "No new voicings — all " + skipped + " were duplicates"
-                importStatus.color = theme.textMuted
+                importPanel.importMergeStatus = "No new voicings — all " + skipped + " were duplicates"
+                importPanel.importMergeStatusColor = theme.textMuted
             }
         } catch (e) {
-            importStatus.text = "FAILED: " + e
-            importStatus.color = theme.errorText
+            importPanel.importMergeStatus = "FAILED: " + e
+            importPanel.importMergeStatusColor = theme.errorText
         }
     }
 
@@ -3520,296 +3519,80 @@ MuseScore {
             onBrowseClicked: function(field) { openFileBrowser("save", field, null) }
         }
 
-        // === Tab 3: Import ===
-        Flickable {
+        // === Tab 3: Import (extracted to ui/ImportPanel.qml, #95) ===
+        ImportPanel {
+            id: importPanel
             visible: currentTab === 3 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: importColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: importColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // --- Initialize / Rebuild Voicings ---
-                Label {
-                    text: "VOICING DATA"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Current tuning: " + (tuningLabels[selectedTuning] || selectedTuning) + " (" + voicingsData.length + " voicings loaded)"
-                    font.pixelSize: 11
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "If voicings aren't showing or you changed your tuning, click Rebuild to regenerate them."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    color: theme.textSecondary
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 6
-
-                    Button {
-                        id: initButton
-                        text: "Rebuild Voicings"
-                        onClicked: {
-                            initButton.enabled = false
-                            initStatusLabel.text = "Calculating voicings for " + (tuningLabels[selectedTuning] || selectedTuning) + "..."
-                            initStatusLabel.color = theme.textSecondary
-                            initTimer.running = true
-                        }
-                    }
-
-                    Button {
-                        text: "Reset All Data"
-                        onClicked: {
-                            _tuningVoicingCache = {}
-                            standardVoicingsData = []
-                            usingTuningVoicings = false
-                            dataLoaded = false
-                            if (loadFromCache()) {
-                                loadTuningVoicings()
-                            }
-                            initStatusLabel.text = "Data reset. Loaded " + voicingsData.length + " voicings."
-                            initStatusLabel.color = theme.successText
-                        }
-                    }
-                }
-
-                Timer {
-                    id: initTimer
-                    interval: 50
-                    repeat: false
-                    onTriggered: {
-                        var diskPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
-                        tuningCacheFile.source = diskPath
-                        try { tuningCacheFile.write("") } catch(e) {}
-                        var cache = {}
-                        for (var ck in _tuningVoicingCache) {
-                            if (ck !== selectedTuning) cache[ck] = _tuningVoicingCache[ck]
-                        }
-                        _tuningVoicingCache = cache
-                        loadTuningVoicings()
-                        initStatusLabel.text = "Done! " + voicingsData.length + " voicings ready for " + (tuningLabels[selectedTuning] || selectedTuning) + "."
-                        initStatusLabel.color = theme.successText
-                        initButton.enabled = true
-                    }
-                }
-
-                Label {
-                    id: initStatusLabel
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Voicing Source URL ---
-                Label {
-                    text: "VOICING SOURCE URL"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                TextField {
-                    id: urlField
-                    Layout.fillWidth: true
-                    text: jsonUrl
-                    font.pixelSize: 11
-                    selectByMouse: true
-                }
-
-                RowLayout {
-                    spacing: 6
-
-                    Button {
-                        text: "Apply URL"
-                        onClicked: {
-                            jsonUrl = urlField.text
-                            dataLoaded = false
-                            saveSettings()
-                            fetchVoicings()
-                        }
-                    }
-
-                    Button {
-                        text: "Reset Default"
-                        onClicked: {
-                            var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
-                            urlField.text = defaultUrl
-                            jsonUrl = defaultUrl
-                            dataLoaded = false
-                            saveSettings()
-                            fetchVoicings()
-                        }
-                    }
-
-                    Button {
-                        text: "Refresh"
-                        onClicked: {
-                            dataLoaded = false
-                            fetchVoicings()
-                        }
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Import Voicings ---
-                Label {
-                    text: "IMPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Merge voicings from a JSON file (duplicates skipped):"
-                    font.pixelSize: 11
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: importPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/voicings.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("open", importPathField, null)
-                    }
-                }
-
-                Button {
-                    text: "Import & Merge"
-                    onClicked: doImport()
-                }
-
-                Label {
-                    id: importStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- T-010: iReal Pro / Text Import ---
-                Label {
-                    text: "IMPORT CHORD CHART"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Paste an iReal Pro URL or type chords (space/line separated):"
-                    font.pixelSize: 11
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                TextArea {
-                    id: irealInput
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 80
-                    font.pixelSize: 11
-                    placeholderText: "irealb://SongTitle=Composer=... or Dm7 G7 Cmaj7 ..."
-                    wrapMode: TextEdit.Wrap
-                    selectByMouse: true
-                }
-
-                Button {
-                    text: "Import & Voice"
-                    onClicked: importIRealPro(irealInput.text.trim())
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- T-014: Arrangement Presets ---
-                Label {
-                    text: "ARRANGEMENT PRESETS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Save/load walkthrough voicing choices:"
-                    font.pixelSize: 11
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: presetPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/preset.json"
-                        selectByMouse: true
-                    }
-                }
-
-                RowLayout {
-                    spacing: 6
-
-                    Button {
-                        text: "Save Preset"
-                        enabled: _batchChords.length > 0
-                        onClicked: {
-                            var path = presetPathField.text.trim()
-                            if (!path) {
-                                path = Qt.resolvedUrl("preset-" + Date.now() + ".json").toString().replace("file://", "")
-                                presetPathField.text = path
-                            }
-                            savePreset(path)
-                        }
-                    }
-
-                    Button {
-                        text: "Load Preset"
-                        onClicked: {
-                            var path = presetPathField.text.trim()
-                            if (!path) {
-                                statusMsg.text = "Enter a preset file path"
-                                statusMsg.color = theme.errorText
-                                return
-                            }
-                            loadPreset(path)
-                        }
-                    }
-                }
+            // State groups
+            library: QtObject {
+                property var voicingsData: chordLibrary.voicingsData
+                property bool dataLoaded: chordLibrary.dataLoaded
             }
+            tuning: QtObject {
+                property string selectedTuning: chordLibrary.selectedTuning
+                property var tuningLabels: chordLibrary.tuningLabels
+            }
+            theme: theme
+
+            // Scalar properties
+            jsonUrl: chordLibrary.jsonUrl
+            hasBatchChords: _batchChords.length > 0
+
+            // Signal handlers
+            onRebuildRequested: {
+                var diskPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
+                tuningCacheFile.source = diskPath
+                try { tuningCacheFile.write("") } catch(e) {}
+                var cache = {}
+                for (var ck in _tuningVoicingCache) {
+                    if (ck !== selectedTuning) cache[ck] = _tuningVoicingCache[ck]
+                }
+                _tuningVoicingCache = cache
+                loadTuningVoicings()
+                importPanel.rebuildStatus = "Done! " + voicingsData.length + " voicings ready for " + (tuningLabels[selectedTuning] || selectedTuning) + "."
+                importPanel.rebuildStatusColor = theme.successText
+                importPanel._rebuildInProgress = false
+            }
+
+            onResetRequested: {
+                _tuningVoicingCache = {}
+                standardVoicingsData = []
+                usingTuningVoicings = false
+                dataLoaded = false
+                if (loadFromCache()) {
+                    loadTuningVoicings()
+                }
+                importPanel.rebuildStatus = "Data reset. Loaded " + voicingsData.length + " voicings."
+                importPanel.rebuildStatusColor = theme.successText
+            }
+
+            onUrlApplyRequested: function(url) {
+                jsonUrl = url
+                dataLoaded = false
+                saveSettings()
+                fetchVoicings()
+            }
+            onUrlResetRequested: {
+                var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
+                jsonUrl = defaultUrl
+                dataLoaded = false
+                saveSettings()
+                fetchVoicings()
+            }
+            onRefreshRequested: {
+                dataLoaded = false
+                fetchVoicings()
+            }
+
+            onImportMergeRequested: function(path) { doImport(path) }
+            onBrowseImportRequested: function(field) { openFileBrowser("open", field, null) }
+            onImportIRealRequested: function(text) { importIRealPro(text) }
+
+            onPresetSaveRequested: function(path) { savePreset(path) }
+            onPresetLoadRequested: function(path) { loadPreset(path) }
         }
 
         // === Tab 4: Practice (Flash Cards) ===
