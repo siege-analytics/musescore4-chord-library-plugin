@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import MuseScore 3.0
 import "ChordSelector.js" as ChordSelector
 import "MelodyEngine.js" as MelodyEngine
 import "Transposer.js" as Transposer
@@ -19,6 +20,9 @@ Item {
     id: batchEngine
 
     // === External dependencies (wired from parent) ===
+
+    // MuseScore plugin root — needed for newElement() and Element.* constants
+    property var pluginRef: null
 
     // MuseScore API — parent passes these; null when no score is open
     property var curScore: null
@@ -578,7 +582,7 @@ Item {
         cursor.prev()
         if (cursor.element && cursor.element.type === Element.CHORD) {
             for (var i = 1; i < pitches.length; i++) {
-                var note = newElement(Element.NOTE)
+                var note = pluginRef.newElement(Element.NOTE)
                 note.pitch = pitches[i]
                 note.tpc1 = DiagramEngine.pitchToTpc(pitches[i])
                 note.tpc2 = note.tpc1
