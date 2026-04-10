@@ -266,9 +266,7 @@ MuseScore {
 
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
-        if (!melodyOnTop) return -1
-        var noteText = melodyOverrideField ? melodyOverrideField.text : ""
-        return MelodyEngine.parseNoteToSemitone(noteText, Transposer.SEMITONE_MAP)
+        return batchEngine.melodyOverrideMidi()
     }
 
     // Dynamic filter lists (rebuilt when data changes)
@@ -370,588 +368,67 @@ MuseScore {
         }
     }
 
-    // === Batch insert ===
-
-    property var batchQueue: []
-    property int batchTotal: 0
+    // === Batch insert (extracted to model/BatchEngine.qml, #100) ===
 
     // Quality map delegated to ChordSelector module
     property var qualityMap: ChordSelector.qualityMap
 
-    function parseChordSymbol(text) {
-        return ChordSelector.parseChordSymbol(text)
-    }
+    // Compatibility aliases — delegate to batchEngine for code that still uses these names
+    // (inline tools, import panel, library panel wiring). Will be removed in Phase C.
+    property alias batchQueue: batchEngine.batchQueue
+    property alias batchTotal: batchEngine.batchTotal
+    property alias _batchChords: batchEngine.batchChords
+    property alias _batchIndex: batchEngine.batchIndex
 
-    // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
-    function voicingTopNoteSemitone(voicing, targetRoot) {
-        return MelodyEngine.voicingTopNoteSemitone(voicing, targetRoot, Transposer.SEMITONE_MAP)
-    }
+    BatchEngine {
+        id: batchEngine
+        curScore: chordLibrary.curScore
+        tempDiagramFile: tempDiagramFile
+        clipboardXmlPath: Qt.resolvedUrl("paste-clipboard.xml")
+        voicingsData: chordLibrary.voicingsData
+        filterContext: chordLibrary.filterContext
+        filterCategory: chordLibrary.filterCategory
+        tuningMaxStrings: chordLibrary.tuningMaxStrings
+        contextStringCounts: chordLibrary.contextStringCounts
+        tuningMidi: chordLibrary.tuningMidi
+        usingTuningVoicings: chordLibrary.usingTuningVoicings
+        tuningOffset: chordLibrary.tuningOffset
+        melodyOnTop: chordLibrary.melodyOnTop
+        melodyStaffIdx: chordLibrary.melodyStaffIdx
+        writeVoice2: chordLibrary.writeVoice2
+        melodyOverrideText: libraryPanel.melodyOverrideField ? libraryPanel.melodyOverrideField.text : ""
 
-    // Build the options object for ChordSelector functions.
-    // Passes direct function references (not closures) to avoid QML/JS boundary issues.
-    function _selectorOpts(melodyMidi, bassMidi) {
-        return {
-            maxStrings: tuningMaxStrings,
-            filterContext: filterContext,
-            contextStringCounts: contextStringCounts,
-            filterCategory: filterCategory,
-            melodyMidi: melodyMidi,
-            bassMidi: bassMidi,
-            melodyLocked: _melodyLocked,
-            bassLocked: _bassLocked,
-            lastInsertedVoicing: lastInsertedVoicing,
-            topNoteFn: MelodyEngine.voicingTopNoteSemitone,
-            bassNoteFn: MelodyEngine.voicingBassNoteSemitone,
-            distanceFn: MelodyEngine.voicingDistance,
-            difficultyFn: FingeringEngine.computeDifficulty,
-            semitoneMap: Transposer.SEMITONE_MAP
+        onStatusMessage: function(text, colorName) {
+            statusMsg.text = text
+            statusMsg.color = colorName === "error" ? theme.errorText
+                            : colorName === "success" ? theme.successText
+                            : theme.textMuted
         }
-    }
-
-    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findBestVoicing(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
-    }
-
-    function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findAllVoicings(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
-    }
-
-    // Alternative voicing state — grouped by bass string
-    property var _altVoicings: []          // all candidates for current step
-    property int _altIndex: 0              // index in current group
-    property var _bassStringGroups: ({})   // { stringNum: [voicings] }
-    property var _bassStringList: []       // sorted list of available bass strings
-    property int _selectedBassString: -1   // currently selected bass string (-1 = auto/best)
-    property int altCount: 0               // total alternatives
-    property int altIndex: 0               // current index for display
-
-    // Build bass-string groups from alternatives.
-    // IMPORTANT: assign new objects to trigger QML bindings.
-    function buildBassStringGroups() {
-        var result = ChordSelector.buildBassStringGroups(_altVoicings)
-        _bassStringGroups = result.groups
-        _bassStringList = result.list
-    }
-
-    // Select voicings by bass string
-    function selectBassString(bassStr) {
-        _selectedBassString = bassStr
-        _altIndex = 0
-        var group = _bassStringGroups[bassStr] || []
-        if (group.length > 0) {
-            applyAlternativeVoicing(group[0])
+        onShowWalkthrough: function(title, content) {
+            toolResultsTitle = title
+            toolResultsContent = content
+            showToolResults = true
         }
-        altCount = group.length
-        altIndex = 0
-    }
-
-    // Cycle within the current bass string group
-    function selectAlternativeVoicing(index) {
-        var group = _bassStringGroups[_selectedBassString] || _altVoicings
-        if (index < 0 || index >= group.length) return
-        _altIndex = index
-        altIndex = index
-        applyAlternativeVoicing(group[index])
-    }
-
-    // Apply a voicing to the current walkthrough step
-    function applyAlternativeVoicing(voicing) {
-        var item = _batchChords[_batchIndex - 1]
-        if (!item) return
-        item.voicing = voicing
-
-        // Update clipboard
-        var xml = generateXmlForVoicing(voicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try { tempDiagramFile.write(xml) } catch (e) {}
-
-        // Refresh display
-        walkthroughPanel.batchChords = _batchChords
-    }
-
-    function _diagramOpts() {
-        return { usingTuningVoicings: usingTuningVoicings, tuningOffset: tuningOffset, semitoneOffsetFn: Transposer.semitoneOffset }
-    }
-
-    function generateXmlForVoicing(voicing, targetRoot) {
-        return DiagramEngine.generateXmlForVoicing(voicing, targetRoot, _diagramOpts())
-    }
-
-    function computeVoicingMidiPitches(voicing, targetRoot) {
-        var opts = _diagramOpts()
-        opts.tuningMidi = tuningMidi
-        return DiagramEngine.computeVoicingMidiPitches(voicing, targetRoot, opts)
-    }
-
-    // Write voicing pitches as notes on voice 2 at the given tick position.
-    // Uses MuseScore's cursor API: addNote for the first pitch, then
-    // cursor.element.add(note) for additional notes in the chord.
-    function writeVoicingToVoice2(voicing, targetRoot, targetTick) {
-        if (!curScore) return false
-        var pitches = computeVoicingMidiPitches(voicing, targetRoot)
-        if (pitches.length === 0) return false
-
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 1  // voice 2 (0-indexed)
-        cursor.rewind(0)
-
-        // Navigate to target tick
-        while (cursor.segment && cursor.tick < targetTick) {
-            cursor.next()
-        }
-
-        if (!cursor.segment || cursor.tick !== targetTick) {
-            console.log("Voice2 export: could not find tick " + targetTick)
-            return false
-        }
-
-        // Match the duration of whatever is in voice 1 at this position
-        var v1cursor = curScore.newCursor()
-        v1cursor.staffIdx = 0
-        v1cursor.voice = 0
-        v1cursor.rewind(0)
-        while (v1cursor.segment && v1cursor.tick < targetTick) v1cursor.next()
-        if (v1cursor.element && v1cursor.element.duration) {
-            cursor.setDuration(v1cursor.element.duration.numerator, v1cursor.element.duration.denominator)
-        }
-
-        // Add the first note (creates the chord element)
-        cursor.addNote(pitches[0])
-
-        // Add remaining notes to the chord
-        // After addNote, cursor.prev() gets us back to the chord we just created
-        cursor.prev()
-        if (cursor.element && cursor.element.type === Element.CHORD) {
-            for (var i = 1; i < pitches.length; i++) {
-                var note = newElement(Element.NOTE)
-                note.pitch = pitches[i]
-                note.tpc1 = pitchToTpc(pitches[i])
-                note.tpc2 = note.tpc1
-                cursor.element.add(note)
-            }
-        }
-
-        return true
-    }
-
-    function pitchToTpc(midiPitch) {
-        return DiagramEngine.pitchToTpc(midiPitch)
-    }
-
-    // Batch voicing state
-    property int _batchIndex: 0
-    property int _batchInserted: 0
-    property var _batchChords: []  // [{text, root, quality, voicing}, ...]
-
-    // Voice a single chord at the current cursor/selection position
-    function voiceAtCursor() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Find the chord symbol at or near the current selection
-        var sel = curScore.selection
-        if (!sel || !sel.elements || sel.elements.length === 0) {
-            statusMsg.text = "Select a note or rest at a chord symbol"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var elem = sel.elements[0]
-        var seg = null
-        if (elem.type === Element.NOTE && elem.parent)
-            seg = elem.parent.parent
-        else if (elem.type === Element.REST || elem.type === Element.CHORD)
-            seg = elem.parent
-
-        if (!seg || !seg.annotations) {
-            statusMsg.text = "No chord symbol at selection"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Find the HARMONY annotation at this segment
-        var chordText = null
-        for (var a = 0; a < seg.annotations.length; a++) {
-            if (seg.annotations[a].type === Element.HARMONY) {
-                chordText = seg.annotations[a].text
-                break
-            }
-        }
-
-        if (!chordText) {
-            statusMsg.text = "No chord symbol at selection"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var parsed = parseChordSymbol(chordText)
-        if (!parsed) {
-            statusMsg.text = "Could not parse: " + chordText
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Extract melody note — use override if set, else detect from selection
-        var melodyMidi = melodyOverrideMidi()
-        if (melodyMidi < 0 && melodyOnTop) {
-            var chordElem = null
-            if (elem.type === Element.NOTE && elem.parent)
-                chordElem = elem.parent
-            else if (elem.type === Element.CHORD)
-                chordElem = elem
-            if (chordElem && chordElem.notes) {
-                for (var n = 0; n < chordElem.notes.length; n++) {
-                    if (chordElem.notes[n].pitch > melodyMidi)
-                        melodyMidi = chordElem.notes[n].pitch
-                }
-            }
-        }
-
-        // Use slash bass if present
-        var bassMidi = parsed.slashBass
-            ? Transposer.SEMITONE_MAP[parsed.slashBass]
-            : undefined
-
-        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
-        if (!voicing) {
-            statusMsg.text = "No voicing found for " + chordText
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Use the single voicing insertion flow (same as "Open" button)
-        generateDiagramFile(voicing)
-    }
-
-    function batchInsert() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Scan all chord symbols and build the voicing plan
-        var chords = []
-        var lastMelodyMidi = -1  // carry-forward: last melody note for rests
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        // If reading melody from a separate staff, create a second cursor
-        var melodyCursor = null
-        if (melodyStaffIdx >= 0 && melodyOnTop) {
-            melodyCursor = curScore.newCursor()
-            melodyCursor.staffIdx = melodyStaffIdx
-            melodyCursor.voice = 0
-            melodyCursor.rewind(0)
-        }
-        while (cursor.segment) {
-            if (cursor.segment.annotations) {
-                for (var a = 0; a < cursor.segment.annotations.length; a++) {
-                    if (cursor.segment.annotations[a].type === Element.HARMONY) {
-                        var text = cursor.segment.annotations[a].text
-                        var parsed = parseChordSymbol(text)
-                        if (parsed) {
-                            // Extract melody note (highest pitch) at this position.
-                            // If user set a manual override, use that for all positions.
-                            var melodyMidi = melodyOverrideMidi()
-
-                            // Try melody from a separate staff first (if configured)
-                            if (melodyMidi < 0 && melodyOnTop && melodyCursor) {
-                                // Advance melody cursor to same tick position
-                                while (melodyCursor.segment && melodyCursor.tick < cursor.tick) {
-                                    melodyCursor.next()
-                                }
-                                if (melodyCursor.segment && melodyCursor.tick === cursor.tick) {
-                                    if (melodyCursor.element && melodyCursor.element.type === Element.CHORD) {
-                                        var melNotes = melodyCursor.element.notes
-                                        for (var mn = 0; mn < melNotes.length; mn++) {
-                                            if (melNotes[mn].pitch > melodyMidi)
-                                                melodyMidi = melNotes[mn].pitch
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Fall back to same-staff melody extraction
-                            if (melodyMidi < 0 && melodyOnTop) {
-                                var segEl = cursor.segment
-                                // Check cursor.element first (voice 0)
-                                if (cursor.element && cursor.element.type === Element.CHORD) {
-                                    var notes0 = cursor.element.notes
-                                    for (var n0 = 0; n0 < notes0.length; n0++) {
-                                        if (notes0[n0].pitch > melodyMidi) melodyMidi = notes0[n0].pitch
-                                    }
-                                }
-                                // Also scan all annotations' parent elements for notes
-                                // (the chord symbol may be attached to a voice with notes)
-                                if (melodyMidi < 0 && segEl && segEl.elementAt) {
-                                    // Try voice 0 through 3
-                                    for (var voice = 0; voice < 4 && melodyMidi < 0; voice++) {
-                                        var el = segEl.elementAt(voice)
-                                        if (el && el.type === Element.CHORD && el.notes) {
-                                            for (var nv = 0; nv < el.notes.length; nv++) {
-                                                if (el.notes[nv].pitch > melodyMidi)
-                                                    melodyMidi = el.notes[nv].pitch
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            // Carry forward: if at a rest, use the last melody note
-                            if (melodyOnTop && melodyMidi < 0 && lastMelodyMidi >= 0) {
-                                melodyMidi = lastMelodyMidi
-                            }
-                            if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
-
-                            // Suggest bass note (default: chord root, or slash bass if present)
-                            var bassMidi
-                            if (parsed.slashBass) {
-                                // Slash chord: use specified bass note
-                                bassMidi = Transposer.SEMITONE_MAP[parsed.slashBass]
-                                if (bassMidi === undefined) bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
-                            } else {
-                                bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
-                            }
-
-                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
-                            if (voicing) {
-                                chords.push({
-                                    text: text,
-                                    root: parsed.root,
-                                    quality: parsed.quality,
-                                    voicing: voicing,
-                                    melodyMidi: melodyMidi,
-                                    bassMidi: bassMidi,
-                                    tick: cursor.tick,
-                                    ambiguous: parsed.ambiguous || false,
-                                })
-                            }
-                        }
-                    }
-                }
-            }
-            cursor.next()
-        }
-
-        if (chords.length === 0) {
-            statusMsg.text = "No matching chord symbols found"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        _batchChords = chords
-        _batchIndex = 0
-        batchTotal = chords.length
-        batchQueue = [1]  // non-empty = in progress
-
-        // Show guided walkthrough
-        batchShowNext()
-    }
-
-    function batchShowNext() {
-        if (_batchIndex >= _batchChords.length) {
-            batchQueue = []
+        onWalkthroughComplete: function(total) {
             showResult("Voice Score Complete",
-                "All " + batchTotal + " chord voicings have been loaded.\n\n"
+                "All " + total + " chord voicings have been loaded.\n\n"
                 + "Click 'Back to Library' to return to the voicing browser.", true)
-            return
         }
-
-        var item = _batchChords[_batchIndex]
-        var remaining = _batchChords.length - _batchIndex
-        var nameParts = item.voicing.name.split(" — ")
-        var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
-
-        // Load all alternative voicings and group by bass string
-        _altVoicings = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
-        buildBassStringGroups()
-        // Auto-select the bass string group that contains the current voicing
-        _selectedBassString = -1
-        for (var bsi = 0; bsi < _bassStringList.length; bsi++) {
-            var bsGroup = _bassStringGroups[_bassStringList[bsi]] || []
-            for (var bvi = 0; bvi < bsGroup.length; bvi++) {
-                if (bsGroup[bvi].id === item.voicing.id) {
-                    _selectedBassString = _bassStringList[bsi]
-                    _altIndex = bvi
-                    break
-                }
-            }
-            if (_selectedBassString >= 0) break
+        onWalkthroughDataChanged: {
+            walkthroughPanel.batchChords = batchEngine.batchChords
         }
-        if (_selectedBassString < 0 && _bassStringList.length > 0) {
-            _selectedBassString = _bassStringList[0]
-            _altIndex = 0
+        onInsertDiagramRequested: function(voicing) {
+            generateDiagramFile(voicing)
         }
-        altCount = (_bassStringGroups[_selectedBassString] || []).length
-        altIndex = _altIndex
-
-        // Load the clipboard with this voicing's diagram
-        var xml = generateXmlForVoicing(item.voicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            showResult("Error", "Failed to write clipboard: " + e, false)
-            return
-        }
-
-        // Write voicing as notes on voice 2 (if enabled and tick is known)
-        if (writeVoice2 && item.tick !== undefined) {
-            curScore.startCmd()
-            var v2ok = writeVoicingToVoice2(item.voicing, item.root, item.tick)
-            curScore.endCmd()
-            if (v2ok) {
-                console.log("Voice2: wrote " + item.text + " at tick " + item.tick)
-            }
-        }
-
-        // Show the guided step with clear instructions
-        var stepText = "▸ " + item.text + " — " + shape
-        if (item.ambiguous) {
-            stepText += "\n  ⚠ \"" + item.text + "\" is ambiguous — defaulting to " + item.root + "7."
-            stepText += "\n     Use the chips above to change quality."
-        }
-        if (melodyOnTop && item.melodyMidi >= 0) {
-            stepText += "\n  Melody: " + MelodyEngine.melodyNoteName(item.melodyMidi)
-        }
-        if (item.bassMidi >= 0) {
-            stepText += "\n  Bass: " + MelodyEngine.melodyNoteName(item.bassMidi)
-        }
-        // Show any warnings from unfulfilled requests (bass/melody impossibilities)
-        if (item._warnings && item._warnings.length > 0) {
-            stepText += "\n"
-            for (var w = 0; w < item._warnings.length; w++) {
-                stepText += "\n  ⚠ " + item._warnings[w]
-            }
-        }
-
-        // Chord-scale suggestion
-        var scaleSuggestion = ChordScales.formatScaleSuggestion(item.root, item.quality)
-        if (scaleSuggestion) {
-            stepText += "\n  Scales: " + scaleSuggestion
-        }
-
-        stepText += "\n"
-        stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
-        stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
-        stepText += "\n  3. Click 'Next →' when ready"
-
-        if (remaining > 1) {
-            stepText += "\n\n" + (remaining - 1) + " chord" + (remaining > 2 ? "s" : "") + " remaining"
-        }
-
-        toolResultsTitle = "Voice Score — " + item.text
-        toolResultsContent = stepText
-        showToolResults = true
-
-        _batchIndex++
     }
 
-    // Re-voice the current walkthrough step with melody note name and category override.
-    // Called from WalkthroughPanel's revoiceRequested signal.
-    // Lock state for melody/bass priority (set by revoice, used by findBestVoicing)
-    property bool _melodyLocked: false
-    property bool _bassLocked: false
-
-    function revoiceCurrentStepWith(melodyNoteText, melodyLocked, bassNoteText, bassLocked, categoryOverride) {
-        var idx = _batchIndex - 1  // _batchIndex was already incremented
-        if (idx < 0 || idx >= _batchChords.length) return
-
-        var item = _batchChords[idx]
-
-        // Parse melody override
-        var newMidi = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
-        if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
-        item.melodyMidi = newMidi
-
-        // Parse bass note override
-        var newBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
-        if (newBass < 0) newBass = MelodyEngine.suggestBassNote(item.root, item.quality, Transposer.SEMITONE_MAP)
-        item.bassMidi = newBass
-
-        // Set lock states for findBestVoicing scoring
-        _melodyLocked = melodyLocked || false
-        _bassLocked = bassLocked || false
-
-        // Temporarily set the category filter for findBestVoicing
-        var savedCategory = filterCategory
-        filterCategory = categoryOverride  // "" means "Any" (no filter)
-
-        // Re-select voicing (inversions are pre-calculated at load time)
-        var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass)
-
-        // Restore filter
-        filterCategory = savedCategory
-
-        if (!newVoicing) {
-            toolResultsContent = "No voicing found for " + item.text
-                + " with these settings.\n\nTry changing the Type, Bass note,"
-                + " or adjust Voicing Constraints in Score Tools."
-            return
-        }
-
-        // Track what couldn't be fulfilled — shown inline in the walkthrough
-        var warnings = []
-
-        var userRequestedBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
-        if (userRequestedBass >= 0) {
-            var actualBass = MelodyEngine.voicingBassNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
-            if (actualBass >= 0 && actualBass !== userRequestedBass) {
-                warnings.push("No playable " + item.text + " with "
-                    + MelodyEngine.NOTE_NAMES[userRequestedBass] + " in bass on this tuning."
-                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualBass]
-                    + " in bass. Try adjusting stretch or mute limits in Score Tools.")
-            }
-        }
-
-        var userRequestedMelody = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
-        if (userRequestedMelody >= 0) {
-            var actualTop = MelodyEngine.voicingTopNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
-            if (actualTop >= 0 && actualTop !== userRequestedMelody) {
-                warnings.push("No playable " + item.text + " with "
-                    + MelodyEngine.NOTE_NAMES[userRequestedMelody] + " on top on this tuning."
-                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualTop]
-                    + " on top.")
-            }
-        }
-
-        // Store warnings so batchShowNext can display them
-        item._warnings = warnings
-
-        item.voicing = newVoicing
-
-        // Regenerate clipboard XML
-        var xml = generateXmlForVoicing(newVoicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            console.log("[ChordLibrary] revoice write error: " + e)
-            return
-        }
-
-        // Reset lock states after revoice (don't affect Voice All)
-        _melodyLocked = false
-        _bassLocked = false
-
-        // Update the display — rewind batchIndex and re-show
-        _batchIndex = idx
-        batchShowNext()
-    }
-
-    function batchProcessNext() {
-        // Called by "Next Chord" button — advance to next chord
-        batchShowNext()
-    }
+    // Convenience delegates for code that still calls these from the parent scope
+    function voiceAtCursor() { batchEngine.voiceAtCursor() }
+    function batchInsert() { batchEngine.batchInsert() }
+    function batchShowNext() { batchEngine.batchShowNext() }
+    function generateXmlForVoicing(voicing, targetRoot) { return batchEngine.generateXmlForVoicing(voicing, targetRoot) }
+    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) { return batchEngine.findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) }
+    function parseChordSymbol(text) { return batchEngine.parseChordSymbol(text) }
 
     function rebuildFilterLists() {
         var lists = FilterEngine.rebuildFilterLists(voicingsData)
@@ -3460,10 +2937,10 @@ MuseScore {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            batchChords: _batchChords
-            batchIndex: _batchIndex
-            batchTotal: chordLibrary.batchTotal
-            batchActive: batchQueue.length > 0
+            batchChords: batchEngine.batchChords
+            batchIndex: batchEngine.batchIndex
+            batchTotal: batchEngine.batchTotal
+            batchActive: batchEngine.batchQueue.length > 0
             resultsTitle: toolResultsTitle
             resultsContent: toolResultsContent
             availableCategories: categoryList
@@ -3471,61 +2948,41 @@ MuseScore {
             calculatedVoicings: usingTuningVoicings
             tuningPitches: tuningPitchNotation
             tuningOffset: chordLibrary.tuningOffset
-            altCount: chordLibrary.altCount
-            altIndex: chordLibrary.altIndex
+            altCount: batchEngine.altCount
+            altIndex: batchEngine.altIndex
             difficultyFn: FingeringEngine.computeDifficulty
-            bassStringList: _bassStringList
-            selectedBassString: _selectedBassString
+            bassStringList: batchEngine.bassStringList
+            selectedBassString: batchEngine.selectedBassString
             bassStringCounts: {
                 var counts = {}
-                for (var bs in _bassStringGroups) {
-                    counts[bs] = _bassStringGroups[bs].length
+                var groups = batchEngine.bassStringGroups
+                for (var bs in groups) {
+                    counts[bs] = groups[bs].length
                 }
                 return counts
             }
 
             onPrevClicked: {
-                _batchIndex = _batchIndex - 2
-                batchShowNext()
+                batchEngine.batchIndex = batchEngine.batchIndex - 2
+                batchEngine.batchShowNext()
             }
-            onNextClicked: batchShowNext()
+            onNextClicked: batchEngine.batchShowNext()
             onStopClicked: {
-                batchQueue = []
-                _batchChords = []
+                batchEngine.batchQueue = []
+                batchEngine.batchChords = []
                 showToolResults = false
             }
             onBassStringClicked: function(bassStr) {
-                selectBassString(bassStr)
+                batchEngine.selectBassString(bassStr)
             }
             onAltSelected: function(index) {
-                selectAlternativeVoicing(index)
+                batchEngine.selectAlternativeVoicing(index)
             }
             onRevoiceRequested: function(melodyNote, melodyLocked, bassNote, bassLocked, category) {
-                revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
+                batchEngine.revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
             }
             onReharmSelected: function(newRoot, newQuality) {
-                // Apply the reharm suggestion: change the current chord's root/quality
-                var idx = _batchIndex - 1
-                if (idx < 0 || idx >= _batchChords.length) return
-                var item = _batchChords[idx]
-                item.root = newRoot
-                item.quality = newQuality
-                item.ambiguous = false  // user made an explicit choice
-                item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality === "maj6" ? "6" : newQuality === "maj" ? "" : newQuality)
-                // Update bass suggestion for new root
-                item.bassMidi = MelodyEngine.suggestBassNote(newRoot, newQuality, Transposer.SEMITONE_MAP)
-                // Re-voice with the new chord
-                var voicing = findBestVoicing(newRoot, newQuality, item.melodyMidi, item.bassMidi)
-                if (voicing) {
-                    item.voicing = voicing
-                    var xml = generateXmlForVoicing(voicing, newRoot)
-                    var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-                    tempDiagramFile.source = xmlPath
-                    try { tempDiagramFile.write(xml) } catch(e) {}
-                }
-                // Refresh the display
-                _batchIndex = idx
-                batchShowNext()
+                batchEngine.applyReharm(newRoot, newQuality)
             }
         }
 
