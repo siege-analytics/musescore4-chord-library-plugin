@@ -360,9 +360,9 @@ MuseScore {
         repeat: false
         onTriggered: {
             statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
-            if (_pendingVoicing) {
-                lastInsertedVoicing = _pendingVoicing
-                _pendingVoicing = null
+            if (insertionEngine._pendingVoicing) {
+                lastInsertedVoicing = insertionEngine._pendingVoicing
+                insertionEngine._pendingVoicing = null
                 if (sortByProximity) applyFilters()
             }
         }
@@ -1163,275 +1163,49 @@ MuseScore {
         })
     }
 
-    // === Voicing insertion ===
+    // === Voicing insertion (extracted to model/InsertionEngine.qml, #103) ===
 
-    function insertVoicing(voicing) {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
+    InsertionEngine {
+        id: insertionEngine
+        curScore: chordLibrary.curScore
+        tempDiagramFile: tempDiagramFile
+        audioFile: audioFile
+        pasteTimer: pasteTimer
+        diagramPlacement: chordLibrary.diagramPlacement
+        tuningMidi: chordLibrary.tuningMidi
+        sortByProximity: chordLibrary.sortByProximity
+        generateXmlFn: function(voicing, root) { return batchEngine.generateXmlForVoicing(voicing, root) }
+        applyFiltersFn: function() { applyFilters() }
+
+        onStatusMessage: function(text, colorType) {
+            statusMsg.text = text
+            statusMsg.color = colorType === "error" ? theme.errorText
+                            : colorType === "success" ? theme.successText
+                            : theme.textMuted
         }
-
-        var selection = curScore.selection
-        if (!selection || !selection.elements || selection.elements.length === 0) {
-            statusMsg.text = "Select a note or rest first"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var targetRoot = null
-        var selectedElement = selection.elements[0]
-        var segment = null
-
-        if (selectedElement.type === Element.NOTE) {
-            var ch = selectedElement.parent
-            if (ch) segment = ch.parent
-        } else if (selectedElement.type === Element.REST) {
-            segment = selectedElement.parent
-        } else if (selectedElement.type === Element.CHORD) {
-            segment = selectedElement.parent
-        }
-
-        if (segment && segment.annotations) {
-            for (var a = 0; a < segment.annotations.length; a++) {
-                if (segment.annotations[a].type === Element.HARMONY) {
-                    targetRoot = Transposer.extractRoot(segment.annotations[a].text)
-                    break
-                }
-            }
-        }
-
-        if (!targetRoot) {
-            targetRoot = voicing.root
-        }
-
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-
-        var targetTick = -1
-        if (segment) {
-            targetTick = segment.tick
-        } else if (selectedElement.type === Element.NOTE) {
-            var parentChord = selectedElement.parent
-            if (parentChord && parentChord.parent) {
-                targetTick = parentChord.parent.tick
-            }
-        }
-
-        if (targetTick < 0) {
-            statusMsg.text = "Could not determine position. Select a note or rest."
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        curScore.startCmd()
-
-        var fd = newElement(Element.FRET_DIAGRAM)
-        fd.fretStrings = voicing.strings || 6
-        fd.fretFrets = voicing.visible_frets || 4
-        fd.fretOffset = voicing.fret_number + offset - 1
-
-        // Set placement based on user preference
-        if (typeof Placement !== "undefined") {
-            if (diagramPlacement === "below") {
-                fd.placement = Placement.BELOW
-            } else {
-                fd.placement = Placement.ABOVE
-            }
-        }
-
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        while (cursor.segment && cursor.tick < targetTick) {
-            cursor.next()
-        }
-
-        cursor.add(fd)
-
-        curScore.endCmd()
-
-        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
-        statusMsg.text = "Inserted " + transposed.name
-            + " [" + transposed.notes.join(" ") + "]"
-            + " (" + diagramPlacement + " staff)"
-        statusMsg.color = theme.successText
-    }
-
-    // === Diagram insertion (setDot API or clipboard workaround) ===
-
-    // Cached result of setDot() availability (null = not yet tested)
-    property var _hasSetDot: null
-    property var _selectedVoicing: null
-
-    function hasSetDotApi() {
-        if (_hasSetDot !== null) return _hasSetDot
-        try {
-            var fd = newElement(Element.FRET_DIAGRAM)
-            _hasSetDot = (typeof fd.setDot === "function")
-            if (_hasSetDot)
-                console.log("setDot() API detected — using direct insertion")
-            else
-                console.log("setDot() not available — using clipboard workaround")
-        } catch (e) {
-            console.log("Could not probe setDot(): " + e)
-            _hasSetDot = false
-        }
-        return _hasSetDot
-    }
-
-    // Insert a voicing directly via setDot() API (no clipboard needed).
-    // Returns true if successful, false if setDot() not available or insert failed.
-    function insertDirect(voicing, targetRoot) {
-        if (!hasSetDotApi()) return false
-        if (!curScore) return false
-
-        var numStrings = voicing.strings || 6
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-
-        try {
-            curScore.startCmd()
-
-            var fd = newElement(Element.FRET_DIAGRAM)
-            fd.fretStrings = numStrings
-            fd.fretFrets = voicing.visible_frets || 4
-            fd.fretOffset = voicing.fret_number + offset - 1
-
-            // Set dots via setDot(string, fret, fingerNumber)
-            // MuseScore uses 0-based string index (0 = leftmost in diagram)
-            var dots = voicing.dots || []
-            for (var d = 0; d < dots.length; d++) {
-                var msStr = numStrings - dots[d].string
-                fd.setDot(msStr, dots[d].fret, 0)
-            }
-
-            // Set mutes and open strings via setMarker
-            var mutes = voicing.mutes || []
-            for (var m = 0; m < mutes.length; m++) {
-                var msMute = numStrings - mutes[m]
-                fd.setMarker(msMute, 1)  // 1 = cross/muted
-            }
-            var opens = voicing.open || []
-            for (var o = 0; o < opens.length; o++) {
-                var msOpen = numStrings - opens[o]
-                fd.setMarker(msOpen, 2)  // 2 = circle/open
-            }
-
-            var cursor = curScore.newCursor()
-            cursor.rewind(1)  // SELECTION_START
-            cursor.add(fd)
-
-            curScore.endCmd()
-            return true
-        } catch (e) {
-            try { curScore.endCmd() } catch (ignore) {}
-            console.log("setDot() insert failed: " + e + " — falling back to clipboard")
-            _hasSetDot = null  // reset cache so clipboard path is used
-            return false
-        }
-    }
-
-    function generateDiagramFile(voicing) {
-        // Determine target root from score selection, or default to C
-        var targetRoot = voicing.root
-        if (curScore) {
-            var sel = curScore.selection
-            if (sel && sel.elements && sel.elements.length > 0) {
-                var elem = sel.elements[0]
-                var seg = null
-                if (elem.type === Element.NOTE && elem.parent)
-                    seg = elem.parent.parent
-                else if (elem.type === Element.REST || elem.type === Element.CHORD)
-                    seg = elem.parent
-                if (seg && seg.annotations) {
-                    for (var a = 0; a < seg.annotations.length; a++) {
-                        if (seg.annotations[a].type === Element.HARMONY) {
-                            var parsed = Transposer.extractRoot(seg.annotations[a].text)
-                            if (parsed) targetRoot = parsed
-                            break
-                        }
-                    }
-                }
-            }
-        }
-
-        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
-        var displayName = transposed.name
-
-        // Try direct insertion via setDot() API first (instant, no clipboard)
-        if (insertDirect(voicing, targetRoot)) {
+        onVoicingInserted: function(voicing) {
             lastInsertedVoicing = voicing
             if (sortByProximity) applyFilters()
-            statusMsg.text = "Inserted " + displayName
-                + " [" + transposed.notes.join(" ") + "]"
-            statusMsg.color = theme.successText
-            return
-        }
-
-        // Fall back to clipboard workaround
-        var xml = generateXmlForVoicing(voicing, targetRoot)
-
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            statusMsg.text = "Failed to write clipboard XML: " + e
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // A launchd agent (com.siegeanalytics.chord-library-clipboard) watches
-        // paste-clipboard.xml for changes and runs ms-clipboard to write to
-        // the macOS pasteboard. No Terminal, no visible windows.
-        _pendingVoicing = voicing
-        // The Timer then fires cmd("paste") to insert the diagram with dots.
-        pasteTimer.start()
-
-        statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
-        statusMsg.color = theme.successText
-    }
-
-    // === Voicing preview (MIDI playback via ms-audio) ===
-
-    function playVoicing(voicing, mode) {
-        // mode: "chord" (all at once) or "arp" (strum low to high)
-        if (!mode) mode = "chord"
-
-        // Compute MIDI note numbers for this voicing in the current tuning
-        var midiNotes = []
-        var dots = voicing.dots || []
-        for (var d = 0; d < dots.length; d++) {
-            var strMidi = tuningMidi[String(dots[d].string)]
-            if (strMidi !== undefined) {
-                var absFret = voicing.fret_number + (dots[d].fret - 1)
-                midiNotes.push(strMidi + absFret)
-            }
-        }
-        // Add open strings
-        var opens = voicing.open || []
-        for (var o = 0; o < opens.length; o++) {
-            var openMidi = tuningMidi[String(opens[o])]
-            if (openMidi !== undefined) {
-                midiNotes.push(openMidi)
-            }
-        }
-
-        if (midiNotes.length === 0) return
-
-        // Write JSON that the launchd agent + ms-audio will pick up
-        var request = JSON.stringify({
-            notes: midiNotes,
-            duration: 1.5,
-            mode: mode,
-        })
-        try {
-            audioFile.write(request)
-        } catch (e) {
-            console.log("Audio playback failed: " + e)
         }
     }
+
+    // Convenience delegates
+    function insertVoicing(voicing) { insertionEngine.insertVoicing(voicing) }
+    function generateDiagramFile(voicing) { insertionEngine.generateDiagramFile(voicing) }
+    function playVoicing(voicing, mode) { insertionEngine.playVoicing(voicing, mode) }
+
+    // Keep paste infrastructure in parent (Timer needs parent scope for cmd("paste"))
+    function _insertionPasteComplete() {
+        if (insertionEngine._pendingVoicing) {
+            lastInsertedVoicing = insertionEngine._pendingVoicing
+            insertionEngine._pendingVoicing = null
+            if (sortByProximity) applyFilters()
+        }
+    }
+
+    // Old insertion code removed — now in InsertionEngine.qml
+    // Keeping paste timer handler in parent (needs cmd("paste") in QML scope)
+
 
     // === File browser (dynamic loading to avoid import issues) ===
 
