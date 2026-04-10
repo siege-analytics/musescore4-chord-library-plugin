@@ -329,13 +329,58 @@ function suggestFingering(voicing) {
     var fingersAvailable = 4 - nextFinger + 1 // fingers 2,3,4 = 3 available
 
     if (fingersNeeded <= fingersAvailable) {
-        // Straightforward assignment
-        for (var si = 0; si < aboveSlots.length; si++) {
-            var slot = aboveSlots[si]
-            for (var ss = 0; ss < slot.strings.length; ss++) {
-                result.push({ string: slot.strings[ss], finger: nextFinger })
+        // Distance-weighted finger assignment (#93):
+        // Instead of sequential (2, 3, 4), select the finger that best
+        // matches the fret distance from the barre. A note 3 frets above
+        // the barre at fret 1 (wide spacing) should get finger 4 (pinky),
+        // not finger 2 (middle).
+        //
+        // Strategy: distribute available fingers (2, 3, 4) across the
+        // above-barre slots proportional to their relative fret distance.
+        var availFingers = []
+        for (var af2 = nextFinger; af2 <= 4; af2++) availFingers.push(af2)
+
+        if (aboveSlots.length === 1) {
+            // Single above-barre slot — pick the finger that best fits the distance
+            var gapMm = fretDistanceMm(minFret, aboveSlots[0].fret)
+            var maxReach14 = FINGER_DISTANCE["1-4"][1]  // 110mm
+            var maxReach13 = FINGER_DISTANCE["1-3"][1]  //  95mm
+            var maxReach12 = FINGER_DISTANCE["1-2"][1]  //  80mm
+            var bestFinger
+            if (gapMm > maxReach13) bestFinger = 4       // too far for ring → pinky
+            else if (gapMm > maxReach12) bestFinger = 3  // too far for middle → ring
+            else bestFinger = 2                          // close → middle
+            // Clamp to available range
+            if (bestFinger < availFingers[0]) bestFinger = availFingers[0]
+            if (bestFinger > availFingers[availFingers.length - 1])
+                bestFinger = availFingers[availFingers.length - 1]
+            for (var ss1 = 0; ss1 < aboveSlots[0].strings.length; ss1++) {
+                result.push({ string: aboveSlots[0].strings[ss1], finger: bestFinger })
             }
-            nextFinger++
+        } else {
+            // Multiple above-barre slots — assign lowest available finger to
+            // the closest slot, highest to the farthest (natural hand shape).
+            // The slots are already sorted by ascending fret.
+            var fingerIdx = 0
+            // If we have more available fingers than slots, skip lower fingers
+            // to match spacing (e.g., 2 slots with fingers 2,3,4 → skip 2, use 3,4)
+            var skip = availFingers.length - aboveSlots.length
+            // But only skip if the first slot is far enough from the barre
+            if (skip > 0 && aboveSlots.length > 0) {
+                var firstGapMm = fretDistanceMm(minFret, aboveSlots[0].fret)
+                var skipThreshold = FINGER_DISTANCE["1-2"][1] * 0.6 // skip finger 2 if gap > 48mm
+                if (firstGapMm > skipThreshold) {
+                    fingerIdx = Math.min(skip, availFingers.length - aboveSlots.length)
+                }
+            }
+            for (var si = 0; si < aboveSlots.length; si++) {
+                var slot = aboveSlots[si]
+                var finger = availFingers[Math.min(fingerIdx, availFingers.length - 1)]
+                for (var ss = 0; ss < slot.strings.length; ss++) {
+                    result.push({ string: slot.strings[ss], finger: finger })
+                }
+                fingerIdx++
+            }
         }
     } else {
         // Not enough fingers — try thumb for the bass-most note,
