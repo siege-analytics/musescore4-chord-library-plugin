@@ -143,27 +143,56 @@ MuseScore {
         source: Qt.resolvedUrl("play-chord.json")
     }
 
+    // === Centralized state groups (C1, #104) ===
+
+    QtObject {
+        id: tuningState
+        property string selectedTuning: "standard"
+        property var tuningList: [
+            "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
+            "baritone"
+        ]
+        property var tuningLabels: ({
+            "standard": "Standard 6-String",
+            "7string-van-eps": "7-String Van Eps (Low A)",
+            "7string-low-b": "7-String Low B",
+            "dadgad": "DADGAD",
+            "all-fourths": "All Fourths",
+            "baritone": "Baritone B (B-E-A-D-F#-B)"
+        })
+        property var tuningStringCounts: ({
+            "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
+            "dadgad": 6, "all-fourths": 6, "baritone": 6
+        })
+    }
+
+    QtObject {
+        id: calcState
+        property int maxFret: 12
+        property int maxStretch: 4
+        property bool allowOpen: true
+        property bool rootInBass: true
+        property int minNotes: 3
+        property int maxMuted: 3
+        property int maxPerQuality: 0
+    }
+
+    // Compatibility aliases — existing code references these unqualified
+    property alias selectedTuning: tuningState.selectedTuning
+    property alias tuningList: tuningState.tuningList
+    property alias tuningLabels: tuningState.tuningLabels
+    property alias tuningStringCounts: tuningState.tuningStringCounts
+    property alias calcMaxFret: calcState.maxFret
+    property alias calcMaxStretch: calcState.maxStretch
+    property alias calcAllowOpen: calcState.allowOpen
+    property alias calcRootInBass: calcState.rootInBass
+    property alias calcMinNotes: calcState.minNotes
+    property alias calcMaxMuted: calcState.maxMuted
+    property alias calcMaxPerQuality: calcState.maxPerQuality
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
-    property string selectedTuning: "standard"  // matches config/tunings/<name>.json
-    property var tuningList: [
-        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
-        "baritone"
-    ]
-    property var tuningLabels: {
-        "standard": "Standard 6-String",
-        "7string-van-eps": "7-String Van Eps (Low A)",
-        "7string-low-b": "7-String Low B",
-        "dadgad": "DADGAD",
-        "all-fourths": "All Fourths",
-        "baritone": "Baritone B (B-E-A-D-F#-B)"
-    }
-    // String count per tuning — used to filter tuning combo by context
-    property var tuningStringCounts: {
-        "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
-        "dadgad": 6, "all-fourths": 6, "baritone": 6
-    }
     // Filtered tuning list — shows tunings compatible with the context's string count.
     // Exact match preferred; if no exact match includes the current tuning, show all compatible (<=).
     property var filteredTuningList: {
@@ -255,14 +284,7 @@ MuseScore {
     property int melodyStaffIdx: -1  // -1 = same staff, 0+ = specific staff index for melody reading
     property bool writeVoice2: false  // when true, write voicing pitches as notes on voice 2
 
-    // Voicing calculator constraints (defaults, overridable per chord in walkthrough)
-    property int calcMaxFret: 12           // highest fret to consider
-    property int calcMaxStretch: 4         // max fret span in one voicing
-    property bool calcAllowOpen: true      // allow open strings in voicings
-    property bool calcRootInBass: true     // require root as lowest note
-    property int calcMinNotes: 3           // minimum sounding strings
-    property int calcMaxMuted: 3           // maximum muted strings
-    property int calcMaxPerQuality: 0      // max voicings per quality (0 = unlimited / Ted Greene mode)
+    // Voicing calculator constraints — backed by calcState QtObject above
 
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
@@ -1925,15 +1947,7 @@ MuseScore {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            calc: QtObject {
-                property int maxFret: chordLibrary.calcMaxFret
-                property int maxStretch: chordLibrary.calcMaxStretch
-                property int minNotes: chordLibrary.calcMinNotes
-                property int maxMuted: chordLibrary.calcMaxMuted
-                property int maxPerQuality: chordLibrary.calcMaxPerQuality
-                property bool allowOpen: chordLibrary.calcAllowOpen
-                property bool rootInBass: chordLibrary.calcRootInBass
-            }
+            calc: calcState
             theme: theme
             usingTuningVoicings: chordLibrary.usingTuningVoicings
             skipDiagramPositions: chordLibrary.skipDiagramPositions
@@ -1972,15 +1986,12 @@ MuseScore {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            // State groups
+            // State groups (centralized, C1 #104)
             library: QtObject {
                 property var voicingsData: chordLibrary.voicingsData
                 property bool dataLoaded: chordLibrary.dataLoaded
             }
-            tuning: QtObject {
-                property string selectedTuning: chordLibrary.selectedTuning
-                property var tuningLabels: chordLibrary.tuningLabels
-            }
+            tuning: tuningState
             theme: theme
 
             // Scalar properties
@@ -2071,11 +2082,7 @@ MuseScore {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            tuning: QtObject {
-                property string selectedTuning: chordLibrary.selectedTuning
-                property var tuningLabels: chordLibrary.tuningLabels
-                property var tuningList: chordLibrary.tuningList
-            }
+            tuning: tuningState
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
