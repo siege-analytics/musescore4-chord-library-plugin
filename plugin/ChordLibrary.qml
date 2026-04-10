@@ -3506,89 +3506,18 @@ MuseScore {
             }
         }
 
-        // === Tab 2: Export ===
-        Flickable {
+        // === Tab 2: Export (extracted to ui/ExportPanel.qml, #94) ===
+        ExportPanel {
             visible: currentTab === 2 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: exportColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
-
-            ColumnLayout {
-                id: exportColumn
-                width: parent.width - 16
-                spacing: 12
-
-                Label {
-                    text: "Save current library to a file:"
-                    font.pixelSize: 11
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: exportPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        text: homePath() + "/Documents/chord-library-export.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("save", exportPathField, null)
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Export JSON"
-                        font.pixelSize: 10
-                        onClicked: doExport()
-                    }
-
-                    Button {
-                        text: "Export MusicXML"
-                        font.pixelSize: 10
-                        onClicked: exportMusicXML()
-                    }
-
-                    Button {
-                        text: "Export GP5"
-                        font.pixelSize: 10
-                        onClicked: exportGP5()
-                    }
-
-                    Button {
-                        text: "Chord Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportChordSheet()
-                    }
-
-                    Button {
-                        text: "Diagrams (SVG)"
-                        font.pixelSize: 10
-                        onClicked: exportDiagramsSVG()
-                    }
-                }
-
-                Label {
-                    id: exportStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-            }
+            defaultPath: homePath() + "/Documents/chord-library-export.json"
+            onExportJson: doExport()
+            onExportMusicXML: exportMusicXML()
+            onExportGP5: exportGP5()
+            onExportChordSheet: exportChordSheet()
+            onExportDiagramsSVG: exportDiagramsSVG()
+            onBrowseClicked: function(field) { openFileBrowser("save", field, null) }
         }
 
         // === Tab 3: Import ===

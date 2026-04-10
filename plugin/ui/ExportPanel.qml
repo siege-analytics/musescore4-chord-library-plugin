@@ -2,9 +2,13 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-// ExportPanel — Export tab UI (Tab 2).
-// Displays export path field and format buttons.
-// All export logic stays in ChordLibrary.qml; this is the template.
+// ExportPanel.qml — Export tab UI (Tab 2) for the Chord Library plugin.
+// Extracted from ChordLibrary.qml (A1, #94).
+//
+// Input properties: defaultPath, statusText, statusColor
+// Output signals: exportJson, exportMusicXML, exportGP5, exportChordSheet,
+//                 exportDiagramsSVG, browseClicked(targetField)
+// Read-only alias: exportPath (for parent to read the user's chosen path)
 
 Flickable {
     id: exportPanel
