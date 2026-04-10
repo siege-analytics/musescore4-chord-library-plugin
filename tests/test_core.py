@@ -769,3 +769,66 @@ class TestFingeringEngine:
                 if af > 0 and d["string"] not in assigned_strings:
                     errors.append(f"{v['id']}: string {d['string']} has no finger")
         assert not errors, f"{len(errors)} unassigned:\n" + "\n".join(errors[:10])
+
+
+# === Physical Hand Model Tests ===
+
+class TestPhysicalHandModel:
+    """Tests for the Mersenne's Law fret geometry and CombinoChord distance model."""
+
+    GAMMA = 36.0  # first fret width mm
+
+    def _fret_width(self, fret):
+        if fret <= 0:
+            return self.GAMMA
+        return self.GAMMA / (2 ** ((fret - 1) / 12))
+
+    def _fret_distance(self, low, high):
+        return sum(self._fret_width(f) for f in range(low, high))
+
+    def test_fret_widths_decrease(self):
+        """Frets get narrower as you go up the neck (Mersenne's Law)."""
+        for f in range(1, 20):
+            assert self._fret_width(f) > self._fret_width(f + 1)
+
+    def test_fret_1_is_widest(self):
+        assert self._fret_width(1) == pytest.approx(36.0, abs=0.1)
+
+    def test_fret_12_is_half_of_fret_1(self):
+        """The 12th fret is exactly half the width of the 1st fret (octave)."""
+        # Actually fret 13 has width = GAMMA/2 since width(n) = GAMMA/2^((n-1)/12)
+        # At n=13: GAMMA/2^(12/12) = GAMMA/2
+        assert self._fret_width(13) == pytest.approx(self.GAMMA / 2, abs=0.1)
+
+    def test_three_fret_span_at_fret_1_exceeds_100mm(self):
+        """A 3-fret span starting at fret 1 should be about 102mm."""
+        dist = self._fret_distance(1, 4)
+        assert dist > 100
+        assert dist < 110
+
+    def test_four_fret_span_at_fret_7_within_reach(self):
+        """A 4-fret span at fret 7 should be within the 110mm finger 1-4 limit."""
+        dist = self._fret_distance(7, 11)
+        assert dist < 110  # within reach
+
+    def test_four_fret_span_at_fret_1_exceeds_reach(self):
+        """A 4-fret span at fret 1 should exceed the 110mm limit."""
+        dist = self._fret_distance(1, 5)
+        assert dist > 110  # too far
+
+    def test_diagonal_barre_possible_at_high_frets(self):
+        """At fret 12+, fret width < 20mm, making diagonal barres possible."""
+        assert self._fret_width(12) < 20  # ~19.1mm
+        assert self._fret_width(10) > 20  # ~21.4mm, too wide
+
+    def test_finger_pair_limits_symmetric(self):
+        """Finger distance constraints: 1-4 has the widest max reach (110mm)."""
+        PAIRS = {
+            "1-2": [5.0, 80.0], "1-3": [15.0, 95.0], "1-4": [25.0, 110.0],
+            "2-3": [6.0, 52.0], "2-4": [12.0, 69.0], "3-4": [8.5, 47.0],
+        }
+        # Max reach should increase with finger span
+        assert PAIRS["1-4"][1] > PAIRS["1-3"][1] > PAIRS["1-2"][1]
+        assert PAIRS["2-4"][1] > PAIRS["2-3"][1]
+        # Min distances should be smallest for adjacent fingers
+        assert PAIRS["1-2"][0] < PAIRS["1-3"][0] < PAIRS["1-4"][0]

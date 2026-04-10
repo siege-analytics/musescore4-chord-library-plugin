@@ -9,16 +9,152 @@
 // - Thumb (T/0) for bass notes when fingers are exhausted
 // - Finger ordering: lower fret → lower finger number
 
-// Maximum stretch (in frets) between finger 1 and finger 4, by fret position.
-var MAX_STRETCH = {
-    1: 5, 2: 5, 3: 4, 4: 4, 5: 4,
-    6: 3, 7: 3, 8: 3, 9: 3,
-    10: 3, 11: 2, 12: 2
+// === Physical Hand Model ===
+// Based on CombinoChord (Smith 2021, IEEE) inter-finger distance constraints.
+// Fret widths computed via Mersenne's Law: width(n) = GAMMA / 2^((n-1)/12)
+// where GAMMA is the first fret width (~36mm on a standard 25.5" scale guitar).
+
+var GAMMA = 36.0  // first fret width in mm (standard 25.5" / 648mm scale)
+
+// Fret width in mm at a given fret position (Mersenne's Law).
+function fretWidthMm(fret) {
+    if (fret <= 0) return GAMMA
+    return GAMMA / Math.pow(2, (fret - 1) / 12)
 }
 
+// Distance in mm between two frets (sum of fret widths in the span).
+function fretDistanceMm(fretLow, fretHigh) {
+    if (fretLow >= fretHigh) return 0
+    var dist = 0
+    for (var f = fretLow; f < fretHigh; f++) {
+        dist += fretWidthMm(f)
+    }
+    return dist
+}
+
+// CombinoChord inter-finger distance constraints (mm).
+// Source: Smith 2021, IEEE — Table 1.
+// Each entry: [minMm, maxMm]
+var FINGER_DISTANCE = {
+    "1-2": [5.0,  80.0],
+    "1-3": [15.0, 95.0],
+    "1-4": [25.0, 110.0],
+    "2-3": [6.0,  52.0],
+    "2-4": [12.0, 69.0],
+    "3-4": [8.5,  47.0]
+}
+
+// Check whether two fingers at given frets are within physical reach.
+// fingerLow/fingerHigh are finger numbers (1-4), fretLow/fretHigh are fret positions.
+function isFingerReachValid(fingerLow, fingerHigh, fretLow, fretHigh) {
+    if (fingerLow === fingerHigh) return fretLow === fretHigh  // same finger = same fret (barre)
+    var key = fingerLow + "-" + fingerHigh
+    var limits = FINGER_DISTANCE[key]
+    if (!limits) return true  // no constraint data, allow
+    var dist = fretDistanceMm(fretLow, fretHigh)
+    return dist >= limits[0] && dist <= limits[1]
+}
+
+// Maximum stretch in frets between finger 1 and finger 4 at a given fret position,
+// derived from the CombinoChord mm model.
 function maxStretchAt(fret) {
-    if (fret <= 0) return 5
-    return MAX_STRETCH[fret] || 2
+    var maxMm = FINGER_DISTANCE["1-4"][1]  // 110mm max reach
+    var stretch = 0
+    var dist = 0
+    for (var f = fret; f < fret + 8; f++) {  // try up to 8 frets
+        dist += fretWidthMm(f)
+        if (dist > maxMm) break
+        stretch++
+    }
+    return stretch
+}
+
+// === Barre Type Detection ===
+//
+// Barre types (from standard to expert):
+//   "full"     — flat finger across contiguous strings at one fret
+//   "hinge"    — flat on some strings, curled away from others (partial coverage)
+//   "tip"      — fingertip presses 2 adjacent lower strings (Ted Greene technique)
+//   "diagonal" — angled finger spans 2 adjacent frets on adjacent strings
+//                (possible where fret width < ~20mm, i.e., fret 10+)
+//
+// Each barre has a difficulty weight used in scoring (Phase 4).
+var BARRE_DIFFICULTY = {
+    "none": 0,
+    "full": 1,
+    "tip": 2,
+    "hinge": 3,
+    "diagonal": 4
+}
+
+// Average finger width in mm (index finger pad).
+// Used to determine if a diagonal barre is physically possible.
+var FINGER_WIDTH_MM = 18.0
+
+// Can a diagonal barre work at this fret position?
+// Requires fret width ≤ finger width (so the finger can span two frets).
+function canDiagonalBarreAt(fret) {
+    return fretWidthMm(fret) <= FINGER_WIDTH_MM
+}
+
+// Barre capability per finger.
+// maxStrings: maximum strings a full barre can cover.
+// canHinge: can this finger do a hinge barre (partial, curled on some strings)?
+// canTip: can this finger tip-barre 2 adjacent strings?
+// canDiagonal: can this finger do a diagonal barre (at narrow enough frets)?
+var FINGER_BARRE_CAPS = {
+    1: { maxStrings: 6, canHinge: true,  canTip: true,  canDiagonal: true  },
+    2: { maxStrings: 3, canHinge: true,  canTip: true,  canDiagonal: true  },
+    3: { maxStrings: 3, canHinge: true,  canTip: true,  canDiagonal: false },
+    4: { maxStrings: 2, canHinge: false, canTip: false, canDiagonal: false }
+}
+
+// Detect the barre type for a finger assignment covering multiple strings/frets.
+// Returns { type: "full"|"hinge"|"tip"|"diagonal"|"none", strings: [], frets: [] }
+function detectBarreType(finger, stringFretPairs) {
+    if (stringFretPairs.length <= 1) return { type: "none", strings: [], frets: [] }
+
+    var caps = FINGER_BARRE_CAPS[finger]
+    if (!caps) return { type: "none", strings: [], frets: [] }
+
+    var strings = stringFretPairs.map(function(p) { return p.string })
+    var frets = stringFretPairs.map(function(p) { return p.fret })
+
+    // All same fret?
+    var allSameFret = true
+    for (var i = 1; i < frets.length; i++) {
+        if (frets[i] !== frets[0]) { allSameFret = false; break }
+    }
+
+    if (allSameFret) {
+        // Check adjacency
+        var sortedStr = strings.slice().sort(function(a, b) { return a - b })
+        var contiguous = true
+        for (var j = 1; j < sortedStr.length; j++) {
+            if (sortedStr[j] - sortedStr[j - 1] !== 1) { contiguous = false; break }
+        }
+        if (contiguous && strings.length <= caps.maxStrings) {
+            return { type: "full", strings: strings, frets: [frets[0]] }
+        }
+        if (caps.canHinge) {
+            return { type: "hinge", strings: strings, frets: [frets[0]] }
+        }
+        if (strings.length === 2 && caps.canTip) {
+            return { type: "tip", strings: strings, frets: [frets[0]] }
+        }
+    }
+
+    // Different frets — check for diagonal barre (2 strings, 2 adjacent frets)
+    if (stringFretPairs.length === 2 && caps.canDiagonal) {
+        var sorted = stringFretPairs.slice().sort(function(a, b) { return a.fret - b.fret })
+        var fretDiff = sorted[1].fret - sorted[0].fret
+        var strDiff = Math.abs(sorted[1].string - sorted[0].string)
+        if (fretDiff === 1 && strDiff === 1 && canDiagonalBarreAt(sorted[0].fret)) {
+            return { type: "diagonal", strings: strings, frets: frets }
+        }
+    }
+
+    return { type: "none", strings: [], frets: [] }
 }
 
 // Check whether a set of strings forms a contiguous (adjacent) group.
@@ -228,7 +364,13 @@ function suggestFingering(voicing) {
         }
     }
 
-    // Add stretch warning if span exceeds physical limits
+    // Detect and annotate barre types on the result
+    _annotateBarreTypes(result, fretted)
+
+    // Validate finger-pair distances against CombinoChord model
+    _validateFingerReach(result, fretted, minFret)
+
+    // Add stretch warning if overall span exceeds physical limits
     _addStretchWarnings(result, fretted, minFret)
 
     return result
@@ -327,6 +469,87 @@ function _consolidateAboveSlots(slots) {
         merged.push({ fret: fretOrder[fi], strings: byFret[fretOrder[fi]] })
     }
     return merged
+}
+
+// Annotate barre types on fingering results.
+// Groups result entries by finger number, detects barre type for each
+// multi-string finger, and adds barreType field to those entries.
+function _annotateBarreTypes(result, fretted) {
+    // Group by finger
+    var byFinger = {}
+    for (var i = 0; i < result.length; i++) {
+        var f = result[i].finger
+        if (f <= 0) continue  // skip thumb
+        if (!byFinger[f]) byFinger[f] = []
+        // Find absolute fret for this string
+        var af = 0
+        for (var j = 0; j < fretted.length; j++) {
+            if (fretted[j].string === result[i].string) {
+                af = fretted[j].fret
+                break
+            }
+        }
+        byFinger[f].push({ string: result[i].string, fret: af, resultIdx: i })
+    }
+
+    for (var finger in byFinger) {
+        var entries = byFinger[finger]
+        if (entries.length <= 1) continue
+
+        var pairs = entries.map(function(e) { return { string: e.string, fret: e.fret } })
+        var bt = detectBarreType(parseInt(finger), pairs)
+
+        if (bt.type !== "none") {
+            for (var k = 0; k < entries.length; k++) {
+                result[entries[k].resultIdx].barreType = bt.type
+            }
+        }
+    }
+}
+
+// Validate finger-pair distances using the CombinoChord mm model.
+// Adds reachWarning flag to result entries where a finger pair exceeds
+// its physical distance limits.
+function _validateFingerReach(result, fretted, minFret) {
+    // Build finger → fret mapping (use the lowest fret for barred fingers)
+    var fingerFrets = {}
+    for (var i = 0; i < result.length; i++) {
+        var f = result[i].finger
+        if (f <= 0) continue  // skip thumb
+        // Find the absolute fret for this string
+        var absFret = -1
+        for (var j = 0; j < fretted.length; j++) {
+            if (fretted[j].string === result[i].string) {
+                absFret = fretted[j].fret
+                break
+            }
+        }
+        if (absFret < 0) continue
+        if (fingerFrets[f] === undefined || absFret < fingerFrets[f]) {
+            fingerFrets[f] = absFret
+        }
+    }
+
+    // Check each finger pair
+    var fingers = Object.keys(fingerFrets).sort(function(a, b) { return a - b })
+    for (var fi = 0; fi < fingers.length; fi++) {
+        for (var fj = fi + 1; fj < fingers.length; fj++) {
+            var fLow = parseInt(fingers[fi])
+            var fHigh = parseInt(fingers[fj])
+            var fretLow = fingerFrets[fLow]
+            var fretHigh = fingerFrets[fHigh]
+            if (fretLow > fretHigh) {
+                var tmp = fretLow; fretLow = fretHigh; fretHigh = tmp
+            }
+            if (!isFingerReachValid(fLow, fHigh, fretLow, fretHigh)) {
+                // Flag all entries as having a reach issue
+                for (var w = 0; w < result.length; w++) {
+                    result[w].stretchWarning = true
+                }
+                return
+            }
+        }
+    }
 }
 
 // Add stretchWarning flag to results when span exceeds physical limits.

@@ -323,6 +323,10 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
             }
             mutes.sort(function(a, b) { return a - b })
 
+            // Fingering feasibility: check that 4 fingers (+ optional thumb)
+            // can cover all fretted notes, accounting for barres.
+            if (dots.length > 0 && !_isFingeringFeasible(dots, fn, numStrings, mutes)) continue
+
             // Top note interval for naming
             var topInterval = intervals.length > 0 ? intervals[intervals.length - 1] : "?"
 
@@ -554,6 +558,131 @@ function capPerRoot(voicings, maxPerQ) {
         }
     }
     return result
+}
+
+// Fingering feasibility check — can 4 fingers (+ optional thumb) cover
+// all fretted notes? Uses barre-aware slot counting:
+// 1. Group notes by absolute fret
+// 2. At the lowest fret, notes on non-adjacent strings that span the full
+//    barre range (with intermediate strings at higher frets) count as ONE
+//    finger (barre). Other same-fret groups also count as one finger each.
+// 3. Above the barre, adjacent strings at the same fret share one finger.
+// 4. Total finger slots must be ≤ 4 (or ≤ 5 with thumb on bass string 5+).
+// 5. Stretch between lowest and highest fret must not exceed position limits.
+//
+// This mirrors FingeringEngine.suggestFingering() logic but is a quick
+// boolean check without building full assignments.
+function _isFingeringFeasible(dots, fretNumber, numStrings, mutes) {
+    // Compute absolute frets
+    var fretted = []
+    for (var i = 0; i < dots.length; i++) {
+        var af = fretNumber + (dots[i].fret - 1)
+        if (af > 0) fretted.push({ string: dots[i].string, fret: af })
+    }
+    if (fretted.length === 0) return true
+
+    var minFret = fretted[0].fret
+    var maxFret = fretted[0].fret
+    for (var m = 1; m < fretted.length; m++) {
+        if (fretted[m].fret < minFret) minFret = fretted[m].fret
+        if (fretted[m].fret > maxFret) maxFret = fretted[m].fret
+    }
+
+    // Stretch check — use Mersenne's Law for mm-based physical limits.
+    // Max reach for fingers 1-4 is ~110mm (CombinoChord, Smith 2021).
+    var MAX_REACH_MM = 110.0
+    var GAMMA = 36.0  // first fret width in mm (25.5" scale)
+    var spanMm = 0
+    for (var sf = minFret; sf < maxFret; sf++) {
+        spanMm += GAMMA / Math.pow(2, (sf - 1) / 12)
+    }
+    if (spanMm > MAX_REACH_MM) return false
+
+    // Count strings at min fret
+    var stringsAtMin = []
+    for (var sm = 0; sm < fretted.length; sm++) {
+        if (fretted[sm].fret === minFret) stringsAtMin.push(fretted[sm].string)
+    }
+
+    // Barre: if ≥2 notes at min fret, they can share finger 1 (barre covers
+    // the range from min to max string, with intermediate strings overridden
+    // by higher-fret fingers or muted)
+    var useBarre = stringsAtMin.length >= 2
+    var fingerSlots = 0
+
+    if (useBarre) {
+        fingerSlots = 1 // barre = 1 finger
+    } else {
+        fingerSlots = 1 // single note at min fret = 1 finger
+    }
+
+    // Count above-barre slots: group by fret, split non-adjacent strings
+    var aboveByFret = {}
+    for (var af2 = 0; af2 < fretted.length; af2++) {
+        if (fretted[af2].fret > minFret) {
+            var fr = fretted[af2].fret
+            if (!aboveByFret[fr]) aboveByFret[fr] = []
+            aboveByFret[fr].push(fretted[af2].string)
+        }
+    }
+    for (var fk in aboveByFret) {
+        var strs = aboveByFret[fk].sort(function(a, b) { return a - b })
+        // Count groups of adjacent strings
+        var groups = 1
+        for (var g = 1; g < strs.length; g++) {
+            if (strs[g] - strs[g - 1] > 1) groups++
+        }
+        fingerSlots += groups
+    }
+
+    // Check if we have enough fingers (4, or 5 with thumb)
+    if (fingerSlots <= 4) return true
+
+    // Try thumb: if bass-most note is on string 5+ and isolated,
+    // removing it might bring slots to ≤ 4
+    if (numStrings >= 6) {
+        var bassString = 0
+        for (var bn = 0; bn < fretted.length; bn++) {
+            if (fretted[bn].string > bassString) bassString = fretted[bn].string
+        }
+        if (bassString >= 5) {
+            // Recount without bass note
+            var remaining = []
+            for (var rn = 0; rn < fretted.length; rn++) {
+                if (fretted[rn].string !== bassString) remaining.push(fretted[rn])
+            }
+            if (remaining.length === 0) return true
+
+            var minF2 = remaining[0].fret
+            for (var m2 = 1; m2 < remaining.length; m2++) {
+                if (remaining[m2].fret < minF2) minF2 = remaining[m2].fret
+            }
+            var atMin2 = 0
+            for (var am2 = 0; am2 < remaining.length; am2++) {
+                if (remaining[am2].fret === minF2) atMin2++
+            }
+            var slots2 = atMin2 >= 2 ? 1 : 1 // barre or single
+            var above2 = {}
+            for (var a2 = 0; a2 < remaining.length; a2++) {
+                if (remaining[a2].fret > minF2) {
+                    var f2 = remaining[a2].fret
+                    if (!above2[f2]) above2[f2] = []
+                    above2[f2].push(remaining[a2].string)
+                }
+            }
+            for (var fk2 in above2) {
+                var strs2 = above2[fk2].sort(function(a, b) { return a - b })
+                var grp2 = 1
+                for (var g2 = 1; g2 < strs2.length; g2++) {
+                    if (strs2[g2] - strs2[g2 - 1] > 1) grp2++
+                }
+                slots2 += grp2
+            }
+            if (slots2 <= 4) return true
+        }
+    }
+
+    return false
 }
 
 // Cartesian product of filtered options (replaces itertools.product)
