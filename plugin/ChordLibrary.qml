@@ -537,280 +537,37 @@ MuseScore {
         console.log("Settings saved")
     }
 
-    // === Tuning import/create ===
+    // === Tuning management (extracted to model/TuningManager.qml, #102) ===
 
-    // MIDI note to name for display
-    property var midiNoteNames: {
-        var names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
-        var map = {}
-        for (var midi = 21; midi <= 108; midi++) {
-            var octave = Math.floor(midi / 12) - 1
-            map[midi] = names[midi % 12] + octave
-        }
-        return map
+    TuningManager {
+        id: tuningManager
+        tuningFile: chordLibrary.tuningFile
+        settingsPanel: settingsPanel
+        tuningList: chordLibrary.tuningList
+        tuningLabels: chordLibrary.tuningLabels
+        tuningStringCounts: chordLibrary.tuningStringCounts
+        selectedTuning: chordLibrary.selectedTuning
+
+        onTuningListChanged: chordLibrary.tuningList = tuningManager.tuningList
+        onTuningLabelsChanged: chordLibrary.tuningLabels = tuningManager.tuningLabels
+        onTuningStringCountsChanged: chordLibrary.tuningStringCounts = tuningManager.tuningStringCounts
+        onSelectedTuningChanged: chordLibrary.selectedTuning = tuningManager.selectedTuning
+        onTuningChanged: { loadTuningStringCount(); loadTuningVoicings() }
+        onSettingsSaveRequested: saveSettings()
     }
 
-    // Parse a note name like "E4", "Bb3", "F#2" to MIDI number
-    // Returns -1 if not a valid note name (caller falls back to parseInt)
-    property var noteToMidiMap: {
-        "C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11
-    }
-    function noteNameToMidi(str) {
-        str = str.trim()
-        // Try as plain integer first
-        var asInt = parseInt(str)
-        if (!isNaN(asInt) && str.match(/^\d+$/)) return asInt
+    // Compatibility aliases
+    property var builtInTunings: tuningManager.builtInTunings
+    property var midiNoteNames: tuningManager.midiNoteNames
+    function noteNameToMidi(str) { return tuningManager.noteNameToMidi(str) }
+    function moveTuning(slug, direction) { tuningManager.moveTuning(slug, direction) }
+    function importTuning(path) { tuningManager.importTuning(path) }
+    function createTuning(name, pitchStr, numStrings) { tuningManager.createTuning(name, pitchStr, numStrings) }
+    function editTuning(slug) { tuningManager.editTuning(slug) }
+    function deleteTuning(slug) { tuningManager.deleteTuning(slug) }
 
-        // Parse note name: letter + optional accidental + octave
-        var match = str.match(/^([A-Ga-g])(#|b|)(\d)$/)
-        if (!match) return -1
-        var letter = match[1].toUpperCase()
-        var accidental = match[2]
-        var octave = parseInt(match[3])
-        var base = noteToMidiMap[letter]
-        if (base === undefined) return -1
-        var midi = (octave + 1) * 12 + base
-        if (accidental === "#") midi += 1
-        else if (accidental === "b") midi -= 1
-        return midi
-    }
-
-    // Move a tuning up or down in the list. direction: -1 = up, +1 = down
-    function moveTuning(slug, direction) {
-        var list = tuningList.slice()
-        var idx = list.indexOf(slug)
-        if (idx < 0) return
-        var newIdx = idx + direction
-        if (newIdx < 0 || newIdx >= list.length) return
-        // Swap
-        var temp = list[newIdx]
-        list[newIdx] = list[idx]
-        list[idx] = temp
-        tuningList = list
-        saveSettings()
-    }
-
-    function addTuningToList(slug, name, stringCount) {
-        // Add to the runtime lists if not already present
-        var list = tuningList.slice()
-        if (list.indexOf(slug) < 0) {
-            list.push(slug)
-            tuningList = list
-        }
-        var labels = {}
-        for (var k in tuningLabels) labels[k] = tuningLabels[k]
-        labels[slug] = name
-        tuningLabels = labels
-        // Record string count for combo filtering
-        if (stringCount) {
-            var counts = {}
-            for (var c in tuningStringCounts) counts[c] = tuningStringCounts[c]
-            counts[slug] = stringCount
-            tuningStringCounts = counts
-        }
-    }
-
-    function importTuning(path) {
-        if (!path) {
-            settingsPanel.tuningStatus = "Enter a file path"
-            settingsPanel.tuningStatusColor = theme.errorText
-            return
-        }
-        tuningFile.source = path
-        try {
-            var raw = tuningFile.read()
-            if (!raw || raw.length === 0) {
-                settingsPanel.tuningStatus = "File not found or empty"
-                settingsPanel.tuningStatusColor = theme.errorText
-                return
-            }
-            var tuning = JSON.parse(raw)
-            if (!tuning.name || !tuning.strings) {
-                settingsPanel.tuningStatus = "Invalid tuning: needs 'name' and 'strings' fields"
-                settingsPanel.tuningStatusColor = theme.errorText
-                return
-            }
-
-            // Save to plugin directory as custom tuning
-            var slug = tuning.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-            var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-            tuningFile.source = destPath
-            tuningFile.write(raw)
-
-            addTuningToList(slug, tuning.name, Object.keys(tuning.strings || {}).length || 6)
-            selectedTuning = slug
-            loadTuningStringCount()
-            loadTuningVoicings()
-            saveSettings()
-
-            settingsPanel.tuningStatus = "Imported: " + tuning.name
-            settingsPanel.tuningStatusColor = theme.successText
-        } catch (e) {
-            settingsPanel.tuningStatus = "Failed: " + e
-            settingsPanel.tuningStatusColor = theme.errorText
-        }
-    }
-
-    function createTuning(name, pitchStr, numStrings) {
-        if (!name) {
-            settingsPanel.tuningStatus = "Enter a tuning name"
-            settingsPanel.tuningStatusColor = theme.errorText
-            return
-        }
-
-        var rawParts = pitchStr.split(",")
-        var pitches = []
-        for (var p = 0; p < rawParts.length; p++) {
-            var midi = noteNameToMidi(rawParts[p])
-            if (midi < 0) {
-                settingsPanel.tuningStatus = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
-                settingsPanel.tuningStatusColor = theme.errorText
-                return
-            }
-            pitches.push(midi)
-        }
-
-        if (pitches.length < numStrings) {
-            settingsPanel.tuningStatus = "Need " + numStrings + " pitches, got " + pitches.length
-            settingsPanel.tuningStatusColor = theme.errorText
-            return
-        }
-        pitches = pitches.slice(0, numStrings)
-
-        // Validate pitches are reasonable MIDI values
-        for (var i = 0; i < pitches.length; i++) {
-            if (pitches[i] < 20 || pitches[i] > 100) {
-                settingsPanel.tuningStatus = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
-                settingsPanel.tuningStatusColor = theme.errorText
-                return
-            }
-        }
-
-        // Build the tuning JSON
-        var strings = {}
-        var notes = {}
-        for (var s = 0; s < pitches.length; s++) {
-            var strNum = s + 1
-            strings[strNum] = pitches[s]
-            notes[strNum] = midiNoteNames[pitches[s]] || ("?" + pitches[s])
-        }
-
-        var tuning = {
-            name: name,
-            description: "Custom tuning created in Chord Library",
-            strings: strings,
-            notes: notes
-        }
-
-        var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-        tuningFile.source = destPath
-        try {
-            tuningFile.write(JSON.stringify(tuning, null, 2))
-            addTuningToList(slug, name, numStrings)
-            selectedTuning = slug
-            loadTuningStringCount()
-            loadTuningVoicings()
-            saveSettings()
-
-            // Show the note names as feedback
-            var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
-            settingsPanel.tuningStatus = "Created: " + name + " (" + noteStr + ")"
-            settingsPanel.tuningStatusColor = theme.successText
-        } catch (e) {
-            settingsPanel.tuningStatus = "Failed to save: " + e
-            settingsPanel.tuningStatusColor = theme.errorText
-        }
-    }
-
-    // The built-in tunings that ship with the plugin (cannot be deleted)
-    property var builtInTunings: [
-        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
-        "baritone", "ukulele", "ukulele-low-g", "mandolin", "banjo-open-g",
-        "bass-4string", "bass-5string"
-    ]
-
-    // Load a tuning's data into the create/edit form fields for editing
-    function editTuning(slug) {
-        if (!slug) return
-        var paths = [
-            Qt.resolvedUrl("tunings/" + slug + ".json"),
-            Qt.resolvedUrl("../config/tunings/" + slug + ".json")
-        ]
-        for (var p = 0; p < paths.length; p++) {
-            tuningFile.source = paths[p]
-            try {
-                var raw = tuningFile.read()
-                if (raw && raw.length > 2) {
-                    var t = JSON.parse(raw)
-                    settingsPanel.tuningNameValue = t.name || slug
-                    var strings = t.strings || {}
-                    var count = Object.keys(strings).length
-                    settingsPanel.tuningStringCountValue = count > 0 ? count : 6
-
-                    // Convert MIDI values back to note names for display
-                    var pitchParts = []
-                    for (var s = 1; s <= count; s++) {
-                        var midi = strings[String(s)]
-                        if (midi !== undefined) {
-                            pitchParts.push(midiNoteNames[midi] || String(midi))
-                        }
-                    }
-                    settingsPanel.tuningPitchesValue = pitchParts.join(", ")
-                    settingsPanel.tuningStatus = "Editing: " + (t.name || slug) + " — change values and click Save"
-                    settingsPanel.tuningStatusColor = theme.textSecondary
-                    return
-                }
-            } catch (e) {}
-        }
-        settingsPanel.tuningStatus = "Could not load tuning: " + slug
-        settingsPanel.tuningStatusColor = theme.errorText
-    }
-
-    // Delete a custom tuning (built-in tunings cannot be deleted)
-    function deleteTuning(slug) {
-        if (!slug) return
-        if (builtInTunings.indexOf(slug) >= 0) {
-            settingsPanel.tuningStatus = "Cannot delete built-in tuning"
-            settingsPanel.tuningStatusColor = theme.errorText
-            return
-        }
-
-        // Remove from tuning list
-        var list = tuningList.slice()
-        var idx = list.indexOf(slug)
-        if (idx >= 0) {
-            list.splice(idx, 1)
-            tuningList = list
-        }
-
-        // Remove from labels
-        var labels = {}
-        for (var k in tuningLabels) {
-            if (k !== slug) labels[k] = tuningLabels[k]
-        }
-        tuningLabels = labels
-
-        // If we just deleted the active tuning, switch to standard
-        if (selectedTuning === slug) {
-            selectedTuning = "standard"
-            loadTuningStringCount()
-            applyFilters()
-        }
-        saveSettings()
-
-        // Delete the tuning file (write empty string — FileIO can't delete)
-        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-        tuningFile.source = destPath
-        try {
-            tuningFile.write("")
-        } catch (e) {
-            // File may not exist in writable location — that's OK
-        }
-
-        settingsPanel.tuningStatus = "Deleted: " + slug
-        settingsPanel.tuningStatusColor = theme.successText
-    }
+    // These were previously inline — now delegate but keep the old function signatures
+    function addTuningToList(slug, name, stringCount) { tuningManager.addTuningToList(slug, name, stringCount) }
 
     // === Save to Library ===
 
@@ -2010,392 +1767,42 @@ MuseScore {
         }
     }
 
-    // === Inline tools (pure QML, no Python/terminal) ===
+    // === Inline tools (extracted to model/InlineTools.qml, #101) ===
 
-    // Collect unique chord symbols from the open score
-    function collectScoreChords() {
-        if (!curScore) return []
-        var chords = []
-        var seen = {}
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-        while (cursor.segment) {
-            var seg = cursor.segment
-            if (seg.annotations) {
-                for (var a = 0; a < seg.annotations.length; a++) {
-                    if (seg.annotations[a].type === Element.HARMONY) {
-                        var text = seg.annotations[a].text
-                        if (!seen[text]) {
-                            seen[text] = true
-                            chords.push(text)
-                        }
-                    }
-                }
-            }
-            cursor.next()
-        }
-        return chords
-    }
+    InlineTools {
+        id: inlineTools
+        curScore: chordLibrary.curScore
+        voicingsData: chordLibrary.voicingsData
+        filterContext: chordLibrary.filterContext
+        filterCategory: chordLibrary.filterCategory
+        skipDiagramPositions: chordLibrary.skipDiagramPositions
+        diagramPlacement: chordLibrary.diagramPlacement
+        findBestVoicingFn: function(root, quality) { return findBestVoicing(root, quality) }
+        parseChordSymbolFn: function(text) { return parseChordSymbol(text) }
+        showResultFn: function(title, msg, ok) { showResult(title, msg, ok) }
+        openSaveDialogFn: function(title, filter, path, cb) { openSaveDialog(title, filter, path, cb) }
+        launchExportFn: function(cmd) { launchExport(cmd) }
+        extractChordsToFileFn: function() { return extractChordsToFile() }
+        homePath: homePath()
 
-    function analyzeCurrentScore() {
-        if (!curScore) {
-            _toolStatusText = "Open a score with chord symbols first."
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            _toolStatusText = "No chord symbols found in the score."
-            return
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-
-        var lines = []
-        var covered = 0
-        var gaps = 0
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  ✗  " + chords[i] + " — could not parse")
-                gaps++
-                continue
-            }
-            var matches = voicingsData.filter(function(v) {
-                // Quartal voicings work over any chord quality
-                if (v.chord_quality !== parsed.quality && v.chord_quality !== "quartal") return false
-                if (ctx !== "all" && v.context !== ctx) return false
-                if (cat !== "all" && v.category !== cat) return false
-                return true
-            })
-            if (matches.length > 0) {
-                var cats = {}
-                for (var m = 0; m < matches.length; m++) cats[matches[m].category] = (cats[matches[m].category] || 0) + 1
-                var catStr = Object.keys(cats).map(function(c) { return c + "(" + cats[c] + ")" }).join(", ")
-                lines.push("  ✓  " + chords[i] + " — " + matches.length + " voicings: " + catStr)
-                covered++
+        onStatusMessage: function(text, colorType) {
+            if (colorType === "error") {
+                _toolStatusText = text
             } else {
-                lines.push("  ✗  " + chords[i] + " — NO VOICINGS")
-                gaps++
+                statusMsg.text = text
+                statusMsg.color = colorType === "success" ? theme.successText : theme.textMuted
             }
-        }
-
-        var pct = Math.round(covered / chords.length * 100)
-        var header = "Coverage: " + covered + "/" + chords.length + " (" + pct + "%)"
-        if (gaps > 0) header += " — " + gaps + " gap(s)"
-        else header += " — full coverage!"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-
-        showResult("Score Analysis", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function runVoiceLeading() {
-        if (!curScore) {
-            _toolStatusText = "Open a score with chord symbols first."
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            _toolStatusText = "No chord symbols found in the score."
-            return
-        }
-
-        var lines = []
-        lastInsertedVoicing = null  // reset voice leading chain
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  " + chords[i] + " — ?")
-                continue
-            }
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                var topNote = nameParts.length > 2 ? nameParts[2] : ""
-                lines.push("  " + chords[i] + "  →  " + shape + (topNote ? " — " + topNote : ""))
-                lastInsertedVoicing = voicing
-            } else {
-                lines.push("  " + chords[i] + "  →  no match")
-            }
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-        var header = "Voice leading path (" + chords.length + " chords)"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-
-        showResult("Voice Leading", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function voiceEntireScore() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-
-        // Preview: show what voicings will be assigned
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            statusMsg.text = "No chord symbols found"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var lines = []
-        var matchCount = 0
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  ✗  " + chords[i] + " — could not parse")
-                continue
-            }
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                lines.push("  ✓  " + chords[i] + "  →  " + shape + " (" + voicing.category + ")")
-                matchCount++
-            } else {
-                lines.push("  ✗  " + chords[i] + " — no matching voicing")
-            }
-        }
-
-        var header = "Ready to insert " + matchCount + " diagrams for " + chords.length + " chords"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-        header += "\n\nChange the filters on the main panel to use different voicing types."
-        header += "\nClick 'Batch' to insert these voicings into the score."
-
-        showResult("Voice Entire Score", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function suggestFingerings() {
-        if (!curScore) {
-            _toolStatusText = "Open a score with chord symbols first."
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            _toolStatusText = "No chord symbols found."
-            return
-        }
-
-        var lines = []
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) continue
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var fg = computeFingeringString(voicing)
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                lines.push("  " + chords[i] + "  →  " + shape + "\n     Fingering: " + fg)
-            } else {
-                lines.push("  " + chords[i] + "  →  no voicing found")
-            }
-        }
-
-        showResult("Fingering Suggestions", "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n\n"), true)
-    }
-
-    function computeFingeringString(voicing) {
-        return FingeringEngine.computeFingeringString(voicing)
-    }
-
-    // Extract fingering string from an existing FretDiagram element in the score.
-    // MuseScore 4's FretDiagram exposes: fretOffset, strings, frets, and per-string
-    // dot/marker data. We build a pseudo-voicing object and reuse computeFingeringString.
-    function fingeringFromDiagram(diagram) {
-        try {
-            var numStrings = diagram.strings || 6
-            var fretOffset = (diagram.fretOffset || 0) + 1  // fretOffset is 0-based
-            var dots = []
-            var mutes = []
-            var opens = []
-
-            for (var s = 0; s < numStrings; s++) {
-                // MuseScore string numbering: 0 = leftmost (low E), we need 1 = high E
-                var msString = numStrings - s  // our string numbering
-                var marker = diagram.marker(s)
-                var dot = diagram.dot(s)
-
-                if (marker === 1) {  // cross = muted
-                    mutes.push(msString)
-                } else if (marker === 2) {  // circle = open
-                    opens.push(msString)
-                } else if (dot && dot > 0) {
-                    dots.push({ string: msString, fret: dot })
-                }
-            }
-
-            if (dots.length === 0 && opens.length === 0) return null
-
-            var pseudoVoicing = {
-                dots: dots,
-                mutes: mutes,
-                open: opens,
-                strings: numStrings,
-                fret_number: fretOffset,
-            }
-            return computeFingeringString(pseudoVoicing)
-        } catch (e) {
-            console.log("[ChordLibrary] Could not read diagram: " + e)
-            return null
         }
     }
 
-    function addFingeringsToScore() {
-        if (!curScore) {
-            showResult("No Score", "Open a score with chord symbols first.", false)
-            return
-        }
-
-        // Collect chord positions using cursor.tick (more reliable than seg.tick in MS4)
-        var chordPositions = []
-        var scanCursor = curScore.newCursor()
-        scanCursor.staffIdx = 0
-        scanCursor.voice = 0
-        scanCursor.rewind(0)
-
-        var skippedDiagram = 0
-        var usedDiagram = 0
-        while (scanCursor.segment) {
-            var seg = scanCursor.segment
-            var currentTick = scanCursor.tick
-            if (seg.annotations) {
-                // Find existing fretboard diagram at this position (if any)
-                var existingDiagram = null
-                for (var c = 0; c < seg.annotations.length; c++) {
-                    if (seg.annotations[c].type === Element.FRET_DIAGRAM) {
-                        existingDiagram = seg.annotations[c]
-                        break
-                    }
-                }
-
-                for (var a = 0; a < seg.annotations.length; a++) {
-                    if (seg.annotations[a].type === Element.HARMONY) {
-                        var chordText = seg.annotations[a].text
-
-                        if (existingDiagram) {
-                            if (skipDiagramPositions) {
-                                skippedDiagram++
-                                continue
-                            }
-                            // Read fingering from the existing diagram
-                            var diagramFinger = fingeringFromDiagram(existingDiagram)
-                            if (diagramFinger) {
-                                chordPositions.push({
-                                    tick: currentTick,
-                                    fingering: diagramFinger,
-                                    chord: chordText,
-                                })
-                                usedDiagram++
-                                continue
-                            }
-                        }
-
-                        // No diagram (or couldn't read it) — pick a voicing
-                        var parsed = parseChordSymbol(chordText)
-                        if (parsed) {
-                            var voicing = findBestVoicing(parsed.root, parsed.quality)
-                            if (voicing) {
-                                var fingerStr = computeFingeringString(voicing)
-                                if (fingerStr) {
-                                    chordPositions.push({
-                                        tick: currentTick,
-                                        fingering: fingerStr,
-                                        chord: chordText,
-                                    })
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            scanCursor.next()
-        }
-
-        if (chordPositions.length === 0) {
-            showResult("No Chords Found", "The score has no chord symbols to annotate.", false)
-            return
-        }
-
-        // Add staff text annotations at each position
-        var added = 0
-        var errors = []
-
-        curScore.startCmd()
-
-        for (var i = 0; i < chordPositions.length; i++) {
-            var pos = chordPositions[i]
-            try {
-                var cursor = curScore.newCursor()
-                cursor.staffIdx = 0
-                cursor.voice = 0
-                cursor.rewind(0)
-
-                // Advance cursor to the target tick
-                while (cursor.segment && cursor.tick < pos.tick) {
-                    cursor.next()
-                }
-
-                if (cursor.segment) {
-                    var staffText = newElement(Element.STAFF_TEXT)
-                    staffText.text = pos.fingering
-                    cursor.add(staffText)
-                    added++
-                }
-            } catch (e) {
-                errors.push(pos.chord + ": " + e)
-            }
-        }
-
-        curScore.endCmd()
-
-        var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
-        if (usedDiagram > 0) {
-            msg += "\n" + usedDiagram + " annotation(s) derived from existing fretboard diagrams."
-        }
-        if (skippedDiagram > 0) {
-            msg += "\nSkipped " + skippedDiagram + " position(s) with existing fretboard diagrams."
-        }
-        if (errors.length > 0) {
-            msg += "\n\nErrors:\n" + errors.join("\n")
-        }
-        msg += "\n\nNotation format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
-        showResult("Staff Text", msg, errors.length === 0)
-    }
-
-    function exportFingeringSheet() {
-        if (!curScore) {
-            showResult("No Score", "Open a score first, then try again.", false)
-            return
-        }
-        var chordsFile = extractChordsToFile()
-        if (!chordsFile) return
-
-        var scoreName = (curScore.scoreName || curScore.title || "fingerings").replace(/[^a-zA-Z0-9-_ ]/g, "")
-        var defaultPath = homePath() + "/Documents/" + scoreName + "-fingerings.pdf"
-
-        openSaveDialog("Save Fingering Sheet", "PDF files (*.pdf)", defaultPath, function(outPath) {
-            var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-            var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
-            var title = curScore.scoreName || curScore.title || "Fingering Reference"
-            var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-
-            launchExport('cd "' + pluginDir + '"; python3 "' + pluginDir
-                + '/scripts/generate_fingering_sheet.py" --chords "' + chordsFile
-                + '" --context ' + ctx + catArg + ' --title "' + title
-                + '" --data "' + pluginDir + '/data/voicings.json" -o "' + outPath
-                + '" 2>&1; open "' + outPath + '"')
-        })
-    }
+    // Convenience delegates for existing callers
+    function analyzeCurrentScore() { inlineTools.analyzeCurrentScore() }
+    function runVoiceLeading() { inlineTools.runVoiceLeading() }
+    function suggestFingerings() { inlineTools.suggestFingerings() }
+    function addFingeringsToScore() { inlineTools.addFingeringsToScore() }
+    function exportFingeringSheet() { inlineTools.exportFingeringSheet() }
+    function computeFingeringString(voicing) { return inlineTools.computeFingeringString(voicing) }
+    function suggestFingering(voicing) { return inlineTools.suggestFingering(voicing) }
 
     function doImport(path) {
         importPanel.importMergeStatus = "Loading..."
