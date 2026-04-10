@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import MuseScore 3.0
 import "ChordSelector.js" as ChordSelector
 import "MelodyEngine.js" as MelodyEngine
 import "Transposer.js" as Transposer
@@ -15,6 +16,7 @@ Item {
     id: inlineTools
 
     // === External dependencies ===
+    property var pluginRef: null  // MuseScore plugin root for newElement()
     property var curScore: null
     property var voicingsData: []
     property string filterContext: ""
@@ -313,7 +315,7 @@ Item {
                 }
 
                 if (cursor.segment) {
-                    var staffText = newElement(Element.STAFF_TEXT)
+                    var staffText = pluginRef.newElement(Element.STAFF_TEXT)
                     staffText.text = pos.fingering
                     cursor.add(staffText)
                     added++

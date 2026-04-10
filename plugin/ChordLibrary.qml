@@ -404,6 +404,7 @@ MuseScore {
 
     BatchEngine {
         id: batchEngine
+        pluginRef: chordLibrary
         curScore: chordLibrary.curScore
         tempDiagramFile: tempDiagramFile
         clipboardXmlPath: Qt.resolvedUrl("paste-clipboard.xml")
@@ -1201,6 +1202,7 @@ MuseScore {
 
     InsertionEngine {
         id: insertionEngine
+        pluginRef: chordLibrary
         curScore: chordLibrary.curScore
         tempDiagramFile: tempDiagramFile
         audioFile: audioFile
@@ -1579,6 +1581,7 @@ MuseScore {
 
     InlineTools {
         id: inlineTools
+        pluginRef: chordLibrary
         curScore: chordLibrary.curScore
         voicingsData: chordLibrary.voicingsData
         filterContext: chordLibrary.filterContext

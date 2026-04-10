@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import MuseScore 3.0
 import "Transposer.js" as Transposer
 
 // InsertionEngine.qml — Diagram insertion and voicing playback.
@@ -15,6 +16,7 @@ Item {
     id: insertionEngine
 
     // === External dependencies ===
+    property var pluginRef: null  // MuseScore plugin root for newElement()
     property var curScore: null
     property var tempDiagramFile: null    // FileIO for paste-clipboard.xml
     property var audioFile: null          // FileIO for MIDI playback
@@ -93,7 +95,7 @@ Item {
 
         curScore.startCmd()
 
-        var fd = newElement(Element.FRET_DIAGRAM)
+        var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
         fd.fretStrings = voicing.strings || 6
         fd.fretFrets = voicing.visible_frets || 4
         fd.fretOffset = voicing.fret_number + offset - 1
@@ -129,7 +131,7 @@ Item {
     function hasSetDotApi() {
         if (_hasSetDot !== null) return _hasSetDot
         try {
-            var fd = newElement(Element.FRET_DIAGRAM)
+            var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
             _hasSetDot = (typeof fd.setDot === "function")
             if (_hasSetDot)
                 console.log("setDot() API detected — using direct insertion")
@@ -152,7 +154,7 @@ Item {
         try {
             curScore.startCmd()
 
-            var fd = newElement(Element.FRET_DIAGRAM)
+            var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
             fd.fretStrings = numStrings
             fd.fretFrets = voicing.visible_frets || 4
             fd.fretOffset = voicing.fret_number + offset - 1
