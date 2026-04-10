@@ -138,10 +138,8 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 
 ## Open Issues (as of 2026-04-10)
 
-- **#75** — Epic: decompose ChordLibrary.qml (Phase A done, Phase B next)
-- **#100** — B1: BatchEngine.qml (~633 lines)
-- **#104** — C1: Group properties into typed QtObjects (depends on A+B)
-- **#74** — cmd("paste") broken in batch insert (bug — core functionality)
+- **#75** — Epic: decompose ChordLibrary.qml (Phases A, B, C complete; 5174→2273 lines)
+- **#74** — cmd("paste") broken in batch insert (core bug, needs MuseScore API fix)
 
 ## MuseScore 4 Plugin API Limitations
 
@@ -159,6 +157,7 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 - **`.pragma library` callbacks**: modules with `.pragma library` can't receive QML closure callbacks — pass direct function references + data separately
 - **Fret calculations**: dot.fret is relative to fret_number (row 1 = fret_number). Absolute fret = fret_number + dot.fret - 1.
 - **String numbering**: 1 = high e, 6 = low E, 7 = low A (Van Eps)
+- **Child QML scope**: `newElement()` only exists on the root MuseScore plugin object. Child Items in `model/` or `ui/` must receive `pluginRef: chordLibrary` and call `pluginRef.newElement()`. Also add `import MuseScore 3.0` to any QML file that uses `Element.*` constants. See VoicingInserter.qml for the pattern.
 
 ---
 
