@@ -464,6 +464,18 @@ MuseScore {
         qualityList = lists.qualityList
     }
 
+    // Deferred tuning load — lets the UI render before heavy calculation (#112)
+    Timer {
+        id: startupTuningTimer
+        interval: 100
+        repeat: false
+        onTriggered: {
+            statusMsg.text = "Loading voicings for " + (tuningLabels[selectedTuning] || selectedTuning) + "..."
+            statusMsg.color = theme.textSecondary
+            loadTuningVoicings()
+        }
+    }
+
     onRun: {
         loadContextLabels()
         loadSettings()
@@ -474,8 +486,8 @@ MuseScore {
                 fetchVoicings()
             }
         }
-        // After loading the standard library, check for tuning-specific voicings
-        loadTuningVoicings()
+        // Defer tuning voicing load so UI renders first (#112)
+        startupTuningTimer.start()
     }
 
     function loadFromCache() {
