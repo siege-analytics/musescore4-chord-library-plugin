@@ -104,7 +104,7 @@ and JS module dispatch.
 
 ```
 plugin/                    # Self-contained installable plugin
-  ChordLibrary.qml         # State management, routing, wiring (~2492 lines)
+  ChordLibrary.qml         # State management, routing, wiring (~2266 lines)
   config/contexts.json      # Context labels
   data/voicings.json        # 820+ voicing library (key of C)
   tunings/                  # 6 guitar tuning configs
@@ -140,9 +140,6 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 
 - **#75** — Epic: decompose ChordLibrary.qml (Phase A done, Phase B next)
 - **#100** — B1: BatchEngine.qml (~633 lines)
-- **#101** — B2: InlineTools.js (~486 lines)
-- **#102** — B3: TuningManager.qml (~600 lines)
-- **#103** — B4: InsertionEngine.qml (~328 lines)
 - **#104** — C1: Group properties into typed QtObjects (depends on A+B)
 - **#74** — cmd("paste") broken in batch insert (bug — core functionality)
 
