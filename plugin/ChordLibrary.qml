@@ -251,6 +251,7 @@ MuseScore {
     property bool sortByProximity: false    // when true, sort filtered results by distance
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
+    property string _toolStatusText: ""  // routed to ScoreToolsPanel
     property int melodyStaffIdx: -1  // -1 = same staff, 0+ = specific staff index for melody reading
     property bool writeVoice2: false  // when true, write voicing pitches as notes on voice 2
 
@@ -342,8 +343,7 @@ MuseScore {
             toolResultsContent = message
             showToolResults = true
         } else {
-            toolStatus.text = title + ": " + message
-            toolStatus.color = isSuccess ? theme.successText : theme.errorText
+            _toolStatusText = title + ": " + message
         }
     }
 
@@ -1132,25 +1132,24 @@ MuseScore {
         }
     }
 
-    function importTuning() {
-        var path = tuningImportPath.text.trim()
+    function importTuning(path) {
         if (!path) {
-            tuningImportStatus.text = "Enter a file path"
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Enter a file path"
+            settingsPanel.tuningStatusColor = theme.errorText
             return
         }
         tuningFile.source = path
         try {
             var raw = tuningFile.read()
             if (!raw || raw.length === 0) {
-                tuningImportStatus.text = "File not found or empty"
-                tuningImportStatus.color = theme.errorText
+                settingsPanel.tuningStatus = "File not found or empty"
+                settingsPanel.tuningStatusColor = theme.errorText
                 return
             }
             var tuning = JSON.parse(raw)
             if (!tuning.name || !tuning.strings) {
-                tuningImportStatus.text = "Invalid tuning: needs 'name' and 'strings' fields"
-                tuningImportStatus.color = theme.errorText
+                settingsPanel.tuningStatus = "Invalid tuning: needs 'name' and 'strings' fields"
+                settingsPanel.tuningStatusColor = theme.errorText
                 return
             }
 
@@ -1166,39 +1165,36 @@ MuseScore {
             loadTuningVoicings()
             saveSettings()
 
-            tuningImportStatus.text = "Imported: " + tuning.name
-            tuningImportStatus.color = theme.successText
+            settingsPanel.tuningStatus = "Imported: " + tuning.name
+            settingsPanel.tuningStatusColor = theme.successText
         } catch (e) {
-            tuningImportStatus.text = "Failed: " + e
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Failed: " + e
+            settingsPanel.tuningStatusColor = theme.errorText
         }
     }
 
-    function createTuning() {
-        var name = tuningNameField.text.trim()
+    function createTuning(name, pitchStr, numStrings) {
         if (!name) {
-            tuningImportStatus.text = "Enter a tuning name"
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Enter a tuning name"
+            settingsPanel.tuningStatusColor = theme.errorText
             return
         }
 
-        var pitchStr = tuningPitchesField.text.trim()
         var rawParts = pitchStr.split(",")
         var pitches = []
         for (var p = 0; p < rawParts.length; p++) {
             var midi = noteNameToMidi(rawParts[p])
             if (midi < 0) {
-                tuningImportStatus.text = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
-                tuningImportStatus.color = theme.errorText
+                settingsPanel.tuningStatus = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
+                settingsPanel.tuningStatusColor = theme.errorText
                 return
             }
             pitches.push(midi)
         }
-        var numStrings = tuningStringCount.value
 
         if (pitches.length < numStrings) {
-            tuningImportStatus.text = "Need " + numStrings + " pitches, got " + pitches.length
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Need " + numStrings + " pitches, got " + pitches.length
+            settingsPanel.tuningStatusColor = theme.errorText
             return
         }
         pitches = pitches.slice(0, numStrings)
@@ -1206,8 +1202,8 @@ MuseScore {
         // Validate pitches are reasonable MIDI values
         for (var i = 0; i < pitches.length; i++) {
             if (pitches[i] < 20 || pitches[i] > 100) {
-                tuningImportStatus.text = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
-                tuningImportStatus.color = theme.errorText
+                settingsPanel.tuningStatus = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
+                settingsPanel.tuningStatusColor = theme.errorText
                 return
             }
         }
@@ -1241,11 +1237,11 @@ MuseScore {
 
             // Show the note names as feedback
             var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
-            tuningImportStatus.text = "Created: " + name + " (" + noteStr + ")"
-            tuningImportStatus.color = theme.successText
+            settingsPanel.tuningStatus = "Created: " + name + " (" + noteStr + ")"
+            settingsPanel.tuningStatusColor = theme.successText
         } catch (e) {
-            tuningImportStatus.text = "Failed to save: " + e
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Failed to save: " + e
+            settingsPanel.tuningStatusColor = theme.errorText
         }
     }
 
@@ -1269,10 +1265,10 @@ MuseScore {
                 var raw = tuningFile.read()
                 if (raw && raw.length > 2) {
                     var t = JSON.parse(raw)
-                    tuningNameField.text = t.name || slug
+                    settingsPanel.tuningNameValue = t.name || slug
                     var strings = t.strings || {}
                     var count = Object.keys(strings).length
-                    tuningStringCount.value = count > 0 ? count : 6
+                    settingsPanel.tuningStringCountValue = count > 0 ? count : 6
 
                     // Convert MIDI values back to note names for display
                     var pitchParts = []
@@ -1282,23 +1278,23 @@ MuseScore {
                             pitchParts.push(midiNoteNames[midi] || String(midi))
                         }
                     }
-                    tuningPitchesField.text = pitchParts.join(", ")
-                    tuningImportStatus.text = "Editing: " + (t.name || slug) + " — change values and click Save"
-                    tuningImportStatus.color = theme.textSecondary
+                    settingsPanel.tuningPitchesValue = pitchParts.join(", ")
+                    settingsPanel.tuningStatus = "Editing: " + (t.name || slug) + " — change values and click Save"
+                    settingsPanel.tuningStatusColor = theme.textSecondary
                     return
                 }
             } catch (e) {}
         }
-        tuningImportStatus.text = "Could not load tuning: " + slug
-        tuningImportStatus.color = theme.errorText
+        settingsPanel.tuningStatus = "Could not load tuning: " + slug
+        settingsPanel.tuningStatusColor = theme.errorText
     }
 
     // Delete a custom tuning (built-in tunings cannot be deleted)
     function deleteTuning(slug) {
         if (!slug) return
         if (builtInTunings.indexOf(slug) >= 0) {
-            tuningImportStatus.text = "Cannot delete built-in tuning"
-            tuningImportStatus.color = theme.errorText
+            settingsPanel.tuningStatus = "Cannot delete built-in tuning"
+            settingsPanel.tuningStatusColor = theme.errorText
             return
         }
 
@@ -1334,43 +1330,36 @@ MuseScore {
             // File may not exist in writable location — that's OK
         }
 
-        tuningImportStatus.text = "Deleted: " + slug
-        tuningImportStatus.color = theme.successText
+        settingsPanel.tuningStatus = "Deleted: " + slug
+        settingsPanel.tuningStatusColor = theme.successText
     }
 
     // === Save to Library ===
 
-    function saveVoicingToLibrary() {
-        saveStatus.text = ""
+    function saveVoicingToLibrary(quality, category, context, fretStr, numStrings, dotsStr, mutesStr) {
+        settingsPanel.saveStatus = ""
 
         // Parse fret number
-        var fretNum = parseInt(saveFretField.text.trim())
+        var fretNum = parseInt(fretStr)
         if (isNaN(fretNum) || fretNum < 0 || fretNum > 24) {
-            saveStatus.text = "Invalid fret number"; saveStatus.color = theme.errorText; return
+            settingsPanel.saveStatus = "Invalid fret number"; settingsPanel.saveStatusColor = theme.errorText; return
         }
 
         // Parse dots: "6:1, 4:1, 3:2" → [{string:6, fret:1}, ...]
-        var dotsStr = saveDotsField.text.trim()
-        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = theme.errorText; return }
+        if (!dotsStr) { settingsPanel.saveStatus = "Enter dot positions"; settingsPanel.saveStatusColor = theme.errorText; return }
         var dotParts = dotsStr.split(",")
         var dots = []
         for (var d = 0; d < dotParts.length; d++) {
             var pair = dotParts[d].trim().split(":")
-            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = theme.errorText; return }
+            if (pair.length !== 2) { settingsPanel.saveStatus = "Bad dot format: " + dotParts[d]; settingsPanel.saveStatusColor = theme.errorText; return }
             dots.push({ string: parseInt(pair[0]), fret: parseInt(pair[1]) })
         }
 
         // Parse mutes: "5, 2, 1" → [5, 2, 1]
-        var mutesStr = saveMutesField.text.trim()
         var mutes = []
         if (mutesStr) {
             mutes = mutesStr.split(",").map(function(s) { return parseInt(s.trim()) })
         }
-
-        var numStrings = saveStringsCount.value
-        var quality = saveQualityCombo.currentText
-        var category = saveCategoryCombo.currentText
-        var context = saveContextCombo.currentText
 
         // Determine current key from score chord symbol
         var targetRoot = "C"
@@ -1430,8 +1419,8 @@ MuseScore {
         // Check for duplicate
         for (var j = 0; j < voicingsData.length; j++) {
             if (voicingsData[j].id === id) {
-                saveStatus.text = "ID already exists: " + id
-                saveStatus.color = theme.errorText
+                settingsPanel.saveStatus = "ID already exists: " + id
+                settingsPanel.saveStatusColor = theme.errorText
                 return
             }
         }
@@ -1472,8 +1461,8 @@ MuseScore {
         saveToCache()
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
-        saveStatus.text = "Saved: " + voicing.name + keyNote
-        saveStatus.color = theme.successText
+        settingsPanel.saveStatus = "Saved: " + voicing.name + keyNote
+        settingsPanel.saveStatusColor = theme.successText
     }
 
     // === Library hygiene audit ===
@@ -1536,8 +1525,8 @@ MuseScore {
             + audit.crossCtx + " cross-context"
         if (audit.dismissed > 0)
             summary += "\n(" + audit.dismissed + " dismissed findings hidden)"
-        hygieneResult.text = summary
-        hygieneResult.color = audit.duplicates > 0 ? theme.errorText : theme.successText
+        settingsPanel.hygieneStatus = summary
+        settingsPanel.hygieneStatusColor = audit.duplicates > 0 ? theme.errorText : theme.successText
 
         lastAuditResults = audit.results
         for (var r = 0; r < audit.results.length; r++)
@@ -1554,17 +1543,16 @@ MuseScore {
             rebuildFilterLists()
             applyFilters()
             saveToCache()
-            hygieneResult.text = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
-            hygieneResult.color = theme.successText
+            settingsPanel.hygieneStatus = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
+            settingsPanel.hygieneStatusColor = theme.successText
         } else {
-            hygieneResult.text = "No duplicates found."
-            hygieneResult.color = theme.successText
+            settingsPanel.hygieneStatus = "No duplicates found."
+            settingsPanel.hygieneStatusColor = theme.successText
         }
     }
 
-    function saveAuditReport() {
-        var path = auditReportPath.text.trim()
-        if (!path) { hygieneResult.text = "Enter a file path"; return }
+    function saveAuditReport(path) {
+        if (!path) { settingsPanel.hygieneStatus = "Enter a file path"; return }
 
         var tuningLabel = tuningLabels[selectedTuning] || selectedTuning
         var report = HygieneEngine.buildReport(voicingsData, tuningLabel, hygieneIgnoreList.length, lastAuditResults)
@@ -1572,21 +1560,21 @@ MuseScore {
         tempDiagramFile.source = path
         try {
             tempDiagramFile.write(report)
-            hygieneResult.text = hygieneResult.text + "\nReport opened"
+            settingsPanel.hygieneStatus = settingsPanel.hygieneStatus + "\nReport opened"
         } catch (e) {
-            hygieneResult.text = "Failed to save report: " + e
-            hygieneResult.color = theme.errorText
+            settingsPanel.hygieneStatus = "Failed to save report: " + e
+            settingsPanel.hygieneStatusColor = theme.errorText
         }
     }
 
     // Pre-fill Save to Library from a selected FretDiagram in the score
     function captureFromScore() {
-        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = theme.errorText; return }
+        if (!curScore) { settingsPanel.saveStatus = "No score open"; settingsPanel.saveStatusColor = theme.errorText; return }
 
         var sel = curScore.selection
         if (!sel || !sel.elements || sel.elements.length === 0) {
-            saveStatus.text = "Select a fretboard diagram first"
-            saveStatus.color = theme.errorText
+            settingsPanel.saveStatus = "Select a fretboard diagram first"
+            settingsPanel.saveStatusColor = theme.errorText
             return
         }
 
@@ -1599,15 +1587,15 @@ MuseScore {
             var frets = elem.fretFrets || 4
             var fretOff = elem.fretOffset || 0
 
-            saveStringsCount.value = strings
-            saveFretField.text = String(fretOff + 1)  // convert 0-indexed back
+            settingsPanel.saveStringsCountValue = strings
+            settingsPanel.saveFretValue = String(fretOff + 1)  // convert 0-indexed back
 
-            saveStatus.text = "Captured: " + strings + " strings, fret " + (fretOff + 1)
+            settingsPanel.saveStatus = "Captured: " + strings + " strings, fret " + (fretOff + 1)
                 + "\nDots not readable from API — enter them manually."
-            saveStatus.color = theme.successText
+            settingsPanel.saveStatusColor = theme.successText
         } else {
-            saveStatus.text = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
-            saveStatus.color = theme.errorText
+            settingsPanel.saveStatus = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
+            settingsPanel.saveStatusColor = theme.errorText
         }
     }
 
@@ -2575,14 +2563,12 @@ MuseScore {
 
     function analyzeCurrentScore() {
         if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "Open a score with chord symbols first."
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "No chord symbols found in the score."
             return
         }
 
@@ -2629,14 +2615,12 @@ MuseScore {
 
     function runVoiceLeading() {
         if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "Open a score with chord symbols first."
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "No chord symbols found in the score."
             return
         }
 
@@ -2715,14 +2699,12 @@ MuseScore {
 
     function suggestFingerings() {
         if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "Open a score with chord symbols first."
             return
         }
         var chords = collectScoreChords()
         if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found."
-            toolStatus.color = theme.errorText
+            _toolStatusText = "No chord symbols found."
             return
         }
 
@@ -3277,232 +3259,37 @@ MuseScore {
             TabButton { text: "Settings"; font.pixelSize: 10 }
         }
 
-        // === Tab 1: Score Tools ===
-        Flickable {
+        // === Tab 1: Score Tools (extracted to ui/ScoreToolsPanel.qml, #97) ===
+        ScoreToolsPanel {
+            id: scoreToolsPanel
             visible: currentTab === 1 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: scoreToolsColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: scoreToolsColumn
-                width: parent.width - 16
-                spacing: 12
-
-                Label {
-                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Analyze Score"
-                        font.pixelSize: 10
-                        onClicked: analyzeCurrentScore()
-                    }
-
-                    Button {
-                        text: "Voice Leading"
-                        font.pixelSize: 10
-                        onClicked: runVoiceLeading()
-                    }
-
-                    Button {
-                        text: "Suggest Fingerings"
-                        font.pixelSize: 10
-                        onClicked: suggestFingerings()
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Voicing Calculator Constraints ---
-                Label {
-                    text: "VOICING CONSTRAINTS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Controls how voicings are generated for non-standard tunings. These are defaults — override per chord in the walkthrough."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                GridLayout {
-                    Layout.fillWidth: true
-                    columns: 4
-                    columnSpacing: 8
-                    rowSpacing: 6
-
-                    Label { text: "Max fret:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxFretSpin
-                        from: 7; to: 24; value: calcMaxFret
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxFret) {
-                                calcMaxFret = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Max stretch:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxStretchSpin
-                        from: 2; to: 7; value: calcMaxStretch
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxStretch) {
-                                calcMaxStretch = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Min notes:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMinNotesSpin
-                        from: 2; to: 6; value: calcMinNotes
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMinNotes) {
-                                calcMinNotes = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Max muted:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxMutedSpin
-                        from: 0; to: 4; value: calcMaxMuted
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxMuted) {
-                                calcMaxMuted = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 8
-
-                    Label { text: "Max per quality:"; font.pixelSize: 10 }
-                    SpinBox {
-                        from: 0; to: 999; value: calcMaxPerQuality
-                        implicitWidth: 80
-                        ToolTip.visible: hovered
-                        ToolTip.text: "0 = unlimited (Ted Greene mode). Higher = fewer voicings, faster."
-                        onValueChanged: {
-                            if (value !== calcMaxPerQuality) {
-                                calcMaxPerQuality = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 12
-
-                    CheckBox {
-                        text: "Open strings"
-                        font.pixelSize: 10
-                        checked: calcAllowOpen
-                        onCheckedChanged: {
-                            calcAllowOpen = checked
-                            if (usingTuningVoicings) loadTuningVoicings()
-                        }
-                    }
-
-                    CheckBox {
-                        text: "Root in bass"
-                        font.pixelSize: 10
-                        checked: calcRootInBass
-                        onCheckedChanged: {
-                            calcRootInBass = checked
-                            if (usingTuningVoicings) loadTuningVoicings()
-                        }
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                Label {
-                    text: "TEXT ANNOTATIONS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text.\nAt positions with existing diagrams, annotation matches the diagram."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Annotate Staff Text"
-                        font.pixelSize: 10
-                        onClicked: addFingeringsToScore()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Adds fret notation as staff text — reads existing diagrams when present"
-                    }
-
-                    Button {
-                        text: "Fingering Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportFingeringSheet()
-                    }
-
-                    CheckBox {
-                        text: "Skip diagrams"
-                        font.pixelSize: 9
-                        checked: skipDiagramPositions
-                        onCheckedChanged: skipDiagramPositions = checked
-                        ToolTip.visible: hovered
-                        ToolTip.text: "When checked, skip positions that already have a fretboard diagram"
-                    }
-                }
-
-                Label {
-                    id: toolStatus
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    font.family: "Menlo, Monaco, Courier New, monospace"
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    padding: 8
-                    background: Rectangle {
-                        color: theme.consoleBg
-                        radius: 4
-                    }
-                }
+            calc: QtObject {
+                property int maxFret: chordLibrary.calcMaxFret
+                property int maxStretch: chordLibrary.calcMaxStretch
+                property int minNotes: chordLibrary.calcMinNotes
+                property int maxMuted: chordLibrary.calcMaxMuted
+                property int maxPerQuality: chordLibrary.calcMaxPerQuality
+                property bool allowOpen: chordLibrary.calcAllowOpen
+                property bool rootInBass: chordLibrary.calcRootInBass
             }
+            theme: theme
+            usingTuningVoicings: chordLibrary.usingTuningVoicings
+            skipDiagramPositions: chordLibrary.skipDiagramPositions
+            toolStatusText: _toolStatusText
+
+            onAnalyzeRequested: analyzeCurrentScore()
+            onVoiceLeadingRequested: runVoiceLeading()
+            onFingeringsRequested: suggestFingerings()
+            onConstraintChanged: function(key, value) {
+                chordLibrary[key] = value
+                if (usingTuningVoicings) loadTuningVoicings()
+            }
+            onAnnotateRequested: addFingeringsToScore()
+            onFingeringSheetRequested: exportFingeringSheet()
+            onSkipDiagramsChanged: function(checked) { skipDiagramPositions = checked }
         }
 
         // === Tab 2: Export (extracted to ui/ExportPanel.qml, #94) ===
@@ -3595,749 +3382,74 @@ MuseScore {
             onPresetLoadRequested: function(path) { loadPreset(path) }
         }
 
-        // === Tab 4: Practice (Flash Cards) ===
-        Flickable {
+        // === Tab 4: Practice (extracted to ui/PracticePanel.qml, #96) ===
+        PracticePanel {
             visible: currentTab === 4 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: practiceColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: practiceColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // Score display
-                RowLayout {
-                    Layout.fillWidth: true
-
-                    Label {
-                        text: "Score: " + practiceCorrect + " / " + practiceTotal
-                        font.pixelSize: 13
-                        font.bold: true
-                        Layout.fillWidth: true
-                    }
-
-                    Label {
-                        text: practiceTotal > 0
-                            ? Math.round(practiceCorrect / practiceTotal * 100) + "% correct"
-                            : ""
-                        font.pixelSize: 11
-                        color: theme.textMuted
-                    }
-
-                    Button {
-                        text: "Reset"
-                        font.pixelSize: 10
-                        onClicked: practiceReset()
-                    }
-                }
-
-                // Mode selector
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 8
-
-                    Label {
-                        text: "Mode:"
-                        font.pixelSize: 11
-                    }
-
-                    Button {
-                        text: "Name the Chord"
-                        font.pixelSize: 10
-                        highlighted: practiceMode === "name"
-                        onClicked: { practiceMode = "name"; practiceNext() }
-                    }
-
-                    Button {
-                        text: "Find the Shape"
-                        font.pixelSize: 10
-                        highlighted: practiceMode === "shape"
-                        onClicked: { practiceMode = "shape"; practiceNext() }
-                    }
-                }
-
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // Flash card area
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 220
-                    radius: 8
-                    color: theme.cardBackground
-                    border.color: theme.cardBorder
-
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 12
-                        spacing: 8
-
-                        // "Name the Chord" mode: show fretboard, hide name
-                        Label {
-                            visible: practiceMode === "name" && !practiceShowAnswer
-                            text: "What chord is this voicing?"
-                            font.pixelSize: 12
-                            color: theme.textSecondary
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        // "Find the Shape" mode: show chord name, hide fretboard
-                        Label {
-                            visible: practiceMode === "shape"
-                            text: practiceVoicing ? practiceVoicing.name || "" : ""
-                            font.pixelSize: 16
-                            font.bold: true
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Label {
-                            visible: practiceMode === "shape" && !practiceShowAnswer
-                            text: "Visualize the fretboard shape, then reveal"
-                            font.pixelSize: 11
-                            color: theme.textMuted
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        // Fretboard preview (hidden in "shape" mode until revealed)
-                        Canvas {
-                            id: practiceCanvas
-                            Layout.preferredWidth: 120
-                            Layout.preferredHeight: 140
-                            Layout.alignment: Qt.AlignHCenter
-                            visible: practiceMode === "name" || practiceShowAnswer
-
-                            property var pv: practiceVoicing
-
-                            onPvChanged: requestPaint()
-
-                            onPaint: {
-                                var ctx = getContext("2d")
-                                ctx.clearRect(0, 0, width, height)
-                                var v = pv
-                                if (!v || !v.dots) return
-
-                                var ns = v.strings || 6
-                                var nf = v.visible_frets || 4
-                                var mg = 10, tm = 18
-                                var ss = (width - 2 * mg) / (ns - 1)
-                                var fs = (height - tm - mg) / nf
-
-                                var isDark = theme.isDark
-                                var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
-                                var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
-                                var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
-
-                                ctx.strokeStyle = gridColor
-                                ctx.lineWidth = 0.5
-                                for (var s = 0; s < ns; s++) {
-                                    ctx.beginPath()
-                                    ctx.moveTo(mg + s * ss, tm)
-                                    ctx.lineTo(mg + s * ss, height - mg)
-                                    ctx.stroke()
-                                }
-                                for (var f = 0; f <= nf; f++) {
-                                    ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
-                                    ctx.beginPath()
-                                    ctx.moveTo(mg, tm + f * fs)
-                                    ctx.lineTo(width - mg, tm + f * fs)
-                                    ctx.stroke()
-                                }
-                                if ((v.fret_number || 0) > 1) {
-                                    ctx.fillStyle = textColor
-                                    ctx.font = "10px sans-serif"
-                                    ctx.textAlign = "right"
-                                    ctx.fillText(v.fret_number, mg - 3, tm + fs * 0.6)
-                                }
-                                var dots = v.dots || []
-                                var ivs = v.intervals || []
-                                for (var d = 0; d < dots.length; d++) {
-                                    var iv = (d < ivs.length) ? ivs[d] : ""
-                                    if (iv === "1") ctx.fillStyle = theme.dotRoot
-                                    else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
-                                    else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
-                                    else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
-                                    else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
-                                    else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
-                                    else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
-                                    else ctx.fillStyle = theme.dotDefault
-                                    ctx.beginPath()
-                                    ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 5, 0, 2 * Math.PI)
-                                    ctx.fill()
-                                }
-                                ctx.fillStyle = muteColor
-                                ctx.font = "11px sans-serif"
-                                ctx.textAlign = "center"
-                                var mutes = v.mutes || []
-                                for (var m = 0; m < mutes.length; m++) {
-                                    ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 3)
-                                }
-                                ctx.strokeStyle = muteColor
-                                ctx.lineWidth = 1
-                                var opens = v.open || []
-                                for (var o = 0; o < opens.length; o++) {
-                                    ctx.beginPath()
-                                    ctx.arc(mg + (ns - opens[o]) * ss, tm - 7, 3.5, 0, 2 * Math.PI)
-                                    ctx.stroke()
-                                }
-                            }
-                        }
-
-                        // Answer (chord name + details)
-                        Label {
-                            visible: practiceShowAnswer && practiceMode === "name"
-                            text: practiceVoicing ? practiceVoicing.name || "" : ""
-                            font.pixelSize: 14
-                            font.bold: true
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Label {
-                            visible: practiceShowAnswer
-                            text: practiceVoicing
-                                ? (practiceVoicing.intervals || []).join(" ")
-                                    + "  |  Fret " + (practiceVoicing.fret_number || "?")
-                                    + "  |  " + (practiceVoicing.category || "")
-                                : ""
-                            font.pixelSize: 10
-                            color: theme.textSecondary
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-                    }
-                }
-
-                // Action buttons
-                RowLayout {
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignHCenter
-                    spacing: 12
-
-                    Button {
-                        visible: !practiceShowAnswer
-                        text: "Reveal Answer"
-                        font.pixelSize: 12
-                        onClicked: practiceReveal()
-                    }
-
-                    Button {
-                        visible: practiceShowAnswer
-                        text: "✓ Got it"
-                        font.pixelSize: 12
-                        onClicked: practiceMarkCorrect()
-                    }
-
-                    Button {
-                        visible: practiceShowAnswer
-                        text: "✗ Missed"
-                        font.pixelSize: 12
-                        onClicked: practiceMarkWrong()
-                    }
-
-                    Button {
-                        text: "Skip"
-                        font.pixelSize: 10
-                        onClicked: practiceNext()
-                    }
-                }
+            practice: QtObject {
+                property var voicing: chordLibrary.practiceVoicing
+                property bool showAnswer: chordLibrary.practiceShowAnswer
+                property string mode: chordLibrary.practiceMode
+                property int correct: chordLibrary.practiceCorrect
+                property int total: chordLibrary.practiceTotal
             }
+            theme: theme
+
+            onResetRequested: practiceReset()
+            onModeChanged: function(mode) { practiceMode = mode; practiceNext() }
+            onRevealRequested: practiceReveal()
+            onMarkCorrectRequested: practiceMarkCorrect()
+            onMarkWrongRequested: practiceMarkWrong()
+            onSkipRequested: practiceNext()
         }
 
-        // === Tab 5: Settings ===
-        Flickable {
+        // === Tab 5: Settings (extracted to ui/SettingsPanel.qml, #98) ===
+        SettingsPanel {
+            id: settingsPanel
             visible: currentTab === 5 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: settingsColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: settingsColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // --- Diagram placement ---
-                Label {
-                    text: "DIAGRAM PLACEMENT"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                ComboBox {
-                    id: placementCombo
-                    model: ["Above staff (default)", "Below staff"]
-                    Layout.fillWidth: true
-                    currentIndex: diagramPlacement === "below" ? 1 : 0
-                    onCurrentIndexChanged: {
-                        diagramPlacement = currentIndex === 1 ? "below" : "above"
-                        saveSettings()
-                    }
-                }
-
-                Label {
-                    text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Tuning ---
-                Label {
-                    text: "TUNING"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 6
-
-                    Label {
-                        text: "Active: " + (tuningLabels[selectedTuning] || selectedTuning)
-                        font.pixelSize: 11
-                        Layout.fillWidth: true
-                    }
-
-                    Button {
-                        text: "Edit"
-                        font.pixelSize: 10
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Load this tuning into the form below for editing"
-                        onClicked: editTuning(selectedTuning)
-                    }
-
-                    Button {
-                        text: "Delete"
-                        font.pixelSize: 10
-                        enabled: builtInTunings.indexOf(selectedTuning) < 0
-                        ToolTip.visible: hovered
-                        ToolTip.text: builtInTunings.indexOf(selectedTuning) >= 0
-                            ? "Built-in tunings cannot be deleted"
-                            : "Delete this custom tuning"
-                        onClicked: deleteTuning(selectedTuning)
-                    }
-
-                    Button {
-                        text: "▲"
-                        font.pixelSize: 10
-                        implicitWidth: 28
-                        enabled: tuningList.indexOf(selectedTuning) > 0
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Move this tuning up in the list"
-                        onClicked: moveTuning(selectedTuning, -1)
-                    }
-
-                    Button {
-                        text: "▼"
-                        font.pixelSize: 10
-                        implicitWidth: 28
-                        enabled: tuningList.indexOf(selectedTuning) < tuningList.length - 1
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Move this tuning down in the list"
-                        onClicked: moveTuning(selectedTuning, 1)
-                    }
-                }
-
-                // --- Import tuning ---
-                Label {
-                    text: "Import a tuning JSON file:"
-                    font.pixelSize: 10
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: tuningImportPath
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/tuning.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Import"
-                        font.pixelSize: 10
-                        onClicked: importTuning()
-                    }
-                }
-
-                Label {
-                    id: tuningImportStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Create / edit tuning ---
-                Label {
-                    text: "Create or edit a tuning:"
-                    font.pixelSize: 10
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: tuningNameField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "Name (e.g. Open G)"
-                        selectByMouse: true
-                    }
-
-                    SpinBox {
-                        id: tuningStringCount
-                        from: 4
-                        to: 12
-                        value: 6
-                        implicitWidth: 80
-                    }
-                }
-
-                Label {
-                    text: "String pitches (high to low, note names or MIDI):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                TextField {
-                    id: tuningPitchesField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "E4, B3, G3, D3, A2, E2"
-                    selectByMouse: true
-                    text: "E4, B3, G3, D3, A2, E2"
-                }
-
-                Button {
-                    text: "Save Tuning"
-                    font.pixelSize: 10
-                    ToolTip.visible: hovered
-                    ToolTip.text: "Create a new tuning or save changes to an existing one"
-                    onClicked: createTuning()
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
-                    font.pixelSize: 10
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://gtdb.org">Guitar Tuning Database (gtdb.org)</a> — reference for string pitches'
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Save to Library ---
-                Label {
-                    text: "SAVE TO LIBRARY"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Enter a voicing or capture from the score."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "Capture from Score"
-                    font.pixelSize: 10
-                    onClicked: captureFromScore()
-                }
-
-                Label {
-                    text: "Dots: string:fret pairs (e.g. 6:1,4:1,3:2)"
-                    font.pixelSize: 9
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    ComboBox {
-                        id: saveQualityCombo
-                        model: ["dom7","maj7","min7","min7b5","dim7","maj6","min6",
-                                "dom7b9","dom7sharp5","dom7alt","dom9","dom13",
-                                "sus4","sus2","aug7","min-maj7","augMaj7"]
-                        Layout.fillWidth: true
-                    }
-
-                    ComboBox {
-                        id: saveCategoryCombo
-                        model: ["shell","drop2","drop3","extended","altered","quartal"]
-                        implicitWidth: 90
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    ComboBox {
-                        id: saveContextCombo
-                        model: ["CV6","CV7","CM6","CM7"]
-                        implicitWidth: 70
-                    }
-
-                    TextField {
-                        id: saveFretField
-                        placeholderText: "Fret#"
-                        implicitWidth: 50
-                        font.pixelSize: 11
-                        selectByMouse: true
-                    }
-
-                    SpinBox {
-                        id: saveStringsCount
-                        from: 4; to: 12; value: 6
-                        implicitWidth: 75
-                    }
-                }
-
-                TextField {
-                    id: saveDotsField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "Dots: 6:1, 4:1, 3:2"
-                    selectByMouse: true
-                }
-
-                TextField {
-                    id: saveMutesField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "Mutes: 5, 2, 1"
-                    selectByMouse: true
-                }
-
-                Label {
-                    text: "Enter positions as played. The plugin will reproject to C."
-                    font.pixelSize: 9
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "Save Voicing"
-                    font.pixelSize: 10
-                    onClicked: saveVoicingToLibrary()
-                }
-
-                Label {
-                    id: saveStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Library Health ---
-                Label {
-                    text: "LIBRARY HEALTH"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: auditReportPath
-                        Layout.fillWidth: true
-                        font.pixelSize: 10
-                        text: homePath() + "/Documents/chord-library-audit.txt"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        font.pixelSize: 10
-                        onClicked: openFileBrowser("save", auditReportPath, null)
-                    }
-                }
-
-                Button {
-                    text: "Run Audit"
-                    font.pixelSize: 10
-                    onClicked: {
-                        runHygieneAudit()
-                        saveAuditReport()
-                        Qt.openUrlExternally(auditReportPath.text)
-                    }
-                }
-
-                Label {
-                    id: hygieneResult
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Dismiss / Fix actions ---
-                Label {
-                    visible: lastAuditResults.length > 0
-                    text: "Paste a DISMISS KEY from the report to suppress it:"
-                    font.pixelSize: 9
-                }
-
-                RowLayout {
-                    visible: lastAuditResults.length > 0
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: dismissKeyField
-                        Layout.fillWidth: true
-                        font.pixelSize: 10
-                        placeholderText: "e.g. ENH:0,4,9,11"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Dismiss"
-                        font.pixelSize: 10
-                        onClicked: {
-                            var key = dismissKeyField.text.trim()
-                            if (key) {
-                                dismissFinding(key)
-                                dismissKeyField.text = ""
-                                hygieneResult.text = "Dismissed. Run audit again to see updated results."
-                                hygieneResult.color = theme.successText
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    visible: lastAuditResults.length > 0 || hygieneIgnoreList.length > 0
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Fix Duplicates"
-                        font.pixelSize: 10
-                        visible: lastAuditResults.some(function(r) { return r.indexOf("DUP:") === 0 })
-                        onClicked: fixDuplicates()
-                    }
-
-                    Button {
-                        text: "Reset All Dismissed"
-                        font.pixelSize: 10
-                        visible: hygieneIgnoreList.length > 0
-                        onClicked: clearDismissals()
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- About ---
-                Label {
-                    text: "ABOUT"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Siege Analytics Chord Library v1.5.0"
-                    font.pixelSize: 12
-                    font.bold: true
-                }
-
-                Label {
-                    text: "Author: Dheeraj Chand"
-                    font.pixelSize: 11
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin">GitHub Repository</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://siegeanalytics.com">Siege Analytics</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://creativecommons.org/licenses/by/4.0/">Licensed under CC BY 4.0</a>'
-                    font.pixelSize: 10
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/blob/main/DEVELOPMENT.md">Documentation</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
+            tuning: QtObject {
+                property string selectedTuning: chordLibrary.selectedTuning
+                property var tuningLabels: chordLibrary.tuningLabels
+                property var tuningList: chordLibrary.tuningList
             }
+            theme: theme
+            diagramPlacement: chordLibrary.diagramPlacement
+            builtInTunings: chordLibrary.builtInTunings
+            lastAuditResults: chordLibrary.lastAuditResults
+            hygieneIgnoreList: chordLibrary.hygieneIgnoreList
+            homePath: homePath()
+
+            onPlacementChanged: function(placement) {
+                diagramPlacement = placement
+                saveSettings()
+            }
+            onEditTuningRequested: function(slug) { editTuning(slug) }
+            onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
+            onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
+            onImportTuningRequested: function(path) { importTuning(path) }
+            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
+            onCaptureRequested: captureFromScore()
+            onSaveVoicingRequested: function(quality, category, context, fret, strings, dots, mutes) {
+                saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
+            }
+            onAuditRequested: function(reportPath) {
+                runHygieneAudit()
+                saveAuditReport(reportPath)
+                Qt.openUrlExternally(reportPath)
+            }
+            onDismissRequested: function(key) {
+                dismissFinding(key)
+                settingsPanel.hygieneStatus = "Dismissed. Run audit again to see updated results."
+                settingsPanel.hygieneStatusColor = theme.successText
+            }
+            onFixDuplicatesRequested: fixDuplicates()
+            onClearDismissalsRequested: clearDismissals()
+            onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
         }
 
         // === Tool Results panel (overlay) — extracted to WalkthroughPanel.qml ===
@@ -4415,531 +3527,88 @@ MuseScore {
             }
         }
 
-        // === Tab 0: Library (main panel) ===
-        TextField {
+        // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===
+        LibraryPanel {
+            id: libraryPanel
             visible: currentTab === 0 && !showToolResults
-            id: searchField
-            placeholderText: "Search voicings..."
-            Layout.fillWidth: true
-            onTextChanged: {
-                searchText = text
-                applyFilters()
-            }
-        }
-
-        RowLayout {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: contextCombo
-                model: contextDisplayList
-                Layout.fillWidth: true
-                currentIndex: Math.max(0, contextList.indexOf(filterContext || "All Contexts"))
-                // onActivated fires only on user clicks, not model/binding changes
-                onActivated: {
-                    if (currentIndex >= 0 && currentIndex < contextList.length) {
-                        var code = contextList[currentIndex]
-                        filterContext = code === "All Contexts" ? "" : code
-                        applyFilters()
-                    }
-                }
-            }
-            ComboBox {
-                id: categoryCombo
-                model: categoryList
-                Layout.fillWidth: true
-                onActivated: {
-                    filterCategory = currentText === "All Types" ? "" : currentText
-                    applyFilters()
-                }
-            }
-        }
-
-        ComboBox {
-            visible: currentTab === 0 && !showToolResults
-            id: qualityCombo
-            model: qualityList
-            Layout.fillWidth: true
-            onCurrentTextChanged: {
-                filterQuality = currentText === "All Qualities" ? "" : currentText
-                applyFilters()
-            }
-        }
-
-        RowLayout {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: tuningMainCombo
-                model: filteredTuningDisplayList
-                Layout.fillWidth: true
-                currentIndex: Math.max(0, filteredTuningList.indexOf(selectedTuning))
-                // Use onActivated (user clicks only), not onCurrentIndexChanged
-                // (which also fires from binding recalculations and causes cascades)
-                onActivated: {
-                    if (currentIndex >= 0 && currentIndex < filteredTuningList.length) {
-                        var newTuning = filteredTuningList[currentIndex]
-                        if (newTuning && newTuning !== selectedTuning) {
-                            selectedTuning = newTuning
-                            loadTuningStringCount()
-                            loadTuningVoicings()
-                            saveSettings()
-                        }
-                    }
-                }
-            }
-
-            Label {
-                text: filteredData.length + " of " + voicingsData.length
-                font.pixelSize: 11
-            }
-
-            Button {
-                visible: selectedTuning !== "standard"
-                text: "Copy Tuning"
-                font.pixelSize: 9
-                implicitHeight: 22
-                ToolTip.visible: hovered
-                ToolTip.text: "Copy tuning info to clipboard.\nPaste into a Subtitle (Add > Text > Subtitle)"
-                onClicked: copyTuningToClipboard()
-            }
-
-            Button {
-                text: "Voice Here"
-                font.pixelSize: 10
-                implicitWidth: 64
-                ToolTip.visible: hovered
-                ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
-                onClicked: voiceAtCursor()
-            }
-
-            Button {
-                text: batchQueue.length > 0 ? "Stop" : "Voice All"
-                font.pixelSize: 10
-                implicitWidth: 64
-                ToolTip.visible: hovered
-                ToolTip.text: "Voice all chord symbols in the score"
-                onClicked: {
-                    if (batchQueue.length > 0) {
-                        batchQueue = []
-                        statusMsg.text = "Voicing stopped"
-                        statusMsg.color = theme.textMuted
-                    } else {
-                        batchInsert()
-                    }
-                }
-            }
-
-            Button {
-                text: sortByProximity ? "Nearest" : "Default"
-                font.pixelSize: 10
-                implicitWidth: 56
-                onClicked: {
-                    sortByProximity = !sortByProximity
-                    applyFilters()
-                    statusMsg.text = sortByProximity
-                        ? "Sorting by proximity to last voicing"
-                        : "Default sort order"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-
-            Button {
-                text: melodyOnTop ? "Melody ✓" : "Melody"
-                font.pixelSize: 10
-                implicitWidth: 56
-                ToolTip.visible: hovered
-                ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
-                onClicked: {
-                    melodyOnTop = !melodyOnTop
-                    statusMsg.text = melodyOnTop
-                        ? "Melody on top: voicings will match the melody note"
-                        : "Melody on top: off"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-
-            TextField {
-                id: melodyOverrideField
-                visible: melodyOnTop
-                implicitWidth: 36
-                font.pixelSize: 10
-                placeholderText: "auto"
-                selectByMouse: true
-                ToolTip.visible: hovered
-                ToolTip.text: "Override melody note (e.g. E, Bb, F#). Leave blank for auto-detect."
-            }
-
-            ComboBox {
-                visible: melodyOnTop
-                implicitWidth: 80
-                font.pixelSize: 10
-                model: ["Same staff", "Staff 1", "Staff 2", "Staff 3"]
-                currentIndex: melodyStaffIdx + 1  // -1 → 0 (Same staff)
-                onCurrentIndexChanged: {
-                    melodyStaffIdx = currentIndex - 1  // 0 → -1 (Same staff)
-                }
-                ToolTip.visible: hovered
-                ToolTip.text: "Which staff to read the melody from"
-            }
-
-            Button {
-                text: writeVoice2 ? "Voice 2 ✓" : "Voice 2"
-                font.pixelSize: 10
-                implicitWidth: 56
-                ToolTip.visible: hovered
-                ToolTip.text: "Write voicing pitches as notes on Voice 2 during walkthrough"
-                onClicked: {
-                    writeVoice2 = !writeVoice2
-                    statusMsg.text = writeVoice2
-                        ? "Voice 2 export: voicing notes will be written to Voice 2"
-                        : "Voice 2 export: off"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-        }
-
-        // Color legend for fretboard dot intervals
-        Flow {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 8
-
-            Repeater {
-                model: theme.legendColors
-
-                Row {
-                    spacing: 2
-                    Rectangle {
-                        width: 8; height: 8; radius: 4
-                        color: modelData.color
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    Label {
-                        text: modelData.label
-                        font.pixelSize: 9
-                    }
-                }
-            }
-        }
-
-        ListView {
-            visible: currentTab === 0 && !showToolResults
-            id: voicingList
             Layout.fillWidth: true
             Layout.fillHeight: true
-            clip: true
-            spacing: 4
-            model: filteredData.length
 
-            delegate: Rectangle {
-                width: voicingList.width
-                height: 80
-                radius: 4
-                color: ma.containsMouse ? theme.chipHover : theme.chipBackground
-                border.color: theme.divider
-                border.width: 1
+            filteredData: chordLibrary.filteredData
+            voicingsData: chordLibrary.voicingsData
+            contextDisplayList: chordLibrary.contextDisplayList
+            contextList: chordLibrary.contextList
+            categoryList: chordLibrary.categoryList
+            qualityList: chordLibrary.qualityList
+            filteredTuningDisplayList: chordLibrary.filteredTuningDisplayList
+            filteredTuningList: chordLibrary.filteredTuningList
+            selectedTuning: chordLibrary.selectedTuning
+            filterContext: chordLibrary.filterContext
+            theme: theme
+            batchActive: batchQueue.length > 0
+            sortByProximity: chordLibrary.sortByProximity
+            melodyOnTop: chordLibrary.melodyOnTop
+            melodyStaffIdx: chordLibrary.melodyStaffIdx
+            writeVoice2: chordLibrary.writeVoice2
+            showComparison: chordLibrary.showComparison
+            compareVoicings: chordLibrary.compareVoicings
+            computeNotesForTuningFn: function(v) { return computeNotesForTuning(v) }
+            suggestFingeringFn: function(v) { return suggestFingering(v) }
 
-                property var v: filteredData[index] || {}
-
-                MouseArea {
-                    id: ma
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onDoubleClicked: generateDiagramFile(v)
-                }
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 6
-                    spacing: 6
-
-                    // Fretboard thumbnail
-                    Canvas {
-                        id: fretCanvas
-                        Layout.preferredWidth: 50
-                        Layout.preferredHeight: 66
-
-                        onPaint: {
-                            var ctx = getContext("2d")
-                            ctx.clearRect(0, 0, width, height)
-                            if (!v || !v.dots) return
-
-                            var ns = v.strings || 6
-                            var nf = v.visible_frets || 4
-                            var mg = 5, tm = 12
-                            var ss = (width - 2 * mg) / (ns - 1)
-                            var fs = (height - tm - mg) / nf
-
-                            // Dark mode colors from centralized theme
-                            var isDark = theme.isDark
-                            var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
-                            var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
-                            var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
-
-                            // Strings
-                            ctx.strokeStyle = gridColor
-                            ctx.lineWidth = 0.5
-                            for (var s = 0; s < ns; s++) {
-                                ctx.beginPath()
-                                ctx.moveTo(mg + s * ss, tm)
-                                ctx.lineTo(mg + s * ss, height - mg)
-                                ctx.stroke()
-                            }
-
-                            // Frets
-                            for (var f = 0; f <= nf; f++) {
-                                ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
-                                var fy = tm + f * fs
-                                ctx.beginPath()
-                                ctx.moveTo(mg, fy)
-                                ctx.lineTo(width - mg, fy)
-                                ctx.stroke()
-                            }
-
-                            // Fret number label
-                            if ((v.fret_number || 0) > 1) {
-                                ctx.fillStyle = textColor
-                                ctx.font = "7px sans-serif"
-                                ctx.textAlign = "right"
-                                ctx.fillText(v.fret_number, mg - 1, tm + fs * 0.6)
-                            }
-
-                            // Dots — color-coded by interval (brighter in dark mode)
-                            var dots = v.dots || []
-                            var ivs = v.intervals || []
-                            for (var d = 0; d < dots.length; d++) {
-                                var iv = (d < ivs.length) ? ivs[d] : ""
-                                // Color by interval family (from theme palette)
-                                if (iv === "1")
-                                    ctx.fillStyle = theme.dotRoot
-                                else if (iv === "3" || iv === "b3")
-                                    ctx.fillStyle = theme.dotThird
-                                else if (iv === "5" || iv === "b5" || iv === "#5")
-                                    ctx.fillStyle = theme.dotFifth
-                                else if (iv === "7" || iv === "b7" || iv === "bb7")
-                                    ctx.fillStyle = theme.dotSeventh
-                                else if (iv === "6" || iv === "13" || iv === "b13")
-                                    ctx.fillStyle = theme.dotSixth
-                                else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
-                                    ctx.fillStyle = theme.dotNinth
-                                else if (iv === "4" || iv === "11" || iv === "#11")
-                                    ctx.fillStyle = theme.dotFourth
-                                else
-                                    ctx.fillStyle = theme.dotDefault
-
-                                var dx = mg + (ns - dots[d].string) * ss
-                                var dy = tm + (dots[d].fret - 0.5) * fs
-                                ctx.beginPath()
-                                ctx.arc(dx, dy, 3.5, 0, 2 * Math.PI)
-                                ctx.fill()
-                            }
-
-                            // Mute markers (×)
-                            ctx.fillStyle = muteColor
-                            ctx.font = "9px sans-serif"
-                            ctx.textAlign = "center"
-                            var mutes = v.mutes || []
-                            for (var m = 0; m < mutes.length; m++) {
-                                ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
-                            }
-
-                            // Open markers (○)
-                            ctx.strokeStyle = muteColor
-                            ctx.lineWidth = 1
-                            var opens = v.open || []
-                            for (var o = 0; o < opens.length; o++) {
-                                ctx.beginPath()
-                                ctx.arc(mg + (ns - opens[o]) * ss, tm - 5, 3, 0, 2 * Math.PI)
-                                ctx.stroke()
-                            }
-                        }
-
-                        Component.onCompleted: requestPaint()
-                    }
-
-                    // Text info
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 2
-
-                        Label {
-                            text: v.name || ""
-                            font.pixelSize: 12
-                            font.bold: true
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                        Label {
-                            text: {
-                                // Find which interval is on top (highest-pitched sounding string)
-                                var topInterval = ""
-                                if (v.dots && v.dots.length > 0 && v.intervals) {
-                                    var minStr = 99
-                                    var topIdx = -1
-                                    for (var ti = 0; ti < v.dots.length; ti++) {
-                                        if (v.dots[ti].string < minStr) {
-                                            minStr = v.dots[ti].string
-                                            topIdx = ti
-                                        }
-                                    }
-                                    // Also check open strings (they can be the highest)
-                                    var opens = v.open || []
-                                    for (var oi = 0; oi < opens.length; oi++) {
-                                        if (opens[oi] < minStr) {
-                                            minStr = opens[oi]
-                                            topIdx = -2 // open string, interval unknown from dots
-                                        }
-                                    }
-                                    if (topIdx >= 0 && topIdx < v.intervals.length) {
-                                        var iv = v.intervals[topIdx]
-                                        var ivLabels = {"1":"root","3":"3rd","b3":"b3","5":"5th","b5":"b5","#5":"#5",
-                                            "7":"7th","b7":"b7","bb7":"bb7","9":"9th","b9":"b9","#9":"#9",
-                                            "4":"4th","11":"11th","#11":"#11","6":"6th","13":"13th","b13":"b13"}
-                                        topInterval = ivLabels[iv] || iv
-                                    }
-                                }
-                                var info = (v.intervals || []).join(" ") + "  |  Fret " + (v.fret_number || "?")
-                                if (topInterval) info += "  |  " + topInterval + " on top"
-                                return info
-                            }
-                            font.pixelSize: 10
-                            Layout.fillWidth: true
-                        }
-                        Label {
-                            text: computeNotesForTuning(v).join(" ")
-                            font.pixelSize: 9
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                    }
-
-                    ColumnLayout {
-                        spacing: 2
-
-                        Button {
-                            text: "Open"
-                            font.pixelSize: 9
-                            implicitWidth: 44
-                            onClicked: generateDiagramFile(v)
-                        }
-
-                        RowLayout {
-                            spacing: 1
-
-                            Button {
-                                text: "\u266B"  // beamed eighth notes — chord strum
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                onClicked: playVoicing(v, "chord")
-                            }
-
-                            Button {
-                                text: "\u2191"  // up arrow — arpeggio
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                onClicked: playVoicing(v, "arp")
-                            }
-
-                            Button {
-                                text: "\u21CB"  // compare arrows
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                ToolTip.visible: hovered
-                                ToolTip.text: "Compare"
-                                onClicked: addToComparison(v)
-                            }
-                        }
-                    }
-                }
+            onSearchChanged: function(text) { searchText = text; applyFilters() }
+            onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
+            onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }
+            onQualityFilterChanged: function(text) { filterQuality = text; applyFilters() }
+            onTuningSelected: function(slug) {
+                selectedTuning = slug
+                loadTuningStringCount()
+                loadTuningVoicings()
+                saveSettings()
             }
+            onVoiceHereRequested: voiceAtCursor()
+            onBatchInsertRequested: batchInsert()
+            onBatchStopRequested: {
+                batchQueue = []
+                statusMsg.text = "Voicing stopped"
+                statusMsg.color = theme.textMuted
+            }
+            onSortToggled: {
+                sortByProximity = !sortByProximity
+                applyFilters()
+                statusMsg.text = sortByProximity
+                    ? "Sorting by proximity to last voicing"
+                    : "Default sort order"
+                statusMsg.color = theme.textMuted
+            }
+            onMelodyToggled: {
+                melodyOnTop = !melodyOnTop
+                statusMsg.text = melodyOnTop
+                    ? "Melody on top: voicings will match the melody note"
+                    : "Melody on top: off"
+                statusMsg.color = theme.textMuted
+            }
+            onVoice2Toggled: {
+                writeVoice2 = !writeVoice2
+                statusMsg.text = writeVoice2
+                    ? "Voice 2 export: voicing notes will be written to Voice 2"
+                    : "Voice 2 export: off"
+                statusMsg.color = theme.textMuted
+            }
+            onMelodyStaffChanged: function(idx) { melodyStaffIdx = idx }
+            onCopyTuningRequested: copyTuningToClipboard()
+            onOpenVoicingRequested: function(voicing) { generateDiagramFile(voicing) }
+            onPlayVoicingRequested: function(voicing, mode) { playVoicing(voicing, mode) }
+            onCompareRequested: function(voicing) { addToComparison(voicing) }
+            onClearComparisonRequested: clearComparison()
         }
 
+        // Global status bar (used by many functions — stays in parent, migrate in Phase C #104)
         Label {
             id: statusMsg
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
             font.pixelSize: 10
-
             text: ""
-        }
-
-        // T-015: Voicing Comparison Panel
-        Rectangle {
-            visible: showComparison && currentTab === 0
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            color: theme.consoleBg
-            radius: 4
-            border.color: theme.divider
-
-            RowLayout {
-                anchors.fill: parent
-                anchors.margins: 6
-                spacing: 6
-
-                Repeater {
-                    model: compareVoicings.length
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        radius: 4
-                        color: theme.cardBackground
-                        border.color: theme.cardBorder
-
-                        property var cv: compareVoicings[index] || {}
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            spacing: 2
-
-                            Label {
-                                text: cv.name || ""
-                                font.pixelSize: 10
-                                font.bold: true
-                                elide: Text.ElideRight
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: (cv.intervals || []).join(" ")
-                                font.pixelSize: 9
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: "Fret " + (cv.fret_number || "?") + "  |  " + (cv.notes || []).join(" ")
-                                font.pixelSize: 9
-                                color: theme.textMuted
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: {
-                                    var f = suggestFingering(cv)
-                                    if (f.length === 0) return ""
-                                    var parts = []
-                                    for (var i = 0; i < f.length; i++) parts.push("S" + f[i].string + ":" + f[i].finger)
-                                    return "Fingering: " + parts.join(" ")
-                                }
-                                font.pixelSize: 8
-                                color: theme.textFaint
-                                Layout.fillWidth: true
-                            }
-                        }
-                    }
-                }
-
-                Button {
-                    text: "Clear"
-                    font.pixelSize: 9
-                    implicitWidth: 40
-                    onClicked: clearComparison()
-                }
-            }
         }
     }
 

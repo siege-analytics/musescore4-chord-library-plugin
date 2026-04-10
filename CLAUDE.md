@@ -45,9 +45,9 @@ A MuseScore Studio 4 plugin for jazz guitar chord voicing management. 820+ curat
 
 - **`plugin/model/*.js`** = business logic (pure functions, no UI)
 - **`plugin/ui/*.qml`** = visual components
-- **`plugin/ChordLibrary.qml`** = state management, routing, wiring (~4957 lines)
+- **`plugin/ChordLibrary.qml`** = state management, routing, wiring (~3626 lines)
 
-Decomposition into tab-level QML components is ongoing (#75, #79).
+Phase A decomposition complete (6 tab panels extracted). Phase B (logic modules) is next.
 
 ### Self-contained plugin
 
@@ -85,7 +85,7 @@ plugin/                    # Self-contained installable plugin
   data/voicings.json        # 820+ voicing library (key of C)
   tunings/                  # 6 guitar tuning configs
   model/                    # 12 JS business logic modules
-  ui/                       # 8 QML visual components
+  ui/                       # 12 QML visual components
 docs/
   fingering-research-report.md   # Comprehensive research
 references/databases/            # Validation datasets (MIT/CC BY 4.0)
