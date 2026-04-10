@@ -403,6 +403,7 @@ MuseScore {
             topNoteFn: MelodyEngine.voicingTopNoteSemitone,
             bassNoteFn: MelodyEngine.voicingBassNoteSemitone,
             distanceFn: MelodyEngine.voicingDistance,
+            difficultyFn: FingeringEngine.computeDifficulty,
             semitoneMap: Transposer.SEMITONE_MAP
         }
     }
@@ -3472,6 +3473,7 @@ MuseScore {
             tuningOffset: chordLibrary.tuningOffset
             altCount: chordLibrary.altCount
             altIndex: chordLibrary.altIndex
+            difficultyFn: FingeringEngine.computeDifficulty
             bassStringList: _bassStringList
             selectedBassString: _selectedBassString
             bassStringCounts: {

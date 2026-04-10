@@ -31,6 +31,7 @@ ColumnLayout {
     property var bassStringList: []       // available bass strings [7, 6, 5, 4]
     property int selectedBassString: -1   // currently selected bass string
     property var bassStringCounts: ({})   // { "7": 45, "6": 32, ... }
+    property var difficultyFn: function(v) { return { score: 0, tier: "standard" } }  // FingeringEngine.computeDifficulty
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -266,6 +267,26 @@ ColumnLayout {
                 font.bold: true
                 font.family: "Menlo, Monaco, monospace"
                 Layout.fillWidth: true
+            }
+
+            // Difficulty tier (#106)
+            Label {
+                visible: currentItem !== null
+                text: {
+                    if (!currentItem) return ""
+                    var d = walkthroughPanel.difficultyFn(currentItem.voicing)
+                    var label = d.tier.charAt(0).toUpperCase() + d.tier.slice(1)
+                    return label + " (" + d.score + "/100)"
+                }
+                color: {
+                    if (!currentItem) return "black"
+                    var d = walkthroughPanel.difficultyFn(currentItem.voicing)
+                    if (d.tier === "expert") return "#e74c3c"
+                    if (d.tier === "advanced") return "#f39c12"
+                    return "#27ae60"
+                }
+                font.pixelSize: 10
+                font.bold: true
             }
 
             // Bass string + voicing navigation — single compact row
