@@ -67,6 +67,29 @@ Phase A decomposition complete (6 tab panels extracted). Phase B (logic modules)
 - **Difficulty scoring**: 0-100 across stretch, finger count, barre complexity, position, thumb
 - **71% exact match** against tombatossals/chords-db (3,282 voicings)
 
+### Decomposition pattern (ADR-001)
+
+**Properties-in / signals-out with state groups.** Each tab panel is a self-contained QML
+component that receives typed state groups (QtObject properties) and emits signals for all
+actions. ChordLibrary.qml remains the router — it handles signal wiring, state mutation,
+and JS module dispatch.
+
+- Panels NEVER mutate parent state directly — always emit a signal
+- Panels NEVER import JS model modules — parent passes callback functions as properties
+  (e.g. `computeNotesForTuningFn`, `suggestFingeringFn`, `difficultyFn`)
+- Timers that defer UI rendering (e.g. ImportPanel's initTimer) stay in the panel
+  (UI concern), but their `onTriggered` emits a signal — parent does the heavy work
+- `statusMsg` is a global status bar label in ChordLibrary.qml, not inside any panel
+  (96 references across the codebase — migration to property deferred to Phase C, #104)
+
+### Voicing ranking
+
+- `ChordSelector.findBestVoicing()` ranks candidates by context (+100), quality (+20),
+  category (shell +10, drop2 +5), melody/bass match, proximity, and register preference
+- **Difficulty penalty** (#105): expert -30, advanced -10, standard 0. Uses
+  `FingeringEngine.computeDifficulty()` passed as a callback to avoid cross-module import
+- Mute penalty: -5 per muted string. Same-shape-as-previous penalty: -15
+
 ### Key design decisions
 
 - `onActivated` not `onCurrentIndexChanged` for ComboBoxes (prevents cascade on model rebuild)
@@ -75,17 +98,26 @@ Phase A decomposition complete (6 tab panels extracted). Phase B (logic modules)
 - All contexts always shown in dropdown — even if current tuning has zero voicings
 - Thumb (T/finger 0) offered as alternative, not default
 - Individual finger assignments preferred over mini-barres (standard pedagogy)
+- Difficulty tier displayed in walkthrough: green (standard), yellow (advanced), red (expert)
 
 ## Key Directories
 
 ```
 plugin/                    # Self-contained installable plugin
-  ChordLibrary.qml         # Main plugin source
+  ChordLibrary.qml         # State management, routing, wiring (~3626 lines)
   config/contexts.json      # Context labels
   data/voicings.json        # 820+ voicing library (key of C)
   tunings/                  # 6 guitar tuning configs
   model/                    # 12 JS business logic modules
   ui/                       # 12 QML visual components
+    ExportPanel.qml          # Tab 2: Export (114 lines)
+    ImportPanel.qml          # Tab 3: Import, rebuild, iReal, presets (319 lines)
+    PracticePanel.qml        # Tab 4: Flash cards (274 lines)
+    ScoreToolsPanel.qml      # Tab 1: Analysis, constraints, annotations (235 lines)
+    SettingsPanel.qml        # Tab 5: Tuning, save to library, audit (560 lines)
+    LibraryPanel.qml         # Tab 0: Search, filters, voicing list, comparison (544 lines)
+    WalkthroughPanel.qml     # Voice Score overlay (640 lines)
+    VoicingCard.qml, VoicingGrid.qml, FilterBar.qml, SearchBar.qml, PanelView.qml
 docs/
   fingering-research-report.md   # Comprehensive research
 references/databases/            # Validation datasets (MIT/CC BY 4.0)
@@ -106,10 +138,13 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 
 ## Open Issues (as of 2026-04-10)
 
-- **#75** — Epic: decompose ChordLibrary.qml
-- **#79** — Phase 4: extract tab UIs into QML components
-- **#92** — Fingering validation with partial barre support (phases 1-5 done)
-- **#93** — Fret-distance finger assignment (implemented, 71% validation)
+- **#75** — Epic: decompose ChordLibrary.qml (Phase A done, Phase B next)
+- **#100** — B1: BatchEngine.qml (~633 lines)
+- **#101** — B2: InlineTools.js (~486 lines)
+- **#102** — B3: TuningManager.qml (~600 lines)
+- **#103** — B4: InsertionEngine.qml (~328 lines)
+- **#104** — C1: Group properties into typed QtObjects (depends on A+B)
+- **#74** — cmd("paste") broken in batch insert (bug — core functionality)
 
 ## MuseScore 4 Plugin API Limitations
 
