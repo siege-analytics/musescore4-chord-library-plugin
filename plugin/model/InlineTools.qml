@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import MuseScore 3.0
 import "ChordSelector.js" as ChordSelector
 import "MelodyEngine.js" as MelodyEngine
 import "Transposer.js" as Transposer
