@@ -1919,9 +1919,6 @@ MuseScore {
         showComparison = false
     }
 
-    function suggestFingering(voicing) {
-        return FingeringEngine.suggestFingering(voicing)
-    }
 
     // === UI ===
 

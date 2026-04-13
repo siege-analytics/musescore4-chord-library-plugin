@@ -157,7 +157,8 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 - **`.pragma library` callbacks**: modules with `.pragma library` can't receive QML closure callbacks — pass direct function references + data separately
 - **Fret calculations**: dot.fret is relative to fret_number (row 1 = fret_number). Absolute fret = fret_number + dot.fret - 1.
 - **String numbering**: 1 = high e, 6 = low E, 7 = low A (Van Eps)
-- **Child QML scope**: `newElement()` only exists on the root MuseScore plugin object. Child Items in `model/` or `ui/` must receive `pluginRef: chordLibrary` and call `pluginRef.newElement()`. Also add `import MuseScore 3.0` to any QML file that uses `Element.*` constants. See VoicingInserter.qml for the pattern.
+- **Child QML scope**: `newElement()` only exists on the root MuseScore plugin object. Child Items in `model/` or `ui/` must receive `pluginRef: chordLibrary` and call `pluginRef.newElement()`. Do NOT add `import MuseScore 3.0` to child files — it breaks plugin loading. `Element.*` constants resolve through QML's parent scope chain. See VoicingInserter.qml for the pattern.
+- **Duplicate function names**: QML does not allow two functions with the same name in a component — even if they have different parameter counts. The plugin will fail to load with "Duplicate method name" in the log. Always check `grep -n "function " plugin/ChordLibrary.qml | sed 's/(.*//; s/.*function //' | sort | uniq -d` before committing.
 
 ---
 
