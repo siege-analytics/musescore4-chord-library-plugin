@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import MuseScore 3.0
 import "Transposer.js" as Transposer
 
 // InsertionEngine.qml — Diagram insertion and voicing playback.
