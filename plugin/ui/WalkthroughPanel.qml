@@ -34,6 +34,10 @@ ColumnLayout {
     property var difficultyFn: function(v) { return { score: 0, tier: "standard" } }  // FingeringEngine.computeDifficulty
     property var fingeringFn: function(v) { return "" }  // FingeringEngine.computeFingeringString
 
+    // Lock states (readable by parent for bass string selection)
+    readonly property bool melodyLocked: typeof melodyLockBtn !== "undefined" && melodyLockBtn ? melodyLockBtn.checked : false
+    readonly property bool bassLocked: typeof bassLockBtn !== "undefined" && bassLockBtn ? bassLockBtn.checked : false
+
     // === Signals (handled by parent) ===
     signal prevClicked()
     signal nextClicked()
