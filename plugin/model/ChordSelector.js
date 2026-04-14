@@ -214,7 +214,7 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
             var dk = ""
             var dots = v.dots || []
             for (var di = 0; di < dots.length; di++) dk += dots[di].string + ":" + dots[di].fret + ","
-            var sk = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dk + "|" + (v.mutes || []).join(",")
+            var sk = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dk
             if (seenShapes[sk]) continue
             seenShapes[sk] = true
             candidates.push(v)
