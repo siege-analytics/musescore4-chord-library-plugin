@@ -81,7 +81,9 @@ function applyFilters(voicingsData, opts) {
         for (var dk = 0; dk < dots.length; dk++) {
             dotsKey += dots[dk].string + ":" + dots[dk].fret + ","
         }
-        var shapeKey = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dotsKey + "|" + (v.mutes || []).join(",")
+        // Key excludes mutes — a 6-string voicing with mutes=[5,6] and a 7-string
+        // version with mutes=[5,6,7] are the same shape to the guitarist.
+        var shapeKey = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dotsKey
         if (seenShapes[shapeKey]) continue
         seenShapes[shapeKey] = true
         result.push(v)
