@@ -118,6 +118,7 @@ Item {
             }
         }
 
+        // Tuning selector row
         RowLayout {
             Layout.fillWidth: true
             spacing: 4
@@ -151,11 +152,16 @@ Item {
                 ToolTip.text: "Copy tuning info to clipboard.\nPaste into a Subtitle (Add > Text > Subtitle)"
                 onClicked: libraryPanel.copyTuningRequested()
             }
+        }
+
+        // Action buttons (wrapping flow to avoid overflow)
+        Flow {
+            Layout.fillWidth: true
+            spacing: 4
 
             Button {
                 text: "Voice Here"
                 font.pixelSize: 10
-                implicitWidth: 64
                 ToolTip.visible: hovered
                 ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
                 onClicked: libraryPanel.voiceHereRequested()
@@ -164,7 +170,6 @@ Item {
             Button {
                 text: libraryPanel.batchActive ? "Stop" : "Voice All"
                 font.pixelSize: 10
-                implicitWidth: 64
                 ToolTip.visible: hovered
                 ToolTip.text: "Voice all chord symbols in the score"
                 onClicked: {
@@ -176,14 +181,12 @@ Item {
             Button {
                 text: libraryPanel.sortByProximity ? "Nearest" : "Default"
                 font.pixelSize: 10
-                implicitWidth: 56
                 onClicked: libraryPanel.sortToggled()
             }
 
             Button {
                 text: libraryPanel.melodyOnTop ? "Melody ✓" : "Melody"
                 font.pixelSize: 10
-                implicitWidth: 56
                 ToolTip.visible: hovered
                 ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
                 onClicked: libraryPanel.melodyToggled()
@@ -192,7 +195,7 @@ Item {
             TextField {
                 id: melodyOverrideField
                 visible: libraryPanel.melodyOnTop
-                implicitWidth: 36
+                width: 36
                 font.pixelSize: 10
                 placeholderText: "auto"
                 selectByMouse: true
@@ -202,7 +205,7 @@ Item {
 
             ComboBox {
                 visible: libraryPanel.melodyOnTop
-                implicitWidth: 80
+                width: 80
                 font.pixelSize: 10
                 model: ["Same staff", "Staff 1", "Staff 2", "Staff 3"]
                 currentIndex: libraryPanel.melodyStaffIdx + 1
@@ -216,7 +219,6 @@ Item {
             Button {
                 text: libraryPanel.writeVoice2 ? "Voice 2 ✓" : "Voice 2"
                 font.pixelSize: 10
-                implicitWidth: 56
                 ToolTip.visible: hovered
                 ToolTip.text: "Write voicing pitches as notes on Voice 2 during walkthrough"
                 onClicked: libraryPanel.voice2Toggled()
