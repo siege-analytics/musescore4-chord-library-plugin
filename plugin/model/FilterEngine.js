@@ -49,6 +49,7 @@ function applyFilters(voicingsData, opts) {
     }
 
     var result = []
+    var seenShapes = {}  // deduplicate by shape (same dots+fret+quality from different contexts)
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
         if (opts.filterContext) {
@@ -73,6 +74,16 @@ function applyFilters(voicingsData, opts) {
                 || (v.tags && v.tags.join(" ").toLowerCase().indexOf(q) >= 0)
             if (!match) continue
         }
+        // Deduplicate: same shape from different contexts should appear once.
+        // Build a shape key from quality + fret + dot positions.
+        var dotsKey = ""
+        var dots = v.dots || []
+        for (var dk = 0; dk < dots.length; dk++) {
+            dotsKey += dots[dk].string + ":" + dots[dk].fret + ","
+        }
+        var shapeKey = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dotsKey + "|" + (v.mutes || []).join(",")
+        if (seenShapes[shapeKey]) continue
+        seenShapes[shapeKey] = true
         result.push(v)
     }
 

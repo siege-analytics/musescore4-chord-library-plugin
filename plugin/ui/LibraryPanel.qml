@@ -163,16 +163,24 @@ Item {
             Button {
                 text: "Voice Here"
                 font.pixelSize: 10
+                enabled: libraryPanel.filterContext.length > 0
+                opacity: enabled ? 1.0 : 0.4
                 ToolTip.visible: hovered
-                ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
+                ToolTip.text: enabled
+                    ? "Suggest a voicing for the chord at the current cursor position"
+                    : "Select a context (e.g. Chord Melody 7-str) first"
                 onClicked: libraryPanel.voiceHereRequested()
             }
 
             Button {
                 text: libraryPanel.batchActive ? "Stop" : "Voice All"
                 font.pixelSize: 10
+                enabled: libraryPanel.batchActive || libraryPanel.filterContext.length > 0
+                opacity: enabled ? 1.0 : 0.4
                 ToolTip.visible: hovered
-                ToolTip.text: "Voice all chord symbols in the score"
+                ToolTip.text: enabled
+                    ? "Voice all chord symbols in the score"
+                    : "Select a context (e.g. Chord Melody 7-str) first"
                 onClicked: {
                     if (libraryPanel.batchActive) libraryPanel.batchStopRequested()
                     else libraryPanel.batchInsertRequested()

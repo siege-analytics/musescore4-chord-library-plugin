@@ -203,12 +203,20 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         if (contextMax < maxStrings) maxStrings = contextMax
     }
     var candidates = []
+    var seenShapes = {}  // deduplicate same shape from different contexts
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
         if ((v.strings || 6) > maxStrings) continue
         if (v.root !== "C" && v.root !== targetRoot) continue
         if (v.chord_quality === quality || v.category === "quartal") {
             if (opts.filterCategory && v.category !== opts.filterCategory && v.chord_quality === quality) continue
+            // Deduplicate by shape
+            var dk = ""
+            var dots = v.dots || []
+            for (var di = 0; di < dots.length; di++) dk += dots[di].string + ":" + dots[di].fret + ","
+            var sk = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dk + "|" + (v.mutes || []).join(",")
+            if (seenShapes[sk]) continue
+            seenShapes[sk] = true
             candidates.push(v)
         }
     }
@@ -280,14 +288,18 @@ function buildBassStringGroups(altVoicings) {
     var list = []
     for (var i = 0; i < altVoicings.length; i++) {
         var v = altVoicings[i]
+        var mutes = v.mutes || []
         var bassStr = 0
+        // Bass = highest-numbered SOUNDING string (fretted or open, not muted)
         var dots = v.dots || []
         for (var d = 0; d < dots.length; d++) {
-            if (dots[d].string > bassStr) bassStr = dots[d].string
+            if (dots[d].string > bassStr && mutes.indexOf(dots[d].string) < 0)
+                bassStr = dots[d].string
         }
         var opens = v.open || []
         for (var o = 0; o < opens.length; o++) {
-            if (opens[o] > bassStr) bassStr = opens[o]
+            if (opens[o] > bassStr && mutes.indexOf(opens[o]) < 0)
+                bassStr = opens[o]
         }
         if (bassStr === 0) bassStr = v.strings || 6
         if (!groups[bassStr]) {

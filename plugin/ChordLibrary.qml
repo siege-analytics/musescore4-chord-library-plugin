@@ -147,7 +147,7 @@ MuseScore {
 
     QtObject {
         id: tuningState
-        property string selectedTuning: "standard"
+        property string selectedTuning: "7string-van-eps"
         property var tuningList: [
             "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
             "baritone"
@@ -353,6 +353,55 @@ MuseScore {
         contextStringCounts = strCounts
     }
 
+    // === Custom context creation (#132) ===
+
+    function createCustomContext(code, name, strings) {
+        // Update runtime state
+        var labels = {}
+        for (var k in contextLabels) labels[k] = contextLabels[k]
+        labels[code] = name
+        contextLabels = labels
+
+        var shorts = {}
+        for (var s in contextLabelsShort) shorts[s] = contextLabelsShort[s]
+        shorts[code] = code.replace(/[0-9]+$/, "") + " " + strings
+        contextLabelsShort = shorts
+
+        var counts = {}
+        for (var c in contextStringCounts) counts[c] = contextStringCounts[c]
+        counts[code] = strings
+        contextStringCounts = counts
+
+        // Add to context list if not already present
+        if (contextList.indexOf(code) < 0) {
+            var list = contextList.slice()
+            list.push(code)
+            contextList = list
+        }
+
+        // Update contexts.json on disk
+        try {
+            var raw = contextsConfigFile.read()
+            var config = (raw && raw.length > 2) ? JSON.parse(raw) : { contexts: {} }
+            config.contexts[code] = {
+                name: name,
+                short: shorts[code],
+                description: "Custom context created by user",
+                strings: strings
+            }
+            contextsConfigFile.write(JSON.stringify(config, null, 2))
+            settingsPanel.contextStatus = "Created: " + name + " (" + code + ")"
+            settingsPanel.contextStatusColor = "#27ae60"
+        } catch (e) {
+            settingsPanel.contextStatus = "Failed to save: " + e
+            settingsPanel.contextStatusColor = "#e74c3c"
+        }
+
+        // Rebuild filter lists so the new context appears
+        rebuildFilterLists()
+        saveSettings()
+    }
+
     // === Tool feedback (uses toolStatus label + console) ===
 
     function showResult(title, message, isSuccess) {
@@ -525,6 +574,7 @@ MuseScore {
             if (s.voicingUrl) jsonUrl = s.voicingUrl
             if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
             if (s.tuning) selectedTuning = s.tuning
+            if (s.defaultContext) filterContext = s.defaultContext
             // Restore custom tunings that were added via Create/Import
             if (s.customTunings.length > 0) {
                 for (var i = 0; i < s.customTunings.length; i++) {
@@ -558,6 +608,7 @@ MuseScore {
             voicingUrl: jsonUrl,
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
+            defaultContext: filterContext,
             customTunings: DataCache.getCustomTuningsList(tuningList, builtInTunings, tuningLabels, tuningStringCounts),
             tuningOrder: tuningList.slice(),
             calcMaxFret: calcMaxFret,
@@ -2134,6 +2185,9 @@ MuseScore {
             onFixDuplicatesRequested: fixDuplicates()
             onClearDismissalsRequested: clearDismissals()
             onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
+            onCreateContextRequested: function(code, name, strings) {
+                createCustomContext(code, name, strings)
+            }
         }
 
         // === Tool Results panel (overlay) — extracted to WalkthroughPanel.qml ===

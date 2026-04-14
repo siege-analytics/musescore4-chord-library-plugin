@@ -58,6 +58,11 @@ Flickable {
     signal fixDuplicatesRequested()
     signal clearDismissalsRequested()
     signal browseAuditRequested(var targetField)
+    signal createContextRequested(string code, string name, int strings)
+
+    // --- Context creation status ---
+    property string contextStatus: ""
+    property color contextStatusColor: "black"
 
     // --- Flickable setup ---
     Layout.fillWidth: true
@@ -489,6 +494,84 @@ Flickable {
                 visible: settingsPanel.hygieneIgnoreList.length > 0
                 onClicked: settingsPanel.clearDismissalsRequested()
             }
+        }
+
+        // --- Divider ---
+        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+        // --- Custom Contexts ---
+        Label {
+            text: "CUSTOM CONTEXTS"
+            font.pixelSize: 11
+            font.bold: true
+            Layout.fillWidth: true
+        }
+
+        Label {
+            text: "Create a voicing context (e.g. Solo Guitar, Bass Duo):"
+            font.pixelSize: 10
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            ComboBox {
+                id: contextTypeCombo
+                model: ["CM", "CV"]
+                implicitWidth: 60
+                font.pixelSize: 10
+            }
+
+            SpinBox {
+                id: contextStringsSpin
+                from: 4
+                to: 12
+                value: 7
+                implicitWidth: 75
+                font.pixelSize: 10
+            }
+
+            TextField {
+                id: contextNameField
+                Layout.fillWidth: true
+                font.pixelSize: 10
+                placeholderText: "Display name (e.g. Solo Guitar)"
+                selectByMouse: true
+            }
+        }
+
+        RowLayout {
+            spacing: 6
+
+            Button {
+                text: "Create Context"
+                font.pixelSize: 10
+                onClicked: {
+                    var code = contextTypeCombo.currentText + contextStringsSpin.value
+                    var name = contextNameField.text.trim()
+                    if (!name) name = contextTypeCombo.currentText + " " + contextStringsSpin.value + "-str"
+                    settingsPanel.createContextRequested(code, name, contextStringsSpin.value)
+                }
+            }
+
+            Label {
+                text: "Code: " + contextTypeCombo.currentText + contextStringsSpin.value
+                font.pixelSize: 9
+                color: "#888"
+            }
+        }
+
+        Label {
+            visible: settingsPanel.contextStatus.length > 0
+            text: settingsPanel.contextStatus
+            color: settingsPanel.contextStatusColor
+            font.pixelSize: 10
+            font.bold: true
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
         }
 
         // --- Divider ---
