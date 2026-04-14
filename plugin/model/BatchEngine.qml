@@ -133,35 +133,40 @@ Item {
         bassStringList = result.list
     }
 
+    // Filtered group for current bass string (melody-filtered when locked)
+    property var _currentGroup: []
+
     function selectBassString(bassStr) {
         selectedBassString = bassStr
         var group = bassStringGroups[bassStr] || []
-        if (group.length > 0) {
-            // If melody is locked (walkthrough lock OR main screen Melody button),
-            // find the voicing in this group that matches the melody note on top
-            var bestIdx = 0
-            var item = batchChords[batchIndex - 1]
-            if (item && item.melodyMidi >= 0 && (_melodyLocked || melodyOnTop)) {
-                var melodyTarget = item.melodyMidi % 12
-                for (var gi = 0; gi < group.length; gi++) {
-                    var topSemi = MelodyEngine.voicingTopNoteSemitone(group[gi], item.root, Transposer.SEMITONE_MAP)
-                    if (topSemi === melodyTarget) {
-                        bestIdx = gi
-                        break
-                    }
+
+        // When melody is locked, filter group to only melody-matching voicings
+        var item = batchChords[batchIndex - 1]
+        if (item && item.melodyMidi >= 0 && (_melodyLocked || melodyOnTop) && group.length > 0) {
+            var melodyTarget = item.melodyMidi % 12
+            var filtered = []
+            for (var gi = 0; gi < group.length; gi++) {
+                var topSemi = MelodyEngine.voicingTopNoteSemitone(group[gi], item.root, Transposer.SEMITONE_MAP)
+                if (topSemi === melodyTarget) {
+                    filtered.push(group[gi])
                 }
             }
-            applyAlternativeVoicing(group[bestIdx])
-            altIndex = bestIdx
+            _currentGroup = filtered.length > 0 ? filtered : group  // fallback if no match
+        } else {
+            _currentGroup = group
         }
-        altCount = group.length
+
+        if (_currentGroup.length > 0) {
+            applyAlternativeVoicing(_currentGroup[0])
+            altIndex = 0
+        }
+        altCount = _currentGroup.length
     }
 
     function selectAlternativeVoicing(index) {
-        var group = bassStringGroups[selectedBassString] || altVoicings
-        if (index < 0 || index >= group.length) return
+        if (index < 0 || index >= _currentGroup.length) return
         altIndex = index
-        applyAlternativeVoicing(group[index])
+        applyAlternativeVoicing(_currentGroup[index])
     }
 
     function applyAlternativeVoicing(voicing) {
