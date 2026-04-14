@@ -137,10 +137,23 @@ Item {
         selectedBassString = bassStr
         var group = bassStringGroups[bassStr] || []
         if (group.length > 0) {
-            applyAlternativeVoicing(group[0])
+            // If melody is locked, find the voicing in this group that matches
+            var bestIdx = 0
+            var item = batchChords[batchIndex - 1]
+            if (item && item.melodyMidi >= 0 && _melodyLocked) {
+                var melodyTarget = item.melodyMidi % 12
+                for (var gi = 0; gi < group.length; gi++) {
+                    var topSemi = MelodyEngine.voicingTopNoteSemitone(group[gi], item.root, Transposer.SEMITONE_MAP)
+                    if (topSemi === melodyTarget) {
+                        bestIdx = gi
+                        break
+                    }
+                }
+            }
+            applyAlternativeVoicing(group[bestIdx])
+            altIndex = bestIdx
         }
         altCount = group.length
-        altIndex = 0
     }
 
     function selectAlternativeVoicing(index) {
@@ -353,6 +366,10 @@ Item {
     }
 
     function batchShowNext() {
+        // Reset lock states on chord transition (user re-locks per chord)
+        _melodyLocked = false
+        _bassLocked = false
+
         if (batchIndex >= batchChords.length) {
             batchQueue = []
             batchEngine.walkthroughComplete(batchTotal)
@@ -511,8 +528,8 @@ Item {
             try { tempDiagramFile.write(xml) } catch (e) {}
         }
 
-        _melodyLocked = false
-        _bassLocked = false
+        // Lock states persist until next chord (batchShowNext) —
+        // so bass string selection respects the user's lock preference
 
         // Rewind and re-show
         batchIndex = idx

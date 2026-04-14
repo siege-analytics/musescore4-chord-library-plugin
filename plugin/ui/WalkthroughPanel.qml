@@ -32,6 +32,7 @@ ColumnLayout {
     property int selectedBassString: -1   // currently selected bass string
     property var bassStringCounts: ({})   // { "7": 45, "6": 32, ... }
     property var difficultyFn: function(v) { return { score: 0, tier: "standard" } }  // FingeringEngine.computeDifficulty
+    property var fingeringFn: function(v) { return "" }  // FingeringEngine.computeFingeringString
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -287,6 +288,19 @@ ColumnLayout {
                 }
                 font.pixelSize: 10
                 font.bold: true
+            }
+
+            // Fingering suggestion
+            Label {
+                visible: currentItem !== null
+                text: {
+                    if (!currentItem) return ""
+                    var fg = walkthroughPanel.fingeringFn(currentItem.voicing)
+                    return fg ? "Fingering: " + fg : ""
+                }
+                font.pixelSize: 10
+                font.family: "Menlo, Monaco, monospace"
+                color: "#aaa"
             }
 
             // Bass string + voicing navigation — single compact row
