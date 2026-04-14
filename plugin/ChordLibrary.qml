@@ -2180,6 +2180,9 @@ MuseScore {
                 showToolResults = false
             }
             onBassStringClicked: function(bassStr) {
+                // Sync lock states from UI before selecting bass string
+                batchEngine._melodyLocked = walkthroughPanel.melodyLocked
+                batchEngine._bassLocked = walkthroughPanel.bassLocked
                 batchEngine.selectBassString(bassStr)
             }
             onAltSelected: function(index) {
