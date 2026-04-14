@@ -1116,7 +1116,21 @@ MuseScore {
         var savedQuality = filterQuality
 
         if (calculated && calculated.length > 0) {
-            voicingsData = calculated
+            // Merge: keep standard library voicings (bass-on-4 drop2s, shells)
+            // alongside calculated tuning voicings. A 6-string drop2 with bass
+            // on string 4 is perfectly valid on a 7-string guitar.
+            var merged = calculated.slice()
+            if (standardVoicingsData.length > 0) {
+                var calcIds = {}
+                for (var ci = 0; ci < calculated.length; ci++) calcIds[calculated[ci].id] = true
+                for (var si = 0; si < standardVoicingsData.length; si++) {
+                    var sv = standardVoicingsData[si]
+                    if (!calcIds[sv.id] && (sv.strings || 6) <= tuningMaxStrings) {
+                        merged.push(sv)
+                    }
+                }
+            }
+            voicingsData = merged
             usingTuningVoicings = true
             rebuildFilterLists()
             if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
