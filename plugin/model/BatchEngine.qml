@@ -87,7 +87,7 @@ Item {
             filterCategory: filterCategory,
             melodyMidi: melodyMidi,
             bassMidi: bassMidi,
-            melodyLocked: _melodyLocked,
+            melodyLocked: _melodyLocked || melodyOnTop,
             bassLocked: _bassLocked,
             lastInsertedVoicing: lastInsertedVoicing,
             topNoteFn: MelodyEngine.voicingTopNoteSemitone,
@@ -137,10 +137,11 @@ Item {
         selectedBassString = bassStr
         var group = bassStringGroups[bassStr] || []
         if (group.length > 0) {
-            // If melody is locked, find the voicing in this group that matches
+            // If melody is locked (walkthrough lock OR main screen Melody button),
+            // find the voicing in this group that matches the melody note on top
             var bestIdx = 0
             var item = batchChords[batchIndex - 1]
-            if (item && item.melodyMidi >= 0 && _melodyLocked) {
+            if (item && item.melodyMidi >= 0 && (_melodyLocked || melodyOnTop)) {
                 var melodyTarget = item.melodyMidi % 12
                 for (var gi = 0; gi < group.length; gi++) {
                     var topSemi = MelodyEngine.voicingTopNoteSemitone(group[gi], item.root, Transposer.SEMITONE_MAP)
