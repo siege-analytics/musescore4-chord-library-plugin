@@ -203,12 +203,20 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         if (contextMax < maxStrings) maxStrings = contextMax
     }
     var candidates = []
+    var seenShapes = {}  // deduplicate same shape from different contexts
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
         if ((v.strings || 6) > maxStrings) continue
         if (v.root !== "C" && v.root !== targetRoot) continue
         if (v.chord_quality === quality || v.category === "quartal") {
             if (opts.filterCategory && v.category !== opts.filterCategory && v.chord_quality === quality) continue
+            // Deduplicate by shape
+            var dk = ""
+            var dots = v.dots || []
+            for (var di = 0; di < dots.length; di++) dk += dots[di].string + ":" + dots[di].fret + ","
+            var sk = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dk + "|" + (v.mutes || []).join(",")
+            if (seenShapes[sk]) continue
+            seenShapes[sk] = true
             candidates.push(v)
         }
     }
