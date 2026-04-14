@@ -12,12 +12,13 @@ Item {
     // === External dependencies ===
     property var tuningFile: null        // FileIO component from parent
     property var settingsPanel: null     // SettingsPanel for status feedback
+    property var state: null             // tuningState QtObject — read/write directly
 
-    // Tuning state (bidirectional with parent)
-    property var tuningList: []
-    property var tuningLabels: ({})
-    property var tuningStringCounts: ({})
-    property string selectedTuning: "standard"
+    // Convenience accessors — read/write through state
+    property var tuningList: state ? state.tuningList : []
+    property var tuningLabels: state ? state.tuningLabels : ({})
+    property var tuningStringCounts: state ? state.tuningStringCounts : ({})
+    property string selectedTuning: state ? state.selectedTuning : "standard"
 
     // === Signals ===
     signal tuningChanged()              // tuning list/selection changed, parent should reload
@@ -62,17 +63,17 @@ Item {
         var list = tuningList.slice()
         if (list.indexOf(slug) < 0) {
             list.push(slug)
-            tuningList = list
+            state.tuningList = list
         }
         var labels = {}
         for (var k in tuningLabels) labels[k] = tuningLabels[k]
         labels[slug] = name
-        tuningLabels = labels
+        state.tuningLabels = labels
         if (stringCount) {
             var counts = {}
             for (var c in tuningStringCounts) counts[c] = tuningStringCounts[c]
             counts[slug] = stringCount
-            tuningStringCounts = counts
+            state.tuningStringCounts = counts
         }
     }
 
@@ -122,7 +123,7 @@ Item {
             tuningFile.write(raw)
 
             addTuningToList(slug, tuning.name, Object.keys(tuning.strings || {}).length || 6)
-            selectedTuning = slug
+            state.selectedTuning = slug
             tuningManager.tuningChanged()
             tuningManager.settingsSaveRequested()
             _setTuningStatus("Imported: " + tuning.name, "success")
@@ -172,7 +173,7 @@ Item {
         try {
             tuningFile.write(JSON.stringify(tuning, null, 2))
             addTuningToList(slug, name, numStrings)
-            selectedTuning = slug
+            state.selectedTuning = slug
             tuningManager.tuningChanged()
             tuningManager.settingsSaveRequested()
             var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
@@ -225,9 +226,9 @@ Item {
         if (idx >= 0) { list.splice(idx, 1); tuningList = list }
         var labels = {}
         for (var k in tuningLabels) { if (k !== slug) labels[k] = tuningLabels[k] }
-        tuningLabels = labels
-        if (selectedTuning === slug) {
-            selectedTuning = "standard"
+        state.tuningLabels = labels
+        if (state.selectedTuning === slug) {
+            state.selectedTuning = "standard"
             tuningManager.tuningChanged()
         }
         tuningManager.settingsSaveRequested()

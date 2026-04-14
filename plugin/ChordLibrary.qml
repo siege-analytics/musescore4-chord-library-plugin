@@ -578,20 +578,7 @@ MuseScore {
         id: tuningManager
         tuningFile: chordLibrary.tuningFile
         settingsPanel: settingsPanel
-
-        // TuningManager reads initial values from tuningState but does NOT bind back.
-        // When TuningManager modifies tuning data, it writes directly to tuningState.
-        Component.onCompleted: {
-            tuningManager.tuningList = tuningState.tuningList
-            tuningManager.tuningLabels = tuningState.tuningLabels
-            tuningManager.tuningStringCounts = tuningState.tuningStringCounts
-            tuningManager.selectedTuning = tuningState.selectedTuning
-        }
-
-        onTuningListChanged: tuningState.tuningList = tuningManager.tuningList
-        onTuningLabelsChanged: tuningState.tuningLabels = tuningManager.tuningLabels
-        onTuningStringCountsChanged: tuningState.tuningStringCounts = tuningManager.tuningStringCounts
-        onSelectedTuningChanged: tuningState.selectedTuning = tuningManager.selectedTuning
+        state: tuningState  // TuningManager reads/writes tuningState directly
         onTuningChanged: { loadTuningStringCount(); loadTuningVoicings() }
         onSettingsSaveRequested: saveSettings()
     }
