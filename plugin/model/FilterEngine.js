@@ -37,10 +37,30 @@ function applyFilters(voicingsData, opts) {
         if (contextMax < maxStrings) maxStrings = contextMax
     }
 
+    // Context matching: CM7 also includes CM6, CM5, CM4 (a 4-string drop2
+    // is valid on a 7-string guitar). Extract the context type prefix (CM/CV)
+    // and match any context with the same prefix and <= string count.
+    var ctxPrefix = ""
+    var ctxStrings = 0
+    if (opts.filterContext && opts.contextStringCounts) {
+        // Extract prefix: "CM7" → "CM", "CV6" → "CV"
+        ctxPrefix = opts.filterContext.replace(/[0-9]+$/, "")
+        ctxStrings = opts.contextStringCounts[opts.filterContext] || 99
+    }
+
     var result = []
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
-        if (opts.filterContext && v.context !== opts.filterContext) continue
+        if (opts.filterContext) {
+            if (ctxPrefix) {
+                // Match same context type with <= string count
+                var vPrefix = (v.context || "").replace(/[0-9]+$/, "")
+                var vStrings = opts.contextStringCounts[v.context] || 99
+                if (vPrefix !== ctxPrefix || vStrings > ctxStrings) continue
+            } else {
+                if (v.context !== opts.filterContext) continue
+            }
+        }
         if (opts.filterCategory && v.category !== opts.filterCategory) continue
         if (opts.filterQuality && v.chord_quality !== opts.filterQuality
             && v.chord_quality !== "quartal") continue

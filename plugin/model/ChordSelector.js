@@ -140,8 +140,14 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         var scoreA = 0, scoreB = 0
         if (a.chord_quality === quality) scoreA += 20
         if (b.chord_quality === quality) scoreB += 20
-        if (opts.filterContext && a.context === opts.filterContext) scoreA += 100
-        if (opts.filterContext && b.context === opts.filterContext) scoreB += 100
+        // Context: exact match +100, same-prefix smaller context +50
+        if (opts.filterContext) {
+            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
+            if (a.context === opts.filterContext) scoreA += 100
+            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
+            if (b.context === opts.filterContext) scoreB += 100
+            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
+        }
         if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
         if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
         if (a.category === "shell") scoreA += 10
@@ -226,8 +232,14 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         var scoreA = 0, scoreB = 0
         if (a.chord_quality === quality) scoreA += 20
         if (b.chord_quality === quality) scoreB += 20
-        if (opts.filterContext && a.context === opts.filterContext) scoreA += 100
-        if (opts.filterContext && b.context === opts.filterContext) scoreB += 100
+        // Context: exact match +100, same-prefix smaller context +50
+        if (opts.filterContext) {
+            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
+            if (a.context === opts.filterContext) scoreA += 100
+            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
+            if (b.context === opts.filterContext) scoreB += 100
+            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
+        }
         if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
         if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
         if (a.category === "shell") scoreA += 10
