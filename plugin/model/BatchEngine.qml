@@ -365,10 +365,14 @@ Item {
         batchShowNext()
     }
 
+    property int _lastShownIndex: -1  // tracks which chord was last displayed
+
     function batchShowNext() {
-        // Reset lock states on chord transition (user re-locks per chord)
-        _melodyLocked = false
-        _bassLocked = false
+        // Only reset locks when advancing to a NEW chord (not re-displaying after revoice)
+        if (batchIndex !== _lastShownIndex) {
+            _melodyLocked = false
+            _bassLocked = false
+        }
 
         if (batchIndex >= batchChords.length) {
             batchQueue = []
@@ -456,6 +460,7 @@ Item {
             stepText += "\n\n" + (remaining - 1) + " chord" + (remaining > 2 ? "s" : "") + " remaining"
         }
 
+        _lastShownIndex = batchIndex
         batchIndex++
         batchEngine.showWalkthrough("Voice Score — " + item.text, stepText)
     }
