@@ -48,6 +48,7 @@ Item {
     // --- Callback functions (passed from parent for delegate use) ---
     property var computeNotesForTuningFn: function(v) { return [] }
     property var suggestFingeringFn: function(v) { return [] }
+    property var fingeringStringFn: function(v) { return "" }
 
     // --- Output signals ---
     signal searchChanged(string text)
@@ -423,6 +424,18 @@ Item {
                         Label {
                             text: libraryPanel.computeNotesForTuningFn(v).join(" ")
                             font.pixelSize: 9
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
+                        Label {
+                            text: {
+                                var fg = libraryPanel.fingeringStringFn(v)
+                                return fg ? fg : ""
+                            }
+                            visible: text.length > 0
+                            font.pixelSize: 8
+                            font.family: "Menlo, Monaco, monospace"
+                            color: "#999"
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }

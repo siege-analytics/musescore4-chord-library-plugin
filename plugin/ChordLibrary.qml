@@ -2157,6 +2157,7 @@ MuseScore {
             altCount: batchEngine.altCount
             altIndex: batchEngine.altIndex
             difficultyFn: FingeringEngine.computeDifficulty
+            fingeringFn: function(v) { return computeFingeringString(v) }
             bassStringList: batchEngine.bassStringList
             selectedBassString: batchEngine.selectedBassString
             bassStringCounts: {
@@ -2219,6 +2220,7 @@ MuseScore {
             compareVoicings: chordLibrary.compareVoicings
             computeNotesForTuningFn: function(v) { return computeNotesForTuning(v) }
             suggestFingeringFn: function(v) { return suggestFingering(v) }
+            fingeringStringFn: function(v) { return computeFingeringString(v) }
 
             onSearchChanged: function(text) { searchText = text; applyFilters() }
             onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
