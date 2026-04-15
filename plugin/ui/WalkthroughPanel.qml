@@ -779,14 +779,98 @@ ColumnLayout {
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         boundsBehavior: Flickable.StopAtBounds
 
-        Label {
-            id: toolResultsLabel
-            text: resultsContent
+        ColumnLayout {
             width: parent.width - 16
-            font.pixelSize: 11
-            font.family: "Menlo, Monaco, monospace"
-            wrapMode: Text.WordWrap
-            padding: 8
+            spacing: 8
+
+            Label {
+                id: toolResultsLabel
+                text: resultsContent
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                font.family: "Menlo, Monaco, monospace"
+                wrapMode: Text.WordWrap
+                padding: 8
+            }
+
+            // --- Chord Analysis Section ---
+            Rectangle {
+                visible: batchActive && currentItem !== null
+                Layout.fillWidth: true
+                height: 1
+                color: theme.divider
+            }
+
+            ColumnLayout {
+                visible: batchActive && currentItem !== null
+                Layout.fillWidth: true
+                Layout.leftMargin: 8
+                Layout.rightMargin: 8
+                spacing: 4
+
+                Label {
+                    text: "CHORD ANALYSIS"
+                    font.pixelSize: 10
+                    font.bold: true
+                    color: theme.textSecondary
+                }
+
+                // Voicing notes in the current key
+                Label {
+                    text: {
+                        if (!currentItem) return ""
+                        var v = currentItem.voicing
+                        var notes = v.notes || []
+                        if (notes.length === 0) return ""
+                        return "Voicing notes: " + notes.join("  ")
+                    }
+                    font.pixelSize: 11
+                    font.family: "Menlo, Monaco, monospace"
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+
+                // Chord tones vs tensions
+                Label {
+                    text: {
+                        if (!currentItem) return ""
+                        var v = currentItem.voicing
+                        var ivs = v.intervals || []
+                        if (ivs.length === 0) return ""
+                        var chordTones = []
+                        var tensions = []
+                        for (var i = 0; i < ivs.length; i++) {
+                            var iv = ivs[i]
+                            if (iv === "1" || iv === "3" || iv === "b3" || iv === "5" || iv === "b5" || iv === "#5"
+                                || iv === "7" || iv === "b7" || iv === "bb7" || iv === "6")
+                                chordTones.push(iv)
+                            else
+                                tensions.push(iv)
+                        }
+                        var result = "Chord tones: " + chordTones.join(" ")
+                        if (tensions.length > 0) result += "   Tensions: " + tensions.join(" ")
+                        return result
+                    }
+                    font.pixelSize: 10
+                    color: theme.textSecondary
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+
+                // Voice leading context (movement from previous chord)
+                Label {
+                    text: {
+                        if (!currentItem || batchIndex <= 1) return ""
+                        var prevItem = batchChords[batchIndex - 2]
+                        if (!prevItem) return ""
+                        return "Previous: " + prevItem.text + " → " + currentItem.text
+                    }
+                    visible: text.length > 0
+                    font.pixelSize: 9
+                    color: theme.textMuted
+                    Layout.fillWidth: true
+                }
+            }
         }
     }
 }

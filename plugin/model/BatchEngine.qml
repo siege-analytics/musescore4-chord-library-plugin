@@ -451,10 +451,7 @@ Item {
             }
         }
 
-        var scaleSuggestion = ChordScales.formatScaleSuggestion(item.root, item.quality)
-        if (scaleSuggestion) {
-            stepText += "\n  Scales: " + scaleSuggestion
-        }
+        // Scales are shown as clickable chips in WalkthroughPanel — not duplicated in text
 
         var remaining = batchChords.length - batchIndex
         stepText += "\n"
