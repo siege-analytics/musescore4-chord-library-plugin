@@ -136,10 +136,13 @@ bash deploy.sh                           # Deploy to local MuseScore (dev only)
 bash deploy.sh --watch                   # Auto-deploy on file changes
 ```
 
-## Open Issues (as of 2026-04-10)
+## Open Issues (as of 2026-04-14)
 
-- **#75** — Epic: decompose ChordLibrary.qml (Phases A, B, C complete; 5174→2273 lines)
-- **#74** — cmd("paste") broken in batch insert (core bug, needs MuseScore API fix)
+- **#75** — Epic: decompose ChordLibrary.qml (Phases A, B, C complete; 5174→2365 lines)
+- **#142** — Scale import and management in Settings (ticketed, not implemented)
+- **#74** — cmd("paste") broken (wishlist — needs MuseScore C++ change, PR #32848 rejected)
+- Settings tab needs redesign — 7+ sections, too long. Consider sub-tabs or collapsible sections
+- Custom context creation (#132) deployed but untested in MuseScore
 
 ## MuseScore 4 Plugin API Limitations
 
