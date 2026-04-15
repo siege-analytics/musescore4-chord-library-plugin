@@ -131,6 +131,11 @@ MuseScore {
     }
 
     FileIO {
+        id: scalesConfigFile
+        source: Qt.resolvedUrl("config/scales.json")
+    }
+
+    FileIO {
         id: tuningFile
     }
 
@@ -273,6 +278,7 @@ MuseScore {
     property string filterContext: ""
     property string filterCategory: ""
     property string filterQuality: ""
+    property string filterScale: ""
     property string searchText: ""
 
     // Voice leading state
@@ -351,6 +357,44 @@ MuseScore {
         contextLabels = labels
         contextLabelsShort = shorts
         contextStringCounts = strCounts
+    }
+
+    // === Scale config loading/saving (#142) ===
+
+    function loadScalesConfig() {
+        try {
+            var raw = scalesConfigFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                if (ChordScales.loadScales(data)) {
+                    console.log("Loaded scales config (" + data.scales.length + " scales)")
+                } else {
+                    console.log("Scale config parse failed, using defaults")
+                }
+            } else {
+                console.log("No scales.json found, using built-in defaults")
+            }
+        } catch (e) {
+            console.log("Error loading scales config: " + e)
+        }
+        // Populate SettingsPanel with scale data
+        settingsPanel.scalesData = ChordScales.getScaleList()
+        settingsPanel.customQualities = ChordScales.getCustomQualities()
+        // Pass name-based map (not ID-based) for the UI editor
+        var nameMap = {}
+        var csm = ChordScales.CHORD_SCALE_MAP
+        for (var q in csm) nameMap[q] = csm[q].slice()
+        settingsPanel.chordScaleMap = nameMap
+    }
+
+    function saveScalesConfig() {
+        try {
+            var data = ChordScales.saveScales()
+            scalesConfigFile.write(JSON.stringify(data, null, 2))
+            console.log("Saved scales config")
+        } catch (e) {
+            console.log("Error saving scales config: " + e)
+        }
     }
 
     // === Custom context creation (#132) ===
@@ -528,6 +572,7 @@ MuseScore {
 
     onRun: {
         loadContextLabels()
+        loadScalesConfig()
         loadSettings()
         loadTuningStringCount()
         if (!dataLoaded) {
@@ -1252,6 +1297,22 @@ MuseScore {
             filterContext: filterContext,
             filterCategory: filterCategory,
             filterQuality: filterQuality,
+            filterScale: filterScale,
+            voicingFitsScaleFn: function(v, scaleName) {
+                // Get the scale intervals by name, check if voicing fits
+                var scaleIntervals = ChordScales.SCALES[scaleName]
+                if (!scaleIntervals) return false
+                // Extract semitone values from voicing intervals
+                var ivMap = {"1":0,"b2":1,"2":2,"b3":3,"3":4,"4":5,"b5":6,"5":7,"#5":8,"b6":8,"6":9,"bb7":9,"b7":10,"7":11,"#9":3,"#11":6,"9":2,"11":5,"13":9,"b9":1,"b13":8}
+                var semis = []
+                var ivs = v.intervals || []
+                for (var i = 0; i < ivs.length; i++) {
+                    var s = ivMap[ivs[i]]
+                    if (s !== undefined) semis.push(s)
+                }
+                if (semis.length === 0) return false
+                return ChordScales.voicingFitsScale(semis, scaleIntervals)
+            },
             searchText: searchText,
             maxStrings: tuningMaxStrings,
             contextStringCounts: contextStringCounts,
@@ -2125,6 +2186,10 @@ MuseScore {
 
             onPresetSaveRequested: function(path) { savePreset(path) }
             onPresetLoadRequested: function(path) { loadPreset(path) }
+
+            // --- Tuning import/create (moved from Settings, #144) ---
+            onImportTuningRequested: function(path) { importTuning(path) }
+            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
         }
 
         // === Tab 4: Practice (extracted to ui/PracticePanel.qml, #96) ===
@@ -2161,9 +2226,6 @@ MuseScore {
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
-            lastAuditResults: chordLibrary.lastAuditResults
-            hygieneIgnoreList: chordLibrary.hygieneIgnoreList
-            homePath: homePath()
 
             onPlacementChanged: function(placement) {
                 diagramPlacement = placement
@@ -2172,27 +2234,85 @@ MuseScore {
             onEditTuningRequested: function(slug) { editTuning(slug) }
             onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
             onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
-            onImportTuningRequested: function(path) { importTuning(path) }
-            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
-            onCaptureRequested: captureFromScore()
-            onSaveVoicingRequested: function(quality, category, context, fret, strings, dots, mutes) {
-                saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
-            }
-            onAuditRequested: function(reportPath) {
-                runHygieneAudit()
-                saveAuditReport(reportPath)
-                Qt.openUrlExternally(reportPath)
-            }
-            onDismissRequested: function(key) {
-                dismissFinding(key)
-                settingsPanel.hygieneStatus = "Dismissed. Run audit again to see updated results."
-                settingsPanel.hygieneStatusColor = theme.successText
-            }
-            onFixDuplicatesRequested: fixDuplicates()
-            onClearDismissalsRequested: clearDismissals()
-            onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
             onCreateContextRequested: function(code, name, strings) {
                 createCustomContext(code, name, strings)
+            }
+
+            // --- Scale signals (#142) ---
+            onScaleAdded: function(jsonData) {
+                var s = JSON.parse(jsonData)
+                var id = ChordScales.addScale(s.name, s.intervals, s.category, s.aliases)
+                if (id) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Added: " + s.name
+                    settingsPanel.scaleStatusColor = theme.successText
+                    settingsPanel.scalesData = ChordScales.getScaleList()
+                } else {
+                    settingsPanel.scaleStatus = "Failed to add scale (name may already exist)"
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
+            }
+            onScaleUpdated: function(jsonData) {
+                var s = JSON.parse(jsonData)
+                if (ChordScales.updateScale(s.id, s.name, s.intervals, s.category, s.aliases)) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Updated: " + s.name
+                    settingsPanel.scaleStatusColor = theme.successText
+                    settingsPanel.scalesData = ChordScales.getScaleList()
+                } else {
+                    settingsPanel.scaleStatus = "Failed to update scale"
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
+            }
+            onScaleDeleted: function(scaleId) {
+                var info = ChordScales.getScaleById(scaleId)
+                if (ChordScales.deleteScale(scaleId)) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Deleted: " + (info ? info.name : scaleId)
+                    settingsPanel.scaleStatusColor = theme.successText
+                    settingsPanel.scalesData = ChordScales.getScaleList()
+                } else {
+                    settingsPanel.scaleStatus = "Cannot delete built-in scale"
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
+            }
+            onChordScaleMappingChanged: function(quality, scaleIdsJson) {
+                var scaleNames = JSON.parse(scaleIdsJson)
+                if (ChordScales.setChordScaleMapping(quality, scaleNames)) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Updated mapping for " + quality
+                    settingsPanel.scaleStatusColor = theme.successText
+                    // Refresh the name-based map for UI
+                    var nameMap = {}
+                    var csm = ChordScales.CHORD_SCALE_MAP
+                    for (var q in csm) nameMap[q] = csm[q].slice()
+                    settingsPanel.chordScaleMap = nameMap
+                } else {
+                    settingsPanel.scaleStatus = "Invalid scale names in mapping"
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
+            }
+            onCustomQualityAdded: function(qualityName) {
+                if (ChordScales.addCustomQuality(qualityName)) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Added quality: " + qualityName
+                    settingsPanel.scaleStatusColor = theme.successText
+                    settingsPanel.customQualities = ChordScales.getCustomQualities()
+                } else {
+                    settingsPanel.scaleStatus = "Quality already exists: " + qualityName
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
+            }
+            onCustomQualityRemoved: function(qualityName) {
+                if (ChordScales.removeCustomQuality(qualityName)) {
+                    saveScalesConfig()
+                    settingsPanel.scaleStatus = "Removed quality: " + qualityName
+                    settingsPanel.scaleStatusColor = theme.successText
+                    settingsPanel.customQualities = ChordScales.getCustomQualities()
+                } else {
+                    settingsPanel.scaleStatus = "Quality not found: " + qualityName
+                    settingsPanel.scaleStatusColor = theme.errorText
+                }
             }
         }
 
@@ -2285,7 +2405,21 @@ MuseScore {
             computeNotesForTuningFn: function(v) { return computeNotesForTuning(v) }
             suggestFingeringFn: function(v) { return suggestFingering(v) }
             fingeringStringFn: function(v) { return computeFingeringString(v) }
+            matchingScalesFn: function(v) {
+                if (!v || !v.quality) return []
+                return ChordScales.getScaleNames(v.quality)
+            }
+            scaleFilterList: {
+                var names = ["All Scales"]
+                var list = ChordScales.getScaleList()
+                for (var i = 0; i < list.length; i++) names.push(list[i].name)
+                return names
+            }
 
+            onScaleFilterChanged: function(scaleName) {
+                chordLibrary.filterScale = scaleName
+                applyFilters()
+            }
             onSearchChanged: function(text) { searchText = text; applyFilters() }
             onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
             onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }
@@ -2339,6 +2473,29 @@ MuseScore {
             onPlayVoicingRequested: function(voicing, mode) { playVoicing(voicing, mode) }
             onCompareRequested: function(voicing) { addToComparison(voicing) }
             onClearComparisonRequested: clearComparison()
+
+            // --- Save to Library + Library Health (moved from Settings, #144) ---
+            homePath: homePath()
+            lastAuditResults: chordLibrary.lastAuditResults
+            hygieneIgnoreList: chordLibrary.hygieneIgnoreList
+
+            onCaptureRequested: captureFromScore()
+            onSaveVoicingRequested: function(quality, category, context, fret, strings, dots, mutes) {
+                saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
+            }
+            onAuditRequested: function(reportPath) {
+                runHygieneAudit()
+                saveAuditReport(reportPath)
+                Qt.openUrlExternally(reportPath)
+            }
+            onDismissRequested: function(key) {
+                dismissFinding(key)
+                libraryPanel.hygieneStatus = "Dismissed. Run audit again to see updated results."
+                libraryPanel.hygieneStatusColor = theme.successText
+            }
+            onFixDuplicatesRequested: fixDuplicates()
+            onClearDismissalsRequested: clearDismissals()
+            onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
         }
 
         // Global status bar (used by many functions — stays in parent, migrate in Phase C #104)

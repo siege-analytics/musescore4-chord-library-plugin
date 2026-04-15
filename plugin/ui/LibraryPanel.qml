@@ -49,6 +49,10 @@ Item {
     property var computeNotesForTuningFn: function(v) { return [] }
     property var suggestFingeringFn: function(v) { return [] }
     property var fingeringStringFn: function(v) { return "" }
+    property var matchingScalesFn: function(v) { return [] }
+
+    // --- Scale filter ---
+    property var scaleFilterList: ["All Scales"]
 
     // --- Output signals ---
     signal searchChanged(string text)
@@ -68,6 +72,32 @@ Item {
     signal playVoicingRequested(var voicing, string mode)
     signal compareRequested(var voicing)
     signal clearComparisonRequested()
+    signal scaleFilterChanged(string scaleName)
+
+    // --- Save to Library signals (moved from Settings, #144) ---
+    signal captureRequested()
+    signal saveVoicingRequested(string quality, string category, string context, string fret, int strings, string dots, string mutes)
+
+    // --- Library Health signals (moved from Settings, #144) ---
+    signal auditRequested(string reportPath)
+    signal dismissRequested(string key)
+    signal fixDuplicatesRequested()
+    signal clearDismissalsRequested()
+    signal browseAuditRequested(var targetField)
+
+    // --- Save/Audit properties (moved from Settings, #144) ---
+    property string homePath: "~"
+    property string saveStatus: ""
+    property color saveStatusColor: "black"
+    property string saveFretValue: ""
+    property int saveStringsCountValue: 6
+    property string hygieneStatus: ""
+    property color hygieneStatusColor: "black"
+    property var lastAuditResults: []
+    property var hygieneIgnoreList: []
+
+    // --- Collapsible sections state ---
+    property bool showLibraryTools: false
 
     // --- Layout ---
     Layout.fillWidth: true
@@ -110,12 +140,26 @@ Item {
             }
         }
 
-        ComboBox {
-            id: qualityCombo
-            model: libraryPanel.qualityList
+        RowLayout {
             Layout.fillWidth: true
-            onCurrentTextChanged: {
-                libraryPanel.qualityFilterChanged(currentText === "All Qualities" ? "" : currentText)
+            spacing: 4
+
+            ComboBox {
+                id: qualityCombo
+                model: libraryPanel.qualityList
+                Layout.fillWidth: true
+                onActivated: {
+                    libraryPanel.qualityFilterChanged(currentText === "All Qualities" ? "" : currentText)
+                }
+            }
+
+            ComboBox {
+                id: scaleFilterCombo
+                model: libraryPanel.scaleFilterList
+                Layout.fillWidth: true
+                onActivated: {
+                    libraryPanel.scaleFilterChanged(currentText === "All Scales" ? "" : currentText)
+                }
             }
         }
 
@@ -442,6 +486,18 @@ Item {
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
+                        Label {
+                            text: {
+                                var scales = libraryPanel.matchingScalesFn(v)
+                                if (!scales || scales.length === 0) return ""
+                                return "Fits: " + scales.join(", ")
+                            }
+                            visible: text.length > 0
+                            font.pixelSize: 8
+                            color: theme.textMuted
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
                     }
 
                     ColumnLayout {
@@ -555,6 +611,235 @@ Item {
                     font.pixelSize: 9
                     implicitWidth: 40
                     onClicked: libraryPanel.clearComparisonRequested()
+                }
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        // Library Tools toggle (Save to Library + Health, moved from Settings #144)
+        // ─────────────────────────────────────────────
+        Button {
+            text: libraryPanel.showLibraryTools ? "\u25BC Library Tools" : "\u25B6 Library Tools"
+            font.pixelSize: 10
+            Layout.fillWidth: true
+            onClicked: libraryPanel.showLibraryTools = !libraryPanel.showLibraryTools
+        }
+
+        ColumnLayout {
+            visible: libraryPanel.showLibraryTools
+            Layout.fillWidth: true
+            spacing: 12
+
+            // --- Save to Library ---
+            Label {
+                text: "SAVE TO LIBRARY"
+                font.pixelSize: 11
+                font.bold: true
+                Layout.fillWidth: true
+            }
+
+            Label {
+                text: "Enter a voicing or capture from the score."
+                font.pixelSize: 10
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            Button {
+                text: "Capture from Score"
+                font.pixelSize: 10
+                onClicked: libraryPanel.captureRequested()
+            }
+
+            Label {
+                text: "Dots: string:fret pairs (e.g. 6:1,4:1,3:2)"
+                font.pixelSize: 9
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 4
+
+                ComboBox {
+                    id: saveQualityCombo
+                    model: ["dom7","maj7","min7","min7b5","dim7","maj6","min6",
+                            "dom7b9","dom7sharp5","dom7alt","dom9","dom13",
+                            "sus4","sus2","aug7","min-maj7","augMaj7"]
+                    Layout.fillWidth: true
+                }
+
+                ComboBox {
+                    id: saveCategoryCombo
+                    model: ["shell","drop2","drop3","extended","altered","quartal"]
+                    implicitWidth: 90
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 4
+
+                ComboBox {
+                    id: saveContextCombo
+                    model: ["CV6","CV7","CM6","CM7"]
+                    implicitWidth: 70
+                }
+
+                TextField {
+                    id: saveFretField
+                    placeholderText: "Fret#"
+                    implicitWidth: 50
+                    font.pixelSize: 11
+                    selectByMouse: true
+                    text: libraryPanel.saveFretValue
+                    onTextChanged: libraryPanel.saveFretValue = text
+                }
+
+                SpinBox {
+                    id: saveStringsCount
+                    from: 4; to: 12
+                    value: libraryPanel.saveStringsCountValue
+                    implicitWidth: 75
+                    onValueChanged: libraryPanel.saveStringsCountValue = value
+                }
+            }
+
+            TextField {
+                id: saveDotsField
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                placeholderText: "Dots: 6:1, 4:1, 3:2"
+                selectByMouse: true
+            }
+
+            TextField {
+                id: saveMutesField
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                placeholderText: "Mutes: 5, 2, 1"
+                selectByMouse: true
+            }
+
+            Label {
+                text: "Enter positions as played. The plugin will reproject to C."
+                font.pixelSize: 9
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            Button {
+                text: "Save Voicing"
+                font.pixelSize: 10
+                onClicked: libraryPanel.saveVoicingRequested(
+                    saveQualityCombo.currentText, saveCategoryCombo.currentText,
+                    saveContextCombo.currentText, saveFretField.text.trim(),
+                    saveStringsCount.value, saveDotsField.text.trim(), saveMutesField.text.trim())
+            }
+
+            Label {
+                visible: libraryPanel.saveStatus.length > 0
+                text: libraryPanel.saveStatus
+                color: libraryPanel.saveStatusColor
+                font.pixelSize: 11
+                font.bold: true
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            // --- Divider ---
+            Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+            // --- Library Health ---
+            Label {
+                text: "LIBRARY HEALTH"
+                font.pixelSize: 11
+                font.bold: true
+                Layout.fillWidth: true
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 4
+
+                TextField {
+                    id: auditReportPath
+                    Layout.fillWidth: true
+                    font.pixelSize: 10
+                    text: libraryPanel.homePath + "/Documents/chord-library-audit.txt"
+                    selectByMouse: true
+                }
+
+                Button {
+                    text: "Browse"
+                    font.pixelSize: 10
+                    onClicked: libraryPanel.browseAuditRequested(auditReportPath)
+                }
+            }
+
+            Button {
+                text: "Run Audit"
+                font.pixelSize: 10
+                onClicked: libraryPanel.auditRequested(auditReportPath.text)
+            }
+
+            Label {
+                visible: libraryPanel.hygieneStatus.length > 0
+                text: libraryPanel.hygieneStatus
+                color: libraryPanel.hygieneStatusColor
+                font.pixelSize: 10
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            Label {
+                visible: libraryPanel.lastAuditResults.length > 0
+                text: "Paste a DISMISS KEY from the report to suppress it:"
+                font.pixelSize: 9
+            }
+
+            RowLayout {
+                visible: libraryPanel.lastAuditResults.length > 0
+                Layout.fillWidth: true
+                spacing: 4
+
+                TextField {
+                    id: dismissKeyField
+                    Layout.fillWidth: true
+                    font.pixelSize: 10
+                    placeholderText: "e.g. ENH:0,4,9,11"
+                    selectByMouse: true
+                }
+
+                Button {
+                    text: "Dismiss"
+                    font.pixelSize: 10
+                    onClicked: {
+                        var key = dismissKeyField.text.trim()
+                        if (key) {
+                            libraryPanel.dismissRequested(key)
+                            dismissKeyField.text = ""
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+                visible: libraryPanel.lastAuditResults.length > 0 || libraryPanel.hygieneIgnoreList.length > 0
+                Layout.fillWidth: true
+                spacing: 4
+
+                Button {
+                    text: "Fix Duplicates"
+                    font.pixelSize: 10
+                    visible: libraryPanel.lastAuditResults.some(function(r) { return r.indexOf("DUP:") === 0 })
+                    onClicked: libraryPanel.fixDuplicatesRequested()
+                }
+
+                Button {
+                    text: "Reset All Dismissed"
+                    font.pixelSize: 10
+                    visible: libraryPanel.hygieneIgnoreList.length > 0
+                    onClicked: libraryPanel.clearDismissalsRequested()
                 }
             }
         }

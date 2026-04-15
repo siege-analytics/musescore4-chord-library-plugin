@@ -42,6 +42,17 @@ Flickable {
     signal presetSaveRequested(string path)
     signal presetLoadRequested(string path)
 
+    // --- Tuning import/create properties (moved from Settings, #144) ---
+    property string tuningNameValue: ""
+    property string tuningPitchesValue: "E4, B3, G3, D3, A2, E2"
+    property int tuningStringCountValue: 6
+    property string tuningStatus: ""
+    property color tuningStatusColor: "black"
+
+    // --- Tuning import/create signals (moved from Settings, #144) ---
+    signal importTuningRequested(string path)
+    signal createTuningRequested(string name, string pitches, int numStrings)
+
     // --- Internal state ---
     property bool _rebuildInProgress: false
     property string _presetStatus: ""
@@ -314,6 +325,140 @@ Flickable {
             font.bold: true
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
+        }
+
+        // --- Divider ---
+        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+        // --- Import Tuning (moved from Settings, #144) ---
+        Label {
+            text: "IMPORT TUNING"
+            font.pixelSize: 11
+            font.bold: true
+            Layout.fillWidth: true
+        }
+
+        Label {
+            text: "Import a tuning JSON file:"
+            font.pixelSize: 10
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            TextField {
+                id: tuningImportPath
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                placeholderText: "/path/to/tuning.json"
+                selectByMouse: true
+            }
+
+            Button {
+                text: "Import"
+                font.pixelSize: 10
+                onClicked: importPanel.importTuningRequested(tuningImportPath.text.trim())
+            }
+        }
+
+        Label {
+            visible: importPanel.tuningStatus.length > 0
+            text: importPanel.tuningStatus
+            color: importPanel.tuningStatusColor
+            font.pixelSize: 11
+            font.bold: true
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
+
+        // --- Divider ---
+        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+        // --- Create / Edit Tuning (moved from Settings, #144) ---
+        Label {
+            text: "CREATE / EDIT TUNING"
+            font.pixelSize: 11
+            font.bold: true
+            Layout.fillWidth: true
+        }
+
+        Label {
+            text: "Create or edit a tuning:"
+            font.pixelSize: 10
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            TextField {
+                id: tuningNameField
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                placeholderText: "Name (e.g. Open G)"
+                selectByMouse: true
+                text: importPanel.tuningNameValue
+                onTextChanged: importPanel.tuningNameValue = text
+            }
+
+            SpinBox {
+                id: tuningStringCount
+                from: 4
+                to: 12
+                value: importPanel.tuningStringCountValue
+                implicitWidth: 80
+                onValueChanged: importPanel.tuningStringCountValue = value
+            }
+        }
+
+        Label {
+            text: "String pitches (high to low, note names or MIDI):"
+            font.pixelSize: 10
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
+
+        TextField {
+            id: tuningPitchesField
+            Layout.fillWidth: true
+            font.pixelSize: 11
+            placeholderText: "E4, B3, G3, D3, A2, E2"
+            selectByMouse: true
+            text: importPanel.tuningPitchesValue
+            onTextChanged: importPanel.tuningPitchesValue = text
+        }
+
+        Button {
+            text: "Save Tuning"
+            font.pixelSize: 10
+            ToolTip.visible: hovered
+            ToolTip.text: "Create a new tuning or save changes to an existing one"
+            onClicked: importPanel.createTuningRequested(tuningNameField.text.trim(), tuningPitchesField.text.trim(), tuningStringCount.value)
+        }
+
+        Label {
+            text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
+            font.pixelSize: 10
+            onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                acceptedButtons: Qt.NoButton
+            }
+        }
+
+        Label {
+            text: '<a href="https://gtdb.org">Guitar Tuning Database (gtdb.org)</a> — reference for string pitches'
+            font.pixelSize: 10
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+            onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                acceptedButtons: Qt.NoButton
+            }
         }
     }
 }

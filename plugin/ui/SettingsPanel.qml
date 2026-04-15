@@ -3,19 +3,20 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 // SettingsPanel.qml — Settings tab UI (Tab 5) for the Chord Library plugin.
-// Extracted from ChordLibrary.qml (A5, #98).
+// Extracted from ChordLibrary.qml (A5, #98). Redesigned with sub-tabs (#142).
+//
+// Sub-tabs: General | Tuning | Scales | Contexts
 //
 // Input state groups: tuning, theme
-// Input properties: diagramPlacement, builtInTunings, lastAuditResults,
-//                   hygieneIgnoreList, homePath
+// Input properties: diagramPlacement, builtInTunings
 // Signals: placementChanged(placement), editTuningRequested(slug),
 //          deleteTuningRequested(slug), moveTuningRequested(slug, direction),
-//          importTuningRequested(path), createTuningRequested(name, pitches, numStrings),
-//          captureRequested, saveVoicingRequested(quality, category, context, fret, strings, dots, mutes),
-//          auditRequested(reportPath), dismissRequested(key), fixDuplicatesRequested,
-//          clearDismissalsRequested, browseAuditRequested(targetField)
+//          createContextRequested(code, name, strings),
+//          scaleAdded(jsonData), scaleUpdated(jsonData), scaleDeleted(scaleId),
+//          chordScaleMappingChanged(quality, scaleIdsJson),
+//          customQualityAdded(qualityName), customQualityRemoved(qualityName)
 
-Flickable {
+Item {
     id: settingsPanel
 
     // --- Input properties (state groups) ---
@@ -25,618 +26,821 @@ Flickable {
     // --- Input properties (scalar) ---
     property string diagramPlacement: "above"
     property var builtInTunings: []
-    property var lastAuditResults: []
-    property var hygieneIgnoreList: []
-    property string homePath: "~"
+
+    // --- Scale data from parent ---
+    property var scalesData: []          // Array of scale objects from scales.json
+    property var chordScaleMap: ({})     // quality -> [scaleId, ...]
+    property var customQualities: []     // Array of custom quality name strings
 
     // --- Status feedback from parent ---
     property string tuningStatus: ""
     property color tuningStatusColor: "black"
-    property string saveStatus: ""
-    property color saveStatusColor: "black"
-    property string hygieneStatus: ""
-    property color hygieneStatusColor: "black"
-
-    // --- Editable fields (parent can set via editTuning/captureFromScore) ---
-    property string tuningNameValue: ""
-    property string tuningPitchesValue: "E4, B3, G3, D3, A2, E2"
-    property int tuningStringCountValue: 6
-    property string saveFretValue: ""
-    property int saveStringsCountValue: 6
 
     // --- Output signals ---
     signal placementChanged(string placement)
     signal editTuningRequested(string slug)
     signal deleteTuningRequested(string slug)
     signal moveTuningRequested(string slug, int direction)
-    signal importTuningRequested(string path)
-    signal createTuningRequested(string name, string pitches, int numStrings)
-    signal captureRequested()
-    signal saveVoicingRequested(string quality, string category, string context, string fret, int strings, string dots, string mutes)
-    signal auditRequested(string reportPath)
-    signal dismissRequested(string key)
-    signal fixDuplicatesRequested()
-    signal clearDismissalsRequested()
-    signal browseAuditRequested(var targetField)
     signal createContextRequested(string code, string name, int strings)
+
+    // --- Scale signals ---
+    signal scaleAdded(string jsonData)
+    signal scaleUpdated(string jsonData)
+    signal scaleDeleted(string scaleId)
+    signal chordScaleMappingChanged(string quality, string scaleIdsJson)
+    signal customQualityAdded(string qualityName)
+    signal customQualityRemoved(string qualityName)
 
     // --- Context creation status ---
     property string contextStatus: ""
     property color contextStatusColor: "black"
 
-    // --- Flickable setup ---
+    // --- Scale status ---
+    property string scaleStatus: ""
+    property color scaleStatusColor: "black"
+
+    // --- Sub-tab state ---
+    property int currentSubTab: 0
+
     Layout.fillWidth: true
     Layout.fillHeight: true
-    contentHeight: settingsColumn.implicitHeight
-    clip: true
-    flickableDirection: Flickable.VerticalFlick
-    ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
-    boundsBehavior: Flickable.StopAtBounds
 
     ColumnLayout {
-        id: settingsColumn
-        width: parent.width - 16
-        spacing: 12
+        anchors.fill: parent
+        spacing: 0
 
-        // --- Diagram placement ---
-        Label {
-            text: "DIAGRAM PLACEMENT"
-            font.pixelSize: 11
-            font.bold: true
+        // === Inner TabBar ===
+        TabBar {
+            id: settingsTabBar
             Layout.fillWidth: true
+            currentIndex: settingsPanel.currentSubTab
+            onCurrentIndexChanged: settingsPanel.currentSubTab = currentIndex
+
+            TabButton { text: "General"; font.pixelSize: 10 }
+            TabButton { text: "Tuning"; font.pixelSize: 10 }
+            TabButton { text: "Scales"; font.pixelSize: 10 }
+            TabButton { text: "Contexts"; font.pixelSize: 10 }
         }
 
-        ComboBox {
-            id: placementCombo
-            model: ["Above staff (default)", "Below staff"]
+        // === Sub-tab content ===
+        StackLayout {
             Layout.fillWidth: true
-            currentIndex: settingsPanel.diagramPlacement === "below" ? 1 : 0
-            onCurrentIndexChanged: {
-                var p = currentIndex === 1 ? "below" : "above"
-                settingsPanel.placementChanged(p)
-            }
-        }
+            Layout.fillHeight: true
+            currentIndex: settingsPanel.currentSubTab
 
-        Label {
-            text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-        // --- Tuning ---
-        Label {
-            text: "TUNING"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 6
-
-            Label {
-                text: "Active: " + (tuning.tuningLabels[tuning.selectedTuning] || tuning.selectedTuning)
-                font.pixelSize: 11
+            // ──────────────────────────────────────────
+            // SUB-TAB 0: General (Diagram Placement + About)
+            // ──────────────────────────────────────────
+            Flickable {
                 Layout.fillWidth: true
-            }
+                Layout.fillHeight: true
+                contentHeight: generalColumn.implicitHeight
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
 
-            Button {
-                text: "Edit"
-                font.pixelSize: 10
-                ToolTip.visible: hovered
-                ToolTip.text: "Load this tuning into the form below for editing"
-                onClicked: settingsPanel.editTuningRequested(tuning.selectedTuning)
-            }
+                ColumnLayout {
+                    id: generalColumn
+                    width: parent.width - 16
+                    spacing: 12
 
-            Button {
-                text: "Delete"
-                font.pixelSize: 10
-                enabled: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) < 0
-                ToolTip.visible: hovered
-                ToolTip.text: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) >= 0
-                    ? "Built-in tunings cannot be deleted"
-                    : "Delete this custom tuning"
-                onClicked: settingsPanel.deleteTuningRequested(tuning.selectedTuning)
-            }
+                    // --- Diagram placement ---
+                    Label {
+                        text: "DIAGRAM PLACEMENT"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
 
-            Button {
-                text: "▲"
-                font.pixelSize: 10
-                implicitWidth: 28
-                enabled: tuning.tuningList.indexOf(tuning.selectedTuning) > 0
-                ToolTip.visible: hovered
-                ToolTip.text: "Move this tuning up in the list"
-                onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, -1)
-            }
+                    ComboBox {
+                        id: placementCombo
+                        model: ["Above staff (default)", "Below staff"]
+                        Layout.fillWidth: true
+                        currentIndex: settingsPanel.diagramPlacement === "below" ? 1 : 0
+                        onActivated: {
+                            var p = currentIndex === 1 ? "below" : "above"
+                            settingsPanel.placementChanged(p)
+                        }
+                    }
 
-            Button {
-                text: "▼"
-                font.pixelSize: 10
-                implicitWidth: 28
-                enabled: tuning.tuningList.indexOf(tuning.selectedTuning) < tuning.tuningList.length - 1
-                ToolTip.visible: hovered
-                ToolTip.text: "Move this tuning down in the list"
-                onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, 1)
-            }
-        }
+                    Label {
+                        text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
+                        font.pixelSize: 10
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
 
-        // --- Import tuning ---
-        Label {
-            text: "Import a tuning JSON file:"
-            font.pixelSize: 10
-        }
+                    // --- Divider ---
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
+                    // --- About ---
+                    Label {
+                        text: "ABOUT"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
 
-            TextField {
-                id: tuningImportPath
-                Layout.fillWidth: true
-                font.pixelSize: 11
-                placeholderText: "/path/to/tuning.json"
-                selectByMouse: true
-            }
+                    Label {
+                        text: "Siege Analytics Chord Library v1.5.0"
+                        font.pixelSize: 12
+                        font.bold: true
+                    }
 
-            Button {
-                text: "Import"
-                font.pixelSize: 10
-                onClicked: settingsPanel.importTuningRequested(tuningImportPath.text.trim())
-            }
-        }
+                    Label {
+                        text: "Author: Dheeraj Chand"
+                        font.pixelSize: 11
+                    }
 
-        Label {
-            visible: settingsPanel.tuningStatus.length > 0
-            text: settingsPanel.tuningStatus
-            color: settingsPanel.tuningStatusColor
-            font.pixelSize: 11
-            font.bold: true
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
+                    Label {
+                        text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin">GitHub Repository</a>'
+                        font.pixelSize: 11
+                        onLinkActivated: Qt.openUrlExternally(link)
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            acceptedButtons: Qt.NoButton
+                        }
+                    }
 
-        // --- Create / edit tuning ---
-        Label {
-            text: "Create or edit a tuning:"
-            font.pixelSize: 10
-        }
+                    Label {
+                        text: '<a href="https://siegeanalytics.com">Siege Analytics</a>'
+                        font.pixelSize: 11
+                        onLinkActivated: Qt.openUrlExternally(link)
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            acceptedButtons: Qt.NoButton
+                        }
+                    }
 
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
+                    Label {
+                        text: '<a href="https://creativecommons.org/licenses/by/4.0/">Licensed under CC BY 4.0</a>'
+                        font.pixelSize: 10
+                        onLinkActivated: Qt.openUrlExternally(link)
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            acceptedButtons: Qt.NoButton
+                        }
+                    }
 
-            TextField {
-                id: tuningNameField
-                Layout.fillWidth: true
-                font.pixelSize: 11
-                placeholderText: "Name (e.g. Open G)"
-                selectByMouse: true
-                text: settingsPanel.tuningNameValue
-                onTextChanged: settingsPanel.tuningNameValue = text
-            }
-
-            SpinBox {
-                id: tuningStringCount
-                from: 4
-                to: 12
-                value: settingsPanel.tuningStringCountValue
-                implicitWidth: 80
-                onValueChanged: settingsPanel.tuningStringCountValue = value
-            }
-        }
-
-        Label {
-            text: "String pitches (high to low, note names or MIDI):"
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        TextField {
-            id: tuningPitchesField
-            Layout.fillWidth: true
-            font.pixelSize: 11
-            placeholderText: "E4, B3, G3, D3, A2, E2"
-            selectByMouse: true
-            text: settingsPanel.tuningPitchesValue
-            onTextChanged: settingsPanel.tuningPitchesValue = text
-        }
-
-        Button {
-            text: "Save Tuning"
-            font.pixelSize: 10
-            ToolTip.visible: hovered
-            ToolTip.text: "Create a new tuning or save changes to an existing one"
-            onClicked: settingsPanel.createTuningRequested(tuningNameField.text.trim(), tuningPitchesField.text.trim(), tuningStringCount.value)
-        }
-
-        Label {
-            text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
-            font.pixelSize: 10
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
-            }
-        }
-
-        Label {
-            text: '<a href="https://gtdb.org">Guitar Tuning Database (gtdb.org)</a> — reference for string pitches'
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
-            }
-        }
-
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-        // --- Save to Library ---
-        Label {
-            text: "SAVE TO LIBRARY"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        Label {
-            text: "Enter a voicing or capture from the score."
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        Button {
-            text: "Capture from Score"
-            font.pixelSize: 10
-            onClicked: settingsPanel.captureRequested()
-        }
-
-        Label {
-            text: "Dots: string:fret pairs (e.g. 6:1,4:1,3:2)"
-            font.pixelSize: 9
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: saveQualityCombo
-                model: ["dom7","maj7","min7","min7b5","dim7","maj6","min6",
-                        "dom7b9","dom7sharp5","dom7alt","dom9","dom13",
-                        "sus4","sus2","aug7","min-maj7","augMaj7"]
-                Layout.fillWidth: true
-            }
-
-            ComboBox {
-                id: saveCategoryCombo
-                model: ["shell","drop2","drop3","extended","altered","quartal"]
-                implicitWidth: 90
-            }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: saveContextCombo
-                model: ["CV6","CV7","CM6","CM7"]
-                implicitWidth: 70
-            }
-
-            TextField {
-                id: saveFretField
-                placeholderText: "Fret#"
-                implicitWidth: 50
-                font.pixelSize: 11
-                selectByMouse: true
-                text: settingsPanel.saveFretValue
-                onTextChanged: settingsPanel.saveFretValue = text
-            }
-
-            SpinBox {
-                id: saveStringsCount
-                from: 4; to: 12
-                value: settingsPanel.saveStringsCountValue
-                implicitWidth: 75
-                onValueChanged: settingsPanel.saveStringsCountValue = value
-            }
-        }
-
-        TextField {
-            id: saveDotsField
-            Layout.fillWidth: true
-            font.pixelSize: 11
-            placeholderText: "Dots: 6:1, 4:1, 3:2"
-            selectByMouse: true
-        }
-
-        TextField {
-            id: saveMutesField
-            Layout.fillWidth: true
-            font.pixelSize: 11
-            placeholderText: "Mutes: 5, 2, 1"
-            selectByMouse: true
-        }
-
-        Label {
-            text: "Enter positions as played. The plugin will reproject to C."
-            font.pixelSize: 9
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        Button {
-            text: "Save Voicing"
-            font.pixelSize: 10
-            onClicked: settingsPanel.saveVoicingRequested(
-                saveQualityCombo.currentText, saveCategoryCombo.currentText,
-                saveContextCombo.currentText, saveFretField.text.trim(),
-                saveStringsCount.value, saveDotsField.text.trim(), saveMutesField.text.trim())
-        }
-
-        Label {
-            visible: settingsPanel.saveStatus.length > 0
-            text: settingsPanel.saveStatus
-            color: settingsPanel.saveStatusColor
-            font.pixelSize: 11
-            font.bold: true
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-        // --- Library Health ---
-        Label {
-            text: "LIBRARY HEALTH"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
-
-            TextField {
-                id: auditReportPath
-                Layout.fillWidth: true
-                font.pixelSize: 10
-                text: settingsPanel.homePath + "/Documents/chord-library-audit.txt"
-                selectByMouse: true
-            }
-
-            Button {
-                text: "Browse"
-                font.pixelSize: 10
-                onClicked: settingsPanel.browseAuditRequested(auditReportPath)
-            }
-        }
-
-        Button {
-            text: "Run Audit"
-            font.pixelSize: 10
-            onClicked: settingsPanel.auditRequested(auditReportPath.text)
-        }
-
-        Label {
-            visible: settingsPanel.hygieneStatus.length > 0
-            text: settingsPanel.hygieneStatus
-            color: settingsPanel.hygieneStatusColor
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        // --- Dismiss / Fix actions ---
-        Label {
-            visible: settingsPanel.lastAuditResults.length > 0
-            text: "Paste a DISMISS KEY from the report to suppress it:"
-            font.pixelSize: 9
-        }
-
-        RowLayout {
-            visible: settingsPanel.lastAuditResults.length > 0
-            Layout.fillWidth: true
-            spacing: 4
-
-            TextField {
-                id: dismissKeyField
-                Layout.fillWidth: true
-                font.pixelSize: 10
-                placeholderText: "e.g. ENH:0,4,9,11"
-                selectByMouse: true
-            }
-
-            Button {
-                text: "Dismiss"
-                font.pixelSize: 10
-                onClicked: {
-                    var key = dismissKeyField.text.trim()
-                    if (key) {
-                        settingsPanel.dismissRequested(key)
-                        dismissKeyField.text = ""
+                    Label {
+                        text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/blob/main/DEVELOPMENT.md">Documentation</a>'
+                        font.pixelSize: 11
+                        onLinkActivated: Qt.openUrlExternally(link)
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            acceptedButtons: Qt.NoButton
+                        }
                     }
                 }
             }
-        }
 
-        RowLayout {
-            visible: settingsPanel.lastAuditResults.length > 0 || settingsPanel.hygieneIgnoreList.length > 0
-            Layout.fillWidth: true
-            spacing: 4
-
-            Button {
-                text: "Fix Duplicates"
-                font.pixelSize: 10
-                visible: settingsPanel.lastAuditResults.some(function(r) { return r.indexOf("DUP:") === 0 })
-                onClicked: settingsPanel.fixDuplicatesRequested()
-            }
-
-            Button {
-                text: "Reset All Dismissed"
-                font.pixelSize: 10
-                visible: settingsPanel.hygieneIgnoreList.length > 0
-                onClicked: settingsPanel.clearDismissalsRequested()
-            }
-        }
-
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-        // --- Custom Contexts ---
-        Label {
-            text: "CUSTOM CONTEXTS"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        Label {
-            text: "Create a voicing context (e.g. Solo Guitar, Bass Duo):"
-            font.pixelSize: 10
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: contextTypeCombo
-                model: ["CM", "CV"]
-                implicitWidth: 60
-                font.pixelSize: 10
-            }
-
-            SpinBox {
-                id: contextStringsSpin
-                from: 4
-                to: 12
-                value: 7
-                implicitWidth: 75
-                font.pixelSize: 10
-            }
-
-            TextField {
-                id: contextNameField
+            // ──────────────────────────────────────────
+            // SUB-TAB 1: Tuning (Current tuning with management buttons)
+            // ──────────────────────────────────────────
+            Flickable {
                 Layout.fillWidth: true
-                font.pixelSize: 10
-                placeholderText: "Display name (e.g. Solo Guitar)"
-                selectByMouse: true
-            }
-        }
+                Layout.fillHeight: true
+                contentHeight: tuningColumn.implicitHeight
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
 
-        RowLayout {
-            spacing: 6
+                ColumnLayout {
+                    id: tuningColumn
+                    width: parent.width - 16
+                    spacing: 12
 
-            Button {
-                text: "Create Context"
-                font.pixelSize: 10
-                onClicked: {
-                    var code = contextTypeCombo.currentText + contextStringsSpin.value
-                    var name = contextNameField.text.trim()
-                    if (!name) name = contextTypeCombo.currentText + " " + contextStringsSpin.value + "-str"
-                    settingsPanel.createContextRequested(code, name, contextStringsSpin.value)
+                    // --- Current tuning ---
+                    Label {
+                        text: "TUNING"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+
+                        Label {
+                            text: "Active: " + (tuning.tuningLabels[tuning.selectedTuning] || tuning.selectedTuning)
+                            font.pixelSize: 11
+                            Layout.fillWidth: true
+                        }
+
+                        Button {
+                            text: "Edit"
+                            font.pixelSize: 10
+                            ToolTip.visible: hovered
+                            ToolTip.text: "Load this tuning into the form below for editing"
+                            onClicked: settingsPanel.editTuningRequested(tuning.selectedTuning)
+                        }
+
+                        Button {
+                            text: "Delete"
+                            font.pixelSize: 10
+                            enabled: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) < 0
+                            ToolTip.visible: hovered
+                            ToolTip.text: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) >= 0
+                                ? "Built-in tunings cannot be deleted"
+                                : "Delete this custom tuning"
+                            onClicked: settingsPanel.deleteTuningRequested(tuning.selectedTuning)
+                        }
+
+                        Button {
+                            text: "\u25B2"
+                            font.pixelSize: 10
+                            implicitWidth: 28
+                            enabled: tuning.tuningList.indexOf(tuning.selectedTuning) > 0
+                            ToolTip.visible: hovered
+                            ToolTip.text: "Move this tuning up in the list"
+                            onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, -1)
+                        }
+
+                        Button {
+                            text: "\u25BC"
+                            font.pixelSize: 10
+                            implicitWidth: 28
+                            enabled: tuning.tuningList.indexOf(tuning.selectedTuning) < tuning.tuningList.length - 1
+                            ToolTip.visible: hovered
+                            ToolTip.text: "Move this tuning down in the list"
+                            onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, 1)
+                        }
+                    }
                 }
             }
 
-            Label {
-                text: "Code: " + contextTypeCombo.currentText + contextStringsSpin.value
-                font.pixelSize: 9
-                color: "#888"
+            // ──────────────────────────────────────────
+            // SUB-TAB 2: Scales (#142 — Scale list, create/edit, mappings, quality CRUD)
+            // ──────────────────────────────────────────
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: scalesColumn.implicitHeight
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
+
+                ColumnLayout {
+                    id: scalesColumn
+                    width: parent.width - 16
+                    spacing: 12
+
+                    // --- Local state for scale editing ---
+                    property bool editing: false
+                    property string editId: ""
+                    property string editName: ""
+                    property string editAliases: ""
+                    property string editIntervals: ""
+                    property string editCategory: "custom"
+                    property bool editBuiltin: false
+
+                    // Categories for the ComboBox
+                    property var categoryOptions: ["mode", "minor", "symmetric", "pentatonic", "blues", "bebop", "custom"]
+
+                    // --- Local state for mapping editor ---
+                    property bool showMappingEditor: false
+                    property string mappingQuality: ""
+                    property string mappingScaleNames: ""
+
+                    // === Status feedback ===
+                    Label {
+                        visible: settingsPanel.scaleStatus.length > 0
+                        text: settingsPanel.scaleStatus
+                        color: settingsPanel.scaleStatusColor
+                        font.pixelSize: 10
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    // ─────────────────────────────────
+                    // SECTION: Scale List
+                    // ─────────────────────────────────
+                    Label {
+                        text: "SCALES (" + settingsPanel.scalesData.length + ")"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    // Scale list
+                    Repeater {
+                        model: settingsPanel.scalesData
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: scaleItemRow.implicitHeight + 8
+                            color: scaleItemMouse.containsMouse ? theme.cardHover : theme.cardBackground
+                            border.color: theme.cardBorder
+                            border.width: 1
+                            radius: 4
+
+                            MouseArea {
+                                id: scaleItemMouse
+                                anchors.fill: parent
+                                hoverEnabled: true
+                            }
+
+                            RowLayout {
+                                id: scaleItemRow
+                                anchors.fill: parent
+                                anchors.margins: 4
+                                spacing: 6
+
+                                ColumnLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 2
+
+                                    Label {
+                                        text: modelData.name + (modelData.builtin ? " (built-in)" : "")
+                                        font.pixelSize: 11
+                                        font.bold: true
+                                        color: theme.textPrimary
+                                    }
+
+                                    Label {
+                                        visible: modelData.aliases.length > 0
+                                        text: "aka: " + modelData.aliases.join(", ")
+                                        font.pixelSize: 9
+                                        color: theme.textMuted
+                                    }
+
+                                    Label {
+                                        text: "[" + modelData.intervals.join(", ") + "]  (" + modelData.category + ")"
+                                        font.pixelSize: 9
+                                        color: theme.textSecondary
+                                    }
+                                }
+
+                                Button {
+                                    text: "Edit"
+                                    font.pixelSize: 9
+                                    implicitWidth: 40
+                                    onClicked: {
+                                        scalesColumn.editing = true
+                                        scalesColumn.editId = modelData.id
+                                        scalesColumn.editName = modelData.name
+                                        scalesColumn.editAliases = modelData.aliases.join(", ")
+                                        scalesColumn.editIntervals = modelData.intervals.join(", ")
+                                        scalesColumn.editCategory = modelData.category
+                                        scalesColumn.editBuiltin = modelData.builtin
+                                    }
+                                }
+
+                                Button {
+                                    text: "Delete"
+                                    font.pixelSize: 9
+                                    implicitWidth: 50
+                                    enabled: !modelData.builtin
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: modelData.builtin ? "Built-in scales cannot be deleted" : "Delete this custom scale"
+                                    onClicked: settingsPanel.scaleDeleted(modelData.id)
+                                }
+                            }
+                        }
+                    }
+
+                    // ─────────────────────────────────
+                    // SECTION: Create / Edit Scale
+                    // ─────────────────────────────────
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    Label {
+                        text: scalesColumn.editing ? "EDIT SCALE" : "CREATE SCALE"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        visible: scalesColumn.editBuiltin && scalesColumn.editing
+                        text: "Built-in scale: only name, aliases, and category can be changed."
+                        font.pixelSize: 9
+                        color: theme.textMuted
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        TextField {
+                            id: scaleNameField
+                            Layout.fillWidth: true
+                            font.pixelSize: 11
+                            placeholderText: "Scale name (e.g. Bebop Major)"
+                            selectByMouse: true
+                            text: scalesColumn.editName
+                            onTextChanged: scalesColumn.editName = text
+                        }
+
+                        ComboBox {
+                            id: scaleCategoryCombo
+                            model: scalesColumn.categoryOptions
+                            implicitWidth: 100
+                            font.pixelSize: 10
+                            currentIndex: {
+                                var idx = scalesColumn.categoryOptions.indexOf(scalesColumn.editCategory)
+                                return idx >= 0 ? idx : 6  // default to "custom"
+                            }
+                            onActivated: scalesColumn.editCategory = currentText
+                        }
+                    }
+
+                    Label {
+                        text: "Aliases (comma-separated):"
+                        font.pixelSize: 9
+                    }
+
+                    TextField {
+                        id: scaleAliasesField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "e.g. Major, Ionic"
+                        selectByMouse: true
+                        text: scalesColumn.editAliases
+                        onTextChanged: scalesColumn.editAliases = text
+                    }
+
+                    Label {
+                        text: "Intervals (semitones from root, comma-separated, must start with 0):"
+                        font.pixelSize: 9
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    TextField {
+                        id: scaleIntervalsField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "e.g. 0, 2, 4, 5, 7, 9, 11"
+                        selectByMouse: true
+                        text: scalesColumn.editIntervals
+                        onTextChanged: scalesColumn.editIntervals = text
+                        enabled: !scalesColumn.editBuiltin || !scalesColumn.editing
+                    }
+
+                    // --- Live preview of scale notes ---
+                    Label {
+                        id: scalePreviewLabel
+                        visible: scaleIntervalsField.text.trim().length > 0
+                        font.pixelSize: 10
+                        color: theme.textSecondary
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        text: {
+                            var raw = scaleIntervalsField.text.trim()
+                            if (!raw) return ""
+                            var parts = raw.split(",")
+                            var noteNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"]
+                            var notes = []
+                            for (var i = 0; i < parts.length; i++) {
+                                var v = parseInt(parts[i].trim())
+                                if (isNaN(v) || v < 0 || v > 11) return "Invalid interval: " + parts[i].trim()
+                                notes.push(noteNames[v])
+                            }
+                            return "Preview (C root): " + notes.join(" - ") + "  (" + notes.length + " notes)"
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: 6
+
+                        Button {
+                            text: scalesColumn.editing ? "Save Changes" : "Add Scale"
+                            font.pixelSize: 10
+                            onClicked: {
+                                // Parse intervals
+                                var parts = scaleIntervalsField.text.trim().split(",")
+                                var intervals = []
+                                for (var i = 0; i < parts.length; i++) {
+                                    var v = parseInt(parts[i].trim())
+                                    if (!isNaN(v)) intervals.push(v)
+                                }
+                                // Parse aliases
+                                var aliases = []
+                                if (scaleAliasesField.text.trim().length > 0) {
+                                    var aliasParts = scaleAliasesField.text.trim().split(",")
+                                    for (var j = 0; j < aliasParts.length; j++) {
+                                        var a = aliasParts[j].trim()
+                                        if (a.length > 0) aliases.push(a)
+                                    }
+                                }
+
+                                var data = {
+                                    id: scalesColumn.editId,
+                                    name: scaleNameField.text.trim(),
+                                    intervals: intervals,
+                                    category: scalesColumn.editCategory,
+                                    aliases: aliases
+                                }
+
+                                if (scalesColumn.editing) {
+                                    settingsPanel.scaleUpdated(JSON.stringify(data))
+                                } else {
+                                    settingsPanel.scaleAdded(JSON.stringify(data))
+                                }
+                            }
+                        }
+
+                        Button {
+                            text: "Clear"
+                            font.pixelSize: 10
+                            onClicked: {
+                                scalesColumn.editing = false
+                                scalesColumn.editId = ""
+                                scalesColumn.editName = ""
+                                scalesColumn.editAliases = ""
+                                scalesColumn.editIntervals = ""
+                                scalesColumn.editCategory = "custom"
+                                scalesColumn.editBuiltin = false
+                            }
+                        }
+                    }
+
+                    // ─────────────────────────────────
+                    // SECTION: Chord-Scale Mappings
+                    // ─────────────────────────────────
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    Label {
+                        text: "CHORD-SCALE MAPPINGS"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: "Click a quality to edit which scales are suggested for it."
+                        font.pixelSize: 9
+                        color: theme.textMuted
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    // Quality chips (clickable)
+                    Flow {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        Repeater {
+                            model: {
+                                var keys = []
+                                var csm = settingsPanel.chordScaleMap
+                                if (csm) {
+                                    for (var q in csm) keys.push(q)
+                                }
+                                return keys.sort()
+                            }
+
+                            Rectangle {
+                                width: qualityChipLabel.implicitWidth + 12
+                                height: qualityChipLabel.implicitHeight + 6
+                                radius: 3
+                                color: scalesColumn.mappingQuality === modelData ? theme.chipHover : theme.chipBackground
+                                border.color: theme.chipBorder
+                                border.width: 1
+
+                                Label {
+                                    id: qualityChipLabel
+                                    anchors.centerIn: parent
+                                    text: modelData
+                                    font.pixelSize: 10
+                                    color: theme.textPrimary
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: {
+                                        if (scalesColumn.mappingQuality === modelData) {
+                                            scalesColumn.showMappingEditor = false
+                                            scalesColumn.mappingQuality = ""
+                                            scalesColumn.mappingScaleNames = ""
+                                        } else {
+                                            scalesColumn.mappingQuality = modelData
+                                            var csm = settingsPanel.chordScaleMap
+                                            scalesColumn.mappingScaleNames = (csm[modelData] || []).join(", ")
+                                            scalesColumn.showMappingEditor = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Mapping editor (shown when a quality is selected)
+                    ColumnLayout {
+                        visible: scalesColumn.showMappingEditor
+                        Layout.fillWidth: true
+                        spacing: 6
+
+                        Label {
+                            text: "Scales for \"" + scalesColumn.mappingQuality + "\" (comma-separated names, in preference order):"
+                            font.pixelSize: 9
+                            wrapMode: Text.WordWrap
+                            Layout.fillWidth: true
+                        }
+
+                        TextField {
+                            id: mappingScalesField
+                            Layout.fillWidth: true
+                            font.pixelSize: 11
+                            selectByMouse: true
+                            text: scalesColumn.mappingScaleNames
+                            onTextChanged: scalesColumn.mappingScaleNames = text
+                        }
+
+                        Button {
+                            text: "Save Mapping"
+                            font.pixelSize: 10
+                            onClicked: {
+                                var parts = mappingScalesField.text.trim().split(",")
+                                var names = []
+                                for (var i = 0; i < parts.length; i++) {
+                                    var n = parts[i].trim()
+                                    if (n.length > 0) names.push(n)
+                                }
+                                settingsPanel.chordScaleMappingChanged(
+                                    scalesColumn.mappingQuality,
+                                    JSON.stringify(names)
+                                )
+                            }
+                        }
+                    }
+
+                    // ─────────────────────────────────
+                    // SECTION: Custom Chord Qualities
+                    // ─────────────────────────────────
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    Label {
+                        text: "CUSTOM CHORD QUALITIES"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: "Add custom quality names (e.g. dom7#9#5, minMaj9) to map scales to."
+                        font.pixelSize: 9
+                        color: theme.textMuted
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    // Existing custom qualities
+                    Repeater {
+                        model: settingsPanel.customQualities
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 4
+
+                            Label {
+                                text: modelData
+                                font.pixelSize: 11
+                                Layout.fillWidth: true
+                                color: theme.textPrimary
+                            }
+
+                            Button {
+                                text: "Remove"
+                                font.pixelSize: 9
+                                implicitWidth: 55
+                                onClicked: settingsPanel.customQualityRemoved(modelData)
+                            }
+                        }
+                    }
+
+                    // Add new quality
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        TextField {
+                            id: newQualityField
+                            Layout.fillWidth: true
+                            font.pixelSize: 11
+                            placeholderText: "New quality name"
+                            selectByMouse: true
+                        }
+
+                        Button {
+                            text: "Add"
+                            font.pixelSize: 10
+                            onClicked: {
+                                var name = newQualityField.text.trim()
+                                if (name) {
+                                    settingsPanel.customQualityAdded(name)
+                                    newQualityField.text = ""
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
 
-        Label {
-            visible: settingsPanel.contextStatus.length > 0
-            text: settingsPanel.contextStatus
-            color: settingsPanel.contextStatusColor
-            font.pixelSize: 10
-            font.bold: true
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
-        }
+            // ──────────────────────────────────────────
+            // SUB-TAB 3: Contexts (Custom contexts)
+            // ──────────────────────────────────────────
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: contextsColumn.implicitHeight
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
 
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+                ColumnLayout {
+                    id: contextsColumn
+                    width: parent.width - 16
+                    spacing: 12
 
-        // --- About ---
-        Label {
-            text: "ABOUT"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
+                    Label {
+                        text: "CUSTOM CONTEXTS"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
 
-        Label {
-            text: "Siege Analytics Chord Library v1.5.0"
-            font.pixelSize: 12
-            font.bold: true
-        }
+                    Label {
+                        text: "Create a voicing context (e.g. Solo Guitar, Bass Duo):"
+                        font.pixelSize: 10
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
 
-        Label {
-            text: "Author: Dheeraj Chand"
-            font.pixelSize: 11
-        }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
 
-        Label {
-            text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin">GitHub Repository</a>'
-            font.pixelSize: 11
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
-            }
-        }
+                        ComboBox {
+                            id: contextTypeCombo
+                            model: ["CM", "CV"]
+                            implicitWidth: 60
+                            font.pixelSize: 10
+                        }
 
-        Label {
-            text: '<a href="https://siegeanalytics.com">Siege Analytics</a>'
-            font.pixelSize: 11
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
-            }
-        }
+                        SpinBox {
+                            id: contextStringsSpin
+                            from: 4
+                            to: 12
+                            value: 7
+                            implicitWidth: 75
+                            font.pixelSize: 10
+                        }
 
-        Label {
-            text: '<a href="https://creativecommons.org/licenses/by/4.0/">Licensed under CC BY 4.0</a>'
-            font.pixelSize: 10
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
-            }
-        }
+                        TextField {
+                            id: contextNameField
+                            Layout.fillWidth: true
+                            font.pixelSize: 10
+                            placeholderText: "Display name (e.g. Solo Guitar)"
+                            selectByMouse: true
+                        }
+                    }
 
-        Label {
-            text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/blob/main/DEVELOPMENT.md">Documentation</a>'
-            font.pixelSize: 11
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.NoButton
+                    RowLayout {
+                        spacing: 6
+
+                        Button {
+                            text: "Create Context"
+                            font.pixelSize: 10
+                            onClicked: {
+                                var code = contextTypeCombo.currentText + contextStringsSpin.value
+                                var name = contextNameField.text.trim()
+                                if (!name) name = contextTypeCombo.currentText + " " + contextStringsSpin.value + "-str"
+                                settingsPanel.createContextRequested(code, name, contextStringsSpin.value)
+                            }
+                        }
+
+                        Label {
+                            text: "Code: " + contextTypeCombo.currentText + contextStringsSpin.value
+                            font.pixelSize: 9
+                            color: "#888"
+                        }
+                    }
+
+                    Label {
+                        visible: settingsPanel.contextStatus.length > 0
+                        text: settingsPanel.contextStatus
+                        color: settingsPanel.contextStatusColor
+                        font.pixelSize: 10
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+                }
             }
         }
     }
