@@ -104,7 +104,7 @@ and JS module dispatch.
 
 ```
 plugin/                    # Self-contained installable plugin
-  ChordLibrary.qml         # State management, routing, wiring (~2266 lines)
+  ChordLibrary.qml         # State management, routing, wiring (~2365 lines)
   config/contexts.json      # Context labels
   data/voicings.json        # 820+ voicing library (key of C)
   tunings/                  # 6 guitar tuning configs
@@ -162,4 +162,4 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 
 ---
 
-*Last updated: 2026-04-10*
+*Last updated: 2026-04-14*
