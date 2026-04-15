@@ -194,10 +194,13 @@ Item {
             }
 
             Button {
-                text: libraryPanel.melodyOnTop ? "Melody ✓" : "Melody"
+                text: libraryPanel.melodyOnTop ? "🔒 Melody" : "Melody"
                 font.pixelSize: 10
+                highlighted: libraryPanel.melodyOnTop
                 ToolTip.visible: hovered
-                ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
+                ToolTip.text: libraryPanel.melodyOnTop
+                    ? "Melody LOCKED — voicings must have melody note on top.\nVoice All will match melody for every chord."
+                    : "Lock voicings to melody note on top (from score or override field)"
                 onClicked: libraryPanel.melodyToggled()
             }
 
