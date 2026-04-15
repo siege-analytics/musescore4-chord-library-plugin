@@ -116,6 +116,35 @@ function matchingScales(voicingSemitones) {
     return matches
 }
 
+// Note names for display (sharps for sharp keys, flats for flat keys)
+var NOTE_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+var SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+var SHARP_ROOTS = {"C#":1, "D":1, "E":1, "F#":1, "G":1, "A":1, "B":1}
+
+// Semitone offset for a root note
+var ROOT_SEMITONES = {"C":0,"C#":1,"Db":1,"D":2,"D#":3,"Eb":3,"E":4,"F":5,"F#":6,"Gb":6,"G":7,"G#":8,"Ab":8,"A":9,"A#":10,"Bb":10,"B":11}
+
+// Get the notes of a scale transposed to a given root.
+// Returns { notes: ["F", "G", "A", "Bb", "C", "D", "Eb"], intervals: ["1", "2", "3", "4", "5", "6", "b7"] }
+function getScaleNotes(scaleName, root) {
+    var intervals = SCALES[scaleName]
+    if (!intervals) return { notes: [], intervals: [] }
+    var rootSemi = ROOT_SEMITONES[root] || 0
+    var useSharp = SHARP_ROOTS[root]
+    var names = useSharp ? SHARP_NAMES : NOTE_NAMES
+
+    var INTERVAL_LABELS = {0:"1",1:"b2",2:"2",3:"b3",4:"3",5:"4",6:"b5",7:"5",8:"b6",9:"6",10:"b7",11:"7"}
+
+    var notes = []
+    var ivLabels = []
+    for (var i = 0; i < intervals.length; i++) {
+        var semi = (rootSemi + intervals[i]) % 12
+        notes.push(names[semi])
+        ivLabels.push(INTERVAL_LABELS[intervals[i]] || String(intervals[i]))
+    }
+    return { notes: notes, intervals: ivLabels }
+}
+
 // Format scale suggestion as a display string.
 // E.g., "Cmaj7 → Ionian, Lydian"
 function formatScaleSuggestion(root, quality) {
