@@ -21,7 +21,7 @@ Always plan first, never jump to implementation:
 
 ### 3. Test Before Presenting
 
-- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 90 tests)
+- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 188 tests: 90 Python + 98 JS module via Node.js)
 - Only present finished, tested solutions
 - **Don't push untested code** — review and fix first, push after
 
@@ -106,6 +106,7 @@ and JS module dispatch.
 plugin/                    # Self-contained installable plugin
   ChordLibrary.qml         # State management, routing, wiring (~2365 lines)
   config/contexts.json      # Context labels
+  config/scales.json        # Scale definitions, chord-scale mappings (#142)
   data/voicings.json        # 820+ voicing library (key of C)
   tunings/                  # 6 guitar tuning configs
   model/                    # 12 JS business logic modules
@@ -130,18 +131,28 @@ REFERENCES.md                    # Full credits and bibliography
 ## Common Commands
 
 ```bash
-python3 -m pytest tests/ -v              # Run all 90 tests
+python3 -m pytest tests/ -v              # Run all 188 tests (90 Python + 98 JS module)
 python3 scripts/validate.py -v           # Validate voicing data
 bash deploy.sh                           # Deploy to local MuseScore (dev only)
 bash deploy.sh --watch                   # Auto-deploy on file changes
 ```
 
-## Open Issues (as of 2026-04-14)
+### JS Module Testing (#145)
+
+`.pragma library` modules are pure JS — tested directly via Node.js from pytest.
+`tests/js_runner.js` strips QML directives and evaluates modules in a VM sandbox.
+Tests cover: ChordScales, FilterEngine, Transposer, DataCache, IRealParser,
+HygieneEngine, MelodyEngine, ReharmonizationEngine, VoicingCalculator, FingeringEngine.
+
+CI runs on every push to main/develop and on all PRs (`.github/workflows/test.yml`).
+
+## Open Issues (as of 2026-04-15)
 
 - **#75** — Epic: decompose ChordLibrary.qml (Phases A, B, C complete; 5174→2365 lines)
-- **#142** — Scale import and management in Settings (ticketed, not implemented)
+- **#142** — Scale management (#142 implemented: scales.json, ChordScales.js CRUD, Settings Scales sub-tab)
+- **#144** — Tab content redistribution (implemented: Import/Create Tuning → Import tab, Save/Audit → Library tab)
+- **#145** — Test modernization epic (Tier 1 complete: 98 JS tests via Node.js, CI workflow)
 - **#74** — cmd("paste") broken (wishlist — needs MuseScore C++ change, PR #32848 rejected)
-- Settings tab needs redesign — 7+ sections, too long. Consider sub-tabs or collapsible sections
 - Custom context creation (#132) deployed but untested in MuseScore
 
 ## MuseScore 4 Plugin API Limitations
@@ -165,4 +176,4 @@ bash deploy.sh --watch                   # Auto-deploy on file changes
 
 ---
 
-*Last updated: 2026-04-14*
+*Last updated: 2026-04-15*
