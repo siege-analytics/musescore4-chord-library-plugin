@@ -391,21 +391,109 @@ ColumnLayout {
                 }
             }
 
-            Label {
+            // Clickable scale chips (#125)
+            Flow {
                 visible: currentItem !== null
-                text: {
-                    if (!currentItem) return ""
-                    var scales = ChordScales.getScaleNames(currentItem.quality || currentItem.voicing.chord_quality)
-                    return scales.length > 0 ? ("Scales: " + scales.join(", ")) : ""
-                }
-                font.pixelSize: 11
-                font.italic: true
-                color: theme.successText
                 Layout.fillWidth: true
-                wrapMode: Text.Wrap
+                spacing: 4
+
+                Label {
+                    text: "Scales:"
+                    font.pixelSize: 10
+                    font.italic: true
+                    color: theme.successText
+                }
+
+                Repeater {
+                    model: currentItem ? ChordScales.getScaleNames(currentItem.quality || currentItem.voicing.chord_quality) : []
+
+                    Rectangle {
+                        width: scaleChipLabel.implicitWidth + 12
+                        height: 20
+                        radius: 10
+                        color: _selectedScale === modelData ? theme.successText : (theme.isDark ? Qt.rgba(1,1,1,0.1) : Qt.rgba(0,0,0,0.05))
+                        border.color: theme.successText
+                        border.width: _selectedScale === modelData ? 0 : 1
+
+                        Label {
+                            id: scaleChipLabel
+                            anchors.centerIn: parent
+                            text: modelData
+                            font.pixelSize: 9
+                            font.italic: true
+                            color: _selectedScale === modelData ? (theme.isDark ? "#000" : "#fff") : theme.successText
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (_selectedScale === modelData) {
+                                    _selectedScale = ""  // toggle off
+                                } else {
+                                    _selectedScale = modelData
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Expanded scale detail (shown when a chip is clicked)
+            Rectangle {
+                visible: _selectedScale.length > 0 && currentItem !== null
+                Layout.fillWidth: true
+                height: scaleDetailColumn.implicitHeight + 12
+                radius: 6
+                color: theme.isDark ? Qt.rgba(1,1,1,0.05) : Qt.rgba(0,0,0,0.03)
+                border.color: theme.divider
+
+                ColumnLayout {
+                    id: scaleDetailColumn
+                    anchors.fill: parent
+                    anchors.margins: 6
+                    spacing: 4
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var root = currentItem.root
+                            return root + " " + _selectedScale
+                        }
+                        font.pixelSize: 12
+                        font.bold: true
+                        color: theme.successText
+                    }
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
+                            return "Notes: " + info.notes.join("  ")
+                        }
+                        font.pixelSize: 11
+                        font.family: "Menlo, Monaco, monospace"
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
+                            return "Intervals: " + info.intervals.join("  ")
+                        }
+                        font.pixelSize: 10
+                        color: theme.textSecondary
+                        Layout.fillWidth: true
+                    }
+                }
             }
         }
     }
+
+    // Internal state for scale chip selection
+    property string _selectedScale: ""
+    onBatchIndexChanged: _selectedScale = ""  // reset when advancing to next chord
 
     // Quality disambiguation chips — shown when chord symbol is ambiguous (e.g. bare "F")
     Flow {
