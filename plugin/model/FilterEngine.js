@@ -37,10 +37,31 @@ function applyFilters(voicingsData, opts) {
         if (contextMax < maxStrings) maxStrings = contextMax
     }
 
+    // Context matching: CM7 also includes CM6, CM5, CM4 (a 4-string drop2
+    // is valid on a 7-string guitar). Extract the context type prefix (CM/CV)
+    // and match any context with the same prefix and <= string count.
+    var ctxPrefix = ""
+    var ctxStrings = 0
+    if (opts.filterContext && opts.contextStringCounts) {
+        // Extract prefix: "CM7" → "CM", "CV6" → "CV"
+        ctxPrefix = opts.filterContext.replace(/[0-9]+$/, "")
+        ctxStrings = opts.contextStringCounts[opts.filterContext] || 99
+    }
+
     var result = []
+    var seenShapes = {}  // deduplicate by shape (same dots+fret+quality from different contexts)
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
-        if (opts.filterContext && v.context !== opts.filterContext) continue
+        if (opts.filterContext) {
+            if (ctxPrefix) {
+                // Match same context type with <= string count
+                var vPrefix = (v.context || "").replace(/[0-9]+$/, "")
+                var vStrings = opts.contextStringCounts[v.context] || 99
+                if (vPrefix !== ctxPrefix || vStrings > ctxStrings) continue
+            } else {
+                if (v.context !== opts.filterContext) continue
+            }
+        }
         if (opts.filterCategory && v.category !== opts.filterCategory) continue
         if (opts.filterQuality && v.chord_quality !== opts.filterQuality
             && v.chord_quality !== "quartal") continue
@@ -53,6 +74,18 @@ function applyFilters(voicingsData, opts) {
                 || (v.tags && v.tags.join(" ").toLowerCase().indexOf(q) >= 0)
             if (!match) continue
         }
+        // Deduplicate: same shape from different contexts should appear once.
+        // Build a shape key from quality + fret + dot positions.
+        var dotsKey = ""
+        var dots = v.dots || []
+        for (var dk = 0; dk < dots.length; dk++) {
+            dotsKey += dots[dk].string + ":" + dots[dk].fret + ","
+        }
+        // Key excludes mutes — a 6-string voicing with mutes=[5,6] and a 7-string
+        // version with mutes=[5,6,7] are the same shape to the guitarist.
+        var shapeKey = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dotsKey
+        if (seenShapes[shapeKey]) continue
+        seenShapes[shapeKey] = true
         result.push(v)
     }
 

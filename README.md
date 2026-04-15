@@ -8,12 +8,18 @@ A MuseScore Studio 4 plugin that gives jazz guitarists a searchable, filterable 
 - **Runtime voicing calculator** generates voicings for any tuning on the fly
 - **Physically-aware fingering engine** validates every voicing against a biomechanical hand model (Mersenne's Law + CombinoChord distance table)
 - **Barre detection** — full, partial/hinge, tip (Ted Greene), and diagonal barres
-- **Difficulty scoring** — each voicing rated standard / advanced / expert
+- **Difficulty scoring** — each voicing rated standard / advanced / expert, shown in walkthrough
+- **Fingering display** — fingering notation (e.g. X X 1 2 3 4) shown on every voicing card and in the walkthrough
+- **Melody Lock** — lock voicings to the melody note on top; persists through Voice All and bass string switching
+- **Chord-scale suggestions** — clickable scale chips in the walkthrough showing transposed scale notes and intervals (Mixolydian, Lydian b7, Bebop Dom, Blues, etc.)
+- **Chord analysis** — voicing notes, chord tones vs tensions, and voice leading context shown in the walkthrough tray
+- **Bass string navigation** — browse voicings by bass string position (Str 4, 5, 6, 7) with melody-filtered alternatives
 - **iReal Pro import** — paste a URL or chord chart, get voicings matched automatically
 - **Arrangement presets** — save and load voiced chord progressions
 - **Voicing comparison** — side-by-side view of up to 3 voicings
+- **Custom contexts** — create new voicing contexts beyond the built-in set (Settings tab)
 - **Dark/light theme** — adapts to your MuseScore color scheme
-- **6 guitar tunings** — Standard, 7-String Van Eps, 7-String Low B, DADGAD, All Fourths, Baritone
+- **6 guitar tunings** — Standard, 7-String Van Eps, 7-String Low B, DADGAD, All Fourths, Baritone (default: Van Eps)
 
 ## Install
 
@@ -51,9 +57,19 @@ That's it — the `plugin/` directory is completely self-contained. No scripts, 
 
 If no chord symbol is present, the voicing inserts in C.
 
-### Walkthrough mode
+### Walkthrough mode (Voice All)
 
-Click **Walkthrough** to step through a chord progression one chord at a time. The plugin finds the best voicing for each chord based on your filters, melody/bass note preferences, and voice leading.
+Click **Voice All** to step through a chord progression one chord at a time. The plugin finds the best voicing for each chord based on your context, melody/bass preferences, and voice leading. Each step shows:
+
+- **Fretboard diagram** with color-coded interval dots and fret position
+- **Difficulty tier** (Standard / Advanced / Expert) with score
+- **Fingering notation** (e.g. X X 1 2 3 4)
+- **Bass string selector** — browse alternatives grouped by bass string position
+- **Clickable scale chips** — tap a scale name to see transposed notes and intervals
+- **Chord analysis** — voicing notes, chord tones vs tensions, voice leading from previous chord
+- **Melody/bass lock** — lock the top or bass note across all voicings; arrow navigation shows only matching voicings
+- **Reharmonization chips** — tritone sub, diminished passing, sus4 alternatives
+- **Per-chord override** — type a note in the Mel/Bass field to override just this chord
 
 ### Import tab
 

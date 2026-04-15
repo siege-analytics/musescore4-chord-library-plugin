@@ -143,27 +143,56 @@ MuseScore {
         source: Qt.resolvedUrl("play-chord.json")
     }
 
+    // === Centralized state groups (C1, #104) ===
+
+    QtObject {
+        id: tuningState
+        property string selectedTuning: "7string-van-eps"
+        property var tuningList: [
+            "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
+            "baritone"
+        ]
+        property var tuningLabels: ({
+            "standard": "Standard 6-String",
+            "7string-van-eps": "7-String Van Eps (Low A)",
+            "7string-low-b": "7-String Low B",
+            "dadgad": "DADGAD",
+            "all-fourths": "All Fourths",
+            "baritone": "Baritone B (B-E-A-D-F#-B)"
+        })
+        property var tuningStringCounts: ({
+            "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
+            "dadgad": 6, "all-fourths": 6, "baritone": 6
+        })
+    }
+
+    QtObject {
+        id: calcState
+        property int maxFret: 12
+        property int maxStretch: 4
+        property bool allowOpen: true
+        property bool rootInBass: true
+        property int minNotes: 3
+        property int maxMuted: 3
+        property int maxPerQuality: 0
+    }
+
+    // Compatibility aliases — existing code references these unqualified
+    property alias selectedTuning: tuningState.selectedTuning
+    property alias tuningList: tuningState.tuningList
+    property alias tuningLabels: tuningState.tuningLabels
+    property alias tuningStringCounts: tuningState.tuningStringCounts
+    property alias calcMaxFret: calcState.maxFret
+    property alias calcMaxStretch: calcState.maxStretch
+    property alias calcAllowOpen: calcState.allowOpen
+    property alias calcRootInBass: calcState.rootInBass
+    property alias calcMinNotes: calcState.minNotes
+    property alias calcMaxMuted: calcState.maxMuted
+    property alias calcMaxPerQuality: calcState.maxPerQuality
+
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
-    property string selectedTuning: "standard"  // matches config/tunings/<name>.json
-    property var tuningList: [
-        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
-        "baritone"
-    ]
-    property var tuningLabels: {
-        "standard": "Standard 6-String",
-        "7string-van-eps": "7-String Van Eps (Low A)",
-        "7string-low-b": "7-String Low B",
-        "dadgad": "DADGAD",
-        "all-fourths": "All Fourths",
-        "baritone": "Baritone B (B-E-A-D-F#-B)"
-    }
-    // String count per tuning — used to filter tuning combo by context
-    property var tuningStringCounts: {
-        "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
-        "dadgad": 6, "all-fourths": 6, "baritone": 6
-    }
     // Filtered tuning list — shows tunings compatible with the context's string count.
     // Exact match preferred; if no exact match includes the current tuning, show all compatible (<=).
     property var filteredTuningList: {
@@ -251,23 +280,15 @@ MuseScore {
     property bool sortByProximity: false    // when true, sort filtered results by distance
     property bool melodyOnTop: false         // when true, prefer voicings with melody note as highest voice
     property bool skipDiagramPositions: false // when true, Annotate Staff Text skips positions with existing diagrams
+    property string _toolStatusText: ""  // routed to ScoreToolsPanel
     property int melodyStaffIdx: -1  // -1 = same staff, 0+ = specific staff index for melody reading
     property bool writeVoice2: false  // when true, write voicing pitches as notes on voice 2
 
-    // Voicing calculator constraints (defaults, overridable per chord in walkthrough)
-    property int calcMaxFret: 12           // highest fret to consider
-    property int calcMaxStretch: 4         // max fret span in one voicing
-    property bool calcAllowOpen: true      // allow open strings in voicings
-    property bool calcRootInBass: true     // require root as lowest note
-    property int calcMinNotes: 3           // minimum sounding strings
-    property int calcMaxMuted: 3           // maximum muted strings
-    property int calcMaxPerQuality: 0      // max voicings per quality (0 = unlimited / Ted Greene mode)
+    // Voicing calculator constraints — backed by calcState QtObject above
 
     // Returns override melody MIDI pitch (0-11) or -1 if no override set
     function melodyOverrideMidi() {
-        if (!melodyOnTop) return -1
-        var noteText = melodyOverrideField ? melodyOverrideField.text : ""
-        return MelodyEngine.parseNoteToSemitone(noteText, Transposer.SEMITONE_MAP)
+        return batchEngine.melodyOverrideMidi()
     }
 
     // Dynamic filter lists (rebuilt when data changes)
@@ -332,6 +353,55 @@ MuseScore {
         contextStringCounts = strCounts
     }
 
+    // === Custom context creation (#132) ===
+
+    function createCustomContext(code, name, strings) {
+        // Update runtime state
+        var labels = {}
+        for (var k in contextLabels) labels[k] = contextLabels[k]
+        labels[code] = name
+        contextLabels = labels
+
+        var shorts = {}
+        for (var s in contextLabelsShort) shorts[s] = contextLabelsShort[s]
+        shorts[code] = code.replace(/[0-9]+$/, "") + " " + strings
+        contextLabelsShort = shorts
+
+        var counts = {}
+        for (var c in contextStringCounts) counts[c] = contextStringCounts[c]
+        counts[code] = strings
+        contextStringCounts = counts
+
+        // Add to context list if not already present
+        if (contextList.indexOf(code) < 0) {
+            var list = contextList.slice()
+            list.push(code)
+            contextList = list
+        }
+
+        // Update contexts.json on disk
+        try {
+            var raw = contextsConfigFile.read()
+            var config = (raw && raw.length > 2) ? JSON.parse(raw) : { contexts: {} }
+            config.contexts[code] = {
+                name: name,
+                short: shorts[code],
+                description: "Custom context created by user",
+                strings: strings
+            }
+            contextsConfigFile.write(JSON.stringify(config, null, 2))
+            settingsPanel.contextStatus = "Created: " + name + " (" + code + ")"
+            settingsPanel.contextStatusColor = "#27ae60"
+        } catch (e) {
+            settingsPanel.contextStatus = "Failed to save: " + e
+            settingsPanel.contextStatusColor = "#e74c3c"
+        }
+
+        // Rebuild filter lists so the new context appears
+        rebuildFilterLists()
+        saveSettings()
+    }
+
     // === Tool feedback (uses toolStatus label + console) ===
 
     function showResult(title, message, isSuccess) {
@@ -342,8 +412,7 @@ MuseScore {
             toolResultsContent = message
             showToolResults = true
         } else {
-            toolStatus.text = title + ": " + message
-            toolStatus.color = isSuccess ? theme.successText : theme.errorText
+            _toolStatusText = title + ": " + message
         }
     }
 
@@ -362,595 +431,76 @@ MuseScore {
         repeat: false
         onTriggered: {
             statusMsg.text = statusMsg.text.replace("Pasting", "Pasted")
-            if (_pendingVoicing) {
-                lastInsertedVoicing = _pendingVoicing
-                _pendingVoicing = null
+            if (insertionEngine._pendingVoicing) {
+                lastInsertedVoicing = insertionEngine._pendingVoicing
+                insertionEngine._pendingVoicing = null
                 if (sortByProximity) applyFilters()
             }
         }
     }
 
-    // === Batch insert ===
-
-    property var batchQueue: []
-    property int batchTotal: 0
+    // === Batch insert (extracted to model/BatchEngine.qml, #100) ===
 
     // Quality map delegated to ChordSelector module
     property var qualityMap: ChordSelector.qualityMap
 
-    function parseChordSymbol(text) {
-        return ChordSelector.parseChordSymbol(text)
-    }
+    // Compatibility aliases — delegate to batchEngine for code that still uses these names
+    // (inline tools, import panel, library panel wiring). Will be removed in Phase C.
+    property alias batchQueue: batchEngine.batchQueue
+    property alias batchTotal: batchEngine.batchTotal
+    property alias _batchChords: batchEngine.batchChords
+    property alias _batchIndex: batchEngine.batchIndex
 
-    // Get the top (highest-pitched) note of a voicing as a semitone class (0-11)
-    function voicingTopNoteSemitone(voicing, targetRoot) {
-        return MelodyEngine.voicingTopNoteSemitone(voicing, targetRoot, Transposer.SEMITONE_MAP)
-    }
+    BatchEngine {
+        id: batchEngine
+        pluginRef: chordLibrary
+        curScore: chordLibrary.curScore
+        tempDiagramFile: tempDiagramFile
+        clipboardXmlPath: Qt.resolvedUrl("paste-clipboard.xml")
+        voicingsData: chordLibrary.voicingsData
+        filterContext: chordLibrary.filterContext
+        filterCategory: chordLibrary.filterCategory
+        tuningMaxStrings: chordLibrary.tuningMaxStrings
+        contextStringCounts: chordLibrary.contextStringCounts
+        tuningMidi: chordLibrary.tuningMidi
+        usingTuningVoicings: chordLibrary.usingTuningVoicings
+        tuningOffset: chordLibrary.tuningOffset
+        melodyOnTop: chordLibrary.melodyOnTop
+        melodyStaffIdx: chordLibrary.melodyStaffIdx
+        writeVoice2: chordLibrary.writeVoice2
+        melodyOverrideText: libraryPanel.melodyOverrideField ? libraryPanel.melodyOverrideField.text : ""
 
-    // Build the options object for ChordSelector functions.
-    // Passes direct function references (not closures) to avoid QML/JS boundary issues.
-    function _selectorOpts(melodyMidi, bassMidi) {
-        return {
-            maxStrings: tuningMaxStrings,
-            filterContext: filterContext,
-            contextStringCounts: contextStringCounts,
-            filterCategory: filterCategory,
-            melodyMidi: melodyMidi,
-            bassMidi: bassMidi,
-            melodyLocked: _melodyLocked,
-            bassLocked: _bassLocked,
-            lastInsertedVoicing: lastInsertedVoicing,
-            topNoteFn: MelodyEngine.voicingTopNoteSemitone,
-            bassNoteFn: MelodyEngine.voicingBassNoteSemitone,
-            distanceFn: MelodyEngine.voicingDistance,
-            semitoneMap: Transposer.SEMITONE_MAP
+        onStatusMessage: function(text, colorName) {
+            statusMsg.text = text
+            statusMsg.color = colorName === "error" ? theme.errorText
+                            : colorName === "success" ? theme.successText
+                            : theme.textMuted
         }
-    }
-
-    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findBestVoicing(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
-    }
-
-    function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findAllVoicings(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
-    }
-
-    // Alternative voicing state — grouped by bass string
-    property var _altVoicings: []          // all candidates for current step
-    property int _altIndex: 0              // index in current group
-    property var _bassStringGroups: ({})   // { stringNum: [voicings] }
-    property var _bassStringList: []       // sorted list of available bass strings
-    property int _selectedBassString: -1   // currently selected bass string (-1 = auto/best)
-    property int altCount: 0               // total alternatives
-    property int altIndex: 0               // current index for display
-
-    // Build bass-string groups from alternatives.
-    // IMPORTANT: assign new objects to trigger QML bindings.
-    function buildBassStringGroups() {
-        var result = ChordSelector.buildBassStringGroups(_altVoicings)
-        _bassStringGroups = result.groups
-        _bassStringList = result.list
-    }
-
-    // Select voicings by bass string
-    function selectBassString(bassStr) {
-        _selectedBassString = bassStr
-        _altIndex = 0
-        var group = _bassStringGroups[bassStr] || []
-        if (group.length > 0) {
-            applyAlternativeVoicing(group[0])
+        onShowWalkthrough: function(title, content) {
+            toolResultsTitle = title
+            toolResultsContent = content
+            showToolResults = true
         }
-        altCount = group.length
-        altIndex = 0
-    }
-
-    // Cycle within the current bass string group
-    function selectAlternativeVoicing(index) {
-        var group = _bassStringGroups[_selectedBassString] || _altVoicings
-        if (index < 0 || index >= group.length) return
-        _altIndex = index
-        altIndex = index
-        applyAlternativeVoicing(group[index])
-    }
-
-    // Apply a voicing to the current walkthrough step
-    function applyAlternativeVoicing(voicing) {
-        var item = _batchChords[_batchIndex - 1]
-        if (!item) return
-        item.voicing = voicing
-
-        // Update clipboard
-        var xml = generateXmlForVoicing(voicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try { tempDiagramFile.write(xml) } catch (e) {}
-
-        // Refresh display
-        walkthroughPanel.batchChords = _batchChords
-    }
-
-    function _diagramOpts() {
-        return { usingTuningVoicings: usingTuningVoicings, tuningOffset: tuningOffset, semitoneOffsetFn: Transposer.semitoneOffset }
-    }
-
-    function generateXmlForVoicing(voicing, targetRoot) {
-        return DiagramEngine.generateXmlForVoicing(voicing, targetRoot, _diagramOpts())
-    }
-
-    function computeVoicingMidiPitches(voicing, targetRoot) {
-        var opts = _diagramOpts()
-        opts.tuningMidi = tuningMidi
-        return DiagramEngine.computeVoicingMidiPitches(voicing, targetRoot, opts)
-    }
-
-    // Write voicing pitches as notes on voice 2 at the given tick position.
-    // Uses MuseScore's cursor API: addNote for the first pitch, then
-    // cursor.element.add(note) for additional notes in the chord.
-    function writeVoicingToVoice2(voicing, targetRoot, targetTick) {
-        if (!curScore) return false
-        var pitches = computeVoicingMidiPitches(voicing, targetRoot)
-        if (pitches.length === 0) return false
-
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 1  // voice 2 (0-indexed)
-        cursor.rewind(0)
-
-        // Navigate to target tick
-        while (cursor.segment && cursor.tick < targetTick) {
-            cursor.next()
-        }
-
-        if (!cursor.segment || cursor.tick !== targetTick) {
-            console.log("Voice2 export: could not find tick " + targetTick)
-            return false
-        }
-
-        // Match the duration of whatever is in voice 1 at this position
-        var v1cursor = curScore.newCursor()
-        v1cursor.staffIdx = 0
-        v1cursor.voice = 0
-        v1cursor.rewind(0)
-        while (v1cursor.segment && v1cursor.tick < targetTick) v1cursor.next()
-        if (v1cursor.element && v1cursor.element.duration) {
-            cursor.setDuration(v1cursor.element.duration.numerator, v1cursor.element.duration.denominator)
-        }
-
-        // Add the first note (creates the chord element)
-        cursor.addNote(pitches[0])
-
-        // Add remaining notes to the chord
-        // After addNote, cursor.prev() gets us back to the chord we just created
-        cursor.prev()
-        if (cursor.element && cursor.element.type === Element.CHORD) {
-            for (var i = 1; i < pitches.length; i++) {
-                var note = newElement(Element.NOTE)
-                note.pitch = pitches[i]
-                note.tpc1 = pitchToTpc(pitches[i])
-                note.tpc2 = note.tpc1
-                cursor.element.add(note)
-            }
-        }
-
-        return true
-    }
-
-    function pitchToTpc(midiPitch) {
-        return DiagramEngine.pitchToTpc(midiPitch)
-    }
-
-    // Batch voicing state
-    property int _batchIndex: 0
-    property int _batchInserted: 0
-    property var _batchChords: []  // [{text, root, quality, voicing}, ...]
-
-    // Voice a single chord at the current cursor/selection position
-    function voiceAtCursor() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Find the chord symbol at or near the current selection
-        var sel = curScore.selection
-        if (!sel || !sel.elements || sel.elements.length === 0) {
-            statusMsg.text = "Select a note or rest at a chord symbol"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var elem = sel.elements[0]
-        var seg = null
-        if (elem.type === Element.NOTE && elem.parent)
-            seg = elem.parent.parent
-        else if (elem.type === Element.REST || elem.type === Element.CHORD)
-            seg = elem.parent
-
-        if (!seg || !seg.annotations) {
-            statusMsg.text = "No chord symbol at selection"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Find the HARMONY annotation at this segment
-        var chordText = null
-        for (var a = 0; a < seg.annotations.length; a++) {
-            if (seg.annotations[a].type === Element.HARMONY) {
-                chordText = seg.annotations[a].text
-                break
-            }
-        }
-
-        if (!chordText) {
-            statusMsg.text = "No chord symbol at selection"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var parsed = parseChordSymbol(chordText)
-        if (!parsed) {
-            statusMsg.text = "Could not parse: " + chordText
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Extract melody note — use override if set, else detect from selection
-        var melodyMidi = melodyOverrideMidi()
-        if (melodyMidi < 0 && melodyOnTop) {
-            var chordElem = null
-            if (elem.type === Element.NOTE && elem.parent)
-                chordElem = elem.parent
-            else if (elem.type === Element.CHORD)
-                chordElem = elem
-            if (chordElem && chordElem.notes) {
-                for (var n = 0; n < chordElem.notes.length; n++) {
-                    if (chordElem.notes[n].pitch > melodyMidi)
-                        melodyMidi = chordElem.notes[n].pitch
-                }
-            }
-        }
-
-        // Use slash bass if present
-        var bassMidi = parsed.slashBass
-            ? Transposer.SEMITONE_MAP[parsed.slashBass]
-            : undefined
-
-        var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
-        if (!voicing) {
-            statusMsg.text = "No voicing found for " + chordText
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Use the single voicing insertion flow (same as "Open" button)
-        generateDiagramFile(voicing)
-    }
-
-    function batchInsert() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // Scan all chord symbols and build the voicing plan
-        var chords = []
-        var lastMelodyMidi = -1  // carry-forward: last melody note for rests
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        // If reading melody from a separate staff, create a second cursor
-        var melodyCursor = null
-        if (melodyStaffIdx >= 0 && melodyOnTop) {
-            melodyCursor = curScore.newCursor()
-            melodyCursor.staffIdx = melodyStaffIdx
-            melodyCursor.voice = 0
-            melodyCursor.rewind(0)
-        }
-        while (cursor.segment) {
-            if (cursor.segment.annotations) {
-                for (var a = 0; a < cursor.segment.annotations.length; a++) {
-                    if (cursor.segment.annotations[a].type === Element.HARMONY) {
-                        var text = cursor.segment.annotations[a].text
-                        var parsed = parseChordSymbol(text)
-                        if (parsed) {
-                            // Extract melody note (highest pitch) at this position.
-                            // If user set a manual override, use that for all positions.
-                            var melodyMidi = melodyOverrideMidi()
-
-                            // Try melody from a separate staff first (if configured)
-                            if (melodyMidi < 0 && melodyOnTop && melodyCursor) {
-                                // Advance melody cursor to same tick position
-                                while (melodyCursor.segment && melodyCursor.tick < cursor.tick) {
-                                    melodyCursor.next()
-                                }
-                                if (melodyCursor.segment && melodyCursor.tick === cursor.tick) {
-                                    if (melodyCursor.element && melodyCursor.element.type === Element.CHORD) {
-                                        var melNotes = melodyCursor.element.notes
-                                        for (var mn = 0; mn < melNotes.length; mn++) {
-                                            if (melNotes[mn].pitch > melodyMidi)
-                                                melodyMidi = melNotes[mn].pitch
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Fall back to same-staff melody extraction
-                            if (melodyMidi < 0 && melodyOnTop) {
-                                var segEl = cursor.segment
-                                // Check cursor.element first (voice 0)
-                                if (cursor.element && cursor.element.type === Element.CHORD) {
-                                    var notes0 = cursor.element.notes
-                                    for (var n0 = 0; n0 < notes0.length; n0++) {
-                                        if (notes0[n0].pitch > melodyMidi) melodyMidi = notes0[n0].pitch
-                                    }
-                                }
-                                // Also scan all annotations' parent elements for notes
-                                // (the chord symbol may be attached to a voice with notes)
-                                if (melodyMidi < 0 && segEl && segEl.elementAt) {
-                                    // Try voice 0 through 3
-                                    for (var voice = 0; voice < 4 && melodyMidi < 0; voice++) {
-                                        var el = segEl.elementAt(voice)
-                                        if (el && el.type === Element.CHORD && el.notes) {
-                                            for (var nv = 0; nv < el.notes.length; nv++) {
-                                                if (el.notes[nv].pitch > melodyMidi)
-                                                    melodyMidi = el.notes[nv].pitch
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            // Carry forward: if at a rest, use the last melody note
-                            if (melodyOnTop && melodyMidi < 0 && lastMelodyMidi >= 0) {
-                                melodyMidi = lastMelodyMidi
-                            }
-                            if (melodyMidi >= 0) lastMelodyMidi = melodyMidi
-
-                            // Suggest bass note (default: chord root, or slash bass if present)
-                            var bassMidi
-                            if (parsed.slashBass) {
-                                // Slash chord: use specified bass note
-                                bassMidi = Transposer.SEMITONE_MAP[parsed.slashBass]
-                                if (bassMidi === undefined) bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
-                            } else {
-                                bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
-                            }
-
-                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
-                            if (voicing) {
-                                chords.push({
-                                    text: text,
-                                    root: parsed.root,
-                                    quality: parsed.quality,
-                                    voicing: voicing,
-                                    melodyMidi: melodyMidi,
-                                    bassMidi: bassMidi,
-                                    tick: cursor.tick,
-                                    ambiguous: parsed.ambiguous || false,
-                                })
-                            }
-                        }
-                    }
-                }
-            }
-            cursor.next()
-        }
-
-        if (chords.length === 0) {
-            statusMsg.text = "No matching chord symbols found"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        _batchChords = chords
-        _batchIndex = 0
-        batchTotal = chords.length
-        batchQueue = [1]  // non-empty = in progress
-
-        // Show guided walkthrough
-        batchShowNext()
-    }
-
-    function batchShowNext() {
-        if (_batchIndex >= _batchChords.length) {
-            batchQueue = []
+        onWalkthroughComplete: function(total) {
             showResult("Voice Score Complete",
-                "All " + batchTotal + " chord voicings have been loaded.\n\n"
+                "All " + total + " chord voicings have been loaded.\n\n"
                 + "Click 'Back to Library' to return to the voicing browser.", true)
-            return
         }
-
-        var item = _batchChords[_batchIndex]
-        var remaining = _batchChords.length - _batchIndex
-        var nameParts = item.voicing.name.split(" — ")
-        var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
-
-        // Load all alternative voicings and group by bass string
-        _altVoicings = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
-        buildBassStringGroups()
-        // Auto-select the bass string group that contains the current voicing
-        _selectedBassString = -1
-        for (var bsi = 0; bsi < _bassStringList.length; bsi++) {
-            var bsGroup = _bassStringGroups[_bassStringList[bsi]] || []
-            for (var bvi = 0; bvi < bsGroup.length; bvi++) {
-                if (bsGroup[bvi].id === item.voicing.id) {
-                    _selectedBassString = _bassStringList[bsi]
-                    _altIndex = bvi
-                    break
-                }
-            }
-            if (_selectedBassString >= 0) break
+        onWalkthroughDataChanged: {
+            walkthroughPanel.batchChords = batchEngine.batchChords
         }
-        if (_selectedBassString < 0 && _bassStringList.length > 0) {
-            _selectedBassString = _bassStringList[0]
-            _altIndex = 0
+        onInsertDiagramRequested: function(voicing) {
+            generateDiagramFile(voicing)
         }
-        altCount = (_bassStringGroups[_selectedBassString] || []).length
-        altIndex = _altIndex
-
-        // Load the clipboard with this voicing's diagram
-        var xml = generateXmlForVoicing(item.voicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            showResult("Error", "Failed to write clipboard: " + e, false)
-            return
-        }
-
-        // Write voicing as notes on voice 2 (if enabled and tick is known)
-        if (writeVoice2 && item.tick !== undefined) {
-            curScore.startCmd()
-            var v2ok = writeVoicingToVoice2(item.voicing, item.root, item.tick)
-            curScore.endCmd()
-            if (v2ok) {
-                console.log("Voice2: wrote " + item.text + " at tick " + item.tick)
-            }
-        }
-
-        // Show the guided step with clear instructions
-        var stepText = "▸ " + item.text + " — " + shape
-        if (item.ambiguous) {
-            stepText += "\n  ⚠ \"" + item.text + "\" is ambiguous — defaulting to " + item.root + "7."
-            stepText += "\n     Use the chips above to change quality."
-        }
-        if (melodyOnTop && item.melodyMidi >= 0) {
-            stepText += "\n  Melody: " + MelodyEngine.melodyNoteName(item.melodyMidi)
-        }
-        if (item.bassMidi >= 0) {
-            stepText += "\n  Bass: " + MelodyEngine.melodyNoteName(item.bassMidi)
-        }
-        // Show any warnings from unfulfilled requests (bass/melody impossibilities)
-        if (item._warnings && item._warnings.length > 0) {
-            stepText += "\n"
-            for (var w = 0; w < item._warnings.length; w++) {
-                stepText += "\n  ⚠ " + item._warnings[w]
-            }
-        }
-
-        // Chord-scale suggestion
-        var scaleSuggestion = ChordScales.formatScaleSuggestion(item.root, item.quality)
-        if (scaleSuggestion) {
-            stepText += "\n  Scales: " + scaleSuggestion
-        }
-
-        stepText += "\n"
-        stepText += "\n  1. Click the note/rest at the " + item.text + " chord symbol"
-        stepText += "\n  2. Press ⌘V to paste the fretboard diagram"
-        stepText += "\n  3. Click 'Next →' when ready"
-
-        if (remaining > 1) {
-            stepText += "\n\n" + (remaining - 1) + " chord" + (remaining > 2 ? "s" : "") + " remaining"
-        }
-
-        toolResultsTitle = "Voice Score — " + item.text
-        toolResultsContent = stepText
-        showToolResults = true
-
-        _batchIndex++
     }
 
-    // Re-voice the current walkthrough step with melody note name and category override.
-    // Called from WalkthroughPanel's revoiceRequested signal.
-    // Lock state for melody/bass priority (set by revoice, used by findBestVoicing)
-    property bool _melodyLocked: false
-    property bool _bassLocked: false
-
-    function revoiceCurrentStepWith(melodyNoteText, melodyLocked, bassNoteText, bassLocked, categoryOverride) {
-        var idx = _batchIndex - 1  // _batchIndex was already incremented
-        if (idx < 0 || idx >= _batchChords.length) return
-
-        var item = _batchChords[idx]
-
-        // Parse melody override
-        var newMidi = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
-        if (newMidi < 0) newMidi = item.melodyMidi  // fallback to auto-detected
-        item.melodyMidi = newMidi
-
-        // Parse bass note override
-        var newBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
-        if (newBass < 0) newBass = MelodyEngine.suggestBassNote(item.root, item.quality, Transposer.SEMITONE_MAP)
-        item.bassMidi = newBass
-
-        // Set lock states for findBestVoicing scoring
-        _melodyLocked = melodyLocked || false
-        _bassLocked = bassLocked || false
-
-        // Temporarily set the category filter for findBestVoicing
-        var savedCategory = filterCategory
-        filterCategory = categoryOverride  // "" means "Any" (no filter)
-
-        // Re-select voicing (inversions are pre-calculated at load time)
-        var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass)
-
-        // Restore filter
-        filterCategory = savedCategory
-
-        if (!newVoicing) {
-            toolResultsContent = "No voicing found for " + item.text
-                + " with these settings.\n\nTry changing the Type, Bass note,"
-                + " or adjust Voicing Constraints in Score Tools."
-            return
-        }
-
-        // Track what couldn't be fulfilled — shown inline in the walkthrough
-        var warnings = []
-
-        var userRequestedBass = MelodyEngine.parseNoteToSemitone(bassNoteText, Transposer.SEMITONE_MAP)
-        if (userRequestedBass >= 0) {
-            var actualBass = MelodyEngine.voicingBassNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
-            if (actualBass >= 0 && actualBass !== userRequestedBass) {
-                warnings.push("No playable " + item.text + " with "
-                    + MelodyEngine.NOTE_NAMES[userRequestedBass] + " in bass on this tuning."
-                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualBass]
-                    + " in bass. Try adjusting stretch or mute limits in Score Tools.")
-            }
-        }
-
-        var userRequestedMelody = MelodyEngine.parseNoteToSemitone(melodyNoteText, Transposer.SEMITONE_MAP)
-        if (userRequestedMelody >= 0) {
-            var actualTop = MelodyEngine.voicingTopNoteSemitone(newVoicing, item.root, Transposer.SEMITONE_MAP)
-            if (actualTop >= 0 && actualTop !== userRequestedMelody) {
-                warnings.push("No playable " + item.text + " with "
-                    + MelodyEngine.NOTE_NAMES[userRequestedMelody] + " on top on this tuning."
-                    + "\n     Offering alternative: " + MelodyEngine.NOTE_NAMES[actualTop]
-                    + " on top.")
-            }
-        }
-
-        // Store warnings so batchShowNext can display them
-        item._warnings = warnings
-
-        item.voicing = newVoicing
-
-        // Regenerate clipboard XML
-        var xml = generateXmlForVoicing(newVoicing, item.root)
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            console.log("[ChordLibrary] revoice write error: " + e)
-            return
-        }
-
-        // Reset lock states after revoice (don't affect Voice All)
-        _melodyLocked = false
-        _bassLocked = false
-
-        // Update the display — rewind batchIndex and re-show
-        _batchIndex = idx
-        batchShowNext()
-    }
-
-    function batchProcessNext() {
-        // Called by "Next Chord" button — advance to next chord
-        batchShowNext()
-    }
+    // Convenience delegates for code that still calls these from the parent scope
+    function voiceAtCursor() { batchEngine.voiceAtCursor() }
+    function batchInsert() { batchEngine.batchInsert() }
+    function batchShowNext() { batchEngine.batchShowNext() }
+    function generateXmlForVoicing(voicing, targetRoot) { return batchEngine.generateXmlForVoicing(voicing, targetRoot) }
+    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) { return batchEngine.findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) }
+    function parseChordSymbol(text) { return batchEngine.parseChordSymbol(text) }
 
     function rebuildFilterLists() {
         var lists = FilterEngine.rebuildFilterLists(voicingsData)
@@ -964,6 +514,18 @@ MuseScore {
         qualityList = lists.qualityList
     }
 
+    // Deferred tuning load — lets the UI render before heavy calculation (#112)
+    Timer {
+        id: startupTuningTimer
+        interval: 100
+        repeat: false
+        onTriggered: {
+            statusMsg.text = "Loading voicings for " + (tuningLabels[selectedTuning] || selectedTuning) + "..."
+            statusMsg.color = theme.textSecondary
+            loadTuningVoicings()
+        }
+    }
+
     onRun: {
         loadContextLabels()
         loadSettings()
@@ -974,8 +536,14 @@ MuseScore {
                 fetchVoicings()
             }
         }
-        // After loading the standard library, check for tuning-specific voicings
-        loadTuningVoicings()
+        // Auto-select CM context if none saved
+        if (!filterContext) {
+            var strCount = tuningStringCounts[selectedTuning] || 6
+            var autoCtx = "CM" + strCount
+            if (contextStringCounts[autoCtx]) filterContext = autoCtx
+        }
+        // Defer tuning voicing load so UI renders first (#112)
+        startupTuningTimer.start()
     }
 
     function loadFromCache() {
@@ -1012,6 +580,7 @@ MuseScore {
             if (s.voicingUrl) jsonUrl = s.voicingUrl
             if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
             if (s.tuning) selectedTuning = s.tuning
+            if (s.defaultContext) filterContext = s.defaultContext
             // Restore custom tunings that were added via Create/Import
             if (s.customTunings.length > 0) {
                 for (var i = 0; i < s.customTunings.length; i++) {
@@ -1045,6 +614,7 @@ MuseScore {
             voicingUrl: jsonUrl,
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
+            defaultContext: filterContext,
             customTunings: DataCache.getCustomTuningsList(tuningList, builtInTunings, tuningLabels, tuningStringCounts),
             tuningOrder: tuningList.slice(),
             calcMaxFret: calcMaxFret,
@@ -1059,318 +629,56 @@ MuseScore {
         console.log("Settings saved")
     }
 
-    // === Tuning import/create ===
+    // === Tuning management (extracted to model/TuningManager.qml, #102) ===
 
-    // MIDI note to name for display
-    property var midiNoteNames: {
-        var names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
-        var map = {}
-        for (var midi = 21; midi <= 108; midi++) {
-            var octave = Math.floor(midi / 12) - 1
-            map[midi] = names[midi % 12] + octave
-        }
-        return map
+    TuningManager {
+        id: tuningManager
+        tuningFile: chordLibrary.tuningFile
+        settingsPanel: settingsPanel
+        state: tuningState  // TuningManager reads/writes tuningState directly
+        onTuningChanged: { loadTuningStringCount(); loadTuningVoicings() }
+        onSettingsSaveRequested: saveSettings()
     }
 
-    // Parse a note name like "E4", "Bb3", "F#2" to MIDI number
-    // Returns -1 if not a valid note name (caller falls back to parseInt)
-    property var noteToMidiMap: {
-        "C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11
-    }
-    function noteNameToMidi(str) {
-        str = str.trim()
-        // Try as plain integer first
-        var asInt = parseInt(str)
-        if (!isNaN(asInt) && str.match(/^\d+$/)) return asInt
+    // Compatibility aliases
+    property var builtInTunings: tuningManager.builtInTunings
+    property var midiNoteNames: tuningManager.midiNoteNames
+    function noteNameToMidi(str) { return tuningManager.noteNameToMidi(str) }
+    function moveTuning(slug, direction) { tuningManager.moveTuning(slug, direction) }
+    function importTuning(path) { tuningManager.importTuning(path) }
+    function createTuning(name, pitchStr, numStrings) { tuningManager.createTuning(name, pitchStr, numStrings) }
+    function editTuning(slug) { tuningManager.editTuning(slug) }
+    function deleteTuning(slug) { tuningManager.deleteTuning(slug) }
 
-        // Parse note name: letter + optional accidental + octave
-        var match = str.match(/^([A-Ga-g])(#|b|)(\d)$/)
-        if (!match) return -1
-        var letter = match[1].toUpperCase()
-        var accidental = match[2]
-        var octave = parseInt(match[3])
-        var base = noteToMidiMap[letter]
-        if (base === undefined) return -1
-        var midi = (octave + 1) * 12 + base
-        if (accidental === "#") midi += 1
-        else if (accidental === "b") midi -= 1
-        return midi
-    }
-
-    // Move a tuning up or down in the list. direction: -1 = up, +1 = down
-    function moveTuning(slug, direction) {
-        var list = tuningList.slice()
-        var idx = list.indexOf(slug)
-        if (idx < 0) return
-        var newIdx = idx + direction
-        if (newIdx < 0 || newIdx >= list.length) return
-        // Swap
-        var temp = list[newIdx]
-        list[newIdx] = list[idx]
-        list[idx] = temp
-        tuningList = list
-        saveSettings()
-    }
-
-    function addTuningToList(slug, name, stringCount) {
-        // Add to the runtime lists if not already present
-        var list = tuningList.slice()
-        if (list.indexOf(slug) < 0) {
-            list.push(slug)
-            tuningList = list
-        }
-        var labels = {}
-        for (var k in tuningLabels) labels[k] = tuningLabels[k]
-        labels[slug] = name
-        tuningLabels = labels
-        // Record string count for combo filtering
-        if (stringCount) {
-            var counts = {}
-            for (var c in tuningStringCounts) counts[c] = tuningStringCounts[c]
-            counts[slug] = stringCount
-            tuningStringCounts = counts
-        }
-    }
-
-    function importTuning() {
-        var path = tuningImportPath.text.trim()
-        if (!path) {
-            tuningImportStatus.text = "Enter a file path"
-            tuningImportStatus.color = theme.errorText
-            return
-        }
-        tuningFile.source = path
-        try {
-            var raw = tuningFile.read()
-            if (!raw || raw.length === 0) {
-                tuningImportStatus.text = "File not found or empty"
-                tuningImportStatus.color = theme.errorText
-                return
-            }
-            var tuning = JSON.parse(raw)
-            if (!tuning.name || !tuning.strings) {
-                tuningImportStatus.text = "Invalid tuning: needs 'name' and 'strings' fields"
-                tuningImportStatus.color = theme.errorText
-                return
-            }
-
-            // Save to plugin directory as custom tuning
-            var slug = tuning.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-            var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-            tuningFile.source = destPath
-            tuningFile.write(raw)
-
-            addTuningToList(slug, tuning.name, Object.keys(tuning.strings || {}).length || 6)
-            selectedTuning = slug
-            loadTuningStringCount()
-            loadTuningVoicings()
-            saveSettings()
-
-            tuningImportStatus.text = "Imported: " + tuning.name
-            tuningImportStatus.color = theme.successText
-        } catch (e) {
-            tuningImportStatus.text = "Failed: " + e
-            tuningImportStatus.color = theme.errorText
-        }
-    }
-
-    function createTuning() {
-        var name = tuningNameField.text.trim()
-        if (!name) {
-            tuningImportStatus.text = "Enter a tuning name"
-            tuningImportStatus.color = theme.errorText
-            return
-        }
-
-        var pitchStr = tuningPitchesField.text.trim()
-        var rawParts = pitchStr.split(",")
-        var pitches = []
-        for (var p = 0; p < rawParts.length; p++) {
-            var midi = noteNameToMidi(rawParts[p])
-            if (midi < 0) {
-                tuningImportStatus.text = "Can't parse: '" + rawParts[p].trim() + "' — use note names (E4, Bb3) or MIDI numbers (64, 59)"
-                tuningImportStatus.color = theme.errorText
-                return
-            }
-            pitches.push(midi)
-        }
-        var numStrings = tuningStringCount.value
-
-        if (pitches.length < numStrings) {
-            tuningImportStatus.text = "Need " + numStrings + " pitches, got " + pitches.length
-            tuningImportStatus.color = theme.errorText
-            return
-        }
-        pitches = pitches.slice(0, numStrings)
-
-        // Validate pitches are reasonable MIDI values
-        for (var i = 0; i < pitches.length; i++) {
-            if (pitches[i] < 20 || pitches[i] > 100) {
-                tuningImportStatus.text = "Pitch out of range: " + pitches[i] + " (expected 20-100)"
-                tuningImportStatus.color = theme.errorText
-                return
-            }
-        }
-
-        // Build the tuning JSON
-        var strings = {}
-        var notes = {}
-        for (var s = 0; s < pitches.length; s++) {
-            var strNum = s + 1
-            strings[strNum] = pitches[s]
-            notes[strNum] = midiNoteNames[pitches[s]] || ("?" + pitches[s])
-        }
-
-        var tuning = {
-            name: name,
-            description: "Custom tuning created in Chord Library",
-            strings: strings,
-            notes: notes
-        }
-
-        var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-        tuningFile.source = destPath
-        try {
-            tuningFile.write(JSON.stringify(tuning, null, 2))
-            addTuningToList(slug, name, numStrings)
-            selectedTuning = slug
-            loadTuningStringCount()
-            loadTuningVoicings()
-            saveSettings()
-
-            // Show the note names as feedback
-            var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
-            tuningImportStatus.text = "Created: " + name + " (" + noteStr + ")"
-            tuningImportStatus.color = theme.successText
-        } catch (e) {
-            tuningImportStatus.text = "Failed to save: " + e
-            tuningImportStatus.color = theme.errorText
-        }
-    }
-
-    // The built-in tunings that ship with the plugin (cannot be deleted)
-    property var builtInTunings: [
-        "standard", "7string-van-eps", "7string-low-b", "dadgad", "all-fourths",
-        "baritone", "ukulele", "ukulele-low-g", "mandolin", "banjo-open-g",
-        "bass-4string", "bass-5string"
-    ]
-
-    // Load a tuning's data into the create/edit form fields for editing
-    function editTuning(slug) {
-        if (!slug) return
-        var paths = [
-            Qt.resolvedUrl("tunings/" + slug + ".json"),
-            Qt.resolvedUrl("../config/tunings/" + slug + ".json")
-        ]
-        for (var p = 0; p < paths.length; p++) {
-            tuningFile.source = paths[p]
-            try {
-                var raw = tuningFile.read()
-                if (raw && raw.length > 2) {
-                    var t = JSON.parse(raw)
-                    tuningNameField.text = t.name || slug
-                    var strings = t.strings || {}
-                    var count = Object.keys(strings).length
-                    tuningStringCount.value = count > 0 ? count : 6
-
-                    // Convert MIDI values back to note names for display
-                    var pitchParts = []
-                    for (var s = 1; s <= count; s++) {
-                        var midi = strings[String(s)]
-                        if (midi !== undefined) {
-                            pitchParts.push(midiNoteNames[midi] || String(midi))
-                        }
-                    }
-                    tuningPitchesField.text = pitchParts.join(", ")
-                    tuningImportStatus.text = "Editing: " + (t.name || slug) + " — change values and click Save"
-                    tuningImportStatus.color = theme.textSecondary
-                    return
-                }
-            } catch (e) {}
-        }
-        tuningImportStatus.text = "Could not load tuning: " + slug
-        tuningImportStatus.color = theme.errorText
-    }
-
-    // Delete a custom tuning (built-in tunings cannot be deleted)
-    function deleteTuning(slug) {
-        if (!slug) return
-        if (builtInTunings.indexOf(slug) >= 0) {
-            tuningImportStatus.text = "Cannot delete built-in tuning"
-            tuningImportStatus.color = theme.errorText
-            return
-        }
-
-        // Remove from tuning list
-        var list = tuningList.slice()
-        var idx = list.indexOf(slug)
-        if (idx >= 0) {
-            list.splice(idx, 1)
-            tuningList = list
-        }
-
-        // Remove from labels
-        var labels = {}
-        for (var k in tuningLabels) {
-            if (k !== slug) labels[k] = tuningLabels[k]
-        }
-        tuningLabels = labels
-
-        // If we just deleted the active tuning, switch to standard
-        if (selectedTuning === slug) {
-            selectedTuning = "standard"
-            loadTuningStringCount()
-            applyFilters()
-        }
-        saveSettings()
-
-        // Delete the tuning file (write empty string — FileIO can't delete)
-        var destPath = Qt.resolvedUrl("tunings/" + slug + ".json")
-        tuningFile.source = destPath
-        try {
-            tuningFile.write("")
-        } catch (e) {
-            // File may not exist in writable location — that's OK
-        }
-
-        tuningImportStatus.text = "Deleted: " + slug
-        tuningImportStatus.color = theme.successText
-    }
+    // These were previously inline — now delegate but keep the old function signatures
+    function addTuningToList(slug, name, stringCount) { tuningManager.addTuningToList(slug, name, stringCount) }
 
     // === Save to Library ===
 
-    function saveVoicingToLibrary() {
-        saveStatus.text = ""
+    function saveVoicingToLibrary(quality, category, context, fretStr, numStrings, dotsStr, mutesStr) {
+        settingsPanel.saveStatus = ""
 
         // Parse fret number
-        var fretNum = parseInt(saveFretField.text.trim())
+        var fretNum = parseInt(fretStr)
         if (isNaN(fretNum) || fretNum < 0 || fretNum > 24) {
-            saveStatus.text = "Invalid fret number"; saveStatus.color = theme.errorText; return
+            settingsPanel.saveStatus = "Invalid fret number"; settingsPanel.saveStatusColor = theme.errorText; return
         }
 
         // Parse dots: "6:1, 4:1, 3:2" → [{string:6, fret:1}, ...]
-        var dotsStr = saveDotsField.text.trim()
-        if (!dotsStr) { saveStatus.text = "Enter dot positions"; saveStatus.color = theme.errorText; return }
+        if (!dotsStr) { settingsPanel.saveStatus = "Enter dot positions"; settingsPanel.saveStatusColor = theme.errorText; return }
         var dotParts = dotsStr.split(",")
         var dots = []
         for (var d = 0; d < dotParts.length; d++) {
             var pair = dotParts[d].trim().split(":")
-            if (pair.length !== 2) { saveStatus.text = "Bad dot format: " + dotParts[d]; saveStatus.color = theme.errorText; return }
+            if (pair.length !== 2) { settingsPanel.saveStatus = "Bad dot format: " + dotParts[d]; settingsPanel.saveStatusColor = theme.errorText; return }
             dots.push({ string: parseInt(pair[0]), fret: parseInt(pair[1]) })
         }
 
         // Parse mutes: "5, 2, 1" → [5, 2, 1]
-        var mutesStr = saveMutesField.text.trim()
         var mutes = []
         if (mutesStr) {
             mutes = mutesStr.split(",").map(function(s) { return parseInt(s.trim()) })
         }
-
-        var numStrings = saveStringsCount.value
-        var quality = saveQualityCombo.currentText
-        var category = saveCategoryCombo.currentText
-        var context = saveContextCombo.currentText
 
         // Determine current key from score chord symbol
         var targetRoot = "C"
@@ -1430,8 +738,8 @@ MuseScore {
         // Check for duplicate
         for (var j = 0; j < voicingsData.length; j++) {
             if (voicingsData[j].id === id) {
-                saveStatus.text = "ID already exists: " + id
-                saveStatus.color = theme.errorText
+                settingsPanel.saveStatus = "ID already exists: " + id
+                settingsPanel.saveStatusColor = theme.errorText
                 return
             }
         }
@@ -1472,8 +780,8 @@ MuseScore {
         saveToCache()
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
-        saveStatus.text = "Saved: " + voicing.name + keyNote
-        saveStatus.color = theme.successText
+        settingsPanel.saveStatus = "Saved: " + voicing.name + keyNote
+        settingsPanel.saveStatusColor = theme.successText
     }
 
     // === Library hygiene audit ===
@@ -1536,8 +844,8 @@ MuseScore {
             + audit.crossCtx + " cross-context"
         if (audit.dismissed > 0)
             summary += "\n(" + audit.dismissed + " dismissed findings hidden)"
-        hygieneResult.text = summary
-        hygieneResult.color = audit.duplicates > 0 ? theme.errorText : theme.successText
+        settingsPanel.hygieneStatus = summary
+        settingsPanel.hygieneStatusColor = audit.duplicates > 0 ? theme.errorText : theme.successText
 
         lastAuditResults = audit.results
         for (var r = 0; r < audit.results.length; r++)
@@ -1554,17 +862,16 @@ MuseScore {
             rebuildFilterLists()
             applyFilters()
             saveToCache()
-            hygieneResult.text = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
-            hygieneResult.color = theme.successText
+            settingsPanel.hygieneStatus = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
+            settingsPanel.hygieneStatusColor = theme.successText
         } else {
-            hygieneResult.text = "No duplicates found."
-            hygieneResult.color = theme.successText
+            settingsPanel.hygieneStatus = "No duplicates found."
+            settingsPanel.hygieneStatusColor = theme.successText
         }
     }
 
-    function saveAuditReport() {
-        var path = auditReportPath.text.trim()
-        if (!path) { hygieneResult.text = "Enter a file path"; return }
+    function saveAuditReport(path) {
+        if (!path) { settingsPanel.hygieneStatus = "Enter a file path"; return }
 
         var tuningLabel = tuningLabels[selectedTuning] || selectedTuning
         var report = HygieneEngine.buildReport(voicingsData, tuningLabel, hygieneIgnoreList.length, lastAuditResults)
@@ -1572,21 +879,21 @@ MuseScore {
         tempDiagramFile.source = path
         try {
             tempDiagramFile.write(report)
-            hygieneResult.text = hygieneResult.text + "\nReport opened"
+            settingsPanel.hygieneStatus = settingsPanel.hygieneStatus + "\nReport opened"
         } catch (e) {
-            hygieneResult.text = "Failed to save report: " + e
-            hygieneResult.color = theme.errorText
+            settingsPanel.hygieneStatus = "Failed to save report: " + e
+            settingsPanel.hygieneStatusColor = theme.errorText
         }
     }
 
     // Pre-fill Save to Library from a selected FretDiagram in the score
     function captureFromScore() {
-        if (!curScore) { saveStatus.text = "No score open"; saveStatus.color = theme.errorText; return }
+        if (!curScore) { settingsPanel.saveStatus = "No score open"; settingsPanel.saveStatusColor = theme.errorText; return }
 
         var sel = curScore.selection
         if (!sel || !sel.elements || sel.elements.length === 0) {
-            saveStatus.text = "Select a fretboard diagram first"
-            saveStatus.color = theme.errorText
+            settingsPanel.saveStatus = "Select a fretboard diagram first"
+            settingsPanel.saveStatusColor = theme.errorText
             return
         }
 
@@ -1599,15 +906,15 @@ MuseScore {
             var frets = elem.fretFrets || 4
             var fretOff = elem.fretOffset || 0
 
-            saveStringsCount.value = strings
-            saveFretField.text = String(fretOff + 1)  // convert 0-indexed back
+            settingsPanel.saveStringsCountValue = strings
+            settingsPanel.saveFretValue = String(fretOff + 1)  // convert 0-indexed back
 
-            saveStatus.text = "Captured: " + strings + " strings, fret " + (fretOff + 1)
+            settingsPanel.saveStatus = "Captured: " + strings + " strings, fret " + (fretOff + 1)
                 + "\nDots not readable from API — enter them manually."
-            saveStatus.color = theme.successText
+            settingsPanel.saveStatusColor = theme.successText
         } else {
-            saveStatus.text = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
-            saveStatus.color = theme.errorText
+            settingsPanel.saveStatus = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
+            settingsPanel.saveStatusColor = theme.errorText
         }
     }
 
@@ -1866,7 +1173,21 @@ MuseScore {
         var savedQuality = filterQuality
 
         if (calculated && calculated.length > 0) {
-            voicingsData = calculated
+            // Merge: keep standard library voicings (bass-on-4 drop2s, shells)
+            // alongside calculated tuning voicings. A 6-string drop2 with bass
+            // on string 4 is perfectly valid on a 7-string guitar.
+            var merged = calculated.slice()
+            if (standardVoicingsData.length > 0) {
+                var calcIds = {}
+                for (var ci = 0; ci < calculated.length; ci++) calcIds[calculated[ci].id] = true
+                for (var si = 0; si < standardVoicingsData.length; si++) {
+                    var sv = standardVoicingsData[si]
+                    if (!calcIds[sv.id] && (sv.strings || 6) <= tuningMaxStrings) {
+                        merged.push(sv)
+                    }
+                }
+            }
+            voicingsData = merged
             usingTuningVoicings = true
             rebuildFilterLists()
             if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
@@ -1940,275 +1261,50 @@ MuseScore {
         })
     }
 
-    // === Voicing insertion ===
+    // === Voicing insertion (extracted to model/InsertionEngine.qml, #103) ===
 
-    function insertVoicing(voicing) {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
+    InsertionEngine {
+        id: insertionEngine
+        pluginRef: chordLibrary
+        curScore: chordLibrary.curScore
+        tempDiagramFile: tempDiagramFile
+        audioFile: audioFile
+        pasteTimer: pasteTimer
+        diagramPlacement: chordLibrary.diagramPlacement
+        tuningMidi: chordLibrary.tuningMidi
+        sortByProximity: chordLibrary.sortByProximity
+        generateXmlFn: function(voicing, root) { return batchEngine.generateXmlForVoicing(voicing, root) }
+        applyFiltersFn: function() { applyFilters() }
+
+        onStatusMessage: function(text, colorType) {
+            statusMsg.text = text
+            statusMsg.color = colorType === "error" ? theme.errorText
+                            : colorType === "success" ? theme.successText
+                            : theme.textMuted
         }
-
-        var selection = curScore.selection
-        if (!selection || !selection.elements || selection.elements.length === 0) {
-            statusMsg.text = "Select a note or rest first"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var targetRoot = null
-        var selectedElement = selection.elements[0]
-        var segment = null
-
-        if (selectedElement.type === Element.NOTE) {
-            var ch = selectedElement.parent
-            if (ch) segment = ch.parent
-        } else if (selectedElement.type === Element.REST) {
-            segment = selectedElement.parent
-        } else if (selectedElement.type === Element.CHORD) {
-            segment = selectedElement.parent
-        }
-
-        if (segment && segment.annotations) {
-            for (var a = 0; a < segment.annotations.length; a++) {
-                if (segment.annotations[a].type === Element.HARMONY) {
-                    targetRoot = Transposer.extractRoot(segment.annotations[a].text)
-                    break
-                }
-            }
-        }
-
-        if (!targetRoot) {
-            targetRoot = voicing.root
-        }
-
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-
-        var targetTick = -1
-        if (segment) {
-            targetTick = segment.tick
-        } else if (selectedElement.type === Element.NOTE) {
-            var parentChord = selectedElement.parent
-            if (parentChord && parentChord.parent) {
-                targetTick = parentChord.parent.tick
-            }
-        }
-
-        if (targetTick < 0) {
-            statusMsg.text = "Could not determine position. Select a note or rest."
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        curScore.startCmd()
-
-        var fd = newElement(Element.FRET_DIAGRAM)
-        fd.fretStrings = voicing.strings || 6
-        fd.fretFrets = voicing.visible_frets || 4
-        fd.fretOffset = voicing.fret_number + offset - 1
-
-        // Set placement based on user preference
-        if (typeof Placement !== "undefined") {
-            if (diagramPlacement === "below") {
-                fd.placement = Placement.BELOW
-            } else {
-                fd.placement = Placement.ABOVE
-            }
-        }
-
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-
-        while (cursor.segment && cursor.tick < targetTick) {
-            cursor.next()
-        }
-
-        cursor.add(fd)
-
-        curScore.endCmd()
-
-        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
-        statusMsg.text = "Inserted " + transposed.name
-            + " [" + transposed.notes.join(" ") + "]"
-            + " (" + diagramPlacement + " staff)"
-        statusMsg.color = theme.successText
-    }
-
-    // === Diagram insertion (setDot API or clipboard workaround) ===
-
-    // Cached result of setDot() availability (null = not yet tested)
-    property var _hasSetDot: null
-    property var _selectedVoicing: null
-
-    function hasSetDotApi() {
-        if (_hasSetDot !== null) return _hasSetDot
-        try {
-            var fd = newElement(Element.FRET_DIAGRAM)
-            _hasSetDot = (typeof fd.setDot === "function")
-            if (_hasSetDot)
-                console.log("setDot() API detected — using direct insertion")
-            else
-                console.log("setDot() not available — using clipboard workaround")
-        } catch (e) {
-            console.log("Could not probe setDot(): " + e)
-            _hasSetDot = false
-        }
-        return _hasSetDot
-    }
-
-    // Insert a voicing directly via setDot() API (no clipboard needed).
-    // Returns true if successful, false if setDot() not available or insert failed.
-    function insertDirect(voicing, targetRoot) {
-        if (!hasSetDotApi()) return false
-        if (!curScore) return false
-
-        var numStrings = voicing.strings || 6
-        var offset = Transposer.semitoneOffset(voicing.root, targetRoot)
-
-        try {
-            curScore.startCmd()
-
-            var fd = newElement(Element.FRET_DIAGRAM)
-            fd.fretStrings = numStrings
-            fd.fretFrets = voicing.visible_frets || 4
-            fd.fretOffset = voicing.fret_number + offset - 1
-
-            // Set dots via setDot(string, fret, fingerNumber)
-            // MuseScore uses 0-based string index (0 = leftmost in diagram)
-            var dots = voicing.dots || []
-            for (var d = 0; d < dots.length; d++) {
-                var msStr = numStrings - dots[d].string
-                fd.setDot(msStr, dots[d].fret, 0)
-            }
-
-            // Set mutes and open strings via setMarker
-            var mutes = voicing.mutes || []
-            for (var m = 0; m < mutes.length; m++) {
-                var msMute = numStrings - mutes[m]
-                fd.setMarker(msMute, 1)  // 1 = cross/muted
-            }
-            var opens = voicing.open || []
-            for (var o = 0; o < opens.length; o++) {
-                var msOpen = numStrings - opens[o]
-                fd.setMarker(msOpen, 2)  // 2 = circle/open
-            }
-
-            var cursor = curScore.newCursor()
-            cursor.rewind(1)  // SELECTION_START
-            cursor.add(fd)
-
-            curScore.endCmd()
-            return true
-        } catch (e) {
-            try { curScore.endCmd() } catch (ignore) {}
-            console.log("setDot() insert failed: " + e + " — falling back to clipboard")
-            _hasSetDot = null  // reset cache so clipboard path is used
-            return false
-        }
-    }
-
-    function generateDiagramFile(voicing) {
-        // Determine target root from score selection, or default to C
-        var targetRoot = voicing.root
-        if (curScore) {
-            var sel = curScore.selection
-            if (sel && sel.elements && sel.elements.length > 0) {
-                var elem = sel.elements[0]
-                var seg = null
-                if (elem.type === Element.NOTE && elem.parent)
-                    seg = elem.parent.parent
-                else if (elem.type === Element.REST || elem.type === Element.CHORD)
-                    seg = elem.parent
-                if (seg && seg.annotations) {
-                    for (var a = 0; a < seg.annotations.length; a++) {
-                        if (seg.annotations[a].type === Element.HARMONY) {
-                            var parsed = Transposer.extractRoot(seg.annotations[a].text)
-                            if (parsed) targetRoot = parsed
-                            break
-                        }
-                    }
-                }
-            }
-        }
-
-        var transposed = Transposer.transposeVoicing(voicing, targetRoot)
-        var displayName = transposed.name
-
-        // Try direct insertion via setDot() API first (instant, no clipboard)
-        if (insertDirect(voicing, targetRoot)) {
+        onVoicingInserted: function(voicing) {
             lastInsertedVoicing = voicing
             if (sortByProximity) applyFilters()
-            statusMsg.text = "Inserted " + displayName
-                + " [" + transposed.notes.join(" ") + "]"
-            statusMsg.color = theme.successText
-            return
-        }
-
-        // Fall back to clipboard workaround
-        var xml = generateXmlForVoicing(voicing, targetRoot)
-
-        var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-        tempDiagramFile.source = xmlPath
-        try {
-            tempDiagramFile.write(xml)
-        } catch (e) {
-            statusMsg.text = "Failed to write clipboard XML: " + e
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        // A launchd agent (com.siegeanalytics.chord-library-clipboard) watches
-        // paste-clipboard.xml for changes and runs ms-clipboard to write to
-        // the macOS pasteboard. No Terminal, no visible windows.
-        _pendingVoicing = voicing
-        // The Timer then fires cmd("paste") to insert the diagram with dots.
-        pasteTimer.start()
-
-        statusMsg.text = "Pasting " + displayName + " [" + transposed.notes.join(" ") + "]..."
-        statusMsg.color = theme.successText
-    }
-
-    // === Voicing preview (MIDI playback via ms-audio) ===
-
-    function playVoicing(voicing, mode) {
-        // mode: "chord" (all at once) or "arp" (strum low to high)
-        if (!mode) mode = "chord"
-
-        // Compute MIDI note numbers for this voicing in the current tuning
-        var midiNotes = []
-        var dots = voicing.dots || []
-        for (var d = 0; d < dots.length; d++) {
-            var strMidi = tuningMidi[String(dots[d].string)]
-            if (strMidi !== undefined) {
-                var absFret = voicing.fret_number + (dots[d].fret - 1)
-                midiNotes.push(strMidi + absFret)
-            }
-        }
-        // Add open strings
-        var opens = voicing.open || []
-        for (var o = 0; o < opens.length; o++) {
-            var openMidi = tuningMidi[String(opens[o])]
-            if (openMidi !== undefined) {
-                midiNotes.push(openMidi)
-            }
-        }
-
-        if (midiNotes.length === 0) return
-
-        // Write JSON that the launchd agent + ms-audio will pick up
-        var request = JSON.stringify({
-            notes: midiNotes,
-            duration: 1.5,
-            mode: mode,
-        })
-        try {
-            audioFile.write(request)
-        } catch (e) {
-            console.log("Audio playback failed: " + e)
         }
     }
+
+    // Convenience delegates
+    function insertVoicing(voicing) { insertionEngine.insertVoicing(voicing) }
+    function generateDiagramFile(voicing) { insertionEngine.generateDiagramFile(voicing) }
+    function playVoicing(voicing, mode) { insertionEngine.playVoicing(voicing, mode) }
+
+    // Keep paste infrastructure in parent (Timer needs parent scope for cmd("paste"))
+    function _insertionPasteComplete() {
+        if (insertionEngine._pendingVoicing) {
+            lastInsertedVoicing = insertionEngine._pendingVoicing
+            insertionEngine._pendingVoicing = null
+            if (sortByProximity) applyFilters()
+        }
+    }
+
+    // Old insertion code removed — now in InsertionEngine.qml
+    // Keeping paste timer handler in parent (needs cmd("paste") in QML scope)
+
 
     // === File browser (dynamic loading to avoid import issues) ===
 
@@ -2544,431 +1640,75 @@ MuseScore {
         }
     }
 
-    // === Inline tools (pure QML, no Python/terminal) ===
+    // === Inline tools (extracted to model/InlineTools.qml, #101) ===
 
-    // Collect unique chord symbols from the open score
-    function collectScoreChords() {
-        if (!curScore) return []
-        var chords = []
-        var seen = {}
-        var cursor = curScore.newCursor()
-        cursor.staffIdx = 0
-        cursor.voice = 0
-        cursor.rewind(0)
-        while (cursor.segment) {
-            var seg = cursor.segment
-            if (seg.annotations) {
-                for (var a = 0; a < seg.annotations.length; a++) {
-                    if (seg.annotations[a].type === Element.HARMONY) {
-                        var text = seg.annotations[a].text
-                        if (!seen[text]) {
-                            seen[text] = true
-                            chords.push(text)
-                        }
-                    }
-                }
-            }
-            cursor.next()
-        }
-        return chords
-    }
+    InlineTools {
+        id: inlineTools
+        pluginRef: chordLibrary
+        curScore: chordLibrary.curScore
+        voicingsData: chordLibrary.voicingsData
+        filterContext: chordLibrary.filterContext
+        filterCategory: chordLibrary.filterCategory
+        skipDiagramPositions: chordLibrary.skipDiagramPositions
+        diagramPlacement: chordLibrary.diagramPlacement
+        findBestVoicingFn: function(root, quality) { return findBestVoicing(root, quality) }
+        parseChordSymbolFn: function(text) { return parseChordSymbol(text) }
+        showResultFn: function(title, msg, ok) { showResult(title, msg, ok) }
+        openSaveDialogFn: function(title, filter, path, cb) { openSaveDialog(title, filter, path, cb) }
+        launchExportFn: function(cmd) { launchExport(cmd) }
+        extractChordsToFileFn: function() { return extractChordsToFile() }
+        homePath: homePath()
 
-    function analyzeCurrentScore() {
-        if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = theme.errorText
-            return
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-
-        var lines = []
-        var covered = 0
-        var gaps = 0
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  ✗  " + chords[i] + " — could not parse")
-                gaps++
-                continue
-            }
-            var matches = voicingsData.filter(function(v) {
-                // Quartal voicings work over any chord quality
-                if (v.chord_quality !== parsed.quality && v.chord_quality !== "quartal") return false
-                if (ctx !== "all" && v.context !== ctx) return false
-                if (cat !== "all" && v.category !== cat) return false
-                return true
-            })
-            if (matches.length > 0) {
-                var cats = {}
-                for (var m = 0; m < matches.length; m++) cats[matches[m].category] = (cats[matches[m].category] || 0) + 1
-                var catStr = Object.keys(cats).map(function(c) { return c + "(" + cats[c] + ")" }).join(", ")
-                lines.push("  ✓  " + chords[i] + " — " + matches.length + " voicings: " + catStr)
-                covered++
+        onStatusMessage: function(text, colorType) {
+            if (colorType === "error") {
+                _toolStatusText = text
             } else {
-                lines.push("  ✗  " + chords[i] + " — NO VOICINGS")
-                gaps++
+                statusMsg.text = text
+                statusMsg.color = colorType === "success" ? theme.successText : theme.textMuted
             }
-        }
-
-        var pct = Math.round(covered / chords.length * 100)
-        var header = "Coverage: " + covered + "/" + chords.length + " (" + pct + "%)"
-        if (gaps > 0) header += " — " + gaps + " gap(s)"
-        else header += " — full coverage!"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-
-        showResult("Score Analysis", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function runVoiceLeading() {
-        if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found in the score."
-            toolStatus.color = theme.errorText
-            return
-        }
-
-        var lines = []
-        lastInsertedVoicing = null  // reset voice leading chain
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  " + chords[i] + " — ?")
-                continue
-            }
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                var topNote = nameParts.length > 2 ? nameParts[2] : ""
-                lines.push("  " + chords[i] + "  →  " + shape + (topNote ? " — " + topNote : ""))
-                lastInsertedVoicing = voicing
-            } else {
-                lines.push("  " + chords[i] + "  →  no match")
-            }
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-        var header = "Voice leading path (" + chords.length + " chords)"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-
-        showResult("Voice Leading", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function voiceEntireScore() {
-        if (!curScore) {
-            statusMsg.text = "No score open"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var ctx = filterContext || "all"
-        var cat = filterCategory || "all"
-
-        // Preview: show what voicings will be assigned
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            statusMsg.text = "No chord symbols found"
-            statusMsg.color = theme.errorText
-            return
-        }
-
-        var lines = []
-        var matchCount = 0
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) {
-                lines.push("  ✗  " + chords[i] + " — could not parse")
-                continue
-            }
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                lines.push("  ✓  " + chords[i] + "  →  " + shape + " (" + voicing.category + ")")
-                matchCount++
-            } else {
-                lines.push("  ✗  " + chords[i] + " — no matching voicing")
-            }
-        }
-
-        var header = "Ready to insert " + matchCount + " diagrams for " + chords.length + " chords"
-        header += "\nContext: " + (ctx === "all" ? "All" : ctx) + "  |  Type: " + (cat === "all" ? "All" : cat)
-        header += "\n\nChange the filters on the main panel to use different voicing types."
-        header += "\nClick 'Batch' to insert these voicings into the score."
-
-        showResult("Voice Entire Score", header + "\n\n" + lines.join("\n"), true)
-    }
-
-    function suggestFingerings() {
-        if (!curScore) {
-            toolStatus.text = "Open a score with chord symbols first."
-            toolStatus.color = theme.errorText
-            return
-        }
-        var chords = collectScoreChords()
-        if (chords.length === 0) {
-            toolStatus.text = "No chord symbols found."
-            toolStatus.color = theme.errorText
-            return
-        }
-
-        var lines = []
-        for (var i = 0; i < chords.length; i++) {
-            var parsed = parseChordSymbol(chords[i])
-            if (!parsed) continue
-            var voicing = findBestVoicing(parsed.root, parsed.quality)
-            if (voicing) {
-                var fg = computeFingeringString(voicing)
-                var nameParts = voicing.name.split(" — ")
-                var shape = nameParts.length > 1 ? nameParts[1] : voicing.category
-                lines.push("  " + chords[i] + "  →  " + shape + "\n     Fingering: " + fg)
-            } else {
-                lines.push("  " + chords[i] + "  →  no voicing found")
-            }
-        }
-
-        showResult("Fingering Suggestions", "Fingerings for " + chords.length + " chords:\n\n" + lines.join("\n\n"), true)
-    }
-
-    function computeFingeringString(voicing) {
-        return FingeringEngine.computeFingeringString(voicing)
-    }
-
-    // Extract fingering string from an existing FretDiagram element in the score.
-    // MuseScore 4's FretDiagram exposes: fretOffset, strings, frets, and per-string
-    // dot/marker data. We build a pseudo-voicing object and reuse computeFingeringString.
-    function fingeringFromDiagram(diagram) {
-        try {
-            var numStrings = diagram.strings || 6
-            var fretOffset = (diagram.fretOffset || 0) + 1  // fretOffset is 0-based
-            var dots = []
-            var mutes = []
-            var opens = []
-
-            for (var s = 0; s < numStrings; s++) {
-                // MuseScore string numbering: 0 = leftmost (low E), we need 1 = high E
-                var msString = numStrings - s  // our string numbering
-                var marker = diagram.marker(s)
-                var dot = diagram.dot(s)
-
-                if (marker === 1) {  // cross = muted
-                    mutes.push(msString)
-                } else if (marker === 2) {  // circle = open
-                    opens.push(msString)
-                } else if (dot && dot > 0) {
-                    dots.push({ string: msString, fret: dot })
-                }
-            }
-
-            if (dots.length === 0 && opens.length === 0) return null
-
-            var pseudoVoicing = {
-                dots: dots,
-                mutes: mutes,
-                open: opens,
-                strings: numStrings,
-                fret_number: fretOffset,
-            }
-            return computeFingeringString(pseudoVoicing)
-        } catch (e) {
-            console.log("[ChordLibrary] Could not read diagram: " + e)
-            return null
         }
     }
 
-    function addFingeringsToScore() {
-        if (!curScore) {
-            showResult("No Score", "Open a score with chord symbols first.", false)
-            return
-        }
+    // Convenience delegates for existing callers
+    function analyzeCurrentScore() { inlineTools.analyzeCurrentScore() }
+    function runVoiceLeading() { inlineTools.runVoiceLeading() }
+    function suggestFingerings() { inlineTools.suggestFingerings() }
+    function addFingeringsToScore() { inlineTools.addFingeringsToScore() }
+    function exportFingeringSheet() { inlineTools.exportFingeringSheet() }
+    function computeFingeringString(voicing) { return inlineTools.computeFingeringString(voicing) }
+    function suggestFingering(voicing) { return inlineTools.suggestFingering(voicing) }
 
-        // Collect chord positions using cursor.tick (more reliable than seg.tick in MS4)
-        var chordPositions = []
-        var scanCursor = curScore.newCursor()
-        scanCursor.staffIdx = 0
-        scanCursor.voice = 0
-        scanCursor.rewind(0)
+    function doImport(path) {
+        importPanel.importMergeStatus = "Loading..."
+        importPanel.importMergeStatusColor = theme.textMuted
 
-        var skippedDiagram = 0
-        var usedDiagram = 0
-        while (scanCursor.segment) {
-            var seg = scanCursor.segment
-            var currentTick = scanCursor.tick
-            if (seg.annotations) {
-                // Find existing fretboard diagram at this position (if any)
-                var existingDiagram = null
-                for (var c = 0; c < seg.annotations.length; c++) {
-                    if (seg.annotations[c].type === Element.FRET_DIAGRAM) {
-                        existingDiagram = seg.annotations[c]
-                        break
-                    }
-                }
-
-                for (var a = 0; a < seg.annotations.length; a++) {
-                    if (seg.annotations[a].type === Element.HARMONY) {
-                        var chordText = seg.annotations[a].text
-
-                        if (existingDiagram) {
-                            if (skipDiagramPositions) {
-                                skippedDiagram++
-                                continue
-                            }
-                            // Read fingering from the existing diagram
-                            var diagramFinger = fingeringFromDiagram(existingDiagram)
-                            if (diagramFinger) {
-                                chordPositions.push({
-                                    tick: currentTick,
-                                    fingering: diagramFinger,
-                                    chord: chordText,
-                                })
-                                usedDiagram++
-                                continue
-                            }
-                        }
-
-                        // No diagram (or couldn't read it) — pick a voicing
-                        var parsed = parseChordSymbol(chordText)
-                        if (parsed) {
-                            var voicing = findBestVoicing(parsed.root, parsed.quality)
-                            if (voicing) {
-                                var fingerStr = computeFingeringString(voicing)
-                                if (fingerStr) {
-                                    chordPositions.push({
-                                        tick: currentTick,
-                                        fingering: fingerStr,
-                                        chord: chordText,
-                                    })
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            scanCursor.next()
-        }
-
-        if (chordPositions.length === 0) {
-            showResult("No Chords Found", "The score has no chord symbols to annotate.", false)
-            return
-        }
-
-        // Add staff text annotations at each position
-        var added = 0
-        var errors = []
-
-        curScore.startCmd()
-
-        for (var i = 0; i < chordPositions.length; i++) {
-            var pos = chordPositions[i]
-            try {
-                var cursor = curScore.newCursor()
-                cursor.staffIdx = 0
-                cursor.voice = 0
-                cursor.rewind(0)
-
-                // Advance cursor to the target tick
-                while (cursor.segment && cursor.tick < pos.tick) {
-                    cursor.next()
-                }
-
-                if (cursor.segment) {
-                    var staffText = newElement(Element.STAFF_TEXT)
-                    staffText.text = pos.fingering
-                    cursor.add(staffText)
-                    added++
-                }
-            } catch (e) {
-                errors.push(pos.chord + ": " + e)
-            }
-        }
-
-        curScore.endCmd()
-
-        var msg = "Added staff text annotations to " + added + " of " + chordPositions.length + " chord positions."
-        if (usedDiagram > 0) {
-            msg += "\n" + usedDiagram + " annotation(s) derived from existing fretboard diagrams."
-        }
-        if (skippedDiagram > 0) {
-            msg += "\nSkipped " + skippedDiagram + " position(s) with existing fretboard diagrams."
-        }
-        if (errors.length > 0) {
-            msg += "\n\nErrors:\n" + errors.join("\n")
-        }
-        msg += "\n\nNotation format: 1=index, 2=middle, 3=ring, 4=pinky, X=muted, O=open"
-        showResult("Staff Text", msg, errors.length === 0)
-    }
-
-    function exportFingeringSheet() {
-        if (!curScore) {
-            showResult("No Score", "Open a score first, then try again.", false)
-            return
-        }
-        var chordsFile = extractChordsToFile()
-        if (!chordsFile) return
-
-        var scoreName = (curScore.scoreName || curScore.title || "fingerings").replace(/[^a-zA-Z0-9-_ ]/g, "")
-        var defaultPath = homePath() + "/Documents/" + scoreName + "-fingerings.pdf"
-
-        openSaveDialog("Save Fingering Sheet", "PDF files (*.pdf)", defaultPath, function(outPath) {
-            var ctx = selectedContext && selectedContext !== "All Contexts" ? selectedContext : "CV6"
-            var catArg = selectedCategory && selectedCategory !== "All Types" ? " --category " + selectedCategory : ""
-            var title = curScore.scoreName || curScore.title || "Fingering Reference"
-            var pluginDir = Qt.resolvedUrl(".").toString().replace("file://", "").replace(/\/$/, "")
-
-            launchExport('cd "' + pluginDir + '"; python3 "' + pluginDir
-                + '/scripts/generate_fingering_sheet.py" --chords "' + chordsFile
-                + '" --context ' + ctx + catArg + ' --title "' + title
-                + '" --data "' + pluginDir + '/data/voicings.json" -o "' + outPath
-                + '" 2>&1; open "' + outPath + '"')
-        })
-    }
-
-    function doImport() {
-        importStatus.text = "Loading..."
-        importStatus.color = theme.textMuted
-
-        var path = importPathField.text.trim()
         if (!path) {
-            importStatus.text = "Enter a file path"
-            importStatus.color = theme.errorText
+            importPanel.importMergeStatus = "Enter a file path"
+            importPanel.importMergeStatusColor = theme.errorText
             return
         }
         importFile.source = path
         try {
             var raw = importFile.read()
             if (!raw || raw.length === 0) {
-                importStatus.text = "FAILED: file is empty or not found"
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: file is empty or not found"
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
             var data = JSON.parse(raw)
             var imported = data.voicings || []
 
             if (!Array.isArray(imported) || imported.length === 0) {
-                importStatus.text = "FAILED: no voicings array found in file"
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: no voicings array found in file"
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
 
             // Validate required fields
             var errors = validateImport(imported)
             if (errors.length > 0) {
-                importStatus.text = "FAILED: " + errors[0]
-                importStatus.color = theme.errorText
+                importPanel.importMergeStatus = "FAILED: " + errors[0]
+                importPanel.importMergeStatusColor = theme.errorText
                 return
             }
 
@@ -2996,17 +1736,17 @@ MuseScore {
             saveToCache()
 
             if (added > 0) {
-                importStatus.text = "SUCCESS: " + added + " voicings added"
+                importPanel.importMergeStatus = "SUCCESS: " + added + " voicings added"
                     + (skipped > 0 ? ", " + skipped + " duplicates skipped" : "")
                     + " (" + voicingsData.length + " total)"
-                importStatus.color = theme.successText
+                importPanel.importMergeStatusColor = theme.successText
             } else {
-                importStatus.text = "No new voicings — all " + skipped + " were duplicates"
-                importStatus.color = theme.textMuted
+                importPanel.importMergeStatus = "No new voicings — all " + skipped + " were duplicates"
+                importPanel.importMergeStatusColor = theme.textMuted
             }
         } catch (e) {
-            importStatus.text = "FAILED: " + e
-            importStatus.color = theme.errorText
+            importPanel.importMergeStatus = "FAILED: " + e
+            importPanel.importMergeStatusColor = theme.errorText
         }
     }
 
@@ -3242,9 +1982,6 @@ MuseScore {
         showComparison = false
     }
 
-    function suggestFingering(voicing) {
-        return FingeringEngine.suggestFingering(voicing)
-    }
 
     // === UI ===
 
@@ -3278,232 +2015,29 @@ MuseScore {
             TabButton { text: "Settings"; font.pixelSize: 10 }
         }
 
-        // === Tab 1: Score Tools ===
-        Flickable {
+        // === Tab 1: Score Tools (extracted to ui/ScoreToolsPanel.qml, #97) ===
+        ScoreToolsPanel {
+            id: scoreToolsPanel
             visible: currentTab === 1 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: scoreToolsColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: scoreToolsColumn
-                width: parent.width - 16
-                spacing: 12
+            calc: calcState
+            theme: theme
+            usingTuningVoicings: chordLibrary.usingTuningVoicings
+            skipDiagramPositions: chordLibrary.skipDiagramPositions
+            toolStatusText: _toolStatusText
 
-                Label {
-                    text: "Score analysis and fingering tools (open a score with chord symbols first):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Analyze Score"
-                        font.pixelSize: 10
-                        onClicked: analyzeCurrentScore()
-                    }
-
-                    Button {
-                        text: "Voice Leading"
-                        font.pixelSize: 10
-                        onClicked: runVoiceLeading()
-                    }
-
-                    Button {
-                        text: "Suggest Fingerings"
-                        font.pixelSize: 10
-                        onClicked: suggestFingerings()
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Voicing Calculator Constraints ---
-                Label {
-                    text: "VOICING CONSTRAINTS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Controls how voicings are generated for non-standard tunings. These are defaults — override per chord in the walkthrough."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                GridLayout {
-                    Layout.fillWidth: true
-                    columns: 4
-                    columnSpacing: 8
-                    rowSpacing: 6
-
-                    Label { text: "Max fret:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxFretSpin
-                        from: 7; to: 24; value: calcMaxFret
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxFret) {
-                                calcMaxFret = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Max stretch:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxStretchSpin
-                        from: 2; to: 7; value: calcMaxStretch
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxStretch) {
-                                calcMaxStretch = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Min notes:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMinNotesSpin
-                        from: 2; to: 6; value: calcMinNotes
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMinNotes) {
-                                calcMinNotes = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-
-                    Label { text: "Max muted:"; font.pixelSize: 10 }
-                    SpinBox {
-                        id: calcMaxMutedSpin
-                        from: 0; to: 4; value: calcMaxMuted
-                        implicitWidth: 70
-                        onValueChanged: {
-                            if (value !== calcMaxMuted) {
-                                calcMaxMuted = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 8
-
-                    Label { text: "Max per quality:"; font.pixelSize: 10 }
-                    SpinBox {
-                        from: 0; to: 999; value: calcMaxPerQuality
-                        implicitWidth: 80
-                        ToolTip.visible: hovered
-                        ToolTip.text: "0 = unlimited (Ted Greene mode). Higher = fewer voicings, faster."
-                        onValueChanged: {
-                            if (value !== calcMaxPerQuality) {
-                                calcMaxPerQuality = value
-                                if (usingTuningVoicings) loadTuningVoicings()
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 12
-
-                    CheckBox {
-                        text: "Open strings"
-                        font.pixelSize: 10
-                        checked: calcAllowOpen
-                        onCheckedChanged: {
-                            calcAllowOpen = checked
-                            if (usingTuningVoicings) loadTuningVoicings()
-                        }
-                    }
-
-                    CheckBox {
-                        text: "Root in bass"
-                        font.pixelSize: 10
-                        checked: calcRootInBass
-                        onCheckedChanged: {
-                            calcRootInBass = checked
-                            if (usingTuningVoicings) loadTuningVoicings()
-                        }
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                Label {
-                    text: "TEXT ANNOTATIONS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Add text notation (e.g. 1-X-1-2-X-X) above each chord symbol as staff text.\nAt positions with existing diagrams, annotation matches the diagram."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Annotate Staff Text"
-                        font.pixelSize: 10
-                        onClicked: addFingeringsToScore()
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Adds fret notation as staff text — reads existing diagrams when present"
-                    }
-
-                    Button {
-                        text: "Fingering Sheet (PDF)"
-                        font.pixelSize: 10
-                        onClicked: exportFingeringSheet()
-                    }
-
-                    CheckBox {
-                        text: "Skip diagrams"
-                        font.pixelSize: 9
-                        checked: skipDiagramPositions
-                        onCheckedChanged: skipDiagramPositions = checked
-                        ToolTip.visible: hovered
-                        ToolTip.text: "When checked, skip positions that already have a fretboard diagram"
-                    }
-                }
-
-                Label {
-                    id: toolStatus
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    font.family: "Menlo, Monaco, Courier New, monospace"
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    padding: 8
-                    background: Rectangle {
-                        color: theme.consoleBg
-                        radius: 4
-                    }
-                }
+            onAnalyzeRequested: analyzeCurrentScore()
+            onVoiceLeadingRequested: runVoiceLeading()
+            onFingeringsRequested: suggestFingerings()
+            onConstraintChanged: function(key, value) {
+                chordLibrary[key] = value
+                if (usingTuningVoicings) loadTuningVoicings()
             }
+            onAnnotateRequested: addFingeringsToScore()
+            onFingeringSheetRequested: exportFingeringSheet()
+            onSkipDiagramsChanged: function(checked) { skipDiagramPositions = checked }
         }
 
         // === Tab 2: Export (extracted to ui/ExportPanel.qml, #94) ===
@@ -3520,1040 +2054,145 @@ MuseScore {
             onBrowseClicked: function(field) { openFileBrowser("save", field, null) }
         }
 
-        // === Tab 3: Import ===
-        Flickable {
+        // === Tab 3: Import (extracted to ui/ImportPanel.qml, #95) ===
+        ImportPanel {
+            id: importPanel
             visible: currentTab === 3 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: importColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: importColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // --- Initialize / Rebuild Voicings ---
-                Label {
-                    text: "VOICING DATA"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Current tuning: " + (tuningLabels[selectedTuning] || selectedTuning) + " (" + voicingsData.length + " voicings loaded)"
-                    font.pixelSize: 11
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "If voicings aren't showing or you changed your tuning, click Rebuild to regenerate them."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    color: theme.textSecondary
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 6
-
-                    Button {
-                        id: initButton
-                        text: "Rebuild Voicings"
-                        onClicked: {
-                            initButton.enabled = false
-                            initStatusLabel.text = "Calculating voicings for " + (tuningLabels[selectedTuning] || selectedTuning) + "..."
-                            initStatusLabel.color = theme.textSecondary
-                            initTimer.running = true
-                        }
-                    }
-
-                    Button {
-                        text: "Reset All Data"
-                        onClicked: {
-                            _tuningVoicingCache = {}
-                            standardVoicingsData = []
-                            usingTuningVoicings = false
-                            dataLoaded = false
-                            if (loadFromCache()) {
-                                loadTuningVoicings()
-                            }
-                            initStatusLabel.text = "Data reset. Loaded " + voicingsData.length + " voicings."
-                            initStatusLabel.color = theme.successText
-                        }
-                    }
-                }
-
-                Timer {
-                    id: initTimer
-                    interval: 50
-                    repeat: false
-                    onTriggered: {
-                        var diskPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
-                        tuningCacheFile.source = diskPath
-                        try { tuningCacheFile.write("") } catch(e) {}
-                        var cache = {}
-                        for (var ck in _tuningVoicingCache) {
-                            if (ck !== selectedTuning) cache[ck] = _tuningVoicingCache[ck]
-                        }
-                        _tuningVoicingCache = cache
-                        loadTuningVoicings()
-                        initStatusLabel.text = "Done! " + voicingsData.length + " voicings ready for " + (tuningLabels[selectedTuning] || selectedTuning) + "."
-                        initStatusLabel.color = theme.successText
-                        initButton.enabled = true
-                    }
-                }
-
-                Label {
-                    id: initStatusLabel
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Voicing Source URL ---
-                Label {
-                    text: "VOICING SOURCE URL"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                TextField {
-                    id: urlField
-                    Layout.fillWidth: true
-                    text: jsonUrl
-                    font.pixelSize: 11
-                    selectByMouse: true
-                }
-
-                RowLayout {
-                    spacing: 6
-
-                    Button {
-                        text: "Apply URL"
-                        onClicked: {
-                            jsonUrl = urlField.text
-                            dataLoaded = false
-                            saveSettings()
-                            fetchVoicings()
-                        }
-                    }
-
-                    Button {
-                        text: "Reset Default"
-                        onClicked: {
-                            var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
-                            urlField.text = defaultUrl
-                            jsonUrl = defaultUrl
-                            dataLoaded = false
-                            saveSettings()
-                            fetchVoicings()
-                        }
-                    }
-
-                    Button {
-                        text: "Refresh"
-                        onClicked: {
-                            dataLoaded = false
-                            fetchVoicings()
-                        }
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Import Voicings ---
-                Label {
-                    text: "IMPORT VOICINGS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Merge voicings from a JSON file (duplicates skipped):"
-                    font.pixelSize: 11
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: importPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/voicings.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        onClicked: openFileBrowser("open", importPathField, null)
-                    }
-                }
-
-                Button {
-                    text: "Import & Merge"
-                    onClicked: doImport()
-                }
-
-                Label {
-                    id: importStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- T-010: iReal Pro / Text Import ---
-                Label {
-                    text: "IMPORT CHORD CHART"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Paste an iReal Pro URL or type chords (space/line separated):"
-                    font.pixelSize: 11
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                TextArea {
-                    id: irealInput
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 80
-                    font.pixelSize: 11
-                    placeholderText: "irealb://SongTitle=Composer=... or Dm7 G7 Cmaj7 ..."
-                    wrapMode: TextEdit.Wrap
-                    selectByMouse: true
-                }
-
-                Button {
-                    text: "Import & Voice"
-                    onClicked: importIRealPro(irealInput.text.trim())
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- T-014: Arrangement Presets ---
-                Label {
-                    text: "ARRANGEMENT PRESETS"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Save/load walkthrough voicing choices:"
-                    font.pixelSize: 11
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: presetPathField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/preset.json"
-                        selectByMouse: true
-                    }
-                }
-
-                RowLayout {
-                    spacing: 6
-
-                    Button {
-                        text: "Save Preset"
-                        enabled: _batchChords.length > 0
-                        onClicked: {
-                            var path = presetPathField.text.trim()
-                            if (!path) {
-                                path = Qt.resolvedUrl("preset-" + Date.now() + ".json").toString().replace("file://", "")
-                                presetPathField.text = path
-                            }
-                            savePreset(path)
-                        }
-                    }
-
-                    Button {
-                        text: "Load Preset"
-                        onClicked: {
-                            var path = presetPathField.text.trim()
-                            if (!path) {
-                                statusMsg.text = "Enter a preset file path"
-                                statusMsg.color = theme.errorText
-                                return
-                            }
-                            loadPreset(path)
-                        }
-                    }
-                }
+            // State groups (centralized, C1 #104)
+            library: QtObject {
+                property var voicingsData: chordLibrary.voicingsData
+                property bool dataLoaded: chordLibrary.dataLoaded
             }
+            tuning: tuningState
+            theme: theme
+
+            // Scalar properties
+            jsonUrl: chordLibrary.jsonUrl
+            hasBatchChords: _batchChords.length > 0
+
+            // Signal handlers
+            onRebuildRequested: {
+                var diskPath = Qt.resolvedUrl("tunings/" + selectedTuning + "-voicings.json")
+                tuningCacheFile.source = diskPath
+                try { tuningCacheFile.write("") } catch(e) {}
+                var cache = {}
+                for (var ck in _tuningVoicingCache) {
+                    if (ck !== selectedTuning) cache[ck] = _tuningVoicingCache[ck]
+                }
+                _tuningVoicingCache = cache
+                loadTuningVoicings()
+                importPanel.rebuildStatus = "Done! " + voicingsData.length + " voicings ready for " + (tuningLabels[selectedTuning] || selectedTuning) + "."
+                importPanel.rebuildStatusColor = theme.successText
+                importPanel._rebuildInProgress = false
+            }
+
+            onResetRequested: {
+                _tuningVoicingCache = {}
+                standardVoicingsData = []
+                usingTuningVoicings = false
+                dataLoaded = false
+                if (loadFromCache()) {
+                    loadTuningVoicings()
+                }
+                importPanel.rebuildStatus = "Data reset. Loaded " + voicingsData.length + " voicings."
+                importPanel.rebuildStatusColor = theme.successText
+            }
+
+            onUrlApplyRequested: function(url) {
+                jsonUrl = url
+                dataLoaded = false
+                saveSettings()
+                fetchVoicings()
+            }
+            onUrlResetRequested: {
+                var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
+                jsonUrl = defaultUrl
+                dataLoaded = false
+                saveSettings()
+                fetchVoicings()
+            }
+            onRefreshRequested: {
+                dataLoaded = false
+                fetchVoicings()
+            }
+
+            onImportMergeRequested: function(path) { doImport(path) }
+            onBrowseImportRequested: function(field) { openFileBrowser("open", field, null) }
+            onImportIRealRequested: function(text) { importIRealPro(text) }
+
+            onPresetSaveRequested: function(path) { savePreset(path) }
+            onPresetLoadRequested: function(path) { loadPreset(path) }
         }
 
-        // === Tab 4: Practice (Flash Cards) ===
-        Flickable {
+        // === Tab 4: Practice (extracted to ui/PracticePanel.qml, #96) ===
+        PracticePanel {
             visible: currentTab === 4 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: practiceColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: practiceColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // Score display
-                RowLayout {
-                    Layout.fillWidth: true
-
-                    Label {
-                        text: "Score: " + practiceCorrect + " / " + practiceTotal
-                        font.pixelSize: 13
-                        font.bold: true
-                        Layout.fillWidth: true
-                    }
-
-                    Label {
-                        text: practiceTotal > 0
-                            ? Math.round(practiceCorrect / practiceTotal * 100) + "% correct"
-                            : ""
-                        font.pixelSize: 11
-                        color: theme.textMuted
-                    }
-
-                    Button {
-                        text: "Reset"
-                        font.pixelSize: 10
-                        onClicked: practiceReset()
-                    }
-                }
-
-                // Mode selector
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 8
-
-                    Label {
-                        text: "Mode:"
-                        font.pixelSize: 11
-                    }
-
-                    Button {
-                        text: "Name the Chord"
-                        font.pixelSize: 10
-                        highlighted: practiceMode === "name"
-                        onClicked: { practiceMode = "name"; practiceNext() }
-                    }
-
-                    Button {
-                        text: "Find the Shape"
-                        font.pixelSize: 10
-                        highlighted: practiceMode === "shape"
-                        onClicked: { practiceMode = "shape"; practiceNext() }
-                    }
-                }
-
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // Flash card area
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: 220
-                    radius: 8
-                    color: theme.cardBackground
-                    border.color: theme.cardBorder
-
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 12
-                        spacing: 8
-
-                        // "Name the Chord" mode: show fretboard, hide name
-                        Label {
-                            visible: practiceMode === "name" && !practiceShowAnswer
-                            text: "What chord is this voicing?"
-                            font.pixelSize: 12
-                            color: theme.textSecondary
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        // "Find the Shape" mode: show chord name, hide fretboard
-                        Label {
-                            visible: practiceMode === "shape"
-                            text: practiceVoicing ? practiceVoicing.name || "" : ""
-                            font.pixelSize: 16
-                            font.bold: true
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Label {
-                            visible: practiceMode === "shape" && !practiceShowAnswer
-                            text: "Visualize the fretboard shape, then reveal"
-                            font.pixelSize: 11
-                            color: theme.textMuted
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        // Fretboard preview (hidden in "shape" mode until revealed)
-                        Canvas {
-                            id: practiceCanvas
-                            Layout.preferredWidth: 120
-                            Layout.preferredHeight: 140
-                            Layout.alignment: Qt.AlignHCenter
-                            visible: practiceMode === "name" || practiceShowAnswer
-
-                            property var pv: practiceVoicing
-
-                            onPvChanged: requestPaint()
-
-                            onPaint: {
-                                var ctx = getContext("2d")
-                                ctx.clearRect(0, 0, width, height)
-                                var v = pv
-                                if (!v || !v.dots) return
-
-                                var ns = v.strings || 6
-                                var nf = v.visible_frets || 4
-                                var mg = 10, tm = 18
-                                var ss = (width - 2 * mg) / (ns - 1)
-                                var fs = (height - tm - mg) / nf
-
-                                var isDark = theme.isDark
-                                var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
-                                var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
-                                var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
-
-                                ctx.strokeStyle = gridColor
-                                ctx.lineWidth = 0.5
-                                for (var s = 0; s < ns; s++) {
-                                    ctx.beginPath()
-                                    ctx.moveTo(mg + s * ss, tm)
-                                    ctx.lineTo(mg + s * ss, height - mg)
-                                    ctx.stroke()
-                                }
-                                for (var f = 0; f <= nf; f++) {
-                                    ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
-                                    ctx.beginPath()
-                                    ctx.moveTo(mg, tm + f * fs)
-                                    ctx.lineTo(width - mg, tm + f * fs)
-                                    ctx.stroke()
-                                }
-                                if ((v.fret_number || 0) > 1) {
-                                    ctx.fillStyle = textColor
-                                    ctx.font = "10px sans-serif"
-                                    ctx.textAlign = "right"
-                                    ctx.fillText(v.fret_number, mg - 3, tm + fs * 0.6)
-                                }
-                                var dots = v.dots || []
-                                var ivs = v.intervals || []
-                                for (var d = 0; d < dots.length; d++) {
-                                    var iv = (d < ivs.length) ? ivs[d] : ""
-                                    if (iv === "1") ctx.fillStyle = theme.dotRoot
-                                    else if (iv === "3" || iv === "b3") ctx.fillStyle = theme.dotThird
-                                    else if (iv === "5" || iv === "b5" || iv === "#5") ctx.fillStyle = theme.dotFifth
-                                    else if (iv === "7" || iv === "b7" || iv === "bb7") ctx.fillStyle = theme.dotSeventh
-                                    else if (iv === "6" || iv === "13" || iv === "b13") ctx.fillStyle = theme.dotSixth
-                                    else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2") ctx.fillStyle = theme.dotNinth
-                                    else if (iv === "4" || iv === "11" || iv === "#11") ctx.fillStyle = theme.dotFourth
-                                    else ctx.fillStyle = theme.dotDefault
-                                    ctx.beginPath()
-                                    ctx.arc(mg + (ns - dots[d].string) * ss, tm + (dots[d].fret - 0.5) * fs, 5, 0, 2 * Math.PI)
-                                    ctx.fill()
-                                }
-                                ctx.fillStyle = muteColor
-                                ctx.font = "11px sans-serif"
-                                ctx.textAlign = "center"
-                                var mutes = v.mutes || []
-                                for (var m = 0; m < mutes.length; m++) {
-                                    ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 3)
-                                }
-                                ctx.strokeStyle = muteColor
-                                ctx.lineWidth = 1
-                                var opens = v.open || []
-                                for (var o = 0; o < opens.length; o++) {
-                                    ctx.beginPath()
-                                    ctx.arc(mg + (ns - opens[o]) * ss, tm - 7, 3.5, 0, 2 * Math.PI)
-                                    ctx.stroke()
-                                }
-                            }
-                        }
-
-                        // Answer (chord name + details)
-                        Label {
-                            visible: practiceShowAnswer && practiceMode === "name"
-                            text: practiceVoicing ? practiceVoicing.name || "" : ""
-                            font.pixelSize: 14
-                            font.bold: true
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Label {
-                            visible: practiceShowAnswer
-                            text: practiceVoicing
-                                ? (practiceVoicing.intervals || []).join(" ")
-                                    + "  |  Fret " + (practiceVoicing.fret_number || "?")
-                                    + "  |  " + (practiceVoicing.category || "")
-                                : ""
-                            font.pixelSize: 10
-                            color: theme.textSecondary
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-                    }
-                }
-
-                // Action buttons
-                RowLayout {
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignHCenter
-                    spacing: 12
-
-                    Button {
-                        visible: !practiceShowAnswer
-                        text: "Reveal Answer"
-                        font.pixelSize: 12
-                        onClicked: practiceReveal()
-                    }
-
-                    Button {
-                        visible: practiceShowAnswer
-                        text: "✓ Got it"
-                        font.pixelSize: 12
-                        onClicked: practiceMarkCorrect()
-                    }
-
-                    Button {
-                        visible: practiceShowAnswer
-                        text: "✗ Missed"
-                        font.pixelSize: 12
-                        onClicked: practiceMarkWrong()
-                    }
-
-                    Button {
-                        text: "Skip"
-                        font.pixelSize: 10
-                        onClicked: practiceNext()
-                    }
-                }
+            practice: QtObject {
+                property var voicing: chordLibrary.practiceVoicing
+                property bool showAnswer: chordLibrary.practiceShowAnswer
+                property string mode: chordLibrary.practiceMode
+                property int correct: chordLibrary.practiceCorrect
+                property int total: chordLibrary.practiceTotal
             }
+            theme: theme
+
+            onResetRequested: practiceReset()
+            onModeChanged: function(mode) { practiceMode = mode; practiceNext() }
+            onRevealRequested: practiceReveal()
+            onMarkCorrectRequested: practiceMarkCorrect()
+            onMarkWrongRequested: practiceMarkWrong()
+            onSkipRequested: practiceNext()
         }
 
-        // === Tab 5: Settings ===
-        Flickable {
+        // === Tab 5: Settings (extracted to ui/SettingsPanel.qml, #98) ===
+        SettingsPanel {
+            id: settingsPanel
             visible: currentTab === 5 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: settingsColumn.implicitHeight
-            clip: true
-            flickableDirection: Flickable.VerticalFlick
-            ScrollBar.vertical: ScrollBar { policy: ScrollBar.AlwaysOn }
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: settingsColumn
-                width: parent.width - 16
-                spacing: 12
-
-                // --- Diagram placement ---
-                Label {
-                    text: "DIAGRAM PLACEMENT"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                ComboBox {
-                    id: placementCombo
-                    model: ["Above staff (default)", "Below staff"]
-                    Layout.fillWidth: true
-                    currentIndex: diagramPlacement === "below" ? 1 : 0
-                    onCurrentIndexChanged: {
-                        diagramPlacement = currentIndex === 1 ? "below" : "above"
-                        saveSettings()
-                    }
-                }
-
-                Label {
-                    text: "You can also show all diagrams at the top of the first page:\nFormat > Style > Fretboard Diagrams"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Tuning ---
-                Label {
-                    text: "TUNING"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 6
-
-                    Label {
-                        text: "Active: " + (tuningLabels[selectedTuning] || selectedTuning)
-                        font.pixelSize: 11
-                        Layout.fillWidth: true
-                    }
-
-                    Button {
-                        text: "Edit"
-                        font.pixelSize: 10
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Load this tuning into the form below for editing"
-                        onClicked: editTuning(selectedTuning)
-                    }
-
-                    Button {
-                        text: "Delete"
-                        font.pixelSize: 10
-                        enabled: builtInTunings.indexOf(selectedTuning) < 0
-                        ToolTip.visible: hovered
-                        ToolTip.text: builtInTunings.indexOf(selectedTuning) >= 0
-                            ? "Built-in tunings cannot be deleted"
-                            : "Delete this custom tuning"
-                        onClicked: deleteTuning(selectedTuning)
-                    }
-
-                    Button {
-                        text: "▲"
-                        font.pixelSize: 10
-                        implicitWidth: 28
-                        enabled: tuningList.indexOf(selectedTuning) > 0
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Move this tuning up in the list"
-                        onClicked: moveTuning(selectedTuning, -1)
-                    }
-
-                    Button {
-                        text: "▼"
-                        font.pixelSize: 10
-                        implicitWidth: 28
-                        enabled: tuningList.indexOf(selectedTuning) < tuningList.length - 1
-                        ToolTip.visible: hovered
-                        ToolTip.text: "Move this tuning down in the list"
-                        onClicked: moveTuning(selectedTuning, 1)
-                    }
-                }
-
-                // --- Import tuning ---
-                Label {
-                    text: "Import a tuning JSON file:"
-                    font.pixelSize: 10
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: tuningImportPath
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "/path/to/tuning.json"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Import"
-                        font.pixelSize: 10
-                        onClicked: importTuning()
-                    }
-                }
-
-                Label {
-                    id: tuningImportStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Create / edit tuning ---
-                Label {
-                    text: "Create or edit a tuning:"
-                    font.pixelSize: 10
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: tuningNameField
-                        Layout.fillWidth: true
-                        font.pixelSize: 11
-                        placeholderText: "Name (e.g. Open G)"
-                        selectByMouse: true
-                    }
-
-                    SpinBox {
-                        id: tuningStringCount
-                        from: 4
-                        to: 12
-                        value: 6
-                        implicitWidth: 80
-                    }
-                }
-
-                Label {
-                    text: "String pitches (high to low, note names or MIDI):"
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                TextField {
-                    id: tuningPitchesField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "E4, B3, G3, D3, A2, E2"
-                    selectByMouse: true
-                    text: "E4, B3, G3, D3, A2, E2"
-                }
-
-                Button {
-                    text: "Save Tuning"
-                    font.pixelSize: 10
-                    ToolTip.visible: hovered
-                    ToolTip.text: "Create a new tuning or save changes to an existing one"
-                    onClicked: createTuning()
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/tree/main/config/tunings">View tuning format on GitHub</a>'
-                    font.pixelSize: 10
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://gtdb.org">Guitar Tuning Database (gtdb.org)</a> — reference for string pitches'
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Save to Library ---
-                Label {
-                    text: "SAVE TO LIBRARY"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Enter a voicing or capture from the score."
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "Capture from Score"
-                    font.pixelSize: 10
-                    onClicked: captureFromScore()
-                }
-
-                Label {
-                    text: "Dots: string:fret pairs (e.g. 6:1,4:1,3:2)"
-                    font.pixelSize: 9
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    ComboBox {
-                        id: saveQualityCombo
-                        model: ["dom7","maj7","min7","min7b5","dim7","maj6","min6",
-                                "dom7b9","dom7sharp5","dom7alt","dom9","dom13",
-                                "sus4","sus2","aug7","min-maj7","augMaj7"]
-                        Layout.fillWidth: true
-                    }
-
-                    ComboBox {
-                        id: saveCategoryCombo
-                        model: ["shell","drop2","drop3","extended","altered","quartal"]
-                        implicitWidth: 90
-                    }
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    ComboBox {
-                        id: saveContextCombo
-                        model: ["CV6","CV7","CM6","CM7"]
-                        implicitWidth: 70
-                    }
-
-                    TextField {
-                        id: saveFretField
-                        placeholderText: "Fret#"
-                        implicitWidth: 50
-                        font.pixelSize: 11
-                        selectByMouse: true
-                    }
-
-                    SpinBox {
-                        id: saveStringsCount
-                        from: 4; to: 12; value: 6
-                        implicitWidth: 75
-                    }
-                }
-
-                TextField {
-                    id: saveDotsField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "Dots: 6:1, 4:1, 3:2"
-                    selectByMouse: true
-                }
-
-                TextField {
-                    id: saveMutesField
-                    Layout.fillWidth: true
-                    font.pixelSize: 11
-                    placeholderText: "Mutes: 5, 2, 1"
-                    selectByMouse: true
-                }
-
-                Label {
-                    text: "Enter positions as played. The plugin will reproject to C."
-                    font.pixelSize: 9
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "Save Voicing"
-                    font.pixelSize: 10
-                    onClicked: saveVoicingToLibrary()
-                }
-
-                Label {
-                    id: saveStatus
-                    visible: text.length > 0
-                    font.pixelSize: 11
-                    font.bold: true
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- Library Health ---
-                Label {
-                    text: "LIBRARY HEALTH"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: auditReportPath
-                        Layout.fillWidth: true
-                        font.pixelSize: 10
-                        text: homePath() + "/Documents/chord-library-audit.txt"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Browse"
-                        font.pixelSize: 10
-                        onClicked: openFileBrowser("save", auditReportPath, null)
-                    }
-                }
-
-                Button {
-                    text: "Run Audit"
-                    font.pixelSize: 10
-                    onClicked: {
-                        runHygieneAudit()
-                        saveAuditReport()
-                        Qt.openUrlExternally(auditReportPath.text)
-                    }
-                }
-
-                Label {
-                    id: hygieneResult
-                    visible: text.length > 0
-                    font.pixelSize: 10
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                // --- Dismiss / Fix actions ---
-                Label {
-                    visible: lastAuditResults.length > 0
-                    text: "Paste a DISMISS KEY from the report to suppress it:"
-                    font.pixelSize: 9
-                }
-
-                RowLayout {
-                    visible: lastAuditResults.length > 0
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    TextField {
-                        id: dismissKeyField
-                        Layout.fillWidth: true
-                        font.pixelSize: 10
-                        placeholderText: "e.g. ENH:0,4,9,11"
-                        selectByMouse: true
-                    }
-
-                    Button {
-                        text: "Dismiss"
-                        font.pixelSize: 10
-                        onClicked: {
-                            var key = dismissKeyField.text.trim()
-                            if (key) {
-                                dismissFinding(key)
-                                dismissKeyField.text = ""
-                                hygieneResult.text = "Dismissed. Run audit again to see updated results."
-                                hygieneResult.color = theme.successText
-                            }
-                        }
-                    }
-                }
-
-                RowLayout {
-                    visible: lastAuditResults.length > 0 || hygieneIgnoreList.length > 0
-                    Layout.fillWidth: true
-                    spacing: 4
-
-                    Button {
-                        text: "Fix Duplicates"
-                        font.pixelSize: 10
-                        visible: lastAuditResults.some(function(r) { return r.indexOf("DUP:") === 0 })
-                        onClicked: fixDuplicates()
-                    }
-
-                    Button {
-                        text: "Reset All Dismissed"
-                        font.pixelSize: 10
-                        visible: hygieneIgnoreList.length > 0
-                        onClicked: clearDismissals()
-                    }
-                }
-
-                // --- Divider ---
-                Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-                // --- About ---
-                Label {
-                    text: "ABOUT"
-                    font.pixelSize: 11
-                    font.bold: true
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    text: "Siege Analytics Chord Library v1.5.0"
-                    font.pixelSize: 12
-                    font.bold: true
-                }
-
-                Label {
-                    text: "Author: Dheeraj Chand"
-                    font.pixelSize: 11
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin">GitHub Repository</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://siegeanalytics.com">Siege Analytics</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://creativecommons.org/licenses/by/4.0/">Licensed under CC BY 4.0</a>'
-                    font.pixelSize: 10
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-
-                Label {
-                    text: '<a href="https://github.com/siege-analytics/musescore4-chord-library-plugin/blob/main/DEVELOPMENT.md">Documentation</a>'
-                    font.pixelSize: 11
-                    onLinkActivated: Qt.openUrlExternally(link)
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
+            tuning: tuningState
+            theme: theme
+            diagramPlacement: chordLibrary.diagramPlacement
+            builtInTunings: chordLibrary.builtInTunings
+            lastAuditResults: chordLibrary.lastAuditResults
+            hygieneIgnoreList: chordLibrary.hygieneIgnoreList
+            homePath: homePath()
+
+            onPlacementChanged: function(placement) {
+                diagramPlacement = placement
+                saveSettings()
+            }
+            onEditTuningRequested: function(slug) { editTuning(slug) }
+            onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
+            onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
+            onImportTuningRequested: function(path) { importTuning(path) }
+            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
+            onCaptureRequested: captureFromScore()
+            onSaveVoicingRequested: function(quality, category, context, fret, strings, dots, mutes) {
+                saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
+            }
+            onAuditRequested: function(reportPath) {
+                runHygieneAudit()
+                saveAuditReport(reportPath)
+                Qt.openUrlExternally(reportPath)
+            }
+            onDismissRequested: function(key) {
+                dismissFinding(key)
+                settingsPanel.hygieneStatus = "Dismissed. Run audit again to see updated results."
+                settingsPanel.hygieneStatusColor = theme.successText
+            }
+            onFixDuplicatesRequested: fixDuplicates()
+            onClearDismissalsRequested: clearDismissals()
+            onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
+            onCreateContextRequested: function(code, name, strings) {
+                createCustomContext(code, name, strings)
             }
         }
 
@@ -4564,10 +2203,10 @@ MuseScore {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            batchChords: _batchChords
-            batchIndex: _batchIndex
-            batchTotal: chordLibrary.batchTotal
-            batchActive: batchQueue.length > 0
+            batchChords: batchEngine.batchChords
+            batchIndex: batchEngine.batchIndex
+            batchTotal: batchEngine.batchTotal
+            batchActive: batchEngine.batchQueue.length > 0
             resultsTitle: toolResultsTitle
             resultsContent: toolResultsContent
             availableCategories: categoryList
@@ -4575,588 +2214,140 @@ MuseScore {
             calculatedVoicings: usingTuningVoicings
             tuningPitches: tuningPitchNotation
             tuningOffset: chordLibrary.tuningOffset
-            altCount: chordLibrary.altCount
-            altIndex: chordLibrary.altIndex
-            bassStringList: _bassStringList
-            selectedBassString: _selectedBassString
+            altCount: batchEngine.altCount
+            altIndex: batchEngine.altIndex
+            difficultyFn: FingeringEngine.computeDifficulty
+            fingeringFn: function(v) { return computeFingeringString(v) }
+            melodyLockDefault: chordLibrary.melodyOnTop
+            bassStringList: batchEngine.bassStringList
+            selectedBassString: batchEngine.selectedBassString
             bassStringCounts: {
                 var counts = {}
-                for (var bs in _bassStringGroups) {
-                    counts[bs] = _bassStringGroups[bs].length
+                var groups = batchEngine.bassStringGroups
+                for (var bs in groups) {
+                    counts[bs] = groups[bs].length
                 }
                 return counts
             }
 
             onPrevClicked: {
-                _batchIndex = _batchIndex - 2
-                batchShowNext()
+                batchEngine.batchIndex = batchEngine.batchIndex - 2
+                batchEngine.batchShowNext()
             }
-            onNextClicked: batchShowNext()
+            onNextClicked: batchEngine.batchShowNext()
             onStopClicked: {
-                batchQueue = []
-                _batchChords = []
+                batchEngine.batchQueue = []
+                batchEngine.batchChords = []
                 showToolResults = false
             }
             onBassStringClicked: function(bassStr) {
-                selectBassString(bassStr)
+                // Sync lock states from UI before selecting bass string
+                batchEngine._melodyLocked = walkthroughPanel.melodyLocked
+                batchEngine._bassLocked = walkthroughPanel.bassLocked
+                batchEngine.selectBassString(bassStr)
             }
             onAltSelected: function(index) {
-                selectAlternativeVoicing(index)
+                batchEngine.selectAlternativeVoicing(index)
             }
             onRevoiceRequested: function(melodyNote, melodyLocked, bassNote, bassLocked, category) {
-                revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
+                batchEngine.revoiceCurrentStepWith(melodyNote, melodyLocked, bassNote, bassLocked, category)
             }
             onReharmSelected: function(newRoot, newQuality) {
-                // Apply the reharm suggestion: change the current chord's root/quality
-                var idx = _batchIndex - 1
-                if (idx < 0 || idx >= _batchChords.length) return
-                var item = _batchChords[idx]
-                item.root = newRoot
-                item.quality = newQuality
-                item.ambiguous = false  // user made an explicit choice
-                item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality === "maj6" ? "6" : newQuality === "maj" ? "" : newQuality)
-                // Update bass suggestion for new root
-                item.bassMidi = MelodyEngine.suggestBassNote(newRoot, newQuality, Transposer.SEMITONE_MAP)
-                // Re-voice with the new chord
-                var voicing = findBestVoicing(newRoot, newQuality, item.melodyMidi, item.bassMidi)
-                if (voicing) {
-                    item.voicing = voicing
-                    var xml = generateXmlForVoicing(voicing, newRoot)
-                    var xmlPath = Qt.resolvedUrl("paste-clipboard.xml")
-                    tempDiagramFile.source = xmlPath
-                    try { tempDiagramFile.write(xml) } catch(e) {}
-                }
-                // Refresh the display
-                _batchIndex = idx
-                batchShowNext()
+                batchEngine.applyReharm(newRoot, newQuality)
             }
         }
 
-        // === Tab 0: Library (main panel) ===
-        TextField {
+        // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===
+        LibraryPanel {
+            id: libraryPanel
             visible: currentTab === 0 && !showToolResults
-            id: searchField
-            placeholderText: "Search voicings..."
-            Layout.fillWidth: true
-            onTextChanged: {
-                searchText = text
-                applyFilters()
-            }
-        }
-
-        RowLayout {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: contextCombo
-                model: contextDisplayList
-                Layout.fillWidth: true
-                currentIndex: Math.max(0, contextList.indexOf(filterContext || "All Contexts"))
-                // onActivated fires only on user clicks, not model/binding changes
-                onActivated: {
-                    if (currentIndex >= 0 && currentIndex < contextList.length) {
-                        var code = contextList[currentIndex]
-                        filterContext = code === "All Contexts" ? "" : code
-                        applyFilters()
-                    }
-                }
-            }
-            ComboBox {
-                id: categoryCombo
-                model: categoryList
-                Layout.fillWidth: true
-                onActivated: {
-                    filterCategory = currentText === "All Types" ? "" : currentText
-                    applyFilters()
-                }
-            }
-        }
-
-        ComboBox {
-            visible: currentTab === 0 && !showToolResults
-            id: qualityCombo
-            model: qualityList
-            Layout.fillWidth: true
-            onCurrentTextChanged: {
-                filterQuality = currentText === "All Qualities" ? "" : currentText
-                applyFilters()
-            }
-        }
-
-        RowLayout {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 4
-
-            ComboBox {
-                id: tuningMainCombo
-                model: filteredTuningDisplayList
-                Layout.fillWidth: true
-                currentIndex: Math.max(0, filteredTuningList.indexOf(selectedTuning))
-                // Use onActivated (user clicks only), not onCurrentIndexChanged
-                // (which also fires from binding recalculations and causes cascades)
-                onActivated: {
-                    if (currentIndex >= 0 && currentIndex < filteredTuningList.length) {
-                        var newTuning = filteredTuningList[currentIndex]
-                        if (newTuning && newTuning !== selectedTuning) {
-                            selectedTuning = newTuning
-                            loadTuningStringCount()
-                            loadTuningVoicings()
-                            saveSettings()
-                        }
-                    }
-                }
-            }
-
-            Label {
-                text: filteredData.length + " of " + voicingsData.length
-                font.pixelSize: 11
-            }
-
-            Button {
-                visible: selectedTuning !== "standard"
-                text: "Copy Tuning"
-                font.pixelSize: 9
-                implicitHeight: 22
-                ToolTip.visible: hovered
-                ToolTip.text: "Copy tuning info to clipboard.\nPaste into a Subtitle (Add > Text > Subtitle)"
-                onClicked: copyTuningToClipboard()
-            }
-
-            Button {
-                text: "Voice Here"
-                font.pixelSize: 10
-                implicitWidth: 64
-                ToolTip.visible: hovered
-                ToolTip.text: "Suggest a voicing for the chord at the current cursor position"
-                onClicked: voiceAtCursor()
-            }
-
-            Button {
-                text: batchQueue.length > 0 ? "Stop" : "Voice All"
-                font.pixelSize: 10
-                implicitWidth: 64
-                ToolTip.visible: hovered
-                ToolTip.text: "Voice all chord symbols in the score"
-                onClicked: {
-                    if (batchQueue.length > 0) {
-                        batchQueue = []
-                        statusMsg.text = "Voicing stopped"
-                        statusMsg.color = theme.textMuted
-                    } else {
-                        batchInsert()
-                    }
-                }
-            }
-
-            Button {
-                text: sortByProximity ? "Nearest" : "Default"
-                font.pixelSize: 10
-                implicitWidth: 56
-                onClicked: {
-                    sortByProximity = !sortByProximity
-                    applyFilters()
-                    statusMsg.text = sortByProximity
-                        ? "Sorting by proximity to last voicing"
-                        : "Default sort order"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-
-            Button {
-                text: melodyOnTop ? "Melody ✓" : "Melody"
-                font.pixelSize: 10
-                implicitWidth: 56
-                ToolTip.visible: hovered
-                ToolTip.text: "Match voicing top note to the melody (Martin Taylor approach)"
-                onClicked: {
-                    melodyOnTop = !melodyOnTop
-                    statusMsg.text = melodyOnTop
-                        ? "Melody on top: voicings will match the melody note"
-                        : "Melody on top: off"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-
-            TextField {
-                id: melodyOverrideField
-                visible: melodyOnTop
-                implicitWidth: 36
-                font.pixelSize: 10
-                placeholderText: "auto"
-                selectByMouse: true
-                ToolTip.visible: hovered
-                ToolTip.text: "Override melody note (e.g. E, Bb, F#). Leave blank for auto-detect."
-            }
-
-            ComboBox {
-                visible: melodyOnTop
-                implicitWidth: 80
-                font.pixelSize: 10
-                model: ["Same staff", "Staff 1", "Staff 2", "Staff 3"]
-                currentIndex: melodyStaffIdx + 1  // -1 → 0 (Same staff)
-                onCurrentIndexChanged: {
-                    melodyStaffIdx = currentIndex - 1  // 0 → -1 (Same staff)
-                }
-                ToolTip.visible: hovered
-                ToolTip.text: "Which staff to read the melody from"
-            }
-
-            Button {
-                text: writeVoice2 ? "Voice 2 ✓" : "Voice 2"
-                font.pixelSize: 10
-                implicitWidth: 56
-                ToolTip.visible: hovered
-                ToolTip.text: "Write voicing pitches as notes on Voice 2 during walkthrough"
-                onClicked: {
-                    writeVoice2 = !writeVoice2
-                    statusMsg.text = writeVoice2
-                        ? "Voice 2 export: voicing notes will be written to Voice 2"
-                        : "Voice 2 export: off"
-                    statusMsg.color = theme.textMuted
-                }
-            }
-        }
-
-        // Color legend for fretboard dot intervals
-        Flow {
-            visible: currentTab === 0 && !showToolResults
-            Layout.fillWidth: true
-            spacing: 8
-
-            Repeater {
-                model: theme.legendColors
-
-                Row {
-                    spacing: 2
-                    Rectangle {
-                        width: 8; height: 8; radius: 4
-                        color: modelData.color
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    Label {
-                        text: modelData.label
-                        font.pixelSize: 9
-                    }
-                }
-            }
-        }
-
-        ListView {
-            visible: currentTab === 0 && !showToolResults
-            id: voicingList
             Layout.fillWidth: true
             Layout.fillHeight: true
-            clip: true
-            spacing: 4
-            model: filteredData.length
 
-            delegate: Rectangle {
-                width: voicingList.width
-                height: 80
-                radius: 4
-                color: ma.containsMouse ? theme.chipHover : theme.chipBackground
-                border.color: theme.divider
-                border.width: 1
+            filteredData: chordLibrary.filteredData
+            voicingsData: chordLibrary.voicingsData
+            contextDisplayList: chordLibrary.contextDisplayList
+            contextList: chordLibrary.contextList
+            categoryList: chordLibrary.categoryList
+            qualityList: chordLibrary.qualityList
+            filteredTuningDisplayList: chordLibrary.filteredTuningDisplayList
+            filteredTuningList: chordLibrary.filteredTuningList
+            selectedTuning: chordLibrary.selectedTuning
+            filterContext: chordLibrary.filterContext
+            theme: theme
+            batchActive: batchQueue.length > 0
+            sortByProximity: chordLibrary.sortByProximity
+            melodyOnTop: chordLibrary.melodyOnTop
+            melodyStaffIdx: chordLibrary.melodyStaffIdx
+            writeVoice2: chordLibrary.writeVoice2
+            showComparison: chordLibrary.showComparison
+            compareVoicings: chordLibrary.compareVoicings
+            computeNotesForTuningFn: function(v) { return computeNotesForTuning(v) }
+            suggestFingeringFn: function(v) { return suggestFingering(v) }
+            fingeringStringFn: function(v) { return computeFingeringString(v) }
 
-                property var v: filteredData[index] || {}
-
-                MouseArea {
-                    id: ma
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onDoubleClicked: generateDiagramFile(v)
-                }
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 6
-                    spacing: 6
-
-                    // Fretboard thumbnail
-                    Canvas {
-                        id: fretCanvas
-                        Layout.preferredWidth: 50
-                        Layout.preferredHeight: 66
-
-                        onPaint: {
-                            var ctx = getContext("2d")
-                            ctx.clearRect(0, 0, width, height)
-                            if (!v || !v.dots) return
-
-                            var ns = v.strings || 6
-                            var nf = v.visible_frets || 4
-                            var mg = 5, tm = 12
-                            var ss = (width - 2 * mg) / (ns - 1)
-                            var fs = (height - tm - mg) / nf
-
-                            // Dark mode colors from centralized theme
-                            var isDark = theme.isDark
-                            var gridColor = isDark ? Qt.rgba(0.85, 0.85, 0.85, 0.7) : Qt.rgba(0.4, 0.4, 0.4, 0.6)
-                            var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
-                            var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
-
-                            // Strings
-                            ctx.strokeStyle = gridColor
-                            ctx.lineWidth = 0.5
-                            for (var s = 0; s < ns; s++) {
-                                ctx.beginPath()
-                                ctx.moveTo(mg + s * ss, tm)
-                                ctx.lineTo(mg + s * ss, height - mg)
-                                ctx.stroke()
-                            }
-
-                            // Frets
-                            for (var f = 0; f <= nf; f++) {
-                                ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
-                                var fy = tm + f * fs
-                                ctx.beginPath()
-                                ctx.moveTo(mg, fy)
-                                ctx.lineTo(width - mg, fy)
-                                ctx.stroke()
-                            }
-
-                            // Fret number label
-                            if ((v.fret_number || 0) > 1) {
-                                ctx.fillStyle = textColor
-                                ctx.font = "7px sans-serif"
-                                ctx.textAlign = "right"
-                                ctx.fillText(v.fret_number, mg - 1, tm + fs * 0.6)
-                            }
-
-                            // Dots — color-coded by interval (brighter in dark mode)
-                            var dots = v.dots || []
-                            var ivs = v.intervals || []
-                            for (var d = 0; d < dots.length; d++) {
-                                var iv = (d < ivs.length) ? ivs[d] : ""
-                                // Color by interval family (from theme palette)
-                                if (iv === "1")
-                                    ctx.fillStyle = theme.dotRoot
-                                else if (iv === "3" || iv === "b3")
-                                    ctx.fillStyle = theme.dotThird
-                                else if (iv === "5" || iv === "b5" || iv === "#5")
-                                    ctx.fillStyle = theme.dotFifth
-                                else if (iv === "7" || iv === "b7" || iv === "bb7")
-                                    ctx.fillStyle = theme.dotSeventh
-                                else if (iv === "6" || iv === "13" || iv === "b13")
-                                    ctx.fillStyle = theme.dotSixth
-                                else if (iv === "9" || iv === "b9" || iv === "#9" || iv === "2")
-                                    ctx.fillStyle = theme.dotNinth
-                                else if (iv === "4" || iv === "11" || iv === "#11")
-                                    ctx.fillStyle = theme.dotFourth
-                                else
-                                    ctx.fillStyle = theme.dotDefault
-
-                                var dx = mg + (ns - dots[d].string) * ss
-                                var dy = tm + (dots[d].fret - 0.5) * fs
-                                ctx.beginPath()
-                                ctx.arc(dx, dy, 3.5, 0, 2 * Math.PI)
-                                ctx.fill()
-                            }
-
-                            // Mute markers (×)
-                            ctx.fillStyle = muteColor
-                            ctx.font = "9px sans-serif"
-                            ctx.textAlign = "center"
-                            var mutes = v.mutes || []
-                            for (var m = 0; m < mutes.length; m++) {
-                                ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
-                            }
-
-                            // Open markers (○)
-                            ctx.strokeStyle = muteColor
-                            ctx.lineWidth = 1
-                            var opens = v.open || []
-                            for (var o = 0; o < opens.length; o++) {
-                                ctx.beginPath()
-                                ctx.arc(mg + (ns - opens[o]) * ss, tm - 5, 3, 0, 2 * Math.PI)
-                                ctx.stroke()
-                            }
-                        }
-
-                        Component.onCompleted: requestPaint()
-                    }
-
-                    // Text info
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 2
-
-                        Label {
-                            text: v.name || ""
-                            font.pixelSize: 12
-                            font.bold: true
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                        Label {
-                            text: {
-                                // Find which interval is on top (highest-pitched sounding string)
-                                var topInterval = ""
-                                if (v.dots && v.dots.length > 0 && v.intervals) {
-                                    var minStr = 99
-                                    var topIdx = -1
-                                    for (var ti = 0; ti < v.dots.length; ti++) {
-                                        if (v.dots[ti].string < minStr) {
-                                            minStr = v.dots[ti].string
-                                            topIdx = ti
-                                        }
-                                    }
-                                    // Also check open strings (they can be the highest)
-                                    var opens = v.open || []
-                                    for (var oi = 0; oi < opens.length; oi++) {
-                                        if (opens[oi] < minStr) {
-                                            minStr = opens[oi]
-                                            topIdx = -2 // open string, interval unknown from dots
-                                        }
-                                    }
-                                    if (topIdx >= 0 && topIdx < v.intervals.length) {
-                                        var iv = v.intervals[topIdx]
-                                        var ivLabels = {"1":"root","3":"3rd","b3":"b3","5":"5th","b5":"b5","#5":"#5",
-                                            "7":"7th","b7":"b7","bb7":"bb7","9":"9th","b9":"b9","#9":"#9",
-                                            "4":"4th","11":"11th","#11":"#11","6":"6th","13":"13th","b13":"b13"}
-                                        topInterval = ivLabels[iv] || iv
-                                    }
-                                }
-                                var info = (v.intervals || []).join(" ") + "  |  Fret " + (v.fret_number || "?")
-                                if (topInterval) info += "  |  " + topInterval + " on top"
-                                return info
-                            }
-                            font.pixelSize: 10
-                            Layout.fillWidth: true
-                        }
-                        Label {
-                            text: computeNotesForTuning(v).join(" ")
-                            font.pixelSize: 9
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                    }
-
-                    ColumnLayout {
-                        spacing: 2
-
-                        Button {
-                            text: "Open"
-                            font.pixelSize: 9
-                            implicitWidth: 44
-                            onClicked: generateDiagramFile(v)
-                        }
-
-                        RowLayout {
-                            spacing: 1
-
-                            Button {
-                                text: "\u266B"  // beamed eighth notes — chord strum
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                onClicked: playVoicing(v, "chord")
-                            }
-
-                            Button {
-                                text: "\u2191"  // up arrow — arpeggio
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                onClicked: playVoicing(v, "arp")
-                            }
-
-                            Button {
-                                text: "\u21CB"  // compare arrows
-                                font.pixelSize: 11
-                                implicitWidth: 22
-                                ToolTip.visible: hovered
-                                ToolTip.text: "Compare"
-                                onClicked: addToComparison(v)
-                            }
-                        }
+            onSearchChanged: function(text) { searchText = text; applyFilters() }
+            onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
+            onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }
+            onQualityFilterChanged: function(text) { filterQuality = text; applyFilters() }
+            onTuningSelected: function(slug) {
+                selectedTuning = slug
+                loadTuningStringCount()
+                loadTuningVoicings()
+                // Auto-select matching CM context if none is selected
+                if (!filterContext) {
+                    var strCount = tuningStringCounts[slug] || 6
+                    var autoCtx = "CM" + strCount
+                    if (contextStringCounts[autoCtx]) {
+                        filterContext = autoCtx
                     }
                 }
+                saveSettings()
             }
+            onVoiceHereRequested: voiceAtCursor()
+            onBatchInsertRequested: batchInsert()
+            onBatchStopRequested: {
+                batchQueue = []
+                statusMsg.text = "Voicing stopped"
+                statusMsg.color = theme.textMuted
+            }
+            onSortToggled: {
+                sortByProximity = !sortByProximity
+                applyFilters()
+                statusMsg.text = sortByProximity
+                    ? "Sorting by proximity to last voicing"
+                    : "Default sort order"
+                statusMsg.color = theme.textMuted
+            }
+            onMelodyToggled: {
+                melodyOnTop = !melodyOnTop
+                statusMsg.text = melodyOnTop
+                    ? "Melody on top: voicings will match the melody note"
+                    : "Melody on top: off"
+                statusMsg.color = theme.textMuted
+            }
+            onVoice2Toggled: {
+                writeVoice2 = !writeVoice2
+                statusMsg.text = writeVoice2
+                    ? "Voice 2 export: voicing notes will be written to Voice 2"
+                    : "Voice 2 export: off"
+                statusMsg.color = theme.textMuted
+            }
+            onMelodyStaffChanged: function(idx) { melodyStaffIdx = idx }
+            onCopyTuningRequested: copyTuningToClipboard()
+            onOpenVoicingRequested: function(voicing) { generateDiagramFile(voicing) }
+            onPlayVoicingRequested: function(voicing, mode) { playVoicing(voicing, mode) }
+            onCompareRequested: function(voicing) { addToComparison(voicing) }
+            onClearComparisonRequested: clearComparison()
         }
 
+        // Global status bar (used by many functions — stays in parent, migrate in Phase C #104)
         Label {
             id: statusMsg
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
             font.pixelSize: 10
-
             text: ""
-        }
-
-        // T-015: Voicing Comparison Panel
-        Rectangle {
-            visible: showComparison && currentTab === 0
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            color: theme.consoleBg
-            radius: 4
-            border.color: theme.divider
-
-            RowLayout {
-                anchors.fill: parent
-                anchors.margins: 6
-                spacing: 6
-
-                Repeater {
-                    model: compareVoicings.length
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        radius: 4
-                        color: theme.cardBackground
-                        border.color: theme.cardBorder
-
-                        property var cv: compareVoicings[index] || {}
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            spacing: 2
-
-                            Label {
-                                text: cv.name || ""
-                                font.pixelSize: 10
-                                font.bold: true
-                                elide: Text.ElideRight
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: (cv.intervals || []).join(" ")
-                                font.pixelSize: 9
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: "Fret " + (cv.fret_number || "?") + "  |  " + (cv.notes || []).join(" ")
-                                font.pixelSize: 9
-                                color: theme.textMuted
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: {
-                                    var f = suggestFingering(cv)
-                                    if (f.length === 0) return ""
-                                    var parts = []
-                                    for (var i = 0; i < f.length; i++) parts.push("S" + f[i].string + ":" + f[i].finger)
-                                    return "Fingering: " + parts.join(" ")
-                                }
-                                font.pixelSize: 8
-                                color: theme.textFaint
-                                Layout.fillWidth: true
-                            }
-                        }
-                    }
-                }
-
-                Button {
-                    text: "Clear"
-                    font.pixelSize: 9
-                    implicitWidth: 40
-                    onClicked: clearComparison()
-                }
-            }
         }
     }
 

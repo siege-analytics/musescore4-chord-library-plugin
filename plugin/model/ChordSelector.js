@@ -140,8 +140,14 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         var scoreA = 0, scoreB = 0
         if (a.chord_quality === quality) scoreA += 20
         if (b.chord_quality === quality) scoreB += 20
-        if (opts.filterContext && a.context === opts.filterContext) scoreA += 100
-        if (opts.filterContext && b.context === opts.filterContext) scoreB += 100
+        // Context: exact match +100, same-prefix smaller context +50
+        if (opts.filterContext) {
+            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
+            if (a.context === opts.filterContext) scoreA += 100
+            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
+            if (b.context === opts.filterContext) scoreB += 100
+            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
+        }
         if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
         if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
         if (a.category === "shell") scoreA += 10
@@ -173,6 +179,15 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         var fretB = b.fret_number || 0
         if (fretA >= 3 && fretA <= 7) scoreA += 5
         if (fretB >= 3 && fretB <= 7) scoreB += 5
+        // Difficulty penalty: prefer playable shapes (#105)
+        if (opts.difficultyFn) {
+            var dA = opts.difficultyFn(a)
+            var dB = opts.difficultyFn(b)
+            if (dA.tier === "expert") scoreA -= 30
+            else if (dA.tier === "advanced") scoreA -= 10
+            if (dB.tier === "expert") scoreB -= 30
+            else if (dB.tier === "advanced") scoreB -= 10
+        }
         return scoreB - scoreA
     })
     return candidates[0]
@@ -188,12 +203,20 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         if (contextMax < maxStrings) maxStrings = contextMax
     }
     var candidates = []
+    var seenShapes = {}  // deduplicate same shape from different contexts
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
         if ((v.strings || 6) > maxStrings) continue
         if (v.root !== "C" && v.root !== targetRoot) continue
         if (v.chord_quality === quality || v.category === "quartal") {
             if (opts.filterCategory && v.category !== opts.filterCategory && v.chord_quality === quality) continue
+            // Deduplicate by shape
+            var dk = ""
+            var dots = v.dots || []
+            for (var di = 0; di < dots.length; di++) dk += dots[di].string + ":" + dots[di].fret + ","
+            var sk = v.chord_quality + "|" + (v.fret_number || 0) + "|" + dk
+            if (seenShapes[sk]) continue
+            seenShapes[sk] = true
             candidates.push(v)
         }
     }
@@ -217,8 +240,14 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         var scoreA = 0, scoreB = 0
         if (a.chord_quality === quality) scoreA += 20
         if (b.chord_quality === quality) scoreB += 20
-        if (opts.filterContext && a.context === opts.filterContext) scoreA += 100
-        if (opts.filterContext && b.context === opts.filterContext) scoreB += 100
+        // Context: exact match +100, same-prefix smaller context +50
+        if (opts.filterContext) {
+            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
+            if (a.context === opts.filterContext) scoreA += 100
+            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
+            if (b.context === opts.filterContext) scoreB += 100
+            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
+        }
         if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
         if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
         if (a.category === "shell") scoreA += 10
@@ -259,14 +288,18 @@ function buildBassStringGroups(altVoicings) {
     var list = []
     for (var i = 0; i < altVoicings.length; i++) {
         var v = altVoicings[i]
+        var mutes = v.mutes || []
         var bassStr = 0
+        // Bass = highest-numbered SOUNDING string (fretted or open, not muted)
         var dots = v.dots || []
         for (var d = 0; d < dots.length; d++) {
-            if (dots[d].string > bassStr) bassStr = dots[d].string
+            if (dots[d].string > bassStr && mutes.indexOf(dots[d].string) < 0)
+                bassStr = dots[d].string
         }
         var opens = v.open || []
         for (var o = 0; o < opens.length; o++) {
-            if (opens[o] > bassStr) bassStr = opens[o]
+            if (opens[o] > bassStr && mutes.indexOf(opens[o]) < 0)
+                bassStr = opens[o]
         }
         if (bassStr === 0) bassStr = v.strings || 6
         if (!groups[bassStr]) {

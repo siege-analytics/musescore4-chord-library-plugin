@@ -31,6 +31,13 @@ ColumnLayout {
     property var bassStringList: []       // available bass strings [7, 6, 5, 4]
     property int selectedBassString: -1   // currently selected bass string
     property var bassStringCounts: ({})   // { "7": 45, "6": 32, ... }
+    property var difficultyFn: function(v) { return { score: 0, tier: "standard" } }  // FingeringEngine.computeDifficulty
+    property var fingeringFn: function(v) { return "" }  // FingeringEngine.computeFingeringString
+    property bool melodyLockDefault: false  // from Library tab's Melody Lock button
+
+    // Lock states (readable by parent for bass string selection)
+    readonly property bool melodyLocked: typeof melodyLockBtn !== "undefined" && melodyLockBtn ? melodyLockBtn.checked : false
+    readonly property bool bassLocked: typeof bassLockBtn !== "undefined" && bassLockBtn ? bassLockBtn.checked : false
 
     // === Signals (handled by parent) ===
     signal prevClicked()
@@ -154,7 +161,7 @@ ColumnLayout {
 
         Canvas {
             id: batchPreviewCanvas
-            Layout.preferredWidth: 70
+            Layout.preferredWidth: 85
             Layout.preferredHeight: 90
 
             property var previewVoicing: currentItem ? currentItem.voicing : null
@@ -169,7 +176,7 @@ ColumnLayout {
 
                 var ns = v.strings || 6
                 var nf = v.visible_frets || 4
-                var mg = 6, tm = 14
+                var mg = 14, tm = 14  // left margin accommodates 2-digit fret number label
                 var ss = (width - 2 * mg) / (ns - 1)
                 var fs = (height - tm - mg) / nf
 
@@ -268,6 +275,63 @@ ColumnLayout {
                 Layout.fillWidth: true
             }
 
+            // Difficulty tier (#106)
+            Label {
+                visible: currentItem !== null
+                text: {
+                    if (!currentItem) return ""
+                    var d = walkthroughPanel.difficultyFn(currentItem.voicing)
+                    var label = d.tier.charAt(0).toUpperCase() + d.tier.slice(1)
+                    return label + " (" + d.score + "/100)"
+                }
+                color: {
+                    if (!currentItem) return "black"
+                    var d = walkthroughPanel.difficultyFn(currentItem.voicing)
+                    if (d.tier === "expert") return "#e74c3c"
+                    if (d.tier === "advanced") return "#f39c12"
+                    return "#27ae60"
+                }
+                font.pixelSize: 10
+                font.bold: true
+            }
+
+            // Fingering suggestion
+            Label {
+                visible: currentItem !== null
+                text: {
+                    if (!currentItem) return ""
+                    var fg = walkthroughPanel.fingeringFn(currentItem.voicing)
+                    return fg ? "Fingering: " + fg : ""
+                }
+                font.pixelSize: 10
+                font.family: "Menlo, Monaco, monospace"
+                color: "#aaa"
+            }
+
+            // Color legend for fretboard dot intervals
+            Flow {
+                visible: currentItem !== null
+                Layout.fillWidth: true
+                spacing: 6
+
+                Repeater {
+                    model: theme.legendColors
+
+                    Row {
+                        spacing: 2
+                        Rectangle {
+                            width: 7; height: 7; radius: 3.5
+                            color: modelData.color
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        Label {
+                            text: modelData.label
+                            font.pixelSize: 8
+                        }
+                    }
+                }
+            }
+
             // Bass string + voicing navigation — single compact row
             RowLayout {
                 visible: currentItem !== null && bassStringList.length > 0
@@ -327,21 +391,109 @@ ColumnLayout {
                 }
             }
 
-            Label {
+            // Clickable scale chips (#125)
+            Flow {
                 visible: currentItem !== null
-                text: {
-                    if (!currentItem) return ""
-                    var scales = ChordScales.getScaleNames(currentItem.quality || currentItem.voicing.chord_quality)
-                    return scales.length > 0 ? ("Scales: " + scales.join(", ")) : ""
-                }
-                font.pixelSize: 11
-                font.italic: true
-                color: theme.successText
                 Layout.fillWidth: true
-                wrapMode: Text.Wrap
+                spacing: 4
+
+                Label {
+                    text: "Scales:"
+                    font.pixelSize: 10
+                    font.italic: true
+                    color: theme.successText
+                }
+
+                Repeater {
+                    model: currentItem ? ChordScales.getScaleNames(currentItem.quality || currentItem.voicing.chord_quality) : []
+
+                    Rectangle {
+                        width: scaleChipLabel.implicitWidth + 12
+                        height: 20
+                        radius: 10
+                        color: _selectedScale === modelData ? theme.successText : (theme.isDark ? Qt.rgba(1,1,1,0.1) : Qt.rgba(0,0,0,0.05))
+                        border.color: theme.successText
+                        border.width: _selectedScale === modelData ? 0 : 1
+
+                        Label {
+                            id: scaleChipLabel
+                            anchors.centerIn: parent
+                            text: modelData
+                            font.pixelSize: 9
+                            font.italic: true
+                            color: _selectedScale === modelData ? (theme.isDark ? "#000" : "#fff") : theme.successText
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (_selectedScale === modelData) {
+                                    _selectedScale = ""  // toggle off
+                                } else {
+                                    _selectedScale = modelData
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Expanded scale detail (shown when a chip is clicked)
+            Rectangle {
+                visible: _selectedScale.length > 0 && currentItem !== null
+                Layout.fillWidth: true
+                height: scaleDetailColumn.implicitHeight + 12
+                radius: 6
+                color: theme.isDark ? Qt.rgba(1,1,1,0.05) : Qt.rgba(0,0,0,0.03)
+                border.color: theme.divider
+
+                ColumnLayout {
+                    id: scaleDetailColumn
+                    anchors.fill: parent
+                    anchors.margins: 6
+                    spacing: 4
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var root = currentItem.root
+                            return root + " " + _selectedScale
+                        }
+                        font.pixelSize: 12
+                        font.bold: true
+                        color: theme.successText
+                    }
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
+                            return "Notes: " + info.notes.join("  ")
+                        }
+                        font.pixelSize: 11
+                        font.family: "Menlo, Monaco, monospace"
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: {
+                            if (!currentItem || !_selectedScale) return ""
+                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
+                            return "Intervals: " + info.intervals.join("  ")
+                        }
+                        font.pixelSize: 10
+                        color: theme.textSecondary
+                        Layout.fillWidth: true
+                    }
+                }
             }
         }
     }
+
+    // Internal state for scale chip selection
+    property string _selectedScale: ""
+    onBatchIndexChanged: _selectedScale = ""  // reset when advancing to next chord
 
     // Quality disambiguation chips — shown when chord symbol is ambiguous (e.g. bare "F")
     Flow {
@@ -487,7 +639,7 @@ ColumnLayout {
             implicitWidth: 24
             implicitHeight: 24
             checkable: true
-            checked: false
+            checked: walkthroughPanel.melodyLockDefault
             ToolTip.visible: hovered
             ToolTip.text: checked ? "Melody LOCKED — must match this note" : "Melody unlocked — prefer but allow alternatives"
         }
@@ -627,14 +779,98 @@ ColumnLayout {
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         boundsBehavior: Flickable.StopAtBounds
 
-        Label {
-            id: toolResultsLabel
-            text: resultsContent
+        ColumnLayout {
             width: parent.width - 16
-            font.pixelSize: 11
-            font.family: "Menlo, Monaco, monospace"
-            wrapMode: Text.WordWrap
-            padding: 8
+            spacing: 8
+
+            Label {
+                id: toolResultsLabel
+                text: resultsContent
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                font.family: "Menlo, Monaco, monospace"
+                wrapMode: Text.WordWrap
+                padding: 8
+            }
+
+            // --- Chord Analysis Section ---
+            Rectangle {
+                visible: batchActive && currentItem !== null
+                Layout.fillWidth: true
+                height: 1
+                color: theme.divider
+            }
+
+            ColumnLayout {
+                visible: batchActive && currentItem !== null
+                Layout.fillWidth: true
+                Layout.leftMargin: 8
+                Layout.rightMargin: 8
+                spacing: 4
+
+                Label {
+                    text: "CHORD ANALYSIS"
+                    font.pixelSize: 10
+                    font.bold: true
+                    color: theme.textSecondary
+                }
+
+                // Voicing notes in the current key
+                Label {
+                    text: {
+                        if (!currentItem) return ""
+                        var v = currentItem.voicing
+                        var notes = v.notes || []
+                        if (notes.length === 0) return ""
+                        return "Voicing notes: " + notes.join("  ")
+                    }
+                    font.pixelSize: 11
+                    font.family: "Menlo, Monaco, monospace"
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+
+                // Chord tones vs tensions
+                Label {
+                    text: {
+                        if (!currentItem) return ""
+                        var v = currentItem.voicing
+                        var ivs = v.intervals || []
+                        if (ivs.length === 0) return ""
+                        var chordTones = []
+                        var tensions = []
+                        for (var i = 0; i < ivs.length; i++) {
+                            var iv = ivs[i]
+                            if (iv === "1" || iv === "3" || iv === "b3" || iv === "5" || iv === "b5" || iv === "#5"
+                                || iv === "7" || iv === "b7" || iv === "bb7" || iv === "6")
+                                chordTones.push(iv)
+                            else
+                                tensions.push(iv)
+                        }
+                        var result = "Chord tones: " + chordTones.join(" ")
+                        if (tensions.length > 0) result += "   Tensions: " + tensions.join(" ")
+                        return result
+                    }
+                    font.pixelSize: 10
+                    color: theme.textSecondary
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+
+                // Voice leading context (movement from previous chord)
+                Label {
+                    text: {
+                        if (!currentItem || batchIndex <= 1) return ""
+                        var prevItem = batchChords[batchIndex - 2]
+                        if (!prevItem) return ""
+                        return "Previous: " + prevItem.text + " → " + currentItem.text
+                    }
+                    visible: text.length > 0
+                    font.pixelSize: 9
+                    color: theme.textMuted
+                    Layout.fillWidth: true
+                }
+            }
         }
     }
 }
