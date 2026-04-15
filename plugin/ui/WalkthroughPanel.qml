@@ -307,6 +307,30 @@ ColumnLayout {
                 color: "#aaa"
             }
 
+            // Color legend for fretboard dot intervals
+            Flow {
+                visible: currentItem !== null
+                Layout.fillWidth: true
+                spacing: 6
+
+                Repeater {
+                    model: theme.legendColors
+
+                    Row {
+                        spacing: 2
+                        Rectangle {
+                            width: 7; height: 7; radius: 3.5
+                            color: modelData.color
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        Label {
+                            text: modelData.label
+                            font.pixelSize: 8
+                        }
+                    }
+                }
+            }
+
             // Bass string + voicing navigation — single compact row
             RowLayout {
                 visible: currentItem !== null && bassStringList.length > 0
