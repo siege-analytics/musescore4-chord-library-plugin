@@ -536,6 +536,12 @@ MuseScore {
                 fetchVoicings()
             }
         }
+        // Auto-select CM context if none saved
+        if (!filterContext) {
+            var strCount = tuningStringCounts[selectedTuning] || 6
+            var autoCtx = "CM" + strCount
+            if (contextStringCounts[autoCtx]) filterContext = autoCtx
+        }
         // Defer tuning voicing load so UI renders first (#112)
         startupTuningTimer.start()
     }
@@ -2288,6 +2294,14 @@ MuseScore {
                 selectedTuning = slug
                 loadTuningStringCount()
                 loadTuningVoicings()
+                // Auto-select matching CM context if none is selected
+                if (!filterContext) {
+                    var strCount = tuningStringCounts[slug] || 6
+                    var autoCtx = "CM" + strCount
+                    if (contextStringCounts[autoCtx]) {
+                        filterContext = autoCtx
+                    }
+                }
                 saveSettings()
             }
             onVoiceHereRequested: voiceAtCursor()
