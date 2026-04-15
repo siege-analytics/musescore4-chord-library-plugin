@@ -161,7 +161,7 @@ ColumnLayout {
 
         Canvas {
             id: batchPreviewCanvas
-            Layout.preferredWidth: 70
+            Layout.preferredWidth: 85
             Layout.preferredHeight: 90
 
             property var previewVoicing: currentItem ? currentItem.voicing : null
@@ -176,7 +176,7 @@ ColumnLayout {
 
                 var ns = v.strings || 6
                 var nf = v.visible_frets || 4
-                var mg = 16, tm = 14  // extra left margin for 2-digit fret numbers
+                var mg = 14, tm = 14  // left margin accommodates 2-digit fret number label
                 var ss = (width - 2 * mg) / (ns - 1)
                 var fs = (height - tm - mg) / nf
 
