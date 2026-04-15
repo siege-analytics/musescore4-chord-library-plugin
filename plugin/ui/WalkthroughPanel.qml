@@ -33,6 +33,7 @@ ColumnLayout {
     property var bassStringCounts: ({})   // { "7": 45, "6": 32, ... }
     property var difficultyFn: function(v) { return { score: 0, tier: "standard" } }  // FingeringEngine.computeDifficulty
     property var fingeringFn: function(v) { return "" }  // FingeringEngine.computeFingeringString
+    property bool melodyLockDefault: false  // from Library tab's Melody Lock button
 
     // Lock states (readable by parent for bass string selection)
     readonly property bool melodyLocked: typeof melodyLockBtn !== "undefined" && melodyLockBtn ? melodyLockBtn.checked : false
@@ -550,7 +551,7 @@ ColumnLayout {
             implicitWidth: 24
             implicitHeight: 24
             checkable: true
-            checked: false
+            checked: walkthroughPanel.melodyLockDefault
             ToolTip.visible: hovered
             ToolTip.text: checked ? "Melody LOCKED — must match this note" : "Melody unlocked — prefer but allow alternatives"
         }

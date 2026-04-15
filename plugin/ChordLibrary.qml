@@ -2212,6 +2212,7 @@ MuseScore {
             altIndex: batchEngine.altIndex
             difficultyFn: FingeringEngine.computeDifficulty
             fingeringFn: function(v) { return computeFingeringString(v) }
+            melodyLockDefault: chordLibrary.melodyOnTop
             bassStringList: batchEngine.bassStringList
             selectedBassString: batchEngine.selectedBassString
             bassStringCounts: {
