@@ -1,0 +1,174 @@
+{
+  "scales": [
+    {
+      "id": "ionian",
+      "name": "Ionian",
+      "aliases": ["Major"],
+      "intervals": [0, 2, 4, 5, 7, 9, 11],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "dorian",
+      "name": "Dorian",
+      "aliases": [],
+      "intervals": [0, 2, 3, 5, 7, 9, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "phrygian",
+      "name": "Phrygian",
+      "aliases": [],
+      "intervals": [0, 1, 3, 5, 7, 8, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "lydian",
+      "name": "Lydian",
+      "aliases": [],
+      "intervals": [0, 2, 4, 6, 7, 9, 11],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "mixolydian",
+      "name": "Mixolydian",
+      "aliases": [],
+      "intervals": [0, 2, 4, 5, 7, 9, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "aeolian",
+      "name": "Aeolian",
+      "aliases": ["Natural Minor"],
+      "intervals": [0, 2, 3, 5, 7, 8, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "locrian",
+      "name": "Locrian",
+      "aliases": [],
+      "intervals": [0, 1, 3, 5, 6, 8, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "melodic-minor",
+      "name": "Melodic Minor",
+      "aliases": ["Jazz Minor"],
+      "intervals": [0, 2, 3, 5, 7, 9, 11],
+      "category": "minor",
+      "builtin": true
+    },
+    {
+      "id": "harmonic-minor",
+      "name": "Harmonic Minor",
+      "aliases": [],
+      "intervals": [0, 2, 3, 5, 7, 8, 11],
+      "category": "minor",
+      "builtin": true
+    },
+    {
+      "id": "lydian-b7",
+      "name": "Lydian b7",
+      "aliases": ["Lydian Dominant", "Overtone"],
+      "intervals": [0, 2, 4, 6, 7, 9, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "altered",
+      "name": "Altered",
+      "aliases": ["Super Locrian", "Diminished Whole Tone"],
+      "intervals": [0, 1, 3, 4, 6, 8, 10],
+      "category": "mode",
+      "builtin": true
+    },
+    {
+      "id": "half-whole-dim",
+      "name": "Half-Whole Dim",
+      "aliases": ["Diminished"],
+      "intervals": [0, 1, 3, 4, 6, 7, 9, 10],
+      "category": "symmetric",
+      "builtin": true
+    },
+    {
+      "id": "whole-half-dim",
+      "name": "Whole-Half Dim",
+      "aliases": ["Auxiliary Diminished"],
+      "intervals": [0, 2, 3, 5, 6, 8, 9, 11],
+      "category": "symmetric",
+      "builtin": true
+    },
+    {
+      "id": "whole-tone",
+      "name": "Whole Tone",
+      "aliases": [],
+      "intervals": [0, 2, 4, 6, 8, 10],
+      "category": "symmetric",
+      "builtin": true
+    },
+    {
+      "id": "blues",
+      "name": "Blues",
+      "aliases": [],
+      "intervals": [0, 3, 5, 6, 7, 10],
+      "category": "blues",
+      "builtin": true
+    },
+    {
+      "id": "bebop-dom",
+      "name": "Bebop Dom",
+      "aliases": ["Bebop Dominant"],
+      "intervals": [0, 2, 4, 5, 7, 9, 10, 11],
+      "category": "bebop",
+      "builtin": true
+    },
+    {
+      "id": "pentatonic-maj",
+      "name": "Pentatonic Maj",
+      "aliases": ["Major Pentatonic"],
+      "intervals": [0, 2, 4, 7, 9],
+      "category": "pentatonic",
+      "builtin": true
+    },
+    {
+      "id": "pentatonic-min",
+      "name": "Pentatonic Min",
+      "aliases": ["Minor Pentatonic"],
+      "intervals": [0, 3, 5, 7, 10],
+      "category": "pentatonic",
+      "builtin": true
+    }
+  ],
+  "chordScaleMap": {
+    "maj7": ["ionian", "lydian"],
+    "maj6": ["ionian", "lydian", "pentatonic-maj"],
+    "maj9": ["ionian", "lydian"],
+    "maj": ["ionian", "lydian", "pentatonic-maj"],
+    "dom7": ["mixolydian", "lydian-b7", "bebop-dom", "blues"],
+    "dom9": ["mixolydian", "lydian-b7", "bebop-dom"],
+    "dom13": ["mixolydian", "lydian-b7"],
+    "dom7b9": ["half-whole-dim", "altered", "phrygian"],
+    "dom7sharp9": ["altered", "half-whole-dim", "blues"],
+    "dom7sharp11": ["lydian-b7"],
+    "dom7b13": ["altered", "whole-tone"],
+    "dom7sharp5": ["whole-tone", "altered"],
+    "min7": ["dorian", "aeolian", "pentatonic-min"],
+    "min9": ["dorian", "aeolian"],
+    "min6": ["dorian", "melodic-minor"],
+    "min-maj7": ["melodic-minor", "harmonic-minor"],
+    "min7b5": ["locrian"],
+    "dim7": ["whole-half-dim"],
+    "dim": ["whole-half-dim"],
+    "aug": ["whole-tone"],
+    "sus4": ["mixolydian", "dorian"],
+    "sus2": ["mixolydian", "ionian"],
+    "quartal": ["dorian", "mixolydian", "pentatonic-maj"]
+  },
+  "customQualities": []
+}

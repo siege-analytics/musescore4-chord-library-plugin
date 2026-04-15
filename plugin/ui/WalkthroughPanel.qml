@@ -465,26 +465,109 @@ ColumnLayout {
                         color: theme.successText
                     }
 
-                    Label {
-                        text: {
-                            if (!currentItem || !_selectedScale) return ""
-                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
-                            return "Notes: " + info.notes.join("  ")
-                        }
-                        font.pixelSize: 11
-                        font.family: "Menlo, Monaco, monospace"
+                    // Color-coded scale notes: chord tone / tension / avoid
+                    Flow {
                         Layout.fillWidth: true
+                        spacing: 2
+
+                        Repeater {
+                            model: {
+                                if (!currentItem || !_selectedScale) return []
+                                var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
+                                // Determine which intervals are chord tones from the voicing
+                                var voicingIvs = {}
+                                var quality = currentItem.quality || (currentItem.voicing ? currentItem.voicing.chord_quality : "")
+                                // Map voicing intervals to semitones
+                                var ivToSemi = {"1":0,"b2":1,"2":2,"b3":3,"3":4,"4":5,"b5":6,"5":7,"#5":8,"b6":8,"6":9,"bb7":9,"b7":10,"7":11,"#9":3,"#11":6,"9":2,"11":5,"13":9,"b9":1,"b13":8}
+                                var voicing = currentItem.voicing || {}
+                                var vIvs = voicing.intervals || []
+                                for (var vi = 0; vi < vIvs.length; vi++) {
+                                    var semi = ivToSemi[vIvs[vi]]
+                                    if (semi !== undefined) voicingIvs[semi] = true
+                                }
+
+                                // Avoid notes: scale degree that's a half-step above a chord tone
+                                // (classical jazz theory: note a minor 2nd above a chord tone)
+                                var avoidSemis = {}
+                                for (var ct in voicingIvs) {
+                                    var above = (parseInt(ct) + 1) % 12
+                                    avoidSemis[above] = true
+                                }
+
+                                var result = []
+                                for (var i = 0; i < info.notes.length; i++) {
+                                    var scaleSemi = info.intervals[i]
+                                    var semiVal = ivToSemi[scaleSemi]
+                                    var role = "tension"  // default
+                                    if (semiVal !== undefined && voicingIvs[semiVal]) {
+                                        role = "chordTone"
+                                    } else if (semiVal !== undefined && avoidSemis[semiVal] && !voicingIvs[semiVal]) {
+                                        role = "avoid"
+                                    }
+                                    result.push({
+                                        note: info.notes[i],
+                                        interval: info.intervals[i],
+                                        role: role
+                                    })
+                                }
+                                return result
+                            }
+
+                            Rectangle {
+                                width: noteCol.implicitWidth + 8
+                                height: noteCol.implicitHeight + 4
+                                radius: 3
+                                color: {
+                                    if (modelData.role === "chordTone") return Qt.rgba(theme.successText.r, theme.successText.g, theme.successText.b, 0.15)
+                                    if (modelData.role === "avoid") return Qt.rgba(theme.errorText.r, theme.errorText.g, theme.errorText.b, 0.15)
+                                    return "transparent"
+                                }
+                                border.color: {
+                                    if (modelData.role === "chordTone") return theme.successText
+                                    if (modelData.role === "avoid") return theme.errorText
+                                    return theme.divider
+                                }
+                                border.width: 1
+
+                                ColumnLayout {
+                                    id: noteCol
+                                    anchors.centerIn: parent
+                                    spacing: 0
+
+                                    Label {
+                                        text: modelData.note
+                                        font.pixelSize: 11
+                                        font.bold: modelData.role === "chordTone"
+                                        font.family: "Menlo, Monaco, monospace"
+                                        color: {
+                                            if (modelData.role === "chordTone") return theme.successText
+                                            if (modelData.role === "avoid") return theme.errorText
+                                            return theme.textPrimary
+                                        }
+                                        horizontalAlignment: Text.AlignHCenter
+                                        Layout.alignment: Qt.AlignHCenter
+                                    }
+
+                                    Label {
+                                        text: modelData.interval
+                                        font.pixelSize: 8
+                                        color: theme.textMuted
+                                        horizontalAlignment: Text.AlignHCenter
+                                        Layout.alignment: Qt.AlignHCenter
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    Label {
-                        text: {
-                            if (!currentItem || !_selectedScale) return ""
-                            var info = ChordScales.getScaleNotes(_selectedScale, currentItem.root)
-                            return "Intervals: " + info.intervals.join("  ")
-                        }
-                        font.pixelSize: 10
-                        color: theme.textSecondary
+                    // Legend
+                    Flow {
                         Layout.fillWidth: true
+                        spacing: 8
+
+                        Label { text: "Chord tone"; font.pixelSize: 8; font.bold: true; color: theme.successText }
+                        Label { text: "Tension"; font.pixelSize: 8; color: theme.textPrimary }
+                        Label { text: "Avoid"; font.pixelSize: 8; color: theme.errorText }
                     }
                 }
             }

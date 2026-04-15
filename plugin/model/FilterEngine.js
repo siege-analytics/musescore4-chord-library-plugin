@@ -26,6 +26,7 @@ function rebuildFilterLists(voicingsData) {
 // @param voicingsData — full voicing array
 // @param opts         — {
 //   filterContext, filterCategory, filterQuality, searchText,
+//   filterScale, voicingFitsScaleFn(voicing, scaleName),
 //   maxStrings, contextStringCounts,
 //   sortByProximity, lastInsertedVoicing, distanceFn(a, b)
 // }
@@ -73,6 +74,9 @@ function applyFilters(voicingsData, opts) {
                 || v.chord_quality.toLowerCase().indexOf(q) >= 0
                 || (v.tags && v.tags.join(" ").toLowerCase().indexOf(q) >= 0)
             if (!match) continue
+        }
+        if (opts.filterScale && opts.voicingFitsScaleFn) {
+            if (!opts.voicingFitsScaleFn(v, opts.filterScale)) continue
         }
         // Deduplicate: same shape from different contexts should appear once.
         // Build a shape key from quality + fret + dot positions.
