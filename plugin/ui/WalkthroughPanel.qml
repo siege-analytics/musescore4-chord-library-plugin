@@ -176,7 +176,7 @@ ColumnLayout {
 
                 var ns = v.strings || 6
                 var nf = v.visible_frets || 4
-                var mg = 6, tm = 14
+                var mg = 16, tm = 14  // extra left margin for 2-digit fret numbers
                 var ss = (width - 2 * mg) / (ns - 1)
                 var fs = (height - tm - mg) / nf
 
