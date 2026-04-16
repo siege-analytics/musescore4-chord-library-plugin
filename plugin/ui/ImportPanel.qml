@@ -210,7 +210,7 @@ Flickable {
         }
 
         Button {
-            text: "Import & Merge"
+            text: "Import && Merge"
             onClicked: importPanel.importMergeRequested(importPathField.text.trim())
         }
 
@@ -254,7 +254,7 @@ Flickable {
         }
 
         Button {
-            text: "Import & Voice"
+            text: "Import && Voice"
             onClicked: importPanel.importIRealRequested(irealInput.text.trim())
         }
 
