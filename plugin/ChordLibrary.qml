@@ -279,6 +279,7 @@ MuseScore {
     property string filterCategory: ""
     property string filterQuality: ""
     property string filterScale: ""
+    property var _scaleNameList: ["All Scales"]
     property string searchText: ""
 
     // Voice leading state
@@ -385,6 +386,11 @@ MuseScore {
         var csm = ChordScales.CHORD_SCALE_MAP
         for (var q in csm) nameMap[q] = csm[q].slice()
         settingsPanel.chordScaleMap = nameMap
+        // Populate scale filter list for Library tab dropdown
+        var names = ["All Scales"]
+        var list = ChordScales.getScaleList()
+        for (var i = 0; i < list.length; i++) names.push(list[i].name)
+        _scaleNameList = names
     }
 
     function saveScalesConfig() {
@@ -2409,12 +2415,7 @@ MuseScore {
                 if (!v || !v.quality) return []
                 return ChordScales.getScaleNames(v.quality)
             }
-            scaleFilterList: {
-                var names = ["All Scales"]
-                var list = ChordScales.getScaleList()
-                for (var i = 0; i < list.length; i++) names.push(list[i].name)
-                return names
-            }
+            scaleFilterList: chordLibrary._scaleNameList
 
             onScaleFilterChanged: function(scaleName) {
                 chordLibrary.filterScale = scaleName
