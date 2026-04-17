@@ -306,7 +306,7 @@ Item {
 
             delegate: Rectangle {
                 width: voicingList.width
-                height: Math.max(80, cardRow.implicitHeight + 12)
+                height: Math.max(90, cardRow.implicitHeight + 14)
                 radius: 4
                 color: ma.containsMouse ? theme.chipHover : theme.chipBackground
                 border.color: theme.divider
@@ -493,11 +493,12 @@ Item {
                             text: {
                                 var scales = libraryPanel.matchingScalesFn(v)
                                 if (!scales || scales.length === 0) return ""
-                                return "Fits: " + scales.join(", ")
+                                return "Scales: " + scales.join(", ")
                             }
                             visible: text.length > 0
-                            font.pixelSize: 8
-                            color: theme.textMuted
+                            font.pixelSize: 10
+                            font.italic: true
+                            color: theme.successText
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
