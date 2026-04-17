@@ -40,9 +40,6 @@ Item {
     property string tuningNameValue: ""
     property string tuningPitchesValue: ""
     property int tuningStringCountValue: 6
-    onTuningNameValueChanged: if (tuningColumn) tuningColumn.tuningEditName = tuningNameValue
-    onTuningPitchesValueChanged: if (tuningColumn) tuningColumn.tuningEditPitches = tuningPitchesValue
-    onTuningStringCountValueChanged: if (tuningColumn) tuningColumn.tuningEditStrings = tuningStringCountValue
 
     // --- Output signals ---
     signal placementChanged(string placement)
@@ -226,12 +223,6 @@ Item {
                     width: parent.width - 16
                     spacing: 12
 
-                    // --- Local edit state for tuning ---
-                    property bool tuningEditing: false
-                    property string tuningEditName: ""
-                    property string tuningEditPitches: "E4, B3, G3, D3, A2, E2"
-                    property int tuningEditStrings: 6
-
                     // --- Tuning list (#148) ---
                     Label {
                         text: "TUNINGS (" + tuning.tuningList.length + ")"
@@ -291,10 +282,7 @@ Item {
                                     font.pixelSize: 9
                                     implicitWidth: 36
                                     onClicked: {
-                                        tuningColumn.tuningEditing = true
-                                        tuningColumn.tuningEditName = tuning.tuningLabels[modelData] || modelData
-                                        // Pitches would need to be loaded from the tuning file
-                                        // For now, signal the parent to load the data
+                                        settingsPanel.tuningNameValue = tuning.tuningLabels[modelData] || modelData
                                         settingsPanel.editTuningRequested(modelData)
                                     }
                                 }
@@ -335,7 +323,7 @@ Item {
 
                     // --- Inline tuning edit/create form ---
                     Label {
-                        text: tuningColumn.tuningEditing ? "EDIT TUNING" : "CREATE TUNING"
+                        text: settingsPanel.tuningNameValue.length > 0 ? "EDIT TUNING" : "CREATE TUNING"
                         font.pixelSize: 11
                         font.bold: true
                         Layout.fillWidth: true
@@ -351,17 +339,17 @@ Item {
                             font.pixelSize: 11
                             placeholderText: "Name (e.g. Open G)"
                             selectByMouse: true
-                            text: tuningColumn.tuningEditName
-                            onTextChanged: tuningColumn.tuningEditName = text
+                            text: settingsPanel.tuningNameValue
+                            onTextChanged: settingsPanel.tuningNameValue = text
                         }
 
                         SpinBox {
                             id: tuningEditStringsCount
                             from: 4
                             to: 12
-                            value: tuningColumn.tuningEditStrings
+                            value: settingsPanel.tuningStringCountValue
                             implicitWidth: 80
-                            onValueChanged: tuningColumn.tuningEditStrings = value
+                            onValueChanged: settingsPanel.tuningStringCountValue = value
                         }
                     }
 
@@ -378,8 +366,8 @@ Item {
                         font.pixelSize: 11
                         placeholderText: "E4, B3, G3, D3, A2, E2"
                         selectByMouse: true
-                        text: tuningColumn.tuningEditPitches
-                        onTextChanged: tuningColumn.tuningEditPitches = text
+                        text: settingsPanel.tuningPitchesValue
+                        onTextChanged: settingsPanel.tuningPitchesValue = text
                     }
 
                     RowLayout {
@@ -398,10 +386,9 @@ Item {
                             text: "Clear"
                             font.pixelSize: 10
                             onClicked: {
-                                tuningColumn.tuningEditing = false
-                                tuningColumn.tuningEditName = ""
-                                tuningColumn.tuningEditPitches = "E4, B3, G3, D3, A2, E2"
-                                tuningColumn.tuningEditStrings = 6
+                                settingsPanel.tuningNameValue = ""
+                                settingsPanel.tuningPitchesValue = "E4, B3, G3, D3, A2, E2"
+                                settingsPanel.tuningStringCountValue = 6
                             }
                         }
                     }
