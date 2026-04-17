@@ -2318,7 +2318,14 @@ MuseScore {
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
-            saveTuningFn: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
+            saveTuningFn: function(name, pitches, numStrings) {
+                try {
+                    createTuning(name, pitches, numStrings)
+                } catch(e) {
+                    settingsPanel.tuningStatus = "Error: " + e
+                    settingsPanel.tuningStatusColor = "#e74c3c"
+                }
+            }
             profilesData: chordLibrary._profileList
             activeProfileId: chordLibrary._activeProfileId
             onProfileSelected: function(profileId) { setProfile(profileId) }
