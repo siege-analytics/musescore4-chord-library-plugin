@@ -188,6 +188,15 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
             if (dB.tier === "expert") scoreB -= 30
             else if (dB.tier === "advanced") scoreB -= 10
         }
+        // Style profile weights (#146)
+        if (opts.profileCategoryWeightFn) {
+            scoreA += opts.profileCategoryWeightFn(a.category)
+            scoreB += opts.profileCategoryWeightFn(b.category)
+        }
+        if (opts.profileQualityBoostFn) {
+            scoreA += opts.profileQualityBoostFn(a.chord_quality)
+            scoreB += opts.profileQualityBoostFn(b.chord_quality)
+        }
         return scoreB - scoreA
     })
     return candidates[0]

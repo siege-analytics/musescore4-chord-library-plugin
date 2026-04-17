@@ -94,7 +94,9 @@ Item {
             bassNoteFn: MelodyEngine.voicingBassNoteSemitone,
             distanceFn: MelodyEngine.voicingDistance,
             difficultyFn: FingeringEngine.computeDifficulty,
-            semitoneMap: Transposer.SEMITONE_MAP
+            semitoneMap: Transposer.SEMITONE_MAP,
+            profileCategoryWeightFn: ChordScales.getProfileCategoryWeight,
+            profileQualityBoostFn: ChordScales.getProfileQualityBoost
         }
     }
 

@@ -41,7 +41,7 @@ Item {
     signal editTuningRequested(string slug)
     signal deleteTuningRequested(string slug)
     signal moveTuningRequested(string slug, int direction)
-    signal createContextRequested(string code, string name, int strings)
+    signal createContextRequested(string code, string name, int strings, string linkedTuning)
 
     // --- Scale signals ---
     signal scaleAdded(string jsonData)
@@ -921,6 +921,32 @@ Item {
                     }
 
                     RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        Label {
+                            text: "Link tuning:"
+                            font.pixelSize: 9
+                            color: theme.textMuted
+                        }
+
+                        ComboBox {
+                            id: contextTuningCombo
+                            model: {
+                                var items = ["(none)"]
+                                if (tuning && tuning.tuningList) {
+                                    for (var i = 0; i < tuning.tuningList.length; i++) {
+                                        items.push(tuning.tuningLabels[tuning.tuningList[i]] || tuning.tuningList[i])
+                                    }
+                                }
+                                return items
+                            }
+                            Layout.fillWidth: true
+                            font.pixelSize: 10
+                        }
+                    }
+
+                    RowLayout {
                         spacing: 6
 
                         Button {
@@ -930,7 +956,11 @@ Item {
                                 var code = contextTypeCombo.currentText + contextStringsSpin.value
                                 var name = contextNameField.text.trim()
                                 if (!name) name = contextTypeCombo.currentText + " " + contextStringsSpin.value + "-str"
-                                settingsPanel.createContextRequested(code, name, contextStringsSpin.value)
+                                var linkedTuning = ""
+                                if (contextTuningCombo.currentIndex > 0 && tuning.tuningList) {
+                                    linkedTuning = tuning.tuningList[contextTuningCombo.currentIndex - 1] || ""
+                                }
+                                settingsPanel.createContextRequested(code, name, contextStringsSpin.value, linkedTuning)
                             }
                         }
 

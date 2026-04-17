@@ -20,6 +20,7 @@ ColumnLayout {
     property int batchTotal: 0        // Total chords in batch
     property bool batchActive: false  // True when walkthrough is in progress
     property string resultsTitle: ""
+    property string activeProfileName: ""
     property string resultsContent: ""
     property var availableCategories: ["All Types"]  // dynamic from parent's categoryList
     property string tuningName: ""  // active tuning display name
@@ -59,11 +60,25 @@ ColumnLayout {
     RowLayout {
         Layout.fillWidth: true
 
-        Label {
-            text: resultsTitle
-            font.pixelSize: 16
-            font.bold: true
+        ColumnLayout {
             Layout.fillWidth: true
+            spacing: 0
+
+            Label {
+                text: resultsTitle
+                font.pixelSize: 16
+                font.bold: true
+                Layout.fillWidth: true
+            }
+
+            Label {
+                visible: activeProfileName.length > 0 && activeProfileName !== "Default"
+                text: "Style: " + activeProfileName
+                font.pixelSize: 9
+                font.italic: true
+                color: theme.textMuted
+                Layout.fillWidth: true
+            }
         }
 
         Button {

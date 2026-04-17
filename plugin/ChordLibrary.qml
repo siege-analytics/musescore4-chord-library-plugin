@@ -287,6 +287,7 @@ MuseScore {
     property var _scaleNameList: ["All Scales"]
     property var _profileList: []          // Array of profile objects from profiles.json
     property string _activeProfileId: ""   // ID of the active profile (empty = default)
+    property var _contextTuningLinks: ({}) // context code → tuning slug (from contexts.json)
     property string searchText: ""
 
     // Voice leading state
@@ -351,11 +352,14 @@ MuseScore {
             if (raw && raw.length > 2) {
                 var config = JSON.parse(raw)
                 var ctxs = config.contexts || {}
+                var tuningLinks = {}
                 for (var code in ctxs) {
                     if (ctxs[code].name) labels[code] = ctxs[code].name
                     if (ctxs[code].short) shorts[code] = ctxs[code].short
                     if (ctxs[code].strings) strCounts[code] = ctxs[code].strings
+                    if (ctxs[code].tuning) tuningLinks[code] = ctxs[code].tuning
                 }
+                _contextTuningLinks = tuningLinks
                 console.log("Loaded context labels from config (" + Object.keys(ctxs).length + " contexts)")
             }
         } catch (e) {
@@ -450,7 +454,7 @@ MuseScore {
 
     // === Custom context creation (#132) ===
 
-    function createCustomContext(code, name, strings) {
+    function createCustomContext(code, name, strings, linkedTuning) {
         // Update runtime state
         var labels = {}
         for (var k in contextLabels) labels[k] = contextLabels[k]
@@ -467,6 +471,14 @@ MuseScore {
         counts[code] = strings
         contextStringCounts = counts
 
+        // Store tuning link (#148)
+        if (linkedTuning) {
+            var links = {}
+            for (var lt in _contextTuningLinks) links[lt] = _contextTuningLinks[lt]
+            links[code] = linkedTuning
+            _contextTuningLinks = links
+        }
+
         // Add to context list if not already present
         if (contextList.indexOf(code) < 0) {
             var list = contextList.slice()
@@ -482,7 +494,8 @@ MuseScore {
                 name: name,
                 short: shorts[code],
                 description: "Custom context created by user",
-                strings: strings
+                strings: strings,
+                tuning: linkedTuning || ""
             }
             contextsConfigFile.write(JSON.stringify(config, null, 2))
             settingsPanel.contextStatus = "Created: " + name + " (" + code + ")"
@@ -700,7 +713,9 @@ MuseScore {
             calcMinNotes = s.calcMinNotes
             calcMaxMuted = s.calcMaxMuted
             calcMaxPerQuality = s.calcMaxPerQuality
-            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning)
+            // Restore active style profile (#146)
+            if (s.activeProfile) setProfile(s.activeProfile)
+            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
             console.log("No saved settings found, using defaults")
         }
@@ -721,6 +736,7 @@ MuseScore {
             calcMinNotes: calcMinNotes,
             calcMaxMuted: calcMaxMuted,
             calcMaxPerQuality: calcMaxPerQuality,
+            activeProfile: _activeProfileId,
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -2310,8 +2326,8 @@ MuseScore {
             onEditTuningRequested: function(slug) { editTuning(slug) }
             onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
             onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
-            onCreateContextRequested: function(code, name, strings) {
-                createCustomContext(code, name, strings)
+            onCreateContextRequested: function(code, name, strings, linkedTuning) {
+                createCustomContext(code, name, strings, linkedTuning)
             }
 
             // --- Scale signals (#142) ---
@@ -2409,6 +2425,12 @@ MuseScore {
             batchTotal: batchEngine.batchTotal
             batchActive: batchEngine.batchQueue.length > 0
             resultsTitle: toolResultsTitle
+            activeProfileName: {
+                for (var i = 0; i < _profileList.length; i++) {
+                    if (_profileList[i].id === _activeProfileId) return _profileList[i].name
+                }
+                return ""
+            }
             resultsContent: toolResultsContent
             availableCategories: categoryList
             tuningName: tuningLabels[selectedTuning] || selectedTuning
@@ -2514,7 +2536,20 @@ MuseScore {
             activeProfileId: _activeProfileId
             onProfileChanged: function(profileId) { setProfile(profileId) }
             onSearchChanged: function(text) { searchText = text; applyFilters() }
-            onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
+            onContextFilterChanged: function(code) {
+                filterContext = code
+                applyFilters()
+                // Auto-switch tuning if context has a linked tuning (#148)
+                if (code && _contextTuningLinks[code]) {
+                    var linkedTuning = _contextTuningLinks[code]
+                    if (linkedTuning !== selectedTuning) {
+                        selectedTuning = linkedTuning
+                        loadTuningStringCount()
+                        loadTuningVoicings()
+                        saveSettings()
+                    }
+                }
+            }
             onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }
             onQualityFilterChanged: function(text) { filterQuality = text; applyFilters() }
             onTuningSelected: function(slug) {

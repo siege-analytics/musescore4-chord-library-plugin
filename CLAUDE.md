@@ -21,7 +21,7 @@ Always plan first, never jump to implementation:
 
 ### 3. Test Before Presenting
 
-- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 188 tests: 90 Python + 98 JS module via Node.js)
+- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 197 tests: 90 Python + 107 JS module via Node.js)
 - Only present finished, tested solutions
 - **Don't push untested code** — review and fix first, push after
 
@@ -131,7 +131,7 @@ REFERENCES.md                    # Full credits and bibliography
 ## Common Commands
 
 ```bash
-python3 -m pytest tests/ -v              # Run all 188 tests (90 Python + 98 JS module)
+python3 -m pytest tests/ -v              # Run all 197 tests (90 Python + 107 JS module)
 python3 scripts/validate.py -v           # Validate voicing data
 bash deploy.sh                           # Deploy to local MuseScore (dev only)
 bash deploy.sh --watch                   # Auto-deploy on file changes
@@ -146,14 +146,19 @@ HygieneEngine, MelodyEngine, ReharmonizationEngine, VoicingCalculator, Fingering
 
 CI runs on every push to main/develop and on all PRs (`.github/workflows/test.yml`).
 
-## Open Issues (as of 2026-04-15)
+## Open Issues (as of 2026-04-16)
 
 - **#75** — Epic: decompose ChordLibrary.qml (Phases A, B, C complete; 5174→2365 lines)
-- **#142** — Scale management (#142 implemented: scales.json, ChordScales.js CRUD, Settings Scales sub-tab)
-- **#144** — Tab content redistribution (implemented: Import/Create Tuning → Import tab, Save/Audit → Library tab)
-- **#145** — Test modernization epic (Tier 1 complete: 98 JS tests via Node.js, CI workflow)
+- **#142** — Scale management (implemented: scales.json, ChordScales.js CRUD, 43 chord-scale mappings)
+- **#144** — Tab content redistribution (implemented: Import/Create Tuning → Import, Save/Audit → Library)
+- **#145** — Test modernization (Tier 1 complete: 107 JS tests, CI workflow)
+- **#146** — Style profiles (implemented: profiles.json, 4 built-in profiles, ChordSelector weights, profile selector)
+- **#147** — Scale UX polish (implemented: delete confirmation, duplicate, validation feedback)
+- **#148** — Tuning list view (implemented) + context-tuning auto-switch (implemented)
+- **#149** — iReal Pro file import (Part A: file picker — implemented; Part B: score creation — deferred)
+- **#150** — Walkthrough layout collision (fixed)
+- **#151** — Clickable scale chips on voicing cards (implemented)
 - **#74** — cmd("paste") broken (wishlist — needs MuseScore C++ change, PR #32848 rejected)
-- Custom context creation (#132) deployed but untested in MuseScore
 
 ## MuseScore 4 Plugin API Limitations
 
@@ -176,4 +181,4 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 
 ---
 
-*Last updated: 2026-04-15*
+*Last updated: 2026-04-16*
