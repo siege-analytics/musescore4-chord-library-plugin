@@ -50,9 +50,15 @@ Item {
     property var suggestFingeringFn: function(v) { return [] }
     property var fingeringStringFn: function(v) { return "" }
     property var matchingScalesFn: function(v) { return [] }
+    property var getScaleNotesFn: function(scaleName, root) { return { notes: [], intervals: [] } }
 
     // --- Scale filter ---
     property var scaleFilterList: ["All Scales"]
+
+    // --- Style profile (#146) ---
+    property var profileDisplayList: ["Default"]
+    property var profileIdList: ["default"]
+    property string activeProfileId: ""
 
     // --- Output signals ---
     signal searchChanged(string text)
@@ -73,6 +79,7 @@ Item {
     signal compareRequested(var voicing)
     signal clearComparisonRequested()
     signal scaleFilterChanged(string scaleName)
+    signal profileChanged(string profileId)
 
     // --- Save to Library signals (moved from Settings, #144) ---
     signal captureRequested()
@@ -159,6 +166,32 @@ Item {
                 Layout.fillWidth: true
                 onActivated: {
                     libraryPanel.scaleFilterChanged(currentText === "All Scales" ? "" : currentText)
+                }
+            }
+        }
+
+        // Style profile selector (#146)
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            Label {
+                text: "Style:"
+                font.pixelSize: 10
+                font.italic: true
+                color: theme.textSecondary
+            }
+
+            ComboBox {
+                id: profileCombo
+                model: libraryPanel.profileDisplayList
+                Layout.fillWidth: true
+                font.pixelSize: 10
+                currentIndex: Math.max(0, libraryPanel.profileIdList.indexOf(libraryPanel.activeProfileId || "default"))
+                onActivated: {
+                    if (currentIndex >= 0 && currentIndex < libraryPanel.profileIdList.length) {
+                        libraryPanel.profileChanged(libraryPanel.profileIdList[currentIndex])
+                    }
                 }
             }
         }
@@ -487,18 +520,54 @@ Item {
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
-                        Label {
-                            text: {
-                                if (!v || !v.chord_quality) return ""
-                                var scales = libraryPanel.matchingScalesFn(v)
-                                if (!scales || scales.length === 0) return ""
-                                return "Scales: " + scales.join(", ")
-                            }
-                            visible: text.length > 0
-                            font.pixelSize: 10
-                            font.italic: true
-                            color: theme.successText
+                        Flow {
                             Layout.fillWidth: true
+                            spacing: 3
+                            visible: v && v.chord_quality && libraryPanel.matchingScalesFn(v).length > 0
+
+                            Label {
+                                text: "Scales:"
+                                font.pixelSize: 9
+                                font.italic: true
+                                color: theme.successText
+                            }
+
+                            Repeater {
+                                model: v ? libraryPanel.matchingScalesFn(v) : []
+
+                                Rectangle {
+                                    width: scaleChipText.implicitWidth + 8
+                                    height: scaleChipText.implicitHeight + 4
+                                    radius: 3
+                                    color: scaleChipMa.containsMouse ? theme.chipHover : "transparent"
+                                    border.color: theme.successText
+                                    border.width: 1
+
+                                    Label {
+                                        id: scaleChipText
+                                        anchors.centerIn: parent
+                                        text: modelData
+                                        font.pixelSize: 9
+                                        font.italic: true
+                                        color: theme.successText
+                                    }
+
+                                    MouseArea {
+                                        id: scaleChipMa
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        cursorShape: Qt.PointingHandCursor
+                                    }
+
+                                    ToolTip.visible: scaleChipMa.containsMouse
+                                    ToolTip.delay: 300
+                                    ToolTip.text: {
+                                        var info = libraryPanel.getScaleNotesFn(modelData, "C")
+                                        if (!info || !info.notes) return modelData
+                                        return "C " + modelData + ": " + info.notes.join(" ") + "\n" + info.intervals.join(" ")
+                                    }
+                                }
+                            }
                         }
                     }
 
