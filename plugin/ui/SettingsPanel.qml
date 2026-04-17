@@ -52,6 +52,7 @@ Item {
     signal moveTuningRequested(string slug, int direction)
     signal createTuningRequested(string name, string pitches, int numStrings)
     signal importTuningRequested(string path)
+    signal browseTuningRequested(var targetField)
     signal createContextRequested(string code, string name, int strings, string linkedTuning)
 
     // --- Scale signals ---
@@ -455,6 +456,12 @@ Item {
                             font.pixelSize: 11
                             placeholderText: "/path/to/tuning.json"
                             selectByMouse: true
+                        }
+
+                        Button {
+                            text: "Browse"
+                            font.pixelSize: 10
+                            onClicked: settingsPanel.browseTuningRequested(tuningImportPathField)
                         }
 
                         Button {

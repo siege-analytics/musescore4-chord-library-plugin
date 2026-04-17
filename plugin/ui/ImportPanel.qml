@@ -382,6 +382,12 @@ Flickable {
             }
 
             Button {
+                text: "Browse"
+                font.pixelSize: 10
+                onClicked: importPanel.browseImportRequested(tuningImportPath)
+            }
+
+            Button {
                 text: "Import"
                 font.pixelSize: 10
                 onClicked: importPanel.importTuningRequested(tuningImportPath.text.trim())

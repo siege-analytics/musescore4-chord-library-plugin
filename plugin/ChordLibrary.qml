@@ -2485,6 +2485,7 @@ MuseScore {
                 createTuning(name, pitches, numStrings)
             }
             onImportTuningRequested: function(path) { importTuning(path) }
+            onBrowseTuningRequested: function(field) { openFileBrowser("open", field, null) }
             onCreateContextRequested: function(code, name, strings, linkedTuning) {
                 createCustomContext(code, name, strings, linkedTuning)
             }
