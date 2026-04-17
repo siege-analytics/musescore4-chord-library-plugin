@@ -239,7 +239,7 @@ Item {
 
                     // --- Tuning list (#148) ---
                     Label {
-                        text: "TUNINGS (" + tuning.tuningList.length + ")"
+                        text: "TUNINGS (" + (tuning && tuning.tuningList ? tuning.tuningList.length : 0) + ")"
                         font.pixelSize: 11
                         font.bold: true
                         Layout.fillWidth: true
@@ -264,7 +264,7 @@ Item {
                     }
 
                     Repeater {
-                        model: tuning.tuningList
+                        model: tuning && tuning.tuningList ? tuning.tuningList : []
 
                         Rectangle {
                             Layout.fillWidth: true
@@ -317,7 +317,7 @@ Item {
                                     text: "\u25B2"
                                     font.pixelSize: 9
                                     implicitWidth: 24
-                                    enabled: tuning.tuningList.indexOf(modelData) > 0
+                                    enabled: tuning && tuning.tuningList ? tuning.tuningList.indexOf(modelData) > 0 : false
                                     onClicked: settingsPanel.moveTuningRequested(modelData, -1)
                                 }
 
@@ -325,7 +325,7 @@ Item {
                                     text: "\u25BC"
                                     font.pixelSize: 9
                                     implicitWidth: 24
-                                    enabled: tuning.tuningList.indexOf(modelData) < tuning.tuningList.length - 1
+                                    enabled: tuning && tuning.tuningList ? tuning.tuningList.indexOf(modelData) < tuning.tuningList.length - 1 : false
                                     onClicked: settingsPanel.moveTuningRequested(modelData, 1)
                                 }
                             }
