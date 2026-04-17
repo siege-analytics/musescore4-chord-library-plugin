@@ -306,7 +306,7 @@ Item {
 
             delegate: Rectangle {
                 width: voicingList.width
-                height: 95
+                height: Math.max(80, cardRow.implicitHeight + 12)
                 radius: 4
                 color: ma.containsMouse ? theme.chipHover : theme.chipBackground
                 border.color: theme.divider
@@ -322,7 +322,10 @@ Item {
                 }
 
                 RowLayout {
-                    anchors.fill: parent
+                    id: cardRow
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
                     anchors.margins: 6
                     spacing: 6
 
