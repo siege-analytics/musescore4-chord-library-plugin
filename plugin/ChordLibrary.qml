@@ -2412,8 +2412,8 @@ MuseScore {
             suggestFingeringFn: function(v) { return suggestFingering(v) }
             fingeringStringFn: function(v) { return computeFingeringString(v) }
             matchingScalesFn: function(v) {
-                if (!v || !v.quality) return []
-                return ChordScales.getScaleNames(v.quality)
+                if (!v || !v.chord_quality) return []
+                return ChordScales.getScaleNames(v.chord_quality)
             }
             scaleFilterList: chordLibrary._scaleNameList
 
