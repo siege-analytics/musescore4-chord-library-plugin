@@ -38,9 +38,10 @@
       "description": "Django Reinhardt tradition. Triads and shell voicings, harmonic minor over minor chords, diminished passing chords. La pompe rhythm.",
       "builtin": true,
       "chordScaleOverrides": {
-        "min7": ["Harmonic Minor", "Aeolian"],
-        "min6": ["Harmonic Minor"],
-        "min": ["Harmonic Minor", "Aeolian"],
+        "min7": ["Harmonic Minor", "Hungarian Minor", "Aeolian"],
+        "min6": ["Harmonic Minor", "Hungarian Minor"],
+        "min": ["Harmonic Minor", "Hungarian Minor", "Aeolian"],
+        "min-maj7": ["Harmonic Minor", "Hungarian Minor"],
         "dom7": ["Mixolydian", "Harmonic Minor"]
       },
       "categoryWeights": {

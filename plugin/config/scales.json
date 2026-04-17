@@ -143,6 +143,14 @@
       "intervals": [0, 3, 5, 7, 10],
       "category": "pentatonic",
       "builtin": true
+    },
+    {
+      "id": "hungarian-minor",
+      "name": "Hungarian Minor",
+      "aliases": ["Gypsy Minor", "Double Harmonic Minor"],
+      "intervals": [0, 2, 3, 6, 7, 8, 11],
+      "category": "minor",
+      "builtin": true
     }
   ],
   "chordScaleMap": {
@@ -161,7 +169,7 @@
     "min7": ["dorian", "aeolian", "pentatonic-min"],
     "min9": ["dorian", "aeolian"],
     "min6": ["dorian", "melodic-minor"],
-    "min-maj7": ["melodic-minor", "harmonic-minor"],
+    "min-maj7": ["melodic-minor", "harmonic-minor", "hungarian-minor"],
     "min7b5": ["locrian"],
     "dim7": ["whole-half-dim"],
     "min": ["dorian", "aeolian", "pentatonic-min"],
@@ -178,7 +186,7 @@
     "maj69": ["ionian", "lydian", "pentatonic-maj"],
     "maj7sharp11": ["lydian"],
     "maj7sharp5": ["lydian", "whole-tone"],
-    "min-maj9": ["melodic-minor", "harmonic-minor"],
+    "min-maj9": ["melodic-minor", "harmonic-minor", "hungarian-minor"],
     "min11": ["dorian", "aeolian"],
     "13b9": ["half-whole-dim", "altered", "phrygian"],
     "13sharp9": ["altered", "half-whole-dim", "blues"],

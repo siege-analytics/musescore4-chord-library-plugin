@@ -25,6 +25,7 @@ var DEFAULT_SCALES = {
     "Bebop Dom":     [0, 2, 4, 5, 7, 9, 10, 11],
     "Pentatonic Maj":[0, 2, 4, 7, 9],
     "Pentatonic Min":[0, 3, 5, 7, 10],
+    "Hungarian Minor":[0, 2, 3, 6, 7, 8, 11],
 }
 
 var DEFAULT_CHORD_SCALE_MAP = {
@@ -43,7 +44,7 @@ var DEFAULT_CHORD_SCALE_MAP = {
     "min7":       ["Dorian", "Aeolian", "Pentatonic Min"],
     "min9":       ["Dorian", "Aeolian"],
     "min6":       ["Dorian", "Melodic Minor"],
-    "min-maj7":   ["Melodic Minor", "Harmonic Minor"],
+    "min-maj7":   ["Melodic Minor", "Harmonic Minor", "Hungarian Minor"],
     "min7b5":     ["Locrian", "Locrian"],
     "min":        ["Dorian", "Aeolian", "Pentatonic Min"],
     "dim7":       ["Whole-Half Dim"],
@@ -60,7 +61,7 @@ var DEFAULT_CHORD_SCALE_MAP = {
     "maj69":      ["Ionian", "Lydian", "Pentatonic Maj"],
     "maj7sharp11":["Lydian"],
     "maj7sharp5": ["Lydian", "Whole Tone"],
-    "min-maj9":   ["Melodic Minor", "Harmonic Minor"],
+    "min-maj9":   ["Melodic Minor", "Harmonic Minor", "Hungarian Minor"],
     "min11":      ["Dorian", "Aeolian"],
     "13b9":       ["Half-Whole Dim", "Altered", "Phrygian"],
     "13sharp9":   ["Altered", "Half-Whole Dim", "Blues"],

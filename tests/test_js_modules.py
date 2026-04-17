@@ -79,7 +79,7 @@ class TestScalesJson:
         assert "customQualities" in self.data
 
     def test_scale_count(self):
-        assert len(self.data["scales"]) == 18
+        assert len(self.data["scales"]) == 19
 
     def test_chord_scale_map_count(self):
         assert len(self.data["chordScaleMap"]) == 43
@@ -156,7 +156,7 @@ class TestChordScalesLoad:
 
     def test_default_scales_count(self):
         assert_js("ChordScales.js", """
-            assertEqual(Object.keys(DEFAULT_SCALES).length, 18, "18 default scales");
+            assertEqual(Object.keys(DEFAULT_SCALES).length, 19, "19 default scales");
         """)
 
     def test_default_chord_scale_map_count(self):
@@ -173,7 +173,7 @@ class TestChordScalesLoad:
     def test_ensure_loaded_populates_defaults(self):
         assert_js("ChordScales.js", """
             _ensureLoaded();
-            assertEqual(Object.keys(SCALES).length, 18, "18 scales after _ensureLoaded");
+            assertEqual(Object.keys(SCALES).length, 19, "19 scales after _ensureLoaded");
             assert(Object.keys(CHORD_SCALE_MAP).length >= 43, "42+ mappings after _ensureLoaded");
         """)
 
@@ -183,7 +183,7 @@ class TestChordScalesLoad:
             var data = JSON.parse(raw);
             var ok = loadScales(data);
             assert(ok === true, "loadScales returns true");
-            assertEqual(Object.keys(SCALES).length, 18, "18 scales loaded");
+            assertEqual(Object.keys(SCALES).length, 19, "19 scales loaded");
         """)
 
     def test_load_scales_populates_registry(self):
@@ -191,7 +191,7 @@ class TestChordScalesLoad:
             var raw = readFileSync("plugin/config/scales.json");
             loadScales(JSON.parse(raw));
             var list = getScaleList();
-            assertEqual(list.length, 18, "18 scales in registry");
+            assertEqual(list.length, 19, "19 scales in registry");
             assert(list[0].id !== undefined, "scale has id");
             assert(list[0].name !== undefined, "scale has name");
         """)
@@ -208,7 +208,7 @@ class TestChordScalesLoad:
         assert_js("ChordScales.js", """
             var ok = loadScales(null);
             assert(ok === false, "returns false for null");
-            assertEqual(Object.keys(SCALES).length, 18, "falls back to defaults");
+            assertEqual(Object.keys(SCALES).length, 19, "falls back to defaults");
         """)
 
     def test_save_scales_roundtrip(self):
@@ -216,7 +216,7 @@ class TestChordScalesLoad:
             var raw = readFileSync("plugin/config/scales.json");
             loadScales(JSON.parse(raw));
             var saved = saveScales();
-            assert(saved.scales.length === 18, "18 scales in saved data");
+            assert(saved.scales.length === 19, "19 scales in saved data");
             assert(Object.keys(saved.chordScaleMap).length >= 43, "42+ mappings saved");
             assert(Array.isArray(saved.customQualities), "customQualities is array");
         """)
