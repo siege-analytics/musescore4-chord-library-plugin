@@ -45,6 +45,7 @@ var DEFAULT_CHORD_SCALE_MAP = {
     "min6":       ["Dorian", "Melodic Minor"],
     "min-maj7":   ["Melodic Minor", "Harmonic Minor"],
     "min7b5":     ["Locrian", "Locrian"],
+    "min":        ["Dorian", "Aeolian", "Pentatonic Min"],
     "dim7":       ["Whole-Half Dim"],
     "dim":        ["Whole-Half Dim"],
     "aug":        ["Whole Tone"],

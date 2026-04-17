@@ -489,6 +489,7 @@ Item {
                         }
                         Label {
                             text: {
+                                if (!v || !v.chord_quality) return ""
                                 var scales = libraryPanel.matchingScalesFn(v)
                                 if (!scales || scales.length === 0) return ""
                                 return "Scales: " + scales.join(", ")
@@ -497,7 +498,6 @@ Item {
                             font.pixelSize: 10
                             font.italic: true
                             color: theme.successText
-                            elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
                     }
