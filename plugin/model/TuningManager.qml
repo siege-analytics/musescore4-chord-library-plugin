@@ -176,7 +176,10 @@ Item {
             state.selectedTuning = slug
             tuningManager.tuningChanged()
             tuningManager.settingsSaveRequested()
-            var noteStr = Object.keys(notes).map(function(k) { return notes[k] }).join("-")
+            var noteArr = []
+            var noteKeys = Object.keys(notes)
+            for (var nk = 0; nk < noteKeys.length; nk++) noteArr.push(notes[noteKeys[nk]])
+            var noteStr = noteArr.join("-")
             _setTuningStatus("Created: " + name + " (" + noteStr + ")", "success")
         } catch (e) {
             _setTuningStatus("Failed to save: " + e, "error")

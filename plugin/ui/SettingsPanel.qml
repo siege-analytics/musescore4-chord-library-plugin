@@ -283,10 +283,10 @@ Item {
                                 spacing: 6
 
                                 Label {
-                                    text: (tuning.tuningLabels[modelData] || modelData)
-                                        + (modelData === tuning.selectedTuning ? " (active)" : "")
+                                    text: (tuning && tuning.tuningLabels ? (tuning.tuningLabels[modelData] || modelData) : modelData)
+                                        + (modelData === (tuning ? tuning.selectedTuning : "") ? " (active)" : "")
                                     font.pixelSize: 11
-                                    font.bold: modelData === tuning.selectedTuning
+                                    font.bold: modelData === (tuning ? tuning.selectedTuning : "")
                                     color: theme.textPrimary
                                     Layout.fillWidth: true
                                 }
@@ -296,7 +296,7 @@ Item {
                                     font.pixelSize: 9
                                     implicitWidth: 36
                                     onClicked: {
-                                        settingsPanel.tuningNameValue = tuning.tuningLabels[modelData] || modelData
+                                        settingsPanel.tuningNameValue = (tuning && tuning.tuningLabels ? tuning.tuningLabels[modelData] : modelData) || modelData
                                         settingsPanel.editTuningRequested(modelData)
                                     }
                                 }
