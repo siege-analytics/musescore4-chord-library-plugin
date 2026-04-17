@@ -406,6 +406,17 @@ Item {
                         }
                     }
 
+                    // Inline tuning status (visible near the Save button)
+                    Label {
+                        visible: settingsPanel.tuningStatus.length > 0
+                        text: settingsPanel.tuningStatus
+                        color: settingsPanel.tuningStatusColor
+                        font.pixelSize: 10
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
                     // --- Import tuning ---
                     Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
 
