@@ -639,6 +639,14 @@ ColumnLayout {
         }
     }
 
+    // Divider between scale detail and reharm (#150)
+    Rectangle {
+        visible: batchActive && currentItem !== null
+        Layout.fillWidth: true
+        height: 1
+        color: theme.divider
+    }
+
     // Reharm suggestion chips
     Flow {
         visible: batchActive && currentItem !== null
