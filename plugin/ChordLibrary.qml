@@ -136,6 +136,11 @@ MuseScore {
     }
 
     FileIO {
+        id: profilesConfigFile
+        source: Qt.resolvedUrl("config/profiles.json")
+    }
+
+    FileIO {
         id: tuningFile
     }
 
@@ -280,6 +285,8 @@ MuseScore {
     property string filterQuality: ""
     property string filterScale: ""
     property var _scaleNameList: ["All Scales"]
+    property var _profileList: []          // Array of profile objects from profiles.json
+    property string _activeProfileId: ""   // ID of the active profile (empty = default)
     property string searchText: ""
 
     // Voice leading state
@@ -401,6 +408,44 @@ MuseScore {
         } catch (e) {
             console.log("Error saving scales config: " + e)
         }
+    }
+
+    // === Style profiles (#146) ===
+
+    function loadProfiles() {
+        try {
+            var raw = profilesConfigFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                _profileList = data.profiles || []
+                console.log("Loaded " + _profileList.length + " style profiles")
+            }
+        } catch (e) {
+            console.log("Error loading profiles: " + e)
+        }
+    }
+
+    function setProfile(profileId) {
+        _activeProfileId = profileId
+        if (!profileId || profileId === "default") {
+            ChordScales.setActiveProfile(null)
+            console.log("Profile: Default (no overrides)")
+        } else {
+            for (var i = 0; i < _profileList.length; i++) {
+                if (_profileList[i].id === profileId) {
+                    ChordScales.setActiveProfile(_profileList[i])
+                    console.log("Profile: " + _profileList[i].name)
+                    break
+                }
+            }
+        }
+        // Refresh scale filter list and voicing cards (scale names may change with profile)
+        var names = ["All Scales"]
+        var list = ChordScales.getScaleList()
+        for (var j = 0; j < list.length; j++) names.push(list[j].name)
+        _scaleNameList = names
+        applyFilters()
+        saveSettings()
     }
 
     // === Custom context creation (#132) ===
@@ -579,6 +624,7 @@ MuseScore {
     onRun: {
         loadContextLabels()
         loadScalesConfig()
+        loadProfiles()
         loadSettings()
         loadTuningStringCount()
         if (!dataLoaded) {
@@ -2193,6 +2239,30 @@ MuseScore {
             onPresetSaveRequested: function(path) { savePreset(path) }
             onPresetLoadRequested: function(path) { loadPreset(path) }
 
+            // --- iReal file import (#149) ---
+            onLoadIRealFileRequested: function(path) {
+                try {
+                    importFile.source = Qt.resolvedUrl(path) || path
+                    var content = importFile.read()
+                    if (!content || content.length < 5) {
+                        importPanel.importMergeStatus = "File is empty or unreadable: " + path
+                        importPanel.importMergeStatusColor = theme.errorText
+                        return
+                    }
+                    // Try to extract irealb:// URL from HTML
+                    var urlMatch = content.match(/irealb:\/\/[^"'<\s]+/)
+                    if (urlMatch) {
+                        importIRealPro(urlMatch[0])
+                    } else {
+                        // Treat as plain text chord chart
+                        importIRealPro(content)
+                    }
+                } catch (e) {
+                    importPanel.importMergeStatus = "Error reading file: " + e
+                    importPanel.importMergeStatusColor = theme.errorText
+                }
+            }
+
             // --- Tuning import/create (moved from Settings, #144) ---
             onImportTuningRequested: function(path) { importTuning(path) }
             onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
@@ -2294,7 +2364,12 @@ MuseScore {
                     for (var q in csm) nameMap[q] = csm[q].slice()
                     settingsPanel.chordScaleMap = nameMap
                 } else {
-                    settingsPanel.scaleStatus = "Invalid scale names in mapping"
+                    // Find which names are invalid
+                    var bad = []
+                    for (var i = 0; i < scaleNames.length; i++) {
+                        if (!ChordScales.SCALES[scaleNames[i]]) bad.push(scaleNames[i])
+                    }
+                    settingsPanel.scaleStatus = "Unknown scale" + (bad.length > 1 ? "s" : "") + ": " + bad.join(", ")
                     settingsPanel.scaleStatusColor = theme.errorText
                 }
             }
@@ -2415,12 +2490,29 @@ MuseScore {
                 if (!v || !v.chord_quality) return []
                 return ChordScales.getScaleNames(v.chord_quality)
             }
+            getScaleNotesFn: function(scaleName, root) {
+                return ChordScales.getScaleNotes(scaleName, root)
+            }
             scaleFilterList: chordLibrary._scaleNameList
 
             onScaleFilterChanged: function(scaleName) {
                 chordLibrary.filterScale = scaleName
                 applyFilters()
             }
+
+            // --- Style profiles (#146) ---
+            profileDisplayList: {
+                var names = []
+                for (var i = 0; i < _profileList.length; i++) names.push(_profileList[i].name)
+                return names.length > 0 ? names : ["Default"]
+            }
+            profileIdList: {
+                var ids = []
+                for (var i = 0; i < _profileList.length; i++) ids.push(_profileList[i].id)
+                return ids.length > 0 ? ids : ["default"]
+            }
+            activeProfileId: _activeProfileId
+            onProfileChanged: function(profileId) { setProfile(profileId) }
             onSearchChanged: function(text) { searchText = text; applyFilters() }
             onContextFilterChanged: function(code) { filterContext = code; applyFilters() }
             onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }

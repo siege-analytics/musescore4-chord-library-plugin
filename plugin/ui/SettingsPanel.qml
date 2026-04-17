@@ -216,61 +216,95 @@ Item {
                     width: parent.width - 16
                     spacing: 12
 
-                    // --- Current tuning ---
+                    // --- Tuning list (#148) ---
                     Label {
-                        text: "TUNING"
+                        text: "TUNINGS (" + tuning.tuningList.length + ")"
                         font.pixelSize: 11
                         font.bold: true
                         Layout.fillWidth: true
                     }
 
-                    RowLayout {
+                    Label {
+                        text: "Active tuning is highlighted. Use Edit to load into the Import tab form."
+                        font.pixelSize: 9
+                        color: theme.textMuted
+                        wrapMode: Text.WordWrap
                         Layout.fillWidth: true
-                        spacing: 6
+                    }
 
-                        Label {
-                            text: "Active: " + (tuning.tuningLabels[tuning.selectedTuning] || tuning.selectedTuning)
-                            font.pixelSize: 11
+                    Label {
+                        visible: settingsPanel.tuningStatus.length > 0
+                        text: settingsPanel.tuningStatus
+                        color: settingsPanel.tuningStatusColor
+                        font.pixelSize: 10
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    Repeater {
+                        model: tuning.tuningList
+
+                        Rectangle {
                             Layout.fillWidth: true
-                        }
+                            height: tuningItemRow.implicitHeight + 8
+                            radius: 4
+                            color: modelData === tuning.selectedTuning
+                                ? Qt.rgba(theme.successText.r, theme.successText.g, theme.successText.b, 0.1)
+                                : theme.cardBackground
+                            border.color: modelData === tuning.selectedTuning ? theme.successText : theme.cardBorder
+                            border.width: 1
 
-                        Button {
-                            text: "Edit"
-                            font.pixelSize: 10
-                            ToolTip.visible: hovered
-                            ToolTip.text: "Load this tuning into the form below for editing"
-                            onClicked: settingsPanel.editTuningRequested(tuning.selectedTuning)
-                        }
+                            RowLayout {
+                                id: tuningItemRow
+                                anchors.fill: parent
+                                anchors.margins: 4
+                                spacing: 6
 
-                        Button {
-                            text: "Delete"
-                            font.pixelSize: 10
-                            enabled: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) < 0
-                            ToolTip.visible: hovered
-                            ToolTip.text: settingsPanel.builtInTunings.indexOf(tuning.selectedTuning) >= 0
-                                ? "Built-in tunings cannot be deleted"
-                                : "Delete this custom tuning"
-                            onClicked: settingsPanel.deleteTuningRequested(tuning.selectedTuning)
-                        }
+                                Label {
+                                    text: (tuning.tuningLabels[modelData] || modelData)
+                                        + (modelData === tuning.selectedTuning ? " (active)" : "")
+                                    font.pixelSize: 11
+                                    font.bold: modelData === tuning.selectedTuning
+                                    color: theme.textPrimary
+                                    Layout.fillWidth: true
+                                }
 
-                        Button {
-                            text: "\u25B2"
-                            font.pixelSize: 10
-                            implicitWidth: 28
-                            enabled: tuning.tuningList.indexOf(tuning.selectedTuning) > 0
-                            ToolTip.visible: hovered
-                            ToolTip.text: "Move this tuning up in the list"
-                            onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, -1)
-                        }
+                                Button {
+                                    text: "Edit"
+                                    font.pixelSize: 9
+                                    implicitWidth: 36
+                                    onClicked: settingsPanel.editTuningRequested(modelData)
+                                }
 
-                        Button {
-                            text: "\u25BC"
-                            font.pixelSize: 10
-                            implicitWidth: 28
-                            enabled: tuning.tuningList.indexOf(tuning.selectedTuning) < tuning.tuningList.length - 1
-                            ToolTip.visible: hovered
-                            ToolTip.text: "Move this tuning down in the list"
-                            onClicked: settingsPanel.moveTuningRequested(tuning.selectedTuning, 1)
+                                Button {
+                                    text: "Del"
+                                    font.pixelSize: 9
+                                    implicitWidth: 30
+                                    enabled: settingsPanel.builtInTunings.indexOf(modelData) < 0
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: settingsPanel.builtInTunings.indexOf(modelData) >= 0
+                                        ? "Built-in tunings cannot be deleted"
+                                        : "Delete this tuning"
+                                    onClicked: settingsPanel.deleteTuningRequested(modelData)
+                                }
+
+                                Button {
+                                    text: "\u25B2"
+                                    font.pixelSize: 9
+                                    implicitWidth: 24
+                                    enabled: tuning.tuningList.indexOf(modelData) > 0
+                                    onClicked: settingsPanel.moveTuningRequested(modelData, -1)
+                                }
+
+                                Button {
+                                    text: "\u25BC"
+                                    font.pixelSize: 9
+                                    implicitWidth: 24
+                                    enabled: tuning.tuningList.indexOf(modelData) < tuning.tuningList.length - 1
+                                    onClicked: settingsPanel.moveTuningRequested(modelData, 1)
+                                }
+                            }
                         }
                     }
                 }
@@ -304,6 +338,11 @@ Item {
 
                     // Categories for the ComboBox
                     property var categoryOptions: ["mode", "minor", "symmetric", "pentatonic", "blues", "bebop", "custom"]
+
+                    // --- Local state for delete confirmation ---
+                    property bool showDeleteConfirm: false
+                    property string deleteConfirmId: ""
+                    property string deleteConfirmName: ""
 
                     // --- Local state for mapping editor ---
                     property bool showMappingEditor: false
@@ -383,7 +422,7 @@ Item {
                                 Button {
                                     text: "Edit"
                                     font.pixelSize: 9
-                                    implicitWidth: 40
+                                    implicitWidth: 36
                                     onClicked: {
                                         scalesColumn.editing = true
                                         scalesColumn.editId = modelData.id
@@ -396,13 +435,84 @@ Item {
                                 }
 
                                 Button {
-                                    text: "Delete"
+                                    text: "Dup"
                                     font.pixelSize: 9
-                                    implicitWidth: 50
+                                    implicitWidth: 34
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Duplicate this scale as a starting point for a new one"
+                                    onClicked: {
+                                        scalesColumn.editing = false
+                                        scalesColumn.editId = ""
+                                        scalesColumn.editName = modelData.name + " (copy)"
+                                        scalesColumn.editAliases = ""
+                                        scalesColumn.editIntervals = modelData.intervals.join(", ")
+                                        scalesColumn.editCategory = modelData.category
+                                        scalesColumn.editBuiltin = false
+                                    }
+                                }
+
+                                Button {
+                                    text: "Del"
+                                    font.pixelSize: 9
+                                    implicitWidth: 34
                                     enabled: !modelData.builtin
                                     ToolTip.visible: hovered
                                     ToolTip.text: modelData.builtin ? "Built-in scales cannot be deleted" : "Delete this custom scale"
-                                    onClicked: settingsPanel.scaleDeleted(modelData.id)
+                                    onClicked: {
+                                        scalesColumn.deleteConfirmId = modelData.id
+                                        scalesColumn.deleteConfirmName = modelData.name
+                                        scalesColumn.showDeleteConfirm = true
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // --- Delete confirmation (#147) ---
+                    Rectangle {
+                        visible: scalesColumn.showDeleteConfirm
+                        Layout.fillWidth: true
+                        height: confirmCol.implicitHeight + 12
+                        radius: 6
+                        color: Qt.rgba(theme.errorText.r, theme.errorText.g, theme.errorText.b, 0.1)
+                        border.color: theme.errorText
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: confirmCol
+                            anchors.fill: parent
+                            anchors.margins: 6
+                            spacing: 6
+
+                            Label {
+                                text: "Delete \"" + scalesColumn.deleteConfirmName + "\"? This cannot be undone."
+                                font.pixelSize: 10
+                                font.bold: true
+                                color: theme.errorText
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+
+                            RowLayout {
+                                spacing: 6
+                                Button {
+                                    text: "Yes, delete"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        settingsPanel.scaleDeleted(scalesColumn.deleteConfirmId)
+                                        scalesColumn.showDeleteConfirm = false
+                                        scalesColumn.deleteConfirmId = ""
+                                        scalesColumn.deleteConfirmName = ""
+                                    }
+                                }
+                                Button {
+                                    text: "Cancel"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        scalesColumn.showDeleteConfirm = false
+                                        scalesColumn.deleteConfirmId = ""
+                                        scalesColumn.deleteConfirmName = ""
+                                    }
                                 }
                             }
                         }
