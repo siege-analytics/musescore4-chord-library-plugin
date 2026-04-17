@@ -168,7 +168,26 @@
     "aug": ["whole-tone"],
     "sus4": ["mixolydian", "dorian"],
     "sus2": ["mixolydian", "ionian"],
-    "quartal": ["dorian", "mixolydian", "pentatonic-maj"]
+    "quartal": ["dorian", "mixolydian", "pentatonic-maj"],
+    "aug7": ["whole-tone", "altered"],
+    "augMaj7": ["lydian", "ionian"],
+    "dom7alt": ["altered", "half-whole-dim"],
+    "dom7flat5": ["whole-tone", "altered", "lydian-b7"],
+    "maj13": ["ionian", "lydian"],
+    "maj69": ["ionian", "lydian", "pentatonic-maj"],
+    "maj7sharp11": ["lydian"],
+    "maj7sharp5": ["lydian", "whole-tone"],
+    "min-maj9": ["melodic-minor", "harmonic-minor"],
+    "min11": ["dorian", "aeolian"],
+    "13b9": ["half-whole-dim", "altered", "phrygian"],
+    "13sharp9": ["altered", "half-whole-dim", "blues"],
+    "13sus4": ["mixolydian", "dorian"],
+    "7b5b9": ["altered", "whole-tone"],
+    "7b5sharp9": ["altered", "half-whole-dim"],
+    "7b9sus4": ["half-whole-dim", "phrygian"],
+    "7sharp5b9": ["altered", "half-whole-dim"],
+    "7sharp5sharp9": ["altered", "half-whole-dim"],
+    "9sus4": ["mixolydian", "dorian"]
   },
   "customQualities": []
 }

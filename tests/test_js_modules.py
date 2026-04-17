@@ -82,7 +82,7 @@ class TestScalesJson:
         assert len(self.data["scales"]) == 18
 
     def test_chord_scale_map_count(self):
-        assert len(self.data["chordScaleMap"]) == 23
+        assert len(self.data["chordScaleMap"]) == 42
 
     def test_all_scales_have_required_fields(self):
         for s in self.data["scales"]:
@@ -162,7 +162,7 @@ class TestChordScalesLoad:
     def test_default_chord_scale_map_count(self):
         assert_js("ChordScales.js", """
             var count = Object.keys(DEFAULT_CHORD_SCALE_MAP).length;
-            assert(count >= 23, "at least 23 chord-scale mappings, got " + count);
+            assert(count >= 42, "at least 42 chord-scale mappings, got " + count);
         """)
 
     def test_scales_empty_before_load(self):
@@ -174,7 +174,7 @@ class TestChordScalesLoad:
         assert_js("ChordScales.js", """
             _ensureLoaded();
             assertEqual(Object.keys(SCALES).length, 18, "18 scales after _ensureLoaded");
-            assert(CHORD_SCALE_MAP["dom7"].length > 0, "dom7 has mappings");
+            assert(Object.keys(CHORD_SCALE_MAP).length >= 42, "42+ mappings after _ensureLoaded");
         """)
 
     def test_load_scales_from_json(self):
@@ -217,7 +217,7 @@ class TestChordScalesLoad:
             loadScales(JSON.parse(raw));
             var saved = saveScales();
             assert(saved.scales.length === 18, "18 scales in saved data");
-            assert(Object.keys(saved.chordScaleMap).length >= 23, "23+ mappings saved");
+            assert(Object.keys(saved.chordScaleMap).length >= 42, "42+ mappings saved");
             assert(Array.isArray(saved.customQualities), "customQualities is array");
         """)
 
