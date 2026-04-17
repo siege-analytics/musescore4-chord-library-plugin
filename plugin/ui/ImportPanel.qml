@@ -41,6 +41,7 @@ Flickable {
     signal importIRealRequested(string text)
     signal presetSaveRequested(string path)
     signal presetLoadRequested(string path)
+    signal loadIRealFileRequested(string path)
 
     // --- Tuning import/create properties (moved from Settings, #144) ---
     property string tuningNameValue: ""
@@ -237,10 +238,35 @@ Flickable {
         }
 
         Label {
-            text: "Paste an iReal Pro URL or type chords (space/line separated):"
+            text: "Paste an iReal Pro URL, type chords, or import from file:"
             font.pixelSize: 11
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            TextField {
+                id: irealFilePath
+                Layout.fillWidth: true
+                font.pixelSize: 11
+                placeholderText: "/path/to/ireal-export.html"
+                selectByMouse: true
+            }
+
+            Button {
+                text: "Browse"
+                font.pixelSize: 10
+                onClicked: importPanel.browseImportRequested(irealFilePath)
+            }
+
+            Button {
+                text: "Load File"
+                font.pixelSize: 10
+                onClicked: importPanel.loadIRealFileRequested(irealFilePath.text.trim())
+            }
         }
 
         TextArea {
