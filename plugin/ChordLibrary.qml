@@ -821,7 +821,42 @@ MuseScore {
         }
     }
     function createTuning(name, pitchStr, numStrings) { tuningManager.createTuning(name, pitchStr, numStrings) }
-    function editTuning(slug) { tuningManager.editTuning(slug) }
+    function editTuning(slug) {
+        // Direct implementation — bypasses TuningManager (#154)
+        if (!slug) return
+        var paths = [
+            Qt.resolvedUrl("tunings/" + slug + ".json"),
+            Qt.resolvedUrl("config/tunings/" + slug + ".json")
+        ]
+        for (var p = 0; p < paths.length; p++) {
+            tuningFile.source = paths[p]
+            try {
+                var raw = tuningFile.read()
+                if (raw && raw.length > 2) {
+                    var t = JSON.parse(raw)
+                    var strings = t.strings || {}
+                    var count = Object.keys(strings).length
+                    var pitchParts = []
+                    for (var s = 1; s <= count; s++) {
+                        var midi = strings[String(s)]
+                        if (midi !== undefined) {
+                            pitchParts.push(midiNoteNames[midi] || String(midi))
+                        }
+                    }
+                    var pitchStr = pitchParts.join(", ")
+                    settingsPanel.tuningNameValue = t.name || slug
+                    settingsPanel.tuningStringCountValue = count > 0 ? count : 6
+                    settingsPanel.tuningPitchesValue = pitchStr
+                    settingsPanel.editingTuningSlug = slug
+                    settingsPanel.tuningStatus = "Editing: " + (t.name || slug) + " — change values and click Save"
+                    settingsPanel.tuningStatusColor = "#888"
+                    return
+                }
+            } catch (e) {}
+        }
+        settingsPanel.tuningStatus = "Could not load tuning: " + slug
+        settingsPanel.tuningStatusColor = "#e74c3c"
+    }
     function deleteTuning(slug) { tuningManager.deleteTuning(slug) }
 
     // These were previously inline — now delegate but keep the old function signatures
