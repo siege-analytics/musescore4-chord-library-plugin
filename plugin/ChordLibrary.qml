@@ -2318,6 +2318,7 @@ MuseScore {
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
+            saveTuningFn: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
             profilesData: chordLibrary._profileList
             activeProfileId: chordLibrary._activeProfileId
             onProfileSelected: function(profileId) { setProfile(profileId) }

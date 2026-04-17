@@ -41,6 +41,9 @@ Item {
     property string tuningPitchesValue: ""
     property int tuningStringCountValue: 6
 
+    // --- Tuning save callback (bypasses signal, #154) ---
+    property var saveTuningFn: function(name, pitches, numStrings) {}
+
     // --- Output signals ---
     signal placementChanged(string placement)
     signal editTuningRequested(string slug)
@@ -387,10 +390,14 @@ Item {
                         Button {
                             text: "Save Tuning"
                             font.pixelSize: 10
-                            onClicked: settingsPanel.createTuningRequested(
-                                tuningEditNameField.text.trim(),
-                                tuningEditPitchesField.text.trim(),
-                                tuningEditStringsCount.value)
+                            onClicked: {
+                                settingsPanel.tuningStatus = "Saving..."
+                                settingsPanel.tuningStatusColor = "#888"
+                                settingsPanel.saveTuningFn(
+                                    tuningEditNameField.text.trim(),
+                                    tuningEditPitchesField.text.trim(),
+                                    tuningEditStringsCount.value)
+                            }
                         }
 
                         Button {
