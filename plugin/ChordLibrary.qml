@@ -455,26 +455,34 @@ MuseScore {
     // === Custom context creation (#132) ===
 
     function createCustomContext(code, name, strings, linkedTuning) {
-        // Update runtime state
+        // Update runtime state — use Object.keys() to avoid QML for...in issues
         var labels = {}
-        for (var k in contextLabels) labels[k] = contextLabels[k]
+        var oldLabels = contextLabels || {}
+        var lKeys = Object.keys(oldLabels)
+        for (var ki = 0; ki < lKeys.length; ki++) labels[lKeys[ki]] = oldLabels[lKeys[ki]]
         labels[code] = name
         contextLabels = labels
 
         var shorts = {}
-        for (var s in contextLabelsShort) shorts[s] = contextLabelsShort[s]
+        var oldShorts = contextLabelsShort || {}
+        var sKeys = Object.keys(oldShorts)
+        for (var si = 0; si < sKeys.length; si++) shorts[sKeys[si]] = oldShorts[sKeys[si]]
         shorts[code] = code.replace(/[0-9]+$/, "") + " " + strings
         contextLabelsShort = shorts
 
         var counts = {}
-        for (var c in contextStringCounts) counts[c] = contextStringCounts[c]
+        var oldCounts = contextStringCounts || {}
+        var cKeys = Object.keys(oldCounts)
+        for (var ci = 0; ci < cKeys.length; ci++) counts[cKeys[ci]] = oldCounts[cKeys[ci]]
         counts[code] = strings
         contextStringCounts = counts
 
         // Store tuning link (#148)
         if (linkedTuning) {
             var links = {}
-            for (var lt in _contextTuningLinks) links[lt] = _contextTuningLinks[lt]
+            var oldLinks = _contextTuningLinks || {}
+            var ltKeys = Object.keys(oldLinks)
+            for (var li = 0; li < ltKeys.length; li++) links[ltKeys[li]] = oldLinks[ltKeys[li]]
             links[code] = linkedTuning
             _contextTuningLinks = links
         }
@@ -2414,8 +2422,63 @@ MuseScore {
                 saveSettings()
             }
             onEditTuningRequested: function(slug) { editTuning(slug) }
-            onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
-            onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
+            onDeleteTuningRequested: function(slug) {
+                // Direct implementation — bypasses TuningManager for...in bug (#154)
+                if (!slug) return
+                if (builtInTunings.indexOf(slug) >= 0) {
+                    settingsPanel.tuningStatus = "Cannot delete built-in tuning"
+                    settingsPanel.tuningStatusColor = "#e74c3c"
+                    return
+                }
+                try {
+                    var newList = []
+                    for (var i = 0; i < tuningList.length; i++) {
+                        if (tuningList[i] !== slug) newList.push(tuningList[i])
+                    }
+                    var newLabels = {}
+                    var oldLabels = tuningLabels || {}
+                    var lKeys = Object.keys(oldLabels)
+                    for (var li = 0; li < lKeys.length; li++) {
+                        if (lKeys[li] !== slug) newLabels[lKeys[li]] = oldLabels[lKeys[li]]
+                    }
+                    var newCounts = {}
+                    var oldCounts = tuningStringCounts || {}
+                    var cKeys = Object.keys(oldCounts)
+                    for (var ci = 0; ci < cKeys.length; ci++) {
+                        if (cKeys[ci] !== slug) newCounts[cKeys[ci]] = oldCounts[cKeys[ci]]
+                    }
+                    tuningList = newList
+                    tuningLabels = newLabels
+                    tuningStringCounts = newCounts
+                    if (selectedTuning === slug) {
+                        selectedTuning = "standard"
+                        loadTuningStringCount()
+                        loadTuningVoicings()
+                    }
+                    // Clear file
+                    tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+                    try { tuningFile.write("") } catch(e2) {}
+                    saveSettings()
+                    settingsPanel.tuningStatus = "Deleted: " + slug
+                    settingsPanel.tuningStatusColor = "#27ae60"
+                } catch(e) {
+                    settingsPanel.tuningStatus = "Error: " + String(e)
+                    settingsPanel.tuningStatusColor = "#e74c3c"
+                }
+            }
+            onMoveTuningRequested: function(slug, direction) {
+                // Direct implementation — bypasses TuningManager alias issues
+                var list = tuningList.slice()
+                var idx = list.indexOf(slug)
+                if (idx < 0) return
+                var newIdx = idx + direction
+                if (newIdx < 0 || newIdx >= list.length) return
+                var temp = list[newIdx]
+                list[newIdx] = list[idx]
+                list[idx] = temp
+                tuningList = list
+                saveSettings()
+            }
             onCreateTuningRequested: function(name, pitches, numStrings) {
                 settingsPanel.tuningStatus = "Saving..."
                 settingsPanel.tuningStatusColor = "#888"
