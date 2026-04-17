@@ -766,7 +766,60 @@ MuseScore {
     property var midiNoteNames: tuningManager.midiNoteNames
     function noteNameToMidi(str) { return tuningManager.noteNameToMidi(str) }
     function moveTuning(slug, direction) { tuningManager.moveTuning(slug, direction) }
-    function importTuning(path) { tuningManager.importTuning(path) }
+    function importTuning(path) {
+        // Direct implementation — bypasses TuningManager for...in bug (#154)
+        function _setImportStatus(text, color) {
+            settingsPanel.tuningStatus = text
+            settingsPanel.tuningStatusColor = color
+            importPanel.tuningStatus = text
+            importPanel.tuningStatusColor = color
+        }
+        if (!path) {
+            _setImportStatus("Enter a file path", "#e74c3c")
+            return
+        }
+        try {
+            tuningFile.source = path
+            var raw = tuningFile.read()
+            if (!raw || raw.length === 0) {
+                _setImportStatus("File not found or empty", "#e74c3c")
+                return
+            }
+            var t = JSON.parse(raw)
+            if (!t.name || !t.strings) {
+                _setImportStatus("Invalid tuning: needs 'name' and 'strings' fields", "#e74c3c")
+                return
+            }
+            var slug = t.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+            var stringCount = Object.keys(t.strings || {}).length || 6
+            // Write file to tunings directory
+            tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+            tuningFile.write(raw)
+            // Build new lists using Object.keys (not for...in)
+            var newList = tuningList.slice()
+            if (newList.indexOf(slug) < 0) newList.push(slug)
+            var newLabels = {}
+            var oldLabels = tuningLabels || {}
+            var lKeys = Object.keys(oldLabels)
+            for (var li = 0; li < lKeys.length; li++) newLabels[lKeys[li]] = oldLabels[lKeys[li]]
+            newLabels[slug] = t.name
+            var newCounts = {}
+            var oldCounts = tuningStringCounts || {}
+            var cKeys = Object.keys(oldCounts)
+            for (var ci = 0; ci < cKeys.length; ci++) newCounts[cKeys[ci]] = oldCounts[cKeys[ci]]
+            newCounts[slug] = stringCount
+            tuningList = newList
+            tuningLabels = newLabels
+            tuningStringCounts = newCounts
+            selectedTuning = slug
+            loadTuningStringCount()
+            loadTuningVoicings()
+            saveSettings()
+            _setImportStatus("Imported: " + t.name, "#27ae60")
+        } catch(e) {
+            _setImportStatus("Failed: " + String(e), "#e74c3c")
+        }
+    }
     function createTuning(name, pitchStr, numStrings) { tuningManager.createTuning(name, pitchStr, numStrings) }
     function editTuning(slug) { tuningManager.editTuning(slug) }
     function deleteTuning(slug) { tuningManager.deleteTuning(slug) }
@@ -2297,7 +2350,10 @@ MuseScore {
 
             // --- Tuning import/create (moved from Settings, #144) ---
             onImportTuningRequested: function(path) { importTuning(path) }
-            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
+            onCreateTuningRequested: function(name, pitches, numStrings) {
+                // Use the same bypass as Settings saveTuningFn (#154)
+                settingsPanel.saveTuningFn(name, pitches, numStrings, "")
+            }
         }
 
         // === Tab 4: Practice (extracted to ui/PracticePanel.qml, #96) ===
@@ -2482,7 +2538,7 @@ MuseScore {
             onCreateTuningRequested: function(name, pitches, numStrings) {
                 settingsPanel.tuningStatus = "Saving..."
                 settingsPanel.tuningStatusColor = "#888"
-                createTuning(name, pitches, numStrings)
+                settingsPanel.saveTuningFn(name, pitches, numStrings, "")
             }
             onImportTuningRequested: function(path) { importTuning(path) }
             onBrowseTuningRequested: function(field) { openFileBrowser("open", field, null) }
