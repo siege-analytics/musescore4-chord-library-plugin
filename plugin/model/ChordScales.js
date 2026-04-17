@@ -90,6 +90,9 @@ var _customQualities = []
 // Track whether loadScales() has been called
 var _loaded = false
 
+// Active style profile (#146) — overrides chord-scale mappings and voicing scoring
+var _activeProfile = null  // { id, name, chordScaleOverrides, categoryWeights, qualityBoosts }
+
 // === Initialization ===
 
 // Initialize SCALES and CHORD_SCALE_MAP from defaults (called on first use if not loaded)
@@ -384,6 +387,33 @@ function getCustomQualities() {
     return _customQualities.slice()
 }
 
+// === Style Profiles (#146) ===
+
+// Set the active style profile. Pass null to clear (revert to default).
+// profileData: { id, name, chordScaleOverrides, categoryWeights, qualityBoosts }
+function setActiveProfile(profileData) {
+    _activeProfile = profileData
+}
+
+// Get the active profile (or null if none/default).
+function getActiveProfile() {
+    return _activeProfile
+}
+
+// Get the category weight modifier for a given category from the active profile.
+// Returns 0 if no profile is active or the category has no weight.
+function getProfileCategoryWeight(category) {
+    if (!_activeProfile || !_activeProfile.categoryWeights) return 0
+    return _activeProfile.categoryWeights[category] || 0
+}
+
+// Get the quality boost modifier for a given chord quality from the active profile.
+// Returns 0 if no profile is active or the quality has no boost.
+function getProfileQualityBoost(quality) {
+    if (!_activeProfile || !_activeProfile.qualityBoosts) return 0
+    return _activeProfile.qualityBoosts[quality] || 0
+}
+
 // === Internal helpers ===
 
 // Convert a scale name to its registry ID. Returns "" if not found.
@@ -421,9 +451,16 @@ var ROOT_SEMITONES = {"C":0,"C#":1,"Db":1,"D":2,"D#":3,"Eb":3,"E":4,"F":5,"F#":6
 
 // Get compatible scales for a chord quality.
 // Returns array of { name: string, intervals: [int] }
+// If a style profile is active with overrides for this quality, uses those instead.
 function getScalesForQuality(quality) {
     _ensureLoaded()
-    var scaleNames = CHORD_SCALE_MAP[quality] || CHORD_SCALE_MAP["dom7"]  // fallback to dominant
+    // Check profile override first (#146)
+    var scaleNames
+    if (_activeProfile && _activeProfile.chordScaleOverrides && _activeProfile.chordScaleOverrides[quality]) {
+        scaleNames = _activeProfile.chordScaleOverrides[quality]
+    } else {
+        scaleNames = CHORD_SCALE_MAP[quality] || CHORD_SCALE_MAP["dom7"]  // fallback to dominant
+    }
     var result = []
     for (var i = 0; i < scaleNames.length; i++) {
         var name = scaleNames[i]
@@ -435,9 +472,15 @@ function getScalesForQuality(quality) {
 }
 
 // Get scale names as a simple string array for tagging/display
+// Respects active profile overrides.
 function getScaleNames(quality) {
     _ensureLoaded()
-    var scaleNames = CHORD_SCALE_MAP[quality]
+    var scaleNames
+    if (_activeProfile && _activeProfile.chordScaleOverrides && _activeProfile.chordScaleOverrides[quality]) {
+        scaleNames = _activeProfile.chordScaleOverrides[quality]
+    } else {
+        scaleNames = CHORD_SCALE_MAP[quality]
+    }
     if (!scaleNames) return []
     return scaleNames.slice()
 }

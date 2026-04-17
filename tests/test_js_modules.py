@@ -934,3 +934,119 @@ class TestFingeringEngineJS:
                 assert(a.finger >= 0 && a.finger <= 4, "finger 0-4: " + a.finger);
             });
         """)
+
+
+# === Style Profiles (#146) ===
+
+
+class TestStyleProfiles:
+    """Test style profile functionality in ChordScales.js."""
+
+    def _load_first(self):
+        return """
+            var raw = readFileSync("plugin/config/scales.json");
+            loadScales(JSON.parse(raw));
+        """
+
+    def test_no_profile_by_default(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            assertEqual(getActiveProfile(), null, "no active profile by default");
+        """)
+
+    def test_set_active_profile(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            setActiveProfile({ id: "test", chordScaleOverrides: {} });
+            assertNotEqual(getActiveProfile(), null, "profile is set");
+            assertEqual(getActiveProfile().id, "test", "correct id");
+        """)
+
+    def test_clear_profile(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            setActiveProfile({ id: "test" });
+            setActiveProfile(null);
+            assertEqual(getActiveProfile(), null, "profile cleared");
+        """)
+
+    def test_profile_overrides_scales_for_quality(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            // Default: min7 -> Dorian, Aeolian, Pentatonic Min
+            var defaultNames = getScaleNames("min7");
+            assertContains(defaultNames, "Dorian", "default has Dorian");
+
+            // Set Manouche profile: min7 -> Harmonic Minor, Aeolian
+            setActiveProfile({
+                id: "manouche",
+                chordScaleOverrides: {
+                    "min7": ["Harmonic Minor", "Aeolian"]
+                }
+            });
+
+            var profileNames = getScaleNames("min7");
+            assertEqual(profileNames.length, 2, "profile has 2 scales for min7");
+            assertEqual(profileNames[0], "Harmonic Minor", "first is Harmonic Minor");
+            assertEqual(profileNames[1], "Aeolian", "second is Aeolian");
+            assert(profileNames.indexOf("Dorian") < 0, "Dorian NOT in profile");
+        """)
+
+    def test_profile_does_not_affect_unmapped_qualities(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            setActiveProfile({
+                id: "test",
+                chordScaleOverrides: { "min7": ["Harmonic Minor"] }
+            });
+            // dom7 should still use default mapping
+            var dom7Names = getScaleNames("dom7");
+            assertContains(dom7Names, "Mixolydian", "dom7 unaffected by profile");
+        """)
+
+    def test_profile_category_weight(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            setActiveProfile({
+                id: "manouche",
+                categoryWeights: { "shell": 15, "drop2": -10 }
+            });
+            assertEqual(getProfileCategoryWeight("shell"), 15, "shell +15");
+            assertEqual(getProfileCategoryWeight("drop2"), -10, "drop2 -10");
+            assertEqual(getProfileCategoryWeight("extended"), 0, "unspecified = 0");
+        """)
+
+    def test_profile_quality_boost(self):
+        assert_js("ChordScales.js", self._load_first() + """
+            setActiveProfile({
+                id: "manouche",
+                qualityBoosts: { "dim7": 20, "maj7": -10 }
+            });
+            assertEqual(getProfileQualityBoost("dim7"), 20, "dim7 +20");
+            assertEqual(getProfileQualityBoost("maj7"), -10, "maj7 -10");
+            assertEqual(getProfileQualityBoost("dom7"), 0, "unspecified = 0");
+        """)
+
+    def test_profiles_json_valid(self):
+        """Validate profiles.json structure."""
+        profiles_path = os.path.join(CONFIG_DIR, "profiles.json")
+        with open(profiles_path) as f:
+            data = json.load(f)
+        assert "profiles" in data
+        assert len(data["profiles"]) >= 3, "at least Default, Bebop, Manouche"
+        for p in data["profiles"]:
+            assert "id" in p, f"Missing id in profile: {p}"
+            assert "name" in p, f"Missing name in profile: {p}"
+            assert "builtin" in p, f"Missing builtin in profile: {p}"
+            assert "chordScaleOverrides" in p, f"Missing chordScaleOverrides: {p}"
+            assert "categoryWeights" in p, f"Missing categoryWeights: {p}"
+            assert "qualityBoosts" in p, f"Missing qualityBoosts: {p}"
+
+    def test_profiles_scale_overrides_valid(self):
+        """All scale names in profile overrides must exist in scales.json."""
+        profiles_path = os.path.join(CONFIG_DIR, "profiles.json")
+        scales_path = os.path.join(CONFIG_DIR, "scales.json")
+        with open(profiles_path) as f:
+            profiles = json.load(f)
+        with open(scales_path) as f:
+            scales = json.load(f)
+        valid_names = {s["name"] for s in scales["scales"]}
+        for p in profiles["profiles"]:
+            for quality, scale_names in p["chordScaleOverrides"].items():
+                for name in scale_names:
+                    assert name in valid_names, \
+                        f"Profile '{p['name']}' references unknown scale '{name}' for quality '{quality}'"

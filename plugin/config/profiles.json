@@ -1,0 +1,84 @@
+{
+  "profiles": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "No style modifications — uses standard chord-scale mappings and voicing ranking.",
+      "builtin": true,
+      "chordScaleOverrides": {},
+      "categoryWeights": {},
+      "qualityBoosts": {}
+    },
+    {
+      "id": "bebop",
+      "name": "Bebop / Post-Bop",
+      "description": "Modern jazz vocabulary. Favors drop 2 voicings, extended chords, and sophisticated voice leading. Altered dominants and ii-V-I substitutions.",
+      "builtin": true,
+      "chordScaleOverrides": {
+        "dom7": ["Mixolydian", "Bebop Dom", "Lydian b7", "Altered"],
+        "min7": ["Dorian", "Aeolian"],
+        "dom7b9": ["Altered", "Half-Whole Dim"]
+      },
+      "categoryWeights": {
+        "drop2": 10,
+        "shell": 5,
+        "extended": 5,
+        "quartal": 0
+      },
+      "qualityBoosts": {
+        "dom7": 5,
+        "min7": 5,
+        "maj7": 5,
+        "dom7alt": 10
+      }
+    },
+    {
+      "id": "manouche",
+      "name": "Gypsy Jazz / Manouche",
+      "description": "Django Reinhardt tradition. Triads and shell voicings, harmonic minor over minor chords, diminished passing chords. La pompe rhythm.",
+      "builtin": true,
+      "chordScaleOverrides": {
+        "min7": ["Harmonic Minor", "Aeolian"],
+        "min6": ["Harmonic Minor"],
+        "min": ["Harmonic Minor", "Aeolian"],
+        "dom7": ["Mixolydian", "Harmonic Minor"]
+      },
+      "categoryWeights": {
+        "shell": 15,
+        "drop2": -10,
+        "extended": -20,
+        "quartal": -15
+      },
+      "qualityBoosts": {
+        "dim7": 20,
+        "min6": 15,
+        "maj6": 10,
+        "maj7": -10,
+        "dom7alt": -15
+      }
+    },
+    {
+      "id": "bossa",
+      "name": "Bossa Nova / Brazilian",
+      "description": "Jobim-style voicings. Favors compact shapes with close intervals, 9th chords, and smooth voice leading. Lydian over major.",
+      "builtin": true,
+      "chordScaleOverrides": {
+        "maj7": ["Lydian", "Ionian"],
+        "dom7": ["Mixolydian", "Lydian b7"],
+        "min7": ["Dorian", "Pentatonic Min"]
+      },
+      "categoryWeights": {
+        "drop2": 15,
+        "shell": 10,
+        "extended": 5,
+        "quartal": -10
+      },
+      "qualityBoosts": {
+        "dom9": 15,
+        "maj9": 10,
+        "min9": 10,
+        "dom7sharp11": 10
+      }
+    }
+  ]
+}
