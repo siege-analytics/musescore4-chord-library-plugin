@@ -2320,9 +2320,66 @@ MuseScore {
             builtInTunings: chordLibrary.builtInTunings
             saveTuningFn: function(name, pitches, numStrings) {
                 try {
-                    createTuning(name, pitches, numStrings)
+                    // Direct implementation — bypasses TuningManager (#154)
+                    var rawParts = pitches.split(",")
+                    var midiPitches = []
+                    for (var p = 0; p < rawParts.length; p++) {
+                        var midi = noteNameToMidi(rawParts[p].trim())
+                        if (midi < 0) {
+                            settingsPanel.tuningStatus = "Can't parse: '" + rawParts[p].trim() + "'"
+                            settingsPanel.tuningStatusColor = "#e74c3c"
+                            return
+                        }
+                        midiPitches.push(midi)
+                    }
+                    if (midiPitches.length < numStrings) {
+                        settingsPanel.tuningStatus = "Need " + numStrings + " pitches, got " + midiPitches.length
+                        settingsPanel.tuningStatusColor = "#e74c3c"
+                        return
+                    }
+                    midiPitches = midiPitches.slice(0, numStrings)
+                    var strings = {}
+                    var notes = {}
+                    for (var s = 0; s < midiPitches.length; s++) {
+                        strings[s + 1] = midiPitches[s]
+                        notes[s + 1] = midiNoteNames[midiPitches[s]] || ("?" + midiPitches[s])
+                    }
+                    var tuningObj = { name: name, description: "Custom tuning", strings: strings, notes: notes }
+                    var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+                    // Write file directly using the root plugin's tuningFile FileIO
+                    tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+                    tuningFile.write(JSON.stringify(tuningObj, null, 2))
+                    // Update tuning list without TuningManager's for...in iteration
+                    var newList = []
+                    for (var li = 0; li < tuningList.length; li++) newList.push(tuningList[li])
+                    if (newList.indexOf(slug) < 0) newList.push(slug)
+                    tuningList = newList
+                    // Update labels safely
+                    var newLabels = {}
+                    var oldLabels = tuningLabels || {}
+                    var oldKeys = Object.keys(oldLabels)
+                    for (var ki = 0; ki < oldKeys.length; ki++) newLabels[oldKeys[ki]] = oldLabels[oldKeys[ki]]
+                    newLabels[slug] = name
+                    tuningLabels = newLabels
+                    // Update string counts safely
+                    var newCounts = {}
+                    var oldCounts = tuningStringCounts || {}
+                    var cKeys = Object.keys(oldCounts)
+                    for (var ci = 0; ci < cKeys.length; ci++) newCounts[cKeys[ci]] = oldCounts[cKeys[ci]]
+                    newCounts[slug] = numStrings
+                    tuningStringCounts = newCounts
+                    // Select the new tuning
+                    selectedTuning = slug
+                    loadTuningStringCount()
+                    loadTuningVoicings()
+                    saveSettings()
+                    // Show success
+                    var noteArr = []
+                    for (var n = 1; n <= numStrings; n++) noteArr.push(notes[n])
+                    settingsPanel.tuningStatus = "Created: " + name + " (" + noteArr.join("-") + ")"
+                    settingsPanel.tuningStatusColor = "#27ae60"
                 } catch(e) {
-                    settingsPanel.tuningStatus = "Error: " + e
+                    settingsPanel.tuningStatus = "Error: " + String(e)
                     settingsPanel.tuningStatusColor = "#e74c3c"
                 }
             }
