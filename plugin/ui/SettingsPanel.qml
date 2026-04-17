@@ -66,6 +66,16 @@ Item {
     property string scaleStatus: ""
     property color scaleStatusColor: "black"
 
+    // --- Profile data from parent (#146) ---
+    property var profilesData: []        // Array of profile objects from profiles.json
+    property string activeProfileId: ""  // Currently active profile ID
+    property string profileStatus: ""
+    property color profileStatusColor: "black"
+
+    // --- Profile signals ---
+    signal profileSelected(string profileId)
+    signal profileDeleted(string profileId)
+
     // --- Sub-tab state ---
     property int currentSubTab: 0
 
@@ -86,6 +96,7 @@ Item {
             TabButton { text: "General"; font.pixelSize: 10 }
             TabButton { text: "Tuning"; font.pixelSize: 10 }
             TabButton { text: "Scales"; font.pixelSize: 10 }
+            TabButton { text: "Profiles"; font.pixelSize: 10 }
             TabButton { text: "Contexts"; font.pixelSize: 10 }
         }
 
@@ -997,7 +1008,135 @@ Item {
             }
 
             // ──────────────────────────────────────────
-            // SUB-TAB 3: Contexts (Custom contexts)
+            // SUB-TAB 3: Profiles (#146 — Style profile management)
+            // ──────────────────────────────────────────
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: profilesColumn.implicitHeight
+                clip: true
+                flickableDirection: Flickable.VerticalFlick
+                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+                boundsBehavior: Flickable.StopAtBounds
+
+                ColumnLayout {
+                    id: profilesColumn
+                    width: parent.width - 16
+                    spacing: 12
+
+                    Label {
+                        text: "STYLE PROFILES (" + settingsPanel.profilesData.length + ")"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        text: "Style profiles override chord-scale suggestions and voicing ranking. Select a profile in the Library tab."
+                        font.pixelSize: 9
+                        color: theme.textMuted
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    Label {
+                        visible: settingsPanel.profileStatus.length > 0
+                        text: settingsPanel.profileStatus
+                        color: settingsPanel.profileStatusColor
+                        font.pixelSize: 10
+                        font.bold: true
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    Repeater {
+                        model: settingsPanel.profilesData
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: profileItemCol.implicitHeight + 12
+                            radius: 4
+                            color: modelData.id === settingsPanel.activeProfileId
+                                ? Qt.rgba(theme.successText.r, theme.successText.g, theme.successText.b, 0.1)
+                                : theme.cardBackground
+                            border.color: modelData.id === settingsPanel.activeProfileId ? theme.successText : theme.cardBorder
+                            border.width: 1
+
+                            ColumnLayout {
+                                id: profileItemCol
+                                anchors.fill: parent
+                                anchors.margins: 6
+                                spacing: 4
+
+                                RowLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 6
+
+                                    Label {
+                                        text: modelData.name + (modelData.id === settingsPanel.activeProfileId ? " (active)" : "")
+                                        font.pixelSize: 11
+                                        font.bold: true
+                                        color: theme.textPrimary
+                                        Layout.fillWidth: true
+                                    }
+
+                                    Button {
+                                        text: "Activate"
+                                        font.pixelSize: 9
+                                        implicitWidth: 55
+                                        enabled: modelData.id !== settingsPanel.activeProfileId
+                                        onClicked: settingsPanel.profileSelected(modelData.id)
+                                    }
+                                }
+
+                                Label {
+                                    text: modelData.description || ""
+                                    font.pixelSize: 9
+                                    color: theme.textSecondary
+                                    wrapMode: Text.WordWrap
+                                    Layout.fillWidth: true
+                                }
+
+                                // Show overrides summary
+                                Label {
+                                    visible: modelData.chordScaleOverrides && Object.keys(modelData.chordScaleOverrides).length > 0
+                                    text: {
+                                        if (!modelData.chordScaleOverrides) return ""
+                                        var keys = Object.keys(modelData.chordScaleOverrides)
+                                        return "Scale overrides: " + keys.join(", ")
+                                    }
+                                    font.pixelSize: 8
+                                    font.italic: true
+                                    color: theme.successText
+                                    wrapMode: Text.WordWrap
+                                    Layout.fillWidth: true
+                                }
+
+                                // Show weight summary
+                                Label {
+                                    visible: modelData.categoryWeights && Object.keys(modelData.categoryWeights).length > 0
+                                    text: {
+                                        if (!modelData.categoryWeights) return ""
+                                        var parts = []
+                                        for (var cat in modelData.categoryWeights) {
+                                            var w = modelData.categoryWeights[cat]
+                                            parts.push(cat + (w > 0 ? "+" : "") + w)
+                                        }
+                                        return "Category weights: " + parts.join(", ")
+                                    }
+                                    font.pixelSize: 8
+                                    color: theme.textMuted
+                                    wrapMode: Text.WordWrap
+                                    Layout.fillWidth: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ──────────────────────────────────────────
+            // SUB-TAB 4: Contexts (Custom contexts)
             // ──────────────────────────────────────────
             Flickable {
                 Layout.fillWidth: true

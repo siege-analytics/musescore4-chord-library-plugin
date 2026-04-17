@@ -2318,6 +2318,9 @@ MuseScore {
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
+            profilesData: chordLibrary._profileList
+            activeProfileId: chordLibrary._activeProfileId
+            onProfileSelected: function(profileId) { setProfile(profileId) }
 
             onPlacementChanged: function(placement) {
                 diagramPlacement = placement
