@@ -391,12 +391,22 @@ Item {
                             text: "Save Tuning"
                             font.pixelSize: 10
                             onClicked: {
+                                var name = tuningEditNameField.text.trim()
+                                var pitches = tuningEditPitchesField.text.trim()
+                                var strings = tuningEditStringsCount.value
+                                if (!name) {
+                                    settingsPanel.tuningStatus = "Enter a tuning name"
+                                    settingsPanel.tuningStatusColor = "#e74c3c"
+                                    return
+                                }
+                                if (!pitches) {
+                                    settingsPanel.tuningStatus = "Enter string pitches"
+                                    settingsPanel.tuningStatusColor = "#e74c3c"
+                                    return
+                                }
                                 settingsPanel.tuningStatus = "Saving..."
                                 settingsPanel.tuningStatusColor = "#888"
-                                settingsPanel.saveTuningFn(
-                                    tuningEditNameField.text.trim(),
-                                    tuningEditPitchesField.text.trim(),
-                                    tuningEditStringsCount.value)
+                                settingsPanel.saveTuningFn(name, pitches, strings)
                             }
                         }
 
