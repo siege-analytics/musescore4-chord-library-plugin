@@ -36,6 +36,14 @@ Item {
     property string tuningStatus: ""
     property color tuningStatusColor: "black"
 
+    // --- Tuning edit bridge (set by TuningManager.editTuning) ---
+    property string tuningNameValue: ""
+    property string tuningPitchesValue: ""
+    property int tuningStringCountValue: 6
+    onTuningNameValueChanged: if (tuningColumn) tuningColumn.tuningEditName = tuningNameValue
+    onTuningPitchesValueChanged: if (tuningColumn) tuningColumn.tuningEditPitches = tuningPitchesValue
+    onTuningStringCountValueChanged: if (tuningColumn) tuningColumn.tuningEditStrings = tuningStringCountValue
+
     // --- Output signals ---
     signal placementChanged(string placement)
     signal editTuningRequested(string slug)
