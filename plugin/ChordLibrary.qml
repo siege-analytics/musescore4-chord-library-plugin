@@ -2258,7 +2258,12 @@ MuseScore {
             // --- iReal file import (#149) ---
             onLoadIRealFileRequested: function(path) {
                 try {
-                    importFile.source = Qt.resolvedUrl(path) || path
+                    // Use file:// prefix for absolute paths, Qt.resolvedUrl for relative
+                    if (path.indexOf("/") === 0) {
+                        importFile.source = "file://" + path
+                    } else {
+                        importFile.source = Qt.resolvedUrl(path)
+                    }
                     var content = importFile.read()
                     if (!content || content.length < 5) {
                         importPanel.importMergeStatus = "File is empty or unreadable: " + path
@@ -2268,7 +2273,10 @@ MuseScore {
                     // Try to extract irealb:// URL from HTML
                     var urlMatch = content.match(/irealb:\/\/[^"'<\s]+/)
                     if (urlMatch) {
-                        importIRealPro(urlMatch[0])
+                        // Decode URL-encoded characters before parsing
+                        var url = urlMatch[0]
+                        try { url = decodeURIComponent(url) } catch(de) {}
+                        importIRealPro(url)
                     } else {
                         // Treat as plain text chord chart
                         importIRealPro(content)

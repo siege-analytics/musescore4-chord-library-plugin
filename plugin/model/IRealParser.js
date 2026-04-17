@@ -149,17 +149,53 @@ function parseUrl(url) {
     var match = url.match(/irealb(?:ook)?:\/\/(.+)/)
     if (!match) return null
 
-    var parts = match[1].split("=")
-    if (parts.length < 6) return null
+    // iReal URL format: title=composer==style=key==encoded_chart==trailing
+    // Split on single = first, then reconstruct from known structure
+    var raw_data = match[1]
 
-    var title = decodeURIComponent(parts[0] || "")
-    var composer = decodeURIComponent(parts[1] || "")
-    var style = decodeURIComponent(parts[2] || "")
-    var key = decodeURIComponent(parts[3] || "")
-    var encoded = parts[5] || ""
+    // Extract title (before first =)
+    var firstEq = raw_data.indexOf("=")
+    if (firstEq < 0) return null
+    var title = raw_data.substring(0, firstEq)
+    var rest = raw_data.substring(firstEq + 1)
 
-    // Some URLs have the chart in parts[4] instead
-    if (!encoded && parts[4]) encoded = parts[4]
+    // Extract composer (before next =)
+    var secondEq = rest.indexOf("=")
+    if (secondEq < 0) return null
+    var composer = rest.substring(0, secondEq)
+    rest = rest.substring(secondEq + 1)
+
+    // Skip empty field (the == delimiter leaves an empty string)
+    if (rest.charAt(0) === "=") rest = rest.substring(1)
+
+    // Extract style (before next =)
+    var thirdEq = rest.indexOf("=")
+    var style = ""
+    if (thirdEq >= 0) {
+        style = rest.substring(0, thirdEq)
+        rest = rest.substring(thirdEq + 1)
+    }
+
+    // Extract key (before next =)
+    var fourthEq = rest.indexOf("=")
+    var key = ""
+    if (fourthEq >= 0) {
+        key = rest.substring(0, fourthEq)
+        rest = rest.substring(fourthEq + 1)
+    }
+
+    // Skip empty field again (==)
+    if (rest.charAt(0) === "=") rest = rest.substring(1)
+
+    // The remaining content up to the trailing ==0=0 is the encoded chart
+    var encoded = rest.replace(/==?\d+=?\d*$/, "")
+
+    try {
+        title = decodeURIComponent(title)
+        composer = decodeURIComponent(composer)
+        style = decodeURIComponent(style)
+        key = decodeURIComponent(key)
+    } catch(e) {}
 
     // Deobfuscate
     var raw = deobfuscate(encoded)
