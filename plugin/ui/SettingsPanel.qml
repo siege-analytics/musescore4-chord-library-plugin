@@ -786,6 +786,17 @@ Item {
                                 )
                             }
                         }
+
+                        // Inline status for mapping save
+                        Label {
+                            visible: settingsPanel.scaleStatus.length > 0
+                            text: settingsPanel.scaleStatus
+                            color: settingsPanel.scaleStatusColor
+                            font.pixelSize: 9
+                            font.bold: true
+                            wrapMode: Text.WordWrap
+                            Layout.fillWidth: true
+                        }
                     }
 
                     // ─────────────────────────────────
