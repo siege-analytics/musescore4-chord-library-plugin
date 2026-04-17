@@ -40,9 +40,10 @@ Item {
     property string tuningNameValue: ""
     property string tuningPitchesValue: ""
     property int tuningStringCountValue: 6
+    property string editingTuningSlug: ""  // original slug when editing (#156)
 
     // --- Tuning save callback (bypasses signal, #154) ---
-    property var saveTuningFn: function(name, pitches, numStrings) {}
+    property var saveTuningFn: function(name, pitches, numStrings, originalSlug) {}
 
     // --- Output signals ---
     signal placementChanged(string placement)
@@ -296,6 +297,7 @@ Item {
                                     font.pixelSize: 9
                                     implicitWidth: 36
                                     onClicked: {
+                                        settingsPanel.editingTuningSlug = modelData
                                         settingsPanel.tuningNameValue = (tuning && tuning.tuningLabels ? tuning.tuningLabels[modelData] : modelData) || modelData
                                         settingsPanel.editTuningRequested(modelData)
                                     }
@@ -406,7 +408,7 @@ Item {
                                 }
                                 settingsPanel.tuningStatus = "Saving..."
                                 settingsPanel.tuningStatusColor = "#888"
-                                settingsPanel.saveTuningFn(name, pitches, strings)
+                                settingsPanel.saveTuningFn(name, pitches, strings, settingsPanel.editingTuningSlug)
                             }
                         }
 
@@ -414,6 +416,7 @@ Item {
                             text: "Clear"
                             font.pixelSize: 10
                             onClicked: {
+                                settingsPanel.editingTuningSlug = ""
                                 settingsPanel.tuningNameValue = ""
                                 settingsPanel.tuningPitchesValue = "E4, B3, G3, D3, A2, E2"
                                 settingsPanel.tuningStringCountValue = 6

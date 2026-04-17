@@ -1506,9 +1506,9 @@ MuseScore {
                 var dlg = Qt.createQmlObject(
                     'import QtQuick.Dialogs\n'
                     + 'FileDialog {\n'
-                    + '  title: "' + (mode === "save" ? "Export Voicings" : "Import Voicings") + '"\n'
+                    + '  title: "' + (mode === "save" ? "Export" : "Import") + '"\n'
                     + '  fileMode: FileDialog.' + (mode === "save" ? "SaveFile" : "OpenFile") + '\n'
-                    + '  nameFilters: ["JSON files (*.json)"]\n'
+                    + '  nameFilters: ["All supported (*.json *.html *.htm *.txt)", "JSON files (*.json)", "HTML files (*.html *.htm)", "All files (*)"]\n'
                     + '}',
                     chordLibrary, "fileBrowser"
                 )
@@ -2318,7 +2318,7 @@ MuseScore {
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
-            saveTuningFn: function(name, pitches, numStrings) {
+            saveTuningFn: function(name, pitches, numStrings, originalSlug) {
                 try {
                     // Direct implementation — bypasses TuningManager (#154)
                     var rawParts = pitches.split(",")
@@ -2346,37 +2346,51 @@ MuseScore {
                     }
                     var tuningObj = { name: name, description: "Custom tuning", strings: strings, notes: notes }
                     var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-                    // Write file directly using the root plugin's tuningFile FileIO
+                    var isUpdate = originalSlug && originalSlug.length > 0
+                    var oldSlug = isUpdate ? originalSlug : ""
+                    // Write file
                     tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
                     tuningFile.write(JSON.stringify(tuningObj, null, 2))
-                    // Update tuning list without TuningManager's for...in iteration
+                    // Build new lists
                     var newList = []
-                    for (var li = 0; li < tuningList.length; li++) newList.push(tuningList[li])
-                    if (newList.indexOf(slug) < 0) newList.push(slug)
-                    tuningList = newList
-                    // Update labels safely
                     var newLabels = {}
-                    var oldLabels = tuningLabels || {}
-                    var oldKeys = Object.keys(oldLabels)
-                    for (var ki = 0; ki < oldKeys.length; ki++) newLabels[oldKeys[ki]] = oldLabels[oldKeys[ki]]
-                    newLabels[slug] = name
-                    tuningLabels = newLabels
-                    // Update string counts safely
                     var newCounts = {}
+                    var oldLabels = tuningLabels || {}
                     var oldCounts = tuningStringCounts || {}
+                    var lKeys = Object.keys(oldLabels)
                     var cKeys = Object.keys(oldCounts)
-                    for (var ci = 0; ci < cKeys.length; ci++) newCounts[cKeys[ci]] = oldCounts[cKeys[ci]]
+                    // Copy existing entries, skipping old slug if renaming
+                    for (var li = 0; li < tuningList.length; li++) {
+                        if (isUpdate && tuningList[li] === oldSlug && oldSlug !== slug) continue
+                        newList.push(tuningList[li])
+                    }
+                    for (var ki = 0; ki < lKeys.length; ki++) {
+                        if (isUpdate && lKeys[ki] === oldSlug && oldSlug !== slug) continue
+                        newLabels[lKeys[ki]] = oldLabels[lKeys[ki]]
+                    }
+                    for (var ci = 0; ci < cKeys.length; ci++) {
+                        if (isUpdate && cKeys[ci] === oldSlug && oldSlug !== slug) continue
+                        newCounts[cKeys[ci]] = oldCounts[cKeys[ci]]
+                    }
+                    // Add/update new slug
+                    if (newList.indexOf(slug) < 0) newList.push(slug)
+                    newLabels[slug] = name
                     newCounts[slug] = numStrings
+                    tuningList = newList
+                    tuningLabels = newLabels
                     tuningStringCounts = newCounts
-                    // Select the new tuning
+                    // Select the tuning
                     selectedTuning = slug
                     loadTuningStringCount()
                     loadTuningVoicings()
                     saveSettings()
+                    // Clear editing state
+                    settingsPanel.editingTuningSlug = ""
                     // Show success
                     var noteArr = []
                     for (var n = 1; n <= numStrings; n++) noteArr.push(notes[n])
-                    settingsPanel.tuningStatus = "Created: " + name + " (" + noteArr.join("-") + ")"
+                    var action = isUpdate ? "Updated" : "Created"
+                    settingsPanel.tuningStatus = action + ": " + name + " (" + noteArr.join("-") + ")"
                     settingsPanel.tuningStatusColor = "#27ae60"
                 } catch(e) {
                     settingsPanel.tuningStatus = "Error: " + String(e)
