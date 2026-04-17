@@ -2326,7 +2326,11 @@ MuseScore {
             onEditTuningRequested: function(slug) { editTuning(slug) }
             onDeleteTuningRequested: function(slug) { deleteTuning(slug) }
             onMoveTuningRequested: function(slug, direction) { moveTuning(slug, direction) }
-            onCreateTuningRequested: function(name, pitches, numStrings) { createTuning(name, pitches, numStrings) }
+            onCreateTuningRequested: function(name, pitches, numStrings) {
+                settingsPanel.tuningStatus = "Saving..."
+                settingsPanel.tuningStatusColor = "#888"
+                createTuning(name, pitches, numStrings)
+            }
             onImportTuningRequested: function(path) { importTuning(path) }
             onCreateContextRequested: function(code, name, strings, linkedTuning) {
                 createCustomContext(code, name, strings, linkedTuning)
