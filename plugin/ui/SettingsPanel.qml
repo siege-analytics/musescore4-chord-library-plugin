@@ -41,6 +41,8 @@ Item {
     signal editTuningRequested(string slug)
     signal deleteTuningRequested(string slug)
     signal moveTuningRequested(string slug, int direction)
+    signal createTuningRequested(string name, string pitches, int numStrings)
+    signal importTuningRequested(string path)
     signal createContextRequested(string code, string name, int strings, string linkedTuning)
 
     // --- Scale signals ---
@@ -216,6 +218,12 @@ Item {
                     width: parent.width - 16
                     spacing: 12
 
+                    // --- Local edit state for tuning ---
+                    property bool tuningEditing: false
+                    property string tuningEditName: ""
+                    property string tuningEditPitches: "E4, B3, G3, D3, A2, E2"
+                    property int tuningEditStrings: 6
+
                     // --- Tuning list (#148) ---
                     Label {
                         text: "TUNINGS (" + tuning.tuningList.length + ")"
@@ -225,7 +233,7 @@ Item {
                     }
 
                     Label {
-                        text: "Active tuning is highlighted. Use Edit to load into the Import tab form."
+                        text: "Click Edit to modify a tuning, or scroll down to create a new one."
                         font.pixelSize: 9
                         color: theme.textMuted
                         wrapMode: Text.WordWrap
@@ -274,7 +282,13 @@ Item {
                                     text: "Edit"
                                     font.pixelSize: 9
                                     implicitWidth: 36
-                                    onClicked: settingsPanel.editTuningRequested(modelData)
+                                    onClicked: {
+                                        tuningColumn.tuningEditing = true
+                                        tuningColumn.tuningEditName = tuning.tuningLabels[modelData] || modelData
+                                        // Pitches would need to be loaded from the tuning file
+                                        // For now, signal the parent to load the data
+                                        settingsPanel.editTuningRequested(modelData)
+                                    }
                                 }
 
                                 Button {
@@ -305,6 +319,111 @@ Item {
                                     onClicked: settingsPanel.moveTuningRequested(modelData, 1)
                                 }
                             }
+                        }
+                    }
+
+                    // --- Divider ---
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    // --- Inline tuning edit/create form ---
+                    Label {
+                        text: tuningColumn.tuningEditing ? "EDIT TUNING" : "CREATE TUNING"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        TextField {
+                            id: tuningEditNameField
+                            Layout.fillWidth: true
+                            font.pixelSize: 11
+                            placeholderText: "Name (e.g. Open G)"
+                            selectByMouse: true
+                            text: tuningColumn.tuningEditName
+                            onTextChanged: tuningColumn.tuningEditName = text
+                        }
+
+                        SpinBox {
+                            id: tuningEditStringsCount
+                            from: 4
+                            to: 12
+                            value: tuningColumn.tuningEditStrings
+                            implicitWidth: 80
+                            onValueChanged: tuningColumn.tuningEditStrings = value
+                        }
+                    }
+
+                    Label {
+                        text: "String pitches (high to low, note names or MIDI):"
+                        font.pixelSize: 9
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+
+                    TextField {
+                        id: tuningEditPitchesField
+                        Layout.fillWidth: true
+                        font.pixelSize: 11
+                        placeholderText: "E4, B3, G3, D3, A2, E2"
+                        selectByMouse: true
+                        text: tuningColumn.tuningEditPitches
+                        onTextChanged: tuningColumn.tuningEditPitches = text
+                    }
+
+                    RowLayout {
+                        spacing: 6
+
+                        Button {
+                            text: "Save Tuning"
+                            font.pixelSize: 10
+                            onClicked: settingsPanel.createTuningRequested(
+                                tuningEditNameField.text.trim(),
+                                tuningEditPitchesField.text.trim(),
+                                tuningEditStringsCount.value)
+                        }
+
+                        Button {
+                            text: "Clear"
+                            font.pixelSize: 10
+                            onClicked: {
+                                tuningColumn.tuningEditing = false
+                                tuningColumn.tuningEditName = ""
+                                tuningColumn.tuningEditPitches = "E4, B3, G3, D3, A2, E2"
+                                tuningColumn.tuningEditStrings = 6
+                            }
+                        }
+                    }
+
+                    // --- Import tuning ---
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    Label {
+                        text: "IMPORT TUNING"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 4
+
+                        TextField {
+                            id: tuningImportPathField
+                            Layout.fillWidth: true
+                            font.pixelSize: 11
+                            placeholderText: "/path/to/tuning.json"
+                            selectByMouse: true
+                        }
+
+                        Button {
+                            text: "Import"
+                            font.pixelSize: 10
+                            onClicked: settingsPanel.importTuningRequested(tuningImportPathField.text.trim())
                         }
                     }
                 }
