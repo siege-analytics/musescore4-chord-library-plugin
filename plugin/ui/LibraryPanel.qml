@@ -306,7 +306,7 @@ Item {
 
             delegate: Rectangle {
                 width: voicingList.width
-                height: 80
+                height: 95
                 radius: 4
                 color: ma.containsMouse ? theme.chipHover : theme.chipBackground
                 border.color: theme.divider
