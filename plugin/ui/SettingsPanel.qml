@@ -270,10 +270,10 @@ Item {
                             Layout.fillWidth: true
                             height: tuningItemRow.implicitHeight + 8
                             radius: 4
-                            color: modelData === tuning.selectedTuning
+                            color: (tuning && modelData === tuning.selectedTuning)
                                 ? Qt.rgba(theme.successText.r, theme.successText.g, theme.successText.b, 0.1)
                                 : theme.cardBackground
-                            border.color: modelData === tuning.selectedTuning ? theme.successText : theme.cardBorder
+                            border.color: (tuning && modelData === tuning.selectedTuning) ? theme.successText : theme.cardBorder
                             border.width: 1
 
                             RowLayout {
@@ -305,9 +305,9 @@ Item {
                                     text: "Del"
                                     font.pixelSize: 9
                                     implicitWidth: 30
-                                    enabled: settingsPanel.builtInTunings.indexOf(modelData) < 0
+                                    enabled: (settingsPanel.builtInTunings || []).indexOf(modelData) < 0
                                     ToolTip.visible: hovered
-                                    ToolTip.text: settingsPanel.builtInTunings.indexOf(modelData) >= 0
+                                    ToolTip.text: (settingsPanel.builtInTunings || []).indexOf(modelData) >= 0
                                         ? "Built-in tunings cannot be deleted"
                                         : "Delete this tuning"
                                     onClicked: settingsPanel.deleteTuningRequested(modelData)
