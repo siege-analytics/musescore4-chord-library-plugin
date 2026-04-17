@@ -239,6 +239,13 @@ Item {
                     width: parent.width - 16
                     spacing: 12
 
+                    // --- Confirmation state ---
+                    property bool showDeleteConfirm: false
+                    property string deleteConfirmSlug: ""
+                    property string deleteConfirmName: ""
+                    property bool showImportConfirm: false
+                    property string importConfirmPath: ""
+
                     // --- Tuning list (#148) ---
                     Label {
                         text: "TUNINGS (" + (tuning && tuning.tuningList ? tuning.tuningList.length : 0) + ")"
@@ -313,7 +320,11 @@ Item {
                                     ToolTip.text: (settingsPanel.builtInTunings || []).indexOf(modelData) >= 0
                                         ? "Built-in tunings cannot be deleted"
                                         : "Delete this tuning"
-                                    onClicked: settingsPanel.deleteTuningRequested(modelData)
+                                    onClicked: {
+                                        tuningColumn.deleteConfirmSlug = modelData
+                                        tuningColumn.deleteConfirmName = (tuning && tuning.tuningLabels ? tuning.tuningLabels[modelData] : modelData) || modelData
+                                        tuningColumn.showDeleteConfirm = true
+                                    }
                                 }
 
                                 Button {
@@ -330,6 +341,56 @@ Item {
                                     implicitWidth: 24
                                     enabled: tuning && tuning.tuningList ? tuning.tuningList.indexOf(modelData) < tuning.tuningList.length - 1 : false
                                     onClicked: settingsPanel.moveTuningRequested(modelData, 1)
+                                }
+                            }
+                        }
+                    }
+
+                    // --- Delete tuning confirmation ---
+                    Rectangle {
+                        visible: tuningColumn.showDeleteConfirm
+                        Layout.fillWidth: true
+                        height: tuningConfirmCol.implicitHeight + 12
+                        radius: 6
+                        color: Qt.rgba(1, 0, 0, 0.08)
+                        border.color: "#e74c3c"
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: tuningConfirmCol
+                            anchors.fill: parent
+                            anchors.margins: 6
+                            spacing: 6
+
+                            Label {
+                                text: "Delete tuning \"" + tuningColumn.deleteConfirmName + "\"? This cannot be undone."
+                                font.pixelSize: 10
+                                font.bold: true
+                                color: "#e74c3c"
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+
+                            RowLayout {
+                                spacing: 6
+                                Button {
+                                    text: "Yes, delete"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        settingsPanel.deleteTuningRequested(tuningColumn.deleteConfirmSlug)
+                                        tuningColumn.showDeleteConfirm = false
+                                        tuningColumn.deleteConfirmSlug = ""
+                                        tuningColumn.deleteConfirmName = ""
+                                    }
+                                }
+                                Button {
+                                    text: "Cancel"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        tuningColumn.showDeleteConfirm = false
+                                        tuningColumn.deleteConfirmSlug = ""
+                                        tuningColumn.deleteConfirmName = ""
+                                    }
                                 }
                             }
                         }
@@ -467,7 +528,64 @@ Item {
                         Button {
                             text: "Import"
                             font.pixelSize: 10
-                            onClicked: settingsPanel.importTuningRequested(tuningImportPathField.text.trim())
+                            onClicked: {
+                                var path = tuningImportPathField.text.trim()
+                                if (!path) {
+                                    settingsPanel.tuningStatus = "Enter a file path"
+                                    settingsPanel.tuningStatusColor = "#e74c3c"
+                                    return
+                                }
+                                tuningColumn.showImportConfirm = true
+                                tuningColumn.importConfirmPath = path
+                            }
+                        }
+                    }
+
+                    // --- Import tuning confirmation ---
+                    Rectangle {
+                        visible: tuningColumn.showImportConfirm
+                        Layout.fillWidth: true
+                        height: tuningImportConfCol.implicitHeight + 12
+                        radius: 6
+                        color: Qt.rgba(0.2, 0.5, 1, 0.08)
+                        border.color: "#2980b9"
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: tuningImportConfCol
+                            anchors.fill: parent
+                            anchors.margins: 6
+                            spacing: 6
+
+                            Label {
+                                text: "Import tuning from \"" + (tuningColumn.importConfirmPath || "").split("/").pop() + "\"?"
+                                font.pixelSize: 10
+                                font.bold: true
+                                color: "#2980b9"
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+
+                            RowLayout {
+                                spacing: 6
+                                Button {
+                                    text: "Yes, import"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        settingsPanel.importTuningRequested(tuningColumn.importConfirmPath)
+                                        tuningColumn.showImportConfirm = false
+                                        tuningColumn.importConfirmPath = ""
+                                    }
+                                }
+                                Button {
+                                    text: "Cancel"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        tuningColumn.showImportConfirm = false
+                                        tuningColumn.importConfirmPath = ""
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -506,6 +624,10 @@ Item {
                     property bool showDeleteConfirm: false
                     property string deleteConfirmId: ""
                     property string deleteConfirmName: ""
+
+                    // --- Local state for quality removal confirmation ---
+                    property bool showQualityConfirm: false
+                    property string qualityConfirmName: ""
 
                     // --- Local state for mapping editor ---
                     property bool showMappingEditor: false
@@ -1001,7 +1123,58 @@ Item {
                                 text: "Remove"
                                 font.pixelSize: 9
                                 implicitWidth: 55
-                                onClicked: settingsPanel.customQualityRemoved(modelData)
+                                onClicked: {
+                                    scalesColumn.qualityConfirmName = modelData
+                                    scalesColumn.showQualityConfirm = true
+                                }
+                            }
+                        }
+                    }
+
+                    // --- Remove quality confirmation ---
+                    Rectangle {
+                        visible: scalesColumn.showQualityConfirm
+                        Layout.fillWidth: true
+                        height: qualityConfirmCol.implicitHeight + 12
+                        radius: 6
+                        color: Qt.rgba(1, 0, 0, 0.08)
+                        border.color: "#e74c3c"
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: qualityConfirmCol
+                            anchors.fill: parent
+                            anchors.margins: 6
+                            spacing: 6
+
+                            Label {
+                                text: "Remove quality \"" + scalesColumn.qualityConfirmName + "\"? Any mappings using it will be lost."
+                                font.pixelSize: 10
+                                font.bold: true
+                                color: "#e74c3c"
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+
+                            RowLayout {
+                                spacing: 6
+                                Button {
+                                    text: "Yes, remove"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        settingsPanel.customQualityRemoved(scalesColumn.qualityConfirmName)
+                                        scalesColumn.showQualityConfirm = false
+                                        scalesColumn.qualityConfirmName = ""
+                                    }
+                                }
+                                Button {
+                                    text: "Cancel"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        scalesColumn.showQualityConfirm = false
+                                        scalesColumn.qualityConfirmName = ""
+                                    }
+                                }
                             }
                         }
                     }

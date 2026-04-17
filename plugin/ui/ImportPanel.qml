@@ -59,6 +59,14 @@ Flickable {
     property string _presetStatus: ""
     property color _presetStatusColor: "black"
 
+    // --- Confirmation state ---
+    property bool _showMergeConfirm: false
+    property string _mergeConfirmPath: ""
+    property bool _showIRealConfirm: false
+    property string _irealConfirmText: ""
+    property bool _showTuningImportConfirm: false
+    property string _tuningImportConfirmPath: ""
+
     // --- Flickable setup ---
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -212,7 +220,64 @@ Flickable {
 
         Button {
             text: "Import && Merge"
-            onClicked: importPanel.importMergeRequested(importPathField.text.trim())
+            onClicked: {
+                var path = importPathField.text.trim()
+                if (!path) {
+                    importPanel.importMergeStatus = "Enter a file path"
+                    importPanel.importMergeStatusColor = "#e74c3c"
+                    return
+                }
+                importPanel._mergeConfirmPath = path
+                importPanel._showMergeConfirm = true
+            }
+        }
+
+        // --- Merge confirmation ---
+        Rectangle {
+            visible: importPanel._showMergeConfirm
+            Layout.fillWidth: true
+            height: mergeConfirmCol.implicitHeight + 12
+            radius: 6
+            color: Qt.rgba(0.2, 0.5, 1, 0.08)
+            border.color: "#2980b9"
+            border.width: 1
+
+            ColumnLayout {
+                id: mergeConfirmCol
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 6
+
+                Label {
+                    text: "Merge voicings from \"" + importPanel._mergeConfirmPath.split("/").pop() + "\" into your library?"
+                    font.pixelSize: 10
+                    font.bold: true
+                    color: "#2980b9"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    spacing: 6
+                    Button {
+                        text: "Yes, import"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel.importMergeRequested(importPanel._mergeConfirmPath)
+                            importPanel._showMergeConfirm = false
+                            importPanel._mergeConfirmPath = ""
+                        }
+                    }
+                    Button {
+                        text: "Cancel"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel._showMergeConfirm = false
+                            importPanel._mergeConfirmPath = ""
+                        }
+                    }
+                }
+            }
         }
 
         Label {
@@ -281,7 +346,62 @@ Flickable {
 
         Button {
             text: "Import && Voice"
-            onClicked: importPanel.importIRealRequested(irealInput.text.trim())
+            onClicked: {
+                var text = irealInput.text.trim()
+                if (!text) return
+                importPanel._irealConfirmText = text
+                importPanel._showIRealConfirm = true
+            }
+        }
+
+        // --- iReal import confirmation ---
+        Rectangle {
+            visible: importPanel._showIRealConfirm
+            Layout.fillWidth: true
+            height: irealConfirmCol.implicitHeight + 12
+            radius: 6
+            color: Qt.rgba(0.2, 0.5, 1, 0.08)
+            border.color: "#2980b9"
+            border.width: 1
+
+            ColumnLayout {
+                id: irealConfirmCol
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 6
+
+                Label {
+                    text: importPanel._irealConfirmText.indexOf("irealb") >= 0
+                        ? "Import chords from iReal Pro URL and start walkthrough?"
+                        : "Import chord chart and start walkthrough?"
+                    font.pixelSize: 10
+                    font.bold: true
+                    color: "#2980b9"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    spacing: 6
+                    Button {
+                        text: "Yes, import"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel.importIRealRequested(importPanel._irealConfirmText)
+                            importPanel._showIRealConfirm = false
+                            importPanel._irealConfirmText = ""
+                        }
+                    }
+                    Button {
+                        text: "Cancel"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel._showIRealConfirm = false
+                            importPanel._irealConfirmText = ""
+                        }
+                    }
+                }
+            }
         }
 
         // --- Divider ---
@@ -390,7 +510,64 @@ Flickable {
             Button {
                 text: "Import"
                 font.pixelSize: 10
-                onClicked: importPanel.importTuningRequested(tuningImportPath.text.trim())
+                onClicked: {
+                    var path = tuningImportPath.text.trim()
+                    if (!path) {
+                        importPanel.tuningStatus = "Enter a file path"
+                        importPanel.tuningStatusColor = "#e74c3c"
+                        return
+                    }
+                    importPanel._tuningImportConfirmPath = path
+                    importPanel._showTuningImportConfirm = true
+                }
+            }
+        }
+
+        // --- Tuning import confirmation ---
+        Rectangle {
+            visible: importPanel._showTuningImportConfirm
+            Layout.fillWidth: true
+            height: tuningImportConfirmCol.implicitHeight + 12
+            radius: 6
+            color: Qt.rgba(0.2, 0.5, 1, 0.08)
+            border.color: "#2980b9"
+            border.width: 1
+
+            ColumnLayout {
+                id: tuningImportConfirmCol
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 6
+
+                Label {
+                    text: "Import tuning from \"" + importPanel._tuningImportConfirmPath.split("/").pop() + "\"?"
+                    font.pixelSize: 10
+                    font.bold: true
+                    color: "#2980b9"
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                RowLayout {
+                    spacing: 6
+                    Button {
+                        text: "Yes, import"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel.importTuningRequested(importPanel._tuningImportConfirmPath)
+                            importPanel._showTuningImportConfirm = false
+                            importPanel._tuningImportConfirmPath = ""
+                        }
+                    }
+                    Button {
+                        text: "Cancel"
+                        font.pixelSize: 10
+                        onClicked: {
+                            importPanel._showTuningImportConfirm = false
+                            importPanel._tuningImportConfirmPath = ""
+                        }
+                    }
+                }
             }
         }
 
