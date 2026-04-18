@@ -1,0 +1,80 @@
+{
+  "modes": {
+    "chord-melody": {
+      "name": "Chord Melody",
+      "short": "CM",
+      "description": "Melody note carried on top by the guitar. Top-note match scored heavily; mid-upper register preferred.",
+      "melodyBonusMultiplier": 1.0,
+      "bassBonusMultiplier": 0.5,
+      "categoryDeltas": {
+        "drop2": 10,
+        "extended": 5,
+        "altered": 5,
+        "shell": 0
+      },
+      "rangeFretMin": 3,
+      "rangeFretMax": 12,
+      "rangeFretBonus": 5,
+      "mutePenaltyPerString": 5,
+      "modeMatchBonus": 25,
+      "modeMismatchPenalty": -15
+    },
+    "comping": {
+      "name": "Comping",
+      "short": "Cmp",
+      "description": "Accompaniment behind a melody instrument. Favors mid-range shells and drop 2 voicings.",
+      "melodyBonusMultiplier": 0.0,
+      "bassBonusMultiplier": 0.8,
+      "categoryDeltas": {
+        "shell": 15,
+        "drop2": 10,
+        "extended": -5,
+        "altered": -5
+      },
+      "rangeFretMin": 3,
+      "rangeFretMax": 7,
+      "rangeFretBonus": 10,
+      "mutePenaltyPerString": 3,
+      "modeMatchBonus": 25,
+      "modeMismatchPenalty": -15
+    },
+    "solo-guitar": {
+      "name": "Solo Guitar",
+      "short": "Solo",
+      "description": "Bass, chord, and melody on one instrument. Wider-range voicings; bass and top both weighted.",
+      "melodyBonusMultiplier": 1.0,
+      "bassBonusMultiplier": 1.2,
+      "categoryDeltas": {
+        "extended": 15,
+        "drop3": 10,
+        "drop2": 5,
+        "shell": -5
+      },
+      "rangeFretMin": 0,
+      "rangeFretMax": 15,
+      "rangeFretBonus": 3,
+      "mutePenaltyPerString": 6,
+      "modeMatchBonus": 25,
+      "modeMismatchPenalty": -15
+    },
+    "duo": {
+      "name": "Duo",
+      "short": "Duo",
+      "description": "Comping behind a voice or another instrument. Narrow mid-upper range; clear top line.",
+      "melodyBonusMultiplier": 0.5,
+      "bassBonusMultiplier": 0.3,
+      "categoryDeltas": {
+        "shell": 10,
+        "drop2": 15,
+        "extended": 0,
+        "altered": -5
+      },
+      "rangeFretMin": 5,
+      "rangeFretMax": 10,
+      "rangeFretBonus": 10,
+      "mutePenaltyPerString": 4,
+      "modeMatchBonus": 25,
+      "modeMismatchPenalty": -15
+    }
+  }
+}

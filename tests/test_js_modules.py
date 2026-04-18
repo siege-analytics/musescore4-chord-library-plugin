@@ -760,6 +760,109 @@ class TestDataCacheJS:
         """)
 
 
+# === ChordSelector.js — mode scoring (#161) ===
+
+
+class TestChordSelectorModes:
+    """Test mode-aware scoring deltas in ChordSelector."""
+
+    def test_compute_mode_delta_null_config(self):
+        assert_js("ChordSelector.js", """
+            var v = { category: "drop2", fret_number: 5, mutes: [], suitableModes: [] };
+            assertEqual(computeModeDelta(v, null, "chord-melody"), 0, "null config -> 0");
+            assertEqual(computeModeDelta(v, undefined, "chord-melody"), 0, "undefined config -> 0");
+        """)
+
+    def test_compute_mode_delta_category(self):
+        assert_js("ChordSelector.js", """
+            var cfg = { categoryDeltas: { shell: 15, drop2: 10 } };
+            assertEqual(computeModeDelta({ category: "shell" }, cfg), 15, "shell +15");
+            assertEqual(computeModeDelta({ category: "drop2" }, cfg), 10, "drop2 +10");
+            assertEqual(computeModeDelta({ category: "other" }, cfg), 0, "unknown category +0");
+        """)
+
+    def test_compute_mode_delta_range(self):
+        assert_js("ChordSelector.js", """
+            var cfg = { rangeFretMin: 3, rangeFretMax: 7, rangeFretBonus: 10 };
+            assertEqual(computeModeDelta({ fret_number: 5 }, cfg), 10, "in range");
+            assertEqual(computeModeDelta({ fret_number: 3 }, cfg), 10, "at lower bound");
+            assertEqual(computeModeDelta({ fret_number: 7 }, cfg), 10, "at upper bound");
+            assertEqual(computeModeDelta({ fret_number: 2 }, cfg), 0, "below range");
+            assertEqual(computeModeDelta({ fret_number: 8 }, cfg), 0, "above range");
+        """)
+
+    def test_compute_mode_delta_mute_penalty(self):
+        assert_js("ChordSelector.js", """
+            var cfg = { mutePenaltyPerString: 5 };
+            assertEqual(computeModeDelta({ mutes: [1, 2] }, cfg), -10, "2 mutes * 5");
+            assertEqual(computeModeDelta({ mutes: [] }, cfg), 0, "no mutes");
+        """)
+
+    def test_compute_mode_delta_suitable_modes(self):
+        assert_js("ChordSelector.js", """
+            var cfg = { modeMatchBonus: 25, modeMismatchPenalty: -15 };
+            var match = { suitableModes: ["chord-melody", "solo-guitar"] };
+            var miss = { suitableModes: ["comping"] };
+            var empty = { suitableModes: [] };
+            assertEqual(computeModeDelta(match, cfg, "chord-melody"), 25, "match +25");
+            assertEqual(computeModeDelta(miss, cfg, "chord-melody"), -15, "miss -15");
+            assertEqual(computeModeDelta(empty, cfg, "chord-melody"), 0, "empty modes untagged");
+        """)
+
+    def test_modes_config_loads(self):
+        assert_js(
+            [os.path.join(CONFIG_DIR, "modes.json")],
+            ""
+        ) if False else None  # json isn't eval-able; load via Python instead
+        import json as _json
+        with open(os.path.join(CONFIG_DIR, "modes.json")) as f:
+            cfg = _json.load(f)
+        assert set(cfg["modes"].keys()) == {"chord-melody", "comping", "solo-guitar", "duo"}
+        for m in cfg["modes"].values():
+            assert "melodyBonusMultiplier" in m
+            assert "bassBonusMultiplier" in m
+            assert "categoryDeltas" in m
+
+    def test_modes_produce_different_rankings(self):
+        # Two candidates: a shell (comping-friendly) vs a drop2 extended (chord-melody-friendly)
+        assert_js("ChordSelector.js", """
+            var shell = {
+                id: "v-shell", root: "C", chord_quality: "dom7",
+                category: "shell", fret_number: 5, mutes: [5, 6],
+                dots: [{string:4,fret:1},{string:3,fret:2},{string:2,fret:1}],
+                suitableModes: ["comping"],
+                intervals: ["1","3","b7"], notes: ["C","E","Bb"], strings: 6, open: []
+            };
+            var drop2 = {
+                id: "v-drop2", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 8, mutes: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3},{string:2,fret:2}],
+                suitableModes: ["chord-melody"],
+                intervals: ["1","3","b7","9"], notes: ["C","E","Bb","D"], strings: 6, open: []
+            };
+            var data = [shell, drop2];
+            var cmCfg = {
+                melodyBonusMultiplier: 1.0, bassBonusMultiplier: 0.5,
+                categoryDeltas: { drop2: 10, shell: 0 },
+                rangeFretMin: 3, rangeFretMax: 12, rangeFretBonus: 5,
+                mutePenaltyPerString: 5, modeMatchBonus: 25, modeMismatchPenalty: -15
+            };
+            var cmpCfg = {
+                melodyBonusMultiplier: 0.0, bassBonusMultiplier: 0.8,
+                categoryDeltas: { shell: 15, drop2: 10 },
+                rangeFretMin: 3, rangeFretMax: 7, rangeFretBonus: 10,
+                mutePenaltyPerString: 3, modeMatchBonus: 25, modeMismatchPenalty: -15
+            };
+            var opts = { maxStrings: 6, semitoneMap: {C:0,D:2,E:4,F:5,G:7,A:9,B:11,Bb:10} };
+            opts.modeConfig = cmCfg; opts.modeId = "chord-melody";
+            var cmPick = findBestVoicing(data, "C", "dom7", opts);
+            opts.modeConfig = cmpCfg; opts.modeId = "comping";
+            var cmpPick = findBestVoicing(data, "C", "dom7", opts);
+            assertEqual(cmPick.id, "v-drop2", "chord-melody picks drop2");
+            assertEqual(cmpPick.id, "v-shell", "comping picks shell");
+        """)
+
+
 # === IRealParser.js ===
 
 

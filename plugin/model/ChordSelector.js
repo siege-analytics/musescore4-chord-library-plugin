@@ -83,6 +83,39 @@ function parseChordSymbol(text) {
     return result
 }
 
+// Compute a scoring delta from the active mode config (#161).
+// Mode config shape (from plugin/config/modes.json):
+//   { categoryDeltas, rangeFretMin, rangeFretMax, rangeFretBonus,
+//     mutePenaltyPerString, modeMatchBonus, modeMismatchPenalty }
+// Caller supplies modeId (the key into the modes map) so we can check
+// voicing.suitableModes membership. If modeConfig is null/undefined,
+// returns 0 (no effect).
+function computeModeDelta(voicing, modeConfig, modeId) {
+    if (!modeConfig) return 0
+    var delta = 0
+    var cd = modeConfig.categoryDeltas || {}
+    if (voicing.category && cd[voicing.category] !== undefined) {
+        delta += cd[voicing.category]
+    }
+    var fret = voicing.fret_number || 0
+    if (modeConfig.rangeFretMin !== undefined && modeConfig.rangeFretMax !== undefined
+        && fret >= modeConfig.rangeFretMin && fret <= modeConfig.rangeFretMax) {
+        delta += (modeConfig.rangeFretBonus || 0)
+    }
+    if (modeConfig.mutePenaltyPerString) {
+        var muteCount = voicing.mutes ? voicing.mutes.length : 0
+        delta -= muteCount * modeConfig.mutePenaltyPerString
+    }
+    if (modeId && voicing.suitableModes && voicing.suitableModes.length > 0) {
+        if (voicing.suitableModes.indexOf(modeId) >= 0) {
+            delta += (modeConfig.modeMatchBonus || 0)
+        } else {
+            delta += (modeConfig.modeMismatchPenalty || 0)
+        }
+    }
+    return delta
+}
+
 // Find the best matching voicing for a chord.
 //
 // @param voicingsData — array of voicing objects
@@ -154,13 +187,19 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         else if (a.category === "drop2") scoreA += 5
         if (b.category === "shell") scoreB += 10
         else if (b.category === "drop2") scoreB += 5
+        // Mode multipliers on melody/bass bonuses (#161). Defaults preserve v2.0 behavior
+        // when no mode is supplied (chord-melody-equivalent: melody 1.0, bass 1.0).
+        var melMul = (opts.modeConfig && opts.modeConfig.melodyBonusMultiplier !== undefined)
+            ? opts.modeConfig.melodyBonusMultiplier : 1.0
+        var bassMul = (opts.modeConfig && opts.modeConfig.bassBonusMultiplier !== undefined)
+            ? opts.modeConfig.bassBonusMultiplier : 1.0
         if (melodyTarget >= 0 && opts.topNoteFn) {
-            var melodyBonus = opts.melodyLocked ? 500 : 200
+            var melodyBonus = (opts.melodyLocked ? 500 : 200) * melMul
             if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
             if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
         }
         if (bassTarget >= 0 && opts.bassNoteFn) {
-            var bassBonus = opts.bassLocked ? 500 : 250
+            var bassBonus = (opts.bassLocked ? 500 : 250) * bassMul
             if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
             if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
         }
@@ -172,6 +211,8 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
             if (ref.category === b.category && ref.fret_number === b.fret_number) scoreB -= 15
         }
         // T-022: Penalize excessive mutes (prefer fuller voicings)
+        // Mode config, if present, contributes its own mute penalty via computeModeDelta —
+        // the base 5-per-string still applies so behavior without a mode is unchanged.
         scoreA -= (a.mutes ? a.mutes.length : 0) * 5
         scoreB -= (b.mutes ? b.mutes.length : 0) * 5
         // T-022: Register preference — prefer mid-register voicings (frets 3-7)
@@ -196,6 +237,11 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
         if (opts.profileQualityBoostFn) {
             scoreA += opts.profileQualityBoostFn(a.chord_quality)
             scoreB += opts.profileQualityBoostFn(b.chord_quality)
+        }
+        // Mode deltas (#161): category preferences, fret range, mode match/mismatch
+        if (opts.modeConfig) {
+            scoreA += computeModeDelta(a, opts.modeConfig, opts.modeId)
+            scoreB += computeModeDelta(b, opts.modeConfig, opts.modeId)
         }
         return scoreB - scoreA
     })
@@ -263,13 +309,18 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         else if (a.category === "drop2") scoreA += 5
         if (b.category === "shell") scoreB += 10
         else if (b.category === "drop2") scoreB += 5
+        // Mode multipliers (#161)
+        var melMul2 = (opts.modeConfig && opts.modeConfig.melodyBonusMultiplier !== undefined)
+            ? opts.modeConfig.melodyBonusMultiplier : 1.0
+        var bassMul2 = (opts.modeConfig && opts.modeConfig.bassBonusMultiplier !== undefined)
+            ? opts.modeConfig.bassBonusMultiplier : 1.0
         if (melodyTarget >= 0 && opts.topNoteFn) {
-            var melodyBonus = opts.melodyLocked ? 500 : 200
+            var melodyBonus = (opts.melodyLocked ? 500 : 200) * melMul2
             if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
             if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
         }
         if (bassTarget >= 0 && opts.bassNoteFn) {
-            var bassBonus = opts.bassLocked ? 500 : 250
+            var bassBonus = (opts.bassLocked ? 500 : 250) * bassMul2
             if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
             if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
         }
@@ -285,6 +336,10 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
         var fretB = b.fret_number || 0
         if (fretA >= 3 && fretA <= 7) scoreA += 5
         if (fretB >= 3 && fretB <= 7) scoreB += 5
+        if (opts.modeConfig) {
+            scoreA += computeModeDelta(a, opts.modeConfig, opts.modeId)
+            scoreB += computeModeDelta(b, opts.modeConfig, opts.modeId)
+        }
         return scoreB - scoreA
     })
     return candidates
