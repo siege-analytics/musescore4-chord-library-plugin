@@ -200,6 +200,11 @@ ColumnLayout {
                 var textColor = isDark ? Qt.rgba(0.8, 0.8, 0.8, 0.8) : Qt.rgba(0.4, 0.4, 0.4, 0.8)
                 var muteColor = isDark ? Qt.rgba(0.7, 0.7, 0.7, 0.8) : Qt.rgba(0.5, 0.5, 0.5, 0.7)
 
+                // Transposed display fret — drives nut/open rendering so the preview
+                // matches what will actually be pasted into the score.
+                var displayFret = currentItem ? transposedFretNumber(v, currentItem.root) : (v.fret_number || 0)
+                var atNut = displayFret <= 1
+
                 // Strings
                 ctx.strokeStyle = gridColor
                 ctx.lineWidth = 0.5
@@ -212,7 +217,7 @@ ColumnLayout {
 
                 // Frets
                 for (var f = 0; f <= nf; f++) {
-                    ctx.lineWidth = (f === 0 && (v.fret_number || 1) <= 1) ? 2.5 : 0.5
+                    ctx.lineWidth = (f === 0 && atNut) ? 2.5 : 0.5
                     ctx.beginPath()
                     ctx.moveTo(mg, tm + f * fs)
                     ctx.lineTo(width - mg, tm + f * fs)
@@ -220,7 +225,6 @@ ColumnLayout {
                 }
 
                 // Fret number (transposed to target root)
-                var displayFret = currentItem ? transposedFretNumber(v, currentItem.root) : (v.fret_number || 0)
                 if (displayFret > 1) {
                     ctx.fillStyle = textColor
                     ctx.font = "9px sans-serif"
@@ -247,7 +251,8 @@ ColumnLayout {
                     ctx.fill()
                 }
 
-                // Mutes
+                // Mutes render above the nut regardless — muted strings stay muted
+                // under transposition.
                 ctx.fillStyle = muteColor
                 ctx.font = "10px sans-serif"
                 ctx.textAlign = "center"
@@ -256,14 +261,25 @@ ColumnLayout {
                     ctx.fillText("×", mg + (ns - mutes[m]) * ss, tm - 2)
                 }
 
-                // Opens
-                ctx.strokeStyle = muteColor
-                ctx.lineWidth = 1
+                // Opens: only truly open when displayFret is at the nut. Otherwise
+                // they render as barred at the top of the visible window (mirrors
+                // the XML generator's barre handling).
                 var opens = v.open || []
-                for (var o = 0; o < opens.length; o++) {
-                    ctx.beginPath()
-                    ctx.arc(mg + (ns - opens[o]) * ss, tm - 6, 3, 0, 2 * Math.PI)
-                    ctx.stroke()
+                if (atNut) {
+                    ctx.strokeStyle = muteColor
+                    ctx.lineWidth = 1
+                    for (var o = 0; o < opens.length; o++) {
+                        ctx.beginPath()
+                        ctx.arc(mg + (ns - opens[o]) * ss, tm - 6, 3, 0, 2 * Math.PI)
+                        ctx.stroke()
+                    }
+                } else {
+                    ctx.fillStyle = theme.dotDefault
+                    for (var ob = 0; ob < opens.length; ob++) {
+                        ctx.beginPath()
+                        ctx.arc(mg + (ns - opens[ob]) * ss, tm + 0.5 * fs, 4, 0, 2 * Math.PI)
+                        ctx.fill()
+                    }
                 }
             }
         }
