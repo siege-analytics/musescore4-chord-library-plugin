@@ -63,6 +63,11 @@ Item {
     property var profileIdList: ["default"]
     property string activeProfileId: ""
 
+    // --- Mode (#164) ---
+    property var modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+    property var modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
+    property string activeMode: "chord-melody"
+
     // --- Output signals ---
     signal searchChanged(string text)
     signal contextFilterChanged(string code)
@@ -83,6 +88,7 @@ Item {
     signal clearComparisonRequested()
     signal scaleFilterChanged(string scaleName)
     signal profileChanged(string profileId)
+    signal modeChanged(string modeId)
 
     // --- Save to Library signals (moved from Settings, #144) ---
     signal captureRequested()
@@ -208,6 +214,38 @@ Item {
                 onActivated: {
                     if (currentIndex >= 0 && currentIndex < libraryPanel.profileIdList.length) {
                         libraryPanel.profileChanged(libraryPanel.profileIdList[currentIndex])
+                    }
+                }
+            }
+        }
+
+        // Mode selector (#164)
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            Label {
+                text: "Mode:"
+                font.pixelSize: 10
+                font.italic: true
+                color: theme.textSecondary
+            }
+
+            ComboBox {
+                id: modeCombo
+                model: libraryPanel.modeDisplayList
+                Layout.fillWidth: true
+                font.pixelSize: 10
+                function syncIndex() {
+                    var ml = libraryPanel.modeIdList
+                    if (!ml || !ml.length) return
+                    currentIndex = Math.max(0, ml.indexOf(libraryPanel.activeMode || "chord-melody"))
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
+                onActivated: {
+                    if (currentIndex >= 0 && currentIndex < libraryPanel.modeIdList.length) {
+                        libraryPanel.modeChanged(libraryPanel.modeIdList[currentIndex])
                     }
                 }
             }

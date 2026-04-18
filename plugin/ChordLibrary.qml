@@ -2879,6 +2879,8 @@ MuseScore {
             }
             activeProfileId: _activeProfileId
             onProfileChanged: function(profileId) { chordLibrary.setProfile(profileId) }
+            activeMode: chordLibrary.activeMode
+            onModeChanged: function(modeId) { chordLibrary.setActiveMode(modeId) }
             onSearchChanged: function(text) { chordLibrary.searchText = text; chordLibrary.applyFilters() }
             onContextFilterChanged: function(code) {
                 chordLibrary.filterContext = code
