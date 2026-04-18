@@ -760,6 +760,211 @@ class TestDataCacheJS:
         """)
 
 
+# === StyleComposer.js — style composition (#162) ===
+
+
+class TestStyleComposer:
+    """Test StyleComposer blending rules and resolution."""
+
+    BASES = """
+        var bebop = {
+            id: "bebop", name: "Bebop",
+            chordScaleOverrides: { dom7: ["Mixolydian", "Altered"] },
+            categoryWeights: { drop2: 10, shell: 5 },
+            qualityBoosts: { dom7: 5 }
+        };
+        var manouche = {
+            id: "manouche", name: "Manouche",
+            chordScaleOverrides: { dom7: ["Harmonic Minor"], min7: ["Harmonic Minor"] },
+            categoryWeights: { shell: 15, drop2: -10 },
+            qualityBoosts: { dim7: 20 }
+        };
+        var bossa = {
+            id: "bossa", name: "Bossa",
+            chordScaleOverrides: { maj7: ["Lydian"] },
+            categoryWeights: { drop2: 15 },
+            qualityBoosts: {}
+        };
+        var all = [bebop, manouche, bossa];
+    """
+
+    def test_plain_style_passthrough(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var out = resolve(bebop, all);
+            assertEqual(out.categoryWeights.drop2, 10, "plain style returns own weights");
+            assertEqual(out.chordScaleOverrides.dom7.length, 2, "scales cloned");
+            out.categoryWeights.drop2 = 999;
+            assertEqual(bebop.categoryWeights.drop2, 10, "resolve returns a clone");
+        """)
+
+    def test_weighted_sum_numeric(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var out = resolve(comp, all);
+            // drop2: 10 (bebop) + (-10) (manouche) = 0
+            assertEqual(out.categoryWeights.drop2, 0, "weighted-sum cancels");
+            // shell: 5 + 15 = 20
+            assertEqual(out.categoryWeights.shell, 20, "shell stacked");
+        """)
+
+    def test_max_numeric_rule(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "max",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var out = resolve(comp, all);
+            // shell: max(|5|, |15|) = 15 (wins by absolute value)
+            assertEqual(out.categoryWeights.shell, 15, "max picks strongest");
+            // drop2: max(|10|, |-10|) = 10 or -10. Both abs=10, order-dependent
+            // but weighted-desc sort puts bebop first (equal weights -> stable)
+            assert(out.categoryWeights.drop2 === 10 || out.categoryWeights.drop2 === -10,
+                   "drop2 is one of the two opinions");
+        """)
+
+    def test_average_numeric_rule(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "average",
+                               weights: { bebop: 1.0, manouche: 3.0 } }
+            };
+            var out = resolve(comp, all);
+            // shell: (5*1 + 15*3) / (1+3) = 50/4 = 12.5 -> 13 (rounded)
+            assertEqual(out.categoryWeights.shell, 13, "average weighted by input");
+        """)
+
+    def test_scale_union_priority(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { scaleRule: "union-priority",
+                               weights: { bebop: 0.7, manouche: 0.5 } }
+            };
+            var out = resolve(comp, all);
+            // bebop has higher weight -> its dom7 scales come first
+            assertEqual(out.chordScaleOverrides.dom7[0], "Mixolydian", "higher-weight first");
+            assertContains(out.chordScaleOverrides.dom7, "Harmonic Minor", "manouche added");
+            assertEqual(out.chordScaleOverrides.dom7.length, 3, "deduped union");
+        """)
+
+    def test_scale_intersect(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { scaleRule: "intersect",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var out = resolve(comp, all);
+            // Bebop dom7: [Mixolydian, Altered], manouche dom7: [Harmonic Minor]
+            // intersection empty -> key omitted
+            assert(!out.chordScaleOverrides.dom7, "no overlap -> key omitted");
+        """)
+
+    def test_scale_first_only(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { scaleRule: "first-only",
+                               weights: { bebop: 0.6, manouche: 0.3 } }
+            };
+            var out = resolve(comp, all);
+            // Only bebop's scales appear
+            assertEqual(out.chordScaleOverrides.dom7.length, 2, "only highest-weight style");
+            assertEqual(out.chordScaleOverrides.dom7[0], "Mixolydian", "bebop wins");
+            assert(!out.chordScaleOverrides.min7, "manouche min7 omitted");
+        """)
+
+    def test_clamp_numeric(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 5.0, manouche: 5.0 },
+                               clampNumeric: [-30, 30] }
+            };
+            var out = resolve(comp, all);
+            // shell: (5+15) * 5 = 100 -> clamped to 30
+            assertEqual(out.categoryWeights.shell, 30, "clamped to upper bound");
+        """)
+
+    def test_freeze_preserves_state(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var frozen = freeze(comp, all);
+            assertEqual(frozen.composition.resolution, "freeze", "marked frozen");
+            assertEqual(frozen.categoryWeights.shell, 20, "baked in");
+            // Mutate base — frozen should not follow
+            manouche.categoryWeights.shell = 999;
+            var out = resolve(frozen, all);
+            assertEqual(out.categoryWeights.shell, 20, "frozen ignores base edits");
+        """)
+
+    def test_re_resolve_follows_base_edits(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               resolution: "re-resolve",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var before = resolve(comp, all).categoryWeights.shell;
+            assertEqual(before, 20, "initial sum");
+            manouche.categoryWeights.shell = 100;
+            var after = resolve(comp, all).categoryWeights.shell;
+            assertEqual(after, 105, "re-resolve picks up edit");
+        """)
+
+    def test_find_dependents(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var live = {
+                id: "live", composedFrom: ["bebop"],
+                composition: { resolution: "re-resolve" }
+            };
+            var frozen = {
+                id: "frozen", composedFrom: ["bebop"],
+                composition: { resolution: "freeze" },
+                categoryWeights: {}, chordScaleOverrides: {}, qualityBoosts: {}
+            };
+            var pool = all.concat([live, frozen]);
+            var deps = findDependents("bebop", pool);
+            assertEqual(deps.length, 1, "only live composition counts");
+            assertEqual(deps[0], "live", "frozen excluded");
+        """)
+
+    def test_zero_weight_excluded(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, manouche: 0 } }
+            };
+            var out = resolve(comp, all);
+            assertEqual(out.categoryWeights.drop2, 10, "manouche skipped");
+        """)
+
+    def test_missing_base_style_skipped(self):
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "nonexistent"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, nonexistent: 1.0 } }
+            };
+            var out = resolve(comp, all);
+            // Only bebop contributes
+            assertEqual(out.categoryWeights.drop2, 10, "missing style silently skipped");
+        """)
+
+
 # === ChordSelector.js — mode scoring (#161) ===
 
 
@@ -1156,7 +1361,7 @@ class TestStyleProfiles:
 
     def test_profiles_json_valid(self):
         """Validate profiles.json structure."""
-        profiles_path = os.path.join(CONFIG_DIR, "profiles.json")
+        profiles_path = os.path.join(CONFIG_DIR, "styles.json")
         with open(profiles_path) as f:
             data = json.load(f)
         assert "profiles" in data
@@ -1171,7 +1376,7 @@ class TestStyleProfiles:
 
     def test_profiles_scale_overrides_valid(self):
         """All scale names in profile overrides must exist in scales.json."""
-        profiles_path = os.path.join(CONFIG_DIR, "profiles.json")
+        profiles_path = os.path.join(CONFIG_DIR, "styles.json")
         scales_path = os.path.join(CONFIG_DIR, "scales.json")
         with open(profiles_path) as f:
             profiles = json.load(f)

@@ -137,7 +137,7 @@ MuseScore {
 
     FileIO {
         id: profilesConfigFile
-        source: Qt.resolvedUrl("config/profiles.json")
+        source: Qt.resolvedUrl("config/styles.json")
     }
 
     FileIO {
