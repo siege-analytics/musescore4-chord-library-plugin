@@ -44,6 +44,10 @@ Item {
     property bool writeVoice2: false
     property string melodyOverrideText: ""  // from LibraryPanel's melodyOverrideField
 
+    // Mode axis (#164) — parent passes activeMode id + resolved modeConfig object
+    property string activeMode: "chord-melody"
+    property var modeConfig: null
+
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
     property var batchQueue: []
@@ -96,7 +100,9 @@ Item {
             difficultyFn: FingeringEngine.computeDifficulty,
             semitoneMap: Transposer.SEMITONE_MAP,
             profileCategoryWeightFn: ChordScales.getProfileCategoryWeight,
-            profileQualityBoostFn: ChordScales.getProfileQualityBoost
+            profileQualityBoostFn: ChordScales.getProfileQualityBoost,
+            modeConfig: modeConfig,
+            modeId: activeMode
         }
     }
 

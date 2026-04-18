@@ -116,6 +116,58 @@ function computeModeDelta(voicing, modeConfig, modeId) {
     return delta
 }
 
+// Score a single voicing candidate against a query context (#164).
+// Centralizes the scoring rubric so findBestVoicing and findAllVoicings stay
+// in sync. Returns a numeric score (higher = better).
+//
+// opts carries the full call context: see findBestVoicing for the shape.
+function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, opts) {
+    var score = 0
+
+    if (v.chord_quality === quality) score += 20
+
+    // Legacy context match (retained until filterContext retires)
+    if (opts.filterContext) {
+        var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
+        if (v.context === opts.filterContext) score += 100
+        else if ((v.context || "").replace(/[0-9]+$/, "") === ctxPfx) score += 50
+    }
+    if (opts.filterCategory && v.category === opts.filterCategory) score += 50
+
+    if (v.category === "shell") score += 10
+    else if (v.category === "drop2") score += 5
+
+    var melMul = (opts.modeConfig && opts.modeConfig.melodyBonusMultiplier !== undefined)
+        ? opts.modeConfig.melodyBonusMultiplier : 1.0
+    var bassMul = (opts.modeConfig && opts.modeConfig.bassBonusMultiplier !== undefined)
+        ? opts.modeConfig.bassBonusMultiplier : 1.0
+
+    if (melodyTarget >= 0 && opts.topNoteFn) {
+        var melodyBonus = (opts.melodyLocked ? 500 : 200) * melMul
+        if (opts.topNoteFn(v, targetRoot, opts.semitoneMap) === melodyTarget) score += melodyBonus
+    }
+    if (bassTarget >= 0 && opts.bassNoteFn) {
+        var bassBonus = (opts.bassLocked ? 500 : 250) * bassMul
+        if (opts.bassNoteFn(v, targetRoot, opts.semitoneMap) === bassTarget) score += bassBonus
+    }
+    if (ref && opts.distanceFn) {
+        score -= opts.distanceFn(ref, v) * 2
+        if (ref.category === v.category && ref.fret_number === v.fret_number) score -= 15
+    }
+    score -= (v.mutes ? v.mutes.length : 0) * 5
+    var fret = v.fret_number || 0
+    if (fret >= 3 && fret <= 7) score += 5
+    if (opts.difficultyFn) {
+        var d = opts.difficultyFn(v)
+        if (d.tier === "expert") score -= 30
+        else if (d.tier === "advanced") score -= 10
+    }
+    if (opts.profileCategoryWeightFn) score += opts.profileCategoryWeightFn(v.category)
+    if (opts.profileQualityBoostFn) score += opts.profileQualityBoostFn(v.chord_quality)
+    if (opts.modeConfig) score += computeModeDelta(v, opts.modeConfig, opts.modeId)
+    return score
+}
+
 // Find the best matching voicing for a chord.
 //
 // @param voicingsData — array of voicing objects
@@ -170,80 +222,8 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
     var ref = opts.lastInsertedVoicing
 
     candidates.sort(function(a, b) {
-        var scoreA = 0, scoreB = 0
-        if (a.chord_quality === quality) scoreA += 20
-        if (b.chord_quality === quality) scoreB += 20
-        // Context: exact match +100, same-prefix smaller context +50
-        if (opts.filterContext) {
-            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
-            if (a.context === opts.filterContext) scoreA += 100
-            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
-            if (b.context === opts.filterContext) scoreB += 100
-            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
-        }
-        if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
-        if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
-        if (a.category === "shell") scoreA += 10
-        else if (a.category === "drop2") scoreA += 5
-        if (b.category === "shell") scoreB += 10
-        else if (b.category === "drop2") scoreB += 5
-        // Mode multipliers on melody/bass bonuses (#161). Defaults preserve v2.0 behavior
-        // when no mode is supplied (chord-melody-equivalent: melody 1.0, bass 1.0).
-        var melMul = (opts.modeConfig && opts.modeConfig.melodyBonusMultiplier !== undefined)
-            ? opts.modeConfig.melodyBonusMultiplier : 1.0
-        var bassMul = (opts.modeConfig && opts.modeConfig.bassBonusMultiplier !== undefined)
-            ? opts.modeConfig.bassBonusMultiplier : 1.0
-        if (melodyTarget >= 0 && opts.topNoteFn) {
-            var melodyBonus = (opts.melodyLocked ? 500 : 200) * melMul
-            if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
-            if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
-        }
-        if (bassTarget >= 0 && opts.bassNoteFn) {
-            var bassBonus = (opts.bassLocked ? 500 : 250) * bassMul
-            if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
-            if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
-        }
-        if (ref && opts.distanceFn) {
-            scoreA -= opts.distanceFn(ref, a) * 2
-            scoreB -= opts.distanceFn(ref, b) * 2
-            // T-022: Penalize consecutive same-shape voicings (same category + fret)
-            if (ref.category === a.category && ref.fret_number === a.fret_number) scoreA -= 15
-            if (ref.category === b.category && ref.fret_number === b.fret_number) scoreB -= 15
-        }
-        // T-022: Penalize excessive mutes (prefer fuller voicings)
-        // Mode config, if present, contributes its own mute penalty via computeModeDelta —
-        // the base 5-per-string still applies so behavior without a mode is unchanged.
-        scoreA -= (a.mutes ? a.mutes.length : 0) * 5
-        scoreB -= (b.mutes ? b.mutes.length : 0) * 5
-        // T-022: Register preference — prefer mid-register voicings (frets 3-7)
-        var fretA = a.fret_number || 0
-        var fretB = b.fret_number || 0
-        if (fretA >= 3 && fretA <= 7) scoreA += 5
-        if (fretB >= 3 && fretB <= 7) scoreB += 5
-        // Difficulty penalty: prefer playable shapes (#105)
-        if (opts.difficultyFn) {
-            var dA = opts.difficultyFn(a)
-            var dB = opts.difficultyFn(b)
-            if (dA.tier === "expert") scoreA -= 30
-            else if (dA.tier === "advanced") scoreA -= 10
-            if (dB.tier === "expert") scoreB -= 30
-            else if (dB.tier === "advanced") scoreB -= 10
-        }
-        // Style profile weights (#146)
-        if (opts.profileCategoryWeightFn) {
-            scoreA += opts.profileCategoryWeightFn(a.category)
-            scoreB += opts.profileCategoryWeightFn(b.category)
-        }
-        if (opts.profileQualityBoostFn) {
-            scoreA += opts.profileQualityBoostFn(a.chord_quality)
-            scoreB += opts.profileQualityBoostFn(b.chord_quality)
-        }
-        // Mode deltas (#161): category preferences, fret range, mode match/mismatch
-        if (opts.modeConfig) {
-            scoreA += computeModeDelta(a, opts.modeConfig, opts.modeId)
-            scoreB += computeModeDelta(b, opts.modeConfig, opts.modeId)
-        }
-        return scoreB - scoreA
+        return _scoreCandidate(b, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
+             - _scoreCandidate(a, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
     })
     return candidates[0]
 }
@@ -292,55 +272,8 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
     var ref = opts.lastInsertedVoicing
 
     candidates.sort(function(a, b) {
-        var scoreA = 0, scoreB = 0
-        if (a.chord_quality === quality) scoreA += 20
-        if (b.chord_quality === quality) scoreB += 20
-        // Context: exact match +100, same-prefix smaller context +50
-        if (opts.filterContext) {
-            var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
-            if (a.context === opts.filterContext) scoreA += 100
-            else if ((a.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreA += 50
-            if (b.context === opts.filterContext) scoreB += 100
-            else if ((b.context || "").replace(/[0-9]+$/, "") === ctxPfx) scoreB += 50
-        }
-        if (opts.filterCategory && a.category === opts.filterCategory) scoreA += 50
-        if (opts.filterCategory && b.category === opts.filterCategory) scoreB += 50
-        if (a.category === "shell") scoreA += 10
-        else if (a.category === "drop2") scoreA += 5
-        if (b.category === "shell") scoreB += 10
-        else if (b.category === "drop2") scoreB += 5
-        // Mode multipliers (#161)
-        var melMul2 = (opts.modeConfig && opts.modeConfig.melodyBonusMultiplier !== undefined)
-            ? opts.modeConfig.melodyBonusMultiplier : 1.0
-        var bassMul2 = (opts.modeConfig && opts.modeConfig.bassBonusMultiplier !== undefined)
-            ? opts.modeConfig.bassBonusMultiplier : 1.0
-        if (melodyTarget >= 0 && opts.topNoteFn) {
-            var melodyBonus = (opts.melodyLocked ? 500 : 200) * melMul2
-            if (opts.topNoteFn(a, targetRoot, opts.semitoneMap) === melodyTarget) scoreA += melodyBonus
-            if (opts.topNoteFn(b, targetRoot, opts.semitoneMap) === melodyTarget) scoreB += melodyBonus
-        }
-        if (bassTarget >= 0 && opts.bassNoteFn) {
-            var bassBonus = (opts.bassLocked ? 500 : 250) * bassMul2
-            if (opts.bassNoteFn(a, targetRoot, opts.semitoneMap) === bassTarget) scoreA += bassBonus
-            if (opts.bassNoteFn(b, targetRoot, opts.semitoneMap) === bassTarget) scoreB += bassBonus
-        }
-        if (ref && opts.distanceFn) {
-            scoreA -= opts.distanceFn(ref, a) * 2
-            scoreB -= opts.distanceFn(ref, b) * 2
-            if (ref.category === a.category && ref.fret_number === a.fret_number) scoreA -= 15
-            if (ref.category === b.category && ref.fret_number === b.fret_number) scoreB -= 15
-        }
-        scoreA -= (a.mutes ? a.mutes.length : 0) * 5
-        scoreB -= (b.mutes ? b.mutes.length : 0) * 5
-        var fretA = a.fret_number || 0
-        var fretB = b.fret_number || 0
-        if (fretA >= 3 && fretA <= 7) scoreA += 5
-        if (fretB >= 3 && fretB <= 7) scoreB += 5
-        if (opts.modeConfig) {
-            scoreA += computeModeDelta(a, opts.modeConfig, opts.modeId)
-            scoreB += computeModeDelta(b, opts.modeConfig, opts.modeId)
-        }
-        return scoreB - scoreA
+        return _scoreCandidate(b, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
+             - _scoreCandidate(a, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
     })
     return candidates
 }

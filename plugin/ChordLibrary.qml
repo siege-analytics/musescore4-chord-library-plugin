@@ -141,6 +141,11 @@ MuseScore {
     }
 
     FileIO {
+        id: modesConfigFile
+        source: Qt.resolvedUrl("config/modes.json")
+    }
+
+    FileIO {
         id: tuningFile
     }
 
@@ -291,6 +296,8 @@ MuseScore {
     property var _scaleNameList: ["All Scales"]
     property var _profileList: []          // Array of profile objects from profiles.json
     property string _activeProfileId: ""   // ID of the active profile (empty = default)
+    property var _modesById: ({})          // Map of modeId -> mode config, from modes.json (#164)
+    property string activeMode: "chord-melody"  // active mode (#164) — drives scoring via modeConfig
     property var _contextTuningLinks: ({}) // context code → tuning slug (from contexts.json)
     property string searchText: ""
 
@@ -431,6 +438,37 @@ MuseScore {
         } catch (e) {
             console.log("Error loading profiles: " + e)
         }
+    }
+
+    // === Modes (#164) ===
+
+    function loadModes() {
+        try {
+            var raw = modesConfigFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                _modesById = data.modes || {}
+                var keys = Object.keys(_modesById)
+                console.log("Loaded " + keys.length + " modes: " + keys.join(", "))
+            }
+        } catch (e) {
+            console.log("Error loading modes: " + e)
+        }
+    }
+
+    function setActiveMode(modeId) {
+        if (!modeId || !_modesById[modeId]) {
+            console.log("setActiveMode: unknown id " + modeId + " — defaulting to chord-melody")
+            modeId = "chord-melody"
+        }
+        activeMode = modeId
+        console.log("Mode: " + (_modesById[modeId] ? _modesById[modeId].name : modeId))
+        saveSettings()
+    }
+
+    // Resolve current mode to its config object (or null if not loaded yet).
+    function currentModeConfig() {
+        return (_modesById && _modesById[activeMode]) ? _modesById[activeMode] : null
     }
 
     function setProfile(profileId) {
@@ -590,6 +628,9 @@ MuseScore {
         melodyStaffIdx: chordLibrary.melodyStaffIdx
         writeVoice2: chordLibrary.writeVoice2
         melodyOverrideText: libraryPanel.melodyOverrideField ? libraryPanel.melodyOverrideField.text : ""
+        // Mode axis (#164) — activeMode drives mode-aware scoring in ChordSelector
+        activeMode: chordLibrary.activeMode
+        modeConfig: chordLibrary.currentModeConfig()
 
         onStatusMessage: function(text, colorName) {
             statusMsg.text = text
@@ -652,6 +693,7 @@ MuseScore {
         loadContextLabels()
         loadScalesConfig()
         loadProfiles()
+        loadModes()
         loadSettings()
         loadTuningStringCount()
         if (!dataLoaded) {
@@ -755,6 +797,8 @@ MuseScore {
             calcMaxPerQuality = s.calcMaxPerQuality
             // Restore active style profile (#146)
             if (s.activeProfile) setProfile(s.activeProfile)
+            // Restore active mode (#164). Default "chord-melody" preserves v2.0 behavior.
+            if (s.activeMode) setActiveMode(s.activeMode)
             refreshFilteredTunings()
             console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
@@ -778,6 +822,7 @@ MuseScore {
             calcMaxMuted: calcMaxMuted,
             calcMaxPerQuality: calcMaxPerQuality,
             activeProfile: _activeProfileId,
+            activeMode: activeMode,
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
