@@ -1,15 +1,16 @@
 # Transition Memo — ChordLibrary v2.0
 
-**Date:** 2026-04-02
+**Date:** 2026-04-17 (updated)
 **Author:** Dheeraj Chand (with Craft Agent)
 **Repo:** `/Users/dheerajchand/Documents/Professional/Siege_Analytics/Code/music/musescore4-chord-library-plugin`
 **Installed:** `~/Documents/MuseScore4/Plugins/chordlibrary/`
+**Branch:** `develop` (7 commits ahead of origin)
 
 ---
 
 ## What This Is
 
-A MuseScore 4 QML plugin for jazz guitar chord voicing — a library browser, guided walkthrough for voicing entire scores, and now a runtime voicing calculator that generates geometrically correct voicings for any guitar tuning.
+A MuseScore 4 QML plugin for jazz guitar chord voicing — a library browser, guided walkthrough for voicing entire scores, and a runtime voicing calculator that generates geometrically correct voicings for any guitar tuning. Supports 6- and 7-string guitars with multiple tunings including standard, Van Eps, all-thirds (Ralph Patt), DADGAD, all-fourths, and baritone.
 
 ---
 
@@ -17,12 +18,20 @@ A MuseScore 4 QML plugin for jazz guitar chord voicing — a library browser, gu
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `plugin/ChordLibrary.qml` | ~4,900 | Main plugin: UI, state, scoring, batch walkthrough |
+| `plugin/ChordLibrary.qml` | ~2,900 | Main plugin: state management, scoring, signal routing |
+| `plugin/ui/LibraryPanel.qml` | ~900 | Library tab: filters, voicing list, ComboBoxes |
+| `plugin/ui/SettingsPanel.qml` | ~450 | Settings tab: tuning CRUD, calculator constraints |
+| `plugin/ui/WalkthroughPanel.qml` | ~450 | Walkthrough overlay: preview, controls, voice leading |
+| `plugin/ui/ImportPanel.qml` | ~200 | Import tab: JSON, iReal Pro, tuning import |
+| `plugin/model/InlineTools.qml` | ~400 | Score tools: analysis, fingering, export |
 | `plugin/model/MelodyEngine.js` | ~310 | Melody/bass scoring, voice leading, note parsing |
 | `plugin/model/VoicingCalculator.js` | ~440 | Runtime voicing generation from tuning geometry |
+| `plugin/model/FilterEngine.js` | ~100 | Voicing filtering by context, category, quality, scale |
+| `plugin/model/IRealParser.js` | ~250 | iReal Pro URL/HTML/plain text chord parsing |
 | `plugin/model/ReharmonizationEngine.js` | ~124 | Reharm suggestions (tritone subs, ii-V, etc.) |
-| `plugin/model/Transposer.js` | ~126 | Semitone transposition, note spelling, name transposition |
-| `plugin/ui/WalkthroughPanel.qml` | ~450 | Walkthrough overlay: preview, controls, voice leading |
+| `plugin/model/Transposer.js` | ~126 | Semitone transposition, note spelling |
+| `plugin/model/ChordScales.js` | ~200 | Chord-scale mappings (43 qualities) |
+| `plugin/model/DataCache.js` | ~100 | Voicing cache read/write |
 | `deploy.sh` | ~47 | Copies source files to MuseScore plugin dir |
 
 ### Key Design Decisions
@@ -34,6 +43,12 @@ A MuseScore 4 QML plugin for jazz guitar chord voicing — a library browser, gu
 3. **12-root generation.** Open strings can't be transposed. The calculator generates voicings for all 12 roots so open strings always produce correct chord tones. `findBestVoicing` matches by root — no transposition needed for calculated voicings.
 
 4. **Standard library for standard tuning.** The 820 hand-curated voicings are still used for standard 6-string tuning. The runtime calculator only activates for non-standard tunings.
+
+5. **Explicit `chordLibrary.` qualification in all child component handlers.** Signal handlers inside `LibraryPanel {}`, `InlineTools {}`, etc. MUST use `chordLibrary.propertyName` — bare `propertyName` resolves to the child component's own property if it declares one with the same name, silently writing to the wrong object. This caused #154 (context/tuning filtering appeared broken). See CLAUDE.md Common Pitfalls.
+
+6. **Imperative `syncIndex()` pattern for ComboBoxes.** Declarative `currentIndex:` bindings are destroyed the first time a user clicks the ComboBox. Use `syncIndex()` functions called from `onModelChanged`, `Component.onCompleted`, and parent `onPropertyChanged` handlers.
+
+7. **Array model for ListView.** `model: array` with `modelData` in delegates, not `model: array.length` with `array[index]`. Integer models only re-render when the count changes, not when the data changes.
 
 ---
 
@@ -106,27 +121,36 @@ Then **quit and relaunch MuseScore** (it caches QML).
 
 5. **Quartal voicings capped at 10 per size** in Pass 3 of `generateAll`. Should respect `maxPerQuality` setting.
 
+6. **`console.log()` invisible from QML plugins.** MuseScore 4 QML plugin `console.log()` does NOT appear in Terminal stdout or MuseScore log files. For debugging, write directly to UI elements (`statusMsg.text`, `Label.text`). Remove diagnostic output before committing.
+
+7. **Van Eps has no cached voicings file.** `tunings/7string-van-eps.json` exists as a tuning definition but no pre-calculated voicing cache. Voicings are generated at runtime on first use (may be slow).
+
+---
+
+## Open Tickets
+
+See CLAUDE.md for the canonical list. Key items as of 2026-04-17:
+
+- **#154** — QML scoping in signal handlers (FIXED: commits `0a6547a`, `ccb8bee`)
+- **#149B** — iReal Pro score creation (deferred — Part A file picker is done)
+- **#159** — Band-in-a-Box import (new — needs format research, .SGU is proprietary binary; may need text/MusicXML export path)
+- **#74** — cmd("paste") broken (wishlist — needs MuseScore C++ change)
+
 ---
 
 ## Unbuilt Features
 
-### Phase 1 Remaining
-- **1.5 Second voice export** — Write voicings as actual notes on a second staff/voice (not just diagrams). Uses MuseScore's `newElement(Element.NOTE)` API.
+### Integration
+- **#149B iReal Pro score creation** — Create MuseScore score from parsed iReal Pro data
+- **#159 Band-in-a-Box import** — Parse BiaB chord charts into walkthrough. BiaB uses proprietary binary .SGU/.MGU formats; most viable path is parsing BiaB's text export or MusicXML export. MuseScore already imports GuitarPro natively.
+- **iGigBook import** — Open MusicXML from iGigBook
+- **Soundslice export** — Export to Soundslice tab format
 
-### Phase 2 — Voicing Library
-- **2.3 Slash chord parsing** — Parse "C/E" chord symbols and auto-set bass to E
-- **2.5 Chord-scale tags** — Tag voicings with compatible scales
-
-### Phase 3 — Integration
-- **3.1 iReal Pro import** — Parse iReal Pro URLs into chord charts
-- **3.2 iGigBook import** — Open MusicXML from iGigBook
-- **3.3 Soundslice export** — Export to Soundslice tab format
-
-### Phase 4 — UX Polish
-- **4.2 Voicing comparison** — Side-by-side view of 2-3 voicings
-- **4.3 Audio preview** — Play voicing through `ms-audio`
-- **4.4 Save arrangement preset** — Serialize walkthrough selections
-- **4.5 Auto-advance** — Blocked on upstream MuseScore PR #32848
+### UX Polish
+- **Voicing comparison** — Side-by-side view of 2-3 voicings
+- **Audio preview** — Play voicing through `ms-audio`
+- **Save arrangement preset** — Serialize walkthrough selections
+- **Auto-advance** — Blocked on upstream MuseScore PR #32848
 
 ### Bugs/Polish
 - Fix mini fretboard preview to show transposed positions
@@ -154,28 +178,21 @@ Then **quit and relaunch MuseScore** (it caches QML).
 ```bash
 cd /path/to/repo
 source .venv/bin/activate
-python -m pytest tests/ -q    # 67 pass, 2 pre-existing failures
+python -m pytest tests/ -q    # 107 JS tests via Node.js VM sandbox, 2 pre-existing schema failures
 ```
+
+Tests cover: ChordScales, FilterEngine, Transposer, DataCache, IRealParser, HygieneEngine, MelodyEngine, ReharmonizationEngine, VoicingCalculator, FingeringEngine. CI runs on every push to main/develop (`.github/workflows/test.yml`).
 
 ---
 
-## Git Log (Today's Commits)
+## Recent Git Log (develop branch, as of 2026-04-17)
 
 ```
-be2fb1e feat: configurable max voicings per quality (0 = Ted Greene mode)
-b946351 feat: uncap voicing generation — digital Ted Greene mode
-5c5c932 fix: cap calculated voicings to ~36 per quality (was 45k uncapped)
-1f100f4 fix: open strings producing wrong notes after transposition
-6460ba1 feat: melody/bass priority lock toggles
-c3cc575 fix: tuning combo shows display names instead of slugs
-af16a94 feat: tuning UX improvements — pitches display, reorder, explicit names
-f630521 fix: clearer impossibility messages — explain what's offered and why
-adbadb1 fix: notify user when bass/melody request can't be fulfilled
-448d636 fix: bass note scoring too weak, increase inversion cap
-d782c05 fix: impossibility warnings shown inline, not in hidden status bar
-def91e5 fix: melody/bass scoring used wrong interval index, add tuning indicator
-9784be6 feat: Phase 1 chord melody features — voice leading, reharm, bass, melody staff
-0d75204 fix: voicing calculator — harmonic geometry, capped inversions, dynamic types
-028da55 wip: runtime voicing calculator, bass note UI, tuning-specific generation
-4fe7857 refactor: decompose ChordLibrary.qml, add tuning-aware voicing pipeline
+ccb8bee bugfix: Fix homePath TypeError on InlineTools + update CLAUDE.md (#154, #159)
+0a6547a bugfix: Fix QML scoping in LibraryPanel signal handlers (#154)
+9c75735 cleanup: Remove debug logging from editTuning (#154)
+b7a0522 bugfix: Import and create tuning bypass TuningManager for...in bug (#154)
+a1b916d feature: Add confirmation dialogs to all CRUD operations
+5d3ea8b feature: Add Browse buttons to all file import locations
+5abc25c bugfix: Delete tuning + move tuning bypass TuningManager for...in bug (#154)
 ```

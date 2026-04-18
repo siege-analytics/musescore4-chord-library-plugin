@@ -93,6 +93,13 @@ This project builds on the work of many researchers, musicians, and open-source 
 
 - **Perlence/PyGuitarPro** — Python library for reading/writing Guitar Pro files (GP3-GP5). https://github.com/Perlence/PyGuitarPro
 
+### File Formats — Import Considerations
+
+- **iReal Pro** — `irealb://` URL scheme with obfuscated chord data. Implemented in `IRealParser.js` (#149). Also exports HTML files containing the URL.
+- **Band-in-a-Box** — Proprietary binary formats: `.SGU` (song), `.MGU` (melody+guitar). No public specification. PG Music has not published a file format spec. Viable import paths: (1) BiaB text export, (2) BiaB MusicXML export → parse chords, (3) reverse-engineer binary format. MuseScore natively imports MusicXML, so plugin value-add would be extracting chord charts for the walkthrough. See #159.
+- **GuitarPro** — `.gp3`/`.gp4`/`.gp5`/`.gpx`/`.gp` formats. MuseScore 4 natively imports these — no plugin work needed.
+- **MusicXML** — W3C standard. MuseScore 4 natively imports. Chord symbols in `<harmony>` elements.
+
 ---
 
 ## APIs & Data Services
