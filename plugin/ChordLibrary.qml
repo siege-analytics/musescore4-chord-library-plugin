@@ -1923,7 +1923,7 @@ MuseScore {
         openSaveDialogFn: function(title, filter, path, cb) { openSaveDialog(title, filter, path, cb) }
         launchExportFn: function(cmd) { launchExport(cmd) }
         extractChordsToFileFn: function() { return extractChordsToFile() }
-        homePath: homePath()
+        homePath: chordLibrary.homePath()
 
         onStatusMessage: function(text, colorType) {
             if (colorType === "error") {

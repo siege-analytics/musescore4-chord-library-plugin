@@ -158,6 +158,9 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 - **#149** — iReal Pro file import (Part A: file picker — implemented; Part B: score creation — deferred)
 - **#150** — Walkthrough layout collision (fixed)
 - **#151** — Clickable scale chips on voicing cards (implemented)
+- **#154** — QML scoping: signal handlers in LibraryPanel/InlineTools wrote to child properties instead of chordLibrary (fixed: explicit `chordLibrary.` qualification)
+- **#159** — Band-in-a-Box import (parse .SGU/.MG? chord charts into walkthrough — needs format research)
+- **#149B** — iReal Pro score creation (deferred from #149 Part A)
 - **#74** — cmd("paste") broken (wishlist — needs MuseScore C++ change, PR #32848 rejected)
 
 ## MuseScore 4 Plugin API Limitations
@@ -177,6 +180,7 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 - **Fret calculations**: dot.fret is relative to fret_number (row 1 = fret_number). Absolute fret = fret_number + dot.fret - 1.
 - **String numbering**: 1 = high e, 6 = low E, 7 = low A (Van Eps)
 - **Child QML scope**: `newElement()` only exists on the root MuseScore plugin object. Child Items in `model/` or `ui/` must receive `pluginRef: chordLibrary` and call `pluginRef.newElement()`. Do NOT add `import MuseScore 3.0` to child files — it breaks plugin loading. `Element.*` constants resolve through QML's parent scope chain. See VoicingInserter.qml for the pattern.
+- **Signal handler scoping trap**: Inside `ChildComponent { onSignal: { propName = val } }`, `propName` resolves to the child's property if it declares one, NOT the parent's. Always qualify: `chordLibrary.propName = val`. This caused #154 — context/tuning switching silently wrote to LibraryPanel copies instead of ChordLibrary's canonical state.
 - **Duplicate function names**: QML does not allow two functions with the same name in a component — even if they have different parameter counts. The plugin will fail to load with "Duplicate method name" in the log. Always check `grep -n "function " plugin/ChordLibrary.qml | sed 's/(.*//; s/.*function //' | sort | uniq -d` before committing.
 
 ---
