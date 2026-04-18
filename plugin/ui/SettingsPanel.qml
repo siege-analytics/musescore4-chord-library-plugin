@@ -26,6 +26,7 @@ Item {
     // --- Input properties (scalar) ---
     property string diagramPlacement: "above"
     property var builtInTunings: []
+    property var tuningListModel: []   // explicitly set by parent after changes
 
     // --- Scale data from parent ---
     property var scalesData: []          // Array of scale objects from scales.json
@@ -248,7 +249,7 @@ Item {
 
                     // --- Tuning list (#148) ---
                     Label {
-                        text: "TUNINGS (" + (tuning && tuning.tuningList ? tuning.tuningList.length : 0) + ")"
+                        text: "TUNINGS (" + settingsPanel.tuningListModel.length + ")"
                         font.pixelSize: 11
                         font.bold: true
                         Layout.fillWidth: true
@@ -273,7 +274,7 @@ Item {
                     }
 
                     Repeater {
-                        model: tuning && tuning.tuningList ? tuning.tuningList : []
+                        model: settingsPanel.tuningListModel
 
                         Rectangle {
                             Layout.fillWidth: true
@@ -331,7 +332,7 @@ Item {
                                     text: "\u25B2"
                                     font.pixelSize: 9
                                     implicitWidth: 24
-                                    enabled: tuning && tuning.tuningList ? tuning.tuningList.indexOf(modelData) > 0 : false
+                                    enabled: settingsPanel.tuningListModel.indexOf(modelData) > 0
                                     onClicked: settingsPanel.moveTuningRequested(modelData, -1)
                                 }
 
@@ -339,7 +340,7 @@ Item {
                                     text: "\u25BC"
                                     font.pixelSize: 9
                                     implicitWidth: 24
-                                    enabled: tuning && tuning.tuningList ? tuning.tuningList.indexOf(modelData) < tuning.tuningList.length - 1 : false
+                                    enabled: settingsPanel.tuningListModel.indexOf(modelData) < settingsPanel.tuningListModel.length - 1
                                     onClicked: settingsPanel.moveTuningRequested(modelData, 1)
                                 }
                             }

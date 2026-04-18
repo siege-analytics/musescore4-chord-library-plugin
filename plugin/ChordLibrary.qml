@@ -203,35 +203,39 @@ MuseScore {
     // Default settings
     property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
     property string diagramPlacement: "above"  // "above" or "below"
-    // Filtered tuning list — shows tunings compatible with the context's string count.
-    // Exact match preferred; if no exact match includes the current tuning, show all compatible (<=).
-    property var filteredTuningList: {
-        if (!filterContext || !contextStringCounts[filterContext]) return tuningList
-        var requiredStrings = contextStringCounts[filterContext]
-        // First try exact match
-        var exact = []
-        for (var i = 0; i < tuningList.length; i++) {
-            var slug = tuningList[i]
-            var strCount = tuningStringCounts[slug] || 6
-            if (strCount === requiredStrings) exact.push(slug)
+    property var filteredTuningList: []
+    property var filteredTuningDisplayList: []
+
+    function refreshFilteredTunings() {
+        var list
+        if (!filterContext || !contextStringCounts[filterContext]) {
+            list = tuningList
+        } else {
+            var requiredStrings = contextStringCounts[filterContext]
+            var exact = []
+            for (var i = 0; i < tuningList.length; i++) {
+                var slug = tuningList[i]
+                var strCount = tuningStringCounts[slug] || 6
+                if (strCount === requiredStrings) exact.push(slug)
+            }
+            if (exact.length > 0) {
+                list = exact
+            } else {
+                var result = []
+                for (var j = 0; j < tuningList.length; j++) {
+                    var slug2 = tuningList[j]
+                    var strCount2 = tuningStringCounts[slug2] || 6
+                    if (strCount2 <= requiredStrings) result.push(slug2)
+                }
+                list = result
+            }
         }
-        if (exact.length > 0) return exact
-        // Fallback: show tunings with <= required strings
-        var result = []
-        for (var j = 0; j < tuningList.length; j++) {
-            var slug2 = tuningList[j]
-            var strCount2 = tuningStringCounts[slug2] || 6
-            if (strCount2 <= requiredStrings) result.push(slug2)
+        filteredTuningList = list
+        var display = []
+        for (var d = 0; d < list.length; d++) {
+            display.push(tuningLabels[list[d]] || list[d])
         }
-        return result
-    }
-    // Display names for tuning combos (shows labels instead of slugs in dropdown)
-    property var filteredTuningDisplayList: {
-        var result = []
-        for (var i = 0; i < filteredTuningList.length; i++) {
-            result.push(tuningLabels[filteredTuningList[i]] || filteredTuningList[i])
-        }
-        return result
+        filteredTuningDisplayList = display
     }
 
     property var voicingsData: []
@@ -515,6 +519,7 @@ MuseScore {
 
         // Rebuild filter lists so the new context appears
         rebuildFilterLists()
+        refreshFilteredTunings()
         saveSettings()
     }
 
@@ -623,7 +628,8 @@ MuseScore {
         // Always include all known contexts (from contextStringCounts) so the
         // dropdown isn't empty on non-standard tunings that only have a subset.
         var allContexts = {}
-        for (var c in contextStringCounts) allContexts[c] = true
+        var csKeys = Object.keys(contextStringCounts || {})
+        for (var c = 0; c < csKeys.length; c++) allContexts[csKeys[c]] = true
         for (var i = 1; i < lists.contextList.length; i++) allContexts[lists.contextList[i]] = true
         contextList = ["All Contexts"].concat(Object.keys(allContexts).sort())
         categoryList = lists.categoryList
@@ -660,6 +666,7 @@ MuseScore {
             var autoCtx = "CM" + strCount
             if (contextStringCounts[autoCtx]) filterContext = autoCtx
         }
+        refreshFilteredTunings()
         // Defer tuning voicing load so UI renders first (#112)
         startupTuningTimer.start()
     }
@@ -672,6 +679,7 @@ MuseScore {
                 voicingsData = cached
                 dataLoaded = true
                 rebuildFilterLists()
+                refreshFilteredTunings()
                 applyFilters()
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
                 statusMsg.color = theme.successText
@@ -699,20 +707,44 @@ MuseScore {
             if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
             if (s.tuning) selectedTuning = s.tuning
             if (s.defaultContext) filterContext = s.defaultContext
-            // Restore custom tunings that were added via Create/Import
+            // Hardcoded built-in tuning data — avoids Object.keys() on QML property aliases (#154)
+            var newLabels = {
+                "standard": "Standard 6-String",
+                "7string-van-eps": "7-String Van Eps (Low A)",
+                "7string-low-b": "7-String Low B",
+                "dadgad": "DADGAD",
+                "all-fourths": "All Fourths",
+                "baritone": "Baritone Guitar"
+            }
+            var newCounts = {
+                "standard": 6,
+                "7string-van-eps": 7,
+                "7string-low-b": 7,
+                "dadgad": 6,
+                "all-fourths": 6,
+                "baritone": 6
+            }
+            var newList = tuningList.slice()
+            // Overlay custom tunings from settings
             if (s.customTunings.length > 0) {
                 for (var i = 0; i < s.customTunings.length; i++) {
                     var ct = s.customTunings[i]
                     if (ct.slug && ct.name) {
-                        addTuningToList(ct.slug, ct.name, ct.strings || 6)
+                        if (newList.indexOf(ct.slug) < 0) newList.push(ct.slug)
+                        newLabels[ct.slug] = ct.name
+                        newCounts[ct.slug] = ct.strings || 6
                     }
                 }
                 console.log("Restored " + s.customTunings.length + " custom tuning(s)")
             }
+            tuningList = newList
+            tuningLabels = newLabels
+            tuningStringCounts = newCounts
             // Restore tuning order (if user reordered)
             if (s.tuningOrder.length > 0) {
                 tuningList = DataCache.mergeTuningOrder(s.tuningOrder, tuningList)
             }
+            if (settingsPanel) settingsPanel.tuningListModel = tuningList.slice()
             // Restore voicing calculator constraints
             calcMaxFret = s.calcMaxFret
             calcMaxStretch = s.calcMaxStretch
@@ -723,7 +755,8 @@ MuseScore {
             calcMaxPerQuality = s.calcMaxPerQuality
             // Restore active style profile (#146)
             if (s.activeProfile) setProfile(s.activeProfile)
-            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", profile=" + (s.activeProfile || "default"))
+            refreshFilteredTunings()
+            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
             console.log("No saved settings found, using defaults")
         }
@@ -814,7 +847,9 @@ MuseScore {
             selectedTuning = slug
             loadTuningStringCount()
             loadTuningVoicings()
+            refreshFilteredTunings()
             saveSettings()
+            settingsPanel.tuningListModel = tuningList.slice()
             _setImportStatus("Imported: " + t.name, "#27ae60")
         } catch(e) {
             _setImportStatus("Failed: " + String(e), "#e74c3c")
@@ -849,7 +884,7 @@ MuseScore {
                     settingsPanel.tuningPitchesValue = pitchStr
                     settingsPanel.editingTuningSlug = slug
                     settingsPanel.tuningStatus = "Editing: " + (t.name || slug) + " — change values and click Save"
-                    settingsPanel.tuningStatusColor = "#888"
+                    settingsPanel.tuningStatusColor = "#2980b9"
                     return
                 }
             } catch (e) {}
@@ -985,6 +1020,7 @@ MuseScore {
         merged.push(voicing)
         voicingsData = merged
         rebuildFilterLists()
+        refreshFilteredTunings()
         applyFilters()
         saveToCache()
 
@@ -1069,6 +1105,7 @@ MuseScore {
         if (result.removed > 0) {
             voicingsData = result.cleaned
             rebuildFilterLists()
+            refreshFilteredTunings()
             applyFilters()
             saveToCache()
             settingsPanel.hygieneStatus = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
@@ -1141,6 +1178,7 @@ MuseScore {
                         voicingsData = data.voicings || []
                         dataLoaded = true
                         rebuildFilterLists()
+                        refreshFilteredTunings()
                         applyFilters()
                         saveToCache()
                         // T-001: trigger tuning-specific voicings now that data is loaded.
@@ -1314,6 +1352,7 @@ MuseScore {
                 if (savedCtx && contextList.indexOf(savedCtx) >= 0) filterContext = savedCtx
                 if (savedCat && categoryList.indexOf(savedCat) >= 0) filterCategory = savedCat
                 if (savedQual && qualityList.indexOf(savedQual) >= 0) filterQuality = savedQual
+                refreshFilteredTunings()
                 applyFilters()
                 console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
@@ -1402,6 +1441,7 @@ MuseScore {
             if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
             if (savedCategory && categoryList.indexOf(savedCategory) >= 0) filterCategory = savedCategory
             if (savedQuality && qualityList.indexOf(savedQuality) >= 0) filterQuality = savedQuality
+            refreshFilteredTunings()
             applyFilters()
             statusMsg.text = calculated.length + " voicings for " + (tuningLabels[selectedTuning] || selectedTuning)
             statusMsg.color = theme.successText
@@ -1414,6 +1454,7 @@ MuseScore {
                 if (savedContext && contextList.indexOf(savedContext) >= 0) filterContext = savedContext
                 if (savedCategory && categoryList.indexOf(savedCategory) >= 0) filterCategory = savedCategory
                 if (savedQuality && qualityList.indexOf(savedQuality) >= 0) filterQuality = savedQuality
+                refreshFilteredTunings()
                 applyFilters()
             }
         }
@@ -1957,6 +1998,7 @@ MuseScore {
 
             voicingsData = merged
             rebuildFilterLists()
+            refreshFilteredTunings()
             applyFilters()
             saveToCache()
 
@@ -2422,6 +2464,7 @@ MuseScore {
             Layout.fillHeight: true
 
             tuning: tuningState
+            tuningListModel: tuningList.slice()
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
             builtInTunings: chordLibrary.builtInTunings
@@ -2490,9 +2533,11 @@ MuseScore {
                     selectedTuning = slug
                     loadTuningStringCount()
                     loadTuningVoicings()
+                    refreshFilteredTunings()
                     saveSettings()
                     // Clear editing state
                     settingsPanel.editingTuningSlug = ""
+                    settingsPanel.tuningListModel = tuningList.slice()
                     // Show success
                     var noteArr = []
                     for (var n = 1; n <= numStrings; n++) noteArr.push(notes[n])
@@ -2549,7 +2594,9 @@ MuseScore {
                     // Clear file
                     tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
                     try { tuningFile.write("") } catch(e2) {}
+                    refreshFilteredTunings()
                     saveSettings()
+                    settingsPanel.tuningListModel = tuningList.slice()
                     settingsPanel.tuningStatus = "Deleted: " + slug
                     settingsPanel.tuningStatusColor = "#27ae60"
                 } catch(e) {
@@ -2558,7 +2605,6 @@ MuseScore {
                 }
             }
             onMoveTuningRequested: function(slug, direction) {
-                // Direct implementation — bypasses TuningManager alias issues
                 var list = tuningList.slice()
                 var idx = list.indexOf(slug)
                 if (idx < 0) return
@@ -2568,6 +2614,8 @@ MuseScore {
                 list[newIdx] = list[idx]
                 list[idx] = temp
                 tuningList = list
+                refreshFilteredTunings()
+                settingsPanel.tuningListModel = list.slice()
                 saveSettings()
             }
             onCreateTuningRequested: function(name, pitches, numStrings) {
@@ -2770,7 +2818,7 @@ MuseScore {
 
             onScaleFilterChanged: function(scaleName) {
                 chordLibrary.filterScale = scaleName
-                applyFilters()
+                chordLibrary.applyFilters()
             }
 
             // --- Style profiles (#146) ---
@@ -2785,96 +2833,98 @@ MuseScore {
                 return ids.length > 0 ? ids : ["default"]
             }
             activeProfileId: _activeProfileId
-            onProfileChanged: function(profileId) { setProfile(profileId) }
-            onSearchChanged: function(text) { searchText = text; applyFilters() }
+            onProfileChanged: function(profileId) { chordLibrary.setProfile(profileId) }
+            onSearchChanged: function(text) { chordLibrary.searchText = text; chordLibrary.applyFilters() }
             onContextFilterChanged: function(code) {
-                filterContext = code
-                applyFilters()
+                chordLibrary.filterContext = code
+                chordLibrary.refreshFilteredTunings()
+                chordLibrary.applyFilters()
                 // Auto-switch tuning if context has a linked tuning (#148)
-                if (code && _contextTuningLinks[code]) {
-                    var linkedTuning = _contextTuningLinks[code]
-                    if (linkedTuning !== selectedTuning) {
-                        selectedTuning = linkedTuning
-                        loadTuningStringCount()
-                        loadTuningVoicings()
-                        saveSettings()
+                if (code && chordLibrary._contextTuningLinks[code]) {
+                    var linkedTuning = chordLibrary._contextTuningLinks[code]
+                    if (linkedTuning !== chordLibrary.selectedTuning) {
+                        chordLibrary.selectedTuning = linkedTuning
+                        chordLibrary.loadTuningStringCount()
+                        chordLibrary.loadTuningVoicings()
+                        chordLibrary.saveSettings()
                     }
                 }
             }
-            onCategoryFilterChanged: function(text) { filterCategory = text; applyFilters() }
-            onQualityFilterChanged: function(text) { filterQuality = text; applyFilters() }
+            onCategoryFilterChanged: function(text) { chordLibrary.filterCategory = text; chordLibrary.applyFilters() }
+            onQualityFilterChanged: function(text) { chordLibrary.filterQuality = text; chordLibrary.applyFilters() }
             onTuningSelected: function(slug) {
-                selectedTuning = slug
-                loadTuningStringCount()
-                loadTuningVoicings()
+                chordLibrary.selectedTuning = slug
+                chordLibrary.loadTuningStringCount()
+                chordLibrary.loadTuningVoicings()
                 // Auto-select matching CM context if none is selected
-                if (!filterContext) {
-                    var strCount = tuningStringCounts[slug] || 6
+                if (!chordLibrary.filterContext) {
+                    var strCount = chordLibrary.tuningStringCounts[slug] || 6
                     var autoCtx = "CM" + strCount
-                    if (contextStringCounts[autoCtx]) {
-                        filterContext = autoCtx
+                    if (chordLibrary.contextStringCounts[autoCtx]) {
+                        chordLibrary.filterContext = autoCtx
                     }
                 }
-                saveSettings()
+                chordLibrary.refreshFilteredTunings()
+                chordLibrary.saveSettings()
             }
-            onVoiceHereRequested: voiceAtCursor()
-            onBatchInsertRequested: batchInsert()
+            onVoiceHereRequested: chordLibrary.voiceAtCursor()
+            onBatchInsertRequested: chordLibrary.batchInsert()
             onBatchStopRequested: {
-                batchQueue = []
+                chordLibrary.batchQueue = []
                 statusMsg.text = "Voicing stopped"
                 statusMsg.color = theme.textMuted
             }
             onSortToggled: {
-                sortByProximity = !sortByProximity
-                applyFilters()
-                statusMsg.text = sortByProximity
+                chordLibrary.sortByProximity = !chordLibrary.sortByProximity
+                chordLibrary.applyFilters()
+                statusMsg.text = chordLibrary.sortByProximity
                     ? "Sorting by proximity to last voicing"
                     : "Default sort order"
                 statusMsg.color = theme.textMuted
             }
             onMelodyToggled: {
-                melodyOnTop = !melodyOnTop
-                statusMsg.text = melodyOnTop
+                chordLibrary.melodyOnTop = !chordLibrary.melodyOnTop
+                statusMsg.text = chordLibrary.melodyOnTop
                     ? "Melody on top: voicings will match the melody note"
                     : "Melody on top: off"
                 statusMsg.color = theme.textMuted
             }
             onVoice2Toggled: {
-                writeVoice2 = !writeVoice2
-                statusMsg.text = writeVoice2
+                chordLibrary.writeVoice2 = !chordLibrary.writeVoice2
+                statusMsg.text = chordLibrary.writeVoice2
                     ? "Voice 2 export: voicing notes will be written to Voice 2"
                     : "Voice 2 export: off"
                 statusMsg.color = theme.textMuted
             }
-            onMelodyStaffChanged: function(idx) { melodyStaffIdx = idx }
-            onCopyTuningRequested: copyTuningToClipboard()
-            onOpenVoicingRequested: function(voicing) { generateDiagramFile(voicing) }
-            onPlayVoicingRequested: function(voicing, mode) { playVoicing(voicing, mode) }
-            onCompareRequested: function(voicing) { addToComparison(voicing) }
-            onClearComparisonRequested: clearComparison()
+            onMelodyStaffChanged: function(idx) { chordLibrary.melodyStaffIdx = idx }
+            onCopyTuningRequested: chordLibrary.copyTuningToClipboard()
+            onOpenVoicingRequested: function(voicing) { chordLibrary.generateDiagramFile(voicing) }
+            onPlayVoicingRequested: function(voicing, mode) { chordLibrary.playVoicing(voicing, mode) }
+            onCompareRequested: function(voicing) { chordLibrary.addToComparison(voicing) }
+            onClearComparisonRequested: chordLibrary.clearComparison()
 
             // --- Save to Library + Library Health (moved from Settings, #144) ---
-            homePath: homePath()
+            homePath: chordLibrary.homePath()
             lastAuditResults: chordLibrary.lastAuditResults
             hygieneIgnoreList: chordLibrary.hygieneIgnoreList
 
-            onCaptureRequested: captureFromScore()
+            onCaptureRequested: chordLibrary.captureFromScore()
             onSaveVoicingRequested: function(quality, category, context, fret, strings, dots, mutes) {
-                saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
+                chordLibrary.saveVoicingToLibrary(quality, category, context, fret, strings, dots, mutes)
             }
             onAuditRequested: function(reportPath) {
-                runHygieneAudit()
-                saveAuditReport(reportPath)
+                chordLibrary.runHygieneAudit()
+                chordLibrary.saveAuditReport(reportPath)
                 Qt.openUrlExternally(reportPath)
             }
             onDismissRequested: function(key) {
-                dismissFinding(key)
+                chordLibrary.dismissFinding(key)
                 libraryPanel.hygieneStatus = "Dismissed. Run audit again to see updated results."
                 libraryPanel.hygieneStatusColor = theme.successText
             }
-            onFixDuplicatesRequested: fixDuplicates()
-            onClearDismissalsRequested: clearDismissals()
-            onBrowseAuditRequested: function(field) { openFileBrowser("save", field, null) }
+            onFixDuplicatesRequested: chordLibrary.fixDuplicates()
+            onClearDismissalsRequested: chordLibrary.clearDismissals()
+            onBrowseAuditRequested: function(field) { chordLibrary.openFileBrowser("save", field, null) }
         }
 
         // Global status bar (used by many functions — stays in parent, migrate in Phase C #104)

@@ -34,6 +34,9 @@ Item {
     property string filterContext: ""
     property var theme: null
 
+    onSelectedTuningChanged: if (tuningMainCombo) tuningMainCombo.syncIndex()
+    onFilterContextChanged: if (contextCombo) contextCombo.syncIndex()
+
     // --- Input properties (toolbar state) ---
     property bool batchActive: false
     property bool sortByProximity: false
@@ -129,7 +132,15 @@ Item {
                 id: contextCombo
                 model: libraryPanel.contextDisplayList
                 Layout.fillWidth: true
-                currentIndex: Math.max(0, libraryPanel.contextList.indexOf(libraryPanel.filterContext || "All Contexts"))
+                function syncIndex() {
+                    var cl = libraryPanel.contextList
+                    if (!cl || !cl.length) return
+                    var fc = libraryPanel.filterContext || "All Contexts"
+                    var idx = cl.indexOf(fc)
+                    currentIndex = Math.max(0, idx)
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
                 onActivated: {
                     if (currentIndex >= 0 && currentIndex < libraryPanel.contextList.length) {
                         var code = libraryPanel.contextList[currentIndex]
@@ -187,7 +198,13 @@ Item {
                 model: libraryPanel.profileDisplayList
                 Layout.fillWidth: true
                 font.pixelSize: 10
-                currentIndex: Math.max(0, libraryPanel.profileIdList.indexOf(libraryPanel.activeProfileId || "default"))
+                function syncIndex() {
+                    var pl = libraryPanel.profileIdList
+                    if (!pl || !pl.length) return
+                    currentIndex = Math.max(0, pl.indexOf(libraryPanel.activeProfileId || "default"))
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
                 onActivated: {
                     if (currentIndex >= 0 && currentIndex < libraryPanel.profileIdList.length) {
                         libraryPanel.profileChanged(libraryPanel.profileIdList[currentIndex])
@@ -205,10 +222,18 @@ Item {
                 id: tuningMainCombo
                 model: libraryPanel.filteredTuningDisplayList
                 Layout.fillWidth: true
-                currentIndex: Math.max(0, libraryPanel.filteredTuningList.indexOf(libraryPanel.selectedTuning))
+                function syncIndex() {
+                    var fl = libraryPanel.filteredTuningList
+                    if (!fl || !fl.length) return
+                    currentIndex = Math.max(0, fl.indexOf(libraryPanel.selectedTuning))
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
                 onActivated: {
-                    if (currentIndex >= 0 && currentIndex < libraryPanel.filteredTuningList.length) {
-                        var newTuning = libraryPanel.filteredTuningList[currentIndex]
+                    var fl = libraryPanel.filteredTuningList
+                    if (!fl) return
+                    if (currentIndex >= 0 && currentIndex < fl.length) {
+                        var newTuning = fl[currentIndex]
                         if (newTuning && newTuning !== libraryPanel.selectedTuning) {
                             libraryPanel.tuningSelected(newTuning)
                         }
@@ -335,7 +360,7 @@ Item {
             Layout.fillHeight: true
             clip: true
             spacing: 4
-            model: libraryPanel.filteredData.length
+            model: libraryPanel.filteredData
 
             delegate: Rectangle {
                 width: voicingList.width
@@ -345,7 +370,8 @@ Item {
                 border.color: theme.divider
                 border.width: 1
 
-                property var v: libraryPanel.filteredData[index] || {}
+                property var v: modelData || {}
+                onVChanged: if (fretCanvas) fretCanvas.requestPaint()
 
                 MouseArea {
                     id: ma
