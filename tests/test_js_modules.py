@@ -729,6 +729,36 @@ class TestDataCacheJS:
             assertEqual(s.tuning, "dadgad", "overridden tuning");
         """)
 
+    def test_suitable_modes_passthrough(self):
+        assert_js("DataCache.js", """
+            var raw = JSON.stringify({voicings: [
+                {name: "v1", suitableModes: ["chord-melody", "solo-guitar"]}
+            ]});
+            var result = parseCache(raw);
+            assertEqual(result[0].suitableModes.length, 2, "existing modes preserved");
+            assertEqual(result[0].suitableModes[0], "chord-melody", "first mode intact");
+        """)
+
+    def test_suitable_modes_derived_from_context(self):
+        assert_js("DataCache.js", """
+            var raw = JSON.stringify({voicings: [
+                {name: "legacy-cm", context: "CM6"},
+                {name: "legacy-cv", context: "CV7"}
+            ]});
+            var result = parseCache(raw);
+            assertEqual(result[0].suitableModes[0], "chord-melody", "CM6 -> chord-melody");
+            assertEqual(result[1].suitableModes[0], "comping", "CV7 -> comping");
+        """)
+
+    def test_suitable_modes_unknown_context_empty(self):
+        assert_js("DataCache.js", """
+            var raw = JSON.stringify({voicings: [
+                {name: "orphan", context: "ZZZ"}
+            ]});
+            var result = parseCache(raw);
+            assertEqual(result[0].suitableModes.length, 0, "unknown context yields empty modes");
+        """)
+
 
 # === IRealParser.js ===
 

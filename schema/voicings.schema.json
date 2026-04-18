@@ -21,7 +21,6 @@
         "chord_quality",
         "root",
         "category",
-        "context",
         "strings",
         "fret_number",
         "visible_frets",
@@ -60,7 +59,17 @@
         "context": {
           "type": "string",
           "minLength": 1,
-          "description": "Texture context (e.g. CM6, CM7, CV6, CV7). Free-text — imports can introduce new contexts."
+          "description": "DEPRECATED — replaced by suitableModes in v2.1. Legacy texture context (CM6/CM7/CV6/CV7). Retained for one-release grace period; readers fall back to this when suitableModes is absent."
+        },
+        "suitableModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["chord-melody", "comping", "solo-guitar", "duo"]
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Modes this voicing is suited to. Replaces the legacy context field. Scoring engine treats this as a soft hint, not a hard filter."
         },
         "strings": {
           "type": "integer",
