@@ -429,7 +429,8 @@ function generateAll(tuningMidi, constraints, progressFn) {
     var cfg = {}
     for (var cdk in DEFAULT_CONSTRAINTS) cfg[cdk] = DEFAULT_CONSTRAINTS[cdk]
     if (constraints) { for (var cck in constraints) cfg[cck] = constraints[cck] }
-    var maxPerQ = cfg.maxPerQuality || 120  // default: ~10 per root
+    // maxPerQuality: 0 = unlimited (Ted Greene mode), positive = cap, undefined/null = default 120
+    var maxPerQ = (typeof cfg.maxPerQuality === "number") ? cfg.maxPerQuality : 120
 
     var totalQualities = defaultQualities.length
 
@@ -499,7 +500,12 @@ function capPerRoot(voicings, maxPerQ) {
         byRoot[r].push(voicings[i])
     }
     var rootKeys = Object.keys(byRoot)
-    var perRoot = Math.max(20, Math.ceil(maxPerQ / Math.max(rootKeys.length, 1)))
+    // maxPerQ === 0 means unlimited — return everything. The 20-per-root floor
+    // below exists so the diversity phases always have room; it intentionally
+    // lifts very small user-supplied caps.
+    var perRoot = (maxPerQ === 0)
+        ? Infinity
+        : Math.max(20, Math.ceil(maxPerQ / Math.max(rootKeys.length, 1)))
 
     var result = []
     for (var ri = 0; ri < rootKeys.length; ri++) {
