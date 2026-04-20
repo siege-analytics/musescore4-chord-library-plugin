@@ -3114,9 +3114,21 @@ MuseScore {
 
     // Helper to get home directory path for default export location
     function homePath() {
-        var url = Qt.resolvedUrl(".")
-        // Extract up to /Users/username or /home/username
-        var str = url.toString().replace("file://", "")
+        // Extract the user's home directory from the plugin's resolved URL. Handles
+        // both POSIX (file:///Users/…, file:///home/…) and Windows (file:///C:/Users/…).
+        // Qt normalises URLs to forward slashes; FileIO accepts forward-slash Windows
+        // paths, so we keep them that way.
+        var str = Qt.resolvedUrl(".").toString().replace("file:///", "").replace("file://", "")
+        if (Qt.platform.os === "windows") {
+            // str = "C:/Users/Name/Documents/MuseScore4/Plugins/chordlibrary/"
+            var wparts = str.split("/")
+            if (wparts.length >= 3 && wparts[0].indexOf(":") >= 0) {
+                return wparts[0] + "/" + wparts[1] + "/" + wparts[2]
+            }
+            return str
+        }
+        // POSIX: str = "/Users/Name/..." → re-add the leading slash we stripped
+        if (str.charAt(0) !== "/") str = "/" + str
         var parts = str.split("/")
         if (parts.length >= 3) {
             return "/" + parts[1] + "/" + parts[2]
