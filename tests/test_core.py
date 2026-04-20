@@ -52,9 +52,10 @@ class TestVoicingData:
         assert len(voicings) >= 700, f"Expected ≥150 voicings, got {len(voicings)}"
 
     def test_all_voicings_have_required_fields(self, voicings):
+        # context retired in #174 Stage 3 — suitableModes replaces it
         required = [
             "id", "name", "chord_quality", "root", "category",
-            "context", "strings", "fret_number", "visible_frets",
+            "suitableModes", "strings", "fret_number", "visible_frets",
             "dots", "mutes", "open", "notes", "intervals", "tags",
         ]
         for v in voicings:
@@ -70,10 +71,14 @@ class TestVoicingData:
         dupes = [x for x in ids if ids.count(x) > 1]
         assert not dupes, f"Duplicate IDs: {set(dupes)}"
 
-    def test_all_contexts_populated(self, voicings):
-        contexts = {v["context"] for v in voicings}
-        for ctx in ["CM6", "CM7", "CV6", "CV7"]:
-            assert ctx in contexts, f"Context {ctx} has no voicings"
+    def test_all_modes_populated(self, voicings):
+        # #174 Stage 3: suitableModes replaces the legacy context field
+        modes = set()
+        for v in voicings:
+            for m in v.get("suitableModes", []):
+                modes.add(m)
+        for mode in ["chord-melody", "comping"]:
+            assert mode in modes, f"Mode {mode} has no voicings"
 
     def test_all_categories_populated(self, voicings):
         categories = {v["category"] for v in voicings}

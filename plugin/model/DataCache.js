@@ -4,35 +4,16 @@
 // Handles parsing and serialisation only — FileIO stays in QML.
 // .pragma library: safe — no QML callbacks received.
 
-// Legacy context → suitableModes mapping. Mirrors scripts/migrate_context_to_modes.py.
-// Kept in-memory so old caches or externally-supplied data still load.
-var CONTEXT_TO_MODES = {
-    "CM6": ["chord-melody"],
-    "CM7": ["chord-melody"],
-    "CV6": ["comping"],
-    "CV7": ["comping"]
-}
-
-// Ensure every voicing carries suitableModes. If absent, derive from legacy context.
-// Mutates the input array in place and returns it.
-function normalizeVoicings(voicings) {
-    for (var i = 0; i < voicings.length; i++) {
-        var v = voicings[i]
-        if (v.suitableModes && v.suitableModes.length > 0) continue
-        var modes = CONTEXT_TO_MODES[v.context]
-        v.suitableModes = modes ? modes.slice() : []
-    }
-    return voicings
-}
-
 // Parse a voicing cache file. Returns the voicings array, or null on failure.
+// Historical note: v2.1 carried a legacy context→suitableModes normalizer for
+// pre-migration caches. #174 Stage 3 retired the context field across the data;
+// the normalizer is no longer needed.
 function parseCache(rawJson) {
     if (!rawJson || rawJson.length <= 2) return null
     try {
         var data = JSON.parse(rawJson)
         var cached = data.voicings || []
-        if (cached.length === 0) return null
-        return normalizeVoicings(cached)
+        return cached.length > 0 ? cached : null
     } catch (e) {
         return null
     }

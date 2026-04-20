@@ -56,11 +56,6 @@
           "minLength": 1,
           "description": "Voicing category (e.g. shell, drop2, drop3, extended, altered, quartal, caged). Free-text — imports can introduce new categories."
         },
-        "context": {
-          "type": "string",
-          "minLength": 1,
-          "description": "DEPRECATED — replaced by suitableModes in v2.1. Legacy texture context (CM6/CM7/CV6/CV7). Retained for one-release grace period; readers fall back to this when suitableModes is absent."
-        },
         "suitableModes": {
           "type": "array",
           "items": {
@@ -156,13 +151,6 @@
             "type": "string"
           },
           "description": "Searchable tags"
-        },
-        "also_contexts": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Additional contexts this voicing works in (e.g. CM6 voicing also usable in CV6)"
         },
         "also_qualities": {
           "type": "array",
