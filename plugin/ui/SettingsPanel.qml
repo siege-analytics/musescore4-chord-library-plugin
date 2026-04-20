@@ -85,6 +85,12 @@ Item {
     // Parent handler resolves, writes to styles.json, reloads profilesData.
     signal compositionSaveRequested(var composition)
 
+    // Backup / restore (#172)
+    signal backupExportRequested()
+    signal backupRestoreRequested()
+    property string backupStatus: ""
+    property color backupStatusColor: "black"
+
     // --- Composition form state (#170) ---
     property bool compositionFormVisible: false
     property string compositionName: ""
@@ -230,6 +236,59 @@ Item {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             acceptedButtons: Qt.NoButton
+                        }
+                    }
+
+                    // === Backup / Restore (#172) ===
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.topMargin: 12
+                        Layout.preferredHeight: backupCol.implicitHeight + 16
+                        radius: 4
+                        color: theme.cardBackground
+                        border.color: theme.cardBorder
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: backupCol
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            spacing: 6
+
+                            Label {
+                                text: "BACKUP / RESTORE"
+                                font.pixelSize: 11
+                                font.bold: true
+                            }
+                            Label {
+                                text: "Export your custom tunings, styles, scales, and settings to a single .json file. Import restores by merging (duplicates by id are updated)."
+                                font.pixelSize: 9
+                                color: theme.textMuted
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Button {
+                                    text: "Export Backup…"
+                                    font.pixelSize: 10
+                                    onClicked: settingsPanel.backupExportRequested()
+                                }
+                                Button {
+                                    text: "Restore from File…"
+                                    font.pixelSize: 10
+                                    onClicked: settingsPanel.backupRestoreRequested()
+                                }
+                            }
+                            Label {
+                                visible: settingsPanel.backupStatus.length > 0
+                                text: settingsPanel.backupStatus
+                                color: settingsPanel.backupStatusColor
+                                font.pixelSize: 10
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
                         }
                     }
                 }

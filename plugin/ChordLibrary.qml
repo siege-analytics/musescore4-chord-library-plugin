@@ -15,6 +15,7 @@ import "model/FilterEngine.js" as FilterEngine
 import "model/DataCache.js" as DataCache
 import "model/HygieneEngine.js" as HygieneEngine
 import "model/FingeringEngine.js" as FingeringEngine
+import "model/BackupManager.js" as BackupManager
 import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
 
@@ -143,6 +144,10 @@ MuseScore {
     FileIO {
         id: modesConfigFile
         source: Qt.resolvedUrl("config/modes.json")
+    }
+
+    FileIO {
+        id: backupFile   // (#172) user-data backup / restore
     }
 
     FileIO {
@@ -451,6 +456,107 @@ MuseScore {
     // Resolve current mode to its config object (or null if not loaded yet).
     function currentModeConfig() {
         return (_modesById && _modesById[activeMode]) ? _modesById[activeMode] : null
+    }
+
+    // === Backup / restore (#172) ===
+
+    function _timestamp() {
+        var d = new Date()
+        var pad = function(n) { return (n < 10 ? "0" : "") + n }
+        return d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate())
+            + "-" + pad(d.getHours()) + pad(d.getMinutes())
+    }
+
+    function exportBackup() {
+        try {
+            var customTuningSlugs = []
+            for (var i = 0; i < tuningList.length; i++) {
+                if (builtInTunings.indexOf(tuningList[i]) < 0) customTuningSlugs.push(tuningList[i])
+            }
+            var settings = {
+                voicingUrl: jsonUrl, diagramPlacement: diagramPlacement,
+                tuning: selectedTuning, customTunings: DataCache.getCustomTuningsList(
+                    tuningList, builtInTunings, tuningLabels, tuningStringCounts),
+                tuningOrder: tuningList.slice(),
+                calcMaxFret: calcMaxFret, calcMaxStretch: calcMaxStretch,
+                calcAllowOpen: calcAllowOpen, calcRootInBass: calcRootInBass,
+                calcMinNotes: calcMinNotes, calcMaxMuted: calcMaxMuted,
+                calcMaxPerQuality: calcMaxPerQuality,
+                activeProfile: _activeProfileId, activeMode: activeMode
+            }
+            var readTuningFile = function(slug) {
+                backupFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+                return backupFile.read()
+            }
+            var allScales = (typeof ChordScales.getScaleList === "function") ? ChordScales.getScaleList() : []
+            var archive = BackupManager.buildArchive({
+                settings: settings,
+                allStyles: _profileList,
+                allScales: allScales,
+                customTuningSlugs: customTuningSlugs,
+                readTuningFile: readTuningFile,
+                version: "v2.2"
+            })
+            var path = homePath() + "/Desktop/chordlibrary-backup-" + _timestamp() + ".json"
+            backupFile.source = path
+            backupFile.write(BackupManager.serialize(archive))
+            settingsPanel.backupStatus = "Exported to " + path
+            settingsPanel.backupStatusColor = theme.successText
+        } catch (e) {
+            settingsPanel.backupStatus = "Export failed: " + String(e)
+            settingsPanel.backupStatusColor = theme.errorText
+        }
+    }
+
+    function restoreBackup(path) {
+        if (!path) {
+            settingsPanel.backupStatus = "No path provided"
+            settingsPanel.backupStatusColor = theme.errorText
+            return
+        }
+        try {
+            backupFile.source = path
+            var raw = backupFile.read()
+            var archive = BackupManager.parseArchive(raw)
+            if (!archive) {
+                settingsPanel.backupStatus = "Not a valid chordlibrary backup file"
+                settingsPanel.backupStatusColor = theme.errorText
+                return
+            }
+            // Merge styles
+            var styleRes = BackupManager.mergeStyles(archive, _profileList || [])
+            if (styleRes.list) {
+                _profileList = styleRes.list
+                profilesConfigFile.write(JSON.stringify({ profiles: _profileList }, null, 2))
+            }
+            // Restore tuning files + settings entries
+            var tFiles = BackupManager.tuningFilesToRestore(archive)
+            var restoredTunings = 0
+            for (var i = 0; i < tFiles.length; i++) {
+                backupFile.source = Qt.resolvedUrl("tunings/" + tFiles[i].slug + ".json")
+                backupFile.write(JSON.stringify(tFiles[i].body, null, 2))
+                restoredTunings += 1
+            }
+            // Merge custom tunings into state
+            if (archive.settings && archive.settings.customTunings) {
+                for (var j = 0; j < archive.settings.customTunings.length; j++) {
+                    var ct = archive.settings.customTunings[j]
+                    if (!ct.slug) continue
+                    if (tuningList.indexOf(ct.slug) < 0) {
+                        var nl = tuningList.slice(); nl.push(ct.slug); tuningList = nl
+                    }
+                    var nlab = Object.assign({}, tuningLabels); nlab[ct.slug] = ct.name; tuningLabels = nlab
+                    var ncnt = Object.assign({}, tuningStringCounts); ncnt[ct.slug] = ct.strings || 6; tuningStringCounts = ncnt
+                }
+            }
+            saveSettings()
+            settingsPanel.backupStatus = "Restored " + (styleRes.added + styleRes.updated) +
+                " style(s), " + restoredTunings + " tuning(s). Restart MuseScore to pick up all changes."
+            settingsPanel.backupStatusColor = theme.successText
+        } catch (e) {
+            settingsPanel.backupStatus = "Restore failed: " + String(e)
+            settingsPanel.backupStatusColor = theme.errorText
+        }
     }
 
     function setProfile(profileId) {
@@ -2581,6 +2687,18 @@ MuseScore {
             profilesData: chordLibrary._profileList
             activeProfileId: chordLibrary._activeProfileId
             onProfileSelected: function(profileId) { setProfile(profileId) }
+            // Backup / restore (#172)
+            onBackupExportRequested: function() { exportBackup() }
+            onBackupRestoreRequested: function() {
+                // Try native FileDialog; fall back to a fixed Desktop path if not available
+                var tmpField = { text: "" }
+                openFileBrowser("open", tmpField, function() {
+                    if (tmpField.text) restoreBackup(tmpField.text)
+                })
+                // If the dialog wasn't supported, openFileBrowser sets statusMsg and returns.
+                // User can also drop a backup at ~/Desktop/chordlibrary-backup-restore.json
+                // and click Restore again if the dialog didn't appear.
+            }
             // Save a new composition to styles.json and reload (#170)
             onCompositionSaveRequested: function(composition) {
                 try {
