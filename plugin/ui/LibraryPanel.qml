@@ -134,8 +134,14 @@ Item {
             Layout.fillWidth: true
             spacing: 4
 
+            // Context dropdown hidden as of #174 Stage 2. Mode (chord-melody /
+            // comping / solo-guitar / duo) replaces the CM/CV distinction; tuning
+            // selection drives string count. filterContext is still computed
+            // internally so legacy tuning-filter logic keeps working; Stages 3-4
+            // remove it entirely.
             ComboBox {
                 id: contextCombo
+                visible: false
                 model: libraryPanel.contextDisplayList
                 Layout.fillWidth: true
                 function syncIndex() {
