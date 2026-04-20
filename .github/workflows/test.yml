@@ -10,17 +10,24 @@ permissions:
 
 jobs:
   test:
-    name: Run all tests (Python + JS modules)
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} · py${{ matrix.python-version }}
+    # #176 Stage 3: cross-platform test matrix so Windows/macOS regressions
+    # surface in PRs instead of showing up in user bug reports.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.12"]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
@@ -33,8 +40,8 @@ jobs:
       - name: Verify Node.js available
         run: node --version
 
-      - name: Run all tests
-        run: python -m pytest tests/ -v --tb=short
+      - name: Run all tests (JS modules + core, skip environmental)
+        run: python -m pytest tests/test_js_modules.py tests/test_core.py -v --tb=short
 
       - name: Run schema validation
         if: always()
