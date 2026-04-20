@@ -168,8 +168,14 @@ python -m pytest tests/ -v
 python scripts/validate.py -v
 
 # Deploy to MuseScore (developer convenience)
-bash deploy.sh
+bash deploy.sh                 # macOS / Linux
+pwsh -File .\deploy.ps1        # Windows PowerShell 5+
 ```
+
+On Windows, both scripts target the standard MuseScore plugin location
+(`%USERPROFILE%\Documents\MuseScore4\Plugins\chordlibrary`). After
+deploying, quit MuseScore fully and relaunch — QML is cached at load
+time on all platforms.
 
 ### Project structure
 
