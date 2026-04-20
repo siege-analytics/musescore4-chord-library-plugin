@@ -126,12 +126,9 @@ function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, 
 
     if (v.chord_quality === quality) score += 20
 
-    // Legacy context match (retained until filterContext retires)
-    if (opts.filterContext) {
-        var ctxPfx = opts.filterContext.replace(/[0-9]+$/, "")
-        if (v.context === opts.filterContext) score += 100
-        else if ((v.context || "").replace(/[0-9]+$/, "") === ctxPfx) score += 50
-    }
+    // Legacy context scoring boost retired (#174 Stage 1). filterContext still
+    // operates as a filter upstream; mode (chord-melody / comping / …) drives
+    // the playing-role scoring via modeConfig below.
     if (opts.filterCategory && v.category === opts.filterCategory) score += 50
 
     if (v.category === "shell") score += 10
