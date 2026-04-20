@@ -2803,8 +2803,14 @@ MuseScore {
                     loadTuningVoicings()
                     refreshFilteredTunings()
                     saveSettings()
-                    // Clear editing state
+                    // Clear editing state AND the form so a second Save click can't
+                    // duplicate. Previously only editingTuningSlug was cleared, which
+                    // meant clicking Save again on the still-populated form created a
+                    // new custom tuning even when the user meant to rename a built-in.
                     settingsPanel.editingTuningSlug = ""
+                    settingsPanel.tuningNameValue = ""
+                    settingsPanel.tuningPitchesValue = ""
+                    settingsPanel.tuningStringCountValue = 6
                     // tuningListModel updates automatically via its binding to tuningList
                     // Show success
                     var noteArr = []
