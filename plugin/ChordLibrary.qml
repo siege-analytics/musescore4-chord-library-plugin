@@ -212,33 +212,15 @@ MuseScore {
     property var filteredTuningDisplayList: []
 
     function refreshFilteredTunings() {
-        var list
-        if (!filterContext || !contextStringCounts[filterContext]) {
-            list = tuningList
-        } else {
-            var requiredStrings = contextStringCounts[filterContext]
-            var exact = []
-            for (var i = 0; i < tuningList.length; i++) {
-                var slug = tuningList[i]
-                var strCount = tuningStringCounts[slug] || 6
-                if (strCount === requiredStrings) exact.push(slug)
-            }
-            if (exact.length > 0) {
-                list = exact
-            } else {
-                var result = []
-                for (var j = 0; j < tuningList.length; j++) {
-                    var slug2 = tuningList[j]
-                    var strCount2 = tuningStringCounts[slug2] || 6
-                    if (strCount2 <= requiredStrings) result.push(slug2)
-                }
-                list = result
-            }
-        }
-        filteredTuningList = list
+        // Context retirement (#174). Previously this capped the tuning list to
+        // the current context's string count, which left users with a stale
+        // defaultContext (e.g. CM6) unable to see 7-string tunings after we
+        // hid the context dropdown. Mode + tuning selection now carry that
+        // responsibility; show every tuning here.
+        filteredTuningList = tuningList
         var display = []
-        for (var d = 0; d < list.length; d++) {
-            display.push(tuningLabels[list[d]] || list[d])
+        for (var d = 0; d < tuningList.length; d++) {
+            display.push(tuningLabels[tuningList[d]] || tuningList[d])
         }
         filteredTuningDisplayList = display
     }
