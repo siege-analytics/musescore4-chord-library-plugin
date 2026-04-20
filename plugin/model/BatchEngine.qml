@@ -47,6 +47,11 @@ Item {
     // Mode axis (#164) — parent passes activeMode id + resolved modeConfig object
     property string activeMode: "chord-melody"
     property var modeConfig: null
+    // Section resolver (#167) — parent callback: (chordIdx) -> modeId
+    // When set, overrides activeMode per-chord based on score sections.
+    property var modeIdResolverFn: null
+    // Section resolver (#167) — parent callback: (chordIdx) -> modeConfig object
+    property var modeConfigResolverFn: null
 
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
@@ -83,7 +88,16 @@ Item {
         return ChordSelector.parseChordSymbol(text)
     }
 
-    function _selectorOpts(melodyMidi, bassMidi) {
+    function _selectorOpts(melodyMidi, bassMidi, chordIdx) {
+        // Section-aware mode resolution (#167). If resolver callbacks are wired,
+        // use them to pick the mode for this chord index; otherwise fall back to
+        // the score-level activeMode + modeConfig.
+        var effectiveModeId = activeMode
+        var effectiveModeConfig = modeConfig
+        if (typeof chordIdx === "number" && modeIdResolverFn && modeConfigResolverFn) {
+            effectiveModeId = modeIdResolverFn(chordIdx) || activeMode
+            effectiveModeConfig = modeConfigResolverFn(chordIdx) || modeConfig
+        }
         return {
             maxStrings: tuningMaxStrings,
             filterContext: filterContext,
@@ -101,17 +115,19 @@ Item {
             semitoneMap: Transposer.SEMITONE_MAP,
             profileCategoryWeightFn: ChordScales.getProfileCategoryWeight,
             profileQualityBoostFn: ChordScales.getProfileQualityBoost,
-            modeConfig: modeConfig,
-            modeId: activeMode
+            modeConfig: effectiveModeConfig,
+            modeId: effectiveModeId
         }
     }
 
-    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findBestVoicing(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
+    function findBestVoicing(targetRoot, quality, melodyMidi, bassMidi, chordIdx) {
+        return ChordSelector.findBestVoicing(voicingsData, targetRoot, quality,
+            _selectorOpts(melodyMidi, bassMidi, chordIdx))
     }
 
-    function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi) {
-        return ChordSelector.findAllVoicings(voicingsData, targetRoot, quality, _selectorOpts(melodyMidi, bassMidi))
+    function findAllVoicings(targetRoot, quality, melodyMidi, bassMidi, chordIdx) {
+        return ChordSelector.findAllVoicings(voicingsData, targetRoot, quality,
+            _selectorOpts(melodyMidi, bassMidi, chordIdx))
     }
 
     function _diagramOpts() {
@@ -346,7 +362,9 @@ Item {
                                 bassMidi = MelodyEngine.suggestBassNote(parsed.root, parsed.quality, Transposer.SEMITONE_MAP)
                             }
 
-                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi)
+                            // Pass the about-to-be-assigned chord index so section-aware
+                            // mode resolution (#167) picks the right mode for each chord.
+                            var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
                             if (voicing) {
                                 chords.push({
                                     text: text,
@@ -498,7 +516,8 @@ Item {
         var savedCategory = filterCategory
         filterCategory = categoryOverride
 
-        var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass)
+        // batchIndex is 1-based after the increment in batchShowNext; use idx-1.
+        var newVoicing = findBestVoicing(item.root, item.quality, newMidi, newBass, Math.max(0, batchIndex - 1))
 
         filterCategory = savedCategory
 
@@ -565,7 +584,7 @@ Item {
         item.text = newRoot + (newQuality === "dom7" ? "7" : newQuality === "min7" ? "m7" : newQuality === "maj7" ? "maj7" : newQuality === "dim7" ? "dim7" : newQuality === "min6" ? "m6" : newQuality === "sus4" ? "sus4" : newQuality === "maj6" ? "6" : newQuality === "maj" ? "" : newQuality)
         item.bassMidi = MelodyEngine.suggestBassNote(newRoot, newQuality, Transposer.SEMITONE_MAP)
 
-        var voicing = findBestVoicing(newRoot, newQuality, item.melodyMidi, item.bassMidi)
+        var voicing = findBestVoicing(newRoot, newQuality, item.melodyMidi, item.bassMidi, Math.max(0, batchIndex - 1))
         if (voicing) {
             item.voicing = voicing
             var xml = generateXmlForVoicing(voicing, newRoot)

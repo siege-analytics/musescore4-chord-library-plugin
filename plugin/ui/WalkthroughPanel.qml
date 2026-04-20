@@ -48,6 +48,32 @@ ColumnLayout {
     signal reharmSelected(string newRoot, string newQuality)
     signal altSelected(int index)
     signal bassStringClicked(int bassStr)
+    // Section-based mode (#167)
+    signal sectionsChanged(var sections)
+
+    // Section data + mode list (wired from parent)
+    property var scoreSections: []
+    property var modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
+    property var modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+    property string activeMode: "chord-melody"
+    property bool sectionsEditorOpen: false
+
+    // Resolve which mode the given chord index sits in
+    function _modeForChord(idx) {
+        if (!scoreSections || scoreSections.length === 0) return activeMode
+        var best = null, bestStart = -1
+        for (var i = 0; i < scoreSections.length; i++) {
+            var s = scoreSections[i]
+            if (typeof s.startIdx !== "number") continue
+            if (s.startIdx <= idx && s.startIdx > bestStart) { best = s; bestStart = s.startIdx }
+        }
+        return best ? best.mode : activeMode
+    }
+    function _modeDisplayFor(idx) {
+        var mid = _modeForChord(idx)
+        var i = modeIdList.indexOf(mid)
+        return i >= 0 ? modeDisplayList[i] : mid
+    }
 
     // Convenience: current item (read-only)
     readonly property var currentItem: {
@@ -120,9 +146,141 @@ ColumnLayout {
             Item { Layout.fillWidth: true }
 
             Label {
+                visible: batchActive
+                text: "Mode: " + walkthroughPanel._modeDisplayFor(Math.max(0, batchIndex - 1))
+                font.pixelSize: 10
+                color: theme.textSecondary
+            }
+
+            Label {
                 text: Math.round(Math.min(batchIndex, batchTotal) / Math.max(batchTotal, 1) * 100) + "%"
                 font.pixelSize: 11
                 color: theme.textMuted
+            }
+        }
+
+        // Section-based mode editor (#167)
+        RowLayout {
+            visible: batchActive
+            Layout.fillWidth: true
+            spacing: 6
+
+            Button {
+                text: walkthroughPanel.sectionsEditorOpen ? "▾ Sections" : "▸ Sections"
+                font.pixelSize: 9
+                flat: true
+                onClicked: walkthroughPanel.sectionsEditorOpen = !walkthroughPanel.sectionsEditorOpen
+            }
+            Label {
+                text: walkthroughPanel.scoreSections.length === 0
+                    ? "whole score = " + walkthroughPanel._modeDisplayFor(0)
+                    : walkthroughPanel.scoreSections.length + " section(s) defined"
+                font.pixelSize: 9
+                color: theme.textMuted
+                Layout.fillWidth: true
+            }
+        }
+
+        // Section list + add controls (appears when expanded)
+        Rectangle {
+            visible: batchActive && walkthroughPanel.sectionsEditorOpen
+            Layout.fillWidth: true
+            Layout.preferredHeight: sectionEditorCol.implicitHeight + 12
+            radius: 4
+            color: theme.cardBackground
+            border.color: theme.cardBorder
+            border.width: 1
+
+            ColumnLayout {
+                id: sectionEditorCol
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 4
+
+                Label {
+                    text: "Sections — each applies its mode to chords from startIdx up to the next section's start."
+                    font.pixelSize: 9
+                    color: theme.textMuted
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+
+                Repeater {
+                    model: walkthroughPanel.scoreSections
+                    delegate: RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+                        Label {
+                            text: "@" + modelData.startIdx + "  " + (modelData.name || "Section")
+                            font.pixelSize: 10
+                            font.family: "Menlo, Monaco, monospace"
+                            Layout.preferredWidth: 110
+                        }
+                        ComboBox {
+                            Layout.fillWidth: true
+                            font.pixelSize: 10
+                            model: walkthroughPanel.modeDisplayList
+                            currentIndex: Math.max(0, walkthroughPanel.modeIdList.indexOf(modelData.mode))
+                            onActivated: {
+                                var updated = walkthroughPanel.scoreSections.slice()
+                                updated[index] = {
+                                    startIdx: modelData.startIdx,
+                                    name: modelData.name,
+                                    mode: walkthroughPanel.modeIdList[currentIndex]
+                                }
+                                walkthroughPanel.sectionsChanged(updated)
+                            }
+                        }
+                        Button {
+                            text: "✕"
+                            font.pixelSize: 9
+                            implicitWidth: 22
+                            onClicked: {
+                                var updated = []
+                                for (var i = 0; i < walkthroughPanel.scoreSections.length; i++) {
+                                    if (i !== index) updated.push(walkthroughPanel.scoreSections[i])
+                                }
+                                walkthroughPanel.sectionsChanged(updated)
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 6
+                    Button {
+                        text: "Split here (@" + Math.max(0, batchIndex - 1) + ")"
+                        font.pixelSize: 10
+                        onClicked: {
+                            var idx = Math.max(0, batchIndex - 1)
+                            // Avoid duplicates at the same startIdx
+                            var updated = []
+                            var dupe = false
+                            for (var i = 0; i < walkthroughPanel.scoreSections.length; i++) {
+                                var s = walkthroughPanel.scoreSections[i]
+                                if (s.startIdx === idx) dupe = true
+                                updated.push(s)
+                            }
+                            if (!dupe) {
+                                updated.push({
+                                    startIdx: idx,
+                                    name: "Section " + (updated.length + 1),
+                                    mode: walkthroughPanel._modeForChord(idx)
+                                })
+                                // Keep sorted by startIdx for predictable display
+                                updated.sort(function(a, b) { return a.startIdx - b.startIdx })
+                                walkthroughPanel.sectionsChanged(updated)
+                            }
+                        }
+                    }
+                    Button {
+                        text: "Clear all"
+                        font.pixelSize: 10
+                        enabled: walkthroughPanel.scoreSections.length > 0
+                        onClicked: walkthroughPanel.sectionsChanged([])
+                    }
+                }
             }
         }
 

@@ -285,6 +285,9 @@ MuseScore {
     property string _activeProfileId: ""   // ID of the active profile (empty = default)
     property var _modesById: ({})          // Map of modeId -> mode config, from modes.json (#164)
     property string activeMode: "chord-melody"  // active mode (#164) — drives scoring via modeConfig
+    // Score-level section overrides (#167). Each entry: { startIdx: int, mode: string, name: string }.
+    // The earliest-matching entry with startIdx <= chord index wins. Empty array = whole score uses activeMode.
+    property var scoreSections: []
     property var _contextTuningLinks: ({}) // context code → tuning slug (from contexts.json)
     property string searchText: ""
 
@@ -456,6 +459,26 @@ MuseScore {
     // Resolve current mode to its config object (or null if not loaded yet).
     function currentModeConfig() {
         return (_modesById && _modesById[activeMode]) ? _modesById[activeMode] : null
+    }
+
+    // Section-aware mode lookup (#167). Returns the mode id active at chord index.
+    function modeForChord(idx) {
+        if (!scoreSections || scoreSections.length === 0) return activeMode
+        var best = null, bestStart = -1
+        for (var i = 0; i < scoreSections.length; i++) {
+            var s = scoreSections[i]
+            if (typeof s.startIdx !== "number") continue
+            if (s.startIdx <= idx && s.startIdx > bestStart) {
+                best = s; bestStart = s.startIdx
+            }
+        }
+        return best ? best.mode : activeMode
+    }
+
+    // Section-aware mode config (#167). Used by BatchEngine per chord.
+    function modeConfigForChord(idx) {
+        var id = modeForChord(idx)
+        return (_modesById && _modesById[id]) ? _modesById[id] : null
     }
 
     // === Backup / restore (#172) ===
@@ -787,6 +810,9 @@ MuseScore {
         // Mode axis (#164) — activeMode drives mode-aware scoring in ChordSelector
         activeMode: chordLibrary.activeMode
         modeConfig: chordLibrary.currentModeConfig()
+        // Section-aware mode resolution (#167)
+        modeIdResolverFn: function(chordIdx) { return chordLibrary.modeForChord(chordIdx) }
+        modeConfigResolverFn: function(chordIdx) { return chordLibrary.modeConfigForChord(chordIdx) }
 
         onStatusMessage: function(text, colorName) {
             statusMsg.text = text
@@ -957,6 +983,8 @@ MuseScore {
             if (s.activeProfile) setProfile(s.activeProfile)
             // Restore active mode (#164). Default "chord-melody" preserves v2.0 behavior.
             if (s.activeMode) setActiveMode(s.activeMode)
+            // Restore score sections (#167). Array of {startIdx, mode, name}.
+            if (s.scoreSections && Array.isArray(s.scoreSections)) scoreSections = s.scoreSections
             refreshFilteredTunings()
             console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
@@ -981,6 +1009,7 @@ MuseScore {
             calcMaxPerQuality: calcMaxPerQuality,
             activeProfile: _activeProfileId,
             activeMode: activeMode,
+            scoreSections: scoreSections,
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -2976,6 +3005,15 @@ MuseScore {
             availableCategories: categoryList
             tuningName: tuningLabels[selectedTuning] || selectedTuning
             calculatedVoicings: usingTuningVoicings
+            // Section-aware mode (#167)
+            scoreSections: chordLibrary.scoreSections
+            activeMode: chordLibrary.activeMode
+            modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
+            modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+            onSectionsChanged: function(sections) {
+                chordLibrary.scoreSections = sections
+                chordLibrary.saveSettings()
+            }
             tuningPitches: tuningPitchNotation
             tuningOffset: chordLibrary.tuningOffset
             altCount: batchEngine.altCount
