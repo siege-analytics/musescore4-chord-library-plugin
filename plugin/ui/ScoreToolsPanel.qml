@@ -102,6 +102,7 @@ Flickable {
 
             Label { text: "Max fret:"; font.pixelSize: 10 }
             SpinBox {
+                editable: true
                 from: 7; to: 24; value: calc.maxFret
                 implicitWidth: 70
                 onValueChanged: {
@@ -111,6 +112,7 @@ Flickable {
 
             Label { text: "Max stretch:"; font.pixelSize: 10 }
             SpinBox {
+                editable: true
                 from: 2; to: 7; value: calc.maxStretch
                 implicitWidth: 70
                 onValueChanged: {
@@ -120,6 +122,7 @@ Flickable {
 
             Label { text: "Min notes:"; font.pixelSize: 10 }
             SpinBox {
+                editable: true
                 from: 2; to: 6; value: calc.minNotes
                 implicitWidth: 70
                 onValueChanged: {
@@ -129,6 +132,7 @@ Flickable {
 
             Label { text: "Max muted:"; font.pixelSize: 10 }
             SpinBox {
+                editable: true
                 from: 0; to: 4; value: calc.maxMuted
                 implicitWidth: 70
                 onValueChanged: {
@@ -143,6 +147,7 @@ Flickable {
 
             Label { text: "Max per quality:"; font.pixelSize: 10 }
             SpinBox {
+                editable: true
                 from: 0; to: 999; value: calc.maxPerQuality
                 implicitWidth: 80
                 ToolTip.visible: hovered

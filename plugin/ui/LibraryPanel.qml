@@ -832,6 +832,7 @@ Item {
 
                 SpinBox {
                     id: saveStringsCount
+                    editable: true
                     from: 4; to: 12
                     value: libraryPanel.saveStringsCountValue
                     implicitWidth: 75

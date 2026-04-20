@@ -613,6 +613,7 @@ Flickable {
 
             SpinBox {
                 id: tuningStringCount
+                editable: true
                 from: 4
                 to: 12
                 value: importPanel.tuningStringCountValue
