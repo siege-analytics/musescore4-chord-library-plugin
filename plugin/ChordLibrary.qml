@@ -174,11 +174,11 @@ MuseScore {
         ]
         property var tuningLabels: ({
             "standard": "Standard 6-String",
-            "7string-van-eps": "7-String Van Eps (Low A)",
-            "7string-low-b": "7-String Low B",
-            "dadgad": "DADGAD",
-            "all-fourths": "All Fourths",
-            "baritone": "Baritone B (B-E-A-D-F#-B)"
+            "7string-van-eps": "Van Eps 7-String (Low A)",
+            "7string-low-b": "Low B 7-String",
+            "dadgad": "DADGAD 6-String",
+            "all-fourths": "All Fourths 6-String",
+            "baritone": "Baritone Guitar 6-String (B Standard)"
         })
         property var tuningStringCounts: ({
             "standard": 6, "7string-van-eps": 7, "7string-low-b": 7,
@@ -459,6 +459,36 @@ MuseScore {
     // Resolve current mode to its config object (or null if not loaded yet).
     function currentModeConfig() {
         return (_modesById && _modesById[activeMode]) ? _modesById[activeMode] : null
+    }
+
+    // Reset a built-in tuning's label + pitches to the factory defaults. Rereads
+    // the bundled tuning JSON from the plugin's own tunings/ dir (the one deploy.sh
+    // overwrites) and applies it.
+    function resetBuiltInTuning(slug) {
+        if (builtInTunings.indexOf(slug) < 0) {
+            settingsPanel.tuningStatus = "Only built-in tunings can be reset to factory"
+            settingsPanel.tuningStatusColor = theme.errorText
+            return
+        }
+        try {
+            tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+            var raw = tuningFile.read()
+            if (!raw || raw.length === 0) {
+                settingsPanel.tuningStatus = "Factory file missing for " + slug
+                settingsPanel.tuningStatusColor = theme.errorText
+                return
+            }
+            var t = JSON.parse(raw)
+            var nlab = Object.assign({}, tuningLabels); nlab[slug] = t.name; tuningLabels = nlab
+            var ncnt = Object.assign({}, tuningStringCounts); ncnt[slug] = Object.keys(t.strings || {}).length || 6; tuningStringCounts = ncnt
+            if (selectedTuning === slug) { loadTuningStringCount(); loadTuningVoicings() }
+            saveSettings()
+            settingsPanel.tuningStatus = "Reset " + t.name + " to factory defaults"
+            settingsPanel.tuningStatusColor = theme.successText
+        } catch (e) {
+            settingsPanel.tuningStatus = "Reset failed: " + String(e)
+            settingsPanel.tuningStatusColor = theme.errorText
+        }
     }
 
     // Section-aware mode lookup (#167). Returns the mode id active at chord index.
@@ -934,11 +964,11 @@ MuseScore {
             // Hardcoded built-in tuning data — avoids Object.keys() on QML property aliases (#154)
             var newLabels = {
                 "standard": "Standard 6-String",
-                "7string-van-eps": "7-String Van Eps (Low A)",
-                "7string-low-b": "7-String Low B",
-                "dadgad": "DADGAD",
-                "all-fourths": "All Fourths",
-                "baritone": "Baritone Guitar"
+                "7string-van-eps": "Van Eps 7-String (Low A)",
+                "7string-low-b": "Low B 7-String",
+                "dadgad": "DADGAD 6-String",
+                "all-fourths": "All Fourths 6-String",
+                "baritone": "Baritone Guitar 6-String (B Standard)"
             }
             var newCounts = {
                 "standard": 6,
@@ -2730,6 +2760,12 @@ MuseScore {
                     var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
                     var isUpdate = originalSlug && originalSlug.length > 0
                     var oldSlug = isUpdate ? originalSlug : ""
+                    // Built-in tunings keep their slug under rename so the factory file on disk
+                    // stays in sync and the builtInTunings registry doesn't develop ghosts.
+                    // Label changes freely; pitches can change too (Reset to factory restores).
+                    if (isUpdate && builtInTunings.indexOf(oldSlug) >= 0) {
+                        slug = oldSlug
+                    }
                     // Write file
                     tuningFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
                     tuningFile.write(JSON.stringify(tuningObj, null, 2))
@@ -2829,6 +2865,7 @@ MuseScore {
                 saveSettings()
             }
             onEditTuningRequested: function(slug) { editTuning(slug) }
+            onResetBuiltInTuningRequested: function(slug) { resetBuiltInTuning(slug) }
             onDeleteTuningRequested: function(slug) {
                 // Direct implementation — bypasses TuningManager for...in bug (#154)
                 if (!slug) return

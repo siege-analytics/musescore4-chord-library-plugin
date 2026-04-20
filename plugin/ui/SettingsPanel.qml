@@ -51,6 +51,7 @@ Item {
     signal editTuningRequested(string slug)
     signal deleteTuningRequested(string slug)
     signal moveTuningRequested(string slug, int direction)
+    signal resetBuiltInTuningRequested(string slug)
     signal createTuningRequested(string name, string pitches, int numStrings)
     signal importTuningRequested(string path)
     signal browseTuningRequested(var targetField)
@@ -419,13 +420,24 @@ Item {
                                     enabled: (settingsPanel.builtInTunings || []).indexOf(modelData) < 0
                                     ToolTip.visible: hovered
                                     ToolTip.text: (settingsPanel.builtInTunings || []).indexOf(modelData) >= 0
-                                        ? "Built-in tunings cannot be deleted"
+                                        ? "Built-in tunings cannot be deleted (use Reset instead)"
                                         : "Delete this tuning"
                                     onClicked: {
                                         tuningColumn.deleteConfirmSlug = modelData
                                         tuningColumn.deleteConfirmName = (tuning && tuning.tuningLabels ? tuning.tuningLabels[modelData] : modelData) || modelData
                                         tuningColumn.showDeleteConfirm = true
                                     }
+                                }
+
+                                // Reset built-ins to factory defaults (#167 follow-up)
+                                Button {
+                                    visible: (settingsPanel.builtInTunings || []).indexOf(modelData) >= 0
+                                    text: "Reset"
+                                    font.pixelSize: 9
+                                    implicitWidth: 40
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Reset this built-in tuning's label and pitches to factory defaults"
+                                    onClicked: settingsPanel.resetBuiltInTuningRequested(modelData)
                                 }
 
                                 Button {
