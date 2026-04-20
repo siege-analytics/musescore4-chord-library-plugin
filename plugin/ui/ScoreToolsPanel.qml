@@ -156,6 +156,13 @@ Flickable {
                     if (value !== calc.maxPerQuality) scoreToolsPanel.constraintChanged("calcMaxPerQuality", value)
                 }
             }
+            Label {
+                text: "0 = unlimited (Ted Greene mode)"
+                font.pixelSize: 9
+                font.italic: true
+                color: theme.textMuted
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {
