@@ -594,6 +594,8 @@ ColumnLayout {
                     // Legend
                     Flow {
                         Layout.fillWidth: true
+                        Layout.topMargin: 4
+                        Layout.bottomMargin: 2
                         spacing: 8
 
                         Label { text: "Chord tone"; font.pixelSize: 8; font.bold: true; color: theme.successText }
@@ -670,12 +672,19 @@ ColumnLayout {
         }
     }
 
-    // Divider between scale detail and reharm (#150)
-    Rectangle {
+    // Divider between scale detail and reharm (#150) — wrap in an Item with
+    // vertical padding so the legend and reharm don't collide at tight heights.
+    Item {
         visible: batchActive && currentItem !== null
         Layout.fillWidth: true
-        height: 1
-        color: theme.divider
+        Layout.preferredHeight: 13
+        Rectangle {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 1
+            color: theme.divider
+        }
     }
 
     // Reharm suggestion chips
