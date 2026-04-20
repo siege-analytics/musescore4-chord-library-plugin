@@ -2599,6 +2599,32 @@ MuseScore {
             profilesData: chordLibrary._profileList
             activeProfileId: chordLibrary._activeProfileId
             onProfileSelected: function(profileId) { setProfile(profileId) }
+            // Save a new composition to styles.json and reload (#170)
+            onCompositionSaveRequested: function(composition) {
+                try {
+                    // Append to in-memory list, avoiding duplicate ids
+                    var updated = _profileList.slice()
+                    var replaced = false
+                    for (var i = 0; i < updated.length; i++) {
+                        if (updated[i].id === composition.id) {
+                            updated[i] = composition
+                            replaced = true
+                            break
+                        }
+                    }
+                    if (!replaced) updated.push(composition)
+                    _profileList = updated
+                    // Persist to styles.json
+                    profilesConfigFile.write(JSON.stringify({ profiles: updated }, null, 2))
+                    settingsPanel.profileStatus = (replaced ? "Updated: " : "Created: ") + composition.name
+                    settingsPanel.profileStatusColor = theme.successText
+                    console.log("Composition saved: " + composition.id)
+                } catch (e) {
+                    settingsPanel.profileStatus = "Error: " + String(e)
+                    settingsPanel.profileStatusColor = theme.errorText
+                    console.log("Composition save failed: " + e)
+                }
+            }
 
             onPlacementChanged: function(placement) {
                 diagramPlacement = placement

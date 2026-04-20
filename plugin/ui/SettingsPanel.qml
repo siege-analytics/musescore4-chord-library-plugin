@@ -81,6 +81,18 @@ Item {
     // --- Profile signals ---
     signal profileSelected(string profileId)
     signal profileDeleted(string profileId)
+    // Composition save (#170) — emitted when user saves a new composition.
+    // Parent handler resolves, writes to styles.json, reloads profilesData.
+    signal compositionSaveRequested(var composition)
+
+    // --- Composition form state (#170) ---
+    property bool compositionFormVisible: false
+    property string compositionName: ""
+    property var _compositionWeights: ({})   // styleId -> weight (0..2)
+    property var _compositionEnabled: ({})   // styleId -> bool
+    property string compositionNumericRule: "weighted-sum"
+    property string compositionScaleRule: "union-priority"
+    property string compositionResolution: "re-resolve"
 
     // --- Sub-tab state ---
     property int currentSubTab: 0
@@ -1239,6 +1251,210 @@ Item {
                         color: theme.textMuted
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
+                    }
+
+                    // New Composition button (#170)
+                    Button {
+                        text: settingsPanel.compositionFormVisible ? "Cancel Composition" : "+ New Composition…"
+                        font.pixelSize: 10
+                        Layout.fillWidth: false
+                        onClicked: {
+                            if (settingsPanel.compositionFormVisible) {
+                                settingsPanel.compositionFormVisible = false
+                                settingsPanel.compositionName = ""
+                                settingsPanel._compositionWeights = ({})
+                                settingsPanel._compositionEnabled = ({})
+                            } else {
+                                var w = {}
+                                var e = {}
+                                for (var i = 0; i < settingsPanel.profilesData.length; i++) {
+                                    var p = settingsPanel.profilesData[i]
+                                    if (p.composedFrom) continue
+                                    if (p.id === "default") continue
+                                    w[p.id] = 1.0
+                                    e[p.id] = false
+                                }
+                                settingsPanel._compositionWeights = w
+                                settingsPanel._compositionEnabled = e
+                                settingsPanel.compositionFormVisible = true
+                            }
+                        }
+                    }
+
+                    // Composition form (#170) — visible only while creating
+                    Rectangle {
+                        visible: settingsPanel.compositionFormVisible
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: compositionFormCol.implicitHeight + 16
+                        radius: 6
+                        color: theme.cardBackground
+                        border.color: theme.cardBorder
+                        border.width: 1
+
+                        ColumnLayout {
+                            id: compositionFormCol
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            spacing: 6
+
+                            Label {
+                                text: "BLEND STYLES"
+                                font.pixelSize: 10
+                                font.bold: true
+                            }
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Label { text: "Name:"; font.pixelSize: 10 }
+                                TextField {
+                                    id: compositionNameField
+                                    Layout.fillWidth: true
+                                    placeholderText: "e.g. Django Goes Bebop"
+                                    text: settingsPanel.compositionName
+                                    onTextChanged: settingsPanel.compositionName = text
+                                    font.pixelSize: 10
+                                }
+                            }
+
+                            Label {
+                                text: "Base styles (check to include, drag slider for weight):"
+                                font.pixelSize: 9
+                                color: theme.textMuted
+                            }
+
+                            Repeater {
+                                model: settingsPanel.profilesData
+                                delegate: RowLayout {
+                                    visible: !modelData.composedFrom && modelData.id !== "default"
+                                    Layout.fillWidth: true
+                                    spacing: 6
+
+                                    CheckBox {
+                                        text: modelData.name
+                                        font.pixelSize: 10
+                                        checked: settingsPanel._compositionEnabled[modelData.id] || false
+                                        onToggled: {
+                                            var e = Object.assign({}, settingsPanel._compositionEnabled)
+                                            e[modelData.id] = checked
+                                            settingsPanel._compositionEnabled = e
+                                        }
+                                    }
+                                    Slider {
+                                        Layout.fillWidth: true
+                                        from: 0
+                                        to: 2
+                                        stepSize: 0.1
+                                        value: settingsPanel._compositionWeights[modelData.id] || 1.0
+                                        enabled: settingsPanel._compositionEnabled[modelData.id] || false
+                                        onMoved: {
+                                            var w = Object.assign({}, settingsPanel._compositionWeights)
+                                            w[modelData.id] = value
+                                            settingsPanel._compositionWeights = w
+                                        }
+                                    }
+                                    Label {
+                                        text: ((settingsPanel._compositionWeights[modelData.id] || 1.0).toFixed(1))
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        color: theme.textMuted
+                                        Layout.preferredWidth: 24
+                                    }
+                                }
+                            }
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Label { text: "Numeric rule:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    Layout.preferredWidth: 140
+                                    font.pixelSize: 9
+                                    model: ["weighted-sum", "max", "average"]
+                                    currentIndex: model.indexOf(settingsPanel.compositionNumericRule)
+                                    onActivated: settingsPanel.compositionNumericRule = currentText
+                                }
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Label { text: "Scale rule:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    Layout.preferredWidth: 140
+                                    font.pixelSize: 9
+                                    model: ["union-priority", "intersect", "first-only"]
+                                    currentIndex: model.indexOf(settingsPanel.compositionScaleRule)
+                                    onActivated: settingsPanel.compositionScaleRule = currentText
+                                }
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Label { text: "Resolution:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    Layout.preferredWidth: 140
+                                    font.pixelSize: 9
+                                    model: ["re-resolve", "freeze"]
+                                    currentIndex: model.indexOf(settingsPanel.compositionResolution)
+                                    onActivated: settingsPanel.compositionResolution = currentText
+                                }
+                            }
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                Button {
+                                    text: "Save Composition"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        if (!settingsPanel.compositionName) {
+                                            settingsPanel.profileStatus = "Name required"
+                                            settingsPanel.profileStatusColor = theme.errorText
+                                            return
+                                        }
+                                        var enabled = []
+                                        var weights = {}
+                                        var keys = Object.keys(settingsPanel._compositionEnabled)
+                                        for (var i = 0; i < keys.length; i++) {
+                                            if (settingsPanel._compositionEnabled[keys[i]]) {
+                                                enabled.push(keys[i])
+                                                weights[keys[i]] = settingsPanel._compositionWeights[keys[i]] || 1.0
+                                            }
+                                        }
+                                        if (enabled.length < 2) {
+                                            settingsPanel.profileStatus = "Select at least 2 base styles"
+                                            settingsPanel.profileStatusColor = theme.errorText
+                                            return
+                                        }
+                                        var id = settingsPanel.compositionName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+                                        var composition = {
+                                            id: id,
+                                            name: settingsPanel.compositionName,
+                                            description: "Blend of " + enabled.join(" + "),
+                                            builtin: false,
+                                            composedFrom: enabled,
+                                            composition: {
+                                                numericRule: settingsPanel.compositionNumericRule,
+                                                scaleRule: settingsPanel.compositionScaleRule,
+                                                weights: weights,
+                                                resolution: settingsPanel.compositionResolution
+                                            },
+                                            chordScaleOverrides: {},
+                                            categoryWeights: {},
+                                            qualityBoosts: {}
+                                        }
+                                        settingsPanel.compositionSaveRequested(composition)
+                                        settingsPanel.compositionFormVisible = false
+                                        settingsPanel.compositionName = ""
+                                    }
+                                }
+                                Button {
+                                    text: "Cancel"
+                                    font.pixelSize: 10
+                                    onClicked: settingsPanel.compositionFormVisible = false
+                                }
+                            }
+                        }
                     }
 
                     Label {
