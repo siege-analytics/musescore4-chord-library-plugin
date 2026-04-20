@@ -786,7 +786,9 @@ MuseScore {
             if (s.tuningOrder.length > 0) {
                 tuningList = DataCache.mergeTuningOrder(s.tuningOrder, tuningList)
             }
-            if (settingsPanel) settingsPanel.tuningListModel = tuningList.slice()
+            // settingsPanel.tuningListModel is a declarative binding on tuningList.slice()
+            // (SettingsPanel instantiation). Don't write it imperatively — that would
+            // break the binding.
             // Restore voicing calculator constraints
             calcMaxFret = s.calcMaxFret
             calcMaxStretch = s.calcMaxStretch
@@ -894,7 +896,7 @@ MuseScore {
             loadTuningVoicings()
             refreshFilteredTunings()
             saveSettings()
-            settingsPanel.tuningListModel = tuningList.slice()
+            // tuningListModel updates automatically via its binding to tuningList
             _setImportStatus("Imported: " + t.name, "#27ae60")
         } catch(e) {
             _setImportStatus("Failed: " + String(e), "#e74c3c")
@@ -2582,7 +2584,7 @@ MuseScore {
                     saveSettings()
                     // Clear editing state
                     settingsPanel.editingTuningSlug = ""
-                    settingsPanel.tuningListModel = tuningList.slice()
+                    // tuningListModel updates automatically via its binding to tuningList
                     // Show success
                     var noteArr = []
                     for (var n = 1; n <= numStrings; n++) noteArr.push(notes[n])
@@ -2641,7 +2643,7 @@ MuseScore {
                     try { tuningFile.write("") } catch(e2) {}
                     refreshFilteredTunings()
                     saveSettings()
-                    settingsPanel.tuningListModel = tuningList.slice()
+                    // tuningListModel updates automatically via its binding to tuningList
                     settingsPanel.tuningStatus = "Deleted: " + slug
                     settingsPanel.tuningStatusColor = "#27ae60"
                 } catch(e) {
@@ -2660,7 +2662,7 @@ MuseScore {
                 list[idx] = temp
                 tuningList = list
                 refreshFilteredTunings()
-                settingsPanel.tuningListModel = list.slice()
+                // tuningListModel updates automatically via its binding to tuningList
                 saveSettings()
             }
             onCreateTuningRequested: function(name, pitches, numStrings) {
