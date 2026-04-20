@@ -88,6 +88,8 @@ Item {
     // Backup / restore (#172)
     signal backupExportRequested()
     signal backupRestoreRequested()
+    // Import from URL (#67)
+    signal urlImportRequested(string url)
     property string backupStatus: ""
     property color backupStatusColor: "black"
 
@@ -280,6 +282,33 @@ Item {
                                     font.pixelSize: 10
                                     onClicked: settingsPanel.backupRestoreRequested()
                                 }
+                            }
+                            // Import from URL (#67) — pull a tuning or backup pack from a URL
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+                                TextField {
+                                    id: urlImportField
+                                    Layout.fillWidth: true
+                                    placeholderText: "https://raw.githubusercontent.com/…/baritone-a.json"
+                                    font.pixelSize: 10
+                                }
+                                Button {
+                                    text: "Import from URL"
+                                    font.pixelSize: 10
+                                    onClicked: {
+                                        if (urlImportField.text.trim().length > 0) {
+                                            settingsPanel.urlImportRequested(urlImportField.text.trim())
+                                        }
+                                    }
+                                }
+                            }
+                            Label {
+                                text: "Example packs: github.com/siege-analytics/chordlibrary-community-packs (paste any raw.githubusercontent.com URL)"
+                                font.pixelSize: 8
+                                color: theme.textMuted
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
                             }
                             Label {
                                 visible: settingsPanel.backupStatus.length > 0

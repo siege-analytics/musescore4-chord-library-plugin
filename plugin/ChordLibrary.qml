@@ -508,6 +508,103 @@ MuseScore {
         }
     }
 
+    // Fetch a URL and dispatch to the right import flow based on content shape (#67).
+    function importFromUrl(url) {
+        if (!url) {
+            settingsPanel.backupStatus = "Enter a URL"
+            settingsPanel.backupStatusColor = theme.errorText
+            return
+        }
+        settingsPanel.backupStatus = "Fetching " + url + " …"
+        settingsPanel.backupStatusColor = theme.textMuted
+        var xhr = new XMLHttpRequest()
+        xhr.open("GET", url)
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState !== XMLHttpRequest.DONE) return
+            if (xhr.status !== 200 && xhr.status !== 0) {
+                settingsPanel.backupStatus = "Fetch failed: HTTP " + xhr.status
+                settingsPanel.backupStatusColor = theme.errorText
+                return
+            }
+            try {
+                var parsed = JSON.parse(xhr.responseText)
+                // Sniff: backup archive has manifest.plugin === "chordlibrary"
+                if (parsed.manifest && parsed.manifest.plugin === "chordlibrary") {
+                    _restoreFromArchive(parsed)
+                    return
+                }
+                // Tuning file: has strings + notes objects with numeric keys
+                if (parsed.strings && parsed.notes && parsed.name) {
+                    _importTuningFromObject(parsed)
+                    return
+                }
+                settingsPanel.backupStatus = "Unrecognised file shape. Expected a tuning or backup-archive JSON."
+                settingsPanel.backupStatusColor = theme.errorText
+            } catch (e) {
+                settingsPanel.backupStatus = "Parse failed: " + String(e)
+                settingsPanel.backupStatusColor = theme.errorText
+            }
+        }
+        xhr.send()
+    }
+
+    // Import a tuning from an already-parsed object (shared with URL import path).
+    function _importTuningFromObject(tuningObj) {
+        try {
+            var slug = tuningObj.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+            var stringCount = Object.keys(tuningObj.strings || {}).length || 6
+            backupFile.source = Qt.resolvedUrl("tunings/" + slug + ".json")
+            backupFile.write(JSON.stringify(tuningObj, null, 2))
+            if (tuningList.indexOf(slug) < 0) {
+                var nl = tuningList.slice(); nl.push(slug); tuningList = nl
+            }
+            var nlab = Object.assign({}, tuningLabels); nlab[slug] = tuningObj.name; tuningLabels = nlab
+            var ncnt = Object.assign({}, tuningStringCounts); ncnt[slug] = stringCount; tuningStringCounts = ncnt
+            saveSettings()
+            settingsPanel.backupStatus = "Imported tuning: " + tuningObj.name
+            settingsPanel.backupStatusColor = theme.successText
+        } catch (e) {
+            settingsPanel.backupStatus = "Tuning import failed: " + String(e)
+            settingsPanel.backupStatusColor = theme.errorText
+        }
+    }
+
+    // Restore from an already-parsed archive (shared with URL import path).
+    function _restoreFromArchive(archive) {
+        try {
+            var styleRes = BackupManager.mergeStyles(archive, _profileList || [])
+            if (styleRes.list) {
+                _profileList = styleRes.list
+                profilesConfigFile.write(JSON.stringify({ profiles: _profileList }, null, 2))
+            }
+            var tFiles = BackupManager.tuningFilesToRestore(archive)
+            var restoredTunings = 0
+            for (var i = 0; i < tFiles.length; i++) {
+                backupFile.source = Qt.resolvedUrl("tunings/" + tFiles[i].slug + ".json")
+                backupFile.write(JSON.stringify(tFiles[i].body, null, 2))
+                restoredTunings += 1
+            }
+            if (archive.settings && archive.settings.customTunings) {
+                for (var j = 0; j < archive.settings.customTunings.length; j++) {
+                    var ct = archive.settings.customTunings[j]
+                    if (!ct.slug) continue
+                    if (tuningList.indexOf(ct.slug) < 0) {
+                        var nl = tuningList.slice(); nl.push(ct.slug); tuningList = nl
+                    }
+                    var nlab = Object.assign({}, tuningLabels); nlab[ct.slug] = ct.name; tuningLabels = nlab
+                    var ncnt = Object.assign({}, tuningStringCounts); ncnt[ct.slug] = ct.strings || 6; tuningStringCounts = ncnt
+                }
+            }
+            saveSettings()
+            settingsPanel.backupStatus = "Imported " + (styleRes.added + styleRes.updated) +
+                " style(s), " + restoredTunings + " tuning(s). Restart MuseScore to pick up all changes."
+            settingsPanel.backupStatusColor = theme.successText
+        } catch (e) {
+            settingsPanel.backupStatus = "Archive import failed: " + String(e)
+            settingsPanel.backupStatusColor = theme.errorText
+        }
+    }
+
     function restoreBackup(path) {
         if (!path) {
             settingsPanel.backupStatus = "No path provided"
@@ -523,36 +620,7 @@ MuseScore {
                 settingsPanel.backupStatusColor = theme.errorText
                 return
             }
-            // Merge styles
-            var styleRes = BackupManager.mergeStyles(archive, _profileList || [])
-            if (styleRes.list) {
-                _profileList = styleRes.list
-                profilesConfigFile.write(JSON.stringify({ profiles: _profileList }, null, 2))
-            }
-            // Restore tuning files + settings entries
-            var tFiles = BackupManager.tuningFilesToRestore(archive)
-            var restoredTunings = 0
-            for (var i = 0; i < tFiles.length; i++) {
-                backupFile.source = Qt.resolvedUrl("tunings/" + tFiles[i].slug + ".json")
-                backupFile.write(JSON.stringify(tFiles[i].body, null, 2))
-                restoredTunings += 1
-            }
-            // Merge custom tunings into state
-            if (archive.settings && archive.settings.customTunings) {
-                for (var j = 0; j < archive.settings.customTunings.length; j++) {
-                    var ct = archive.settings.customTunings[j]
-                    if (!ct.slug) continue
-                    if (tuningList.indexOf(ct.slug) < 0) {
-                        var nl = tuningList.slice(); nl.push(ct.slug); tuningList = nl
-                    }
-                    var nlab = Object.assign({}, tuningLabels); nlab[ct.slug] = ct.name; tuningLabels = nlab
-                    var ncnt = Object.assign({}, tuningStringCounts); ncnt[ct.slug] = ct.strings || 6; tuningStringCounts = ncnt
-                }
-            }
-            saveSettings()
-            settingsPanel.backupStatus = "Restored " + (styleRes.added + styleRes.updated) +
-                " style(s), " + restoredTunings + " tuning(s). Restart MuseScore to pick up all changes."
-            settingsPanel.backupStatusColor = theme.successText
+            _restoreFromArchive(archive)
         } catch (e) {
             settingsPanel.backupStatus = "Restore failed: " + String(e)
             settingsPanel.backupStatusColor = theme.errorText
@@ -2687,8 +2755,9 @@ MuseScore {
             profilesData: chordLibrary._profileList
             activeProfileId: chordLibrary._activeProfileId
             onProfileSelected: function(profileId) { setProfile(profileId) }
-            // Backup / restore (#172)
+            // Backup / restore (#172) + URL import (#67)
             onBackupExportRequested: function() { exportBackup() }
+            onUrlImportRequested: function(url) { importFromUrl(url) }
             onBackupRestoreRequested: function() {
                 // Try native FileDialog; fall back to a fixed Desktop path if not available
                 var tmpField = { text: "" }
