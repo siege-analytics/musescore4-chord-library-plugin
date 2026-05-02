@@ -21,7 +21,7 @@ Always plan first, never jump to implementation:
 
 ### 3. Test Before Presenting
 
-- Run `python3 -m pytest tests/ -v` and iterate until all pass (currently 197 tests: 90 Python + 107 JS module via Node.js)
+- Run `python3 -m pytest tests/test_js_modules.py tests/test_core.py -v` and iterate until all pass (currently 198 tests). The full `tests/` suite includes macOS-pasteboard integration tests that are environmental and skipped on CI.
 - Only present finished, tested solutions
 - **Don't push untested code** — review and fix first, push after
 
@@ -84,8 +84,10 @@ and JS module dispatch.
 
 ### Voicing ranking
 
-- `ChordSelector.findBestVoicing()` ranks candidates by context (+100), quality (+20),
-  category (shell +10, drop2 +5), melody/bass match, proximity, and register preference
+- `ChordSelector.findBestVoicing()` ranks candidates by quality (+20),
+  category (shell +10, drop2 +5), melody/bass match (with mode-driven multipliers),
+  proximity, and register preference. The legacy `+100 for context match` rubric was
+  retired in #174 — Mode + Tuning now carry that responsibility.
 - **Difficulty penalty** (#105): expert -30, advanced -10, standard 0. Uses
   `FingeringEngine.computeDifficulty()` passed as a callback to avoid cross-module import
 - Mute penalty: -5 per muted string. Same-shape-as-previous penalty: -15
