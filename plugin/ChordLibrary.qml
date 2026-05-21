@@ -16,6 +16,7 @@ import "model/DataCache.js" as DataCache
 import "model/HygieneEngine.js" as HygieneEngine
 import "model/FingeringEngine.js" as FingeringEngine
 import "model/BackupManager.js" as BackupManager
+import "model/StyleComposer.js" as StyleComposer
 import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
 
@@ -2777,6 +2778,11 @@ MuseScore {
                 // If the dialog wasn't supported, openFileBrowser sets statusMsg and returns.
                 // User can also drop a backup at ~/Desktop/chordlibrary-backup-restore.json
                 // and click Restore again if the dialog didn't appear.
+            }
+            // Active style readout callback (#195) — SettingsPanel uses this
+            // to live-preview what its composition-form draft resolves to.
+            resolveCompositionFn: function(composition, allStyles) {
+                return StyleComposer.resolve(composition, allStyles)
             }
             // Save a new composition to styles.json and reload (#170)
             onCompositionSaveRequested: function(composition) {

@@ -1042,6 +1042,25 @@ class TestStyleComposer:
             assertEqual(out.categoryWeights.drop2, 10, "manouche skipped");
         """)
 
+    def test_resolved_readout_matches_resolver(self):
+        # #195: the SettingsPanel readout consumes StyleComposer.resolve output
+        # directly. This test verifies a known composition fixture resolves to
+        # the expected category weights so the readout's "top by abs magnitude"
+        # display will surface the right entries.
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var resolved = resolve(comp, all);
+            // Verify deterministic outputs the readout would render:
+            assertEqual(resolved.categoryWeights.shell, 20, "shell stacks to 20");
+            assertEqual(resolved.categoryWeights.drop2, 0, "drop2 cancels");
+            // The readout sorts by absolute magnitude; shell would surface first.
+            // The drop2 cancellation surfaces via the dedicated 'resolved to nothing' branch only when ALL fields are zero.
+        """)
+
     def test_missing_base_style_skipped(self):
         assert_js("StyleComposer.js", self.BASES + """
             var comp = {
