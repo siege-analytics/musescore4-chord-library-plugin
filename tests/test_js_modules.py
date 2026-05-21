@@ -1257,6 +1257,27 @@ class TestBackupManagerRoundTrip:
             assertEqual(slugs[1], "beta", "beta present");
         """)
 
+    def test_timestamp_for_filename_format(self):
+        # #181: timestampForFilename produces YYYYMMDD-HHMM for filenames.
+        assert_js("BackupManager.js", """
+            var t = timestampForFilename(new Date(2026, 4, 21, 3, 7));  // May 21 2026 03:07
+            assertEqual(t, "20260521-0307", "format YYYYMMDD-HHMM with zero-padding");
+        """)
+
+    def test_reason_message_unsupported_version_includes_detail(self):
+        assert_js("BackupManager.js", """
+            var pres = { ok: false, reason: "unsupported-version", detail: "v9.99" };
+            var m = reasonMessage(pres);
+            assert(m.indexOf("v9.99") >= 0, "message names the offending version");
+            assert(m.indexOf("update the plugin") >= 0, "message advises action");
+        """)
+
+    def test_reason_message_empty_returns_empty(self):
+        assert_js("BackupManager.js", """
+            assertEqual(reasonMessage(null), "", "null result -> empty");
+            assertEqual(reasonMessage({ ok: true, archive: {} }), "", "ok result -> empty");
+        """)
+
     def test_freeze_resolution_round_trip_via_archive(self):
         # Frozen compositions in an archive should restore as frozen — base
         # styles can be missing from the receiving plugin without breaking.

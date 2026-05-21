@@ -155,6 +155,33 @@ function mergeScales(archive, existing) {
     return { list: out, added: added, updated: updated }
 }
 
+// Build the YYYYMMDD-HHMM timestamp suffix used in backup filenames. Pure
+// function; lifted out of ChordLibrary.qml so the export-path naming is
+// owned by the same module that owns the archive format (#181).
+function timestampForFilename(now) {
+    var d = now || new Date()
+    var pad = function(n) { return (n < 10 ? "0" : "") + n }
+    return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate())
+         + "-" + pad(d.getHours()) + pad(d.getMinutes())
+}
+
+// Map a parseArchive failure result into a user-facing message (#181).
+// Keeping the message catalog beside the parseArchive that produces the
+// reasons keeps "this is what users see when X breaks" inspectable in one
+// place.
+function reasonMessage(parseResult) {
+    if (!parseResult || parseResult.ok) return ""
+    switch (parseResult.reason) {
+    case "empty":               return "Backup file is empty"
+    case "not-json":            return "Backup file is not valid JSON: " + (parseResult.detail || "")
+    case "not-chordlibrary":    return "Not a chordlibrary backup file"
+    case "missing-version":     return "Backup file has no manifest.version (corrupt or pre-v2.2)"
+    case "unsupported-version": return "Backup is from a newer plugin version (" + (parseResult.detail || "?")
+                                     + "). Please update the plugin before restoring."
+    default:                    return "Restore failed: " + (parseResult.reason || "unknown error")
+    }
+}
+
 function tuningFilesToRestore(archive) {
     if (!archive || !archive.customTuningFiles) return []
     var out = []
