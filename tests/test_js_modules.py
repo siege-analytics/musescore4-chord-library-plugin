@@ -1137,6 +1137,150 @@ class TestBackupManagerParse:
         """)
 
 
+class TestBackupManagerRoundTrip:
+    """Round-trip and merge coverage for BackupManager.js (#185)."""
+
+    def test_build_archive_excludes_builtin_styles(self):
+        assert_js("BackupManager.js", """
+            var allStyles = [
+                { id: "default", name: "Default", builtin: true },
+                { id: "bebop", name: "Bebop", builtin: true },
+                { id: "my-blend", name: "My Blend", builtin: false }
+            ];
+            var a = buildArchive({ allStyles: allStyles, allScales: [], customTuningSlugs: [] });
+            assertEqual(a.customStyles.length, 1, "only custom style included");
+            assertEqual(a.customStyles[0].id, "my-blend", "the right one");
+        """)
+
+    def test_build_archive_excludes_builtin_scales(self):
+        assert_js("BackupManager.js", """
+            var allScales = [
+                { id: "ionian", builtin: true },
+                { id: "my-scale", builtin: false }
+            ];
+            var a = buildArchive({ allStyles: [], allScales: allScales, customTuningSlugs: [] });
+            assertEqual(a.customScales.length, 1, "only custom scale included");
+            assertEqual(a.customScales[0].id, "my-scale", "the right one");
+        """)
+
+    def test_build_archive_reads_tuning_files(self):
+        assert_js("BackupManager.js", """
+            var readCalls = [];
+            var reader = function(slug) {
+                readCalls.push(slug);
+                return JSON.stringify({ name: slug, strings: {}, notes: {} });
+            };
+            var a = buildArchive({
+                allStyles: [], allScales: [],
+                customTuningSlugs: ["custom-1", "custom-2"],
+                readTuningFile: reader
+            });
+            assertEqual(readCalls.length, 2, "reader called once per slug");
+            assertEqual(Object.keys(a.customTuningFiles).length, 2, "both tuning files included");
+            assertEqual(a.customTuningFiles["custom-1"].name, "custom-1", "body parsed");
+        """)
+
+    def test_build_archive_skips_unreadable_tunings(self):
+        assert_js("BackupManager.js", """
+            var reader = function(slug) {
+                if (slug === "broken") throw new Error("file missing");
+                return JSON.stringify({ name: slug, strings: {}, notes: {} });
+            };
+            var a = buildArchive({
+                allStyles: [], allScales: [],
+                customTuningSlugs: ["broken", "ok"],
+                readTuningFile: reader
+            });
+            assertEqual(Object.keys(a.customTuningFiles).length, 1, "broken skipped, ok kept");
+            assert(a.customTuningFiles["ok"] !== undefined, "ok present");
+            assert(a.customTuningFiles["broken"] === undefined, "broken absent");
+        """)
+
+    def test_serialize_parse_round_trip(self):
+        assert_js("BackupManager.js", """
+            var archive = buildArchive({
+                allStyles: [{ id: "x", name: "X", builtin: false }],
+                allScales: [{ id: "s", name: "S", builtin: false }],
+                customTuningSlugs: []
+            });
+            var raw = serialize(archive);
+            var r = parseArchive(raw);
+            assertEqual(r.ok, true, "round-trip parses");
+            assertEqual(r.archive.customStyles.length, 1, "style preserved");
+            assertEqual(r.archive.customScales.length, 1, "scale preserved");
+        """)
+
+    def test_merge_styles_adds_when_absent(self):
+        assert_js("BackupManager.js", """
+            var existing = [{ id: "a", name: "A" }];
+            var archive = { customStyles: [{ id: "b", name: "B" }] };
+            var res = mergeStyles(archive, existing);
+            assertEqual(res.added, 1, "1 added");
+            assertEqual(res.updated, 0, "0 updated");
+            assertEqual(res.list.length, 2, "list has both");
+        """)
+
+    def test_merge_styles_updates_on_id_collision(self):
+        assert_js("BackupManager.js", """
+            var existing = [{ id: "a", name: "Old A" }];
+            var archive = { customStyles: [{ id: "a", name: "New A" }] };
+            var res = mergeStyles(archive, existing);
+            assertEqual(res.added, 0, "0 added");
+            assertEqual(res.updated, 1, "1 updated");
+            assertEqual(res.list[0].name, "New A", "new value wins");
+        """)
+
+    def test_merge_scales_mirrors_styles(self):
+        assert_js("BackupManager.js", """
+            var existing = [{ id: "ionian" }];
+            var archive = { customScales: [
+                { id: "ionian" },        // update
+                { id: "custom-scale" }   // add
+            ]};
+            var res = mergeScales(archive, existing);
+            assertEqual(res.added, 1, "1 added");
+            assertEqual(res.updated, 1, "1 updated");
+            assertEqual(res.list.length, 2, "list has both");
+        """)
+
+    def test_tuning_files_to_restore_returns_one_per_slug(self):
+        assert_js("BackupManager.js", """
+            var archive = { customTuningFiles: {
+                "alpha": { name: "Alpha" },
+                "beta": { name: "Beta" }
+            }};
+            var out = tuningFilesToRestore(archive);
+            assertEqual(out.length, 2, "2 entries");
+            // Order not guaranteed (Object.keys); verify content by id
+            var slugs = out.map(function(x) { return x.slug; }).sort();
+            assertEqual(slugs[0], "alpha", "alpha present");
+            assertEqual(slugs[1], "beta", "beta present");
+        """)
+
+    def test_freeze_resolution_round_trip_via_archive(self):
+        # Frozen compositions in an archive should restore as frozen — base
+        # styles can be missing from the receiving plugin without breaking.
+        assert_js("BackupManager.js", """
+            var frozenComposition = {
+                id: "my-blend", name: "My Blend", builtin: false,
+                composedFrom: ["bebop", "manouche"],
+                composition: { resolution: "freeze" },
+                chordScaleOverrides: { dom7: ["Mixolydian"] },
+                categoryWeights: { drop2: 20 },
+                qualityBoosts: {}
+            };
+            var a = buildArchive({
+                allStyles: [frozenComposition],
+                allScales: [],
+                customTuningSlugs: []
+            });
+            var r = parseArchive(serialize(a));
+            assertEqual(r.ok, true, "parses");
+            assertEqual(r.archive.customStyles[0].composition.resolution, "freeze", "stays frozen");
+            assertEqual(r.archive.customStyles[0].categoryWeights.drop2, 20, "deltas preserved");
+        """)
+
+
 # === IRealParser.js ===
 
 
