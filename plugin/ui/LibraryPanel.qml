@@ -87,6 +87,12 @@ Item {
     signal compareRequested(var voicing)
     signal clearComparisonRequested()
     signal removeFromComparisonRequested(int index)
+    // #210 Stage 2 — hidden voicing overrides
+    signal includeVoicingRequested(string signatureKey)
+    signal clearVoicingOverridesRequested()
+
+    // #210 Stage 2 — list of voicings hidden by exclusion engine
+    property var hiddenVoicings: []
     signal scaleFilterChanged(string scaleName)
     signal profileChanged(string profileId)
     signal modeChanged(string modeId)
@@ -690,6 +696,14 @@ Item {
             suggestFingeringFn: libraryPanel.suggestFingeringFn
             onRemoveRequested: function(index) { libraryPanel.removeFromComparisonRequested(index) }
             onClearRequested: libraryPanel.clearComparisonRequested()
+        }
+
+        // Hidden voicings disclosure (#210 Stage 2)
+        HiddenVoicingsPanel {
+            hiddenVoicings: libraryPanel.hiddenVoicings
+            titlePrefix: "Show hidden"
+            onIncludeRequested: function(sig) { libraryPanel.includeVoicingRequested(sig) }
+            onClearAllOverridesRequested: libraryPanel.clearVoicingOverridesRequested()
         }
 
         // ─────────────────────────────────────────────

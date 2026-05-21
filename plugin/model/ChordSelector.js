@@ -312,6 +312,9 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
     var quartalCandidates = []
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
+        // #210 Stage 2: excluded voicings are not eligible for best-pick.
+        // They remain in findAllVoicings so the user can see + override.
+        if (v._excludedReason) continue
         if ((v.strings || 6) > maxStrings) continue
         if (v.root !== "C" && v.root !== targetRoot) continue
         if (v.chord_quality === quality) {

@@ -1005,6 +1005,193 @@ class TestUnionVoicings:
         """)
 
 
+# === ExclusionEngine.js — per-tuning-per-mode exclusion (#210) ===
+
+
+class TestExclusionEngine:
+    """Test ExclusionEngine.js exclusion + override behavior."""
+
+    def test_no_tolerances_returns_null(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            assertEqual(evaluateExclusion(v, null, null, null), null,
+                "no tolerances -> visible");
+            assertEqual(evaluateExclusion(v, {}, null, null), null,
+                "empty tolerances -> visible");
+        """)
+
+    def test_excluded_categories_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [],
+                      intervals: [], fret_number: 5, category: "quartal" };
+            var t = { excludedCategories: ["quartal"] };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "excludedCategories", "category excluded");
+            assert(r.message.indexOf("quartal") >= 0, "message names category");
+        """)
+
+    def test_max_difficulty_tier_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            var t = { maxDifficultyTier: "advanced" };
+            var difficultyFn = function(_) { return { tier: "expert" }; };
+            var r = evaluateExclusion(v, t, null, { difficultyFn: difficultyFn });
+            assertEqual(r.dimension, "maxDifficultyTier", "expert > advanced");
+        """)
+
+    def test_max_difficulty_tier_passes_when_within_limit(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [],
+                      intervals: [], fret_number: 5 };
+            var t = { maxDifficultyTier: "advanced" };
+            var difficultyFn = function(_) { return { tier: "standard" }; };
+            assertEqual(evaluateExclusion(v, t, null, { difficultyFn: difficultyFn }), null,
+                "standard within advanced -> visible");
+        """)
+
+    def test_max_muted_strings_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:1,fret:1}], mutes: [2,3,4,5], open: [],
+                      intervals: ["1"], fret_number: 5 };
+            var t = { maxMutedStrings: 3 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxMutedStrings", "4 mutes > 3 max");
+        """)
+
+    def test_max_stretch_dimension(self):
+        # Dots at fret_number 1 with relative frets 1 and 7 → absolute 1 and 7
+        # → stretch 7 (inclusive). Should fail max=5.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1},{string:1,fret:7}],
+                      mutes: [], open: [], intervals: ["1","5"], fret_number: 1 };
+            var t = { maxStretch: 5 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxStretch", "stretch 7 > max 5");
+        """)
+
+    def test_max_fret_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 14 };
+            var t = { maxFret: 12 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxFret", "fret 14 > max 12");
+        """)
+
+    def test_min_sounding_notes_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}, {string:5,fret:1}],
+                      mutes: [], open: [], intervals: ["1","5"], fret_number: 5 };
+            var t = { minSoundingNotes: 3 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "minSoundingNotes", "2 sounding < 3 min");
+        """)
+
+    def test_require_root_in_bass_dimension(self):
+        # Bass string (highest-numbered sounding) is string 6 with interval "5" → not root.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6,
+                      dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                      mutes: [], open: [],
+                      intervals: ["5","1","3"], fret_number: 5 };
+            var t = { requireRootInBass: true };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "requireRootInBass", "bass is 5th, not root");
+        """)
+
+    def test_allow_open_strings_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [3,4],
+                      intervals: [], fret_number: 0 };
+            var t = { allowOpenStrings: false };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "allowOpenStrings", "opens disallowed");
+        """)
+
+    def test_user_override_include_wins_over_tolerance(self):
+        # Acceptance criterion: allowlisted signature always passes.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [1,2,3,4,5], open: [],
+                      intervals: [], fret_number: 5, category: "quartal" };
+            // Would fail BOTH maxMutedStrings AND excludedCategories.
+            var t = { maxMutedStrings: 3, excludedCategories: ["quartal"] };
+            var overrides = { "my-sig": "include" };
+            var opts = { signatureKeyFn: function(_) { return "my-sig"; } };
+            assertEqual(evaluateExclusion(v, t, overrides, opts), null,
+                "allowlist wins over all tolerance failures");
+        """)
+
+    def test_user_override_exclude_wins_over_tolerance(self):
+        # Acceptance criterion: denylisted signature always fails.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            // Would pass everything.
+            var t = { maxMutedStrings: 3, excludedCategories: [] };
+            var overrides = { "my-sig": "exclude" };
+            var opts = { signatureKeyFn: function(_) { return "my-sig"; } };
+            var r = evaluateExclusion(v, t, overrides, opts);
+            assertEqual(r.dimension, "userOverride", "denylist beats passing checks");
+        """)
+
+    def test_dimension_priority_category_before_difficulty(self):
+        # When two tolerances both fail, the higher-priority one wins.
+        # Category exclusion is higher priority than difficulty.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "quartal" };
+            var t = { excludedCategories: ["quartal"], maxDifficultyTier: "standard" };
+            var difficultyFn = function(_) { return { tier: "expert" }; };
+            var r = evaluateExclusion(v, t, null, { difficultyFn: difficultyFn });
+            assertEqual(r.dimension, "excludedCategories",
+                "category check fires before difficulty");
+        """)
+
+    def test_resolve_tolerances_mode_only(self):
+        assert_js("ExclusionEngine.js", """
+            var map = { modes: { "comping": { maxMutedStrings: 2 } } };
+            var t = resolveTolerances(map, "standard", "comping");
+            assertEqual(t.maxMutedStrings, 2, "mode default applied");
+        """)
+
+    def test_resolve_tolerances_tuning_overrides_mode(self):
+        assert_js("ExclusionEngine.js", """
+            var map = {
+                modes: { "comping": { maxMutedStrings: 2, maxFret: 12 } },
+                tunings: { "baritone": { "comping": { maxFret: 14 } } }
+            };
+            var t = resolveTolerances(map, "baritone", "comping");
+            assertEqual(t.maxMutedStrings, 2, "mode default preserved");
+            assertEqual(t.maxFret, 14, "tuning override applied");
+        """)
+
+    def test_findbest_skips_excluded_voicings(self):
+        # findBestVoicing must not return a voicing with _excludedReason set,
+        # even if it would otherwise score highest.
+        assert_js("ChordSelector.js", """
+            var excluded = {
+                id: "v-excluded", root: "C", chord_quality: "dom7",
+                category: "shell", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                _excludedReason: { dimension: "userOverride", message: "user-excluded" }
+            };
+            var visible = {
+                id: "v-visible", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"], strings: 6
+            };
+            var pick = findBestVoicing([excluded, visible], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assertEqual(pick.id, "v-visible",
+                "excluded voicing is not selectable as best");
+        """)
+
+
 # === RevoiceMemory.js — per-chord choice persistence (#197) ===
 
 

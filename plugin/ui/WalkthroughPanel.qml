@@ -42,6 +42,11 @@ ColumnLayout {
     property var compareVoicings: []
     property var suggestFingeringFn: function(v) { return [] }
 
+    // Hidden alts (#210 Stage 2). Voicings for the current chord that the
+    // exclusion engine has hidden. Renders as a disclosure list at the
+    // bottom of the alt navigation.
+    property var hiddenAltVoicings: []
+
     // Lock states (readable by parent for bass string selection)
     readonly property bool melodyLocked: typeof melodyLockBtn !== "undefined" && melodyLockBtn ? melodyLockBtn.checked : false
     readonly property bool bassLocked: typeof bassLockBtn !== "undefined" && bassLockBtn ? bassLockBtn.checked : false
@@ -60,6 +65,9 @@ ColumnLayout {
     // #196 — tray controls shared with LibraryPanel
     signal removeFromComparisonRequested(int index)
     signal clearComparisonRequested()
+    // #210 Stage 2 — hidden voicing overrides
+    signal includeVoicingRequested(string signatureKey)
+    signal clearVoicingOverridesRequested()
 
     // Section data + mode list (wired from parent)
     property var scoreSections: []
@@ -99,6 +107,15 @@ ColumnLayout {
         suggestFingeringFn: walkthroughPanel.suggestFingeringFn
         onRemoveRequested: function(index) { walkthroughPanel.removeFromComparisonRequested(index) }
         onClearRequested: walkthroughPanel.clearComparisonRequested()
+    }
+
+    // Hidden alts disclosure (#210 Stage 2). Voicings excluded for this
+    // chord under the current tuning/mode tolerances. Auto-hides when none.
+    HiddenVoicingsPanel {
+        hiddenVoicings: walkthroughPanel.hiddenAltVoicings
+        titlePrefix: "Hidden alts"
+        onIncludeRequested: function(sig) { walkthroughPanel.includeVoicingRequested(sig) }
+        onClearAllOverridesRequested: walkthroughPanel.clearVoicingOverridesRequested()
     }
 
     // Header row with title and nav buttons
