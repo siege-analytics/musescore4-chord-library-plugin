@@ -28,44 +28,84 @@ Additionally, native palettes cannot be updated remotely — sharing requires ma
 ---
 ## Architecture
 
-### Components
+### Components (as of v2.2)
 
+```
 musescore4-chord-library-plugin/
-├── plugin/
-│   ├── ChordLibrary.qml
-│   ├── ui/
-│   │   ├── PanelView.qml
-│   │   ├── FilterBar.qml
-│   │   ├── VoicingGrid.qml
-│   │   ├── VoicingCard.qml
-│   │   └── SearchBar.qml
-│   ├── model/
-│   │   ├── LibraryModel.qml
-│   │   └── VoicingInserter.qml
-│   └── assets/
-│       └── icons/
-├── schema/
-│   └── voicings.schema.json
-├── data/
-│   └── voicings.json
-├── scripts/
-│   ├── validate.py
-│   └── generate_from_mscz.py
-├── docs/
-│   └── CONTRIBUTING.md
-├── DEVELOPMENT.md
-└── README.md
+├── plugin/                         Self-contained installable unit
+│   ├── ChordLibrary.qml            State + routing + signal wiring (~3.3k lines)
+│   ├── config/
+│   │   ├── modes.json              Mode axis configs (#161)
+│   │   ├── styles.json             Style + composition entries (#162)
+│   │   └── scales.json             Scale library (#142)
+│   ├── data/
+│   │   └── voicings.json           820 curated voicings (key of C)
+│   ├── tunings/                    Built-in tuning definitions
+│   ├── model/                      Pure JS modules (no UI)
+│   │   ├── ChordSelector.js        Chord parsing + voicing selection
+│   │   ├── VoicingCalculator.js    Runtime voicing generation per tuning
+│   │   ├── FingeringEngine.js      Fingering assignment + difficulty
+│   │   ├── DiagramEngine.js        Fretboard diagram XML generation
+│   │   ├── DataCache.js            Settings/cache serialization
+│   │   ├── IRealParser.js          iReal Pro URL/text parsing
+│   │   ├── HygieneEngine.js        Library audit
+│   │   ├── Transposer.js           Key transposition
+│   │   ├── MelodyEngine.js         Melody/bass note analysis
+│   │   ├── ChordScales.js          Scale-chord mapping
+│   │   ├── ReharmonizationEngine.js  Reharm suggestions
+│   │   ├── StyleComposer.js        Style composition resolver (#162)
+│   │   ├── FilterEngine.js         Voicing filter logic
+│   │   └── BackupManager.js        Backup/restore archive shape (#172, #179)
+│   ├── model/ (QML)                Stateful helpers
+│   │   ├── BatchEngine.qml         Walkthrough state machine
+│   │   ├── TuningManager.qml       Tuning CRUD
+│   │   ├── InlineTools.qml         Score-tool actions
+│   │   ├── InsertionEngine.qml     Single-chord insertion
+│   │   └── VoicingInserter.qml     Diagram insertion glue
+│   └── ui/                         QML panels (properties-in / signals-out)
+│       ├── LibraryPanel.qml        Tab 0 — search, filter, voicings
+│       ├── ScoreToolsPanel.qml     Tab 1 — analysis, calc constraints
+│       ├── ExportPanel.qml         Tab 2 — exports
+│       ├── ImportPanel.qml         Tab 3 — imports
+│       ├── PracticePanel.qml       Tab 4 — practice mode (flash cards)
+│       ├── SettingsPanel.qml       Tab 5 — General | Tuning | Scales | Profiles
+│       └── WalkthroughPanel.qml    Walkthrough overlay
+├── schema/voicings.schema.json     Validation schema
+├── scripts/                        Python tools (validation, migration, import)
+├── tests/                          198 tests (Python + JS via Node.js sandbox)
+├── deploy.sh                       macOS/Linux deploy
+├── deploy.ps1                      Windows PowerShell deploy
+├── CLAUDE.md                       AI-assistant guidance
+├── README.md                       User-facing docs
+├── DEVELOPMENT.md                  This file
+└── REFERENCES.md                   Citations + bibliography
+```
 
-### Data flow
-GitHub (voicings.json)
-↓  HTTP fetch (Qt.network)
-LibraryModel.qml
-↓  parsed + filtered
-VoicingGrid.qml
-↓  user clicks voicing
-VoicingInserter.qml
-↓  MuseScore plugin API
-Selected note in score ← fretboard diagram inserted
+### Data flow (current)
+
+The library is bundled with the plugin (single source of truth in `plugin/data/voicings.json`). Optional features layer on top:
+
+```
+plugin/data/voicings.json (bundled)
+    ↓
+ChordLibrary.qml.loadFromCache()
+    ↓
+ChordSelector.findBestVoicing() / findAllVoicings()
+    ↓
+LibraryPanel grid  OR  WalkthroughPanel step
+    ↓
+User triggers Voice-Here / Voice-All
+    ↓
+BatchEngine + DiagramEngine generate XML
+    ↓
+ms-clipboard.py writes diagram to macOS pasteboard
+    ↓
+cmd("paste") inserts at the score cursor
+```
+
+For non-standard tunings, `VoicingCalculator.generateAll(tuningMidi, constraints)` produces voicings at runtime; the result is cached at `~/Documents/MuseScore4/Plugins/chordlibrary/tunings/<slug>-voicings.json`.
+
+For backup/restore (#172) and URL imports (#67), `BackupManager` handles archive serialization, version-checking (#179), and merge.
 
 ---
 
@@ -116,34 +156,44 @@ Each voicing in the library is a JSON object with the following structure:
 | `intervals` | array | Chord intervals (1, 3, b7, etc.) |
 | `tags` | array | Freeform tags for search |
 
-### Context codes
+### Mode axis (v2.1+)
 
-| Code | Meaning |
+The `context` field on voicings was retired in #174 / #184. Playing role is now expressed as a per-voicing `suitableModes` array referring to entries in `plugin/config/modes.json`.
+
+| Mode | Meaning |
 |---|---|
-| `CM6` | Chord Melody, 6-string |
-| `CM7` | Chord Melody, 7-string (Van Eps tuning: low A) |
-| `CV6` | Comping/Vocal, 6-string |
-| `CV7` | Comping/Vocal, 7-string |
+| `chord-melody` | Melody note on top; top-note match scored heavily |
+| `comping` | Accompaniment; mid-range shells/drop 2s preferred |
+| `solo-guitar` | Bass + chord + melody on one instrument; wider range |
+| `duo` | Comping behind voice/another instrument; narrow mid-upper range |
+
+Tuning carries the string-count dimension that legacy CM6/CM7/CV6/CV7 codes packed into one string.
 
 ---
 
 ## Plugin UI
 
-### Panel layout
-┌─────────────────────────────┐
-│ Search voicings...          │
-├─────────────────────────────┤
-│ Context: CM6 CM7 CV6 CV7    │
-│ Quality: maj7 dom7 min7 ... │
-│ Type:  Shell Drop2 Drop3 .. │
-│ Strings: 6  7               │
-├─────────────────────────────┤
-│ ┌────┐ ┌────┐ ┌────┐        │
-│ │    │ │    │ │    │        │
-│ │ C7 │ │Cm7 │ │Cma7│        │
-│ └────┘ └────┘ └────┘        │
-│ Shell  Shell  Shell         │
-└─────────────────────────────┘
+### Panel layout (Library tab, v2.2)
+
+```
+┌─────────────────────────────────────────┐
+│ Library | Score Tools | Export | …      │  (top-level tab bar)
+├─────────────────────────────────────────┤
+│ Search voicings…                        │
+│ Quality: All | maj7 | dom7 | min7 | …   │
+│ Type:    All | Shell | Drop2 | Drop3 …  │
+│ Scale:   All | Mixolydian | Dorian | …  │
+│ Tuning:  Standard 6-String              │
+│ Mode:    Chord Melody                   │
+│ Style:   Default                        │
+├─────────────────────────────────────────┤
+│ ┌──────┐ ┌──────┐ ┌──────┐               │
+│ │  C7  │ │ Cm7  │ │ Cmaj7│  Voicing cards│
+│ │ ♫♫♫  │ │ ♫♫♫  │ │ ♫♫♫  │  fretboard +  │
+│ │Shell │ │Shell │ │Drop2 │  metadata     │
+│ └──────┘ └──────┘ └──────┘               │
+└─────────────────────────────────────────┘
+```
 
 ### Interaction model
 
@@ -190,37 +240,42 @@ Note: the exact API for fretboard diagram manipulation needs verification agains
 
 ## Development phases
 
-### Phase 1 — JSON schema and data (complete)
-- [x] JSON schema with extensible strings (4-12), free-text category/quality/context
+### Phase 1 — JSON schema and data (complete, v1.0)
+- [x] JSON schema with extensible strings (4-12), free-text category/quality
 - [x] Note-computation validator with per-voicing tuning support
-- [x] 176 voicings across 26 qualities, 6 categories, 4 contexts
-- [x] Published to GitHub, fetched at runtime
+- [x] Voicing data published bundled with the plugin (no longer fetched at runtime)
 
-### Phase 2 — Plugin scaffold (complete)
-- [x] QML plugin loads in MuseScore Studio 4.6.5
-- [x] Fetches and parses voicings.json from GitHub
+### Phase 2 — Plugin scaffold (complete, v1.0)
+- [x] QML plugin loads in MuseScore Studio 4.x (verified through 4.6; 4.7 expected to work)
 - [x] Local voicing cache persists between sessions
 
-### Phase 3 — UI (complete)
-- [x] Filter dropdowns: context, quality, type (dynamically rebuilt from data)
+### Phase 3 — UI (complete, v1.0 → v2.0)
+- [x] Filter dropdowns: quality, type, scale, tuning, mode, style
 - [x] Search bar with name, quality, and tag matching
-- [x] Tuning selector on main panel
-- [x] Context labels from config/contexts.json (extensible)
 - [x] Fretboard thumbnail canvas on voicing cards with interval color coding
+- [x] Phase A decomposition: extracted Library/Settings/Walkthrough/Score Tools/Import/Practice panels
 
-### Phase 4 — Score insertion (complete)
-- [x] Read selected note and chord symbol
+### Phase 4 — Score insertion (complete, v1.0)
 - [x] Key-aware transposition with correct enharmonic spelling
-- [x] Insert fretboard diagram with complete dot/marker data via clipboard paste
+- [x] Insert fretboard diagram via macOS-pasteboard + cmd("paste") workflow
 - [x] Diagram placement above/below staff (configurable)
 
-### Phase 5 — Polish (complete)
-- [x] Offline fallback via local voicing cache
-- [x] User-defined JSON URL
+### Phase 5 — Polish + tuning system (complete, v1.0 → v2.0)
 - [x] Configurable tuning system with import and create
+- [x] User-defined JSON URL (deprecated in v2.2 in favor of bundled data + community-packs URL import)
 - [x] Export/import voicings as JSON
-- [x] Contributing guide
 - [x] v1.0.0 release
+
+### Phase 6 — Mode + style + sections (complete, v2.1 → v2.2)
+- [x] `context` field retired (#160, #174); replaced by `suitableModes` array
+- [x] Four-mode axis: chord-melody, comping, solo-guitar, duo (#161)
+- [x] Style composition engine: blend multiple styles with user-selectable rules (#162)
+- [x] Section-based mode: per-section overrides in walkthrough (#167)
+- [x] Backup + restore with archive-version migration (#172, #179)
+- [x] URL import from community-packs repo (#67 Phase 1)
+- [x] Windows compliance: homePath + deploy.ps1 + CI matrix (#176)
+- [x] Built-in tuning rename + edit-in-place + reset-to-factory
+- [x] Megarelease code-review pass + 8 follow-up tickets (#178-#185)
 
 ---
 
