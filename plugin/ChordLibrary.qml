@@ -22,6 +22,7 @@ import "model/IRealParser.js" as IRealParser
 import "model/RevoiceMemory.js" as RevoiceMemory
 import "model/ComparisonTray.js" as ComparisonTray
 import "model/ExclusionEngine.js" as ExclusionEngine
+import "model/MastersStore.js" as MastersStore
 
 MuseScore {
     id: chordLibrary
@@ -180,6 +181,11 @@ MuseScore {
     }
 
     FileIO {
+        id: mastersFile  // #220 — masters' lessons bookshelf
+        source: Qt.resolvedUrl("data/masters.json")
+    }
+
+    FileIO {
         id: backupFile   // (#172) user-data backup / restore
     }
 
@@ -289,6 +295,9 @@ MuseScore {
     property var userVoicingToleranceMap: ({ modes: {}, tunings: {} })
     // Per-signature include/exclude decisions persisted to settings.json (#210).
     property var userVoicingOverrides: ({})  // signatureKey -> "include" | "exclude"
+
+    // Masters' lessons bookshelf (#220). Loaded from data/masters.json.
+    property var mastersStore: ({ version: "v1", masters: [] })
 
     // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
     // see RevoiceMemory.js for the on-disk shape. The "current scope" is
@@ -792,6 +801,20 @@ MuseScore {
         userVoicingOverrides = ({})
         saveSettings()
         applyExclusionPass()
+    }
+
+    // === Masters' Lessons (#220) ===
+
+    function loadMasters() {
+        try {
+            var raw = mastersFile.read()
+            mastersStore = MastersStore.parseStore(raw)
+            var c = MastersStore.counts(mastersStore)
+            console.log("Loaded masters: " + c.masters + " masters, " + c.principles + " principles")
+        } catch (e) {
+            console.log("Error loading masters: " + e)
+            mastersStore = { version: "v1", masters: [] }
+        }
     }
 
     // === Per-chord re-voice memory (#197) ===
@@ -1316,6 +1339,7 @@ MuseScore {
         loadModes()
         loadCuratedShapes()
         loadVoicingTolerances()
+        loadMasters()
         loadRevoiceMemory()
         loadSettings()
         loadTuningStringCount()
@@ -2941,6 +2965,7 @@ MuseScore {
             TabButton { text: "Import"; font.pixelSize: 10 }
             TabButton { text: "Practice"; font.pixelSize: 10 }
             TabButton { text: "Settings"; font.pixelSize: 10 }
+            TabButton { text: "Masters"; font.pixelSize: 10 }  // #220 — Tab 6
         }
 
         // === Tab 1: Score Tools (extracted to ui/ScoreToolsPanel.qml, #97) ===
@@ -3107,6 +3132,14 @@ MuseScore {
         }
 
         // === Tab 5: Settings (extracted to ui/SettingsPanel.qml, #98) ===
+        // === Tab 6: Masters (#220) ===
+        MastersPanel {
+            visible: currentTab === 6 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            mastersStore: chordLibrary.mastersStore
+        }
+
         SettingsPanel {
             id: settingsPanel
             visible: currentTab === 5 && !showToolResults

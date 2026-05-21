@@ -1,0 +1,122 @@
+.pragma library
+
+// MastersStore.js — load + validate + query the Masters' Lessons bookshelf
+// (#220).
+//
+// Source-of-truth file: plugin/data/masters.json. Schema:
+//   {
+//     version: "v1",
+//     masters: [
+//       {
+//         id, name, lived, traditions: [...], instrument, biography,
+//         principles: [
+//           {
+//             id, name, summary,
+//             voicingStyleTags: [...],   // forward-compat for Track 3
+//             playStyleTags: [...],
+//             applies_to_modes: [...],
+//             applies_to_tunings?: [...],
+//             tolerance_hints?: { maxStretch?, minSoundingNotes?, ... },
+//             references?: [{ source, citation?, url? }],
+//             example_voicing_signatures?: [...]
+//           }
+//         ]
+//       }
+//     ]
+//   }
+
+function emptyStore() {
+    return { version: "v1", masters: [] }
+}
+
+// Parse raw JSON text into a validated store. On any parse/schema error,
+// returns emptyStore() (defensive; UI degrades to "no masters loaded").
+function parseStore(raw) {
+    if (!raw) return emptyStore()
+    try {
+        var data = JSON.parse(raw)
+        if (!data || typeof data !== "object") return emptyStore()
+        if (data.version !== "v1") return emptyStore()
+        if (!Array.isArray(data.masters)) return emptyStore()
+        return data
+    } catch (e) {
+        return emptyStore()
+    }
+}
+
+// Find a master by id; returns null if not found.
+function findMaster(store, masterId) {
+    if (!store || !store.masters) return null
+    for (var i = 0; i < store.masters.length; i++) {
+        if (store.masters[i].id === masterId) return store.masters[i]
+    }
+    return null
+}
+
+// Find a principle by (masterId, principleId); returns null if not found.
+function findPrinciple(store, masterId, principleId) {
+    var master = findMaster(store, masterId)
+    if (!master || !master.principles) return null
+    for (var i = 0; i < master.principles.length; i++) {
+        if (master.principles[i].id === principleId) return master.principles[i]
+    }
+    return null
+}
+
+// Flat list of every principle across all masters, each carrying the
+// owning master's id so UI surfaces can render attribution chips.
+// Returns [{ masterId, masterName, principle }, ...].
+function allPrinciples(store) {
+    var out = []
+    if (!store || !store.masters) return out
+    for (var i = 0; i < store.masters.length; i++) {
+        var m = store.masters[i]
+        var ps = m.principles || []
+        for (var j = 0; j < ps.length; j++) {
+            out.push({ masterId: m.id, masterName: m.name, principle: ps[j] })
+        }
+    }
+    return out
+}
+
+// Principles whose voicingStyleTags include `tag` (e.g. "greene", "drop-2").
+// Use by future engine code that wants to find "what does this voicing
+// taxonomy tag mean across the bookshelf?"
+function principlesByVoicingStyle(store, tag) {
+    if (!tag) return []
+    var hits = allPrinciples(store)
+    var out = []
+    for (var i = 0; i < hits.length; i++) {
+        var tags = (hits[i].principle.voicingStyleTags) || []
+        if (tags.indexOf(tag) >= 0) out.push(hits[i])
+    }
+    return out
+}
+
+// Principles applicable to a given (mode, tuning) combo. tuningSlug
+// optional; principle's applies_to_tunings (if present) must include it.
+function principlesFor(store, modeId, tuningSlug) {
+    var hits = allPrinciples(store)
+    var out = []
+    for (var i = 0; i < hits.length; i++) {
+        var p = hits[i].principle
+        var modes = p.applies_to_modes || []
+        if (modeId && modes.indexOf(modeId) < 0) continue
+        if (tuningSlug && p.applies_to_tunings) {
+            if (p.applies_to_tunings.indexOf(tuningSlug) < 0) continue
+        }
+        out.push(hits[i])
+    }
+    return out
+}
+
+// Summary counts useful for UI badges.
+function counts(store) {
+    var c = { masters: 0, principles: 0 }
+    if (!store || !store.masters) return c
+    c.masters = store.masters.length
+    for (var i = 0; i < store.masters.length; i++) {
+        c.principles += (store.masters[i].principles || []).length
+    }
+    return c
+}

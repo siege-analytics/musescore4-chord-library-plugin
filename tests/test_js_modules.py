@@ -1446,6 +1446,159 @@ class TestRevoiceMemory:
         """)
 
 
+# === MastersStore.js — Masters' Lessons bookshelf (#220) ===
+
+
+class TestMastersStore:
+    """Test MastersStore.js loader + query helpers."""
+
+    SEED = """
+        var sample = {
+            version: "v1",
+            masters: [
+                {
+                    id: "ted-greene",
+                    name: "Ted Greene",
+                    principles: [
+                        {
+                            id: "voice-leading",
+                            name: "Voice leading",
+                            voicingStyleTags: ["greene"],
+                            applies_to_modes: ["chord-melody", "solo-guitar"]
+                        },
+                        {
+                            id: "sequential",
+                            name: "Sequential articulation",
+                            voicingStyleTags: ["greene"],
+                            playStyleTags: ["sequential"],
+                            applies_to_modes: ["chord-melody"]
+                        }
+                    ]
+                },
+                {
+                    id: "van-eps",
+                    name: "George Van Eps",
+                    principles: [
+                        {
+                            id: "comping-with-self",
+                            voicingStyleTags: ["van-eps"],
+                            applies_to_modes: ["chord-melody"],
+                            applies_to_tunings: ["7string-van-eps"]
+                        }
+                    ]
+                }
+            ]
+        };
+    """
+
+    def test_empty_store_when_no_input(self):
+        assert_js("MastersStore.js", """
+            var e = emptyStore();
+            assertEqual(e.version, "v1", "version stamped");
+            assertEqual(e.masters.length, 0, "no masters");
+        """)
+
+    def test_parse_store_rejects_invalid_inputs(self):
+        assert_js("MastersStore.js", """
+            assertEqual(parseStore("").masters.length, 0, "empty -> empty store");
+            assertEqual(parseStore("not json").masters.length, 0, "invalid json -> empty");
+            assertEqual(parseStore('{"version":"v0"}').masters.length, 0, "wrong version");
+            assertEqual(parseStore('{"version":"v1"}').masters.length, 0, "no masters array");
+        """)
+
+    def test_masters_store_loads_seeded_data(self):
+        # Ticket falsifier — confirms the loader round-trips seeded entries.
+        assert_js("MastersStore.js", """
+            var s = parseStore(JSON.stringify({
+                version: "v1",
+                masters: [{ id: "x", name: "X", principles: [] }]
+            }));
+            assertEqual(s.masters.length, 1, "one master loaded");
+            assertEqual(s.masters[0].id, "x", "id preserved");
+        """)
+
+    def test_find_master_by_id(self):
+        assert_js("MastersStore.js", self.SEED + """
+            assertEqual(findMaster(sample, "ted-greene").name, "Ted Greene", "found");
+            assertEqual(findMaster(sample, "no-such-master"), null, "missing -> null");
+        """)
+
+    def test_find_principle_by_master_and_id(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var p = findPrinciple(sample, "ted-greene", "voice-leading");
+            assertEqual(p.name, "Voice leading", "found");
+            assertEqual(findPrinciple(sample, "ted-greene", "no-such"), null, "missing -> null");
+            assertEqual(findPrinciple(sample, "no-such-master", "voice-leading"), null, "missing master");
+        """)
+
+    def test_all_principles_flattens_across_masters(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var all = allPrinciples(sample);
+            assertEqual(all.length, 3, "three principles total");
+            assertEqual(all[0].masterId, "ted-greene", "carries master id");
+            assertEqual(all[2].masterId, "van-eps", "second master included");
+        """)
+
+    def test_principles_by_voicing_style_tag(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var greene = principlesByVoicingStyle(sample, "greene");
+            assertEqual(greene.length, 2, "two greene principles");
+            var ve = principlesByVoicingStyle(sample, "van-eps");
+            assertEqual(ve.length, 1, "one van-eps principle");
+            assertEqual(principlesByVoicingStyle(sample, "no-such").length, 0, "no match");
+        """)
+
+    def test_principles_for_mode_and_tuning(self):
+        # Semantic: principles without an explicit applies_to_tunings list
+        # apply to all tunings (they're tuning-agnostic by default). Only
+        # tuning-restricted principles are filtered by the tuning argument.
+        assert_js("MastersStore.js", self.SEED + """
+            // chord-melody mode applies to all 3 sample principles
+            assertEqual(principlesFor(sample, "chord-melody", null).length, 3, "by mode");
+            // solo-guitar applies to one (Greene voice-leading)
+            assertEqual(principlesFor(sample, "solo-guitar", null).length, 1, "by mode solo");
+            // chord-melody + 7string-van-eps: all three principles match
+            // (Greene's two are tuning-agnostic; van-eps explicitly lists it).
+            assertEqual(principlesFor(sample, "chord-melody", "7string-van-eps").length, 3,
+                "tuning-agnostic principles still included");
+            // chord-melody + a tuning the van-eps principle does NOT list:
+            // van-eps drops, Greene's two stay (they're tuning-agnostic).
+            assertEqual(principlesFor(sample, "chord-melody", "standard").length, 2,
+                "tuning-restricted principle filtered out when tuning doesn't match");
+        """)
+
+    def test_counts_summary(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var c = counts(sample);
+            assertEqual(c.masters, 2, "two masters");
+            assertEqual(c.principles, 3, "three principles");
+        """)
+
+    def test_loads_repo_masters_json(self):
+        # Regression fence: the actual plugin/data/masters.json must parse
+        # and meet the AC (≥ 7 masters, ≥ 1 principle each).
+        import json as _json
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "masters.json")) as f:
+            data = _json.load(f)
+        result = run_js(["MastersStore.js"], f"""
+            var s = parseStore({_json.dumps(_json.dumps(data))});
+            var c = counts(s);
+            _results.push({{ pass: c.masters >= 7, message: "at least 7 masters ("+c.masters+")" }});
+            _results.push({{ pass: c.principles >= 7, message: "at least 7 principles ("+c.principles+")" }});
+            // Each master has at least one principle.
+            for (var i = 0; i < s.masters.length; i++) {{
+                var m = s.masters[i];
+                var ok = m.principles && m.principles.length > 0;
+                _results.push({{
+                    pass: ok,
+                    message: "master " + m.id + " has principles (" + (m.principles ? m.principles.length : 0) + ")"
+                }});
+                if (!ok) _pass = false;
+            }}
+        """)
+        assert result["pass"], f"masters.json schema check failed: {result}"
+
+
 # === ComparisonTray.js — side-by-side voicing comparison (#196) ===
 
 
