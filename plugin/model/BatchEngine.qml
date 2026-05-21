@@ -213,8 +213,10 @@ Item {
         item.voicing = voicing
 
         // Persist alt selection for next session (#197).
-        if (revoiceMemoryRecordFn && voicing.id) {
-            revoiceMemoryRecordFn(item.text, voicing.id)
+        // #211 Stage 3 — record by signature so memory survives id changes.
+        if (revoiceMemoryRecordFn) {
+            var sig = voicing._signatureKey || ChordSelector.signatureKey(voicing)
+            if (sig) revoiceMemoryRecordFn(item.text, sig)
         }
 
         // Update clipboard
@@ -388,11 +390,14 @@ Item {
                             // a specific voicing for this chord-symbol last time
                             // under the same (mode, style, tuning), restore it.
                             if (voicing && revoiceMemoryGetFn) {
-                                var savedId = revoiceMemoryGetFn(text)
-                                if (savedId) {
+                                // #211 Stage 3 — memory stores signatureKey (v2).
+                                // Match alts by signature, not by voicing.id.
+                                var savedSig = revoiceMemoryGetFn(text)
+                                if (savedSig) {
                                     var alts = findAllVoicings(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
                                     for (var sai = 0; sai < alts.length; sai++) {
-                                        if (alts[sai].id === savedId) { voicing = alts[sai]; break }
+                                        var altSig = alts[sai]._signatureKey || ChordSelector.signatureKey(alts[sai])
+                                        if (altSig === savedSig) { voicing = alts[sai]; break }
                                     }
                                 }
                             }
@@ -598,8 +603,10 @@ Item {
         item.voicing = newVoicing
 
         // Persist the user's choice for next session (#197).
-        if (revoiceMemoryRecordFn && newVoicing.id) {
-            revoiceMemoryRecordFn(item.text, newVoicing.id)
+        // #211 Stage 3 — record by signature.
+        if (revoiceMemoryRecordFn) {
+            var newSig = newVoicing._signatureKey || ChordSelector.signatureKey(newVoicing)
+            if (newSig) revoiceMemoryRecordFn(item.text, newSig)
         }
 
         // Regenerate clipboard XML
