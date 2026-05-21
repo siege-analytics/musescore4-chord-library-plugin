@@ -91,6 +91,16 @@ Item {
     signal clearVoicingOverridesRequested()
     property var effectiveVoicingTolerances: ({})
     property int voicingOverrideCount: 0
+    // #216 — per-dimension tolerance editor
+    property var voicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var tuningIdList: []          // ["standard", "baritone", ...]
+    property var tuningDisplayList: []     // ["Standard 6-String", "Baritone", ...]
+    property var modeIdList: []            // ["chord-melody", ...]
+    property var modeDisplayList: []       // ["Chord Melody", ...]
+    property string tolEditTuning: ""      // "" = all-tunings (mode default)
+    property string tolEditMode: "chord-melody"
+    signal voicingToleranceChanged(string tuning, string mode, string dimension, var value)
+    signal voicingTolerancesResetRequested(string tuning, string mode)
     property string backupStatus: ""
     property color backupStatusColor: "black"
 
@@ -367,7 +377,7 @@ Item {
                         }
                     }
 
-                    // === Voicing Tolerances (#210 Stage 2) ===
+                    // === Voicing Tolerances (#210 Stage 2 + #216 editor) ===
                     Rectangle {
                         Layout.fillWidth: true
                         Layout.preferredHeight: tolColumn.implicitHeight + 16
@@ -375,11 +385,25 @@ Item {
                         radius: 4
                         border.color: theme.divider
 
+                        // Compute the effective tolerances for the (editTuning, editMode)
+                        // pair from the merged voicingToleranceMap. When editTuning="",
+                        // show the mode-level entry; otherwise the per-tuning entry.
+                        function _tolFor(tuning, mode) {
+                            var map = settingsPanel.voicingToleranceMap || {}
+                            if (tuning && tuning.length > 0) {
+                                var t = (map.tunings || {})[tuning]
+                                if (t && t[mode]) return t[mode]
+                            }
+                            return ((map.modes || {})[mode]) || {}
+                        }
+
+                        property var _editTol: _tolFor(settingsPanel.tolEditTuning, settingsPanel.tolEditMode)
+
                         ColumnLayout {
                             id: tolColumn
                             anchors.fill: parent
                             anchors.margins: 8
-                            spacing: 4
+                            spacing: 6
 
                             Label {
                                 text: "VOICING TOLERANCES"
@@ -387,45 +411,139 @@ Item {
                                 font.bold: true
                             }
                             Label {
-                                text: "Effective thresholds for the current tuning + mode. Hand-edit plugin/config/tuning-mode-tolerances.json to customize. Per-signature include/exclude overrides are managed via the 'Hidden voicings' lists in the Library tab and Walkthrough."
+                                text: "Edit thresholds per tuning and mode. Empty values fall through to mode-level defaults. Per-signature include/exclude overrides are managed via the 'Hidden voicings' lists in the Library tab and Walkthrough."
                                 font.pixelSize: 9
                                 color: theme.textMuted
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                             }
-                            // Read-only dimension grid
+
+                            // Tuning + mode selectors
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+
+                                Label { text: "Tuning:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    id: tolTuningCombo
+                                    Layout.fillWidth: true
+                                    font.pixelSize: 9
+                                    model: ["All tunings (mode default)"].concat(settingsPanel.tuningDisplayList)
+                                    currentIndex: {
+                                        if (!settingsPanel.tolEditTuning) return 0
+                                        var i = settingsPanel.tuningIdList.indexOf(settingsPanel.tolEditTuning)
+                                        return i >= 0 ? i + 1 : 0
+                                    }
+                                    onActivated: function(idx) {
+                                        if (idx === 0) settingsPanel.tolEditTuning = ""
+                                        else settingsPanel.tolEditTuning = settingsPanel.tuningIdList[idx - 1] || ""
+                                    }
+                                }
+                                Label { text: "Mode:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    id: tolModeCombo
+                                    Layout.fillWidth: true
+                                    font.pixelSize: 9
+                                    model: settingsPanel.modeDisplayList
+                                    currentIndex: Math.max(0,
+                                        settingsPanel.modeIdList.indexOf(settingsPanel.tolEditMode))
+                                    onActivated: function(idx) {
+                                        settingsPanel.tolEditMode = settingsPanel.modeIdList[idx] || "chord-melody"
+                                    }
+                                }
+                            }
+
+                            // Numeric SpinBoxes
                             Grid {
                                 columns: 2
                                 columnSpacing: 12
-                                rowSpacing: 2
+                                rowSpacing: 4
                                 Layout.fillWidth: true
 
-                                Label { text: "Max fret:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.maxFret !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxFret) : "—"; font.pixelSize: 9 }
+                                Label { text: "Max fret:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 0; to: 24
+                                    value: parent.parent.parent._editTol.maxFret !== undefined ? parent.parent.parent._editTol.maxFret : 12
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxFret", value)
+                                }
 
-                                Label { text: "Max stretch (frets):"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.maxStretch !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxStretch) : "—"; font.pixelSize: 9 }
+                                Label { text: "Max stretch (frets):"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 1; to: 10
+                                    value: parent.parent.parent._editTol.maxStretch !== undefined ? parent.parent.parent._editTol.maxStretch : 5
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxStretch", value)
+                                }
 
-                                Label { text: "Max muted strings:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.maxMutedStrings !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxMutedStrings) : "—"; font.pixelSize: 9 }
+                                Label { text: "Max muted strings:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 0; to: 7
+                                    value: parent.parent.parent._editTol.maxMutedStrings !== undefined ? parent.parent.parent._editTol.maxMutedStrings : 3
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxMutedStrings", value)
+                                }
 
-                                Label { text: "Min sounding notes:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.minSoundingNotes !== undefined ? String(settingsPanel.effectiveVoicingTolerances.minSoundingNotes) : "—"; font.pixelSize: 9 }
+                                Label { text: "Min sounding notes:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 1; to: 7
+                                    value: parent.parent.parent._editTol.minSoundingNotes !== undefined ? parent.parent.parent._editTol.minSoundingNotes : 3
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "minSoundingNotes", value)
+                                }
 
-                                Label { text: "Max difficulty tier:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.maxDifficultyTier || "—"; font.pixelSize: 9 }
+                                Label { text: "Max difficulty tier:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                ComboBox {
+                                    id: tolDifficultyCombo
+                                    model: ["standard", "advanced", "expert"]
+                                    font.pixelSize: 9
+                                    currentIndex: {
+                                        var t = parent.parent.parent._editTol.maxDifficultyTier || "advanced"
+                                        return Math.max(0, model.indexOf(t))
+                                    }
+                                    onActivated: function(idx) {
+                                        settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxDifficultyTier", model[idx])
+                                    }
+                                }
 
-                                Label { text: "Excluded categories:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: (settingsPanel.effectiveVoicingTolerances.excludedCategories || []).join(", ") || "(none)"; font.pixelSize: 9 }
+                                Label { text: "Require root in bass:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                CheckBox {
+                                    checked: parent.parent.parent._editTol.requireRootInBass === true
+                                    onToggled: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "requireRootInBass", checked)
+                                }
 
-                                Label { text: "Require root in bass:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.requireRootInBass ? "yes" : "no"; font.pixelSize: 9 }
-
-                                Label { text: "Allow open strings:"; font.pixelSize: 9; color: theme.textSecondary }
-                                Label { text: settingsPanel.effectiveVoicingTolerances.allowOpenStrings === false ? "no" : "yes"; font.pixelSize: 9 }
+                                Label { text: "Allow open strings:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                CheckBox {
+                                    checked: parent.parent.parent._editTol.allowOpenStrings !== false
+                                    onToggled: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "allowOpenStrings", checked)
+                                }
                             }
+
+                            // Excluded categories — comma-separated TextField for MVP
+                            // (chip-multi-select deferred).
+                            Label {
+                                text: "Excluded categories (comma-separated, e.g. quartal, extended):"
+                                font.pixelSize: 9
+                                color: theme.textSecondary
+                            }
+                            TextField {
+                                id: tolExcludedField
+                                Layout.fillWidth: true
+                                font.pixelSize: 10
+                                selectByMouse: true
+                                text: ((parent.parent._editTol.excludedCategories) || []).join(", ")
+                                onEditingFinished: {
+                                    var raw = text.split(",")
+                                    var list = []
+                                    for (var i = 0; i < raw.length; i++) {
+                                        var s = raw[i].trim()
+                                        if (s.length > 0) list.push(s)
+                                    }
+                                    settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "excludedCategories", list)
+                                }
+                            }
+
+                            // Footer actions
                             RowLayout {
                                 Layout.fillWidth: true
+                                spacing: 6
+
                                 Label {
                                     text: "User overrides set: " + settingsPanel.voicingOverrideCount
                                     font.pixelSize: 9
@@ -433,8 +551,18 @@ Item {
                                     Layout.fillWidth: true
                                 }
                                 Button {
-                                    text: "Clear all overrides"
+                                    text: "Reset this (tuning, mode)"
                                     font.pixelSize: 9
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Revert all dimensions for the selected tuning + mode to file defaults."
+                                    onClicked: settingsPanel.voicingTolerancesResetRequested(
+                                        settingsPanel.tolEditTuning, settingsPanel.tolEditMode)
+                                }
+                                Button {
+                                    text: "Clear signature overrides"
+                                    font.pixelSize: 9
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Clear per-signature include/exclude overrides (the ones from 'Hidden voicings' lists)."
                                     enabled: settingsPanel.voicingOverrideCount > 0
                                     onClicked: settingsPanel.clearVoicingOverridesRequested()
                                 }

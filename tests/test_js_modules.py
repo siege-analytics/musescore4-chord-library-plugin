@@ -1203,6 +1203,60 @@ class TestExclusionEngine:
             assertEqual(t.maxFret, 14, "tuning override applied");
         """)
 
+    def test_merge_tolerances_user_overrides_base(self):
+        # #216 — user-edited tolerance overrides shadow file defaults at the
+        # dimension level. Untouched dimensions fall through.
+        assert_js("ExclusionEngine.js", """
+            var base = {
+                modes: {
+                    "comping": { maxFret: 12, maxStretch: 5, maxMutedStrings: 2 }
+                },
+                tunings: {}
+            };
+            var user = {
+                modes: {
+                    "comping": { maxStretch: 4 }   // user tightens the stretch
+                },
+                tunings: {}
+            };
+            var merged = mergeTolerances(base, user);
+            assertEqual(merged.modes.comping.maxFret, 12, "untouched dim falls through");
+            assertEqual(merged.modes.comping.maxStretch, 4, "user override wins");
+            assertEqual(merged.modes.comping.maxMutedStrings, 2, "other dim preserved");
+        """)
+
+    def test_merge_tolerances_tuning_overrides(self):
+        assert_js("ExclusionEngine.js", """
+            var base = {
+                modes: { "chord-melody": { maxFret: 12 } },
+                tunings: {
+                    "baritone": { "chord-melody": { maxFret: 14 } }
+                }
+            };
+            var user = {
+                modes: {},
+                tunings: {
+                    "baritone": { "chord-melody": { maxStretch: 7 } }
+                }
+            };
+            var merged = mergeTolerances(base, user);
+            // Tuning-level merge: base's tuning fret + user's tuning stretch
+            assertEqual(merged.tunings.baritone["chord-melody"].maxFret, 14,
+                "base tuning override preserved");
+            assertEqual(merged.tunings.baritone["chord-melody"].maxStretch, 7,
+                "user tuning override added");
+        """)
+
+    def test_merge_tolerances_handles_empty_inputs(self):
+        assert_js("ExclusionEngine.js", """
+            var m1 = mergeTolerances(null, null);
+            assertEqual(Object.keys(m1.modes).length, 0, "null inputs -> empty modes");
+            var m2 = mergeTolerances({}, {});
+            assertEqual(Object.keys(m2.modes).length, 0, "empty inputs -> empty modes");
+            var m3 = mergeTolerances({ modes: { "comping": { maxFret: 10 } } }, null);
+            assertEqual(m3.modes.comping.maxFret, 10, "null user -> base passes through");
+        """)
+
     def test_findbest_skips_excluded_voicings(self):
         # findBestVoicing must not return a voicing with _excludedReason set,
         # even if it would otherwise score highest.
