@@ -41,7 +41,35 @@ var CHORD_QUALITIES = {
     "dom7b9":     { intervals: [0, 1, 4, 10], display: "7b9", minNotes: 4 },
     "dom7sharp9": { intervals: [0, 3, 4, 10], display: "7#9", minNotes: 4 },
     "dom7sharp11":{ intervals: [0, 4, 6, 10], display: "7#11", minNotes: 4 },
+    "dom7sharp5": { intervals: [0, 4, 8, 10], display: "7#5", minNotes: 4 },
     "dom7b13":    { intervals: [0, 4, 8, 10], display: "7b13", minNotes: 4 },
+    "dom7flat5":  { intervals: [0, 4, 6, 10], display: "7b5", minNotes: 4 },
+    // dom7alt = generalized altered dominant. Pragmatic canonical voicing is
+    // 7#5b9 (encompasses the "alt scale" sound without needing all altered
+    // tones present in a single voicing). The picker explores subsets via the
+    // standard minNotes mechanism.
+    "dom7alt":    { intervals: [0, 1, 4, 8, 10], display: "7alt", minNotes: 4 },
+    // Extended dominants with altered tensions (#180)
+    "13b9":         { intervals: [0, 1, 4, 9, 10], display: "13b9", minNotes: 4 },
+    "13sharp9":     { intervals: [0, 3, 4, 9, 10], display: "13#9", minNotes: 4 },
+    "13sus4":       { intervals: [0, 5, 9, 10], display: "13sus4", minNotes: 4 },
+    "7b5b9":        { intervals: [0, 1, 4, 6, 10], display: "7b5b9", minNotes: 4 },
+    "7b5sharp9":    { intervals: [0, 3, 4, 6, 10], display: "7b5#9", minNotes: 4 },
+    "7b9sus4":      { intervals: [0, 1, 5, 10], display: "7b9sus4", minNotes: 4 },
+    "7sharp5b9":    { intervals: [0, 1, 4, 8, 10], display: "7#5b9", minNotes: 4 },
+    "7sharp5sharp9":{ intervals: [0, 3, 4, 8, 10], display: "7#5#9", minNotes: 4 },
+    "9sus4":        { intervals: [0, 2, 5, 7, 10], display: "9sus4", minNotes: 4 },
+    // Major extensions (#180)
+    "maj13":        { intervals: [0, 4, 9, 11], display: "maj13", minNotes: 4 },
+    "maj69":        { intervals: [0, 2, 4, 9], display: "6/9", minNotes: 4 },
+    "maj7sharp11":  { intervals: [0, 4, 6, 11], display: "maj7#11", minNotes: 4 },
+    "maj7sharp5":   { intervals: [0, 4, 8, 11], display: "maj7#5", minNotes: 4 },
+    // Augmented variants (#180)
+    "aug7":         { intervals: [0, 4, 8, 10], display: "aug7", minNotes: 4 },
+    "augMaj7":      { intervals: [0, 4, 8, 11], display: "+maj7", minNotes: 4 },
+    // Minor extensions (#180)
+    "min11":        { intervals: [0, 3, 5, 10], display: "m11", minNotes: 4 },
+    "min-maj9":     { intervals: [0, 2, 3, 11], display: "m(maj9)", minNotes: 4 },
 }
 
 // Quartal voicings — stacked perfect 4ths, defined as pitch class sets.
