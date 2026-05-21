@@ -1,0 +1,305 @@
+{
+  "version": "v1",
+  "schemaNote": "Masters' principles for voicing selection (#220). Each principle is paraphrased in the maintainer's own words. References cite sources for further study. voicingStyleTags / playStyleTags map to the Stage-1-reserved voicing schema fields; engine consumption follows in a Track-3 ticket. Initial principles drafted from general knowledge — the project owner will refine and expand.",
+  "masters": [
+    {
+      "id": "van-eps",
+      "name": "George Van Eps",
+      "lived": "1913-1998",
+      "traditions": ["chord-melody", "jazz", "swing"],
+      "instrument": "7-string (low A) and 6-string",
+      "biography": "Pioneer of the 7-string electric guitar with the added low A string. Developed a body of theory treating the guitar as a contrapuntal instrument: independent bass, inner voices, and melody moving simultaneously, often beneath sustained chord shapes.",
+      "principles": [
+        {
+          "id": "comping-with-self",
+          "name": "Comping with self",
+          "summary": "The 7th string (low A) carries an independent bass voice while the chord above it sustains. Bass moves tonic-dominant-tonic or chromatic neighbor while the upper four voices hold the chord; the listener hears two parts at once.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": ["sequential", "hybrid-pick"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "applies_to_tunings": ["7string-van-eps"],
+          "tolerance_hints": {
+            "minSoundingNotes": 4
+          },
+          "references": [
+            {
+              "source": "Harmonic Mechanisms for Guitar (Mel Bay, 3 vols)",
+              "citation": "Van Eps, George. Harmonic Mechanisms for Guitar. Mel Bay, 1980-1982."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "vertical-structures",
+          "name": "Vertical structures",
+          "summary": "Chord-melody where the bass note is part of the unified vertical structure, not an isolated low note. Voicings are designed so every interval contributes to the chord's identity; no 'spare' notes added for body.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": ["block", "sequential"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "tolerance_hints": {
+            "requireRootInBass": true
+          },
+          "references": [
+            {
+              "source": "Harmonic Mechanisms for Guitar Vol I",
+              "citation": "Van Eps. HM Vol I, sections on triad-with-bass forms."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ]
+    },
+    {
+      "id": "ted-greene",
+      "name": "Ted Greene",
+      "lived": "1946-2005",
+      "traditions": ["chord-melody", "jazz", "baroque", "blues", "gospel", "country"],
+      "instrument": "6-string (low E)",
+      "biography": "Los Angeles teacher and player whose lessons reshaped how guitarists think about chord voicings, voice-leading, and the interaction of melody with harmony. Authored Chord Chemistry and Modern Chord Progressions; his estate (tedgreene.com) maintains his manuscript and lesson archive openly.",
+      "principles": [
+        {
+          "id": "voice-leading-inner-motion",
+          "name": "Voice leading through inner motion",
+          "summary": "Melody stays on top while inner voices (alto, tenor) move stepwise between chord changes. The bass anchors, the top voice carries the melody, and the inner voices do the harmonic work — producing the sense of multiple lines weaving rather than block chords thudding.",
+          "voicingStyleTags": ["greene"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "tolerance_hints": {
+            "minSoundingNotes": 4
+          },
+          "references": [
+            {
+              "source": "Chord Chemistry",
+              "citation": "Greene, Ted. Chord Chemistry. Dale Zdenek, 1971."
+            },
+            {
+              "source": "tedgreene.com",
+              "url": "https://tedgreene.com/teaching/v_system.aspx"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "sequential-articulation",
+          "name": "Sequential articulation",
+          "summary": "Voicings are designed for hybrid-pick or fingerstyle plucking with a specific right-hand sequence: bass plucked first, then the inner voices in order, melody on top. The pluck order is part of the music; strumming the same shape sounds different.",
+          "voicingStyleTags": ["greene"],
+          "playStyleTags": ["sequential", "hybrid-pick"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Modern Chord Progressions",
+              "citation": "Greene, Ted. Modern Chord Progressions. Dale Zdenek, 1973."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ]
+    },
+    {
+      "id": "joe-pass",
+      "name": "Joe Pass",
+      "lived": "1929-1994",
+      "traditions": ["jazz", "bebop", "chord-melody"],
+      "instrument": "6-string",
+      "biography": "Bebop guitarist whose solo recordings (Virtuoso series, 1973-1983) reset expectations for unaccompanied jazz guitar. Combined walking bass lines with chord stabs and single-note runs from held chord positions.",
+      "principles": [
+        {
+          "id": "walking-bass-plus-chord",
+          "name": "Walking bass plus chord",
+          "summary": "Bass note on every beat with chord stabs on the off-beats. Requires voicings that don't bury the bass string and whose chord stab is short enough to leave room for the next bass note. Often 2-3 note chord stabs rather than full block voicings.",
+          "voicingStyleTags": ["pass"],
+          "playStyleTags": ["sequential", "hybrid-pick"],
+          "applies_to_modes": ["solo-guitar"],
+          "tolerance_hints": {
+            "requireRootInBass": true,
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Joe Pass Guitar Style",
+              "citation": "Pass, Joe and Bill Thrasher. Joe Pass Guitar Style. Gwyn Publishing, 1971."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "runs-from-chord-shapes",
+          "name": "Single-note runs from chord shapes",
+          "summary": "Improvise melodically by playing single notes drawn from the chord shape currently held. The held shape acts as a position anchor; the soloing fingers move between the chord tones without requiring a separate scale framework.",
+          "voicingStyleTags": ["pass"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Joe Pass Guitar Style",
+              "citation": "Pass and Thrasher. Joe Pass Guitar Style. Gwyn, 1971."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ]
+    },
+    {
+      "id": "lenny-breau",
+      "name": "Lenny Breau",
+      "lived": "1941-1984",
+      "traditions": ["jazz", "country", "flamenco", "classical-influenced"],
+      "instrument": "6-string and 7-string (high A)",
+      "biography": "Canadian guitarist who synthesized jazz harmony with classical fingerstyle technique. Known for playing three independent voices simultaneously and for cascading artificial-harmonic textures.",
+      "principles": [
+        {
+          "id": "three-voices-on-six-strings",
+          "name": "Three independent voices on six strings",
+          "summary": "Bass, chord, and melody played simultaneously via fingerstyle. The chord voice is often only 2-3 notes (not a full block) to leave room for the bass below and melody above. Right hand: thumb on bass, fingers on chord and melody.",
+          "voicingStyleTags": ["breau"],
+          "playStyleTags": ["sequential", "block"],
+          "applies_to_modes": ["solo-guitar"],
+          "tolerance_hints": {
+            "maxMutedStrings": 1,
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Lenny Breau: The Velvet Touch (instructional)",
+              "citation": "Breau, Lenny. The Velvet Touch of Lenny Breau (RCA, 1969) — recorded reference."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "cascading-harmonics",
+          "name": "Cascading harmonics",
+          "summary": "Artificial harmonics intermixed with fretted notes for harp-like cascades. Right hand executes the harmonic with thumb/index touching 12 frets above the fretted position while picking with the ring finger.",
+          "voicingStyleTags": ["breau"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["solo-guitar"],
+          "tolerance_hints": {},
+          "references": []
+        }
+      ]
+    },
+    {
+      "id": "jim-hall",
+      "name": "Jim Hall",
+      "lived": "1930-2013",
+      "traditions": ["jazz", "cool-jazz", "post-bop"],
+      "instrument": "6-string",
+      "biography": "Influential jazz comper and soloist whose voicings emphasize space, fourths, and conversational interaction with the soloist. Recordings with Bill Evans, Sonny Rollins, and Paul Desmond defined a quieter approach to jazz guitar accompaniment.",
+      "principles": [
+        {
+          "id": "open-voicings-with-fourths",
+          "name": "Open voicings with fourths",
+          "summary": "Wide intervals between adjacent voices, often using stacked fourths instead of triadic thirds-and-fifths stacks. Produces a modern, ambiguous sound that doesn't commit to a single tonality.",
+          "voicingStyleTags": ["hall"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["comping", "chord-melody"],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Jim Hall: Exploring Jazz Guitar",
+              "citation": "Hall, Jim. Exploring Jazz Guitar. Hal Leonard."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "space-in-comping",
+          "name": "Space in comping",
+          "summary": "Playing less, leaving room for the soloist or for melody to ring. Fewer notes per voicing (often 2-3); strategic silences. The voicing's job is to imply the chord, not exhaustively spell it.",
+          "voicingStyleTags": ["hall"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["comping"],
+          "tolerance_hints": {
+            "maxMutedStrings": 4,
+            "minSoundingNotes": 2
+          },
+          "references": []
+        }
+      ]
+    },
+    {
+      "id": "johnny-smith",
+      "name": "Johnny Smith",
+      "lived": "1922-2013",
+      "traditions": ["jazz", "cool-jazz", "standards"],
+      "instrument": "6-string",
+      "biography": "Quiet master of close-voiced chord-melody. His 1952 recording 'Moonlight in Vermont' became a template for the genre. Voicings are tight (often all within 4 frets), with the melody close above the chord rather than floating two octaves higher.",
+      "principles": [
+        {
+          "id": "tight-voicings",
+          "name": "Tight voicings",
+          "summary": "Closely-voiced chord-melody, often within 4 frets, every voice within an octave of the others. Produces a unified vertical sound rather than a wide-spread harp texture.",
+          "voicingStyleTags": ["smith"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["chord-melody"],
+          "tolerance_hints": {
+            "maxStretch": 4
+          },
+          "references": [
+            {
+              "source": "Mel Bay's Johnny Smith Approach to Guitar",
+              "citation": "Smith, Johnny. Johnny Smith Approach to Guitar. Mel Bay."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "melody-under-chord",
+          "name": "Single-string melody under chord",
+          "summary": "Melody dropped to lower strings while upper voices sustain a chord above it. Inverts the usual chord-melody direction; the chord becomes the sky and the melody walks the ground.",
+          "voicingStyleTags": ["smith"],
+          "playStyleTags": ["sequential", "block"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "tolerance_hints": {},
+          "references": []
+        }
+      ]
+    },
+    {
+      "id": "jody-fisher",
+      "name": "Jody Fisher",
+      "lived": "1957-",
+      "traditions": ["jazz", "pedagogical"],
+      "instrument": "6-string",
+      "biography": "Educator whose Alfred Music series (Jazz Guitar Method, Chord Tone Soloing, Mastering Jazz Guitar) systematized jazz voicing study for generations of self-taught players. Codified the drop-2 / drop-3 / spread voicing taxonomy as a pedagogical framework.",
+      "principles": [
+        {
+          "id": "drop-voicing-taxonomy",
+          "name": "Drop-voicing pedagogical taxonomy",
+          "summary": "Categorize voicings systematically by which voice is 'dropped' from a close-position stack: drop-2 (drop the second-from-top), drop-3 (drop the third-from-top), drop-2-and-4 (drop both). The taxonomy makes the otherwise-overwhelming voicing space teachable.",
+          "voicingStyleTags": ["fisher", "drop-2", "drop-3"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["chord-melody", "comping"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Jazz Guitar Method",
+              "citation": "Fisher, Jody. Complete Jazz Guitar Method. Alfred Music."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "position-based-practice",
+          "name": "Position-based practice methodology",
+          "summary": "Systematic chord-quality study through CAGED positions or position-fixed walks: take a position, cycle every chord quality through it, only THEN move position. Builds vocabulary in a position rather than overwhelming the learner with mobility immediately.",
+          "voicingStyleTags": ["fisher"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Mastering Jazz Guitar: Chord/Melody",
+              "citation": "Fisher, Jody. Mastering Jazz Guitar: Chord/Melody. Alfred Music."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
