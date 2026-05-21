@@ -267,6 +267,63 @@ function mergeTolerances(base, user) {
     return out
 }
 
+// Tighten a tolerance object by overlaying a hints object using per-dimension
+// "stricter wins" semantics (#222 Track 3). Used to apply a master's
+// tolerance_hints on top of the user-edited tolerance map.
+//
+// Per-dimension policy:
+//   maxFret, maxStretch, maxMutedStrings    — ceiling, MIN of base + hint
+//   minSoundingNotes                        — floor,   MAX of base + hint
+//   requireRootInBass                       — OR (any true => true)
+//   allowOpenStrings                        — AND (any false => false)
+//   maxDifficultyTier                       — MIN by tier rank
+//   excludedCategories                      — UNION
+//
+// Unknown dimensions are passed through unchanged (the hint REPLACES the
+// base value), so future schema additions don't silently get dropped.
+function tightenTolerances(base, hints) {
+    if (!hints) return base || {}
+    if (!base) base = {}
+    var out = {}
+    for (var k in base) out[k] = base[k]
+
+    for (var dim in hints) {
+        var h = hints[dim]
+        var b = out[dim]
+        if (b === undefined || b === null) { out[dim] = h; continue }
+        switch (dim) {
+            case "maxFret":
+            case "maxStretch":
+            case "maxMutedStrings":
+                out[dim] = Math.min(b, h)
+                break
+            case "minSoundingNotes":
+                out[dim] = Math.max(b, h)
+                break
+            case "requireRootInBass":
+                out[dim] = (b === true) || (h === true)
+                break
+            case "allowOpenStrings":
+                out[dim] = (b !== false) && (h !== false)
+                break
+            case "maxDifficultyTier":
+                var ranks = { "standard": 0, "advanced": 1, "expert": 2 }
+                out[dim] = (ranks[h] < ranks[b]) ? h : b
+                break
+            case "excludedCategories":
+                var union = (b || []).slice()
+                for (var i = 0; i < (h || []).length; i++) {
+                    if (union.indexOf(h[i]) < 0) union.push(h[i])
+                }
+                out[dim] = union
+                break
+            default:
+                out[dim] = h  // unknown dim: REPLACE (forward-compat)
+        }
+    }
+    return out
+}
+
 // Resolve the effective tolerances for (tuning, mode) given a sparse override
 // map. Per-tuning-per-mode entries override per-mode entries, which override
 // the empty-object default.

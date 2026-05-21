@@ -298,6 +298,8 @@ MuseScore {
 
     // Masters' lessons bookshelf (#220). Loaded from data/masters.json.
     property var mastersStore: ({ version: "v1", masters: [] })
+    // #222 Track 3 — active master selection. "" = no master applied.
+    property string activeMasterId: ""
 
     // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
     // see RevoiceMemory.js for the on-disk shape. The "current scope" is
@@ -649,9 +651,8 @@ MuseScore {
             // No user-tolerances.json — fresh install, stick with defaults.
             userVoicingToleranceMap = { modes: {}, tunings: {} }
         }
-        // Effective map = defaults ⊕ user.
-        voicingToleranceMap = ExclusionEngine.mergeTolerances(
-            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        // Effective map = defaults ⊕ user ⊕ active-master tightening (#222).
+        voicingToleranceMap = _computeEffectiveToleranceMap()
     }
 
     function saveUserTolerances() {
@@ -707,8 +708,7 @@ MuseScore {
             target[dimension] = value
         }
         userVoicingToleranceMap = next
-        voicingToleranceMap = ExclusionEngine.mergeTolerances(
-            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        voicingToleranceMap = _computeEffectiveToleranceMap()  // #222 includes master layer
         saveUserTolerances()
         applyExclusionPass()
     }
@@ -733,8 +733,7 @@ MuseScore {
             if (Object.keys(next.tunings[t]).length === 0) delete next.tunings[t]
         }
         userVoicingToleranceMap = next
-        voicingToleranceMap = ExclusionEngine.mergeTolerances(
-            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        voicingToleranceMap = _computeEffectiveToleranceMap()  // #222 includes master layer
         saveUserTolerances()
         applyExclusionPass()
     }
@@ -815,6 +814,60 @@ MuseScore {
             console.log("Error loading masters: " + e)
             mastersStore = { version: "v1", masters: [] }
         }
+    }
+
+    // === #222 Track 3 — active master integration ===
+
+    function setActiveMaster(masterId) {
+        activeMasterId = masterId || ""
+        saveSettings()
+        // Re-merge tolerances and re-decorate the pool.
+        voicingToleranceMap = _computeEffectiveToleranceMap()
+        applyExclusionPass()
+    }
+
+    // The active master's voicing style tags (union across principles).
+    // Returns [] when no master is active or the master is unknown.
+    function activeMasterVoicingTags() {
+        if (!activeMasterId) return []
+        var m = MastersStore.findMaster(mastersStore, activeMasterId)
+        if (!m) return []
+        return MastersStore.collectVoicingStyleTags(m)
+    }
+
+    // The active master's combined tolerance hints, or null when no master
+    // is active or no principle declared hints.
+    function activeMasterToleranceHints() {
+        if (!activeMasterId) return null
+        var m = MastersStore.findMaster(mastersStore, activeMasterId)
+        if (!m) return null
+        return MastersStore.deriveTolerancesFromMaster(m, ExclusionEngine.tightenTolerances)
+    }
+
+    // Effective tolerance map = defaults ⊕ user-edits ⊕ master-tightening.
+    // Replaces the inline merge in loadVoicingTolerances + setVoicingTolerance
+    // so the master layer is composed in one place.
+    function _computeEffectiveToleranceMap() {
+        var merged = ExclusionEngine.mergeTolerances(
+            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        var hints = activeMasterToleranceHints()
+        if (!hints) return merged
+        // Apply the master's hints across every (mode, tuning) combo in
+        // the merged map. The semantic is "the master tightens whatever
+        // is configured for the active session" — so we tighten every
+        // mode default and every tuning override.
+        var out = { modes: {}, tunings: {} }
+        for (var m in (merged.modes || {})) {
+            out.modes[m] = ExclusionEngine.tightenTolerances(merged.modes[m], hints)
+        }
+        for (var t in (merged.tunings || {})) {
+            out.tunings[t] = {}
+            for (var tm in merged.tunings[t]) {
+                out.tunings[t][tm] = ExclusionEngine.tightenTolerances(
+                    merged.tunings[t][tm], hints)
+            }
+        }
+        return out
     }
 
     // === Per-chord re-voice memory (#197) ===
@@ -1269,6 +1322,9 @@ MuseScore {
         modeConfig: chordLibrary.currentModeConfig()
         // Curated shape boost (#194 Phase 2a)
         curatedLookup: chordLibrary.curatedShapeLookup
+        // Master style boost (#222 Track 3) — bound dynamically so the
+        // scorer reflects the live activeMasterId.
+        masterVoicingStyleTags: chordLibrary.activeMasterVoicingTags()
         // Per-chord re-voice memory (#197)
         revoiceMemoryGetFn: function(chordSymbol) { return chordLibrary.revoiceMemoryGet(chordSymbol) }
         revoiceMemoryRecordFn: function(chordSymbol, voicingId) { chordLibrary.revoiceMemoryRecord(chordSymbol, voicingId) }
@@ -1435,6 +1491,11 @@ MuseScore {
             if (s.userVoicingOverrides && typeof s.userVoicingOverrides === "object") {
                 userVoicingOverrides = s.userVoicingOverrides
             }
+            // #222 Track 3 — restore active master (engine consumption recomputed
+            // when applyExclusionPass runs after loadSettings completes).
+            if (typeof s.activeMasterId === "string") {
+                activeMasterId = s.activeMasterId
+            }
             refreshFilteredTunings()
             console.log("Settings loaded: placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
@@ -1461,6 +1522,7 @@ MuseScore {
             activeMode: activeMode,
             scoreSections: scoreSections,
             userVoicingOverrides: userVoicingOverrides,  // #210 Stage 2
+            activeMasterId: activeMasterId,              // #222 Track 3
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -3622,6 +3684,21 @@ MuseScore {
             onProfileChanged: function(profileId) { chordLibrary.setProfile(profileId) }
             activeMode: chordLibrary.activeMode
             onModeChanged: function(modeId) { chordLibrary.setActiveMode(modeId) }
+            // #222 Track 3 — Master selector
+            masterIdList: {
+                var ids = [""]
+                var ms = (chordLibrary.mastersStore && chordLibrary.mastersStore.masters) || []
+                for (var mi = 0; mi < ms.length; mi++) ids.push(ms[mi].id)
+                return ids
+            }
+            masterDisplayList: {
+                var names = ["(no master)"]
+                var ms = (chordLibrary.mastersStore && chordLibrary.mastersStore.masters) || []
+                for (var mi = 0; mi < ms.length; mi++) names.push(ms[mi].name)
+                return names
+            }
+            activeMasterId: chordLibrary.activeMasterId
+            onMasterChanged: function(masterId) { chordLibrary.setActiveMaster(masterId) }
             onSearchChanged: function(text) { chordLibrary.searchText = text; chordLibrary.applyFilters() }
             onContextFilterChanged: function(code) {
                 // Context dropdown is hidden as of #174 Stage 2; the signal is

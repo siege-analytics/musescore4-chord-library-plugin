@@ -64,6 +64,9 @@ Item {
     property var revoiceMemoryGetFn: null
     property var revoiceMemoryRecordFn: null
 
+    // Master style tags (#222 Track 3). Empty when no master is active.
+    property var masterVoicingStyleTags: []
+
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
     property var batchQueue: []
@@ -130,7 +133,8 @@ Item {
             profileQualityBoostFn: ChordScales.getProfileQualityBoost,
             modeConfig: effectiveModeConfig,
             modeId: effectiveModeId,
-            curatedLookup: curatedLookup
+            curatedLookup: curatedLookup,
+            masterVoicingStyleTags: masterVoicingStyleTags
         }
     }
 

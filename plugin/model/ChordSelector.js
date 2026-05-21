@@ -288,6 +288,18 @@ function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, 
         var entry = opts.curatedLookup[signatureKey(v)]
         if (entry && entry.boost) score += entry.boost
     }
+    // Master style boost (#222 Track 3). When an active master is selected
+    // and the voicing's voicingStyle tags intersect with the master's,
+    // apply a capped bonus. +30 per matching tag, max +60. Voicings with
+    // no voicingStyle field are no-ops (no boost, no penalty).
+    if (opts.masterVoicingStyleTags && opts.masterVoicingStyleTags.length > 0
+            && v.voicingStyle && v.voicingStyle.length > 0) {
+        var hits = 0
+        for (var msi = 0; msi < v.voicingStyle.length; msi++) {
+            if (opts.masterVoicingStyleTags.indexOf(v.voicingStyle[msi]) >= 0) hits++
+        }
+        if (hits > 0) score += Math.min(hits, 2) * 30
+    }
     return score
 }
 
