@@ -143,6 +143,11 @@ MuseScore {
     }
 
     FileIO {
+        id: curatedShapesFile  // #194 Phase 2a — root-relative shape boost lookup
+        source: Qt.resolvedUrl("data/curated-shapes.json")
+    }
+
+    FileIO {
         id: backupFile   // (#172) user-data backup / restore
     }
 
@@ -229,6 +234,10 @@ MuseScore {
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
+    // Curated shape boost lookup (#194 Phase 2a). Loaded from
+    // plugin/data/curated-shapes.json on startup; passed to BatchEngine which
+    // forwards it through to ChordSelector._scoreCandidate.
+    property var curatedShapeLookup: ({})
     property var standardVoicingsData: []  // backup of the standard library for tuning switches
     property bool usingTuningVoicings: false  // true when tuning-specific voicings are loaded
     // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
@@ -413,6 +422,24 @@ MuseScore {
             }
         } catch (e) {
             console.log("Error loading modes: " + e)
+        }
+    }
+
+    function loadCuratedShapes() {
+        // #194 Phase 2a — parse curated-shapes.json into the runtime lookup.
+        // ChordSelector.buildCuratedLookup keys each entry by its root-relative
+        // signature; _scoreCandidate consults the lookup to apply each shape's
+        // boost when a candidate matches.
+        try {
+            var raw = curatedShapesFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                curatedShapeLookup = ChordSelector.buildCuratedLookup(data)
+                var n = Object.keys(curatedShapeLookup).length
+                console.log("Loaded " + n + " curated shapes")
+            }
+        } catch (e) {
+            console.log("Error loading curated shapes: " + e)
         }
     }
 
@@ -781,6 +808,8 @@ MuseScore {
         // Mode axis (#164) — activeMode drives mode-aware scoring in ChordSelector
         activeMode: chordLibrary.activeMode
         modeConfig: chordLibrary.currentModeConfig()
+        // Curated shape boost (#194 Phase 2a)
+        curatedLookup: chordLibrary.curatedShapeLookup
         // Section-aware mode resolution (#167)
         modeIdResolverFn: function(chordIdx) { return chordLibrary.modeForChord(chordIdx) }
         modeConfigResolverFn: function(chordIdx) { return chordLibrary.modeConfigForChord(chordIdx) }
@@ -846,6 +875,7 @@ MuseScore {
         loadScalesConfig()
         loadProfiles()
         loadModes()
+        loadCuratedShapes()
         loadSettings()
         loadTuningStringCount()
         if (!dataLoaded) {

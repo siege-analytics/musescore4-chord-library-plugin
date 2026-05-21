@@ -53,6 +53,11 @@ Item {
     // Section resolver (#167) — parent callback: (chordIdx) -> modeConfig object
     property var modeConfigResolverFn: null
 
+    // Curated shape boost lookup (#194 Phase 2a). Map of root-relative
+    // signature key -> { boost, name, ... }. Empty by default; ChordLibrary
+    // wires the parsed curated-shapes.json on startup.
+    property var curatedLookup: ({})
+
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
     property var batchQueue: []
@@ -116,7 +121,8 @@ Item {
             profileCategoryWeightFn: ChordScales.getProfileCategoryWeight,
             profileQualityBoostFn: ChordScales.getProfileQualityBoost,
             modeConfig: effectiveModeConfig,
-            modeId: effectiveModeId
+            modeId: effectiveModeId,
+            curatedLookup: curatedLookup
         }
     }
 
