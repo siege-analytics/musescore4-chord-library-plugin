@@ -99,6 +99,52 @@ Item {
     property string compositionScaleRule: "union-priority"
     property string compositionResolution: "re-resolve"
 
+    // Composition resolver (#195) — parent passes StyleComposer.resolve as a
+    // callback so the live readout doesn't import the model directly.
+    property var resolveCompositionFn: function(composition, allStyles) { return null }
+
+    // Build a draft composition from the current form state for live preview.
+    function _draftComposition() {
+        var enabled = []
+        var weights = {}
+        var keys = Object.keys(_compositionEnabled)
+        for (var i = 0; i < keys.length; i++) {
+            if (_compositionEnabled[keys[i]]) {
+                enabled.push(keys[i])
+                weights[keys[i]] = _compositionWeights[keys[i]] || 1.0
+            }
+        }
+        return {
+            id: "_draft",
+            name: compositionName,
+            composedFrom: enabled,
+            composition: {
+                numericRule: compositionNumericRule,
+                scaleRule: compositionScaleRule,
+                weights: weights,
+                resolution: compositionResolution
+            },
+            chordScaleOverrides: {},
+            categoryWeights: {},
+            qualityBoosts: {}
+        }
+    }
+
+    // Compact readout: top-N entries by absolute magnitude, formatted "key: ±value".
+    function _topByAbsMagnitude(obj, n) {
+        if (!obj) return []
+        var keys = Object.keys(obj)
+        var pairs = []
+        for (var i = 0; i < keys.length; i++) {
+            pairs.push({ key: keys[i], val: obj[keys[i]] })
+        }
+        pairs.sort(function(a, b) { return Math.abs(b.val) - Math.abs(a.val) })
+        return pairs.slice(0, n).map(function(p) {
+            var sign = p.val > 0 ? "+" : ""
+            return p.key + ": " + sign + p.val
+        })
+    }
+
     // --- Sub-tab state ---
     property int currentSubTab: 0
 
@@ -1492,6 +1538,93 @@ Item {
                                     model: ["re-resolve", "freeze"]
                                     currentIndex: model.indexOf(settingsPanel.compositionResolution)
                                     onActivated: settingsPanel.compositionResolution = currentText
+                                }
+                            }
+
+                            // Resolved-style readout (#195). Shows what the
+                            // current composition draft actually evaluates to,
+                            // so users notice when two styles cancel out.
+                            Rectangle {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: resolvedReadoutCol.implicitHeight + 12
+                                color: theme.cardBackground
+                                border.color: theme.cardBorder
+                                border.width: 1
+                                radius: 4
+                                ColumnLayout {
+                                    id: resolvedReadoutCol
+                                    anchors.fill: parent
+                                    anchors.margins: 6
+                                    spacing: 3
+
+                                    property var _resolved: settingsPanel.resolveCompositionFn(
+                                        settingsPanel._draftComposition(),
+                                        settingsPanel.profilesData
+                                    )
+
+                                    Label {
+                                        text: "RESOLVED PREVIEW"
+                                        font.pixelSize: 9
+                                        font.bold: true
+                                        color: theme.textMuted
+                                    }
+                                    Label {
+                                        property var cw: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.categoryWeights : null
+                                        property var top: settingsPanel._topByAbsMagnitude(cw, 5)
+                                        visible: top.length > 0
+                                        text: "category weights: " + top.join(", ")
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property var qb: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.qualityBoosts : null
+                                        property var top: settingsPanel._topByAbsMagnitude(qb, 5)
+                                        visible: top.length > 0
+                                        text: "quality boosts: " + top.join(", ")
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property var cso: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.chordScaleOverrides : null
+                                        property string summary: {
+                                            if (!cso) return ""
+                                            var keys = Object.keys(cso)
+                                            if (keys.length === 0) return ""
+                                            var parts = []
+                                            for (var i = 0; i < Math.min(keys.length, 5); i++) {
+                                                parts.push(keys[i] + ": " + (cso[keys[i]] || []).join(", "))
+                                            }
+                                            return parts.join("  ·  ")
+                                        }
+                                        visible: summary.length > 0
+                                        text: "scales: " + summary
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property bool empty: {
+                                            var r = resolvedReadoutCol._resolved
+                                            if (!r) return true
+                                            return Object.keys(r.categoryWeights || {}).length === 0
+                                                && Object.keys(r.qualityBoosts || {}).length === 0
+                                                && Object.keys(r.chordScaleOverrides || {}).length === 0
+                                        }
+                                        visible: empty
+                                        text: "resolved to nothing — select at least 2 styles with non-zero weights"
+                                        font.pixelSize: 9
+                                        font.italic: true
+                                        color: theme.textMuted
+                                        Layout.fillWidth: true
+                                    }
                                 }
                             }
 
