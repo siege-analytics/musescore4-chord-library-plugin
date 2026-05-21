@@ -511,14 +511,27 @@ MuseScore {
         return (_modesById && _modesById[id]) ? _modesById[id] : null
     }
 
-    // === Backup / restore (#172) ===
-
-    function _timestamp() {
-        var d = new Date()
-        var pad = function(n) { return (n < 10 ? "0" : "") + n }
-        return d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate())
-            + "-" + pad(d.getHours()) + pad(d.getMinutes())
-    }
+    // ============================================================
+    // === Backup / restore + URL import =========================
+    // ============================================================
+    // The pure logic (archive shape, version checking, merge rules,
+    // timestamps, error messages) lives in plugin/model/BackupManager.js.
+    // The QML-side functions below glue that to FileIO, plugin state,
+    // and the SettingsPanel status surface. They were considered for
+    // extraction into a separate QML controller in #181 but the residue
+    // is genuinely QML-glue and gains nothing from a controller split.
+    //
+    // Related tickets: #172 (initial backup MVP), #179 (version migration),
+    // #67 (URL import + community packs), #181 (extraction re-evaluation).
+    //
+    // Function index:
+    //   exportBackup()                — write archive to Desktop
+    //   restoreBackup(path)           — read archive from path and apply
+    //   importFromUrl(url)            — fetch JSON via HTTP, sniff, dispatch
+    //   _importTuningFromObject(t)    — apply a single tuning JSON
+    //   _restoreFromArchive(archive)  — apply a verified archive
+    //   _reportArchiveError(pres)     — surface parseArchive failures to UI
+    // ============================================================
 
     function exportBackup() {
         try {
@@ -550,7 +563,7 @@ MuseScore {
                 readTuningFile: readTuningFile,
                 version: "v2.2"
             })
-            var path = homePath() + "/Desktop/chordlibrary-backup-" + _timestamp() + ".json"
+            var path = homePath() + "/Desktop/chordlibrary-backup-" + BackupManager.timestampForFilename() + ".json"
             backupFile.source = path
             backupFile.write(BackupManager.serialize(archive))
             settingsPanel.backupStatus = "Exported to " + path
@@ -691,30 +704,12 @@ MuseScore {
         }
     }
 
-    // Translate a parseArchive failure into a user-facing message (#179).
+    // Translate a parseArchive failure into a user-facing message (#179, #181).
+    // The catalog itself lives in BackupManager.reasonMessage so the messages
+    // sit beside the parseArchive that produces the reasons; this function
+    // just routes the result to the SettingsPanel surface.
     function _reportArchiveError(pres) {
-        var msg
-        switch (pres.reason) {
-        case "empty":
-            msg = "Backup file is empty"
-            break
-        case "not-json":
-            msg = "Backup file is not valid JSON: " + (pres.detail || "")
-            break
-        case "not-chordlibrary":
-            msg = "Not a chordlibrary backup file"
-            break
-        case "missing-version":
-            msg = "Backup file has no manifest.version (corrupt or pre-v2.2)"
-            break
-        case "unsupported-version":
-            msg = "Backup is from a newer plugin version (" + (pres.detail || "?") +
-                  "). Please update the plugin before restoring."
-            break
-        default:
-            msg = "Restore failed: " + (pres.reason || "unknown error")
-        }
-        settingsPanel.backupStatus = msg
+        settingsPanel.backupStatus = BackupManager.reasonMessage(pres)
         settingsPanel.backupStatusColor = theme.errorText
     }
 
