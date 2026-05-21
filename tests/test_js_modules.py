@@ -1081,6 +1081,62 @@ class TestChordSelectorModes:
         """)
 
 
+# === BackupManager.js — parseArchive (#179) ===
+
+
+class TestBackupManagerParse:
+    """Test BackupManager.parseArchive structured-result behavior."""
+
+    def test_empty_input_returns_empty_reason(self):
+        assert_js("BackupManager.js", """
+            var r = parseArchive("");
+            assertEqual(r.ok, false, "ok=false");
+            assertEqual(r.reason, "empty", "reason=empty");
+        """)
+
+    def test_invalid_json_returns_not_json(self):
+        assert_js("BackupManager.js", """
+            var r = parseArchive("{not valid json");
+            assertEqual(r.ok, false, "ok=false");
+            assertEqual(r.reason, "not-json", "reason=not-json");
+            assert(r.detail !== undefined, "detail set");
+        """)
+
+    def test_non_chordlibrary_manifest_rejected(self):
+        assert_js("BackupManager.js", """
+            var r = parseArchive(JSON.stringify({ manifest: { plugin: "other-tool", version: "v1.0" } }));
+            assertEqual(r.reason, "not-chordlibrary", "reason=not-chordlibrary");
+        """)
+
+    def test_missing_version_rejected(self):
+        assert_js("BackupManager.js", """
+            var r = parseArchive(JSON.stringify({ manifest: { plugin: "chordlibrary" } }));
+            assertEqual(r.reason, "missing-version", "reason=missing-version");
+        """)
+
+    def test_unsupported_version_rejected(self):
+        assert_js("BackupManager.js", """
+            var r = parseArchive(JSON.stringify({
+                manifest: { plugin: "chordlibrary", version: "v9.99" }
+            }));
+            assertEqual(r.ok, false, "ok=false");
+            assertEqual(r.reason, "unsupported-version", "reason=unsupported-version");
+            assertEqual(r.detail, "v9.99", "detail names the version");
+        """)
+
+    def test_current_version_accepted(self):
+        assert_js("BackupManager.js", """
+            var archive = {
+                manifest: { plugin: "chordlibrary", version: "v2.2", exportedAt: "2026-05-21" },
+                settings: {}, customStyles: [], customScales: [], customTuningFiles: {}
+            };
+            var r = parseArchive(JSON.stringify(archive));
+            assertEqual(r.ok, true, "ok=true");
+            assertEqual(r.migrated, false, "current version not migrated");
+            assertEqual(r.archive.manifest.version, "v2.2", "archive returned");
+        """)
+
+
 # === IRealParser.js ===
 
 

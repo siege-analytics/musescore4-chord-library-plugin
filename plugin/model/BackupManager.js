@@ -15,6 +15,18 @@
 
 .pragma library
 
+// Versions this plugin can read on restore (#179). Append as the archive shape
+// stabilizes across releases. Anything not in this list returns a structured
+// "unsupported-version" error from parseArchive.
+var SUPPORTED_VERSIONS = ["v2.2"]
+var CURRENT_VERSION = "v2.2"
+
+// Migration registry: { fromVersion: function(archive) -> archive }
+// Keyed by the archive's manifest.version. Migrations run in order from the
+// archive's declared version up to CURRENT_VERSION. Empty today because v2.2
+// is the only supported version; declared structure for future use.
+var MIGRATIONS = {}
+
 function buildArchive(opts) {
     // opts: { settings, allStyles, allScales, customTuningSlugs, readTuningFile }
     var custStyles = []
@@ -48,7 +60,7 @@ function buildArchive(opts) {
     return {
         manifest: {
             plugin: "chordlibrary",
-            version: opts.version || "v2.2",
+            version: opts.version || CURRENT_VERSION,
             exportedAt: new Date().toISOString()
         },
         settings: opts.settings || {},
@@ -62,15 +74,46 @@ function serialize(archive) {
     return JSON.stringify(archive, null, 2)
 }
 
+// Parse + version-check an archive. Returns one of:
+//   { ok: true,  archive: <archive>, migrated: <bool> }
+//   { ok: false, reason: "empty" }
+//   { ok: false, reason: "not-json", detail: <string> }
+//   { ok: false, reason: "not-chordlibrary" }
+//   { ok: false, reason: "missing-version" }
+//   { ok: false, reason: "unsupported-version", detail: <version-string> }
+//
+// Callers should switch on `reason` to produce user-facing messages. Future
+// versions add migrations to MIGRATIONS; an older-but-known version chains
+// through the registered migrations until current.
 function parseArchive(rawJson) {
-    if (!rawJson || rawJson.length === 0) return null
+    if (!rawJson || rawJson.length === 0) return { ok: false, reason: "empty" }
+    var a
     try {
-        var a = JSON.parse(rawJson)
-        if (!a.manifest || a.manifest.plugin !== "chordlibrary") return null
-        return a
+        a = JSON.parse(rawJson)
     } catch (e) {
-        return null
+        return { ok: false, reason: "not-json", detail: String(e) }
     }
+    if (!a.manifest || a.manifest.plugin !== "chordlibrary") {
+        return { ok: false, reason: "not-chordlibrary" }
+    }
+    if (!a.manifest.version) {
+        return { ok: false, reason: "missing-version" }
+    }
+    var v = a.manifest.version
+    if (SUPPORTED_VERSIONS.indexOf(v) < 0) {
+        return { ok: false, reason: "unsupported-version", detail: v }
+    }
+    // Run any migrations chained from `v` up to CURRENT_VERSION. v2.2 only
+    // supports its own version today, so this loop is a no-op until we add
+    // entries to MIGRATIONS.
+    var migrated = false
+    var current = v
+    while (current !== CURRENT_VERSION && MIGRATIONS[current]) {
+        a = MIGRATIONS[current](a)
+        current = a.manifest.version
+        migrated = true
+    }
+    return { ok: true, archive: a, migrated: migrated }
 }
 
 // Merge restore helpers — each returns a summary object {added, updated, skipped}
