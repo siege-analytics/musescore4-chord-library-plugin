@@ -170,8 +170,13 @@ MuseScore {
     }
 
     FileIO {
-        id: toleranceConfigFile  // #210 Stage 2 — per-tuning-per-mode exclusion thresholds
+        id: toleranceConfigFile  // #210 Stage 2 — per-tuning-per-mode exclusion thresholds (defaults)
         source: Qt.resolvedUrl("config/tuning-mode-tolerances.json")
+    }
+
+    FileIO {
+        id: userTolerancesFile  // #216 — user-edited tolerance overrides
+        source: Qt.resolvedUrl("data/user-tolerances.json")
     }
 
     FileIO {
@@ -275,12 +280,14 @@ MuseScore {
     // voicings.json as the user-import store. Persisted to data/user-voicings.json.
     property var userVoicings: []
 
-    // Exclusion engine (#210 Stage 2). The full tolerance map (per-mode +
-    // per-tuning-per-mode overrides), loaded once from config. The per-user
-    // signature override map ("include" / "exclude" decisions) persisted to
-    // settings.json. The exclusion pass is rerun whenever voicingsData,
-    // activeMode, selectedTuning, or userVoicingOverrides change.
+    // Exclusion engine (#210 Stage 2 + #216). voicingToleranceMap is the
+    // EFFECTIVE map: defaults from tuning-mode-tolerances.json overlaid with
+    // user edits from user-tolerances.json. Tracked separately so we can
+    // re-merge after edits without re-reading the defaults file.
     property var voicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var defaultVoicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var userVoicingToleranceMap: ({ modes: {}, tunings: {} })
+    // Per-signature include/exclude decisions persisted to settings.json (#210).
     property var userVoicingOverrides: ({})  // signatureKey -> "include" | "exclude"
 
     // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
@@ -603,18 +610,124 @@ MuseScore {
     // === Exclusion engine (#210 Stage 2) ===
 
     function loadVoicingTolerances() {
+        // Defaults from config (read-only).
         try {
             var raw = toleranceConfigFile.read()
             if (raw && raw.length > 2) {
-                voicingToleranceMap = JSON.parse(raw) || { modes: {}, tunings: {} }
-                console.log("Loaded voicing tolerances: "
-                    + Object.keys(voicingToleranceMap.modes || {}).length + " mode default(s), "
-                    + Object.keys(voicingToleranceMap.tunings || {}).length + " tuning override(s)")
+                defaultVoicingToleranceMap = JSON.parse(raw) || { modes: {}, tunings: {} }
+                console.log("Loaded voicing tolerance defaults: "
+                    + Object.keys(defaultVoicingToleranceMap.modes || {}).length + " mode default(s), "
+                    + Object.keys(defaultVoicingToleranceMap.tunings || {}).length + " tuning override(s)")
             }
         } catch (e) {
-            console.log("Error loading voicing tolerances: " + e)
-            voicingToleranceMap = { modes: {}, tunings: {} }
+            console.log("Error loading voicing tolerance defaults: " + e)
+            defaultVoicingToleranceMap = { modes: {}, tunings: {} }
         }
+        // User edits (sparse, written by Settings UI).
+        try {
+            var rawUser = userTolerancesFile.read()
+            if (rawUser && rawUser.length > 2) {
+                var data = JSON.parse(rawUser)
+                userVoicingToleranceMap = {
+                    modes: (data && data.modes) || {},
+                    tunings: (data && data.tunings) || {}
+                }
+                console.log("Loaded user tolerance edits: "
+                    + Object.keys(userVoicingToleranceMap.modes).length + " mode(s), "
+                    + Object.keys(userVoicingToleranceMap.tunings).length + " tuning override(s)")
+            }
+        } catch (e) {
+            // No user-tolerances.json — fresh install, stick with defaults.
+            userVoicingToleranceMap = { modes: {}, tunings: {} }
+        }
+        // Effective map = defaults ⊕ user.
+        voicingToleranceMap = ExclusionEngine.mergeTolerances(
+            defaultVoicingToleranceMap, userVoicingToleranceMap)
+    }
+
+    function saveUserTolerances() {
+        try {
+            userTolerancesFile.write(JSON.stringify({
+                version: "v1",
+                modes: userVoicingToleranceMap.modes || {},
+                tunings: userVoicingToleranceMap.tunings || {}
+            }))
+        } catch (e) {
+            console.log("Failed to write user-tolerances.json: " + e)
+        }
+    }
+
+    // Set a single dimension override for (tuning, mode). Pass tuning=""
+    // to edit the mode-level default (applies to all tunings). Value is
+    // the new value; pass null to clear the user override and revert
+    // to the file default for that dimension.
+    function setVoicingTolerance(tuning, mode, dimension, value) {
+        if (!mode || !dimension) return
+        // Build a mutable clone to drop into the user map.
+        var next = {
+            modes: {},
+            tunings: {}
+        }
+        // Copy current user-edit shape.
+        for (var m in (userVoicingToleranceMap.modes || {})) {
+            next.modes[m] = {}
+            var src = userVoicingToleranceMap.modes[m]
+            for (var k in src) next.modes[m][k] = src[k]
+        }
+        for (var t in (userVoicingToleranceMap.tunings || {})) {
+            next.tunings[t] = {}
+            for (var tm in userVoicingToleranceMap.tunings[t]) {
+                next.tunings[t][tm] = {}
+                var src2 = userVoicingToleranceMap.tunings[t][tm]
+                for (var k2 in src2) next.tunings[t][tm][k2] = src2[k2]
+            }
+        }
+        // Place the edit.
+        var target
+        if (tuning && tuning.length > 0) {
+            if (!next.tunings[tuning]) next.tunings[tuning] = {}
+            if (!next.tunings[tuning][mode]) next.tunings[tuning][mode] = {}
+            target = next.tunings[tuning][mode]
+        } else {
+            if (!next.modes[mode]) next.modes[mode] = {}
+            target = next.modes[mode]
+        }
+        if (value === null || value === undefined) {
+            delete target[dimension]
+        } else {
+            target[dimension] = value
+        }
+        userVoicingToleranceMap = next
+        voicingToleranceMap = ExclusionEngine.mergeTolerances(
+            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        saveUserTolerances()
+        applyExclusionPass()
+    }
+
+    // Reset all user edits for a single (tuning, mode) combo back to the
+    // file defaults. Pass tuning="" to reset the mode-level entry.
+    function resetVoicingTolerances(tuning, mode) {
+        var next = {
+            modes: {},
+            tunings: {}
+        }
+        for (var m in (userVoicingToleranceMap.modes || {})) {
+            if (!tuning && m === mode) continue  // skip the one being reset
+            next.modes[m] = userVoicingToleranceMap.modes[m]
+        }
+        for (var t in (userVoicingToleranceMap.tunings || {})) {
+            next.tunings[t] = {}
+            for (var tm in userVoicingToleranceMap.tunings[t]) {
+                if (tuning && t === tuning && tm === mode) continue  // skip
+                next.tunings[t][tm] = userVoicingToleranceMap.tunings[t][tm]
+            }
+            if (Object.keys(next.tunings[t]).length === 0) delete next.tunings[t]
+        }
+        userVoicingToleranceMap = next
+        voicingToleranceMap = ExclusionEngine.mergeTolerances(
+            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        saveUserTolerances()
+        applyExclusionPass()
     }
 
     // Apply the exclusion engine in-place: attach _excludedReason to each
@@ -3012,6 +3125,27 @@ MuseScore {
             )
             voicingOverrideCount: Object.keys(chordLibrary.userVoicingOverrides || {}).length
             onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
+            // #216 — per-dimension tolerance editor
+            voicingToleranceMap: chordLibrary.voicingToleranceMap
+            tuningIdList: chordLibrary.tuningList
+            tuningDisplayList: {
+                var labels = []
+                for (var i = 0; i < chordLibrary.tuningList.length; i++) {
+                    var slug = chordLibrary.tuningList[i]
+                    labels.push(chordLibrary.tuningLabels[slug] || slug)
+                }
+                return labels
+            }
+            modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
+            modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+            tolEditMode: chordLibrary.activeMode
+            tolEditTuning: ""
+            onVoicingToleranceChanged: function(tuning, mode, dimension, value) {
+                chordLibrary.setVoicingTolerance(tuning, mode, dimension, value)
+            }
+            onVoicingTolerancesResetRequested: function(tuning, mode) {
+                chordLibrary.resetVoicingTolerances(tuning, mode)
+            }
             builtInTunings: chordLibrary.builtInTunings
             saveTuningFn: function(name, pitches, numStrings, originalSlug) {
                 try {

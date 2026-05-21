@@ -213,6 +213,60 @@ function evaluateExclusion(voicing, tolerances, userOverrides, opts) {
     return null
 }
 
+// Merge a user-edits tolerance map onto a base (config) map, producing the
+// effective map consumed by resolveTolerances (#216). The user map is sparse —
+// only dimensions the user has explicitly set appear in it. Dimensions absent
+// from the user map fall through to the base values.
+//
+// Both maps have the shape:
+//   { modes: { <modeId>: { ...dimension overrides... } },
+//     tunings: { <tuningSlug>: { <modeId>: { ... } } } }
+//
+// Merge is dimension-level (the user object for a (tuning, mode) replaces
+// individual dimension entries on top of the base entry for that combo).
+function mergeTolerances(base, user) {
+    var out = { modes: {}, tunings: {} }
+    if (!base) base = {}
+    if (!user) user = {}
+    // modes
+    var baseModes = base.modes || {}
+    var userModes = user.modes || {}
+    var modeKeys = {}
+    for (var bm in baseModes) modeKeys[bm] = true
+    for (var um in userModes) modeKeys[um] = true
+    for (var m in modeKeys) {
+        var merged = {}
+        var b = baseModes[m] || {}
+        for (var bk in b) merged[bk] = b[bk]
+        var u = userModes[m] || {}
+        for (var uk in u) merged[uk] = u[uk]
+        out.modes[m] = merged
+    }
+    // tunings
+    var baseTunings = base.tunings || {}
+    var userTunings = user.tunings || {}
+    var tuningKeys = {}
+    for (var bt in baseTunings) tuningKeys[bt] = true
+    for (var ut in userTunings) tuningKeys[ut] = true
+    for (var t in tuningKeys) {
+        out.tunings[t] = {}
+        var baseT = baseTunings[t] || {}
+        var userT = userTunings[t] || {}
+        var tModeKeys = {}
+        for (var bm2 in baseT) tModeKeys[bm2] = true
+        for (var um2 in userT) tModeKeys[um2] = true
+        for (var tm in tModeKeys) {
+            var merged2 = {}
+            var bb = baseT[tm] || {}
+            for (var bbk in bb) merged2[bbk] = bb[bbk]
+            var uu = userT[tm] || {}
+            for (var uuk in uu) merged2[uuk] = uu[uuk]
+            out.tunings[t][tm] = merged2
+        }
+    }
+    return out
+}
+
 // Resolve the effective tolerances for (tuning, mode) given a sparse override
 // map. Per-tuning-per-mode entries override per-mode entries, which override
 // the empty-object default.
