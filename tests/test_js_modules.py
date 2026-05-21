@@ -1049,6 +1049,37 @@ class TestChordSelectorModes:
             assertEqual(cmpPick.id, "v-shell", "comping picks shell");
         """)
 
+    def test_difficulty_memoization_one_call_per_voicing(self):
+        # #178: _difficultyFor must call difficultyFn at most once per unique
+        # voicing per sort pass, not twice per comparison.
+        assert_js("ChordSelector.js", """
+            // Build 8 distinct voicings — enough that a sort would normally call
+            // the comparator many times.
+            var voicings = [];
+            for (var i = 0; i < 8; i++) {
+                voicings.push({
+                    id: "v" + i, root: "C", chord_quality: "dom7",
+                    category: "drop2", fret_number: i + 1, mutes: [],
+                    dots: [{string: 5, fret: 1}, {string: 4, fret: 2}],
+                    intervals: ["1", "3", "b7"], notes: ["C", "E", "Bb"],
+                    strings: 6, open: [], suitableModes: ["chord-melody"]
+                });
+            }
+            var calls = {};
+            var difficultyFn = function(v) {
+                calls[v.id] = (calls[v.id] || 0) + 1;
+                return { tier: "standard", score: 10 };
+            };
+            findBestVoicing(voicings, "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0},
+                difficultyFn: difficultyFn
+            });
+            // Each voicing's difficulty should be computed exactly once.
+            for (var k = 0; k < 8; k++) {
+                assertEqual(calls["v" + k], 1, "v" + k + " called once");
+            }
+        """)
+
 
 # === IRealParser.js ===
 
