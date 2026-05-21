@@ -19,6 +19,7 @@ import "model/BackupManager.js" as BackupManager
 import "model/StyleComposer.js" as StyleComposer
 import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
+import "model/RevoiceMemory.js" as RevoiceMemory
 
 MuseScore {
     id: chordLibrary
@@ -148,6 +149,11 @@ MuseScore {
     }
 
     FileIO {
+        id: revoiceMemoryFile  // #197 — per-chord voicing choice persistence
+        source: Qt.resolvedUrl("revoice-memory.json")
+    }
+
+    FileIO {
         id: backupFile   // (#172) user-data backup / restore
     }
 
@@ -238,6 +244,12 @@ MuseScore {
     // plugin/data/curated-shapes.json on startup; passed to BatchEngine which
     // forwards it through to ChordSelector._scoreCandidate.
     property var curatedShapeLookup: ({})
+
+    // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
+    // see RevoiceMemory.js for the on-disk shape. The "current scope" is
+    // derived from (curScore.path, activeMode, activeStyle, selectedTuning).
+    property var revoiceMemory: ({ version: "v1", scopes: {} })
+    readonly property int revoiceMemoryMaxBytes: 100000  // 100KB cap (AC #4)
     property var standardVoicingsData: []  // backup of the standard library for tuning switches
     property bool usingTuningVoicings: false  // true when tuning-specific voicings are loaded
     // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
@@ -441,6 +453,53 @@ MuseScore {
         } catch (e) {
             console.log("Error loading curated shapes: " + e)
         }
+    }
+
+    // === Per-chord re-voice memory (#197) ===
+
+    function loadRevoiceMemory() {
+        try {
+            var raw = revoiceMemoryFile.read()
+            revoiceMemory = RevoiceMemory.parseMemory(raw)
+            console.log("Loaded revoice memory: "
+                + Object.keys(revoiceMemory.scopes).length + " scope(s)")
+        } catch (e) {
+            console.log("No revoice memory; starting fresh")
+            revoiceMemory = { version: "v1", scopes: {} }
+        }
+    }
+
+    function saveRevoiceMemory() {
+        try {
+            RevoiceMemory.pruneToSize(revoiceMemory, revoiceMemoryMaxBytes)
+            revoiceMemoryFile.write(JSON.stringify(revoiceMemory))
+        } catch (e) {
+            console.log("Error saving revoice memory: " + e)
+        }
+    }
+
+    function currentRevoiceScopeKey() {
+        // Score path may be empty for unsaved scores; RevoiceMemory uses
+        // "<no-path>" in that case — saved choices share a scope across all
+        // unsaved scores under the same axes. Acceptable per ticket Assumptions.
+        var scorePath = (curScore && curScore.path) ? curScore.path : ""
+        return RevoiceMemory.buildScopeKey(scorePath, activeMode, _activeProfileId, selectedTuning)
+    }
+
+    function revoiceMemoryGet(chordSymbol) {
+        return RevoiceMemory.getChoice(revoiceMemory, currentRevoiceScopeKey(), chordSymbol)
+    }
+
+    function revoiceMemoryRecord(chordSymbol, voicingId) {
+        RevoiceMemory.recordChoice(revoiceMemory, currentRevoiceScopeKey(), chordSymbol, voicingId)
+        saveRevoiceMemory()
+    }
+
+    function clearRevoiceMemoryForCurrentScope() {
+        RevoiceMemory.clearScope(revoiceMemory, currentRevoiceScopeKey())
+        saveRevoiceMemory()
+        statusMsg.text = "Cleared saved voicing choices for this score"
+        statusMsg.color = theme.successText
     }
 
     function setActiveMode(modeId) {
@@ -810,6 +869,9 @@ MuseScore {
         modeConfig: chordLibrary.currentModeConfig()
         // Curated shape boost (#194 Phase 2a)
         curatedLookup: chordLibrary.curatedShapeLookup
+        // Per-chord re-voice memory (#197)
+        revoiceMemoryGetFn: function(chordSymbol) { return chordLibrary.revoiceMemoryGet(chordSymbol) }
+        revoiceMemoryRecordFn: function(chordSymbol, voicingId) { chordLibrary.revoiceMemoryRecord(chordSymbol, voicingId) }
         // Section-aware mode resolution (#167)
         modeIdResolverFn: function(chordIdx) { return chordLibrary.modeForChord(chordIdx) }
         modeConfigResolverFn: function(chordIdx) { return chordLibrary.modeConfigForChord(chordIdx) }
@@ -876,6 +938,7 @@ MuseScore {
         loadProfiles()
         loadModes()
         loadCuratedShapes()
+        loadRevoiceMemory()
         loadSettings()
         loadTuningStringCount()
         if (!dataLoaded) {
@@ -3073,6 +3136,7 @@ MuseScore {
             onReharmSelected: function(newRoot, newQuality) {
                 batchEngine.applyReharm(newRoot, newQuality)
             }
+            onClearSavedChoicesClicked: chordLibrary.clearRevoiceMemoryForCurrentScope()
         }
 
         // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===

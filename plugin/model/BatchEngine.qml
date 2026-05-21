@@ -58,6 +58,12 @@ Item {
     // wires the parsed curated-shapes.json on startup.
     property var curatedLookup: ({})
 
+    // Per-chord re-voice memory (#197). Both null when memory is disabled.
+    // getter: (chordSymbol) -> voicingId-or-null
+    // recorder: (chordSymbol, voicingId) -> void (caller persists)
+    property var revoiceMemoryGetFn: null
+    property var revoiceMemoryRecordFn: null
+
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
     property var batchQueue: []
@@ -203,6 +209,11 @@ Item {
         var item = batchChords[batchIndex - 1]
         if (!item) return
         item.voicing = voicing
+
+        // Persist alt selection for next session (#197).
+        if (revoiceMemoryRecordFn && voicing.id) {
+            revoiceMemoryRecordFn(item.text, voicing.id)
+        }
 
         // Update clipboard
         var xml = generateXmlForVoicing(voicing, item.root)
@@ -371,6 +382,18 @@ Item {
                             // Pass the about-to-be-assigned chord index so section-aware
                             // mode resolution (#167) picks the right mode for each chord.
                             var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
+                            // Per-chord re-voice memory (#197). If the user picked
+                            // a specific voicing for this chord-symbol last time
+                            // under the same (mode, style, tuning), restore it.
+                            if (voicing && revoiceMemoryGetFn) {
+                                var savedId = revoiceMemoryGetFn(text)
+                                if (savedId) {
+                                    var alts = findAllVoicings(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
+                                    for (var sai = 0; sai < alts.length; sai++) {
+                                        if (alts[sai].id === savedId) { voicing = alts[sai]; break }
+                                    }
+                                }
+                            }
                             if (voicing) {
                                 chords.push({
                                     text: text,
@@ -561,6 +584,11 @@ Item {
 
         item._warnings = warnings
         item.voicing = newVoicing
+
+        // Persist the user's choice for next session (#197).
+        if (revoiceMemoryRecordFn && newVoicing.id) {
+            revoiceMemoryRecordFn(item.text, newVoicing.id)
+        }
 
         // Regenerate clipboard XML
         var xml = generateXmlForVoicing(newVoicing, item.root)

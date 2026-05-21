@@ -50,6 +50,7 @@ ColumnLayout {
     signal bassStringClicked(int bassStr)
     // Section-based mode (#167)
     signal sectionsChanged(var sections)
+    signal clearSavedChoicesClicked()  // #197 — wipe revoice memory for current scope
 
     // Section data + mode list (wired from parent)
     property var scoreSections: []
@@ -1005,6 +1006,15 @@ ColumnLayout {
             ToolTip.visible: hovered
             ToolTip.text: "Re-select voicing with melody, bass note, and/or category override"
             onClicked: emitRevoice()
+        }
+
+        Button {
+            // #197 — wipe per-chord choices for this (score, mode, style, tuning) scope
+            text: "Clear saved"
+            font.pixelSize: 10
+            ToolTip.visible: hovered
+            ToolTip.text: "Forget all per-chord voicing choices saved for this score"
+            onClicked: walkthroughPanel.clearSavedChoicesClicked()
         }
     }
 
