@@ -1001,6 +1001,75 @@ class TestRevoiceMemory:
         """)
 
 
+# === ComparisonTray.js — side-by-side voicing comparison (#196) ===
+
+
+class TestComparisonTray:
+    """Test ComparisonTray.js FIFO + dedup behavior."""
+
+    def test_empty_tray_starts_empty(self):
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            assertEqual(t.length, 0, "tray empty");
+        """)
+
+    def test_add_appends_voicing(self):
+        assert_js("ComparisonTray.js", """
+            var t = add(emptyTray(), { id: "v1", name: "Shell" });
+            assertEqual(t.length, 1, "one entry");
+            assertEqual(t[0].id, "v1", "by id");
+        """)
+
+    def test_add_skips_duplicates_by_id(self):
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            t = add(t, { id: "v1" });
+            t = add(t, { id: "v1" });
+            assertEqual(t.length, 1, "duplicate add ignored");
+        """)
+
+    def test_comparison_tray_evicts_oldest_on_fourth(self):
+        # The ticket's named falsifier (#196): adding a 4th voicing must
+        # evict the first. Capacity is 3.
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            t = add(t, { id: "v1" });
+            t = add(t, { id: "v2" });
+            t = add(t, { id: "v3" });
+            assertEqual(t.length, 3, "at capacity");
+            t = add(t, { id: "v4" });
+            assertEqual(t.length, 3, "still at capacity after 4th add");
+            assertEqual(t[0].id, "v2", "v1 evicted (FIFO)");
+            assertEqual(t[1].id, "v3", "v3 shifted");
+            assertEqual(t[2].id, "v4", "v4 appended");
+        """)
+
+    def test_remove_at_drops_specific_entry(self):
+        assert_js("ComparisonTray.js", """
+            var t = [{ id: "a" }, { id: "b" }, { id: "c" }];
+            t = removeAt(t, 1);
+            assertEqual(t.length, 2, "one removed");
+            assertEqual(t[0].id, "a", "first kept");
+            assertEqual(t[1].id, "c", "third kept");
+        """)
+
+    def test_clear_empties_tray(self):
+        # Falsifier for the Clear AC.
+        assert_js("ComparisonTray.js", """
+            var t = [{ id: "a" }, { id: "b" }, { id: "c" }];
+            t = clear();
+            assertEqual(t.length, 0, "tray cleared");
+        """)
+
+    def test_contains_reports_membership(self):
+        assert_js("ComparisonTray.js", """
+            var v = { id: "v1" };
+            assert(!contains([], v), "empty doesn't contain");
+            assert(contains([v], v), "contains by reference");
+            assert(contains([{ id: "v1" }], v), "contains by id even if different ref");
+        """)
+
+
 # === StyleComposer.js — style composition (#162) ===
 
 
