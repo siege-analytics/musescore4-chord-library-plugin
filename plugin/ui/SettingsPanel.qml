@@ -5,13 +5,13 @@ import QtQuick.Layouts 1.15
 // SettingsPanel.qml — Settings tab UI (Tab 5) for the Chord Library plugin.
 // Extracted from ChordLibrary.qml (A5, #98). Redesigned with sub-tabs (#142).
 //
-// Sub-tabs: General | Tuning | Scales | Contexts
+// Sub-tabs: General | Tuning | Scales | Profiles
+// (Contexts sub-tab retired in #184 alongside the context axis itself.)
 //
 // Input state groups: tuning, theme
 // Input properties: diagramPlacement, builtInTunings
 // Signals: placementChanged(placement), editTuningRequested(slug),
 //          deleteTuningRequested(slug), moveTuningRequested(slug, direction),
-//          createContextRequested(code, name, strings),
 //          scaleAdded(jsonData), scaleUpdated(jsonData), scaleDeleted(scaleId),
 //          chordScaleMappingChanged(quality, scaleIdsJson),
 //          customQualityAdded(qualityName), customQualityRemoved(qualityName)
@@ -55,7 +55,7 @@ Item {
     signal createTuningRequested(string name, string pitches, int numStrings)
     signal importTuningRequested(string path)
     signal browseTuningRequested(var targetField)
-    signal createContextRequested(string code, string name, int strings, string linkedTuning)
+    // createContextRequested retired in #184 (Contexts sub-tab removed)
 
     // --- Scale signals ---
     signal scaleAdded(string jsonData)
@@ -64,10 +64,6 @@ Item {
     signal chordScaleMappingChanged(string quality, string scaleIdsJson)
     signal customQualityAdded(string qualityName)
     signal customQualityRemoved(string qualityName)
-
-    // --- Context creation status ---
-    property string contextStatus: ""
-    property color contextStatusColor: "black"
 
     // --- Scale status ---
     property string scaleStatus: ""
@@ -124,7 +120,6 @@ Item {
             TabButton { text: "Tuning"; font.pixelSize: 10 }
             TabButton { text: "Scales"; font.pixelSize: 10 }
             TabButton { text: "Profiles"; font.pixelSize: 10 }
-            TabButton { text: "Contexts"; font.pixelSize: 10 }
         }
 
         // === Sub-tab content ===
@@ -1653,129 +1648,6 @@ Item {
                 }
             }
 
-            // ──────────────────────────────────────────
-            // SUB-TAB 4: Contexts (Custom contexts)
-            // ──────────────────────────────────────────
-            Flickable {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                contentHeight: contextsColumn.implicitHeight
-                clip: true
-                flickableDirection: Flickable.VerticalFlick
-                ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
-                boundsBehavior: Flickable.StopAtBounds
-
-                ColumnLayout {
-                    id: contextsColumn
-                    width: parent.width - 16
-                    spacing: 12
-
-                    Label {
-                        text: "CUSTOM CONTEXTS"
-                        font.pixelSize: 11
-                        font.bold: true
-                        Layout.fillWidth: true
-                    }
-
-                    Label {
-                        text: "Create a voicing context (e.g. Solo Guitar, Bass Duo):"
-                        font.pixelSize: 10
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                    }
-
-                    RowLayout {
-                        Layout.fillWidth: true
-                        spacing: 4
-
-                        ComboBox {
-                            id: contextTypeCombo
-                            model: ["CM", "CV"]
-                            implicitWidth: 60
-                            font.pixelSize: 10
-                        }
-
-                        SpinBox {
-                            id: contextStringsSpin
-                            editable: true
-                            from: 4
-                            to: 12
-                            value: 7
-                            implicitWidth: 75
-                            font.pixelSize: 10
-                        }
-
-                        TextField {
-                            id: contextNameField
-                            Layout.fillWidth: true
-                            font.pixelSize: 10
-                            placeholderText: "Display name (e.g. Solo Guitar)"
-                            selectByMouse: true
-                        }
-                    }
-
-                    RowLayout {
-                        Layout.fillWidth: true
-                        spacing: 4
-
-                        Label {
-                            text: "Link tuning:"
-                            font.pixelSize: 9
-                            color: theme.textMuted
-                        }
-
-                        ComboBox {
-                            id: contextTuningCombo
-                            model: {
-                                var items = ["(none)"]
-                                if (tuning && tuning.tuningList) {
-                                    for (var i = 0; i < tuning.tuningList.length; i++) {
-                                        items.push(tuning.tuningLabels[tuning.tuningList[i]] || tuning.tuningList[i])
-                                    }
-                                }
-                                return items
-                            }
-                            Layout.fillWidth: true
-                            font.pixelSize: 10
-                        }
-                    }
-
-                    RowLayout {
-                        spacing: 6
-
-                        Button {
-                            text: "Create Context"
-                            font.pixelSize: 10
-                            onClicked: {
-                                var code = contextTypeCombo.currentText + contextStringsSpin.value
-                                var name = contextNameField.text.trim()
-                                if (!name) name = contextTypeCombo.currentText + " " + contextStringsSpin.value + "-str"
-                                var linkedTuning = ""
-                                if (contextTuningCombo.currentIndex > 0 && tuning.tuningList) {
-                                    linkedTuning = tuning.tuningList[contextTuningCombo.currentIndex - 1] || ""
-                                }
-                                settingsPanel.createContextRequested(code, name, contextStringsSpin.value, linkedTuning)
-                            }
-                        }
-
-                        Label {
-                            text: "Code: " + contextTypeCombo.currentText + contextStringsSpin.value
-                            font.pixelSize: 9
-                            color: "#888"
-                        }
-                    }
-
-                    Label {
-                        visible: settingsPanel.contextStatus.length > 0
-                        text: settingsPanel.contextStatus
-                        color: settingsPanel.contextStatusColor
-                        font.pixelSize: 10
-                        font.bold: true
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                    }
-                }
-            }
         }
     }
 }

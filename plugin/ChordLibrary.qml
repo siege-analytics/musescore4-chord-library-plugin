@@ -127,11 +127,6 @@ MuseScore {
     }
 
     FileIO {
-        id: contextsConfigFile
-        source: Qt.resolvedUrl("config/contexts.json")
-    }
-
-    FileIO {
         id: scalesConfigFile
         source: Qt.resolvedUrl("config/scales.json")
     }
@@ -288,7 +283,6 @@ MuseScore {
     // Score-level section overrides (#167). Each entry: { startIdx: int, mode: string, name: string }.
     // The earliest-matching entry with startIdx <= chord index wins. Empty array = whole score uses activeMode.
     property var scoreSections: []
-    property var _contextTuningLinks: ({}) // context code → tuning slug (from contexts.json)
     property string searchText: ""
 
     // Voice leading state
@@ -322,55 +316,30 @@ MuseScore {
         return result
     }
 
-    // Context display names — loaded from config/contexts.json, extensible
-    property var contextLabels: ({})
-    property var contextLabelsShort: ({})
-    // Context string counts — enforced as a ceiling on voicing selection
+    // Context display labels — legacy, baked in directly after #174/#184 retirement.
+    // The plugin no longer surfaces a context picker; these labels exist only
+    // for the few code paths that still group voicings by suitableModes (e.g.
+    // FilterEngine's string-count cap). Removing them entirely is its own
+    // future refactor; until then they're held as constants.
+    property var contextLabels: ({
+        "CM6": "Chord Melody 6-String",
+        "CM7": "Chord Melody 7-String",
+        "CV6": "Chord + Voice 6-String",
+        "CV7": "Chord + Voice 7-String",
+        "CM4": "Chord Melody 4-String",
+        "CV4": "Chord + Voice 4-String",
+        "CM5": "Chord Melody 5-String",
+        "CV5": "Chord + Voice 5-String"
+    })
+    property var contextLabelsShort: ({
+        "CM6": "CM 6", "CM7": "CM 7",
+        "CV6": "CV 6", "CV7": "CV 7",
+        "CM4": "CM 4", "CV4": "CV 4",
+        "CM5": "CM 5", "CV5": "CV 5"
+    })
+    // Context string counts — still used by ChordSelector as a max-strings cap.
     property var contextStringCounts: ({"CM4": 4, "CV4": 4, "CM5": 5, "CV5": 5, "CM6": 6, "CV6": 6, "CM7": 7, "CV7": 7})
 
-    function loadContextLabels() {
-        // Defaults (used if config file not found)
-        var labels = {
-            "CM6": "Chord Melody 6-String",
-            "CM7": "Chord Melody 7-String",
-            "CV6": "Chord + Voice 6-String",
-            "CV7": "Chord + Voice 7-String",
-            "CM4": "Chord Melody 4-String",
-            "CV4": "Chord + Voice 4-String",
-            "CM5": "Chord Melody 5-String",
-            "CV5": "Chord + Voice 5-String"
-        }
-        var shorts = {
-            "CM6": "CM 6", "CM7": "CM 7",
-            "CV6": "CV 6", "CV7": "CV 7",
-            "CM4": "CM 4", "CV4": "CV 4",
-            "CM5": "CM 5", "CV5": "CV 5"
-        }
-        var strCounts = {"CM6": 6, "CM7": 7, "CV6": 6, "CV7": 7}
-
-        try {
-            var raw = contextsConfigFile.read()
-            if (raw && raw.length > 2) {
-                var config = JSON.parse(raw)
-                var ctxs = config.contexts || {}
-                var tuningLinks = {}
-                for (var code in ctxs) {
-                    if (ctxs[code].name) labels[code] = ctxs[code].name
-                    if (ctxs[code].short) shorts[code] = ctxs[code].short
-                    if (ctxs[code].strings) strCounts[code] = ctxs[code].strings
-                    if (ctxs[code].tuning) tuningLinks[code] = ctxs[code].tuning
-                }
-                _contextTuningLinks = tuningLinks
-                console.log("Loaded context labels from config (" + Object.keys(ctxs).length + " contexts)")
-            }
-        } catch (e) {
-            console.log("Using default context labels: " + e)
-        }
-
-        contextLabels = labels
-        contextLabelsShort = shorts
-        contextStringCounts = strCounts
-    }
 
     // === Scale config loading/saving (#142) ===
 
@@ -736,72 +705,10 @@ MuseScore {
         saveSettings()
     }
 
-    // === Custom context creation (#132) ===
-
-    function createCustomContext(code, name, strings, linkedTuning) {
-        // Update runtime state — use Object.keys() to avoid QML for...in issues
-        var labels = {}
-        var oldLabels = contextLabels || {}
-        var lKeys = Object.keys(oldLabels)
-        for (var ki = 0; ki < lKeys.length; ki++) labels[lKeys[ki]] = oldLabels[lKeys[ki]]
-        labels[code] = name
-        contextLabels = labels
-
-        var shorts = {}
-        var oldShorts = contextLabelsShort || {}
-        var sKeys = Object.keys(oldShorts)
-        for (var si = 0; si < sKeys.length; si++) shorts[sKeys[si]] = oldShorts[sKeys[si]]
-        shorts[code] = code.replace(/[0-9]+$/, "") + " " + strings
-        contextLabelsShort = shorts
-
-        var counts = {}
-        var oldCounts = contextStringCounts || {}
-        var cKeys = Object.keys(oldCounts)
-        for (var ci = 0; ci < cKeys.length; ci++) counts[cKeys[ci]] = oldCounts[cKeys[ci]]
-        counts[code] = strings
-        contextStringCounts = counts
-
-        // Store tuning link (#148)
-        if (linkedTuning) {
-            var links = {}
-            var oldLinks = _contextTuningLinks || {}
-            var ltKeys = Object.keys(oldLinks)
-            for (var li = 0; li < ltKeys.length; li++) links[ltKeys[li]] = oldLinks[ltKeys[li]]
-            links[code] = linkedTuning
-            _contextTuningLinks = links
-        }
-
-        // Add to context list if not already present
-        if (contextList.indexOf(code) < 0) {
-            var list = contextList.slice()
-            list.push(code)
-            contextList = list
-        }
-
-        // Update contexts.json on disk
-        try {
-            var raw = contextsConfigFile.read()
-            var config = (raw && raw.length > 2) ? JSON.parse(raw) : { contexts: {} }
-            config.contexts[code] = {
-                name: name,
-                short: shorts[code],
-                description: "Custom context created by user",
-                strings: strings,
-                tuning: linkedTuning || ""
-            }
-            contextsConfigFile.write(JSON.stringify(config, null, 2))
-            settingsPanel.contextStatus = "Created: " + name + " (" + code + ")"
-            settingsPanel.contextStatusColor = "#27ae60"
-        } catch (e) {
-            settingsPanel.contextStatus = "Failed to save: " + e
-            settingsPanel.contextStatusColor = "#e74c3c"
-        }
-
-        // Rebuild filter lists so the new context appears
-        rebuildFilterLists()
-        refreshFilteredTunings()
-        saveSettings()
-    }
+    // Custom context creation retired in #184 (followup to #174).
+    // Mode + tuning replace what the context axis used to do. The hardcoded
+    // context labels above remain for the few code paths that still group
+    // voicings by string count.
 
     // === Tool feedback (uses toolStatus label + console) ===
 
@@ -935,7 +842,6 @@ MuseScore {
     }
 
     onRun: {
-        loadContextLabels()
         loadScalesConfig()
         loadProfiles()
         loadModes()
@@ -2972,9 +2878,7 @@ MuseScore {
             }
             onImportTuningRequested: function(path) { importTuning(path) }
             onBrowseTuningRequested: function(field) { openFileBrowser("open", field, null) }
-            onCreateContextRequested: function(code, name, strings, linkedTuning) {
-                createCustomContext(code, name, strings, linkedTuning)
-            }
+            // createCustomContext handler removed in #184 — Contexts sub-tab retired.
 
             // --- Scale signals (#142) ---
             onScaleAdded: function(jsonData) {
@@ -3194,19 +3098,13 @@ MuseScore {
             onModeChanged: function(modeId) { chordLibrary.setActiveMode(modeId) }
             onSearchChanged: function(text) { chordLibrary.searchText = text; chordLibrary.applyFilters() }
             onContextFilterChanged: function(code) {
+                // Context dropdown is hidden as of #174 Stage 2; the signal is
+                // still emitted by the hidden ComboBox on model rebuild but no
+                // longer needs to switch tunings. The auto-link path retired
+                // in #184 alongside contexts.json.
                 chordLibrary.filterContext = code
                 chordLibrary.refreshFilteredTunings()
                 chordLibrary.applyFilters()
-                // Auto-switch tuning if context has a linked tuning (#148)
-                if (code && chordLibrary._contextTuningLinks[code]) {
-                    var linkedTuning = chordLibrary._contextTuningLinks[code]
-                    if (linkedTuning !== chordLibrary.selectedTuning) {
-                        chordLibrary.selectedTuning = linkedTuning
-                        chordLibrary.loadTuningStringCount()
-                        chordLibrary.loadTuningVoicings()
-                        chordLibrary.saveSettings()
-                    }
-                }
             }
             onCategoryFilterChanged: function(text) { chordLibrary.filterCategory = text; chordLibrary.applyFilters() }
             onQualityFilterChanged: function(text) { chordLibrary.filterQuality = text; chordLibrary.applyFilters() }
