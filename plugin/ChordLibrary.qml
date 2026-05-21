@@ -238,8 +238,8 @@ MuseScore {
     property alias calcMaxMuted: calcState.maxMuted
     property alias calcMaxPerQuality: calcState.maxPerQuality
 
-    // Default settings
-    property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
+    // Default settings (#217 — jsonUrl removed; voicings come from the
+    // calculator and user-voicings.json, not from a remote URL).
     property string diagramPlacement: "above"  // "above" or "below"
     property var filteredTuningList: []
     property var filteredTuningDisplayList: []
@@ -860,7 +860,7 @@ MuseScore {
                 if (builtInTunings.indexOf(tuningList[i]) < 0) customTuningSlugs.push(tuningList[i])
             }
             var settings = {
-                voicingUrl: jsonUrl, diagramPlacement: diagramPlacement,
+                diagramPlacement: diagramPlacement,
                 tuning: selectedTuning, customTunings: DataCache.getCustomTuningsList(
                     tuningList, builtInTunings, tuningLabels, tuningStringCounts),
                 tuningOrder: tuningList.slice(),
@@ -1224,19 +1224,11 @@ MuseScore {
         startupTuningTimer.start()
     }
 
-    // #211 Stage 3 — voicings.json is no longer the runtime source for
-    // standard tuning. The functions below are kept as no-ops so the
-    // surviving UI handlers (URL Apply, Reset, Refresh, Reset Data,
-    // import-merge, fixDuplicates) don't crash. Migrating those callers to
-    // calculator-based actions is a follow-up.
-    function loadFromCache() {
-        console.log("loadFromCache is deprecated (#211 Stage 3); ignoring")
-        return false
-    }
-
-    function saveToCache() {
-        console.log("saveToCache is deprecated (#211 Stage 3); use saveUserVoicings()")
-    }
+    // #217 — loadFromCache / saveToCache / fetchVoicings removed.
+    // voicings.json is no longer a runtime source; the candidate pool is
+    // calculator output ∪ user-voicings.json. Imports go through
+    // saveUserVoicings(); pool regeneration goes through
+    // loadCalculatedStandard() + rebuildStandardPool().
 
     // === Settings persistence ===
 
@@ -1244,7 +1236,7 @@ MuseScore {
         try {
             var raw = settingsFile.read()
             var s = DataCache.parseSettings(raw)
-            if (s.voicingUrl) jsonUrl = s.voicingUrl
+            // #217 — s.voicingUrl ignored (jsonUrl property removed)
             if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
             if (s.tuning) selectedTuning = s.tuning
             if (s.defaultContext) filterContext = s.defaultContext
@@ -1307,7 +1299,7 @@ MuseScore {
                 userVoicingOverrides = s.userVoicingOverrides
             }
             refreshFilteredTunings()
-            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
+            console.log("Settings loaded: placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
             console.log("No saved settings found, using defaults")
         }
@@ -1315,7 +1307,7 @@ MuseScore {
 
     function saveSettings() {
         var s = {
-            voicingUrl: jsonUrl,
+            // #217 — voicingUrl removed (jsonUrl property gone).
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
             defaultContext: filterContext,
@@ -1664,7 +1656,10 @@ MuseScore {
             rebuildFilterLists()
             refreshFilteredTunings()
             applyFilters()
-            saveToCache()
+            // #217 — saveToCache removed; voicingsData is a derived union of
+            // calculator output + userVoicings, so this filter is in-memory only.
+            // A future ticket could route the removed entries to a userVoicings
+            // delete if they came from there.
             settingsPanel.hygieneStatus = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
             settingsPanel.hygieneStatusColor = theme.successText
         } else {
@@ -1719,19 +1714,6 @@ MuseScore {
             settingsPanel.saveStatus = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
             settingsPanel.saveStatusColor = theme.errorText
         }
-    }
-
-    // === Data fetching ===
-
-    // #211 Stage 3 — voicings.json is no longer a runtime source. The
-    // calculator generates the standard pool; users append to user-voicings.json.
-    // fetchVoicings is kept as a no-op so existing Import-panel UI handlers
-    // don't crash; if a user clicks "Apply URL" or "Refresh", the request is
-    // ignored with a status message.
-    function fetchVoicings() {
-        statusMsg.text = "URL fetch is deprecated — pool is generated locally"
-        statusMsg.color = theme.textMuted
-        console.log("fetchVoicings is a no-op in #211 Stage 3")
     }
 
     // === Filtering ===
@@ -2541,11 +2523,30 @@ MuseScore {
                 }
             }
 
-            voicingsData = merged
+            // #217 — Import/Merge: route the newly-added voicings to
+            // userVoicings (persisted to user-voicings.json) so they survive
+            // a pool rebuild. Dedupe against the existing union pool by
+            // (signature, chord_quality) so we don't shadow calculator
+            // output or duplicate prior user imports.
+            var existingSigs = {}
+            for (var ei = 0; ei < voicingsData.length; ei++) {
+                var ev = voicingsData[ei]
+                existingSigs[ChordSelector.signatureKey(ev) + "|" + (ev.chord_quality || "")] = true
+            }
+            var nextUser = userVoicings.slice()
+            for (var ui = 0; ui < imported.length; ui++) {
+                var iv = imported[ui]
+                var key = ChordSelector.signatureKey(iv) + "|" + (iv.chord_quality || "")
+                if (existingSigs[key]) continue  // already in pool
+                nextUser.push(iv)
+                existingSigs[key] = true
+            }
+            userVoicings = nextUser
+            saveUserVoicings()
+            rebuildStandardPool()
             rebuildFilterLists()
             refreshFilteredTunings()
-            applyFilters()
-            saveToCache()
+            applyExclusionPass()
 
             if (added > 0) {
                 importPanel.importMergeStatus = "SUCCESS: " + added + " voicings added"
@@ -2884,7 +2885,6 @@ MuseScore {
             theme: theme
 
             // Scalar properties
-            jsonUrl: chordLibrary.jsonUrl
             hasBatchChords: _batchChords.length > 0
 
             // Signal handlers
@@ -2903,34 +2903,24 @@ MuseScore {
                 importPanel._rebuildInProgress = false
             }
 
+            // #217 — Reset All Data now busts the calculator cache and
+            // regenerates the pool from scratch (calculator + user voicings).
+            // URL Apply/Reset/Refresh handlers removed along with their signals.
             onResetRequested: {
                 _tuningVoicingCache = {}
                 standardVoicingsData = []
                 usingTuningVoicings = false
                 dataLoaded = false
-                if (loadFromCache()) {
-                    loadTuningVoicings()
-                }
-                importPanel.rebuildStatus = "Data reset. Loaded " + voicingsData.length + " voicings."
+                // Bust the standard-calculated cache so it regenerates fresh.
+                try { standardCalculatedFile.write("") } catch(e) {}
+                loadCalculatedStandard()
+                loadUserVoicings()
+                rebuildStandardPool()
+                applyExclusionPass()
+                if (selectedTuning !== "standard") loadTuningVoicings()
+                importPanel.rebuildStatus = "Pool regenerated. "
+                    + voicingsData.length + " voicings."
                 importPanel.rebuildStatusColor = theme.successText
-            }
-
-            onUrlApplyRequested: function(url) {
-                jsonUrl = url
-                dataLoaded = false
-                saveSettings()
-                fetchVoicings()
-            }
-            onUrlResetRequested: {
-                var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
-                jsonUrl = defaultUrl
-                dataLoaded = false
-                saveSettings()
-                fetchVoicings()
-            }
-            onRefreshRequested: {
-                dataLoaded = false
-                fetchVoicings()
             }
 
             onImportMergeRequested: function(path) { doImport(path) }
