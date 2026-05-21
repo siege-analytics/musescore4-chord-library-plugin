@@ -579,24 +579,33 @@ MuseScore {
                 settingsPanel.backupStatusColor = theme.errorText
                 return
             }
-            try {
-                var parsed = JSON.parse(xhr.responseText)
-                // Sniff: backup archive has manifest.plugin === "chordlibrary"
-                if (parsed.manifest && parsed.manifest.plugin === "chordlibrary") {
-                    _restoreFromArchive(parsed)
-                    return
+            // Route through BackupManager so version-checking applies to URL
+            // imports the same way it does to file restores (#179).
+            var pres = BackupManager.parseArchive(xhr.responseText)
+            if (pres.ok) {
+                _restoreFromArchive(pres.archive)
+                if (pres.migrated) {
+                    settingsPanel.backupStatus += " (migrated from older archive version)"
                 }
-                // Tuning file: has strings + notes objects with numeric keys
-                if (parsed.strings && parsed.notes && parsed.name) {
-                    _importTuningFromObject(parsed)
-                    return
-                }
-                settingsPanel.backupStatus = "Unrecognised file shape. Expected a tuning or backup-archive JSON."
-                settingsPanel.backupStatusColor = theme.errorText
-            } catch (e) {
-                settingsPanel.backupStatus = "Parse failed: " + String(e)
-                settingsPanel.backupStatusColor = theme.errorText
+                return
             }
+            if (pres.reason === "not-chordlibrary" || pres.reason === "missing-version") {
+                // Could still be a single tuning file. Try sniff path.
+                try {
+                    var parsed = JSON.parse(xhr.responseText)
+                    if (parsed.strings && parsed.notes && parsed.name) {
+                        _importTuningFromObject(parsed)
+                        return
+                    }
+                    settingsPanel.backupStatus = "Unrecognised file shape. Expected a tuning or backup-archive JSON."
+                    settingsPanel.backupStatusColor = theme.errorText
+                } catch (e) {
+                    settingsPanel.backupStatus = "Parse failed: " + String(e)
+                    settingsPanel.backupStatusColor = theme.errorText
+                }
+                return
+            }
+            _reportArchiveError(pres)
         }
         xhr.send()
     }
@@ -667,17 +676,46 @@ MuseScore {
         try {
             backupFile.source = path
             var raw = backupFile.read()
-            var archive = BackupManager.parseArchive(raw)
-            if (!archive) {
-                settingsPanel.backupStatus = "Not a valid chordlibrary backup file"
-                settingsPanel.backupStatusColor = theme.errorText
+            var pres = BackupManager.parseArchive(raw)
+            if (!pres.ok) {
+                _reportArchiveError(pres)
                 return
             }
-            _restoreFromArchive(archive)
+            _restoreFromArchive(pres.archive)
+            if (pres.migrated) {
+                settingsPanel.backupStatus += " (migrated from older archive version)"
+            }
         } catch (e) {
             settingsPanel.backupStatus = "Restore failed: " + String(e)
             settingsPanel.backupStatusColor = theme.errorText
         }
+    }
+
+    // Translate a parseArchive failure into a user-facing message (#179).
+    function _reportArchiveError(pres) {
+        var msg
+        switch (pres.reason) {
+        case "empty":
+            msg = "Backup file is empty"
+            break
+        case "not-json":
+            msg = "Backup file is not valid JSON: " + (pres.detail || "")
+            break
+        case "not-chordlibrary":
+            msg = "Not a chordlibrary backup file"
+            break
+        case "missing-version":
+            msg = "Backup file has no manifest.version (corrupt or pre-v2.2)"
+            break
+        case "unsupported-version":
+            msg = "Backup is from a newer plugin version (" + (pres.detail || "?") +
+                  "). Please update the plugin before restoring."
+            break
+        default:
+            msg = "Restore failed: " + (pres.reason || "unknown error")
+        }
+        settingsPanel.backupStatus = msg
+        settingsPanel.backupStatusColor = theme.errorText
     }
 
     function setProfile(profileId) {
