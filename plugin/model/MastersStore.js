@@ -110,6 +110,54 @@ function principlesFor(store, modeId, tuningSlug) {
     return out
 }
 
+// Collect the union of voicingStyleTags across all principles of one master.
+// Returns a deduped array. Used by the scorer to know which voicing tags to
+// boost when this master is active (#222 Track 3).
+function collectVoicingStyleTags(master) {
+    var seen = {}
+    var out = []
+    if (!master || !master.principles) return out
+    for (var i = 0; i < master.principles.length; i++) {
+        var tags = master.principles[i].voicingStyleTags || []
+        for (var j = 0; j < tags.length; j++) {
+            if (!seen[tags[j]]) {
+                seen[tags[j]] = true
+                out.push(tags[j])
+            }
+        }
+    }
+    return out
+}
+
+// Derive a single tolerance-hints object from a master's principles by
+// folding each principle's tolerance_hints together with "stricter wins"
+// semantics (#222 Track 3). Returns null if no principle declared any
+// hints (signal to skip the overlay entirely).
+function deriveTolerancesFromMaster(master, tightenFn) {
+    if (!master || !master.principles) return null
+    if (!tightenFn) {
+        // Caller forgot to pass the tightener; degrade gracefully by
+        // returning the FIRST hint we find (better than nothing).
+        for (var ii = 0; ii < master.principles.length; ii++) {
+            var h0 = master.principles[ii].tolerance_hints
+            if (h0 && Object.keys(h0).length > 0) return h0
+        }
+        return null
+    }
+    var combined = null
+    for (var i = 0; i < master.principles.length; i++) {
+        var h = master.principles[i].tolerance_hints
+        if (!h || Object.keys(h).length === 0) continue
+        if (combined === null) {
+            combined = {}
+            for (var k0 in h) combined[k0] = h[k0]
+        } else {
+            combined = tightenFn(combined, h)
+        }
+    }
+    return combined
+}
+
 // Summary counts useful for UI badges.
 function counts(store) {
     var c = { masters: 0, principles: 0 }

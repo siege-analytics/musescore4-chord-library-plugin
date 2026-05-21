@@ -1257,6 +1257,112 @@ class TestExclusionEngine:
             assertEqual(m3.modes.comping.maxFret, 10, "null user -> base passes through");
         """)
 
+    def test_tighten_tolerances_ceiling_takes_min(self):
+        assert_js("ExclusionEngine.js", """
+            var base = { maxFret: 12, maxStretch: 6, maxMutedStrings: 3 };
+            var hint = { maxFret: 10, maxStretch: 8, maxMutedStrings: 1 };
+            var t = tightenTolerances(base, hint);
+            assertEqual(t.maxFret, 10, "fret tighter wins");
+            assertEqual(t.maxStretch, 6, "base already tighter wins");
+            assertEqual(t.maxMutedStrings, 1, "mute tighter wins");
+        """)
+
+    def test_tighten_tolerances_floor_takes_max(self):
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances({ minSoundingNotes: 3 }, { minSoundingNotes: 4 });
+            assertEqual(t.minSoundingNotes, 4, "floor tighter wins");
+            t = tightenTolerances({ minSoundingNotes: 5 }, { minSoundingNotes: 4 });
+            assertEqual(t.minSoundingNotes, 5, "base already tighter wins");
+        """)
+
+    def test_tighten_tolerances_booleans_and_enum(self):
+        assert_js("ExclusionEngine.js", """
+            var t1 = tightenTolerances({ requireRootInBass: false }, { requireRootInBass: true });
+            assertEqual(t1.requireRootInBass, true, "any-true tightens");
+            var t2 = tightenTolerances({ allowOpenStrings: true }, { allowOpenStrings: false });
+            assertEqual(t2.allowOpenStrings, false, "any-disallow tightens");
+            var t3 = tightenTolerances({ maxDifficultyTier: "expert" }, { maxDifficultyTier: "standard" });
+            assertEqual(t3.maxDifficultyTier, "standard", "lower tier wins");
+        """)
+
+    def test_tighten_tolerances_excluded_categories_unions(self):
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances(
+                { excludedCategories: ["quartal"] },
+                { excludedCategories: ["extended", "altered"] }
+            );
+            assertEqual(t.excludedCategories.length, 3, "union of three");
+            assert(t.excludedCategories.indexOf("quartal") >= 0, "quartal present");
+            assert(t.excludedCategories.indexOf("extended") >= 0, "extended present");
+            assert(t.excludedCategories.indexOf("altered") >= 0, "altered present");
+        """)
+
+    def test_tighten_tolerances_unknown_dim_replaces(self):
+        # Forward-compat: future dimensions get REPLACED, not silently dropped.
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances({ futureDim: 5 }, { futureDim: 10 });
+            assertEqual(t.futureDim, 10, "unknown dim: hint replaces");
+        """)
+
+    def test_master_style_boost_promotes_matching_voicing(self):
+        # Ticket falsifier — a tagged voicing outscores an equivalent untagged one
+        # when the matching master is active.
+        assert_js("ChordSelector.js", """
+            var tagged = {
+                id: "v-greene", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                voicingStyle: ["greene"]
+            };
+            var untagged = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"], strings: 6
+            };
+            // Without master active: pick either (no signal — equivalent).
+            // With Greene active: tagged voicing wins.
+            var pick = findBestVoicing([untagged, tagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0},
+                masterVoicingStyleTags: ["greene"]
+            });
+            assertEqual(pick.id, "v-greene", "tagged voicing wins under matching master");
+        """)
+
+    def test_no_master_active_is_noop(self):
+        # When no master is active, scoring matches pre-#222 behavior.
+        # A tagged voicing should NOT outscore an equivalent untagged one
+        # just by virtue of being tagged.
+        assert_js("ChordSelector.js", """
+            var tagged = {
+                id: "v-greene", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                voicingStyle: ["greene"]
+            };
+            var untagged = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6
+            };
+            // Same shape, same scoring inputs, no master active.
+            // Sort order is determined by JS engine; either may win.
+            // Important: the BOOST itself should be zero in both cases.
+            var pickWithoutMaster = findBestVoicing([tagged, untagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assert(pickWithoutMaster !== null, "still picks one when no master");
+            // Now with Greene: tagged wins.
+            var pickWithMaster = findBestVoicing([tagged, untagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0},
+                masterVoicingStyleTags: ["greene"]
+            });
+            assertEqual(pickWithMaster.id, "v-greene", "master signal does reach scorer");
+        """)
+
     def test_findbest_skips_excluded_voicings(self):
         # findBestVoicing must not return a voicing with _excludedReason set,
         # even if it would otherwise score highest.
@@ -1572,6 +1678,66 @@ class TestMastersStore:
             var c = counts(sample);
             assertEqual(c.masters, 2, "two masters");
             assertEqual(c.principles, 3, "three principles");
+        """)
+
+    def test_collect_voicing_style_tags_unions_across_principles(self):
+        # #222 Track 3 — master's voicingStyleTags from all principles unioned.
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { voicingStyleTags: ["greene"] },
+                    { voicingStyleTags: ["greene", "shell"] },
+                    { voicingStyleTags: ["drop-2"] }
+                ]
+            };
+            var tags = collectVoicingStyleTags(master);
+            assertEqual(tags.length, 3, "deduped union");
+            assert(tags.indexOf("greene") >= 0, "greene present");
+            assert(tags.indexOf("shell") >= 0, "shell present");
+            assert(tags.indexOf("drop-2") >= 0, "drop-2 present");
+        """)
+
+    def test_derive_tolerances_folds_principle_hints(self):
+        # Combines tolerance_hints across principles using the tightenFn
+        # callback (provided by caller — comes from ExclusionEngine.tightenTolerances).
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { tolerance_hints: { maxFret: 12, minSoundingNotes: 3 } },
+                    { tolerance_hints: { maxFret: 10, minSoundingNotes: 4 } },
+                    { tolerance_hints: {} }  // empty hint -> skipped
+                ]
+            };
+            // Stub tightener: ceiling MIN, floor MAX.
+            var tighten = function(a, b) {
+                var out = {};
+                for (var k in a) out[k] = a[k];
+                for (var k in b) {
+                    if (out[k] === undefined) { out[k] = b[k]; continue; }
+                    if (k === "maxFret") out[k] = Math.min(out[k], b[k]);
+                    else if (k === "minSoundingNotes") out[k] = Math.max(out[k], b[k]);
+                    else out[k] = b[k];
+                }
+                return out;
+            };
+            var d = deriveTolerancesFromMaster(master, tighten);
+            assertEqual(d.maxFret, 10, "tightest fret wins");
+            assertEqual(d.minSoundingNotes, 4, "tightest floor wins");
+        """)
+
+    def test_derive_tolerances_returns_null_when_no_hints(self):
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { voicingStyleTags: ["x"] },  // no tolerance_hints
+                    { tolerance_hints: {} }       // empty
+                ]
+            };
+            var d = deriveTolerancesFromMaster(master, function(){});
+            assertEqual(d, null, "no hints -> null (signal to skip overlay)");
         """)
 
     def test_loads_repo_masters_json(self):

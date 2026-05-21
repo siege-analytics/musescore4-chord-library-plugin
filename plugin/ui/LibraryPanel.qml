@@ -68,6 +68,11 @@ Item {
     property var modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
     property string activeMode: "chord-melody"
 
+    // --- Master style (#222 Track 3) ---
+    property var masterIdList: []         // ["", "van-eps", "ted-greene", ...]
+    property var masterDisplayList: []    // ["(no master)", "George Van Eps", ...]
+    property string activeMasterId: ""
+
     // --- Output signals ---
     signal searchChanged(string text)
     signal contextFilterChanged(string code)
@@ -96,6 +101,7 @@ Item {
     signal scaleFilterChanged(string scaleName)
     signal profileChanged(string profileId)
     signal modeChanged(string modeId)
+    signal masterChanged(string masterId)  // #222 Track 3
 
     // --- Save to Library signals (moved from Settings, #144) ---
     signal captureRequested()
@@ -261,6 +267,48 @@ Item {
                         libraryPanel.modeChanged(libraryPanel.modeIdList[currentIndex])
                     }
                 }
+            }
+        }
+
+        // Master selector (#222 Track 3) — boost voicings tagged with the
+        // selected master's voicingStyleTags + apply principle tolerance hints
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+            visible: libraryPanel.masterDisplayList.length > 1  // only show if any masters loaded
+
+            Label {
+                text: "Master:"
+                font.pixelSize: 10
+                font.italic: true
+                color: theme.textSecondary
+            }
+
+            ComboBox {
+                id: masterCombo
+                model: libraryPanel.masterDisplayList
+                Layout.fillWidth: true
+                font.pixelSize: 10
+                function syncIndex() {
+                    var ml = libraryPanel.masterIdList
+                    if (!ml || !ml.length) return
+                    var idx = ml.indexOf(libraryPanel.activeMasterId || "")
+                    currentIndex = (idx >= 0) ? idx : 0
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
+                onActivated: {
+                    if (currentIndex >= 0 && currentIndex < libraryPanel.masterIdList.length) {
+                        libraryPanel.masterChanged(libraryPanel.masterIdList[currentIndex])
+                    }
+                }
+            }
+
+            Label {
+                visible: libraryPanel.activeMasterId.length > 0
+                text: "(active)"
+                font.pixelSize: 9
+                color: theme.successText || theme.textSecondary
             }
         }
 
