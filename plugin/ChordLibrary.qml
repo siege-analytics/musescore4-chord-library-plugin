@@ -155,6 +155,11 @@ MuseScore {
     }
 
     FileIO {
+        id: standardCalculatedFile  // #209 Stage 1 — cached calculator output for standard tuning
+        source: Qt.resolvedUrl("data/standard-calculated.json")
+    }
+
+    FileIO {
         id: backupFile   // (#172) user-data backup / restore
     }
 
@@ -245,6 +250,11 @@ MuseScore {
     // plugin/data/curated-shapes.json on startup; passed to BatchEngine which
     // forwards it through to ChordSelector._scoreCandidate.
     property var curatedShapeLookup: ({})
+
+    // Calculator output for standard tuning (#209 Stage 1). When non-empty,
+    // unioned with voicingsData by signatureKey to expand the candidate pool.
+    // Cached to data/standard-calculated.json; invalidated by constraints hash.
+    property var calculatedStandardVoicings: []
 
     // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
     // see RevoiceMemory.js for the on-disk shape. The "current scope" is
@@ -454,6 +464,75 @@ MuseScore {
         } catch (e) {
             console.log("Error loading curated shapes: " + e)
         }
+    }
+
+    // === Calculator output for standard tuning (#209 Stage 1) ===
+
+    // Standard tuning's MIDI map. Used by VoicingCalculator.generateAll when
+    // running on standard from a non-standard active tuning. Mirrors plugin/
+    // tunings/standard.json so we don't need to round-trip through FileIO.
+    readonly property var standardTuningMidi: ({
+        "1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40
+    })
+
+    function loadCalculatedStandard() {
+        // Try cache; regenerate if missing or constraints-hash mismatch.
+        var hash = _tuningCacheKey()
+        try {
+            var raw = standardCalculatedFile.read()
+            if (raw && raw.length > 2) {
+                var cached = JSON.parse(raw)
+                if (cached && cached.cacheKey === hash
+                        && cached.voicings && cached.voicings.length > 0) {
+                    calculatedStandardVoicings = cached.voicings
+                    console.log("Loaded " + cached.voicings.length
+                        + " calculated standard voicings (cache hit)")
+                    return
+                }
+            }
+        } catch (e) {
+            // No cache or stale — fall through to regenerate.
+        }
+        // Regenerate.
+        try {
+            console.log("Regenerating calculator output for standard tuning...")
+            var constraints = calcConstraints()
+            var generated = VoicingCalculator.generateAll(standardTuningMidi, constraints)
+            calculatedStandardVoicings = generated || []
+            console.log("Generated " + calculatedStandardVoicings.length
+                + " calculator voicings for standard tuning")
+            // Persist for next startup.
+            if (calculatedStandardVoicings.length > 0) {
+                try {
+                    standardCalculatedFile.write(JSON.stringify({
+                        cacheKey: hash,
+                        tuning: "standard",
+                        count: calculatedStandardVoicings.length,
+                        voicings: calculatedStandardVoicings
+                    }))
+                    console.log("Saved standard-calculated.json cache")
+                } catch (e2) {
+                    console.log("Failed to write standard-calculated.json: " + e2)
+                }
+            }
+        } catch (e) {
+            console.log("Calculator failed on standard: " + e
+                + " (union will fall back to voicings.json only)")
+            calculatedStandardVoicings = []
+        }
+    }
+
+    // Apply the union to voicingsData. Called after both halves are loaded.
+    // No-op when calculatedStandardVoicings is empty (graceful degradation).
+    function applyStandardUnion() {
+        if (!voicingsData || voicingsData.length === 0) return
+        if (!calculatedStandardVoicings || calculatedStandardVoicings.length === 0) return
+        var before = voicingsData.length
+        voicingsData = ChordSelector.unionVoicings(voicingsData, calculatedStandardVoicings)
+        var after = voicingsData.length
+        console.log("Unioned standard pool: " + before + " curated + "
+            + calculatedStandardVoicings.length + " calculator -> "
+            + after + " unique")
     }
 
     // === Per-chord re-voice memory (#197) ===
@@ -948,6 +1027,12 @@ MuseScore {
                 fetchVoicings()
             }
         }
+        // Stage 1 (#209): union calculator output for standard tuning.
+        // Runs after voicings.json is loaded; populates voicingsData with the
+        // unioned pool. Standard tuning is what's loaded by default at startup;
+        // if the user switches tunings, loadTuningVoicings handles non-standard.
+        loadCalculatedStandard()
+        applyStandardUnion()
         // Auto-select CM context if none saved
         if (!filterContext) {
             var strCount = tuningStringCounts[selectedTuning] || 6
@@ -1473,6 +1558,9 @@ MuseScore {
                         var data = JSON.parse(xhr.responseText)
                         voicingsData = data.voicings || []
                         dataLoaded = true
+                        // Stage 1 (#209): the union runs whenever voicingsData
+                        // is freshly populated; deduped so it's idempotent.
+                        applyStandardUnion()
                         rebuildFilterLists()
                         refreshFilteredTunings()
                         applyFilters()
