@@ -742,6 +742,114 @@ class TestDataCacheJS:
         """)
 
 
+# === ChordSelector.js — curated shape signature (#194) ===
+
+
+class TestChordSelectorSignature:
+    """Test the root-relative fingering signature helpers (#194)."""
+
+    def test_signature_key_stable_across_dot_order(self):
+        assert_js("ChordSelector.js", """
+            var v1 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:3,fret:2}, {string:4,fret:1}, {string:6,fret:1}],
+                intervals: ["3", "b7", "1"]
+            };
+            var v2 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            assertEqual(signatureKey(v1), signatureKey(v2),
+                "same shape, different dot order, same key");
+        """)
+
+    def test_signature_key_different_intervals_different_keys(self):
+        assert_js("ChordSelector.js", """
+            var maj7 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "7"]
+            };
+            var dom7 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            assertNotEqual(signatureKey(maj7), signatureKey(dom7),
+                "different intervals -> different keys");
+        """)
+
+    def test_signature_key_root_relative(self):
+        # Same shape transposed: only the fret_number changes; the intervals
+        # stay the same; the key should match.
+        assert_js("ChordSelector.js", """
+            var c7 = {
+                strings: 6, mutes: [], open: [], fret_number: 8,
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            var f7 = Object.assign({}, c7, { fret_number: 1 });
+            assertEqual(signatureKey(c7), signatureKey(f7),
+                "root-relative: fret_number doesn't affect key");
+        """)
+
+    def test_build_curated_lookup_returns_keyed_map(self):
+        assert_js("ChordSelector.js", """
+            var payload = {
+                shapes: [{
+                    signature: {
+                        strings: 6, mutes: [], opens: [],
+                        pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                    },
+                    name: "Shell 137",
+                    boost: 60
+                }]
+            };
+            var lookup = buildCuratedLookup(payload);
+            var keys = Object.keys(lookup);
+            assertEqual(keys.length, 1, "one entry");
+            // Construct a matching voicing and verify the lookup finds it
+            var v = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            var key = signatureKey(v);
+            assert(lookup[key] !== undefined, "voicing signature matches curated");
+            assertEqual(lookup[key].boost, 60, "boost retrieved");
+        """)
+
+    def test_curated_shapes_json_matches_runtime_signature(self):
+        # Regression: every entry in curated-shapes.json must produce a key
+        # that runtime signatureKey() would reconstruct for the same shape.
+        # This is the cross-script-and-runtime invariant for #194.
+        import json as _json
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "curated-shapes.json")) as f:
+            data = _json.load(f)
+        first = data["shapes"][0]
+        # Build a voicing from the signature pairs + dummy frets
+        pairs = first["signature"]["pairs"]
+        dots = [{"string": p[0], "fret": 1} for p in pairs]
+        intervals = [p[1] for p in pairs]
+        voicing = {
+            "strings": first["signature"]["strings"],
+            "mutes": first["signature"]["mutes"],
+            "open": first["signature"]["opens"],
+            "dots": dots,
+            "intervals": intervals,
+        }
+        result = run_js(["ChordSelector.js"], f"""
+            var payload = {_json.dumps(data)};
+            var lookup = buildCuratedLookup(payload);
+            var v = {_json.dumps(voicing)};
+            var key = signatureKey(v);
+            _results.push({{ pass: lookup[key] !== undefined, message: "first curated shape lookups via runtime signatureKey" }});
+            if (lookup[key] === undefined) _pass = false;
+        """)
+        assert result["pass"], f"curated shape signature mismatch: {result}"
+
+
 # === StyleComposer.js — style composition (#162) ===
 
 

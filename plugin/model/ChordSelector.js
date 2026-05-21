@@ -83,6 +83,71 @@ function parseChordSymbol(text) {
     return result
 }
 
+// Compute a voicing's root-relative fingering signature (#194).
+// Matches the shape produced by scripts/derive_curated_shapes.py so the
+// curated-shapes.json lookup at scoring time is symmetric.
+//
+// Returns a string key suitable for object lookup. Format:
+//   "<strings>|m:<sorted-mutes>|o:<sorted-opens>|p:<sorted (string,interval) pairs>"
+//
+// Two voicings with the same root-relative shape produce the same key
+// regardless of which root they're transposed to.
+function signatureKey(voicing) {
+    if (!voicing) return ""
+    var strings = voicing.strings || 6
+    var mutes = (voicing.mutes || []).slice().sort(function(a, b) { return a - b })
+    var opens = (voicing.open || []).slice().sort(function(a, b) { return a - b })
+    var dots = voicing.dots || []
+    var intervals = voicing.intervals || []
+    var pairs = []
+    for (var i = 0; i < dots.length; i++) {
+        if (i >= intervals.length) continue
+        pairs.push([dots[i].string, intervals[i]])
+    }
+    pairs.sort(function(a, b) {
+        if (a[0] !== b[0]) return a[0] - b[0]
+        if (a[1] < b[1]) return -1
+        if (a[1] > b[1]) return 1
+        return 0
+    })
+    var pairStr = ""
+    for (var pi = 0; pi < pairs.length; pi++) {
+        if (pi > 0) pairStr += ","
+        pairStr += pairs[pi][0] + ":" + pairs[pi][1]
+    }
+    return strings + "|m:" + mutes.join(",") + "|o:" + opens.join(",") + "|p:" + pairStr
+}
+
+// Build a lookup map from a curated-shapes.json payload (#194).
+// Returns { signatureKey -> { boost, name, traditions, … } }.
+function buildCuratedLookup(curatedPayload) {
+    var lookup = {}
+    if (!curatedPayload || !curatedPayload.shapes) return lookup
+    for (var i = 0; i < curatedPayload.shapes.length; i++) {
+        var shape = curatedPayload.shapes[i]
+        var sig = shape.signature || {}
+        // Reconstruct the same key format signatureKey() produces.
+        var strings = sig.strings || 6
+        var mutes = (sig.mutes || []).slice().sort(function(a, b) { return a - b })
+        var opens = (sig.opens || []).slice().sort(function(a, b) { return a - b })
+        var pairs = (sig.pairs || []).slice()
+        pairs.sort(function(a, b) {
+            if (a[0] !== b[0]) return a[0] - b[0]
+            if (a[1] < b[1]) return -1
+            if (a[1] > b[1]) return 1
+            return 0
+        })
+        var pairStr = ""
+        for (var pi = 0; pi < pairs.length; pi++) {
+            if (pi > 0) pairStr += ","
+            pairStr += pairs[pi][0] + ":" + pairs[pi][1]
+        }
+        var key = strings + "|m:" + mutes.join(",") + "|o:" + opens.join(",") + "|p:" + pairStr
+        lookup[key] = shape
+    }
+    return lookup
+}
+
 // Compute a scoring delta from the active mode config (#161).
 // Mode config shape (from plugin/config/modes.json):
 //   { categoryDeltas, rangeFretMin, rangeFretMax, rangeFretBonus,
