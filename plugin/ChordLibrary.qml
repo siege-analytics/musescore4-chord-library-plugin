@@ -21,6 +21,7 @@ import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
 import "model/RevoiceMemory.js" as RevoiceMemory
 import "model/ComparisonTray.js" as ComparisonTray
+import "model/ExclusionEngine.js" as ExclusionEngine
 
 MuseScore {
     id: chordLibrary
@@ -160,6 +161,11 @@ MuseScore {
     }
 
     FileIO {
+        id: toleranceConfigFile  // #210 Stage 2 — per-tuning-per-mode exclusion thresholds
+        source: Qt.resolvedUrl("config/tuning-mode-tolerances.json")
+    }
+
+    FileIO {
         id: backupFile   // (#172) user-data backup / restore
     }
 
@@ -255,6 +261,14 @@ MuseScore {
     // unioned with voicingsData by signatureKey to expand the candidate pool.
     // Cached to data/standard-calculated.json; invalidated by constraints hash.
     property var calculatedStandardVoicings: []
+
+    // Exclusion engine (#210 Stage 2). The full tolerance map (per-mode +
+    // per-tuning-per-mode overrides), loaded once from config. The per-user
+    // signature override map ("include" / "exclude" decisions) persisted to
+    // settings.json. The exclusion pass is rerun whenever voicingsData,
+    // activeMode, selectedTuning, or userVoicingOverrides change.
+    property var voicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var userVoicingOverrides: ({})  // signatureKey -> "include" | "exclude"
 
     // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
     // see RevoiceMemory.js for the on-disk shape. The "current scope" is
@@ -535,6 +549,77 @@ MuseScore {
             + after + " unique")
     }
 
+    // === Exclusion engine (#210 Stage 2) ===
+
+    function loadVoicingTolerances() {
+        try {
+            var raw = toleranceConfigFile.read()
+            if (raw && raw.length > 2) {
+                voicingToleranceMap = JSON.parse(raw) || { modes: {}, tunings: {} }
+                console.log("Loaded voicing tolerances: "
+                    + Object.keys(voicingToleranceMap.modes || {}).length + " mode default(s), "
+                    + Object.keys(voicingToleranceMap.tunings || {}).length + " tuning override(s)")
+            }
+        } catch (e) {
+            console.log("Error loading voicing tolerances: " + e)
+            voicingToleranceMap = { modes: {}, tunings: {} }
+        }
+    }
+
+    // Apply the exclusion engine in-place: attach _excludedReason to each
+    // voicing (null when visible, {dimension, message} when hidden).
+    // findBestVoicing/findAllVoicings consult this via BatchEngine.
+    function applyExclusionPass() {
+        if (!voicingsData || voicingsData.length === 0) return
+        var tolerances = ExclusionEngine.resolveTolerances(
+            voicingToleranceMap, selectedTuning, activeMode)
+        var opts = {
+            signatureKeyFn: function(v) { return ChordSelector.signatureKey(v) },
+            difficultyFn: function(v) { return FingeringEngine.computeDifficulty(v) }
+        }
+        var hidden = 0
+        var updated = []
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            // Don't mutate cached objects in place — copy then attach.
+            var clone = {}
+            for (var k in v) clone[k] = v[k]
+            // Cache signature on the clone so UI override actions can
+            // identify the voicing without re-computing.
+            clone._signatureKey = ChordSelector.signatureKey(v)
+            clone._excludedReason = ExclusionEngine.evaluateExclusion(
+                v, tolerances, userVoicingOverrides, opts)
+            if (clone._excludedReason) hidden++
+            updated.push(clone)
+        }
+        voicingsData = updated
+        console.log("Exclusion pass: " + (voicingsData.length - hidden)
+            + " visible, " + hidden + " hidden")
+        // Re-partition for UI surfaces.
+        applyFilters()
+    }
+
+    function setVoicingOverride(signatureKey, decision) {
+        // decision: "include" | "exclude" | null (clear)
+        if (!signatureKey) return
+        var next = {}
+        for (var k in userVoicingOverrides) next[k] = userVoicingOverrides[k]
+        if (decision === null || decision === undefined) {
+            delete next[signatureKey]
+        } else {
+            next[signatureKey] = decision
+        }
+        userVoicingOverrides = next
+        saveSettings()
+        applyExclusionPass()
+    }
+
+    function clearAllVoicingOverrides() {
+        userVoicingOverrides = ({})
+        saveSettings()
+        applyExclusionPass()
+    }
+
     // === Per-chord re-voice memory (#197) ===
 
     function loadRevoiceMemory() {
@@ -590,6 +675,9 @@ MuseScore {
         activeMode = modeId
         console.log("Mode: " + (_modesById[modeId] ? _modesById[modeId].name : modeId))
         saveSettings()
+        // #210 Stage 2: tolerances are mode-specific, so the exclusion pass
+        // must rerun after mode changes.
+        applyExclusionPass()
     }
 
     // Resolve current mode to its config object (or null if not loaded yet).
@@ -1018,6 +1106,7 @@ MuseScore {
         loadProfiles()
         loadModes()
         loadCuratedShapes()
+        loadVoicingTolerances()
         loadRevoiceMemory()
         loadSettings()
         loadTuningStringCount()
@@ -1033,6 +1122,9 @@ MuseScore {
         // if the user switches tunings, loadTuningVoicings handles non-standard.
         loadCalculatedStandard()
         applyStandardUnion()
+        // Stage 2 (#210): apply exclusion engine to the (unioned) pool.
+        // Re-runs on tuning/mode changes via property change handlers below.
+        applyExclusionPass()
         // Auto-select CM context if none saved
         if (!filterContext) {
             var strCount = tuningStringCounts[selectedTuning] || 6
@@ -1134,6 +1226,10 @@ MuseScore {
             if (s.activeMode) setActiveMode(s.activeMode)
             // Restore score sections (#167). Array of {startIdx, mode, name}.
             if (s.scoreSections && Array.isArray(s.scoreSections)) scoreSections = s.scoreSections
+            // #210 Stage 2 — restore user voicing overrides
+            if (s.userVoicingOverrides && typeof s.userVoicingOverrides === "object") {
+                userVoicingOverrides = s.userVoicingOverrides
+            }
             refreshFilteredTunings()
             console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
@@ -1159,6 +1255,7 @@ MuseScore {
             activeProfile: _activeProfileId,
             activeMode: activeMode,
             scoreSections: scoreSections,
+            userVoicingOverrides: userVoicingOverrides,  // #210 Stage 2
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -1741,6 +1838,7 @@ MuseScore {
                 console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
                 statusMsg.color = theme.successText
+                applyExclusionPass()  // #210 Stage 2
             }
             _loadingTuningVoicings = false;
             return
@@ -1842,6 +1940,9 @@ MuseScore {
                 applyFilters()
             }
         }
+        // #210 Stage 2: rerun the exclusion pass against the new pool's
+        // tuning-mode tolerances.
+        applyExclusionPass()
         _loadingTuningVoicings = false
     }
 
@@ -1881,8 +1982,21 @@ MuseScore {
         return MelodyEngine.voicingDistance(a, b)
     }
 
+    // #210 Stage 2 — voicings hidden by the exclusion engine. Exposed
+    // so LibraryPanel/WalkthroughPanel can render the disclosure list.
+    property var hiddenVoicingsData: []
+
     function applyFilters() {
-        filteredData = FilterEngine.applyFilters(voicingsData, {
+        // Partition voicingsData into visible (no _excludedReason) and hidden.
+        var visible = []
+        var hidden = []
+        for (var pi = 0; pi < voicingsData.length; pi++) {
+            var pv = voicingsData[pi]
+            if (pv && pv._excludedReason) hidden.push(pv)
+            else visible.push(pv)
+        }
+        hiddenVoicingsData = hidden
+        filteredData = FilterEngine.applyFilters(visible, {
             filterContext: filterContext,
             filterCategory: filterCategory,
             filterQuality: filterQuality,
@@ -2853,6 +2967,14 @@ MuseScore {
             tuningListModel: tuningList.slice()
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
+            // #210 Stage 2 — voicing exclusion engine surface
+            effectiveVoicingTolerances: ExclusionEngine.resolveTolerances(
+                chordLibrary.voicingToleranceMap,
+                chordLibrary.selectedTuning,
+                chordLibrary.activeMode
+            )
+            voicingOverrideCount: Object.keys(chordLibrary.userVoicingOverrides || {}).length
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
             builtInTunings: chordLibrary.builtInTunings
             saveTuningFn: function(name, pitches, numStrings, originalSlug) {
                 try {
@@ -3233,6 +3355,10 @@ MuseScore {
             suggestFingeringFn: function(v) { return suggestFingering(v) }
             onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
             onClearComparisonRequested: chordLibrary.clearComparison()
+            // #210 Stage 2 — hidden alts inside the walkthrough
+            hiddenAltVoicings: batchEngine.hiddenAltVoicings
+            onIncludeVoicingRequested: function(sig) { chordLibrary.setVoicingOverride(sig, "include") }
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
         }
 
         // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===
@@ -3355,6 +3481,10 @@ MuseScore {
             onCompareRequested: function(voicing) { chordLibrary.addToComparison(voicing) }
             onClearComparisonRequested: chordLibrary.clearComparison()
             onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
+            // #210 Stage 2 — hidden voicing surface
+            hiddenVoicings: chordLibrary.hiddenVoicingsData
+            onIncludeVoicingRequested: function(sig) { chordLibrary.setVoicingOverride(sig, "include") }
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
 
             // --- Save to Library + Library Health (moved from Settings, #144) ---
             homePath: chordLibrary.homePath()

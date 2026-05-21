@@ -87,6 +87,10 @@ Item {
     signal backupRestoreRequested()
     // Import from URL (#67)
     signal urlImportRequested(string url)
+    // #210 Stage 2 — voicing exclusion engine surface
+    signal clearVoicingOverridesRequested()
+    property var effectiveVoicingTolerances: ({})
+    property int voicingOverrideCount: 0
     property string backupStatus: ""
     property color backupStatusColor: "black"
 
@@ -359,6 +363,81 @@ Item {
                                 font.pixelSize: 10
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    // === Voicing Tolerances (#210 Stage 2) ===
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: tolColumn.implicitHeight + 16
+                        color: theme.consoleBg
+                        radius: 4
+                        border.color: theme.divider
+
+                        ColumnLayout {
+                            id: tolColumn
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            spacing: 4
+
+                            Label {
+                                text: "VOICING TOLERANCES"
+                                font.pixelSize: 11
+                                font.bold: true
+                            }
+                            Label {
+                                text: "Effective thresholds for the current tuning + mode. Hand-edit plugin/config/tuning-mode-tolerances.json to customize. Per-signature include/exclude overrides are managed via the 'Hidden voicings' lists in the Library tab and Walkthrough."
+                                font.pixelSize: 9
+                                color: theme.textMuted
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                            // Read-only dimension grid
+                            Grid {
+                                columns: 2
+                                columnSpacing: 12
+                                rowSpacing: 2
+                                Layout.fillWidth: true
+
+                                Label { text: "Max fret:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.maxFret !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxFret) : "—"; font.pixelSize: 9 }
+
+                                Label { text: "Max stretch (frets):"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.maxStretch !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxStretch) : "—"; font.pixelSize: 9 }
+
+                                Label { text: "Max muted strings:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.maxMutedStrings !== undefined ? String(settingsPanel.effectiveVoicingTolerances.maxMutedStrings) : "—"; font.pixelSize: 9 }
+
+                                Label { text: "Min sounding notes:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.minSoundingNotes !== undefined ? String(settingsPanel.effectiveVoicingTolerances.minSoundingNotes) : "—"; font.pixelSize: 9 }
+
+                                Label { text: "Max difficulty tier:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.maxDifficultyTier || "—"; font.pixelSize: 9 }
+
+                                Label { text: "Excluded categories:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: (settingsPanel.effectiveVoicingTolerances.excludedCategories || []).join(", ") || "(none)"; font.pixelSize: 9 }
+
+                                Label { text: "Require root in bass:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.requireRootInBass ? "yes" : "no"; font.pixelSize: 9 }
+
+                                Label { text: "Allow open strings:"; font.pixelSize: 9; color: theme.textSecondary }
+                                Label { text: settingsPanel.effectiveVoicingTolerances.allowOpenStrings === false ? "no" : "yes"; font.pixelSize: 9 }
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                Label {
+                                    text: "User overrides set: " + settingsPanel.voicingOverrideCount
+                                    font.pixelSize: 9
+                                    color: theme.textSecondary
+                                    Layout.fillWidth: true
+                                }
+                                Button {
+                                    text: "Clear all overrides"
+                                    font.pixelSize: 9
+                                    enabled: settingsPanel.voicingOverrideCount > 0
+                                    onClicked: settingsPanel.clearVoicingOverridesRequested()
+                                }
                             }
                         }
                     }

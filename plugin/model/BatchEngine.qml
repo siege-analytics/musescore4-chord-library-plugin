@@ -74,6 +74,8 @@ Item {
 
     // Alternative voicing state — grouped by bass string
     property var altVoicings: []
+    // #210 Stage 2 — alts hidden by exclusion engine for the current chord.
+    property var hiddenAltVoicings: []
     property int altCount: 0
     property int altIndex: 0
     property var bassStringGroups: ({})
@@ -445,8 +447,18 @@ Item {
         var nameParts = item.voicing.name.split(" — ")
         var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
 
-        // Load alternatives and group by bass string
-        altVoicings = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
+        // Load alternatives and group by bass string. #210 Stage 2:
+        // partition out excluded voicings so the bass-string nav only
+        // surfaces visible alts; hidden ones go to the disclosure panel.
+        var allAlts = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
+        var visible = []
+        var hidden = []
+        for (var ai = 0; ai < allAlts.length; ai++) {
+            if (allAlts[ai] && allAlts[ai]._excludedReason) hidden.push(allAlts[ai])
+            else visible.push(allAlts[ai])
+        }
+        altVoicings = visible
+        hiddenAltVoicings = hidden
         buildBassStringGroups()
 
         // Auto-select the bass string group containing the current voicing

@@ -1,0 +1,46 @@
+{
+  "schemaNote": "#210 Stage 2 — per-tuning-per-mode voicing exclusion thresholds. modes[] block defines defaults that apply across all tunings; tunings[<slug>][<mode>] overrides specific dimensions. ExclusionEngine.resolveTolerances() merges them.",
+  "modes": {
+    "chord-melody": {
+      "maxFret": 14,
+      "maxStretch": 6,
+      "maxMutedStrings": 3,
+      "minSoundingNotes": 3,
+      "requireRootInBass": false,
+      "allowOpenStrings": true,
+      "maxDifficultyTier": "advanced",
+      "excludedCategories": []
+    },
+    "comping": {
+      "maxFret": 12,
+      "maxStretch": 5,
+      "maxMutedStrings": 2,
+      "minSoundingNotes": 3,
+      "requireRootInBass": false,
+      "allowOpenStrings": true,
+      "maxDifficultyTier": "advanced",
+      "excludedCategories": ["quartal"]
+    },
+    "solo-guitar": {
+      "maxFret": 15,
+      "maxStretch": 7,
+      "maxMutedStrings": 3,
+      "minSoundingNotes": 3,
+      "requireRootInBass": false,
+      "allowOpenStrings": true,
+      "maxDifficultyTier": "expert",
+      "excludedCategories": []
+    },
+    "duo": {
+      "maxFret": 12,
+      "maxStretch": 5,
+      "maxMutedStrings": 2,
+      "minSoundingNotes": 3,
+      "requireRootInBass": false,
+      "allowOpenStrings": true,
+      "maxDifficultyTier": "advanced",
+      "excludedCategories": []
+    }
+  },
+  "tunings": {}
+}
