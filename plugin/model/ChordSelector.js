@@ -148,6 +148,33 @@ function buildCuratedLookup(curatedPayload) {
     return lookup
 }
 
+// Union two voicing arrays, deduping by (signatureKey, chord_quality) (#209).
+// Curated entries (the first array) win on collision so their hand-curated
+// metadata (name, category, traditions, voicingStyle, playStyle) is preserved
+// over the calculator's generic equivalents.
+//
+// Both arrays may contain voicings normalized to C-root (the convention for
+// both `voicings.json` and `VoicingCalculator.generateAll` output), so the
+// signatureKey is comparable across sources.
+function unionVoicings(curated, calculated) {
+    var seen = {}
+    var out = []
+    function addAll(arr) {
+        if (!arr) return
+        for (var i = 0; i < arr.length; i++) {
+            var v = arr[i]
+            if (!v) continue
+            var key = signatureKey(v) + "|" + (v.chord_quality || "")
+            if (seen[key]) continue
+            seen[key] = true
+            out.push(v)
+        }
+    }
+    addAll(curated)    // first wins on collision — curated metadata preserved
+    addAll(calculated)
+    return out
+}
+
 // Compute a scoring delta from the active mode config (#161).
 // Mode config shape (from plugin/config/modes.json):
 //   { categoryDeltas, rangeFretMin, rangeFretMax, rangeFretBonus,

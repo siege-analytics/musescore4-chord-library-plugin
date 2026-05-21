@@ -908,6 +908,103 @@ class TestChordSelectorSignature:
         assert result["pass"], f"curated shape signature mismatch: {result}"
 
 
+# === ChordSelector.js — unionVoicings (#209) ===
+
+
+class TestUnionVoicings:
+    """Test the curated+calculator union helper (#209 Stage 1)."""
+
+    def test_empty_inputs_return_empty(self):
+        assert_js("ChordSelector.js", """
+            assertEqual(unionVoicings(null, null).length, 0, "null inputs");
+            assertEqual(unionVoicings([], []).length, 0, "empty inputs");
+        """)
+
+    def test_disjoint_voicings_are_concatenated(self):
+        assert_js("ChordSelector.js", """
+            var a = [{
+                id: "c1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var b = [{
+                id: "g1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"]
+            }];
+            var u = unionVoicings(a, b);
+            assertEqual(u.length, 2, "both kept");
+        """)
+
+    def test_union_curated_wins_on_collision(self):
+        # Falsifier for the acceptance criterion: when curated and calculator
+        # both produce the same shape, the curated one (with its metadata)
+        # survives.
+        assert_js("ChordSelector.js", """
+            var curated = [{
+                id: "curated-id", name: "Shell 137 — root on top",
+                category: "shell", traditions: ["bebop"],
+                root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var calculator = [{
+                id: "calc-id", name: "dom7 fret 1",
+                category: "generated",
+                root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var u = unionVoicings(curated, calculator);
+            assertEqual(u.length, 1, "collision -> one entry");
+            assertEqual(u[0].id, "curated-id", "curated id survives");
+            assertEqual(u[0].name, "Shell 137 — root on top",
+                "curated name survives");
+            assertEqual(u[0].category, "shell", "curated category survives");
+        """)
+
+    def test_same_shape_different_quality_both_survive(self):
+        # The dedup key includes chord_quality, so a shape used as maj7
+        # by the curated set and as dom7 by the calculator both survive.
+        assert_js("ChordSelector.js", """
+            var a = [{
+                id: "as-maj7", root: "C", chord_quality: "maj7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"]
+            }];
+            var b = [{
+                id: "as-dom7", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"]
+            }];
+            var u = unionVoicings(a, b);
+            assertEqual(u.length, 2, "different quality, both kept");
+        """)
+
+    def test_voicing_schema_accepts_reserved_fields(self):
+        # Schema reservation for Track 2/3 (#212): voicings may carry
+        # voicingStyle and playStyle. They round-trip through union
+        # without being dropped.
+        assert_js("ChordSelector.js", """
+            var v = {
+                id: "v1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"],
+                voicingStyle: ["van-eps", "shell"],
+                playStyle: "sequential"
+            };
+            var u = unionVoicings([v], []);
+            assertEqual(u.length, 1, "kept");
+            assertEqual(u[0].voicingStyle.length, 2, "voicingStyle preserved");
+            assertEqual(u[0].voicingStyle[0], "van-eps", "first tag");
+            assertEqual(u[0].playStyle, "sequential", "playStyle preserved");
+        """)
+
+
 # === RevoiceMemory.js — per-chord choice persistence (#197) ===
 
 
