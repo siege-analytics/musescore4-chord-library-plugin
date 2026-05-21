@@ -116,6 +116,30 @@ function computeModeDelta(voicing, modeConfig, modeId) {
     return delta
 }
 
+// Difficulty memo (#178). FingeringEngine.computeDifficulty is a pure function of
+// dots+mutes+open+strings+fret_number, and we call it O(N) times per sort in the
+// hot path. Memoize on the voicing's stable identity. Cleared per scoring pass
+// to avoid unbounded growth in long-running sessions.
+var _difficultyMemo = {}
+function _resetDifficultyMemo() { _difficultyMemo = {} }
+function _difficultyFor(v, fn) {
+    if (!fn) return null
+    // Prefer voicing.id when available (curated voicings); fall back to a derived
+    // signature for calculator-generated voicings that may have transient ids.
+    var key = v.id
+    if (!key) {
+        var dots = v.dots || []
+        var sig = (v.strings || 6) + "|" + (v.fret_number || 0) + "|"
+        for (var i = 0; i < dots.length; i++) sig += dots[i].string + ":" + dots[i].fret + ","
+        sig += "m:" + (v.mutes || []).join(",") + "|o:" + (v.open || []).join(",")
+        key = sig
+    }
+    if (_difficultyMemo[key] === undefined) {
+        _difficultyMemo[key] = fn(v)
+    }
+    return _difficultyMemo[key]
+}
+
 // Score a single voicing candidate against a query context (#164).
 // Centralizes the scoring rubric so findBestVoicing and findAllVoicings stay
 // in sync. Returns a numeric score (higher = better).
@@ -155,9 +179,12 @@ function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, 
     var fret = v.fret_number || 0
     if (fret >= 3 && fret <= 7) score += 5
     if (opts.difficultyFn) {
-        var d = opts.difficultyFn(v)
-        if (d.tier === "expert") score -= 30
-        else if (d.tier === "advanced") score -= 10
+        // Memoized via _difficultyFor (#178). Same voicing in repeated sort passes
+        // (walkthrough re-sort on every step) reuses the prior result instead of
+        // re-running suggestFingering's constraint solver.
+        var d = _difficultyFor(v, opts.difficultyFn)
+        if (d && d.tier === "expert") score -= 30
+        else if (d && d.tier === "advanced") score -= 10
     }
     if (opts.profileCategoryWeightFn) score += opts.profileCategoryWeightFn(v.category)
     if (opts.profileQualityBoostFn) score += opts.profileQualityBoostFn(v.chord_quality)
@@ -218,11 +245,19 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
     var bassTarget = (bassMidi !== undefined && bassMidi >= 0) ? bassMidi % 12 : -1
     var ref = opts.lastInsertedVoicing
 
-    candidates.sort(function(a, b) {
-        return _scoreCandidate(b, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
-             - _scoreCandidate(a, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
-    })
-    return candidates[0]
+    // Precompute scores once per candidate (#178). Previously the comparator
+    // called _scoreCandidate twice per comparison, multiplying difficultyFn
+    // and inner callback invocations by N×log(N)×2.
+    _resetDifficultyMemo()
+    var ranked = new Array(candidates.length)
+    for (var k = 0; k < candidates.length; k++) {
+        ranked[k] = {
+            v: candidates[k],
+            s: _scoreCandidate(candidates[k], targetRoot, quality, melodyTarget, bassTarget, ref, opts)
+        }
+    }
+    ranked.sort(function(a, b) { return b.s - a.s })
+    return ranked[0].v
 }
 
 // Return ALL matching voicings for a chord, sorted by score (best first).
@@ -268,11 +303,19 @@ function findAllVoicings(voicingsData, targetRoot, quality, opts) {
     var bassTarget = (bassMidi !== undefined && bassMidi >= 0) ? bassMidi % 12 : -1
     var ref = opts.lastInsertedVoicing
 
-    candidates.sort(function(a, b) {
-        return _scoreCandidate(b, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
-             - _scoreCandidate(a, targetRoot, quality, melodyTarget, bassTarget, ref, opts)
-    })
-    return candidates
+    // Precompute scores once per candidate (#178).
+    _resetDifficultyMemo()
+    var ranked = new Array(candidates.length)
+    for (var k = 0; k < candidates.length; k++) {
+        ranked[k] = {
+            v: candidates[k],
+            s: _scoreCandidate(candidates[k], targetRoot, quality, melodyTarget, bassTarget, ref, opts)
+        }
+    }
+    ranked.sort(function(a, b) { return b.s - a.s })
+    var out = new Array(ranked.length)
+    for (var oi = 0; oi < ranked.length; oi++) out[oi] = ranked[oi].v
+    return out
 }
 
 // Build bass-string groups from a list of alternative voicings.
