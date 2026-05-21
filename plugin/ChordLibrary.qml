@@ -20,6 +20,7 @@ import "model/StyleComposer.js" as StyleComposer
 import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
 import "model/RevoiceMemory.js" as RevoiceMemory
+import "model/ComparisonTray.js" as ComparisonTray
 
 MuseScore {
     id: chordLibrary
@@ -2512,35 +2513,37 @@ MuseScore {
         statusMsg.color = theme.successText
     }
 
-    // === T-015: Voicing Comparison ===
+    // === Voicing Comparison Tray (#196) ===
 
     property var compareVoicings: []  // up to 3 voicings for side-by-side comparison
     property bool showComparison: false
 
     function addToComparison(voicing) {
-        if (compareVoicings.length >= 3) {
-            statusMsg.text = "Comparison full (max 3) — clear first"
+        if (!voicing) return
+        if (ComparisonTray.contains(compareVoicings, voicing)) {
+            statusMsg.text = "Already in comparison"
             statusMsg.color = theme.textMuted
             return
         }
-        // Check for duplicates
-        for (var i = 0; i < compareVoicings.length; i++) {
-            if (compareVoicings[i].id === voicing.id) {
-                statusMsg.text = "Already in comparison"
-                statusMsg.color = theme.textMuted
-                return
-            }
+        var prev = compareVoicings
+        compareVoicings = ComparisonTray.add(compareVoicings, voicing)
+        showComparison = compareVoicings.length > 0
+        // FIFO eviction hint when at capacity (AC: "visual hint")
+        if (prev.length === 3) {
+            statusMsg.text = "Added to comparison (3/3) — oldest dropped"
+        } else {
+            statusMsg.text = "Added to comparison (" + compareVoicings.length + "/3)"
         }
-        var updated = compareVoicings.slice()
-        updated.push(voicing)
-        compareVoicings = updated
-        showComparison = true
-        statusMsg.text = "Added to comparison (" + compareVoicings.length + "/3)"
         statusMsg.color = theme.successText
     }
 
+    function removeFromComparison(index) {
+        compareVoicings = ComparisonTray.removeAt(compareVoicings, index)
+        showComparison = compareVoicings.length > 0
+    }
+
     function clearComparison() {
-        compareVoicings = []
+        compareVoicings = ComparisonTray.clear()
         showComparison = false
     }
 
@@ -3137,6 +3140,11 @@ MuseScore {
                 batchEngine.applyReharm(newRoot, newQuality)
             }
             onClearSavedChoicesClicked: chordLibrary.clearRevoiceMemoryForCurrentScope()
+            // #196 — comparison tray inside the walkthrough
+            compareVoicings: chordLibrary.compareVoicings
+            suggestFingeringFn: function(v) { return suggestFingering(v) }
+            onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
+            onClearComparisonRequested: chordLibrary.clearComparison()
         }
 
         // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===
@@ -3258,6 +3266,7 @@ MuseScore {
             onPlayVoicingRequested: function(voicing, mode) { chordLibrary.playVoicing(voicing, mode) }
             onCompareRequested: function(voicing) { chordLibrary.addToComparison(voicing) }
             onClearComparisonRequested: chordLibrary.clearComparison()
+            onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
 
             // --- Save to Library + Library Health (moved from Settings, #144) ---
             homePath: chordLibrary.homePath()

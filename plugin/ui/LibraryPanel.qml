@@ -86,6 +86,7 @@ Item {
     signal playVoicingRequested(var voicing, string mode)
     signal compareRequested(var voicing)
     signal clearComparisonRequested()
+    signal removeFromComparisonRequested(int index)
     signal scaleFilterChanged(string scaleName)
     signal profileChanged(string profileId)
     signal modeChanged(string modeId)
@@ -682,78 +683,13 @@ Item {
             }
         }
 
-        // Comparison panel
-        Rectangle {
-            visible: libraryPanel.showComparison
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            color: theme.consoleBg
-            radius: 4
-            border.color: theme.divider
-
-            RowLayout {
-                anchors.fill: parent
-                anchors.margins: 6
-                spacing: 6
-
-                Repeater {
-                    model: libraryPanel.compareVoicings.length
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        radius: 4
-                        color: theme.cardBackground
-                        border.color: theme.cardBorder
-
-                        property var cv: libraryPanel.compareVoicings[index] || {}
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            spacing: 2
-
-                            Label {
-                                text: cv.name || ""
-                                font.pixelSize: 10
-                                font.bold: true
-                                elide: Text.ElideRight
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: (cv.intervals || []).join(" ")
-                                font.pixelSize: 9
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: "Fret " + (cv.fret_number || "?") + "  |  " + (cv.notes || []).join(" ")
-                                font.pixelSize: 9
-                                color: theme.textMuted
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: {
-                                    var f = libraryPanel.suggestFingeringFn(cv)
-                                    if (f.length === 0) return ""
-                                    var parts = []
-                                    for (var i = 0; i < f.length; i++) parts.push("S" + f[i].string + ":" + f[i].finger)
-                                    return "Fingering: " + parts.join(" ")
-                                }
-                                font.pixelSize: 8
-                                color: theme.textFaint
-                                Layout.fillWidth: true
-                            }
-                        }
-                    }
-                }
-
-                Button {
-                    text: "Clear"
-                    font.pixelSize: 9
-                    implicitWidth: 40
-                    onClicked: libraryPanel.clearComparisonRequested()
-                }
-            }
+        // Comparison tray (#196) — extracted to shared component so the
+        // same tray renders in both Library tab and Walkthrough.
+        ComparisonTrayPanel {
+            compareVoicings: libraryPanel.compareVoicings
+            suggestFingeringFn: libraryPanel.suggestFingeringFn
+            onRemoveRequested: function(index) { libraryPanel.removeFromComparisonRequested(index) }
+            onClearRequested: libraryPanel.clearComparisonRequested()
         }
 
         // ─────────────────────────────────────────────
