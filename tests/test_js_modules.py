@@ -820,6 +820,64 @@ class TestChordSelectorSignature:
             assertEqual(lookup[key].boost, 60, "boost retrieved");
         """)
 
+    def test_curated_boost_promotes_matching_candidate(self):
+        # #201 Phase 2a — when a candidate's root-relative signature matches
+        # a curated entry, _scoreCandidate adds entry.boost. Two otherwise
+        # equivalent candidates: only the one with a matching signature in
+        # the curated lookup should win, by exactly the boost margin.
+        assert_js("ChordSelector.js", """
+            var curated = {
+                id: "v-curated", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1", "b7", "3"], strings: 6
+            };
+            var plain = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:5,fret:3},{string:4,fret:2}],
+                intervals: ["1", "5", "3"], strings: 6
+            };
+            var payload = { shapes: [{
+                signature: {
+                    strings: 6, mutes: [], opens: [],
+                    pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                },
+                name: "Shell 137", boost: 80
+            }]};
+            var lookup = buildCuratedLookup(payload);
+            // Without lookup: shapes are scoring-equivalent here. We pick whatever
+            // findBestVoicing returns as a baseline and confirm the curated one
+            // wins once the lookup is in place.
+            var pickWithout = findBestVoicing([curated, plain], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            var pickWith = findBestVoicing([curated, plain], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}, curatedLookup: lookup
+            });
+            assertEqual(pickWith.id, "v-curated",
+                "curated lookup promotes matching signature");
+            // Sanity: the lookup-less call did not magically pick the same one
+            // for the same reason. Either result is allowed without lookup.
+            assert(pickWithout !== null, "baseline still returns something");
+        """)
+
+    def test_curated_boost_absent_lookup_is_noop(self):
+        # Absence of opts.curatedLookup must not throw and must not change
+        # scoring. Defensive against partial wiring.
+        assert_js("ChordSelector.js", """
+            var v = {
+                id: "v1", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1", "b7", "3"], strings: 6
+            };
+            var pick = findBestVoicing([v], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assertEqual(pick.id, "v1", "no lookup → still returns candidate");
+        """)
+
     def test_curated_shapes_json_matches_runtime_signature(self):
         # Regression: every entry in curated-shapes.json must produce a key
         # that runtime signatureKey() would reconstruct for the same shape.

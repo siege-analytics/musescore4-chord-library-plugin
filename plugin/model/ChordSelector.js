@@ -254,6 +254,13 @@ function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, 
     if (opts.profileCategoryWeightFn) score += opts.profileCategoryWeightFn(v.category)
     if (opts.profileQualityBoostFn) score += opts.profileQualityBoostFn(v.chord_quality)
     if (opts.modeConfig) score += computeModeDelta(v, opts.modeConfig, opts.modeId)
+    // Curated shape boost (#194 Phase 2a). When a candidate's root-relative
+    // fingering signature matches a curated entry, apply the entry's boost.
+    // Lookup is built once at startup from curated-shapes.json.
+    if (opts.curatedLookup) {
+        var entry = opts.curatedLookup[signatureKey(v)]
+        if (entry && entry.boost) score += entry.boost
+    }
     return score
 }
 
