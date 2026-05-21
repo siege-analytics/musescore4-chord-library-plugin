@@ -908,6 +908,99 @@ class TestChordSelectorSignature:
         assert result["pass"], f"curated shape signature mismatch: {result}"
 
 
+# === RevoiceMemory.js — per-chord choice persistence (#197) ===
+
+
+class TestRevoiceMemory:
+    """Test RevoiceMemory.js scope-keyed choice storage."""
+
+    def test_empty_memory_starts_with_no_scopes(self):
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            assertEqual(m.version, "v1", "version stamped");
+            assertEqual(Object.keys(m.scopes).length, 0, "no scopes yet");
+        """)
+
+    def test_record_and_get_round_trip(self):
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var key = buildScopeKey("/path/to.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, key, "Cm7", "v-shell-137", 1000);
+            assertEqual(getChoice(m, key, "Cm7"), "v-shell-137", "saved choice returned");
+            assertEqual(getChoice(m, key, "F7"), null, "absent symbol returns null");
+        """)
+
+    def test_scope_key_includes_all_axes(self):
+        # Each of (scorePath, mode, style, tuning) must produce a distinct key,
+        # so changing any one isolates a fresh scope.
+        assert_js("RevoiceMemory.js", """
+            var a = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var b = buildScopeKey("/b.mscz", "chord-melody", "default", "standard");
+            var c = buildScopeKey("/a.mscz", "comping",      "default", "standard");
+            var d = buildScopeKey("/a.mscz", "chord-melody", "bebop",   "standard");
+            var e = buildScopeKey("/a.mscz", "chord-melody", "default", "baritone");
+            assertNotEqual(a, b, "different score = different scope");
+            assertNotEqual(a, c, "different mode = different scope");
+            assertNotEqual(a, d, "different style = different scope");
+            assertNotEqual(a, e, "different tuning = different scope");
+        """)
+
+    def test_changing_mode_does_not_replay_prior_choice(self):
+        # The headline AC: changing mode/style/tuning must reset choices.
+        # Falsifier from the ticket.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var cm = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var cmp = buildScopeKey("/a.mscz", "comping",      "default", "standard");
+            recordChoice(m, cm, "F7", "v-melody-pick", 1000);
+            assertEqual(getChoice(m, cm, "F7"), "v-melody-pick", "saved in chord-melody scope");
+            assertEqual(getChoice(m, cmp, "F7"), null,
+                "switched to comping scope: no replay of chord-melody choice");
+        """)
+
+    def test_clear_scope_removes_just_one_scope(self):
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var a = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var b = buildScopeKey("/b.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, a, "C7", "v-a", 1000);
+            recordChoice(m, b, "C7", "v-b", 1000);
+            clearScope(m, a);
+            assertEqual(getChoice(m, a, "C7"), null, "scope a cleared");
+            assertEqual(getChoice(m, b, "C7"), "v-b", "scope b untouched");
+        """)
+
+    def test_prune_drops_oldest_scope_first(self):
+        # Build a memory with enough scopes to exceed a small budget, then
+        # confirm the oldest (by ts) is dropped.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            for (var i = 0; i < 50; i++) {
+                var key = "/score" + i + ".mscz|m:chord-melody|s:default|t:standard";
+                recordChoice(m, key, "F7", "v-id-" + i, i + 1);
+            }
+            var beforeKeys = Object.keys(m.scopes).length;
+            pruneToSize(m, 500);  // tight budget — most scopes drop
+            var afterKeys = Object.keys(m.scopes).length;
+            assert(afterKeys < beforeKeys, "prune dropped some scopes");
+            // The newest scope (ts=50) must survive.
+            var newestKey = "/score49.mscz|m:chord-melody|s:default|t:standard";
+            assert(m.scopes[newestKey] !== undefined, "newest scope survives");
+            // The oldest (ts=1) must be gone.
+            var oldestKey = "/score0.mscz|m:chord-melody|s:default|t:standard";
+            assert(m.scopes[oldestKey] === undefined, "oldest scope dropped");
+        """)
+
+    def test_parse_memory_handles_corrupt_input(self):
+        assert_js("RevoiceMemory.js", """
+            assertEqual(parseMemory("").version, "v1", "empty string -> empty memory");
+            assertEqual(parseMemory("not json").version, "v1", "invalid json -> empty memory");
+            assertEqual(parseMemory('{"version":"v0"}').version, "v1", "wrong version -> empty");
+            var ok = parseMemory('{"version":"v1","scopes":{"a":{"choices":{"F7":"v1"},"ts":1}}}');
+            assertEqual(ok.scopes.a.choices.F7, "v1", "valid memory parses through");
+        """)
+
+
 # === StyleComposer.js — style composition (#162) ===
 
 
