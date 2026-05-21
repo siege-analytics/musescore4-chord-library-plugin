@@ -68,10 +68,13 @@ function _mergeNumeric(contributors, fieldName, rule, clamp) {
     var keys = {}
     for (var i = 0; i < contributors.length; i++) {
         var src = contributors[i].style[fieldName] || {}
-        for (var k in src) keys[k] = true
+        var srcKeys = Object.keys(src)
+        for (var ski = 0; ski < srcKeys.length; ski++) keys[srcKeys[ski]] = true
     }
 
-    for (var key in keys) {
+    var keyList = Object.keys(keys)
+    for (var kli = 0; kli < keyList.length; kli++) {
+        var key = keyList[kli]
         var vals = []
         var weights = []
         for (var ci = 0; ci < contributors.length; ci++) {
@@ -120,17 +123,24 @@ function _mergeScales(contributors, rule) {
     // other contributors' qualities don't leak in.
     if (rule === "first-only") {
         var top = contributors[0].style.chordScaleOverrides || {}
-        for (var tq in top) result[tq] = top[tq].slice()
+        var topKeys = Object.keys(top)
+        for (var tki = 0; tki < topKeys.length; tki++) {
+            var tq = topKeys[tki]
+            result[tq] = top[tq].slice()
+        }
         return result
     }
 
     var qualities = {}
     for (var ci = 0; ci < contributors.length; ci++) {
         var src = contributors[ci].style.chordScaleOverrides || {}
-        for (var q in src) qualities[q] = true
+        var srcKeys2 = Object.keys(src)
+        for (var sk2 = 0; sk2 < srcKeys2.length; sk2++) qualities[srcKeys2[sk2]] = true
     }
 
-    for (var qual in qualities) {
+    var qualityList = Object.keys(qualities)
+    for (var qli = 0; qli < qualityList.length; qli++) {
+        var qual = qualityList[qli]
         var lists = []
         for (var cj = 0; cj < contributors.length; cj++) {
             var arr = (contributors[cj].style.chordScaleOverrides || {})[qual]
