@@ -102,14 +102,11 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
     var quality = CHORD_QUALITIES[qualityId] || QUARTAL_QUALITIES[qualityId]
     if (!quality) return []
 
-    var cfg = {}
-    for (var dk in DEFAULT_CONSTRAINTS) cfg[dk] = DEFAULT_CONSTRAINTS[dk]
-    if (constraints) {
-        for (var ck in constraints) cfg[ck] = constraints[ck]
-    }
+    var cfg = Object.assign({}, DEFAULT_CONSTRAINTS, constraints || {})
 
     var strings = []
-    for (var sk in tuningMidi) strings.push(parseInt(sk))
+    var tuningStringKeys = Object.keys(tuningMidi)
+    for (var sk = 0; sk < tuningStringKeys.length; sk++) strings.push(parseInt(tuningStringKeys[sk]))
     strings.sort(function(a, b) { return a - b })  // 1=highest, 6=lowest
     var stringsLowToHigh = strings.slice().reverse()  // 6,5,4,3,2,1
     var numStrings = strings.length
@@ -277,8 +274,7 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
                 for (var df = 0; df < fretted.length; df++) {
                     distinctFrets[fretted[df]] = true
                 }
-                var numDistinct = 0
-                for (var dfk in distinctFrets) numDistinct++
+                var numDistinct = Object.keys(distinctFrets).length
                 if (numDistinct > 4) continue
             }
 
@@ -433,8 +429,9 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
   } // end roots loop
 
     // Collect results (keep _score for caller sorting — cleaned up in generateAll)
-    for (var key in bestVoicings) {
-        results.push(bestVoicings[key])
+    var bestKeys = Object.keys(bestVoicings)
+    for (var bki = 0; bki < bestKeys.length; bki++) {
+        results.push(bestVoicings[bestKeys[bki]])
     }
     return results
 }
@@ -447,16 +444,11 @@ function calculateForQuality(tuningMidi, qualityId, constraints) {
 // @param progressFn   — optional callback(current, total, phase) for UI progress
 function generateAll(tuningMidi, constraints, progressFn) {
     var allVoicings = []
-    var defaultQualities = []
-    for (var qid in CHORD_QUALITIES) {
-        defaultQualities.push(qid)
-    }
+    var defaultQualities = Object.keys(CHORD_QUALITIES)
 
     // capPerRoot budget: user-specified cap, or 120 default (~10 per root).
     // capPerRoot always runs to ensure top-note diversity and even root distribution.
-    var cfg = {}
-    for (var cdk in DEFAULT_CONSTRAINTS) cfg[cdk] = DEFAULT_CONSTRAINTS[cdk]
-    if (constraints) { for (var cck in constraints) cfg[cck] = constraints[cck] }
+    var cfg = Object.assign({}, DEFAULT_CONSTRAINTS, constraints || {})
     // maxPerQuality: 0 = unlimited (Ted Greene mode), positive = cap, undefined/null = default 120
     var maxPerQ = (typeof cfg.maxPerQuality === "number") ? cfg.maxPerQuality : 120
 
@@ -473,9 +465,7 @@ function generateAll(tuningMidi, constraints, progressFn) {
     }
 
     // Pass 2: inversions (non-root bass) for all qualities
-    var invConstraints = {}
-    for (var dk in DEFAULT_CONSTRAINTS) invConstraints[dk] = DEFAULT_CONSTRAINTS[dk]
-    if (constraints) { for (var ck in constraints) invConstraints[ck] = constraints[ck] }
+    var invConstraints = Object.assign({}, DEFAULT_CONSTRAINTS, constraints || {})
     invConstraints.requireRootInBass = false
     for (var ii = 0; ii < defaultQualities.length; ii++) {
         if (progressFn) progressFn(ii, totalQualities, "inversions")
@@ -488,12 +478,12 @@ function generateAll(tuningMidi, constraints, progressFn) {
 
     // Pass 3: quartal voicings — use the same geometry engine with quartal pitch classes.
     // Root-in-bass relaxed for quartals since they're not root-oriented.
-    var quartalConstraints = {}
-    for (var qdk in DEFAULT_CONSTRAINTS) quartalConstraints[qdk] = DEFAULT_CONSTRAINTS[qdk]
-    if (constraints) { for (var qck in constraints) quartalConstraints[qck] = constraints[qck] }
+    var quartalConstraints = Object.assign({}, DEFAULT_CONSTRAINTS, constraints || {})
     quartalConstraints.requireRootInBass = false
     if (progressFn) progressFn(0, 3, "quartal")
-    for (var qid in QUARTAL_QUALITIES) {
+    var quartalIds = Object.keys(QUARTAL_QUALITIES)
+    for (var qi = 0; qi < quartalIds.length; qi++) {
+        var qid = quartalIds[qi]
         var qVoicings = calculateForQuality(tuningMidi, qid, quartalConstraints)
         qVoicings = capPerRoot(qVoicings, maxPerQ)
         for (var qi2 = 0; qi2 < qVoicings.length; qi2++) {
@@ -659,8 +649,9 @@ function _isFingeringFeasible(dots, fretNumber, numStrings, mutes) {
             aboveByFret[fr].push(fretted[af2].string)
         }
     }
-    for (var fk in aboveByFret) {
-        var strs = aboveByFret[fk].sort(function(a, b) { return a - b })
+    var aboveFretKeys = Object.keys(aboveByFret)
+    for (var afi = 0; afi < aboveFretKeys.length; afi++) {
+        var strs = aboveByFret[aboveFretKeys[afi]].sort(function(a, b) { return a - b })
         // Count groups of adjacent strings
         var groups = 1
         for (var g = 1; g < strs.length; g++) {
@@ -704,8 +695,9 @@ function _isFingeringFeasible(dots, fretNumber, numStrings, mutes) {
                     above2[f2].push(remaining[a2].string)
                 }
             }
-            for (var fk2 in above2) {
-                var strs2 = above2[fk2].sort(function(a, b) { return a - b })
+            var above2Keys = Object.keys(above2)
+            for (var a2i = 0; a2i < above2Keys.length; a2i++) {
+                var strs2 = above2[above2Keys[a2i]].sort(function(a, b) { return a - b })
                 var grp2 = 1
                 for (var g2 = 1; g2 < strs2.length; g2++) {
                     if (strs2[g2] - strs2[g2 - 1] > 1) grp2++
