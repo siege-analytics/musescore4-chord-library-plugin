@@ -1297,6 +1297,28 @@ class TestVoicingCalculatorJS:
             assert(typeof calculateForQuality === "function", "calculateForQuality exists");
         """)
 
+    def test_calculator_covers_every_quality_in_voicings_json(self):
+        # #180: CHORD_QUALITIES must define every chord_quality value that
+        # appears in the curated voicings.json (excluding the chord-agnostic
+        # "quartal" which has its own table).
+        import json as _json
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "voicings.json")) as f:
+            data = _json.load(f)
+        data_qualities = sorted({
+            v["chord_quality"] for v in data["voicings"]
+            if v["chord_quality"] != "quartal"
+        })
+        missing = []
+        for q in data_qualities:
+            r = run_js(["VoicingCalculator.js"], f"""
+                var present = (CHORD_QUALITIES["{q}"] !== undefined);
+                _results.push({{ pass: present, message: "{q}" }});
+                if (!present) _pass = false;
+            """)
+            if not r["pass"]:
+                missing.append(q)
+        assert not missing, f"calculator missing qualities: {missing}"
+
 
 # === FingeringEngine.js (direct JS tests, complementing Python tests) ===
 
