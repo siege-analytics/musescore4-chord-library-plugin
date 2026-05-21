@@ -113,10 +113,9 @@ MuseScore {
         source: Qt.resolvedUrl("settings.json")
     }
 
-    FileIO {
-        id: localCacheFile
-        source: Qt.resolvedUrl("data/voicings.json")
-    }
+    // #211 Stage 3 — localCacheFile removed; voicings.json is no longer a
+    // runtime load target. The calculator generates the standard pool;
+    // user imports persist to user-voicings.json (see userVoicingsFile below).
 
     FileIO {
         id: exportFile
@@ -158,6 +157,16 @@ MuseScore {
     FileIO {
         id: standardCalculatedFile  // #209 Stage 1 — cached calculator output for standard tuning
         source: Qt.resolvedUrl("data/standard-calculated.json")
+    }
+
+    FileIO {
+        id: userVoicingsFile  // #211 Stage 3 — user-imported voicings (replaces voicings.json runtime role)
+        source: Qt.resolvedUrl("data/user-voicings.json")
+    }
+
+    FileIO {
+        id: voicingsJsonForMigration  // #211 Stage 3 — read ONCE if revoice memory is v1, then never again
+        source: Qt.resolvedUrl("data/voicings.json")
     }
 
     FileIO {
@@ -261,6 +270,10 @@ MuseScore {
     // unioned with voicingsData by signatureKey to expand the candidate pool.
     // Cached to data/standard-calculated.json; invalidated by constraints hash.
     property var calculatedStandardVoicings: []
+
+    // User-imported voicings (#211 Stage 3). Replaces the previous role of
+    // voicings.json as the user-import store. Persisted to data/user-voicings.json.
+    property var userVoicings: []
 
     // Exclusion engine (#210 Stage 2). The full tolerance map (per-mode +
     // per-tuning-per-mode overrides), loaded once from config. The per-user
@@ -549,6 +562,44 @@ MuseScore {
             + after + " unique")
     }
 
+    // #211 Stage 3 — assemble the runtime pool from calculator + user imports.
+    // Replaces the previous voicings.json-driven flow. Standard tuning's pool
+    // = union(calculatedStandardVoicings, userVoicings), deduped by signature.
+    function rebuildStandardPool() {
+        var pool = ChordSelector.unionVoicings(calculatedStandardVoicings, userVoicings)
+        voicingsData = pool
+        dataLoaded = true
+        console.log("Rebuilt standard pool: " + (calculatedStandardVoicings || []).length
+            + " calculator + " + (userVoicings || []).length + " user -> "
+            + pool.length + " unique")
+    }
+
+    function loadUserVoicings() {
+        try {
+            var raw = userVoicingsFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                userVoicings = (data && data.voicings) || []
+                console.log("Loaded " + userVoicings.length + " user voicings")
+            }
+        } catch (e) {
+            // No file or empty — start clean.
+            userVoicings = []
+        }
+    }
+
+    function saveUserVoicings() {
+        try {
+            userVoicingsFile.write(JSON.stringify({
+                version: "v1",
+                count: userVoicings.length,
+                voicings: userVoicings
+            }))
+        } catch (e) {
+            console.log("Failed to write user-voicings.json: " + e)
+        }
+    }
+
     // === Exclusion engine (#210 Stage 2) ===
 
     function loadVoicingTolerances() {
@@ -587,6 +638,16 @@ MuseScore {
             // Cache signature on the clone so UI override actions can
             // identify the voicing without re-computing.
             clone._signatureKey = ChordSelector.signatureKey(v)
+            // #211 Stage 3 — calculator voicings that match a curated
+            // signature inherit the curated name/category for display.
+            // (User imports already carry their own name/category and
+            // typically won't match a curated signature; if they do,
+            // curated wins — same precedence as Stage 1's union.)
+            var curatedHit = curatedShapeLookup[clone._signatureKey]
+            if (curatedHit) {
+                if (curatedHit.name) clone.name = curatedHit.name
+                if (curatedHit.category) clone.category = curatedHit.category
+            }
             clone._excludedReason = ExclusionEngine.evaluateExclusion(
                 v, tolerances, userVoicingOverrides, opts)
             if (clone._excludedReason) hidden++
@@ -626,12 +687,47 @@ MuseScore {
         try {
             var raw = revoiceMemoryFile.read()
             revoiceMemory = RevoiceMemory.parseMemory(raw)
-            console.log("Loaded revoice memory: "
+            // #211 Stage 3 — migrate v1 (id-keyed) to v2 (signature-keyed).
+            // Reads voicings.json ONE last time to build {id -> signatureKey}.
+            // After this point, runtime never reads voicings.json again.
+            if (revoiceMemory.version === "v1") {
+                console.log("Migrating revoice memory v1 -> v2")
+                var idToSig = _buildIdToSignatureLookup()
+                RevoiceMemory.migrateFromV1(revoiceMemory, idToSig)
+                if (revoiceMemory._droppedIds && revoiceMemory._droppedIds.length > 0) {
+                    console.log("Dropped " + revoiceMemory._droppedIds.length
+                        + " unresolvable choice(s) during v1->v2 migration")
+                }
+                saveRevoiceMemory()
+            }
+            console.log("Loaded revoice memory ("
+                + revoiceMemory.version + "): "
                 + Object.keys(revoiceMemory.scopes).length + " scope(s)")
         } catch (e) {
             console.log("No revoice memory; starting fresh")
-            revoiceMemory = { version: "v1", scopes: {} }
+            revoiceMemory = { version: "v2", scopes: {} }
         }
+    }
+
+    // #211 Stage 3 — one-time helper for v1->v2 migration. Reads voicings.json
+    // (the source-of-truth-at-time-of-migration), maps each id to its
+    // signature key. Empty map on file-missing (memory's unresolvable
+    // entries are dropped with diagnostics).
+    function _buildIdToSignatureLookup() {
+        var lookup = {}
+        try {
+            var raw = voicingsJsonForMigration.read()
+            if (!raw || raw.length < 2) return lookup
+            var data = JSON.parse(raw)
+            var arr = (data && data.voicings) || (Array.isArray(data) ? data : [])
+            for (var i = 0; i < arr.length; i++) {
+                var v = arr[i]
+                if (v && v.id) lookup[v.id] = ChordSelector.signatureKey(v)
+            }
+        } catch (e) {
+            console.log("Migration lookup: voicings.json unreadable: " + e)
+        }
+        return lookup
     }
 
     function saveRevoiceMemory() {
@@ -1110,20 +1206,12 @@ MuseScore {
         loadRevoiceMemory()
         loadSettings()
         loadTuningStringCount()
-        if (!dataLoaded) {
-            // Try local cache first (contains imports), fall back to URL
-            if (!loadFromCache()) {
-                fetchVoicings()
-            }
-        }
-        // Stage 1 (#209): union calculator output for standard tuning.
-        // Runs after voicings.json is loaded; populates voicingsData with the
-        // unioned pool. Standard tuning is what's loaded by default at startup;
-        // if the user switches tunings, loadTuningVoicings handles non-standard.
+        // #211 Stage 3 — voicings.json no longer loaded at runtime. The
+        // standard-tuning pool is built from calculator output + user
+        // imports. Non-standard tunings still flow through loadTuningVoicings.
         loadCalculatedStandard()
-        applyStandardUnion()
-        // Stage 2 (#210): apply exclusion engine to the (unioned) pool.
-        // Re-runs on tuning/mode changes via property change handlers below.
+        loadUserVoicings()
+        rebuildStandardPool()
         applyExclusionPass()
         // Auto-select CM context if none saved
         if (!filterContext) {
@@ -1136,30 +1224,18 @@ MuseScore {
         startupTuningTimer.start()
     }
 
+    // #211 Stage 3 — voicings.json is no longer the runtime source for
+    // standard tuning. The functions below are kept as no-ops so the
+    // surviving UI handlers (URL Apply, Reset, Refresh, Reset Data,
+    // import-merge, fixDuplicates) don't crash. Migrating those callers to
+    // calculator-based actions is a follow-up.
     function loadFromCache() {
-        try {
-            var raw = localCacheFile.read()
-            var cached = DataCache.parseCache(raw)
-            if (cached) {
-                voicingsData = cached
-                dataLoaded = true
-                rebuildFilterLists()
-                refreshFilteredTunings()
-                applyFilters()
-                statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
-                statusMsg.color = theme.successText
-                console.log("Loaded " + cached.length + " voicings from local cache")
-                return true
-            }
-        } catch (e) {
-            console.log("No local cache, fetching from URL")
-        }
+        console.log("loadFromCache is deprecated (#211 Stage 3); ignoring")
         return false
     }
 
     function saveToCache() {
-        localCacheFile.write(DataCache.serializeCache(voicingsData))
-        console.log("Saved " + voicingsData.length + " voicings to local cache")
+        console.log("saveToCache is deprecated (#211 Stage 3); use saveUserVoicings()")
     }
 
     // === Settings persistence ===
@@ -1493,14 +1569,17 @@ MuseScore {
             tags: ["custom", category]
         }
 
-        // Add to library and save
-        var merged = voicingsData.slice()
-        merged.push(voicing)
-        voicingsData = merged
+        // #211 Stage 3 — user imports go to user-voicings.json, NOT
+        // back to voicings.json. The pool rebuilds from calculator output
+        // unioned with userVoicings, then the exclusion pass runs.
+        var nextUser = userVoicings.slice()
+        nextUser.push(voicing)
+        userVoicings = nextUser
+        saveUserVoicings()
+        rebuildStandardPool()
         rebuildFilterLists()
         refreshFilteredTunings()
-        applyFilters()
-        saveToCache()
+        applyExclusionPass()  // re-runs applyFilters internally
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
         settingsPanel.saveStatus = "Saved: " + voicing.name + keyNote
@@ -1644,47 +1723,15 @@ MuseScore {
 
     // === Data fetching ===
 
+    // #211 Stage 3 — voicings.json is no longer a runtime source. The
+    // calculator generates the standard pool; users append to user-voicings.json.
+    // fetchVoicings is kept as a no-op so existing Import-panel UI handlers
+    // don't crash; if a user clicks "Apply URL" or "Refresh", the request is
+    // ignored with a status message.
     function fetchVoicings() {
-        statusMsg.text = "Loading voicings..."
-        statusMsg.color = theme.textSecondary
-        var xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    try {
-                        var data = JSON.parse(xhr.responseText)
-                        voicingsData = data.voicings || []
-                        dataLoaded = true
-                        // Stage 1 (#209): the union runs whenever voicingsData
-                        // is freshly populated; deduped so it's idempotent.
-                        applyStandardUnion()
-                        rebuildFilterLists()
-                        refreshFilteredTunings()
-                        applyFilters()
-                        saveToCache()
-                        // T-001: trigger tuning-specific voicings now that data is loaded.
-                        // loadTuningVoicings() in onRun ran before this async callback,
-                        // so non-standard tunings need a second call here.
-                        if (selectedTuning !== "standard") {
-                            loadTuningVoicings()
-                        }
-                        statusMsg.text = "Loaded " + voicingsData.length + " voicings"
-                        statusMsg.color = theme.successText
-                    } catch (e) {
-                        statusMsg.text = "Failed to parse voicings: " + e
-                        statusMsg.color = theme.errorText
-                    }
-                } else if (xhr.status === 0) {
-                    statusMsg.text = "Could not reach URL. Check connection or URL."
-                    statusMsg.color = theme.errorText
-                } else {
-                    statusMsg.text = "Failed to fetch: HTTP " + xhr.status
-                    statusMsg.color = theme.errorText
-                }
-            }
-        }
-        xhr.open("GET", jsonUrl)
-        xhr.send()
+        statusMsg.text = "URL fetch is deprecated — pool is generated locally"
+        statusMsg.color = theme.textMuted
+        console.log("fetchVoicings is a no-op in #211 Stage 3")
     }
 
     // === Filtering ===

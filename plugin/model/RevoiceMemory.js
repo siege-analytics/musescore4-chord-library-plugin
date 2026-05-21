@@ -20,8 +20,15 @@
 // mode/style/tuning resets the saved choices"). When the user comes back with
 // the same axes, prior choices are restored.
 
+// Schema versioning:
+//   v1 — choice values are voicing IDs (introduced in #197).
+//   v2 — choice values are root-relative signature keys (#211 Stage 3).
+//        Stable across voicings.json removal because signatures are
+//        computed from the voicing's shape, not from any persisted id.
+var CURRENT_VERSION = "v2"
+
 function emptyMemory() {
-    return { version: "v1", scopes: {} }
+    return { version: CURRENT_VERSION, scopes: {} }
 }
 
 function buildScopeKey(scorePath, mode, style, tuning) {
@@ -96,10 +103,47 @@ function parseMemory(raw) {
     try {
         var m = JSON.parse(raw)
         if (!m || typeof m !== "object") return emptyMemory()
-        if (m.version !== "v1") return emptyMemory()
+        // Accept both v1 and v2 schemas; caller handles migration when v1.
+        if (m.version !== "v1" && m.version !== "v2") return emptyMemory()
         if (!m.scopes || typeof m.scopes !== "object") return emptyMemory()
         return m
     } catch (e) {
         return emptyMemory()
     }
+}
+
+// Migrate v1 (id-keyed) memory to v2 (signature-keyed) (#211 Stage 3).
+// Caller provides idToSigLookup — a map { voicingId -> signatureKey } built
+// from voicings.json one last time before the runtime read paths are dropped.
+//
+// Mutates `memory` in place AND returns it. Choices whose voicingId can't
+// be resolved (e.g. voicing was removed from voicings.json across upgrades)
+// are dropped, with a log line per dropped entry returned via the result's
+// `droppedIds` array.
+//
+// No-op if memory is already v2.
+function migrateFromV1(memory, idToSigLookup) {
+    if (!memory) return emptyMemory()
+    if (memory.version === "v2") return memory
+    if (memory.version !== "v1") return memory  // unknown — leave alone
+    var droppedIds = []
+    var scopes = memory.scopes || {}
+    for (var scopeKey in scopes) {
+        var scope = scopes[scopeKey]
+        var choices = (scope && scope.choices) || {}
+        var newChoices = {}
+        for (var chord in choices) {
+            var id = choices[chord]
+            var sig = idToSigLookup ? idToSigLookup[id] : null
+            if (sig) {
+                newChoices[chord] = sig
+            } else {
+                droppedIds.push({ scopeKey: scopeKey, chordSymbol: chord, voicingId: id })
+            }
+        }
+        scope.choices = newChoices
+    }
+    memory.version = "v2"
+    memory._droppedIds = droppedIds  // surfaced for diagnostic logging
+    return memory
 }

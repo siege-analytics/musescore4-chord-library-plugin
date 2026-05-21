@@ -985,6 +985,42 @@ class TestUnionVoicings:
             assertEqual(u.length, 2, "different quality, both kept");
         """)
 
+    def test_calculator_voicing_inherits_curated_display_name(self):
+        # #211 Stage 3: when a calculator voicing's signature matches a
+        # curated lookup entry, its display name/category come from the
+        # curated entry. We exercise buildCuratedLookup + signatureKey
+        # directly (the QML applyExclusionPass calls both); the test
+        # confirms the lookup-by-signature works for downstream display.
+        assert_js("ChordSelector.js", """
+            var payload = {
+                shapes: [{
+                    signature: {
+                        strings: 6, mutes: [], opens: [],
+                        pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                    },
+                    name: "Shell 137 — root on top",
+                    category: "shell",
+                    boost: 60
+                }]
+            };
+            var lookup = buildCuratedLookup(payload);
+            var calculatorVoicing = {
+                id: "calc-gen-1",
+                name: "dom7 fret 1",     // calculator's generic name
+                category: "generated",   // calculator's generic category
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            };
+            var sig = signatureKey(calculatorVoicing);
+            var curated = lookup[sig];
+            assert(curated !== undefined, "calculator signature hits curated lookup");
+            assertEqual(curated.name, "Shell 137 — root on top",
+                "curated name available to attach");
+            assertEqual(curated.category, "shell",
+                "curated category available to attach");
+        """)
+
     def test_voicing_schema_accepts_reserved_fields(self):
         # Schema reservation for Track 2/3 (#212): voicings may carry
         # voicingStyle and playStyle. They round-trip through union
@@ -1199,9 +1235,10 @@ class TestRevoiceMemory:
     """Test RevoiceMemory.js scope-keyed choice storage."""
 
     def test_empty_memory_starts_with_no_scopes(self):
+        # Default version bumped to "v2" by #211 Stage 3 (signature-keyed).
         assert_js("RevoiceMemory.js", """
             var m = emptyMemory();
-            assertEqual(m.version, "v1", "version stamped");
+            assertEqual(m.version, "v2", "version stamped");
             assertEqual(Object.keys(m.scopes).length, 0, "no scopes yet");
         """)
 
@@ -1276,12 +1313,82 @@ class TestRevoiceMemory:
         """)
 
     def test_parse_memory_handles_corrupt_input(self):
+        # Updated for #211 Stage 3 — empty memory is now v2.
         assert_js("RevoiceMemory.js", """
-            assertEqual(parseMemory("").version, "v1", "empty string -> empty memory");
-            assertEqual(parseMemory("not json").version, "v1", "invalid json -> empty memory");
-            assertEqual(parseMemory('{"version":"v0"}').version, "v1", "wrong version -> empty");
-            var ok = parseMemory('{"version":"v1","scopes":{"a":{"choices":{"F7":"v1"},"ts":1}}}');
-            assertEqual(ok.scopes.a.choices.F7, "v1", "valid memory parses through");
+            assertEqual(parseMemory("").version, "v2", "empty string -> empty v2 memory");
+            assertEqual(parseMemory("not json").version, "v2", "invalid json -> empty v2 memory");
+            assertEqual(parseMemory('{"version":"v0"}').version, "v2", "unknown version -> empty");
+            // v1 memories still parse (caller migrates).
+            var v1 = parseMemory('{"version":"v1","scopes":{"a":{"choices":{"F7":"v1"},"ts":1}}}');
+            assertEqual(v1.version, "v1", "v1 still parseable");
+            assertEqual(v1.scopes.a.choices.F7, "v1", "v1 choices preserved");
+            // v2 memories parse straight through.
+            var v2 = parseMemory('{"version":"v2","scopes":{"a":{"choices":{"F7":"sig123"},"ts":1}}}');
+            assertEqual(v2.version, "v2", "v2 parses");
+            assertEqual(v2.scopes.a.choices.F7, "sig123", "v2 signature value");
+        """)
+
+    def test_revoice_memory_migrates_v1_to_v2(self):
+        # #211 Stage 3 ticket falsifier. v1 memory + an idToSig lookup
+        # produces a v2 memory with signatures in choices.
+        assert_js("RevoiceMemory.js", """
+            var memory = {
+                version: "v1",
+                scopes: {
+                    "scope-a": { choices: { "F7": "id-shell-137", "Cm7": "id-drop2" }, ts: 1000 },
+                    "scope-b": { choices: { "Bbmaj7": "id-shell-137" }, ts: 2000 }
+                }
+            };
+            var idToSig = {
+                "id-shell-137": "sig-shell-137",
+                "id-drop2": "sig-drop2"
+            };
+            migrateFromV1(memory, idToSig);
+            assertEqual(memory.version, "v2", "schema bumped");
+            assertEqual(memory.scopes["scope-a"].choices.F7, "sig-shell-137",
+                "F7 choice rewritten");
+            assertEqual(memory.scopes["scope-a"].choices.Cm7, "sig-drop2",
+                "Cm7 choice rewritten");
+            assertEqual(memory.scopes["scope-b"].choices.Bbmaj7, "sig-shell-137",
+                "scope-b also rewritten");
+            assertEqual((memory._droppedIds || []).length, 0, "nothing dropped");
+        """)
+
+    def test_revoice_memory_v2_round_trip(self):
+        # Post-migration, get/record operate on signatures as values.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            assertEqual(m.version, "v2", "starts at v2");
+            var key = buildScopeKey("/p.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, key, "F7", "sig-shell-137", 1000);
+            assertEqual(getChoice(m, key, "F7"), "sig-shell-137",
+                "signature retrievable");
+        """)
+
+    def test_revoice_memory_migration_drops_unresolvable_ids(self):
+        assert_js("RevoiceMemory.js", """
+            var memory = {
+                version: "v1",
+                scopes: {
+                    "scope-a": { choices: { "F7": "id-known", "Cm7": "id-missing" }, ts: 1000 }
+                }
+            };
+            var idToSig = { "id-known": "sig-known" };  // id-missing not in lookup
+            migrateFromV1(memory, idToSig);
+            assertEqual(memory.scopes["scope-a"].choices.F7, "sig-known",
+                "resolvable id rewritten");
+            assertEqual(memory.scopes["scope-a"].choices.Cm7, undefined,
+                "unresolvable id dropped");
+            assertEqual((memory._droppedIds || []).length, 1,
+                "drop logged for surfaceable diagnostics");
+        """)
+
+    def test_revoice_memory_migration_is_noop_on_v2(self):
+        assert_js("RevoiceMemory.js", """
+            var m = { version: "v2", scopes: { "a": { choices: { "F7": "sig" }, ts: 1 } } };
+            migrateFromV1(m, {});
+            assertEqual(m.version, "v2", "still v2");
+            assertEqual(m.scopes.a.choices.F7, "sig", "untouched");
         """)
 
 
