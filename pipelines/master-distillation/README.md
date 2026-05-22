@@ -4,6 +4,16 @@ Converts a master's source book(s) into a **statement of outputs** — structure
 
 Tracked in #297. Design note: `../../sessions/260522-ruby-vista/plans/think-297-master-distillation-pipeline.md` (one session out from the repo; not committed).
 
+## The code layer is demonstrably free
+
+This pipeline makes **no LLM API calls** and depends on **no LLM SDK**. Stages that need LLM work hand off via the filesystem:
+
+1. Stage writes a request file (`runs/<id>/llm-calls/<stage>-<scope>.request.json`) containing the prompt + JSON Schema for the expected response, then exits in `awaiting-llm`.
+2. A human or agent fills the response file (`<stage>-<scope>.response.json`) using whatever LLM interface they prefer — Claude CLI, Craft Agents, an Ollama wrapper script, even hand-typing.
+3. The pipeline picks back up on `resume`, validates the response against the schema, and continues.
+
+No surprise spend lives in `git diff`. Cost responsibility sits at the human/agent layer.
+
 ## What the pipeline produces
 
 Per book, COMMITTED under `plugin/data/masters-corpus/<master>/<work>/`:
@@ -77,11 +87,23 @@ Resets the named stage AND all downstream stages to `pending`. Re-run with `resu
 python pipelines/master-distillation/run.py status <run-id>
 ```
 
-## LLM invocation (interim)
+## Filling response files
 
-Until the Anthropic SDK is wired up, LLM-driven stages (2-4) write their prompts to `runs/<run-id>/llm-calls/<stage>-<scope>.request.json` and exit in `awaiting-llm`. The agent (or a human) runs the LLM with that prompt, drops the parsed JSON response at `runs/<run-id>/llm-calls/<stage>-<scope>.response.json`, then `resume`s.
+When a stage hits `awaiting-llm`, its request file describes what's needed:
 
-A follow-up ticket will add direct SDK support so the pipeline can run autonomously.
+- `system_prompt` + `user_prompt` — feed these to your LLM of choice
+- `response_schema` — if present, the response must match this JSON Schema; if absent, the response is free-form prose wrapped as `{"text": "..."}`
+- `model` — informational only; you decide what model produces the response
+
+Drop a JSON file at the response path, then `resume`. The pipeline validates against the schema and continues.
+
+This contract is intentionally backend-agnostic. Some ways to fill:
+- Craft Agents / Claude desktop — paste request, paste response back. Subagents can parallelize this for per-chapter stages.
+- Claude CLI — `cat request.json | claude ... > response.json` (your own wrapper)
+- Local LLM (Ollama, llama.cpp, etc.) — your own wrapper script that posts the prompt and writes the response
+- Hand-typed — for short prose stages, sometimes the right move
+
+The pipeline doesn't care which.
 
 ## Adding a new book
 
