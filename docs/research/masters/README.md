@@ -47,7 +47,7 @@ an inference.
 
 | Master | Research file | Status |
 |---|---|---|
-| George Van Eps | `george-van-eps.md` | web-researched, 5 documented principles |
+| George Van Eps | `george-van-eps.md` | **primary-source (1939 Method PDF)**, 7 documented principles. 7-string Harmonic Mechanisms principles pending separate pass. |
 | Ted Greene | `ted-greene.md` | corpus-extracted, 5 documented principles |
 | Joe Pass | `joe-pass.md` | web-researched, 4 documented principles |
 | Martin Taylor | `martin-taylor.md` | web-researched, 4 documented principles |
@@ -57,7 +57,7 @@ an inference.
 | Johnny Smith | `johnny-smith.md` | web-researched, 3 documented principles |
 | Jody Fisher | `jody-fisher.md` | web-researched, 2 documented principles (small by design — pedagogue, not stylist) |
 
-**Bookshelf total: 9 masters, 36 principles.**
+**Bookshelf total: 9 masters, 38 principles.**
 
 Each research file follows the same shape: web sources table,
 per-principle source attribution with quotes, a "what was REMOVED"
