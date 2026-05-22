@@ -55,12 +55,50 @@
       "lived": "1946-2005",
       "traditions": ["chord-melody", "jazz", "baroque", "blues", "gospel", "country"],
       "instrument": "6-string (low E)",
-      "biography": "Los Angeles teacher and player whose lessons reshaped how guitarists think about chord voicings, voice-leading, and the interaction of melody with harmony. Authored Chord Chemistry and Modern Chord Progressions; his estate (tedgreene.com) maintains his manuscript and lesson archive openly.",
+      "biography": "Los Angeles teacher and player whose lessons and the openly-distributed tedgreene.com archive reshaped how guitarists think about four-note voicings, voice-leading, and the relationship between melody and harmony. Authored Chord Chemistry (1971) and Modern Chord Progressions (1973). His V-System — a taxonomy of 14 voicing groups across 43 unique four-note chord qualities — is the canonical Greene framework.",
       "principles": [
+        {
+          "id": "v-system-voicing-groups",
+          "name": "V-System voicing groups",
+          "summary": "Four-note voicings are classified into 14 groups (V-1 through V-14) ordered from most compact to most spread: V-1 is the closest cluster, V-14 the widest, with V-13/V-14 less spread than V-11/V-12. Any chord quality (43 unique four-note qualities) can be voiced in any V-group; cycling through them gives every distinct way to spell the same chord. The framework is taxonomic, not prescriptive — Greene's pragmatic note: 'use logic to generate possibilities but don't be so strict that you lose [practical results].'",
+          "voicingStyleTags": ["greene", "greene-v-system"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "tolerance_hints": {
+            "minSoundingNotes": 4
+          },
+          "references": [
+            {
+              "source": "tedgreene.com V-System archive (Hober's intro)",
+              "url": "https://tedgreene.com/teaching/v_system.asp",
+              "citation": "Hober, James. V-System Introduction. tedgreene.com. Corpus extract at plugin/data/masters-corpus/greene/01_WhoIsJamesHober.txt."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "fixed-soprano-tour",
+          "name": "Fixed soprano tour",
+          "summary": "Hold the top voice (soprano) constant on a chosen melody note; cycle through all 14 V-System voicing groups to reveal every way Greene's system harmonizes underneath that note. For chord-melody work this is the engine: the melody fixes the soprano; the V-System provides the harmonic exploration. Hober: 'in a single line of music notation he had concisely described and implied the entire V-System.'",
+          "voicingStyleTags": ["greene", "greene-v-system"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "tolerance_hints": {
+            "minSoundingNotes": 4
+          },
+          "references": [
+            {
+              "source": "tedgreene.com V-System archive (Hober's 'Who Is James' chapter)",
+              "url": "https://tedgreene.com/teaching/v_system.asp",
+              "citation": "Hober, James. Who Is James? — V-System Introduction. Corpus extract at plugin/data/masters-corpus/greene/01_WhoIsJamesHober.txt."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
         {
           "id": "voice-leading-inner-motion",
           "name": "Voice leading through inner motion",
-          "summary": "Melody stays on top while inner voices (alto, tenor) move stepwise between chord changes. The bass anchors, the top voice carries the melody, and the inner voices do the harmonic work — producing the sense of multiple lines weaving rather than block chords thudding.",
+          "summary": "Melody stays on top while inner voices (alto, tenor) move stepwise between chord changes. The bass anchors, the top voice carries the melody, and the inner voices do the harmonic work — producing the sense of multiple independent lines rather than block chords. The V-System's 'Conversion' method (Welcome chapter index, item 20) is the formal device for moving between V-groups while preserving voice-leading economy.",
           "voicingStyleTags": ["greene"],
           "playStyleTags": ["sequential"],
           "applies_to_modes": ["chord-melody", "solo-guitar"],
@@ -73,8 +111,25 @@
               "citation": "Greene, Ted. Chord Chemistry. Dale Zdenek, 1971."
             },
             {
-              "source": "tedgreene.com",
-              "url": "https://tedgreene.com/teaching/v_system.aspx"
+              "source": "tedgreene.com V-System archive",
+              "url": "https://tedgreene.com/teaching/v_system.asp",
+              "citation": "Welcome chapter; corpus extract at plugin/data/masters-corpus/greene/00_Welcome.txt."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "ii7-over-ivmaj7-substitution",
+          "name": "ii7 preferred over IVmaj7 for the IV function",
+          "summary": "Greene's 1974 manuscript on ii7-V7-I documents the historical/aural preference for ii7 over IVmaj7 in the IV-V-I cadence: IVmaj7's root-to-7 major-7 interval is strident, while ii7's minor-7 interval is mild. The substitution defines the canonical jazz ii7-V7-I cadence; voicings supporting the ii7-V7-I motion (smooth root motion by 5ths, common-tone voice leading) are preferred. Minor variant: iiø7 - V(7) - i.",
+          "voicingStyleTags": ["greene"],
+          "playStyleTags": [],
+          "applies_to_modes": ["comping", "chord-melody"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Ted Greene, ii7 - V(7) - I (1974-11-28 and 1974-11-29)",
+              "citation": "Manuscript. Corpus extract at plugin/data/masters-corpus/greene/ii7-V7-I_TedGreene_1974-11-28_and_29.txt. Quoted: 'the strongly dissonant interval of a major 7th... was apparently harsher to the ears of our forefathers than the mild dissonance of a minor 7th in the ii7.'"
             }
           ],
           "example_voicing_signatures": []
@@ -82,7 +137,7 @@
         {
           "id": "sequential-articulation",
           "name": "Sequential articulation",
-          "summary": "Voicings are designed for hybrid-pick or fingerstyle plucking with a specific right-hand sequence: bass plucked first, then the inner voices in order, melody on top. The pluck order is part of the music; strumming the same shape sounds different.",
+          "summary": "Voicings are played with right-hand fingerstyle or hybrid-pick articulation rather than strummed — bass plucked first, inner voices in sequence, melody on top. The pluck order is part of the music; strumming the same shape produces a different effect. Closely associated with Greene's harp-harmonics technique (also Lenny Breau), which he treasured and lamented as overexposed (1995 letter).",
           "voicingStyleTags": ["greene"],
           "playStyleTags": ["sequential", "hybrid-pick"],
           "applies_to_modes": ["chord-melody", "solo-guitar"],
@@ -91,6 +146,10 @@
             {
               "source": "Modern Chord Progressions",
               "citation": "Greene, Ted. Modern Chord Progressions. Dale Zdenek, 1973."
+            },
+            {
+              "source": "Ted Greene letter to Bruce (1995-12-16)",
+              "citation": "Manuscript. Corpus extract at plugin/data/masters-corpus/greene/3-NoteChordsForThe_I_ChordInGBlues_WithLetter_TedGreene_1995-12-16.txt — Greene laments harp-harmonics losing their impact through overexposure."
             }
           ],
           "example_voicing_signatures": []
@@ -237,9 +296,9 @@
           "example_voicing_signatures": []
         },
         {
-          "id": "block-chord-to-octave-parallelism",
-          "name": "Block-chord-to-octave parallelism",
-          "summary": "When transitioning from the octave tier to the block-chord tier, the chord voicing places the destination note of the preceding octave passage on top. Voice-leading between adjacent block chords is typically half-step or whole-step in the top voice with parallel inner voices below — drop-2 voicings predominate because they keep the melody on the top string.",
+          "id": "block-chord-drop-2-predominance",
+          "name": "Block-chord drop-2 predominance",
+          "summary": "Wes's block-chord soloing uses drop-2 voicings as the primary vehicle — voicings on adjacent strings with the second-from-top voice dropped an octave. The melody lives on the top string of the voicing; chord tones fill in below. Voice-leading between adjacent block chords is typically smooth in the top voice with parallel inner motion.",
           "voicingStyleTags": ["montgomery", "drop-2"],
           "playStyleTags": ["block"],
           "applies_to_modes": ["solo-guitar", "chord-melody"],
@@ -248,8 +307,14 @@
           },
           "references": [
             {
-              "source": "The Incredible Jazz Guitar of Wes Montgomery (1960)",
-              "citation": "Recorded reference: 'D-Natural Blues' — block-chord chorus shows the octave-to-chord transition explicitly."
+              "source": "Voicelid Jazz Guitar — Drop-2 + Upper Structures",
+              "url": "https://www.voicelidjazzguitar.com/jazz-guitar-blog/jazz-guitar-upper-structures-wes-montgomery-drop-2",
+              "citation": "Documents drop-2 as 'the vehicle for these ideas' and notes Wes 'stuck with chords played mainly on adjacent strings and drop 2 chord shapes.'"
+            },
+            {
+              "source": "jazzguitar.be — Wes Montgomery chord soloing",
+              "url": "https://www.jazzguitar.be/blog/wes-montgomery-jazz-guitar-licks/",
+              "citation": "Indexed across the 40-licks article and Wes Montgomery chord-solo lesson."
             }
           ],
           "example_voicing_signatures": []
@@ -271,19 +336,26 @@
           "example_voicing_signatures": []
         },
         {
-          "id": "blues-vocabulary-in-jazz-context",
-          "name": "Blues vocabulary inside jazz repertoire",
-          "summary": "Single-note phrases pull from blues language — flat thirds, flat fifths, blues-scale-derived runs — even on tunes that aren't formally blues. The harmonic implication when these lines arrive at a block-chord destination favors altered-dominant voicings (7b9, 7#9, 7alt) and #11 colorations rather than vanilla diatonic substitutes.",
+          "id": "upper-structure-triad-substitution",
+          "name": "Upper-structure triad substitution",
+          "summary": "Over a ii7-V7 (or single dominant), Wes voices an upper-structure chord that omits the root: e.g., a DbMaj7 shape over Bbm7 (the 3-5-9-11), then the same DbMaj7 shape carries forward over the following Eb7 (becoming b7-9-sus4-13). Wes treats the entire ii-V interaction as a unified 'Db major field,' reducing cognitive load while generating sophisticated harmonic color. Lines and chord stabs both draw from this field — single-note phrases imply complex harmony.",
           "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar"],
+          "playStyleTags": ["block", "sequential"],
+          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
           "tolerance_hints": {
-            "excludedCategories": []
+            "minSoundingNotes": 3,
+            "requireRootInBass": false
           },
           "references": [
             {
-              "source": "Riverside-era recordings (1959-1963)",
-              "citation": "Recorded reference: 'Twisted Blues,' 'West Coast Blues,' 'Mr. Walker' — blues vocabulary on jazz tunes."
+              "source": "Voicelid Jazz Guitar — Drop-2 + Upper Structures",
+              "url": "https://www.voicelidjazzguitar.com/jazz-guitar-blog/jazz-guitar-upper-structures-wes-montgomery-drop-2",
+              "citation": "Documents Wes's chord-over-chord substitution: 'his lines imply complex harmony even when he plays single notes.'"
+            },
+            {
+              "source": "Wikipedia — Wes Montgomery",
+              "url": "https://en.wikipedia.org/wiki/Wes_Montgomery",
+              "citation": "Documents 'superimposed triads and arpeggios as the main source for his soloing ideas.'"
             }
           ],
           "example_voicing_signatures": []
