@@ -120,15 +120,23 @@ class RunState:
 
     def next_runnable_stage(self) -> str | None:
         """Return the next stage that should run. None if the pipeline
-        is complete or blocked on review/LLM."""
+        is complete or blocked on review.
+
+        Special handling:
+          - `running` means a prior run crashed mid-stage (process died,
+            laptop reset, kernel panic, etc.). The stage's outputs may
+            be partially written; the stage's `run()` is expected to be
+            idempotent (skip already-written per-chapter files, etc.).
+            Re-runnable from the current position.
+          - `awaiting-llm` is a paused mid-stage state; also re-runnable
+            (the stage's `run()` re-tries the request, which the Ollama
+            backend serves directly or the file-dance picks up).
+        """
         for stage in STAGE_ORDER:
             rec = self.stages[stage]
-            if rec.status in ("pending", "awaiting-llm"):
-                # awaiting-llm resumes mid-stage when the response file
-                # arrives, so it IS runnable. pending is runnable iff
-                # all earlier stages accepted.
-                if rec.status == "awaiting-llm":
-                    return stage
+            if rec.status in ("pending", "awaiting-llm", "running"):
+                if rec.status in ("awaiting-llm", "running"):
+                    return stage  # resume mid-stage
                 earlier_ok = all(
                     self.stages[s].status == "accepted"
                     for s in STAGE_ORDER[: STAGE_ORDER.index(stage)]
