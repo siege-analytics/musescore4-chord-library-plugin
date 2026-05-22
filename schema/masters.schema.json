@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A)",
+  "description": "Schema for plugin/data/masters.json. Stage A introduces a dual-shape window: each master may declare legacy 'principles' (v1) and/or new 'systems' (systems-with-three-layers per docs/design-philosophy.md). At least one of the two must be present. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'.",
+  "type": "object",
+  "required": ["version", "masters"],
+  "properties": {
+    "version": { "const": "v1" },
+    "schemaNote": { "type": "string" },
+    "masters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/master" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "master": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "lived": { "type": "string" },
+        "traditions": { "type": "array", "items": { "type": "string" } },
+        "instrument": { "type": "string" },
+        "biography": { "type": "string" },
+        "principles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/principle" }
+        },
+        "systems": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/system" }
+        }
+      },
+      "anyOf": [
+        { "required": ["principles"] },
+        { "required": ["systems"] }
+      ],
+      "additionalProperties": true
+    },
+    "principle": {
+      "type": "object",
+      "required": ["id", "name", "summary"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "voicingStyleTags": { "type": "array", "items": { "type": "string" } },
+        "playStyleTags": { "type": "array", "items": { "type": "string" } },
+        "applies_to_modes": { "type": "array", "items": { "type": "string" } },
+        "applies_to_tunings": { "type": "array", "items": { "type": "string" } },
+        "tolerance_hints": { "type": "object" },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source"],
+            "properties": {
+              "source": { "type": "string" },
+              "citation": { "type": "string" },
+              "url": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "example_voicing_signatures": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "system": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(_placeholder:)?[a-z0-9_-]+:[a-z0-9_-]+$",
+          "description": "Format '<master>:<system-slug>'. A '_placeholder:' prefix marks a system whose interior is intentionally empty pending design — placeholder shape relaxes the non-empty-members rule."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "members": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/taxonomy" }
+        },
+        "traversal_rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rule" }
+        },
+        "modification_rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rule" }
+        },
+        "preferences": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/preference" }
+        },
+        "examples": { "type": "array" },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source"],
+            "properties": {
+              "source": { "type": "string" },
+              "citation": { "type": "string" },
+              "url": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "description": "Placeholder shape: id begins with '_placeholder:'; members/rules may be omitted or empty.",
+          "properties": {
+            "id": { "pattern": "^_placeholder:[a-z0-9_-]+:[a-z0-9_-]+$" }
+          },
+          "required": ["id"]
+        },
+        {
+          "description": "Real shape: non-empty members[] AND at least one of traversal_rules or modification_rules non-empty.",
+          "properties": {
+            "id": { "pattern": "^[a-z0-9_-]+:[a-z0-9_-]+$" },
+            "members": { "type": "array", "minItems": 1 }
+          },
+          "required": ["members"],
+          "anyOf": [
+            { "properties": { "traversal_rules":   { "type": "array", "minItems": 1 } }, "required": ["traversal_rules"] },
+            { "properties": { "modification_rules":{ "type": "array", "minItems": 1 } }, "required": ["modification_rules"] }
+          ]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "taxonomy": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "name", "engine_payload"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "engine_payload": { "$ref": "#/$defs/engine_payload" }
+      },
+      "additionalProperties": true
+    },
+    "engine_payload": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "PositionContinuity",
+                "VoiceMotion",
+                "RegisterBand",
+                "ContraryMotion",
+                "StringSetPreference",
+                "OmissionPriority",
+                "TextureCycle",
+                "DensityBand",
+                "ApproachAlignment",
+                "BassIndependence",
+                "ChordToneSpelling",
+                "GuideToneTracking"
+              ]
+            },
+            { "type": "string", "pattern": "^_pending:[a-z0-9-]+$" }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "preference": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "engine_payload": { "$ref": "#/$defs/engine_payload" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

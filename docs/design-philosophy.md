@@ -139,7 +139,7 @@ If a decision is load-bearing enough to outlive the conversation that produced i
 |---|---|
 | Project framing for AI agents | [`.agents/skills/jazz-system/SKILL.md`](../.agents/skills/jazz-system/SKILL.md) |
 | Project conventions (existing) | [`CLAUDE.md`](../CLAUDE.md) |
-| Master schema (planned) | `schema/masters.schema.json` (rewrite per #249) |
+| Master schema | [`schema/masters.schema.json`](../schema/masters.schema.json) — Stage A dual-shape window per #276; per-master migration in #277-#285 |
 | Voicing descriptor schema (planned) | `schema/voicings.schema.json` (extend per #249's voicing-descriptor pairing) |
 | Base-case content (planned) | `docs/base-case-berklee-content.md` (to be written) |
 | Open architecture tickets | #240, #241, #242, #243, #244, #245, #246, #247, #248, #249, #250, #251 |
