@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Validate voicings.json against the JSON schema and verify note accuracy.
+"""Validate plugin data files against their JSON schemas.
 
 Usage:
     python scripts/validate.py
+    python scripts/validate.py --target voicings
+    python scripts/validate.py --target masters
     python scripts/validate.py --data path/to/voicings.json
     python scripts/validate.py --verbose
     python scripts/validate.py --tuning tunings/7string-low-b.json
@@ -24,6 +26,17 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCHEMA = REPO_ROOT / "schema" / "voicings.schema.json"
 DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
 DEFAULT_TUNING = REPO_ROOT / "plugin" / "tunings" / "7string-van-eps.json"
+
+TARGETS = {
+    "voicings": {
+        "schema": REPO_ROOT / "schema" / "voicings.schema.json",
+        "data":   REPO_ROOT / "plugin" / "data" / "voicings.json",
+    },
+    "masters": {
+        "schema": REPO_ROOT / "schema" / "masters.schema.json",
+        "data":   REPO_ROOT / "plugin" / "data" / "masters.json",
+    },
+}
 
 # Chromatic note names (using sharps and flats consistently)
 CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
@@ -224,6 +237,84 @@ def validate(schema_path: Path, data_path: Path, verbose: bool = False) -> bool:
     return False
 
 
+def validate_masters(schema_path: Path, data_path: Path, verbose: bool = False) -> bool:
+    """Schema-validate plugin/data/masters.json and run masters-specific
+    consistency checks. See schema/masters.schema.json for the dual-shape
+    window (principles[] legacy / systems[] new)."""
+    with open(schema_path) as f:
+        schema = json.load(f)
+    with open(data_path) as f:
+        data = json.load(f)
+
+    validator = Draft202012Validator(schema)
+    errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+
+    if errors:
+        print(f"INVALID. {len(errors)} schema error(s) found:\n", file=sys.stderr)
+        for i, error in enumerate(errors, 1):
+            path = " > ".join(str(p) for p in error.absolute_path) or "(root)"
+            print(f"  {i}. [{path}] {error.message}", file=sys.stderr)
+        return False
+
+    masters = data.get("masters", [])
+    print(f"Valid. {len(masters)} master(s) passed schema validation.")
+
+    warnings = _check_masters_consistency(data)
+    if warnings:
+        print(f"\n{len(warnings)} consistency warning(s):", file=sys.stderr)
+        for w in warnings:
+            print(f"  - {w}", file=sys.stderr)
+
+    if verbose:
+        n_p = sum(len(m.get("principles", [])) for m in masters)
+        n_s = sum(len(m.get("systems", [])) for m in masters)
+        print(f"\n--- Summary ---")
+        print(f"Masters: {len(masters)}")
+        print(f"Principles (legacy): {n_p}")
+        print(f"Systems (new): {n_s}")
+
+    return True
+
+
+def _check_masters_consistency(data: dict) -> list[str]:
+    """Cross-cutting checks beyond JSON Schema for masters.json."""
+    warnings: list[str] = []
+    seen_master_ids: set[str] = set()
+
+    for m in data.get("masters", []):
+        mid = m.get("id", "<no-id>")
+        if mid in seen_master_ids:
+            warnings.append(f"Duplicate master id: {mid}")
+        seen_master_ids.add(mid)
+
+        seen_principle_ids: set[str] = set()
+        for p in m.get("principles", []) or []:
+            pid = p.get("id", "<no-id>")
+            if pid in seen_principle_ids:
+                warnings.append(f"{mid}: duplicate principle id '{pid}'")
+            seen_principle_ids.add(pid)
+
+        seen_system_ids: set[str] = set()
+        for s in m.get("systems", []) or []:
+            sid = s.get("id", "<no-id>")
+            if sid in seen_system_ids:
+                warnings.append(f"{mid}: duplicate system id '{sid}'")
+            seen_system_ids.add(sid)
+
+            # Per docs/design-philosophy.md, system ids carry an owner prefix
+            # '<master>:<slug>' (optionally '_placeholder:'-prefixed). The
+            # owner prefix should match the enclosing master's id.
+            bare = sid[len("_placeholder:"):] if sid.startswith("_placeholder:") else sid
+            owner_prefix = bare.split(":", 1)[0] if ":" in bare else ""
+            if owner_prefix and owner_prefix != mid:
+                warnings.append(
+                    f"{mid}: system id '{sid}' owner prefix '{owner_prefix}' "
+                    f"does not match master id"
+                )
+
+    return warnings
+
+
 def _check_consistency(data: dict) -> list[str]:
     """Run additional consistency checks beyond schema validation."""
     warnings = []
@@ -369,32 +460,46 @@ def _print_summary(data: dict) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Validate voicings.json")
+    parser = argparse.ArgumentParser(description="Validate plugin data files")
     parser.add_argument(
-        "--schema", type=Path, default=DEFAULT_SCHEMA, help="Path to JSON schema"
+        "--target",
+        choices=sorted(TARGETS.keys()),
+        default="voicings",
+        help="Which data file to validate (default: voicings)",
     )
     parser.add_argument(
-        "--data", type=Path, default=DEFAULT_DATA, help="Path to voicings.json"
+        "--schema", type=Path, default=None, help="Override schema path"
+    )
+    parser.add_argument(
+        "--data", type=Path, default=None, help="Override data path"
     )
     parser.add_argument(
         "--tuning", type=Path, default=DEFAULT_TUNING,
-        help="Path to tuning config JSON (default: config/tunings/standard.json)"
+        help="Path to tuning config JSON (voicings target only)"
     )
     parser.add_argument("--verbose", "-v", action="store_true", help="Show summary")
     args = parser.parse_args()
 
-    if not args.schema.exists():
-        print(f"Schema not found: {args.schema}", file=sys.stderr)
+    target = TARGETS[args.target]
+    schema_path = args.schema or target["schema"]
+    data_path = args.data or target["data"]
+
+    if not schema_path.exists():
+        print(f"Schema not found: {schema_path}", file=sys.stderr)
         sys.exit(1)
-    if not args.data.exists():
-        print(f"Data not found: {args.data}", file=sys.stderr)
+    if not data_path.exists():
+        print(f"Data not found: {data_path}", file=sys.stderr)
         sys.exit(1)
 
-    valid = validate(args.schema, args.data, args.verbose)
+    if args.target == "masters":
+        ok = validate_masters(schema_path, data_path, args.verbose)
+        sys.exit(0 if ok else 1)
+
+    valid = validate(schema_path, data_path, args.verbose)
 
     # Load tuning and run all checks
     tuning = _load_tuning(args.tuning)
-    with open(args.data) as f:
+    with open(data_path) as f:
         data = json.load(f)
 
     # Consistency checks

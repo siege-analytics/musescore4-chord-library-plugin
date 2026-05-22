@@ -3,7 +3,12 @@
 // MastersStore.js — load + validate + query the Masters' Lessons bookshelf
 // (#220).
 //
-// Source-of-truth file: plugin/data/masters.json. Schema:
+// Source-of-truth file: plugin/data/masters.json. Authoritative schema:
+// schema/masters.schema.json. Each Master may declare legacy `principles[]`
+// AND/OR new `systems[]` (#276 Stage A dual-shape window). Per-master
+// migration lands in #277-#285; Stage C removes `principles`.
+//
+// Legacy shape:
 //   {
 //     version: "v1",
 //     masters: [
@@ -160,11 +165,80 @@ function deriveTolerancesFromMaster(master, tightenFn) {
 
 // Summary counts useful for UI badges.
 function counts(store) {
-    var c = { masters: 0, principles: 0 }
+    var c = { masters: 0, principles: 0, systems: 0 }
     if (!store || !store.masters) return c
     c.masters = store.masters.length
     for (var i = 0; i < store.masters.length; i++) {
         c.principles += (store.masters[i].principles || []).length
+        c.systems += (store.masters[i].systems || []).length
     }
     return c
+}
+
+// --- Systems accessors (#276 Stage A) -----------------------------------
+// Each Master may carry a `systems[]` array alongside `principles[]` per
+// the dual-shape window in schema/masters.schema.json. Per-master migration
+// from principles -> systems lands in #277-#285.
+
+// Flat list of every system across all masters with attribution.
+// Returns [{ masterId, masterName, system }, ...].
+function allSystems(store) {
+    var out = []
+    if (!store || !store.masters) return out
+    for (var i = 0; i < store.masters.length; i++) {
+        var m = store.masters[i]
+        var ss = m.systems || []
+        for (var j = 0; j < ss.length; j++) {
+            out.push({ masterId: m.id, masterName: m.name, system: ss[j] })
+        }
+    }
+    return out
+}
+
+// Find a system by (masterId, systemId); returns null if not found.
+function findSystem(store, masterId, systemId) {
+    var master = findMaster(store, masterId)
+    if (!master || !master.systems) return null
+    for (var i = 0; i < master.systems.length; i++) {
+        if (master.systems[i].id === systemId) return master.systems[i]
+    }
+    return null
+}
+
+// Flat list of preferences across systems. If masterId is provided, scope
+// to that master; otherwise scan all masters.
+// Returns [{ masterId, masterName, systemId, preference }, ...].
+function preferencesFor(store, masterId) {
+    var out = []
+    if (!store || !store.masters) return out
+    for (var i = 0; i < store.masters.length; i++) {
+        var m = store.masters[i]
+        if (masterId && m.id !== masterId) continue
+        var ss = m.systems || []
+        for (var j = 0; j < ss.length; j++) {
+            var prefs = ss[j].preferences || []
+            for (var k = 0; k < prefs.length; k++) {
+                out.push({
+                    masterId: m.id,
+                    masterName: m.name,
+                    systemId: ss[j].id,
+                    preference: prefs[k]
+                })
+            }
+        }
+    }
+    return out
+}
+
+// Find the first preference by id across all systems of all masters.
+// Returns { masterId, masterName, systemId, preference } or null.
+function findPreferenceById(store, preferenceId) {
+    if (!preferenceId) return null
+    var hits = preferencesFor(store, null)
+    for (var i = 0; i < hits.length; i++) {
+        if (hits[i].preference && hits[i].preference.id === preferenceId) {
+            return hits[i]
+        }
+    }
+    return null
 }

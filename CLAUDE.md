@@ -187,6 +187,22 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 - **Signal handler scoping trap**: Inside `ChildComponent { onSignal: { propName = val } }`, `propName` resolves to the child's property if it declares one, NOT the parent's. Always qualify: `chordLibrary.propName = val`. This caused #154 — context/tuning switching silently wrote to LibraryPanel copies instead of ChordLibrary's canonical state.
 - **Duplicate function names**: QML does not allow two functions with the same name in a component — even if they have different parameter counts. The plugin will fail to load with "Duplicate method name" in the log. Always check `grep -n "function " plugin/ChordLibrary.qml | sed 's/(.*//; s/.*function //' | sort | uniq -d` before committing.
 
+## Masters schema (#220 / #276 Stage A)
+
+`plugin/data/masters.json` is governed by `schema/masters.schema.json`. The schema declares a **dual-shape window**: each master may carry the legacy `principles[]` array, the new `systems[]` array (systems-with-three-layers per `docs/design-philosophy.md`), or both. At least one is required. Per-master migrations land in #277-#285; Stage C will drop `principles`.
+
+**System IDs** are `<master>:<slug>` (e.g. `van-eps:harmonized-scale`). A leading `_placeholder:` prefix marks an intentionally-empty system whose interior is pending design (relaxes the non-empty-members rule).
+
+**Engine payload `kind`** is either one of the 12 canonical CamelCase kinds — `PositionContinuity`, `VoiceMotion`, `RegisterBand`, `ContraryMotion`, `StringSetPreference`, `OmissionPriority`, `TextureCycle`, `DensityBand`, `ApproachAlignment`, `BassIndependence`, `ChordToneSpelling`, `GuideToneTracking` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting design.
+
+**Validate** with:
+
+```
+python scripts/validate.py --target masters
+```
+
+**MastersStore.js** accessors for systems (alongside the existing principle accessors): `allSystems(store)`, `findSystem(store, masterId, systemId)`, `preferencesFor(store, masterId)`, `findPreferenceById(store, prefId)`, plus `counts(store)` now reports `systems`.
+
 ---
 
-*Last updated: 2026-04-16*
+*Last updated: 2026-05-22*
