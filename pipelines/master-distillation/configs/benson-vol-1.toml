@@ -1,0 +1,39 @@
+# Per-book config for the master-distillation pipeline.
+# First validated book per #297.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-1-chord-construction"
+title = "The George Benson Method, Vol. 1 — Chord Construction / Beginning Harmony"
+# year, instrument_scope filled in once we read the front matter.
+year = ""
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf"
+needs_ocr = false
+
+[stages.s1]
+# Native PDF text extraction. pdftotext preferred; markitdown fallback.
+ocr_lang = "en"
+
+[stages.s2]
+# Per-chapter curated verbatim extraction. Haiku.
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-haiku-4-5-20251001"
+
+[stages.s3]
+# Hierarchical distillation. Sonnet at book level.
+per_chapter_model = "claude-haiku-4-5-20251001"
+book_level_model = "claude-sonnet-4-6"
+
+[stages.s4]
+# Statement of outputs + systems-draft.
+model = "claude-sonnet-4-6"
+# Use _pending:<kebab> for any engine_payload.kind we're not confident
+# about — until #298 payload-kind glossary lands.
+engine_kind_policy = "pending-when-unsure"
