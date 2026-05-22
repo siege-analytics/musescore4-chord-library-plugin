@@ -143,6 +143,87 @@
       ]
     },
     {
+      "id": "martin-taylor",
+      "name": "Martin Taylor",
+      "lived": "1956-",
+      "traditions": ["jazz", "chord-melody", "solo-guitar", "fingerstyle"],
+      "instrument": "6-string",
+      "biography": "Scottish virtuoso whose solo fingerstyle approach extends the Joe Pass tradition: walking bass, chord stabs, and melody played simultaneously on a single guitar. Distinguished from Pass by all-fingers right-hand technique (no plectrum) and a more orchestral chord-voicing palette. Authored instructional series (Single Note Soloing, Solo Jazz Guitar Mastering) and operates an active online lesson archive.",
+      "principles": [
+        {
+          "id": "thumb-bass-independence",
+          "name": "Thumb-bass independence",
+          "summary": "The right-hand thumb plays an independent bass line (often walking quarter notes) while the fingers handle chord stabs and melody. The bass is rhythmically and contrapuntally independent of the chord/melody, not just a low root.",
+          "voicingStyleTags": ["taylor"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "tolerance_hints": {
+            "requireRootInBass": true,
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Martin Taylor's Solo Jazz Guitar (Mel Bay)",
+              "citation": "Taylor, Martin. Solo Jazz Guitar. Mel Bay."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "orchestral-voicing-palette",
+          "name": "Orchestral voicing palette",
+          "summary": "Voicing choice spans more than block chords — at any moment the guitar may be sounding bass + chord, bass + counterline, double-stop + melody, or full block voicing. The 'right' voicing in a Taylor arrangement depends on which texture the moment calls for, not a single default.",
+          "voicingStyleTags": ["taylor"],
+          "playStyleTags": ["sequential", "block"],
+          "applies_to_modes": ["solo-guitar"],
+          "tolerance_hints": {
+            "maxMutedStrings": 3
+          },
+          "references": []
+        }
+      ]
+    },
+    {
+      "id": "wes-montgomery",
+      "name": "Wes Montgomery",
+      "lived": "1923-1968",
+      "traditions": ["jazz", "bebop", "hard-bop"],
+      "instrument": "6-string",
+      "biography": "Self-taught Indianapolis guitarist whose innovations (thumb-attack right hand, octave melodic statements, block-chord chorus climax) reshaped jazz guitar after 1959. Recordings are the primary documentation; written method books are mostly posthumous transcription collections.",
+      "principles": [
+        {
+          "id": "three-tier-chorus-development",
+          "name": "Three-tier chorus development",
+          "summary": "A solo arcs from single-note lines through octave statements to block-chord harmonization. Each tier carries melodic content; the chord tier voices the same melodic shape with full block voicings underneath. The block-chord tier is where chord-voicing choice matters most — those voicings are melody-led, not chord-led.",
+          "voicingStyleTags": ["montgomery"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "tolerance_hints": {
+            "minSoundingNotes": 4
+          },
+          "references": [
+            {
+              "source": "The Wes Montgomery Guitar Folio (Hal Leonard)",
+              "citation": "Montgomery, Wes. The Wes Montgomery Guitar Folio. Hal Leonard. Posthumous transcriptions."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "thumb-attack-articulation",
+          "name": "Thumb-attack articulation",
+          "summary": "Right-hand technique uses the thumb only (no plectrum, no fingerstyle multi-finger). This constrains practical voicings: block chords with bass on the lower strings are thumb-friendly; sweeps across many strings are not. Voicings get chosen partly for executability under this constraint.",
+          "voicingStyleTags": ["montgomery"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["solo-guitar", "comping"],
+          "tolerance_hints": {
+            "allowOpenStrings": true
+          },
+          "references": []
+        }
+      ]
+    },
+    {
       "id": "lenny-breau",
       "name": "Lenny Breau",
       "lived": "1941-1984",
