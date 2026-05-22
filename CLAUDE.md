@@ -193,7 +193,7 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 
 **System IDs** are `<master>:<slug>` (e.g. `van-eps:harmonized-scale`). A leading `_placeholder:` prefix marks an intentionally-empty system whose interior is pending design (relaxes the non-empty-members rule).
 
-**Engine payload `kind`** is either one of the 12 canonical CamelCase kinds — `PositionContinuity`, `VoiceMotion`, `RegisterBand`, `ContraryMotion`, `StringSetPreference`, `OmissionPriority`, `TextureCycle`, `DensityBand`, `ApproachAlignment`, `BassIndependence`, `ChordToneSpelling`, `GuideToneTracking` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting design.
+**Engine payload `kind`** is either one of 12 named kinds traced to predecessor session 260521-aware-nebula's `plans/schema-systems-model.md` (lines 121-134) — `PositionContinuity`, `VoiceMotion`, `StringSetTransition`, `SymmetryMovement`, `FamilyCoherence`, `SubstitutionExpand`, `DensityFloor`, `DensityCeiling`, `OmissionAllow`, `ColorToneRequire`, `NCTHarmonization`, `TextureCycle` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting definition. A formal glossary defining each kind's semantics is pending; until then these names are nominal labels, not behavioral contracts. (PR #290 originally shipped a 12-name enum where 9 names were invented without design source; #295 rolled them back to the predecessor-designed set.)
 
 **Validate** with:
 
