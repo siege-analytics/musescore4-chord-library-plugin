@@ -330,6 +330,60 @@
             {
               "source": "Joe Pass Guitar Style",
               "citation": "Pass and Thrasher. Joe Pass Guitar Style. Gwyn, 1971."
+            },
+            {
+              "source": "Joe Pass Guitar Method",
+              "citation": "Pass, Joe. The Joe Pass Guitar Method. Chappell & Co., 1977 (Hal Leonard HL00347734), p. 4: 'With the Chord Forms acting as points of anchor or reference, the ability to create an improvised scale or melody will be unhampered by the struggle to find the notes.'"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "six-chord-forms-position-system",
+          "name": "Six Chord Forms as positional substrate",
+          "summary": "Pass's framework divides the fingerboard into six overlapping positional regions named for the chord shape that anchors each one — C, A, G, E, D, and Intermediate Forms — each spanning roughly five to six frets. Choosing a voicing is therefore also choosing a position: the player picks the Form whose chord shape lets the melody, bass, and inner voices sit inside one hand position. This is the spatial substrate that makes the walking-bass-plus-chord-stabs and runs-from-chord-shapes principles physically executable.",
+          "voicingStyleTags": ["pass"],
+          "playStyleTags": ["block", "sequential"],
+          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Joe Pass Guitar Method",
+              "citation": "Pass, Joe. The Joe Pass Guitar Method. Chappell & Co., 1977 (Hal Leonard HL00347734), p. 4: 'Below are six diagrams which are usually learned by all guitarists when beginning to play in first position [...]. All scales are played vertically within each form whose object is to provide a framework in which to function.' The six forms enumerated are C, A, G, E, D (1st inversion of C), and Intermediate (top part of C)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "three-to-four-note-voicings-with-voice-leading",
+          "name": "Three- to four-note voicings linked by voice-leading",
+          "summary": "For unaccompanied solo work Pass deliberately reduces voicings to three or four sounding notes and connects successive chords through common tones or stepwise inner-voice motion. Full six-string block chords are avoided as the default. The principle complements drop-2/drop-3 chord-melody — drop voicings supply the shape, this principle constrains the density and the linkage between adjacent chords. Engine signal: floor voicings at three sounding notes; rank candidates that share tones with the previous voicing higher.",
+          "voicingStyleTags": ["pass"],
+          "playStyleTags": ["block", "sequential"],
+          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Joe Pass Guitar Method",
+              "citation": "Pass, Joe. The Joe Pass Guitar Method. Chappell & Co., 1977 (Hal Leonard HL00347734), p. 30, head note to 'Blues for Nina': 'All changes should be reduced to three- or four-note chords. And for better movement, voicings should lead into one another or have a common tone connecting them. Nobs contains several examples of this technique.' The 'EXAMPLES OF VOICE LEADING' panel on p. 31 demonstrates the principle with the sequence Dm9 → C13 → C9(b5) → C9(6)/C7 → Fmaj7."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "dominant-alteration-substitution-lattice",
+          "name": "Dominant alteration and tritone substitution lattice",
+          "summary": "A written 'simple' dominant chord licenses an entire family of altered and extended substitutes — 9, 13, 9(6), 11, +9, b9, +5, b5 — plus the tritone substitute and its altered family. In the *Joe Pass Guitar Method* this is stated as an explicit rule for the whole 'Blues for Nina / Nobs / Alison / Grete' set: any of these alterations 'may be substituted for simple Dominants.' On Joe's Blues, plain G7 expands to G13, G9, G9(6), G7+9, G7(b9); E7 expands to E+9/Em9/E13/E9 or the tritone family Bb9/Bb+9/Bbm9/Bb13. Engine signal: when ranking voicings against a notated dominant, the altered/extended family and the tritone substitute should both be eligible candidates carrying Pass's style tag.",
+          "voicingStyleTags": ["pass"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Joe Pass Guitar Method",
+              "citation": "Pass, Joe. The Joe Pass Guitar Method. Chappell & Co., 1977 (Hal Leonard HL00347734). 'Joe's Blues' head note, p. 25, enumerates substitutes for G7 (G13/G9/G9(6)/G7+9/G7(b9)), Bm7 in bar 8 (F13/F9/F+9/Fm9, or B7/B9/B13), and E7 (E+9/Em9/E13/E9 or the tritone-substitute family Bb9/Bb+9/Bbm9/Bb13/Bb9). 'Blues for Nina' head note, p. 30: 'Throughout, +9/b9/13/9(6)/11/+5/b5 may be substituted for simple Dominants.'"
             }
           ],
           "example_voicing_signatures": []
