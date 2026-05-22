@@ -207,7 +207,7 @@ A work id may be prefixed `_placeholder:` (e.g. `_placeholder:harmonic-mechanism
 
 ### Engine payload `kind`
 
-Either one of the 12 canonical CamelCase kinds — `PositionContinuity`, `VoiceMotion`, `RegisterBand`, `ContraryMotion`, `StringSetPreference`, `OmissionPriority`, `TextureCycle`, `DensityBand`, `ApproachAlignment`, `BassIndependence`, `ChordToneSpelling`, `GuideToneTracking` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting design.
+Either one of 12 named kinds traced to predecessor session 260521-aware-nebula's `plans/schema-systems-model.md` (lines 121-134) — `PositionContinuity`, `VoiceMotion`, `StringSetTransition`, `SymmetryMovement`, `FamilyCoherence`, `SubstitutionExpand`, `DensityFloor`, `DensityCeiling`, `OmissionAllow`, `ColorToneRequire`, `NCTHarmonization`, `TextureCycle` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting definition. A formal glossary defining each kind's semantics is pending; until then these names are nominal labels, not behavioral contracts. (PR #290 originally shipped 9 invented names; #295 rolled them back to the predecessor-designed set.)
 
 ### Validate
 

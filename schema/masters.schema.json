@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A / #293 Stage A.1)",
-  "description": "Schema for plugin/data/masters.json. Stage A introduced a dual-shape window (legacy 'principles' / new 'systems'). Stage A.1 (#293) adds an optional 'works' layer for multi-method masters: Van Eps's 1939 Method vs Harmonic Mechanisms, Martin Taylor's multiple books, etc. Each master must declare at least one of principles[], systems[], works[]. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'.",
+  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A / #293 Stage A.1 / #295 enum provenance fix)",
+  "description": "Schema for plugin/data/masters.json. Stage A introduced a dual-shape window (legacy 'principles' / new 'systems'). Stage A.1 (#293) adds an optional 'works' layer for multi-method masters: Van Eps's 1939 Method vs Harmonic Mechanisms, Martin Taylor's multiple books, etc. Each master must declare at least one of principles[], systems[], works[]. The engine_payload.kind enum was rolled back in #295 from the originally-shipped invented names to the 12 names with design provenance in predecessor session 260521-aware-nebula's schema-systems-model.md. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'.",
   "type": "object",
   "required": ["version", "masters"],
   "properties": {
@@ -162,6 +162,7 @@
     "engine_payload": {
       "type": "object",
       "required": ["kind"],
+      "description": "Each rule carries one engine_payload. `kind` must be one of the 12 named kinds traced to predecessor session 260521-aware-nebula's plans/schema-systems-model.md (lines 121-134), OR a `_pending:<kebab>` placeholder for kinds awaiting definition. A glossary defining each kind's semantics is a separate work item — until then these names are nominal labels, not contracts.",
       "properties": {
         "kind": {
           "anyOf": [
@@ -169,16 +170,16 @@
               "enum": [
                 "PositionContinuity",
                 "VoiceMotion",
-                "RegisterBand",
-                "ContraryMotion",
-                "StringSetPreference",
-                "OmissionPriority",
-                "TextureCycle",
-                "DensityBand",
-                "ApproachAlignment",
-                "BassIndependence",
-                "ChordToneSpelling",
-                "GuideToneTracking"
+                "StringSetTransition",
+                "SymmetryMovement",
+                "FamilyCoherence",
+                "SubstitutionExpand",
+                "DensityFloor",
+                "DensityCeiling",
+                "OmissionAllow",
+                "ColorToneRequire",
+                "NCTHarmonization",
+                "TextureCycle"
               ]
             },
             { "type": "string", "pattern": "^_pending:[a-z0-9-]+$" }
