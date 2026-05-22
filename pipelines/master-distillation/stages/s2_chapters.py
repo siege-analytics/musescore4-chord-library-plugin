@@ -93,24 +93,28 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
         str(book.chapter_bounds.relative_to(book.run_dir.parent.parent.parent)),
     ]
 
-    # --- 2. Per-chapter curated quote extraction ---
+    # --- 2a. Pre-write ALL per-chapter request files so the agent/human
+    # can fan out responses in parallel. We only skip chapters whose
+    # committed chapter MD file already exists.
+    pending_chapters: list[dict] = []
     for ch in chapters:
-        ch_n = ch["n"]
-        ch_md_path = book.chapter_file(ch_n)
+        ch_md_path = book.chapter_file(ch["n"])
         if ch_md_path.exists():
-            # Skip if already written — let the user --redo s2 to refresh.
             outputs.append(
                 str(ch_md_path.relative_to(book.run_dir.parent.parent.parent.parent))
             )
             continue
+        _write_extract_request(book, transcript, ch, model)
+        pending_chapters.append(ch)
 
-        quotes = _extract_quotes(
-            cfg, book, transcript, ch, model
-        )
-
+    # --- 2b. Consume responses in order. If any response is missing,
+    # PendingLLMOutput surfaces — but the other request files already on
+    # disk remain available for parallel filling.
+    for ch in pending_chapters:
+        quotes = _consume_extract_response(cfg, book, transcript, ch, model)
         _write_chapter_file(book, ch, quotes, model)
         outputs.append(
-            str(ch_md_path.relative_to(book.run_dir.parent.parent.parent.parent))
+            str(book.chapter_file(ch["n"]).relative_to(book.run_dir.parent.parent.parent.parent))
         )
 
     return outputs
@@ -221,91 +225,102 @@ CRITICAL RULES:
    significance — not a paraphrase of the quote."""
 
 
-MAX_EXTRACT_RETRIES = 2
+def _chapter_user_prompt(transcript: str, ch: dict) -> str:
+    """The prompt body sent for one chapter — shared between
+    _write_extract_request and the validator's chapter_text source."""
+    chapter_text = text.text_between_pages(
+        transcript, ch["start_page"], ch["end_page"]
+    )
+    chapter_text_clean = text.strip_page_marks(chapter_text)
+    return (
+        f"Chapter {ch['n']}: {ch['title']}\n"
+        f"Pages {ch['start_page']}-{ch['end_page']} of the book.\n\n"
+        f"<<<CHAPTER TEXT\n{chapter_text_clean}\nCHAPTER TEXT>>>"
+    )
 
 
-def _extract_quotes(
+def _write_extract_request(
+    book: BookPaths,
+    transcript: str,
+    ch: dict,
+    model: str,
+) -> None:
+    """Write the request file for one chapter's extraction. Idempotent —
+    safe to re-run. Does not consume a response."""
+    scope = f"extract-ch{ch['n']:02d}"
+    req = LLMRequest(
+        stage="s2",
+        scope=scope,
+        model=model,
+        system_prompt=_EXTRACT_SYSTEM,
+        user_prompt=_chapter_user_prompt(transcript, ch),
+        response_schema=EXTRACT_RESPONSE_SCHEMA,
+        notes=f"chapter {ch['n']} extraction",
+    )
+    request_path = book.llm_call_file("s2", scope, "request")
+    # Use request_llm without expecting a response — we just want the
+    # request file written. If the response is already on disk, that's
+    # fine; we'll consume it in phase 2b.
+    request_path.parent.mkdir(parents=True, exist_ok=True)
+    request_path.write_text(json.dumps(req.to_dict(), indent=2) + "\n")
+
+
+def _consume_extract_response(
     cfg: dict,
     book: BookPaths,
     transcript: str,
     ch: dict,
     model: str,
 ) -> list[dict]:
-    ch_n = ch["n"]
-    start_page = ch["start_page"]
-    end_page = ch["end_page"]
+    """Read the response file for one chapter, validate quote fidelity,
+    return the validated quotes. Raises PendingLLMOutput if missing.
 
-    chapter_text = text.text_between_pages(transcript, start_page, end_page)
-    chapter_text_clean = text.strip_page_marks(chapter_text)
-
-    base_user_prompt = (
-        f"Chapter {ch_n}: {ch['title']}\n"
-        f"Pages {start_page}-{end_page} of the book.\n\n"
-        f"<<<CHAPTER TEXT\n{chapter_text_clean}\nCHAPTER TEXT>>>"
+    Validates each quote against the chapter text (tighter check than
+    full transcript — catches a model echoing content from outside the
+    chapter scope)."""
+    scope = f"extract-ch{ch['n']:02d}"
+    req = LLMRequest(
+        stage="s2",
+        scope=scope,
+        model=model,
+        system_prompt=_EXTRACT_SYSTEM,
+        user_prompt=_chapter_user_prompt(transcript, ch),
+        response_schema=EXTRACT_RESPONSE_SCHEMA,
+        notes=f"chapter {ch['n']} extraction",
     )
+    request_path = book.llm_call_file("s2", scope, "request")
+    response_path = book.llm_call_file("s2", scope, "response")
+    resp = request_llm(req, request_path, response_path)
+    quotes = resp["quotes"]
 
-    last_error: str | None = None
-    for attempt in range(MAX_EXTRACT_RETRIES + 1):
-        user_prompt = base_user_prompt
-        if last_error is not None:
-            user_prompt += (
-                f"\n\nRETRY NOTE (attempt {attempt + 1}): your previous "
-                f"response failed quote verification. {last_error} "
-                f"Re-extract quotes that are EXACT substrings of the "
-                f"chapter text above. Copy character-for-character. "
-                f"Verify your quotes appear in the chapter before responding."
-            )
-
-        scope = f"extract-ch{ch_n:02d}" if attempt == 0 else f"extract-ch{ch_n:02d}-retry{attempt}"
-        req = LLMRequest(
-            stage="s2",
-            scope=scope,
-            model=model,
-            system_prompt=_EXTRACT_SYSTEM,
-            user_prompt=user_prompt,
-            response_schema=EXTRACT_RESPONSE_SCHEMA,
-            notes=f"chapter {ch_n} extraction (attempt {attempt + 1})",
+    # Quote-fidelity gate.
+    chapter_text = text.text_between_pages(
+        transcript, ch["start_page"], ch["end_page"]
+    )
+    bad = [q for q in quotes if not text.verify_quote_in_transcript(
+        q["verbatim_quote"], chapter_text
+    )]
+    if bad:
+        examples = "; ".join(
+            f'"{q["verbatim_quote"][:80]}..."' for q in bad[:2]
         )
-        request_path = book.llm_call_file("s2", scope, "request")
-        response_path = book.llm_call_file("s2", scope, "response")
-        resp = request_llm(req, request_path, response_path)
-        quotes = resp["quotes"]
-
-        # Verify every quote is in chapter_text (not just full transcript —
-        # tighter check catches the model echoing content from outside the
-        # chapter scope).
-        bad = []
-        for q in quotes:
-            if not text.verify_quote_in_transcript(
-                q["verbatim_quote"], chapter_text
-            ):
-                bad.append(q)
-
-        if not bad:
-            # All quotes verified. Stamp each with its page if missing.
-            pages = text.load_pages(book.pages_json)
-            for q in quotes:
-                if "page" not in q:
-                    page = text.find_page_of_quote(
-                        q["verbatim_quote"], transcript, pages
-                    )
-                    if page is not None:
-                        q["page"] = page
-            return quotes
-
-        last_error = (
+        raise RuntimeError(
+            f"chapter {ch['n']} extraction failed quote-fidelity: "
             f"{len(bad)} of {len(quotes)} quote(s) were NOT exact "
-            f"substrings of the chapter. Examples of unverified quotes: "
-            + "; ".join(
-                f'"{q["verbatim_quote"][:80]}..."'
-                for q in bad[:2]
-            )
+            f"substrings of the chapter. Examples: {examples}. "
+            f"Edit the response file at {response_path} and re-resume."
         )
 
-    raise RuntimeError(
-        f"chapter {ch_n} extraction failed quote-fidelity after "
-        f"{MAX_EXTRACT_RETRIES + 1} attempts: {last_error}"
-    )
+    # Back-fill missing page numbers from a transcript-wide search.
+    pages = text.load_pages(book.pages_json)
+    for q in quotes:
+        if "page" not in q:
+            page = text.find_page_of_quote(
+                q["verbatim_quote"], transcript, pages
+            )
+            if page is not None:
+                q["page"] = page
+    return quotes
 
 
 # ---------------------------------------------------------------------------

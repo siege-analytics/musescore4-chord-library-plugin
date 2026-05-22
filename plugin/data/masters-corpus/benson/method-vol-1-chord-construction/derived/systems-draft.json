@@ -1,0 +1,304 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-22T21-15-00-benson-vol-1",
+    "stage": "s4",
+    "source_pdf": "THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf",
+    "extracted_at": "2026-05-22T21:32:47+00:00",
+    "schema_version": "0.1",
+    "model": "qwen2.5:72b"
+  },
+  "master_id": "benson",
+  "work_id": "method-vol-1-chord-construction",
+  "systems": [
+    {
+      "id": "benson:method-vol-1-chord-construction:fretboard-matrix",
+      "name": "Fretboard Matrix (Root-String Zones)",
+      "summary": "Benson's chord-first fretboard visualization, organized by which string carries the root. Chords, arpeggios, and scales are all learned in four root-string zones, anchored by the bass note, so that any voicing's location on the neck is identified by its root string. This is the spatial backbone of the method: every chord family and harmonic field is practiced through these zones before being moved across the neck.",
+      "members": [
+        {
+          "id": "root-6th-string-zone",
+          "name": "Root on 6th String Zone",
+          "summary": "Voicings and arpeggios whose root is on the low E string; primary practice zone in Chapter 2."
+        },
+        {
+          "id": "root-5th-string-zone",
+          "name": "Root on 5th String Zone",
+          "summary": "Voicings and arpeggios whose root is on the A string; second practice zone after 6th-string mastery."
+        },
+        {
+          "id": "root-4th-string-zone",
+          "name": "Root on 4th String Zone",
+          "summary": "Voicings rooted on the D string; introduced after 6th/5th-string fluency, per Chapter 7's practice rule."
+        },
+        {
+          "id": "root-3rd-string-triad-zone",
+          "name": "Root on 3rd String Triad Zone",
+          "summary": "Triadic upper-structure voicings rooted on the G string; used primarily for triads and close-voiced color shapes."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "bass-note-anchoring",
+          "name": "Bass-Note Anchoring",
+          "summary": "Identify and hold the root string as the positional anchor before adding upper voices; the bass note defines the zone.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          }
+        },
+        {
+          "id": "string-set-transition-6-5-4-3",
+          "name": "String-Set Transition (6 to 5 to 4 to 3)",
+          "summary": "Move a chord shape across root-string zones by translating it onto the next string set, preserving function while changing fingering.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          }
+        }
+      ],
+      "modification_rules": []
+    },
+    {
+      "id": "benson:method-vol-1-chord-construction:chord-families",
+      "name": "Chord Families (Triads, Tetrads, Extended Chords)",
+      "summary": "The taxonomy of chord qualities Benson develops in Chapter 4: triads, seventh-chord tetrads, and extended chords (9, 11, 13) together with sus and drop voicings. Voice-leading and density policies govern how members are voiced and connected, especially the smallest-movement principle, the omission of the 5th in 13ths, the no-flat-9-above-bass rule, and the #11-vs-11 substitution policy.",
+      "members": [
+        {
+          "id": "triads",
+          "name": "Triads",
+          "summary": "Major, minor, diminished, augmented; root, 1st, 2nd inversions across string sets."
+        },
+        {
+          "id": "tetrads",
+          "name": "Seventh-Chord Tetrads",
+          "summary": "maj7, 7, m7, m7b5, dim7, mMaj7 and their inversions."
+        },
+        {
+          "id": "extended-chords",
+          "name": "Extended Chords",
+          "summary": "9, 11, 13 chords and their altered variants built atop the tetrad core."
+        },
+        {
+          "id": "sus-voicings",
+          "name": "Suspended Voicings",
+          "summary": "sus2 and sus4 substitutions of the 3rd."
+        },
+        {
+          "id": "drop-voicings",
+          "name": "Drop-2 and Drop-3 Voicings",
+          "summary": "Re-spaced close voicings to open-voicing form, derived by dropping the 2nd or 3rd voice from the top."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "smallest-movement-voice-leading",
+          "name": "Smallest-Movement Voice Leading",
+          "summary": "When connecting two chord-family members, prefer the voicing whose voices move by the smallest collective interval from the previous chord.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          }
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "omit-5th-in-13ths",
+          "name": "Omit 5th in 13th Chords",
+          "summary": "In 13th-chord voicings, the perfect 5th may be omitted to make room for upper extensions without losing harmonic identity.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          }
+        },
+        {
+          "id": "no-flat-9-above-bass",
+          "name": "No b9 Interval Above Bass",
+          "summary": "Avoid placing a note a flat-9th above the bass note in any voicing; this dissonance violates Benson's density ceiling for chord voicings.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          }
+        },
+        {
+          "id": "sharp-11-vs-natural-11",
+          "name": "#11 vs Natural 11 Policy",
+          "summary": "On dominant and major chords substitute #11 for natural 11 to avoid the b9-against-3rd clash; on minor chords the natural 11 is permitted.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          }
+        },
+        {
+          "id": "sus-substitution",
+          "name": "Suspended Substitution",
+          "summary": "Replace the 3rd with the 2nd or 4th to produce sus2/sus4 forms as substitutes for the parent triad or tetrad.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          }
+        },
+        {
+          "id": "drop-2-drop-3-respacing",
+          "name": "Drop-2 / Drop-3 Respacing",
+          "summary": "Generate open-voiced family members by dropping the 2nd or 3rd voice from the top of a close voicing down an octave.",
+          "engine_payload": {
+            "kind": "_pending:voicing-respacing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "benson:method-vol-1-chord-construction:harmonic-fields",
+      "name": "Harmonic Fields (Diatonic Modes and Degrees)",
+      "summary": "The diatonic harmony frame Benson uses for practice in Chapters 5-6: the seven modes of the major scale, each broken into Chord Tones, Extensions, Avoid notes, and Characteristic notes. Substitution catalogs (modal interchange, secondary dominants) and a strict Study Devices protocol govern how the field is traversed in practice.",
+      "members": [
+        {
+          "id": "ionian",
+          "name": "Ionian",
+          "summary": "Mode I; characteristic note is the major 7."
+        },
+        {
+          "id": "dorian",
+          "name": "Dorian",
+          "summary": "Mode II; characteristic note is the natural 6."
+        },
+        {
+          "id": "phrygian",
+          "name": "Phrygian",
+          "summary": "Mode III; characteristic note is the b2."
+        },
+        {
+          "id": "lydian",
+          "name": "Lydian",
+          "summary": "Mode IV; characteristic note is the #4."
+        },
+        {
+          "id": "mixolydian",
+          "name": "Mixolydian",
+          "summary": "Mode V; characteristic note is the b7."
+        },
+        {
+          "id": "aeolian",
+          "name": "Aeolian",
+          "summary": "Mode VI; characteristic note is the b6."
+        },
+        {
+          "id": "locrian",
+          "name": "Locrian",
+          "summary": "Mode VII; characteristic note is the b5."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "study-devices-protocol",
+          "name": "Study Devices Protocol",
+          "summary": "Practice each harmonic field in one key, with a groove, achieving mastery before changing key, and on 6th/5th-string roots before 4th-string roots.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          }
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "characteristic-note-required",
+          "name": "Characteristic Note Required",
+          "summary": "When voicing or improvising over a mode, the characteristic scale degree must be present to identify the mode against its diatonic neighbors.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          }
+        },
+        {
+          "id": "extension-omission-allowed",
+          "name": "Extension Omission Allowed",
+          "summary": "Extension tones from the mode may be omitted without losing modal identity; only chord tones and the characteristic note are obligatory.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          }
+        },
+        {
+          "id": "avoid-note-suppression",
+          "name": "Avoid Note Suppression",
+          "summary": "Notes flagged as Avoid for the mode must not be sustained as voicing tones; they are passable only as non-chord tones.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          }
+        },
+        {
+          "id": "modal-substitution-catalog",
+          "name": "Modal Substitution Catalog",
+          "summary": "Substitute parallel-mode or related-degree chords (modal interchange, secondary dominants) into the diatonic field to expand the harmonic palette.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          }
+        }
+      ]
+    },
+    {
+      "id": "benson:method-vol-1-chord-construction:chromatic-color-scales",
+      "name": "Chromatic Color Scales (Harmonic Minor, Melodic Minor, Harmonic Major)",
+      "summary": "Chapter 7's three parent scales beyond the major scale, used as color sources layered over existing diatonic chords rather than as standalone progression engines. Each parent generates a family of named derived modes (Altered, Lydian Augmented, Lydian Dominant, Locrian Nat 6, Phrygian Dominant, etc.), and each is selected by matching its characteristic notes to a target chord quality.",
+      "members": [
+        {
+          "id": "harmonic-minor",
+          "name": "Harmonic Minor (Parent)",
+          "summary": "Source of Phrygian Dominant (V), Locrian Nat 6 (II), and the o7(b13) coloration on diminished chords."
+        },
+        {
+          "id": "melodic-minor",
+          "name": "Melodic Minor (Parent)",
+          "summary": "Source of Lydian Dominant (IV), Altered (VII), Lydian Augmented (III), and Locrian Nat 2 (VI)."
+        },
+        {
+          "id": "harmonic-major",
+          "name": "Harmonic Major (Parent)",
+          "summary": "Major scale with b6; source of Lydian b3, Phrygian b4, and a major-quality color set with the (11) coloration."
+        },
+        {
+          "id": "altered-scale",
+          "name": "Altered Scale",
+          "summary": "VII mode of melodic minor; color source for fully-altered dominants (b9, #9, b5, #5)."
+        },
+        {
+          "id": "lydian-dominant",
+          "name": "Lydian Dominant",
+          "summary": "IV mode of melodic minor; color source for dominant 7(#11)."
+        },
+        {
+          "id": "lydian-augmented",
+          "name": "Lydian Augmented",
+          "summary": "III mode of melodic minor; color source for maj7(#5)."
+        },
+        {
+          "id": "phrygian-dominant",
+          "name": "Phrygian Dominant",
+          "summary": "V mode of harmonic minor; color source for V7(b9,b13) in minor keys."
+        },
+        {
+          "id": "locrian-nat-6",
+          "name": "Locrian Natural 6",
+          "summary": "II mode of harmonic minor; color source for m7b5 with a brighter 6th."
+        }
+      ],
+      "traversal_rules": [],
+      "modification_rules": [
+        {
+          "id": "characteristic-color-note-required",
+          "name": "Characteristic Color Note Required",
+          "summary": "When applying a color scale over a chord, the scale's characteristic note(s) (the alteration that distinguishes it from the diatonic parent) must sound to deliver the intended color.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          }
+        },
+        {
+          "id": "diminished-b13-coloration",
+          "name": "Diminished o7(b13) Coloration",
+          "summary": "Color a diminished seventh chord by adding the b13 from harmonic minor, substituting the colored voicing for the bare o7.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          }
+        },
+        {
+          "id": "harmonic-major-11-coloration",
+          "name": "Harmonic Major (11) Coloration",
+          "summary": "Color a major chord by adding the natural 11 from harmonic major contexts where the b6 supports it, substituting the colored voicing for the plain major form.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          }
+        }
+      ]
+    }
+  ]
+}

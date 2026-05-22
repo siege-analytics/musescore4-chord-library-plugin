@@ -38,23 +38,41 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
 
     outputs: list[str] = []
 
-    # --- 1. Per-chapter summaries ---
-    chapter_summaries: list[tuple[dict, str]] = []
+    # --- 1a. Pre-write all per-chapter summary request files so they
+    # can be filled in parallel.
+    pending_chapters: list[dict] = []
     for ch in chapters:
-        ch_n = ch["n"]
-        summary_path = book.chapter_summary(ch_n)
-        chapter_md = book.chapter_file(ch_n).read_text()
+        summary_path = book.chapter_summary(ch["n"])
+        if summary_path.exists():
+            outputs.append(_rel_to_repo(book, summary_path))
+            continue
+        chapter_md = book.chapter_file(ch["n"]).read_text()
         body = _strip_frontmatter(chapter_md)
-        summary_text = _summarize_chapter(
-            book, ch, body, per_chapter_model
-        )
+        _write_chapter_summary_request(book, ch, body, per_chapter_model)
+        pending_chapters.append(ch)
+
+    # --- 1b. Consume per-chapter summary responses.
+    chapter_summaries: list[tuple[dict, str]] = []
+    for ch in pending_chapters:
+        chapter_md = book.chapter_file(ch["n"]).read_text()
+        body = _strip_frontmatter(chapter_md)
+        summary_text = _consume_chapter_summary(book, ch, body, per_chapter_model)
         _write_chapter_summary(
             book, ch, summary_text, per_chapter_model, source_pdf_name
         )
         chapter_summaries.append((ch, summary_text))
-        outputs.append(_rel_to_repo(book, summary_path))
+        outputs.append(_rel_to_repo(book, book.chapter_summary(ch["n"])))
+
+    # If any chapters were already done (from a prior resume), include
+    # their summaries in the book-level input.
+    for ch in chapters:
+        if ch in [c for c, _ in chapter_summaries]:
+            continue
+        summary_md = book.chapter_summary(ch["n"]).read_text()
+        chapter_summaries.append((ch, _strip_frontmatter(summary_md).strip()))
 
     # --- 2. Book-level summary ---
+    chapter_summaries.sort(key=lambda x: x[0]["n"])
     book_summary_text = _summarize_book(book, chapter_summaries, book_model)
     _write_book_summary(
         book, book_summary_text, book_model, source_pdf_name
@@ -84,10 +102,10 @@ Output just the paragraph — no preamble, no JSON, no markdown formatting.
 """
 
 
-def _summarize_chapter(
-    book: BookPaths, ch: dict, chapter_md_body: str, model: str
-) -> str:
-    req = LLMRequest(
+def _chapter_summary_request(
+    ch: dict, chapter_md_body: str, model: str
+) -> LLMRequest:
+    return LLMRequest(
         stage="s3",
         scope=f"chapter-ch{ch['n']:02d}",
         model=model,
@@ -96,11 +114,28 @@ def _summarize_chapter(
             f"Chapter {ch['n']}: {ch['title']}\n\n"
             f"<<<CHAPTER FILE\n{chapter_md_body}\nCHAPTER FILE>>>"
         ),
-        response_schema=None,  # free-form prose
+        response_schema=None,
         notes=f"per-chapter distillation for ch{ch['n']:02d}",
     )
-    request_path = book.llm_call_file("s3", f"chapter-ch{ch['n']:02d}", "request")
-    response_path = book.llm_call_file("s3", f"chapter-ch{ch['n']:02d}", "response")
+
+
+def _write_chapter_summary_request(
+    book: BookPaths, ch: dict, chapter_md_body: str, model: str
+) -> None:
+    req = _chapter_summary_request(ch, chapter_md_body, model)
+    scope = f"chapter-ch{ch['n']:02d}"
+    request_path = book.llm_call_file("s3", scope, "request")
+    request_path.parent.mkdir(parents=True, exist_ok=True)
+    request_path.write_text(json.dumps(req.to_dict(), indent=2) + "\n")
+
+
+def _consume_chapter_summary(
+    book: BookPaths, ch: dict, chapter_md_body: str, model: str
+) -> str:
+    req = _chapter_summary_request(ch, chapter_md_body, model)
+    scope = f"chapter-ch{ch['n']:02d}"
+    request_path = book.llm_call_file("s3", scope, "request")
+    response_path = book.llm_call_file("s3", scope, "response")
     resp = request_llm(req, request_path, response_path)
     return resp["text"].strip()
 
