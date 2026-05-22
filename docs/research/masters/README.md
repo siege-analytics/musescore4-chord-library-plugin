@@ -47,15 +47,19 @@ an inference.
 
 | Master | Research file | Status |
 |---|---|---|
-| George Van Eps | (not yet) | research pending — #228 |
+| George Van Eps | `george-van-eps.md` | web-researched, 5 documented principles |
 | Ted Greene | `ted-greene.md` | corpus-extracted, 5 documented principles |
-| Joe Pass | (not yet) | research pending — #230 |
-| Martin Taylor | (not yet) | research pending — #231 |
+| Joe Pass | `joe-pass.md` | web-researched, 4 documented principles |
+| Martin Taylor | `martin-taylor.md` | web-researched, 4 documented principles |
 | Wes Montgomery | `wes-montgomery.md` | web-researched, 5 documented principles |
-| Lenny Breau | (not yet) | research pending — #232 |
-| Jim Hall | (not yet) | research pending — #233 |
-| Johnny Smith | (not yet) | research pending — #234 |
-| Jody Fisher | (not yet) | research pending — #235 |
+| Lenny Breau | `lenny-breau.md` | web-researched, 4 documented principles |
+| Jim Hall | `jim-hall.md` | web-researched, 4 documented principles |
+| Johnny Smith | `johnny-smith.md` | web-researched, 3 documented principles |
+| Jody Fisher | `jody-fisher.md` | web-researched, 2 documented principles (small by design — pedagogue, not stylist) |
 
-Each ticketed master gets a research file when its principle entries
-are refined past the original seeds.
+**Bookshelf total: 9 masters, 36 principles.**
+
+Each research file follows the same shape: web sources table,
+per-principle source attribution with quotes, a "what was REMOVED"
+section flagging earlier unsourced claims that got corrected, a
+followups list, and a bibliography.
