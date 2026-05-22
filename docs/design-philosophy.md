@@ -121,6 +121,20 @@ A user wanting a more conservative experience can stay with `master: berklee, st
 
 ---
 
+## 6a. Works as the unit of authority (Stage A.1 amendment, #293)
+
+The unit of authority in instructional method literature is **the work, not the master.** Van Eps wrote two methods — the 1939 6-string and Harmonic Mechanisms 1980-82 (7-string, lap-piano counterpoint) — that share principles (harmonized scale as vocabulary) but diverge sharply (7-string-only bass independence on the low A). Martin Taylor has multiple books that contradict each other at the technique level, not cleanly by date. Splitting Van Eps into two pseudo-masters wouldn't generalize to Taylor and would duplicate biography/traditions.
+
+**Schema response:** masters may carry an optional `works[]` layer. Each work has its own `systems[]`. Multi-method masters (Van Eps, Taylor) use it; single-method masters (Berklee, anyone whose oeuvre is undivided) keep `systems[]` directly on the master.
+
+**Cross-work systems are not modeled.** If the same idea appears in three books with three prescriptions, those become three independent systems — one per work. The engine consults one work at a time. This is honest about contradictions instead of inventing "the canonical Taylor view of guide-tone tracking."
+
+**System ids reflect their layer:** `<master>:<slug>` at the master level, `<master>:<work>:<slug>` when inside a work. Both may carry the `_placeholder:` prefix for entries pending content.
+
+**Tracking:** schema in [`schema/masters.schema.json`](../schema/masters.schema.json) post-#293. Per-master migration tickets #277-#285 must decide for each master whether to use `works[]` or place systems at the master level; this is a thinking act, not a transform.
+
+---
+
 ## 7. Documentation discipline
 
 Project-defining decisions land in **three places, not one**:
@@ -139,7 +153,7 @@ If a decision is load-bearing enough to outlive the conversation that produced i
 |---|---|
 | Project framing for AI agents | [`.agents/skills/jazz-system/SKILL.md`](../.agents/skills/jazz-system/SKILL.md) |
 | Project conventions (existing) | [`CLAUDE.md`](../CLAUDE.md) |
-| Master schema | [`schema/masters.schema.json`](../schema/masters.schema.json) — Stage A dual-shape window per #276; per-master migration in #277-#285 |
+| Master schema | [`schema/masters.schema.json`](../schema/masters.schema.json) — Stage A dual-shape window (#276); Stage A.1 works layer (#293); per-master migration in #277-#285 |
 | Voicing descriptor schema (planned) | `schema/voicings.schema.json` (extend per #249's voicing-descriptor pairing) |
 | Base-case content (planned) | `docs/base-case-berklee-content.md` (to be written) |
 | Open architecture tickets | #240, #241, #242, #243, #244, #245, #246, #247, #248, #249, #250, #251 |

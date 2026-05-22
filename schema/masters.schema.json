@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A / #295 enum provenance fix)",
-  "description": "Schema for plugin/data/masters.json. Stage A introduces a dual-shape window: each master may declare legacy 'principles' (v1) and/or new 'systems' (systems-with-three-layers per docs/design-philosophy.md). At least one of the two must be present. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'. The engine_payload.kind enum was rolled back in #295 from the originally-shipped invented names to the 12 names with design provenance in predecessor session 260521-aware-nebula's schema-systems-model.md.",
+  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A / #293 Stage A.1 / #295 enum provenance fix)",
+  "description": "Schema for plugin/data/masters.json. Stage A introduced a dual-shape window (legacy 'principles' / new 'systems'). Stage A.1 (#293) adds an optional 'works' layer for multi-method masters: Van Eps's 1939 Method vs Harmonic Mechanisms, Martin Taylor's multiple books, etc. Each master must declare at least one of principles[], systems[], works[]. The engine_payload.kind enum was rolled back in #295 from the originally-shipped invented names to the 12 names with design provenance in predecessor session 260521-aware-nebula's schema-systems-model.md. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'.",
   "type": "object",
   "required": ["version", "masters"],
   "properties": {
@@ -31,12 +31,40 @@
         "systems": {
           "type": "array",
           "items": { "$ref": "#/$defs/system" }
+        },
+        "works": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/work" }
         }
       },
       "anyOf": [
         { "required": ["principles"] },
-        { "required": ["systems"] }
+        { "required": ["systems"] },
+        { "required": ["works"] }
       ],
+      "additionalProperties": true
+    },
+    "work": {
+      "description": "A discrete body of method content authored by the master — typically one book or one method era. Multi-method masters (e.g. Van Eps's 1939 Method vs Harmonic Mechanisms) place their systems inside the matching work so per-method divergence is legible. Single-method masters do not need works[] at all; their systems live directly on the master.",
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(_placeholder:)?[a-z0-9_-]+$",
+          "description": "Master-local kebab id (e.g. '1939-method', 'harmonic-mechanisms'). '_placeholder:' prefix marks a work whose interior is pending research; its systems[] may be empty or absent."
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "year": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+        "instrument_scope": { "type": "string" },
+        "summary": { "type": "string" },
+        "systems": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/system" }
+        },
+        "references": { "$ref": "#/$defs/references" }
+      },
       "additionalProperties": true
     },
     "principle": {
@@ -51,19 +79,7 @@
         "applies_to_modes": { "type": "array", "items": { "type": "string" } },
         "applies_to_tunings": { "type": "array", "items": { "type": "string" } },
         "tolerance_hints": { "type": "object" },
-        "references": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["source"],
-            "properties": {
-              "source": { "type": "string" },
-              "citation": { "type": "string" },
-              "url": { "type": "string" }
-            },
-            "additionalProperties": true
-          }
-        },
+        "references": { "$ref": "#/$defs/references" },
         "example_voicing_signatures": { "type": "array" }
       },
       "additionalProperties": true
@@ -74,8 +90,8 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^(_placeholder:)?[a-z0-9_-]+:[a-z0-9_-]+$",
-          "description": "Format '<master>:<system-slug>'. A '_placeholder:' prefix marks a system whose interior is intentionally empty pending design — placeholder shape relaxes the non-empty-members rule."
+          "pattern": "^(_placeholder:)?[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$",
+          "description": "Two- or three-segment id. Two-segment '<master>:<slug>' for systems living directly on master.systems (single-method masters). Three-segment '<master>:<work>:<slug>' for systems inside master.works[*].systems (multi-method masters). Optional '_placeholder:' prefix marks a system whose interior is intentionally empty pending design — placeholder shape relaxes the non-empty-members rule."
         },
         "name": { "type": "string", "minLength": 1 },
         "summary": { "type": "string" },
@@ -96,32 +112,20 @@
           "items": { "$ref": "#/$defs/preference" }
         },
         "examples": { "type": "array" },
-        "references": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["source"],
-            "properties": {
-              "source": { "type": "string" },
-              "citation": { "type": "string" },
-              "url": { "type": "string" }
-            },
-            "additionalProperties": true
-          }
-        }
+        "references": { "$ref": "#/$defs/references" }
       },
       "anyOf": [
         {
           "description": "Placeholder shape: id begins with '_placeholder:'; members/rules may be omitted or empty.",
           "properties": {
-            "id": { "pattern": "^_placeholder:[a-z0-9_-]+:[a-z0-9_-]+$" }
+            "id": { "pattern": "^_placeholder:[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$" }
           },
           "required": ["id"]
         },
         {
           "description": "Real shape: non-empty members[] AND at least one of traversal_rules or modification_rules non-empty.",
           "properties": {
-            "id": { "pattern": "^[a-z0-9_-]+:[a-z0-9_-]+$" },
+            "id": { "pattern": "^[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$" },
             "members": { "type": "array", "minItems": 1 }
           },
           "required": ["members"],
@@ -194,6 +198,19 @@
         "engine_payload": { "$ref": "#/$defs/engine_payload" }
       },
       "additionalProperties": true
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {
+          "source": { "type": "string" },
+          "citation": { "type": "string" },
+          "url": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
     }
   }
 }

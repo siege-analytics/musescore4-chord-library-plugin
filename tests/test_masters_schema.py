@@ -243,3 +243,259 @@ def test_real_system_with_members_but_no_rules_is_invalid(validator):
         ],
     }
     assert list(validator.iter_errors(_doc([master])))
+
+
+# === Works layer (#293 Stage A.1) ===
+
+def _real_system_3seg(master_id: str, work_id: str, slug: str = "harmonized-scale") -> dict:
+    return {
+        "id": f"{master_id}:{work_id}:{slug}",
+        "name": "Harmonized scale",
+        "members": [{"id": "triad-major", "name": "Major triad"}],
+        "traversal_rules": [
+            {
+                "id": "step-up",
+                "name": "Step up",
+                "engine_payload": {"kind": "PositionContinuity"},
+            }
+        ],
+    }
+
+
+def test_works_only_master_is_valid(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [
+            {
+                "id": "1939-method",
+                "title": "The George Van Eps Method for Guitar",
+                "year": 1939,
+                "instrument_scope": "6-string",
+                "systems": [_real_system_3seg("van-eps", "1939-method")],
+            }
+        ],
+    }
+    assert list(validator.iter_errors(_doc([master]))) == []
+
+
+def test_works_plus_systems_plus_principles_is_valid(validator):
+    master = _base_master({
+        "systems": [
+            {
+                "id": "van-eps:legacy-system",
+                "name": "Legacy",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {
+                        "id": "t", "name": "T",
+                        "engine_payload": {"kind": "VoiceMotion"},
+                    }
+                ],
+            }
+        ],
+        "works": [
+            {
+                "id": "1939-method",
+                "title": "The George Van Eps Method",
+                "systems": [_real_system_3seg("van-eps", "1939-method")],
+            }
+        ],
+    })
+    assert list(validator.iter_errors(_doc([master]))) == []
+
+
+def test_placeholder_work_with_no_systems_is_valid(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [
+            {
+                "id": "_placeholder:harmonic-mechanisms",
+                "title": "Harmonic Mechanisms for Guitar (7-string research pending)",
+            }
+        ],
+    }
+    assert list(validator.iter_errors(_doc([master]))) == []
+
+
+def test_work_scoped_system_with_2segment_id_is_rejected(validator):
+    """A system inside a work must carry the 3-segment id pattern. The
+    schema can't enforce structural location, but the consistency check
+    (validate.py) flags it. Still, the system id itself must match the
+    pattern; a 2-segment id inside a work is structurally wrong but
+    schema-legal — covered by the validator-level test below."""
+    # This is the schema-level companion: a deliberately-broken 1-segment
+    # id (no colons) is rejected by the pattern.
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [
+            {
+                "id": "1939-method",
+                "title": "Method",
+                "systems": [
+                    {
+                        "id": "no-colons-at-all",
+                        "name": "Bad",
+                        "members": [{"id": "x", "name": "X"}],
+                        "traversal_rules": [
+                            {"id": "t", "name": "T",
+                             "engine_payload": {"kind": "VoiceMotion"}},
+                        ],
+                    }
+                ],
+            }
+        ],
+    }
+    assert list(validator.iter_errors(_doc([master])))
+
+
+def test_empty_works_array_rejected(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [],
+        "principles": [
+            {"id": "p", "name": "P", "summary": "..."}
+        ],
+    }
+    # works[] present but empty violates minItems:1
+    assert list(validator.iter_errors(_doc([master])))
+
+
+def test_work_missing_title_rejected(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [{"id": "1939-method"}],
+    }
+    assert list(validator.iter_errors(_doc([master])))
+
+
+def test_work_id_can_be_placeholder(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [
+            {
+                "id": "_placeholder:future-method",
+                "title": "Future method",
+            }
+        ],
+    }
+    assert list(validator.iter_errors(_doc([master]))) == []
+
+
+def test_three_segment_placeholder_system_inside_work_is_valid(validator):
+    master = {
+        "id": "van-eps",
+        "name": "George Van Eps",
+        "works": [
+            {
+                "id": "harmonic-mechanisms",
+                "title": "Harmonic Mechanisms",
+                "systems": [
+                    {
+                        "id": "_placeholder:van-eps:harmonic-mechanisms:lap-piano",
+                        "name": "Lap piano counterpoint (research pending)",
+                    }
+                ],
+            }
+        ],
+    }
+    assert list(validator.iter_errors(_doc([master]))) == []
+
+
+# === Validator consistency checks (#293) ===
+
+def test_consistency_flags_3seg_system_with_wrong_master_prefix(monkeypatch):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "validate_mod",
+        REPO_ROOT / "scripts" / "validate.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    data = _doc([{
+        "id": "van-eps",
+        "name": "Van Eps",
+        "works": [{
+            "id": "1939-method",
+            "title": "Method",
+            "systems": [{
+                "id": "wrong-master:1939-method:foo",
+                "name": "Foo",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {"id": "t", "name": "T",
+                     "engine_payload": {"kind": "VoiceMotion"}},
+                ],
+            }],
+        }],
+    }])
+    warnings = mod._check_masters_consistency(data)
+    assert any("master prefix 'wrong-master'" in w for w in warnings), warnings
+
+
+def test_consistency_flags_3seg_system_with_wrong_work_segment():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "validate_mod",
+        REPO_ROOT / "scripts" / "validate.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    data = _doc([{
+        "id": "van-eps",
+        "name": "Van Eps",
+        "works": [{
+            "id": "1939-method",
+            "title": "Method",
+            "systems": [{
+                "id": "van-eps:wrong-work:foo",
+                "name": "Foo",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {"id": "t", "name": "T",
+                     "engine_payload": {"kind": "VoiceMotion"}},
+                ],
+            }],
+        }],
+    }])
+    warnings = mod._check_masters_consistency(data)
+    assert any("work segment 'wrong-work'" in w for w in warnings), warnings
+
+
+def test_consistency_flags_2segment_system_inside_work():
+    """A system schema-valid by pattern but structurally misplaced (2-segment
+    id inside a work) is caught by the consistency check, not the schema."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "validate_mod",
+        REPO_ROOT / "scripts" / "validate.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    data = _doc([{
+        "id": "van-eps",
+        "name": "Van Eps",
+        "works": [{
+            "id": "1939-method",
+            "title": "Method",
+            "systems": [{
+                "id": "van-eps:foo",
+                "name": "Foo",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {"id": "t", "name": "T",
+                     "engine_payload": {"kind": "VoiceMotion"}},
+                ],
+            }],
+        }],
+    }])
+    warnings = mod._check_masters_consistency(data)
+    assert any("expected 3 colon-separated segments" in w for w in warnings), warnings
