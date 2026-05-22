@@ -21,19 +21,20 @@ needs_ocr = false
 ocr_lang = "en"
 
 [stages.s2]
-# Per-chapter curated verbatim extraction. Haiku.
+# Per-chapter curated verbatim extraction. Local 72B for full quality.
 chapter_strategy = "toc-or-heading"
 min_chapter_chars = 500
-model = "claude-haiku-4-5-20251001"
+model = "qwen2.5:72b"
 
 [stages.s3]
-# Hierarchical distillation. Sonnet at book level.
-per_chapter_model = "claude-haiku-4-5-20251001"
-book_level_model = "claude-sonnet-4-6"
+# Hierarchical distillation. Same model for both tiers; qwen2.5:72b is
+# strong enough for both per-chapter and book-level synthesis.
+per_chapter_model = "qwen2.5:72b"
+book_level_model = "qwen2.5:72b"
 
 [stages.s4]
-# Statement of outputs + systems-draft.
-model = "claude-sonnet-4-6"
+# Statement of outputs + systems-draft. Judgment-heaviest stage; 72B.
+model = "qwen2.5:72b"
 # Use _pending:<kebab> for any engine_payload.kind we're not confident
 # about — until #298 payload-kind glossary lands.
 engine_kind_policy = "pending-when-unsure"

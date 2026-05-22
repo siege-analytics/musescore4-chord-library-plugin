@@ -156,7 +156,13 @@ def _call_ollama(req: LLMRequest) -> Any:
         "stream": False,
     }
     if req.response_schema is not None:
-        body["format"] = "json"
+        # Ollama 0.5+ supports JSON Schema directly via `format`; the model
+        # is constrained to produce output matching the schema rather than
+        # merely valid JSON. Earlier behaviour (format: "json") let the
+        # model invent an arbitrary JSON shape — verified bad against
+        # qwen2.5:72b which returned {"document": {...}} when asked for a
+        # {"chapters": [...]} shape.
+        body["format"] = req.response_schema
 
     data = json.dumps(body).encode("utf-8")
     request = urllib.request.Request(
