@@ -7,109 +7,134 @@
       "name": "George Van Eps",
       "lived": "1913-1998",
       "traditions": ["chord-melody", "jazz", "swing"],
-      "instrument": "7-string (low A) and 6-string",
-      "biography": "Pioneer of the 7-string electric guitar with the added low A string. Developed a body of theory treating the guitar as a contrapuntal instrument: independent bass, inner voices, and melody moving simultaneously, often beneath sustained chord shapes.",
+      "instrument": "6-string (the 1939 Method) and later 7-string (low A; Harmonic Mechanisms, Mel Bay, 1980-82)",
+      "biography": "Pianistic master of the guitar whose body of method work began with the 1939-era Epiphone-published Van Eps Method (6-string) and matured into the 3-volume Harmonic Mechanisms for Guitar (Mel Bay, 1980-1982) on the 7-string with low A. The principles below are sourced from the 6-string 1939 method (primary source verified). 7-string-specific principles from Harmonic Mechanisms (lap-piano style, independent bass counterpoint on the low A) are pending a separate research pass.",
       "principles": [
         {
-          "id": "lap-piano-polyphonic-style",
-          "name": "Lap piano polyphonic style",
-          "summary": "Van Eps treats the guitar as a polyphonic instrument with three independent voices — bass, inner voices, melody — moving simultaneously like a pianist's left hand, right hand, and inner motion. He developed this style in the 1930s for solo performance, emulating a full piano accompaniment on a single instrument. His own words: 'I'm more interested in having every voice in a chord be a melody that both stands by itself and works with the others.'",
+          "id": "harmonized-scale-foundation",
+          "name": "Harmonized scale as foundational vocabulary",
+          "summary": "Every chord-quality category in Van Eps's method begins by harmonizing the corresponding scale in triads. Major chords (Ex. 1-25) start with the harmonized major scale in triads; minor chords (Ex. 26-32) with the harmonized minor; 7th chords (Ex. 33-47) with the 7th-arpeggio scale; diminished chords (Ex. 48-82) with the harmonized diminished. The harmonized scale IS the vocabulary; voicings derive from running it through different fingerings. Practice in all 12 keys via the solfeggio system: 'Think of the tonic of every key as do.'",
           "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
           "tolerance_hints": {
-            "minSoundingNotes": 4
-          },
-          "references": [
-            {
-              "source": "jazzguitarlessons.net — George Van Eps (1913-1998)",
-              "url": "https://www.jazzguitarlessons.net/blog/george-van-eps",
-              "citation": "Documents the 'lap piano' style and quotes Van Eps directly on inner-voice melody."
-            },
-            {
-              "source": "Guitar Player — Van Eps profile",
-              "url": "https://www.guitarplayer.com/players/george-van-eps-my-guitar",
-              "citation": "Notes 'lap piano' as Van Eps's own term; describes the smooth/effortless sound and the bass counterpoint."
-            }
-          ],
-          "example_voicing_signatures": []
-        },
-        {
-          "id": "independent-bass-counterpoint",
-          "name": "Independent bass counterpoint (7th string)",
-          "summary": "On the 7-string (low A tuning), the 7th string carries an independent bass voice with its own melodic motion — chromatic neighbor tones, tonic-dominant pedal, walking patterns — while the upper voices sustain or move on their own timeline. Van Eps: 'I wanted things to happen, voices to move… for the bass to move a little bit.' The 7-string was designed specifically for this purpose; he debuted it on Mellow Guitar (1956).",
-          "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "applies_to_tunings": ["7string-van-eps"],
-          "tolerance_hints": {
-            "minSoundingNotes": 4
-          },
-          "references": [
-            {
-              "source": "jazzguitarlessons.net — George Van Eps",
-              "url": "https://www.jazzguitarlessons.net/blog/george-van-eps",
-              "citation": "Quotes Van Eps on bass motion: 'for the bass to move a little bit.'"
-            },
-            {
-              "source": "Harmonic Mechanisms for Guitar (Mel Bay, 3 vols, 1980-1982)",
-              "citation": "Van Eps, George. The canonical method work."
-            }
-          ],
-          "example_voicing_signatures": []
-        },
-        {
-          "id": "10th-interval-anchor",
-          "name": "10th-interval anchor with inner arpeggios",
-          "summary": "A central Harmonic Mechanisms device: hold a 10th interval (bass note to a third 10 frets above) while inner voices arpeggiate underneath. The 10th is the chord's outer frame; the inner motion harmonizes through major, melodic minor, and harmonic minor scales, generating triads and 7th-chord inversions inside the held outer voices.",
-          "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "tolerance_hints": {
-            "maxStretch": 10,
             "minSoundingNotes": 3
           },
           "references": [
             {
-              "source": "jazzguitarlessons.net — George Van Eps",
-              "url": "https://www.jazzguitarlessons.net/blog/george-van-eps",
-              "citation": "Describes the technique: 'holding down a 10th interval on strings, and playing arpeggios as inner lines, and then moving the patterns up and down the major, melodic minor, and harmonic minor scales.'"
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+              "citation": "Foreword + Ex. 1 (major) / Ex. 26 (minor) / Ex. 33 (7th) / Ex. 48 (diminished). Quoted: 'All exercises presented in this volume have been carefully tested through years of teaching. Each one has a definite purpose for development of the hand, no matter how insignificant it may seem to the student.' Solfeggio quote also from Foreword."
             }
           ],
           "example_voicing_signatures": []
         },
         {
-          "id": "rootless-voicings-for-cadences",
-          "name": "Rootless voicings for ii-V-I cadences",
-          "summary": "Van Eps's Method exercises use chord shapes that omit the root to imply richer harmony: an F triad (C-F-A) on the C major formation creates a Dm7 voicing without spelling Dm7 explicitly, enabling the ii-V-I cadence. The rootless approach was a precursor to the bebop-piano voicing convention that came later. Each of his six 'formations' in C Major transposes to all 12 keys.",
+          "id": "six-fingering-string-sets",
+          "name": "Six fingering forms across string sets",
+          "summary": "Every chord pattern is practiced in up to six different fingerings on different string-set positions: sets of 3 (1|3, 2|3, 3|3, 4|3), sets of 4 (1|4, 2|4, 3|4), and 'broken' sets (1|B3, 2|B3, 3|B3 — sets that skip an intermediate string). The fingerings cover the entire fingerboard with the same harmonic content. The six forms of Ex. 1 cover roughly: 1st form C-up-to-F; 2nd C-to-C#(D); 3rd C-to-F; 4th Ab-to-Db(D); 5th Ab-to-E; 6th F#-to-C#. Practiced legato; finger placement is 'next-position-forming while the hand is in motion' (legato principle).",
           "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["comping", "chord-melody"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
           "tolerance_hints": {
-            "requireRootInBass": false
+            "minSoundingNotes": 3
           },
           "references": [
             {
-              "source": "Rob MacKillop — George Van Eps Method for Guitar",
-              "url": "https://robmackillop.net/george-van-eps-method-for-guitar/",
-              "citation": "Analyses Exercise 1: 'an F triad (C-F-A) where a diatonic A minor might be expected, which... creates a Dm7 voicing — enabling the ii-V-I cadence fundamental to jazz.'"
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+              "citation": "Explanation of String Chart (p. 6) and Ex. 1 instructions (p. 8). Each set has a notation symbol (1|3, 2|3, ..., 1|B3, etc.). The six-form scope is documented in the Ex. 1 instructions: '1st form C up to F, 2nd form C up to C sharp (D if possible)...'"
             }
           ],
           "example_voicing_signatures": []
         },
         {
-          "id": "banjo-derived-arpeggio-picking",
-          "name": "Banjo-derived arpeggio picking",
-          "summary": "Right-hand technique uses an arpeggio picking style 'derived from banjo fingerstyle technique.' Van Eps requires this articulation across all the Harmonic Mechanisms exercises — chords are unrolled note-by-note in a defined sequence, not strummed. Left-hand support uses 'mini barres' (flattening the last joint of fingers) for efficiency moving between formations.",
+          "id": "outer-voice-anchor-inner-motion",
+          "name": "Outer-voice anchor with inner voice motion",
+          "summary": "Hold outer voices (top or bass) while inner voices move — Van Eps's central polyphonic device. Documented across multiple exercises: Ex. 14 ('the upper melodic line is in half notes while the two lower voices are in whole notes'); Ex. 20 (top quarter notes, bottom whole notes); Ex. 57 ('the top line is in quarter notes and the harmonic structure is in whole notes'); Ex. 60-65 ('the moving voice is in the middle of the structure'); Ex. 82 ('the third and fourth fingers play the two upper voices in quarter notes while the first and second fingers sustain the lower voices in whole notes'). Pre-figures the 'lap piano' / Harmonic Mechanisms aesthetic.",
           "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential", "hybrid-pick"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+              "citation": "Exercises 14, 18, 20, 37, 40, 42, 46, 57, 60-65, 67-68, 82. Ex. 82: 'Individual control of the fingers is developed in this exercise. In the first measure the third and fourth fingers play the two upper voices in quarter notes while the first and second fingers sustain the lower voices in whole notes.'"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "chromatic-tenths-with-middle-voice",
+          "name": "Chromatic 10ths with middle voice motion",
+          "summary": "Specific stretching-exercise mechanic from Ex. 37: hold a 10th interval between outer voices while the middle voice moves chromatically. Van Eps's own description: 'the middle note remains the same while the other two voices move around the middle voice in chromatic tenths.' Uses a 'broken set of three strings' (one string between the two outer voices is skipped). Each form is then transposed to all 12 keys.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939), Ex. 37",
+              "citation": "Direct quote from Ex. 37 instructions: 'The middle note remains the same while the other two voices move around the middle voice in chromatic tenths. This is the first exercise using a broken set of three strings.'"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "pulsation-picking-top-voice-emphasis",
+          "name": "Pulsation picking with top-voice emphasis",
+          "summary": "Right-hand technique: pick passes over each string with 'a slight kick, which is more of a pulsation' rather than picking each note individually. Wrist axis is positioned directly over the highest note 'as the top note should predominate.' Built-in dynamic stratification across a triad: '...the D string will sound softly, the G string a little louder, and the B string will be the loudest, which is dynamically correct.' Inside-string playing uses the next-higher string as a pick-stop on downstrokes.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": ["sequential"],
           "applies_to_modes": ["chord-melody", "solo-guitar", "comping"],
+          "applies_to_tunings": ["standard"],
           "tolerance_hints": {},
           "references": [
             {
-              "source": "Rob MacKillop — George Van Eps Method for Guitar",
-              "url": "https://robmackillop.net/george-van-eps-method-for-guitar/",
-              "citation": "Documents the picking method 'derived from banjo fingerstyle technique' and the 'mini barres' left-hand mechanic."
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+              "citation": "'Pick and Wrist Action' section (p. 3) + Ex. 2 instructions (p. 9). Ex. 2: 'The pick passes over each string and accents it with a slight kick, which is more of a pulsation... using the pulsation principle you will be able to maintain a steady tempo and you will not strike two strings at once.' Picking section: '...the top note should predominate.'"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "finger-flattening-fifth-finger",
+          "name": "Finger flattening for added notes ('fifth finger')",
+          "summary": "Left-hand technique: deliberately flatten the first joint of a finger from its arched position to produce an additional note on a neighboring string, classified as a 'fifth finger' addition. Introduced in Ex. 16 ('the breaking, or flattening from an arched position, of the first joint of the fingers'); difficult because the flattening finger must continue to sustain another note during the process. Practiced 'with a snap,' rhythmically reliable. Voicings designed with this technique fit one more note than the four fingers alone could reach.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939), Ex. 16",
+              "citation": "Direct quote from Ex. 16: 'This exercise must be practiced very carefully as we introduce a new principle in the first two forms which is the breaking (or flattening from an arched position) of the first joint of the fingers. In the first form at the second and third measures, you flatten the first joint of the second finger to produce the added note, which brings this principle into the classification of a fifth finger.'"
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "string-deadening-for-open-voicings",
+          "name": "String deadening for open voicings",
+          "summary": "Left-hand technique for open voicings on non-adjacent strings: the pick strikes a string while a left-hand finger touches (deadens) it to silence the note. Ex. 58 documents the mechanic precisely: 'the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string. (i.e. The pick strikes that string, but the left hand finger does not let it sound clearly.)' Enables voicings where the pick can sweep cleanly across all strings while only the intended notes ring.",
+          "voicingStyleTags": ["van-eps"],
+          "playStyleTags": [],
+          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "applies_to_tunings": ["standard"],
+          "tolerance_hints": {
+            "allowOpenStrings": true
+          },
+          "references": [
+            {
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939), Ex. 58",
+              "citation": "Direct quote from Ex. 58 (the first diminished open-voicing exercise) and its footnote: 'In the first form the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string... *i.e. The pick strikes that string, but the left hand finger does not let it sound clearly.'"
             }
           ],
           "example_voicing_signatures": []
