@@ -1,6 +1,8 @@
 # musescore4-chord-library-plugin
 
-> **SESSION START**: Read this file and `REFERENCES.md` before making any changes.
+> **SESSION START**: Read this file, `REFERENCES.md`, and `docs/design-philosophy.md` before making any changes.
+>
+> Note: as of 2026-05-22 (session 260521-aware-nebula) the project's identity has evolved from "chord voicing management" to a **jazz arrangement system**. The framing in this file is partially historical; `docs/design-philosophy.md` is the operative scope and design contract. When the two conflict, the design-philosophy doc wins. See also `.agents/skills/jazz-system/SKILL.md`.
 
 ## Working Guidelines for AI Assistants
 
