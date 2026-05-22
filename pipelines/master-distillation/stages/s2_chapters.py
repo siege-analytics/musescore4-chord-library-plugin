@@ -1,14 +1,382 @@
-"""Stage 2 — Chapters + curated verbatim. STUB.
+"""Stage 2 — Chapter detection + curated verbatim quote extraction.
 
-Will land alongside the Benson Vol 1 walk-through.
+Two LLM scopes:
+
+  - `toc`: given the front matter (first ~20 pages), produce a list of
+    chapter-shaped sections with page ranges.
+  - `extract:chNN`: per chapter, extract verbatim quotes for every
+    passage that teaches a technique, defines a concept, gives a rule,
+    or shows a load-bearing example.
+
+Outputs:
+  - runs/<id>/chapter-bounds.json       (committed, audit trail)
+  - plugin/data/masters-corpus/<master>/<work>/chapters/chNN.md (committed)
+
+Quote-fidelity: every extracted quote must appear in the raw
+transcript verbatim (whitespace-normalized substring). The validator
+rejects hallucinated quotes and the stage retries with a tightening
+hint up to N times; persistent failures error-out the stage.
 """
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+from lib import provenance, text
+from lib.llm import LLMRequest, request_llm
 from lib.paths import BookPaths
+
+TOC_RESPONSE_SCHEMA = {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": ["chapters"],
+    "properties": {
+        "chapters": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": ["n", "title", "start_page", "end_page"],
+                "properties": {
+                    "n": {"type": "integer", "minimum": 1},
+                    "title": {"type": "string", "minLength": 1},
+                    "start_page": {"type": "integer", "minimum": 1},
+                    "end_page": {"type": "integer", "minimum": 1},
+                    "notes": {"type": "string"},
+                },
+                "additionalProperties": True,
+            },
+        }
+    },
+    "additionalProperties": True,
+}
+
+EXTRACT_RESPONSE_SCHEMA = {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": ["quotes"],
+    "properties": {
+        "quotes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["topic", "verbatim_quote", "why_load_bearing"],
+                "properties": {
+                    "topic": {"type": "string", "minLength": 1},
+                    "verbatim_quote": {"type": "string", "minLength": 1},
+                    "why_load_bearing": {"type": "string", "minLength": 1},
+                    "page": {"type": "integer", "minimum": 1},
+                },
+                "additionalProperties": True,
+            },
+        }
+    },
+    "additionalProperties": True,
+}
 
 
 def run(cfg: dict, book: BookPaths) -> list[str]:
-    raise NotImplementedError(
-        "Stage 2 lands in the next step of #297. Stage 1 first."
+    transcript = text.load_transcript(book.raw_transcript)
+    pages = text.load_pages(book.pages_json)
+    n_pages = text.total_pages(pages)
+    model = cfg["stages"]["s2"]["model"]
+
+    # --- 1. Detect chapters from front matter ---
+    chapters = _detect_chapters(cfg, book, transcript, pages, n_pages, model)
+    book.chapter_bounds.write_text(
+        json.dumps({"chapters": chapters}, indent=2) + "\n"
     )
+
+    outputs: list[str] = [
+        f"detected {len(chapters)} chapter(s)",
+        str(book.chapter_bounds.relative_to(book.run_dir.parent.parent.parent)),
+    ]
+
+    # --- 2. Per-chapter curated quote extraction ---
+    for ch in chapters:
+        ch_n = ch["n"]
+        ch_md_path = book.chapter_file(ch_n)
+        if ch_md_path.exists():
+            # Skip if already written — let the user --redo s2 to refresh.
+            outputs.append(
+                str(ch_md_path.relative_to(book.run_dir.parent.parent.parent.parent))
+            )
+            continue
+
+        quotes = _extract_quotes(
+            cfg, book, transcript, ch, model
+        )
+
+        _write_chapter_file(book, ch, quotes, model)
+        outputs.append(
+            str(ch_md_path.relative_to(book.run_dir.parent.parent.parent.parent))
+        )
+
+    return outputs
+
+
+# ---------------------------------------------------------------------------
+# TOC detection
+# ---------------------------------------------------------------------------
+
+_TOC_SYSTEM = """You are extracting the structural outline of a guitar method book from its front matter.
+
+The user will give you the verbatim text of the first ~20 pages of a book.
+Identify the chapters or major sections of the book (whichever the book uses
+— some method books use "Lesson", "Chapter", "Part", "Section", "Unit").
+
+Output a JSON object with this shape:
+
+  { "chapters": [
+      { "n": 1, "title": "...", "start_page": <int>, "end_page": <int> },
+      ...
+  ] }
+
+Rules:
+- `n` is the 1-indexed chapter number you assign (independent of the book's
+  own numbering — book may start at 0 or use Roman numerals).
+- `title` is the chapter's title as it appears in the book.
+- `start_page` is the first page of the chapter; `end_page` is the last.
+- If the front matter doesn't list page numbers, infer from the chapter
+  headings you see — start_page is where the chapter HEADING appears, and
+  end_page is one less than the next chapter's start_page (or the book's
+  last page for the final chapter).
+- Skip the table of contents itself, the title page, the copyright page,
+  the author bio — they are not "chapters" in this sense.
+- If the book is short and not subdivided, output a single chapter covering
+  the entire content."""
+
+
+def _detect_chapters(
+    cfg: dict,
+    book: BookPaths,
+    transcript: str,
+    pages: list[dict],
+    n_pages: int,
+    model: str,
+) -> list[dict]:
+    fm_pages = min(20, n_pages)
+    front = text.front_matter(transcript, n_pages=fm_pages)
+    # Strip page markers from the prompt so the model doesn't quote them.
+    front_clean = text.strip_page_marks(front)
+
+    req = LLMRequest(
+        stage="s2",
+        scope="toc",
+        model=model,
+        system_prompt=_TOC_SYSTEM,
+        user_prompt=(
+            f"Total pages in the book: {n_pages}.\n"
+            f"First {fm_pages} pages follow. Identify chapters.\n\n"
+            f"<<<TEXT\n{front_clean}\nTEXT>>>"
+        ),
+        response_schema=TOC_RESPONSE_SCHEMA,
+        notes=f"book has {n_pages} pages; using first {fm_pages} as front matter.",
+    )
+    request_path = book.llm_call_file("s2", "toc", "request")
+    response_path = book.llm_call_file("s2", "toc", "response")
+    resp = request_llm(req, request_path, response_path)
+    return resp["chapters"]
+
+
+# ---------------------------------------------------------------------------
+# Per-chapter extraction
+# ---------------------------------------------------------------------------
+
+_EXTRACT_SYSTEM = """You are extracting load-bearing passages from one chapter of a guitar method book.
+
+The user will give you the verbatim text of one chapter. Extract every passage
+that does any of the following:
+
+- teaches a technique (how to play, fingering, hand position, picking pattern)
+- defines a concept (a chord type, a scale, a position system, a terminology)
+- gives a rule (when to do X, what to avoid, what to prefer)
+- shows a load-bearing example (an exercise that illustrates a method's
+  characteristic move)
+
+Output a JSON object with this shape:
+
+  { "quotes": [
+      { "topic": "<short topic label>",
+        "verbatim_quote": "<exact substring of the input>",
+        "why_load_bearing": "<one sentence on why this passage matters>",
+        "page": <int, optional>
+      },
+      ...
+  ] }
+
+CRITICAL RULES:
+1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not
+   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.
+2. If you can't find a substantial passage in the input that fits a topic,
+   skip the topic — don't fabricate.
+3. Skip prose that is purely biographical, motivational, or transitional.
+   Keep prose that teaches.
+4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing
+   passage gets one quote; a dense chapter gets many.
+5. `topic` is a short label (2-6 words). Use the book's own terminology
+   when possible.
+6. `why_load_bearing` is one sentence in YOUR voice explaining the
+   significance — not a paraphrase of the quote."""
+
+
+MAX_EXTRACT_RETRIES = 2
+
+
+def _extract_quotes(
+    cfg: dict,
+    book: BookPaths,
+    transcript: str,
+    ch: dict,
+    model: str,
+) -> list[dict]:
+    ch_n = ch["n"]
+    start_page = ch["start_page"]
+    end_page = ch["end_page"]
+
+    chapter_text = text.text_between_pages(transcript, start_page, end_page)
+    chapter_text_clean = text.strip_page_marks(chapter_text)
+
+    base_user_prompt = (
+        f"Chapter {ch_n}: {ch['title']}\n"
+        f"Pages {start_page}-{end_page} of the book.\n\n"
+        f"<<<CHAPTER TEXT\n{chapter_text_clean}\nCHAPTER TEXT>>>"
+    )
+
+    last_error: str | None = None
+    for attempt in range(MAX_EXTRACT_RETRIES + 1):
+        user_prompt = base_user_prompt
+        if last_error is not None:
+            user_prompt += (
+                f"\n\nRETRY NOTE (attempt {attempt + 1}): your previous "
+                f"response failed quote verification. {last_error} "
+                f"Re-extract quotes that are EXACT substrings of the "
+                f"chapter text above. Copy character-for-character. "
+                f"Verify your quotes appear in the chapter before responding."
+            )
+
+        scope = f"extract-ch{ch_n:02d}" if attempt == 0 else f"extract-ch{ch_n:02d}-retry{attempt}"
+        req = LLMRequest(
+            stage="s2",
+            scope=scope,
+            model=model,
+            system_prompt=_EXTRACT_SYSTEM,
+            user_prompt=user_prompt,
+            response_schema=EXTRACT_RESPONSE_SCHEMA,
+            notes=f"chapter {ch_n} extraction (attempt {attempt + 1})",
+        )
+        request_path = book.llm_call_file("s2", scope, "request")
+        response_path = book.llm_call_file("s2", scope, "response")
+        resp = request_llm(req, request_path, response_path)
+        quotes = resp["quotes"]
+
+        # Verify every quote is in chapter_text (not just full transcript —
+        # tighter check catches the model echoing content from outside the
+        # chapter scope).
+        bad = []
+        for q in quotes:
+            if not text.verify_quote_in_transcript(
+                q["verbatim_quote"], chapter_text
+            ):
+                bad.append(q)
+
+        if not bad:
+            # All quotes verified. Stamp each with its page if missing.
+            pages = text.load_pages(book.pages_json)
+            for q in quotes:
+                if "page" not in q:
+                    page = text.find_page_of_quote(
+                        q["verbatim_quote"], transcript, pages
+                    )
+                    if page is not None:
+                        q["page"] = page
+            return quotes
+
+        last_error = (
+            f"{len(bad)} of {len(quotes)} quote(s) were NOT exact "
+            f"substrings of the chapter. Examples of unverified quotes: "
+            + "; ".join(
+                f'"{q["verbatim_quote"][:80]}..."'
+                for q in bad[:2]
+            )
+        )
+
+    raise RuntimeError(
+        f"chapter {ch_n} extraction failed quote-fidelity after "
+        f"{MAX_EXTRACT_RETRIES + 1} attempts: {last_error}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Writing committed chapter files
+# ---------------------------------------------------------------------------
+
+
+def _write_chapter_file(
+    book: BookPaths,
+    ch: dict,
+    quotes: list[dict],
+    model: str,
+) -> None:
+    """Emit chNN.md with the provenance frontmatter + one section per
+    topic. Quotes are wrapped in markdown blockquotes; rationales follow
+    as plain prose."""
+    ch_n = ch["n"]
+    source_pages = f"{ch['start_page']}-{ch['end_page']}"
+    prov = provenance.Provenance(
+        run_id=book.run_id,
+        stage="s2",
+        source_pdf=Path(_source_pdf(book)).name,
+        source_pages=source_pages,
+        model=model,
+    )
+
+    lines: list[str] = [
+        prov.yaml_block(),
+        "",
+        f"# Chapter {ch_n} — {ch['title']}",
+        "",
+        f"_Pages {source_pages}._",
+        "",
+    ]
+    if not quotes:
+        lines.append(
+            "_No load-bearing passages identified in this chapter._\n"
+        )
+
+    by_topic: dict[str, list[dict]] = {}
+    for q in quotes:
+        by_topic.setdefault(q["topic"], []).append(q)
+
+    for topic, items in by_topic.items():
+        lines.append(f"## {topic}")
+        lines.append("")
+        for q in items:
+            page = q.get("page")
+            page_suffix = f" (p. {page})" if page else ""
+            quote_text = q["verbatim_quote"].strip()
+            for line in quote_text.splitlines():
+                lines.append(f"> {line}".rstrip())
+            lines.append("")
+            lines.append(f"**Significance{page_suffix}.** {q['why_load_bearing'].strip()}")
+            lines.append("")
+
+    book.committed_chapters_dir.mkdir(parents=True, exist_ok=True)
+    book.chapter_file(ch_n).write_text("\n".join(lines).rstrip() + "\n")
+
+
+def _source_pdf(book: BookPaths) -> str:
+    """Best-effort recovery of the source PDF path from stage-state.
+
+    Avoids a second config read; the state file path leads to the
+    config which leads to the PDF. We only need the basename for
+    provenance, so a fallback to the work_id is acceptable."""
+    try:
+        import tomllib
+
+        state = json.loads(book.state_file.read_text())
+        cfg = tomllib.loads(Path(state["config"]).read_text())
+        return cfg["source"]["pdf"]
+    except Exception:
+        return book.work_id  # fallback; better than nothing
