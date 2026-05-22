@@ -268,16 +268,30 @@ def validate_masters(schema_path: Path, data_path: Path, verbose: bool = False) 
     if verbose:
         n_p = sum(len(m.get("principles", [])) for m in masters)
         n_s = sum(len(m.get("systems", [])) for m in masters)
+        n_w = sum(len(m.get("works", [])) for m in masters)
+        for m in masters:
+            for w in m.get("works", []) or []:
+                n_s += len(w.get("systems", []) or [])
         print(f"\n--- Summary ---")
         print(f"Masters: {len(masters)}")
+        print(f"Works: {n_w}")
         print(f"Principles (legacy): {n_p}")
-        print(f"Systems (new): {n_s}")
+        print(f"Systems (new, incl. work-scoped): {n_s}")
 
     return True
 
 
 def _check_masters_consistency(data: dict) -> list[str]:
-    """Cross-cutting checks beyond JSON Schema for masters.json."""
+    """Cross-cutting checks beyond JSON Schema for masters.json.
+
+    Covers:
+      - duplicate master / principle / system / work ids
+      - system id owner-prefix matches enclosing master
+      - work-scoped system id (3 segments) work-prefix matches enclosing work
+      - master-level system ids are 2 segments; work-scoped are 3 segments
+      - system ids are unique across (master.systems + all works[].systems)
+        within a single master
+    """
     warnings: list[str] = []
     seen_master_ids: set[str] = set()
 
@@ -294,25 +308,67 @@ def _check_masters_consistency(data: dict) -> list[str]:
                 warnings.append(f"{mid}: duplicate principle id '{pid}'")
             seen_principle_ids.add(pid)
 
-        seen_system_ids: set[str] = set()
+        # Aggregate every system id under this master across master.systems
+        # and every works[*].systems, so we can flag cross-bucket duplicates.
+        all_system_ids: set[str] = set()
+
         for s in m.get("systems", []) or []:
             sid = s.get("id", "<no-id>")
-            if sid in seen_system_ids:
+            if sid in all_system_ids:
                 warnings.append(f"{mid}: duplicate system id '{sid}'")
-            seen_system_ids.add(sid)
+            all_system_ids.add(sid)
+            _check_system_id(mid, None, sid, warnings, expect_segments=2)
 
-            # Per docs/design-philosophy.md, system ids carry an owner prefix
-            # '<master>:<slug>' (optionally '_placeholder:'-prefixed). The
-            # owner prefix should match the enclosing master's id.
-            bare = sid[len("_placeholder:"):] if sid.startswith("_placeholder:") else sid
-            owner_prefix = bare.split(":", 1)[0] if ":" in bare else ""
-            if owner_prefix and owner_prefix != mid:
-                warnings.append(
-                    f"{mid}: system id '{sid}' owner prefix '{owner_prefix}' "
-                    f"does not match master id"
-                )
+        seen_work_ids: set[str] = set()
+        for w in m.get("works", []) or []:
+            wid = w.get("id", "<no-id>")
+            if wid in seen_work_ids:
+                warnings.append(f"{mid}: duplicate work id '{wid}'")
+            seen_work_ids.add(wid)
+
+            for s in w.get("systems", []) or []:
+                sid = s.get("id", "<no-id>")
+                if sid in all_system_ids:
+                    warnings.append(f"{mid}: duplicate system id '{sid}'")
+                all_system_ids.add(sid)
+                _check_system_id(mid, wid, sid, warnings, expect_segments=3)
 
     return warnings
+
+
+def _check_system_id(
+    master_id: str,
+    work_id: str | None,
+    sid: str,
+    warnings: list[str],
+    expect_segments: int,
+) -> None:
+    """Verify a system id matches its enclosing master (and work if any).
+
+    expect_segments: 2 for master-level systems, 3 for work-scoped systems.
+    """
+    bare = sid[len("_placeholder:"):] if sid.startswith("_placeholder:") else sid
+    parts = bare.split(":") if bare else []
+
+    if len(parts) != expect_segments:
+        where = f"work '{work_id}'" if work_id else "master.systems"
+        warnings.append(
+            f"{master_id}: system id '{sid}' in {where} expected "
+            f"{expect_segments} colon-separated segments, got {len(parts)}"
+        )
+        return
+
+    if parts[0] != master_id:
+        warnings.append(
+            f"{master_id}: system id '{sid}' master prefix '{parts[0]}' "
+            f"does not match master id"
+        )
+
+    if expect_segments == 3 and work_id is not None and parts[1] != work_id:
+        warnings.append(
+            f"{master_id}: system id '{sid}' work segment '{parts[1]}' "
+            f"does not match enclosing work id '{work_id}'"
+        )
 
 
 def _check_consistency(data: dict) -> list[str]:

@@ -187,21 +187,45 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 - **Signal handler scoping trap**: Inside `ChildComponent { onSignal: { propName = val } }`, `propName` resolves to the child's property if it declares one, NOT the parent's. Always qualify: `chordLibrary.propName = val`. This caused #154 — context/tuning switching silently wrote to LibraryPanel copies instead of ChordLibrary's canonical state.
 - **Duplicate function names**: QML does not allow two functions with the same name in a component — even if they have different parameter counts. The plugin will fail to load with "Duplicate method name" in the log. Always check `grep -n "function " plugin/ChordLibrary.qml | sed 's/(.*//; s/.*function //' | sort | uniq -d` before committing.
 
-## Masters schema (#220 / #276 Stage A)
+## Masters schema (#220 / #276 Stage A / #293 Stage A.1)
 
-`plugin/data/masters.json` is governed by `schema/masters.schema.json`. The schema declares a **dual-shape window**: each master may carry the legacy `principles[]` array, the new `systems[]` array (systems-with-three-layers per `docs/design-philosophy.md`), or both. At least one is required. Per-master migrations land in #277-#285; Stage C will drop `principles`.
+`plugin/data/masters.json` is governed by `schema/masters.schema.json`. The schema declares a **multi-shape window**: each master may carry any of the legacy `principles[]` array, the new `systems[]` array (systems-with-three-layers per `docs/design-philosophy.md`), or the `works[]` layer (multi-method masters). At least one is required. Per-master migrations land in #277-#285; Stage C will drop `principles`.
 
-**System IDs** are `<master>:<slug>` (e.g. `van-eps:harmonized-scale`). A leading `_placeholder:` prefix marks an intentionally-empty system whose interior is pending design (relaxes the non-empty-members rule).
+### Works (multi-method masters)
 
-**Engine payload `kind`** is either one of the 12 canonical CamelCase kinds — `PositionContinuity`, `VoiceMotion`, `RegisterBand`, `ContraryMotion`, `StringSetPreference`, `OmissionPriority`, `TextureCycle`, `DensityBand`, `ApproachAlignment`, `BassIndependence`, `ChordToneSpelling`, `GuideToneTracking` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting design.
+Masters whose body of method content spans multiple books or eras place each one in `works[]`. Each work has `id` (kebab, master-local), `title` (required), and may carry `year`, `instrument_scope`, `summary`, `references`, and its own `systems[]`. Use this for Van Eps (1939 Method vs Harmonic Mechanisms 1980-82), Martin Taylor (multiple contradictory books), or any master where one prescription doesn't speak for the whole oeuvre. Single-method masters (Berklee codified consensus) put systems directly on `master.systems[]` and do NOT need `works[]`.
 
-**Validate** with:
+Cross-work systems are NOT modeled — the same idea appearing in three books with three prescriptions becomes three separate systems, one per work. The engine consults one work at a time.
+
+A work id may be prefixed `_placeholder:` (e.g. `_placeholder:harmonic-mechanisms`) for an entry whose content is pending research; its `systems[]` may be empty or absent.
+
+### System IDs
+
+- On `master.systems[]`: **2 segments** — `<master>:<slug>` (e.g. `berklee:guide-tone-tracking`).
+- On `master.works[*].systems[]`: **3 segments** — `<master>:<work>:<slug>` (e.g. `van-eps:1939-method:harmonized-scale`).
+- Either form may be prefixed `_placeholder:` for an intentionally-empty system whose interior is pending design.
+
+### Engine payload `kind`
+
+Either one of the 12 canonical CamelCase kinds — `PositionContinuity`, `VoiceMotion`, `RegisterBand`, `ContraryMotion`, `StringSetPreference`, `OmissionPriority`, `TextureCycle`, `DensityBand`, `ApproachAlignment`, `BassIndependence`, `ChordToneSpelling`, `GuideToneTracking` — or a `_pending:<kebab-slug>` placeholder for kinds awaiting design.
+
+### Validate
 
 ```
 python scripts/validate.py --target masters
 ```
 
-**MastersStore.js** accessors for systems (alongside the existing principle accessors): `allSystems(store)`, `findSystem(store, masterId, systemId)`, `preferencesFor(store, masterId)`, `findPreferenceById(store, prefId)`, plus `counts(store)` now reports `systems`.
+Runs schema validation plus consistency checks: duplicate ids (master/principle/system/work), system-id prefix-matches-enclosing-master, work-scoped system-id work-segment-matches-enclosing-work, and 2-vs-3-segment placement rules.
+
+### MastersStore.js accessors
+
+Systems (walk both master.systems and master.works[*].systems): `allSystems(store)`, `findSystem(store, masterId, systemId)`.
+
+Works: `allWorks(store)`, `findWork(store, masterId, workId)`, `systemsForWork(store, masterId, workId)`.
+
+Preferences: `preferencesFor(store, masterId)` (walks works), `findPreferenceById(store, prefId)`.
+
+`counts(store)` reports `{ masters, principles, systems, works }`. `systems` includes work-scoped systems.
 
 ---
 
