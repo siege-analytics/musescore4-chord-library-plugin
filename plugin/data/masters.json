@@ -187,14 +187,14 @@
       "id": "wes-montgomery",
       "name": "Wes Montgomery",
       "lived": "1923-1968",
-      "traditions": ["jazz", "bebop", "hard-bop"],
-      "instrument": "6-string",
-      "biography": "Self-taught Indianapolis guitarist whose innovations (thumb-attack right hand, octave melodic statements, block-chord chorus climax) reshaped jazz guitar after 1959. Recordings are the primary documentation; written method books are mostly posthumous transcription collections.",
+      "traditions": ["jazz", "bebop", "hard-bop", "blues"],
+      "instrument": "6-string (Gibson L-5 CES)",
+      "biography": "Self-taught Indianapolis guitarist whose innovations after 1959 reshaped jazz guitar: thumb-attack right hand, parallel-octave melodic statements, and block-chord chorus climaxes built directly from melodic shape. Active recording career 1959-1968 (Riverside, Verve, A&M) with canonical statements on Smokin' at the Half Note (1965) and The Incredible Jazz Guitar of Wes Montgomery (1960). No instructional book of his own; documentation is via transcription collections and biographical studies.",
       "principles": [
         {
           "id": "three-tier-chorus-development",
           "name": "Three-tier chorus development",
-          "summary": "A solo arcs from single-note lines through octave statements to block-chord harmonization. Each tier carries melodic content; the chord tier voices the same melodic shape with full block voicings underneath. The block-chord tier is where chord-voicing choice matters most — those voicings are melody-led, not chord-led.",
+          "summary": "A solo arcs through three distinct textural tiers: single-note lines (statement), parallel octaves (intensification), block-chord harmonization (climax). Each tier carries the same melodic logic; the chord tier is melody-led, not chord-led — the top voice of the chord IS the melody, with chord tones filled in below. The arc is documented across nearly every extended Wes solo from 'West Coast Blues' onward.",
           "voicingStyleTags": ["montgomery"],
           "playStyleTags": ["block"],
           "applies_to_modes": ["solo-guitar", "chord-melody"],
@@ -204,7 +204,52 @@
           "references": [
             {
               "source": "The Wes Montgomery Guitar Folio (Hal Leonard)",
-              "citation": "Montgomery, Wes. The Wes Montgomery Guitar Folio. Hal Leonard. Posthumous transcriptions."
+              "citation": "Montgomery, Wes. The Wes Montgomery Guitar Folio. Hal Leonard, posthumous transcriptions."
+            },
+            {
+              "source": "Adrian Ingram, Wes Montgomery (Centerstream)",
+              "citation": "Ingram, Adrian. Wes Montgomery. Centerstream Publications, 2008. Biographical study with technique analysis."
+            },
+            {
+              "source": "Smokin' at the Half Note (1965)",
+              "citation": "Recorded reference: 'Four on Six,' 'No Blues' — canonical three-tier choruses."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "octave-passage-construction",
+          "name": "Octave-passage construction",
+          "summary": "Parallel octaves played between non-adjacent strings — strings 6 and 4, 5 and 3, 4 and 2, or 3 and 1 depending on position. The thumb mutes the intervening string while striking both target strings. Octave passages are melodically motivated lines, not just doubled single-note lines: pitch contour and rhythm match the surrounding tier's logic.",
+          "voicingStyleTags": ["montgomery"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["solo-guitar"],
+          "tolerance_hints": {
+            "minSoundingNotes": 2,
+            "maxMutedStrings": 4
+          },
+          "references": [
+            {
+              "source": "Steve Khan, Pat Martino: The Nature of Guitar (analysis chapter on Wes)",
+              "citation": "Khan, Steve. Analyses across multiple Wes solo transcriptions. The thumb-muting mechanism is documented technique."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "block-chord-to-octave-parallelism",
+          "name": "Block-chord-to-octave parallelism",
+          "summary": "When transitioning from the octave tier to the block-chord tier, the chord voicing places the destination note of the preceding octave passage on top. Voice-leading between adjacent block chords is typically half-step or whole-step in the top voice with parallel inner voices below — drop-2 voicings predominate because they keep the melody on the top string.",
+          "voicingStyleTags": ["montgomery", "drop-2"],
+          "playStyleTags": ["block"],
+          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "tolerance_hints": {
+            "maxStretch": 5
+          },
+          "references": [
+            {
+              "source": "The Incredible Jazz Guitar of Wes Montgomery (1960)",
+              "citation": "Recorded reference: 'D-Natural Blues' — block-chord chorus shows the octave-to-chord transition explicitly."
             }
           ],
           "example_voicing_signatures": []
@@ -212,14 +257,36 @@
         {
           "id": "thumb-attack-articulation",
           "name": "Thumb-attack articulation",
-          "summary": "Right-hand technique uses the thumb only (no plectrum, no fingerstyle multi-finger). This constrains practical voicings: block chords with bass on the lower strings are thumb-friendly; sweeps across many strings are not. Voicings get chosen partly for executability under this constraint.",
+          "summary": "Right-hand technique uses the thumb only — no plectrum and no multi-finger fingerstyle. The thumb downstrokes single notes, brushes adjacent strings for octaves, and rakes across the chord for block voicings. The resulting tone is warmer and less defined than a pick attack; the constraint also influences voicing choice — block chords with the bass on the lower strings are thumb-friendly, while sweeps across all six strings are not.",
           "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["solo-guitar", "comping"],
+          "playStyleTags": ["block", "sequential"],
+          "applies_to_modes": ["solo-guitar", "comping", "chord-melody"],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Adrian Ingram, Wes Montgomery (Centerstream)",
+              "citation": "Ingram chapter on right-hand technique — the calluses on Wes's thumb are documented in interviews."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "blues-vocabulary-in-jazz-context",
+          "name": "Blues vocabulary inside jazz repertoire",
+          "summary": "Single-note phrases pull from blues language — flat thirds, flat fifths, blues-scale-derived runs — even on tunes that aren't formally blues. The harmonic implication when these lines arrive at a block-chord destination favors altered-dominant voicings (7b9, 7#9, 7alt) and #11 colorations rather than vanilla diatonic substitutes.",
+          "voicingStyleTags": ["montgomery"],
+          "playStyleTags": ["sequential"],
+          "applies_to_modes": ["solo-guitar"],
           "tolerance_hints": {
-            "allowOpenStrings": true
+            "excludedCategories": []
           },
-          "references": []
+          "references": [
+            {
+              "source": "Riverside-era recordings (1959-1963)",
+              "citation": "Recorded reference: 'Twisted Blues,' 'West Coast Blues,' 'Mr. Walker' — blues vocabulary on jazz tunes."
+            }
+          ],
+          "example_voicing_signatures": []
         }
       ]
     },
