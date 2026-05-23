@@ -23,3 +23,9 @@ Thumbs.db
 dist/
 exports/
 chords-db-import.json
+
+# Master distillation pipeline — keep run state, LLM logs, and curated
+# outputs in the repo (the audit trail is reproducible). The full raw
+# transcript IS the book end-to-end and stays out of a public repo for
+# copyright; everything else under runs/ commits cleanly.
+pipelines/master-distillation/runs/*/raw-transcript.txt

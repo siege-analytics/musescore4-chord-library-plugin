@@ -1,0 +1,82 @@
+{
+  "quotes": [
+    {
+      "topic": "Interval definition",
+      "verbatim_quote": "A musical interval is the distance from one note (sound) to another. They may be described\n    as perfect, major, minor, diminished or augmented. The smallest existing interval is called\n    half step, which can also be called half tone or semitone; two half steps form one whole step,\n    which can be called whole tone.",
+      "why_load_bearing": "Defines interval and the half-step/whole-step vocabulary the rest of the book builds on.",
+      "page": 20
+    },
+    {
+      "topic": "Natural notes and letters",
+      "verbatim_quote": "There\n    are 12 existing notes in western music, but actually we only need 7 of them for such\n    representation. We will call them natural notes: Do, Re, Mi, Fa, Sol, La, Ti. Each one of these\n    notes are represented by the 7 Jirst letters from the alphabet:\n\n      • Do = C / Re = D / Mi = E / Fa = F / Sol = G / La = A / Ti = B",
+      "why_load_bearing": "Establishes the 12-note system, the 7 naturals, and the solfege-to-letter mapping used throughout.",
+      "page": 20
+    },
+    {
+      "topic": "Accidentals derive remaining notes",
+      "verbatim_quote": "The other 5 notes will be derived from these main 7, using what we call music accidentals,\n    which can rise or lower each note one half step.",
+      "why_load_bearing": "Explains why only 7 letter names cover 12 pitches — accidentals do the rest.",
+      "page": 20
+    },
+    {
+      "topic": "Staff definition",
+      "verbatim_quote": "Staff or Stave is the set of 5 horizontal, parallel and equidistant lines which create four spaces\nbetween themselves. Each line and each space represent a different musical pitch.",
+      "why_load_bearing": "Defines the staff's geometry — the basic surface on which all notation lives.",
+      "page": 21
+    },
+    {
+      "topic": "Clef purpose",
+      "verbatim_quote": "The Clef is a symbol that we place on the staff to indicate in which line or space the musical\nnotes should be placed.",
+      "why_load_bearing": "Defines what a clef does — anchors note names to staff positions.",
+      "page": 21
+    },
+    {
+      "topic": "Treble (G) clef",
+      "verbatim_quote": "The most famous and used Clef is called \"Treble Clef\" or also \"G\" Clef.\nIt is used for high pitched instruments such as guitar, flute, clarinet, trumpet, and soprano voice.\nNotice that the curl of the Treble Clef passes through the 2nd line, which means that it will be",
+      "why_load_bearing": "Identifies the guitar's clef and explains why the G-clef curl on line 2 names that line G.",
+      "page": 21
+    },
+    {
+      "topic": "Bass (F) clef",
+      "verbatim_quote": "For lower pich instruments and voices, such bass, trombone, tuba and bass voice, we use the \"F\"\nClef also known as the \"Bass Clef\". Notice that there are two dots between the 4th line, which\nindicates that this note is the \"F\" note. Therefore, as we can see the notes will change places",
+      "why_load_bearing": "Explains the bass clef's anchor on line 4 and why note positions differ from treble.",
+      "page": 21
+    },
+    {
+      "topic": "C clef",
+      "verbatim_quote": "This clef is called \"C\" Clef. Notice that it is placed on the 3rd line of the staff. It is used mostly\nfor voice, viola da gamba, and alto trombone.",
+      "why_load_bearing": "Introduces the C clef and its standard alto placement on the 3rd line.",
+      "page": 21
+    },
+    {
+      "topic": "Why multiple clefs",
+      "verbatim_quote": "It is important to understand that we must\n\n\n\n                  œ\nuse these 3 different clefs because they give us the possibility to write music for all instruments\n\n\n            œ œ œ\nand voices.",
+      "why_load_bearing": "Justifies the existence of three clef families — pitch range coverage across instruments.",
+      "page": 21
+    },
+    {
+      "topic": "G clef line/space notes",
+      "verbatim_quote": "G clef:                                       F clef:                                    C clef:\n    Lines: E - G - B - D - F                      Lines: G - B - D - F - A                   Lines: F - A - C - E - G\n    Spaces: F - A - C - E                         Spaces: A - C - E - G                      Spaces: G - B - D - F",
+      "why_load_bearing": "Reference table mapping lines and spaces to note names for all three clefs — direct lookup students memorize.",
+      "page": 22
+    },
+    {
+      "topic": "Clef subdivisions and positions",
+      "verbatim_quote": "1) Treble Clef on the 1st and 2nd line of the staff.\n\n\n2) C Clef on the 1st, 2nd, 3rd, 4th and 5th line of the staff.\n\n\n3) F Clef on the 3rd and 4th line of the staff.",
+      "why_load_bearing": "Enumerates the ten clef-position variants derived from the three clef types.",
+      "page": 23
+    },
+    {
+      "topic": "Popular-music clef usage",
+      "verbatim_quote": "Regardless of the many clef options, popular music usually makes use of two of them: The\nTreble Clef and the Bass Clef.",
+      "why_load_bearing": "Practical rule narrowing the working clef set for popular-music guitarists.",
+      "page": 23
+    },
+    {
+      "topic": "Grand Staff",
+      "verbatim_quote": "2) Grand Staff: Two staffs connected by a vertical line, plus one key or bracket, which\n    determines that both are played simultaneously thus creating what we call a system. This type of\n    staff is usually used by piano or harp.",
+      "why_load_bearing": "Defines the grand staff and the term system — needed when reading piano/harp scores alongside guitar.",
+      "page": 24
+    }
+  ]
+}

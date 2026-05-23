@@ -1,0 +1,40 @@
+# Per-book config for the master-distillation pipeline.
+# First validated book per #297.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-1-chord-construction"
+title = "The George Benson Method, Vol. 1 — Chord Construction / Beginning Harmony"
+# year, instrument_scope filled in once we read the front matter.
+year = ""
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf"
+needs_ocr = false
+
+[stages.s1]
+# Native PDF text extraction. pdftotext preferred; markitdown fallback.
+ocr_lang = "en"
+
+[stages.s2]
+# Per-chapter curated verbatim extraction. Local 72B for full quality.
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "qwen2.5:72b"
+
+[stages.s3]
+# Hierarchical distillation. Same model for both tiers; qwen2.5:72b is
+# strong enough for both per-chapter and book-level synthesis.
+per_chapter_model = "qwen2.5:72b"
+book_level_model = "qwen2.5:72b"
+
+[stages.s4]
+# Statement of outputs + systems-draft. Judgment-heaviest stage; 72B.
+model = "qwen2.5:72b"
+# Use _pending:<kebab> for any engine_payload.kind we're not confident
+# about — until #298 payload-kind glossary lands.
+engine_kind_policy = "pending-when-unsure"
