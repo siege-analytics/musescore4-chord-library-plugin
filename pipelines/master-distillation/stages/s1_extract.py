@@ -70,7 +70,13 @@ def _extract_per_page(pdf_path: Path) -> tuple[str, dict]:
       { "pages": [ { "n": 1, "start": 0, "length": 1234, "preview": "..." }, ... ] }
     """
     if shutil.which("pdftotext"):
-        return _extract_with_pdftotext(pdf_path)
+        raw, idx = _extract_with_pdftotext(pdf_path)
+        # Strip C0 control chars (\x00-\x08, \x0b, \x0c, \x0e-\x1f) that
+        # some PDFs leak via stylized bullet glyphs — they break JSON
+        # when faithfully copied into subagent response files. Keep
+        # \t (\x09), \n (\x0a), \r (\x0d).
+        raw = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", raw)
+        return raw, idx
     if shutil.which("markitdown"):
         return _extract_with_markitdown(pdf_path)
     raise RuntimeError(

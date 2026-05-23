@@ -1,0 +1,33 @@
+# Per-book config for the master-distillation pipeline.
+# Second book through the pipeline (Coker turned out to be scanned;
+# Bruno is digital-native with 139k characters).
+
+[master]
+id = "jimmy-bruno"
+name = "Jimmy Bruno"
+
+[work]
+id = "the-art-of-picking"
+title = "The Art of Picking"
+year = 2002
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/Jimmy-Bruno-The-Art-Of-Picking.pdf"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
