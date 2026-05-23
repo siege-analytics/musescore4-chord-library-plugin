@@ -6,7 +6,11 @@
       "id": "van-eps",
       "name": "George Van Eps",
       "lived": "1913-1998",
-      "traditions": ["chord-melody", "jazz", "swing"],
+      "traditions": [
+        "chord-melody",
+        "jazz",
+        "swing"
+      ],
       "instrument": "6-string (the 1939 Method) and later 7-string (low A; Harmonic Mechanisms, Mel Bay, 1980-82)",
       "biography": "Pianistic master of the guitar whose body of method work began with the 1939-era Epiphone-published Van Eps Method (6-string) and matured into the 3-volume Harmonic Mechanisms for Guitar (Mel Bay, 1980-1982) on the 7-string with low A. The principles below are sourced from the 6-string 1939 method (primary source verified). 7-string-specific principles from Harmonic Mechanisms (lap-piano style, independent bass counterpoint on the low A) are pending a separate research pass.",
       "principles": [
@@ -14,10 +18,18 @@
           "id": "harmonized-scale-foundation",
           "name": "Harmonized scale as foundational vocabulary",
           "summary": "Every chord-quality category in Van Eps's method begins by harmonizing the corresponding scale in triads. Major chords (Ex. 1-25) start with the harmonized major scale in triads; minor chords (Ex. 26-32) with the harmonized minor; 7th chords (Ex. 33-47) with the 7th-arpeggio scale; diminished chords (Ex. 48-82) with the harmonized diminished. The harmonized scale IS the vocabulary; voicings derive from running it through different fingerings. Practice in all 12 keys via the solfeggio system: 'Think of the tonic of every key as do.'",
-          "voicingStyleTags": ["van-eps"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -33,10 +45,18 @@
           "id": "six-fingering-string-sets",
           "name": "Six fingering forms across string sets",
           "summary": "Every chord pattern is practiced in up to six different fingerings on different string-set positions: sets of 3 (1|3, 2|3, 3|3, 4|3), sets of 4 (1|4, 2|4, 3|4), and 'broken' sets (1|B3, 2|B3, 3|B3 — sets that skip an intermediate string). The fingerings cover the entire fingerboard with the same harmonic content. The six forms of Ex. 1 cover roughly: 1st form C-up-to-F; 2nd C-to-C#(D); 3rd C-to-F; 4th Ab-to-Db(D); 5th Ab-to-E; 6th F#-to-C#. Practiced legato; finger placement is 'next-position-forming while the hand is in motion' (legato principle).",
-          "voicingStyleTags": ["van-eps"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -52,10 +72,19 @@
           "id": "outer-voice-anchor-inner-motion",
           "name": "Outer-voice anchor with inner voice motion",
           "summary": "Hold outer voices (top or bass) while inner voices move — Van Eps's central polyphonic device. Documented across multiple exercises: Ex. 14 ('the upper melodic line is in half notes while the two lower voices are in whole notes'); Ex. 20 (top quarter notes, bottom whole notes); Ex. 57 ('the top line is in quarter notes and the harmonic structure is in whole notes'); Ex. 60-65 ('the moving voice is in the middle of the structure'); Ex. 82 ('the third and fourth fingers play the two upper voices in quarter notes while the first and second fingers sustain the lower voices in whole notes'). Pre-figures the 'lap piano' / Harmonic Mechanisms aesthetic.",
-          "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -71,10 +100,19 @@
           "id": "chromatic-tenths-with-middle-voice",
           "name": "Chromatic 10ths with middle voice motion",
           "summary": "Specific stretching-exercise mechanic from Ex. 37: hold a 10th interval between outer voices while the middle voice moves chromatically. Van Eps's own description: 'the middle note remains the same while the other two voices move around the middle voice in chromatic tenths.' Uses a 'broken set of three strings' (one string between the two outer voices is skipped). Each form is then transposed to all 12 keys.",
-          "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -90,10 +128,20 @@
           "id": "pulsation-picking-top-voice-emphasis",
           "name": "Pulsation picking with top-voice emphasis",
           "summary": "Right-hand technique: pick passes over each string with 'a slight kick, which is more of a pulsation' rather than picking each note individually. Wrist axis is positioned directly over the highest note 'as the top note should predominate.' Built-in dynamic stratification across a triad: '...the D string will sound softly, the G string a little louder, and the B string will be the loudest, which is dynamically correct.' Inside-string playing uses the next-higher string as a pick-stop on downstrokes.",
-          "voicingStyleTags": ["van-eps"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar", "comping"],
-          "applies_to_tunings": ["standard"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar",
+            "comping"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -107,10 +155,17 @@
           "id": "finger-flattening-fifth-finger",
           "name": "Finger flattening for added notes ('fifth finger')",
           "summary": "Left-hand technique: deliberately flatten the first joint of a finger from its arched position to produce an additional note on a neighboring string, classified as a 'fifth finger' addition. Introduced in Ex. 16 ('the breaking, or flattening from an arched position, of the first joint of the fingers'); difficult because the flattening finger must continue to sustain another note during the process. Practiced 'with a snap,' rhythmically reliable. Voicings designed with this technique fit one more note than the four fingers alone could reach.",
-          "voicingStyleTags": ["van-eps"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -124,10 +179,17 @@
           "id": "string-deadening-for-open-voicings",
           "name": "String deadening for open voicings",
           "summary": "Left-hand technique for open voicings on non-adjacent strings: the pick strikes a string while a left-hand finger touches (deadens) it to silence the note. Ex. 58 documents the mechanic precisely: 'the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string. (i.e. The pick strikes that string, but the left hand finger does not let it sound clearly.)' Enables voicings where the pick can sweep cleanly across all strings while only the intended notes ring.",
-          "voicingStyleTags": ["van-eps"],
+          "voicingStyleTags": [
+            "van-eps"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
-          "applies_to_tunings": ["standard"],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "applies_to_tunings": [
+            "standard"
+          ],
           "tolerance_hints": {
             "allowOpenStrings": true
           },
@@ -145,7 +207,14 @@
       "id": "ted-greene",
       "name": "Ted Greene",
       "lived": "1946-2005",
-      "traditions": ["chord-melody", "jazz", "baroque", "blues", "gospel", "country"],
+      "traditions": [
+        "chord-melody",
+        "jazz",
+        "baroque",
+        "blues",
+        "gospel",
+        "country"
+      ],
       "instrument": "6-string (low E)",
       "biography": "Los Angeles teacher and player whose lessons and the openly-distributed tedgreene.com archive reshaped how guitarists think about four-note voicings, voice-leading, and the relationship between melody and harmony. Authored Chord Chemistry (1971) and Modern Chord Progressions (1973). His V-System — a taxonomy of 14 voicing groups across 43 unique four-note chord qualities — is the canonical Greene framework.",
       "principles": [
@@ -153,9 +222,16 @@
           "id": "v-system-voicing-groups",
           "name": "V-System voicing groups",
           "summary": "Four-note voicings are classified into 14 groups (V-1 through V-14) ordered from most compact to most spread: V-1 is the closest cluster, V-14 the widest, with V-13/V-14 less spread than V-11/V-12. Any chord quality (43 unique four-note qualities) can be voiced in any V-group; cycling through them gives every distinct way to spell the same chord. The framework is taxonomic, not prescriptive — Greene's pragmatic note: 'use logic to generate possibilities but don't be so strict that you lose [practical results].'",
-          "voicingStyleTags": ["greene", "greene-v-system"],
+          "voicingStyleTags": [
+            "greene",
+            "greene-v-system"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -172,9 +248,17 @@
           "id": "fixed-soprano-tour",
           "name": "Fixed soprano tour",
           "summary": "Hold the top voice (soprano) constant on a chosen melody note; cycle through all 14 V-System voicing groups to reveal every way Greene's system harmonizes underneath that note. For chord-melody work this is the engine: the melody fixes the soprano; the V-System provides the harmonic exploration. Hober: 'in a single line of music notation he had concisely described and implied the entire V-System.'",
-          "voicingStyleTags": ["greene", "greene-v-system"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "voicingStyleTags": [
+            "greene",
+            "greene-v-system"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -191,9 +275,16 @@
           "id": "voice-leading-inner-motion",
           "name": "Voice leading through inner motion",
           "summary": "Melody stays on top while inner voices (alto, tenor) move stepwise between chord changes. The bass anchors, the top voice carries the melody, and the inner voices do the harmonic work — producing the sense of multiple independent lines rather than block chords. The V-System's 'Conversion' method (Welcome chapter index, item 20) is the formal device for moving between V-groups while preserving voice-leading economy.",
-          "voicingStyleTags": ["greene"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "voicingStyleTags": [
+            "greene"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -214,9 +305,14 @@
           "id": "ii7-over-ivmaj7-substitution",
           "name": "ii7 preferred over IVmaj7 for the IV function",
           "summary": "Greene's 1974 manuscript on ii7-V7-I documents the historical/aural preference for ii7 over IVmaj7 in the IV-V-I cadence: IVmaj7's root-to-7 major-7 interval is strident, while ii7's minor-7 interval is mild. The substitution defines the canonical jazz ii7-V7-I cadence; voicings supporting the ii7-V7-I motion (smooth root motion by 5ths, common-tone voice leading) are preferred. Minor variant: iiø7 - V(7) - i.",
-          "voicingStyleTags": ["greene"],
+          "voicingStyleTags": [
+            "greene"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["comping", "chord-melody"],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -230,9 +326,17 @@
           "id": "sequential-articulation",
           "name": "Sequential articulation",
           "summary": "Voicings are played with right-hand fingerstyle or hybrid-pick articulation rather than strummed — bass plucked first, inner voices in sequence, melody on top. The pluck order is part of the music; strumming the same shape produces a different effect. Closely associated with Greene's harp-harmonics technique (also Lenny Breau), which he treasured and lamented as overexposed (1995 letter).",
-          "voicingStyleTags": ["greene"],
-          "playStyleTags": ["sequential", "hybrid-pick"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "voicingStyleTags": [
+            "greene"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "hybrid-pick"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -252,7 +356,11 @@
       "id": "joe-pass",
       "name": "Joe Pass",
       "lived": "1929-1994",
-      "traditions": ["jazz", "bebop", "chord-melody"],
+      "traditions": [
+        "jazz",
+        "bebop",
+        "chord-melody"
+      ],
       "instrument": "6-string",
       "biography": "Bebop guitarist whose solo recordings (Virtuoso series, 1973-1983) reset expectations for unaccompanied jazz guitar. Combined walking bass lines with chord stabs and single-note runs from held chord positions.",
       "principles": [
@@ -260,9 +368,16 @@
           "id": "walking-bass-plus-chord-stabs",
           "name": "Walking bass plus chord stabs",
           "summary": "Bass walks on every beat (chord tones, passing notes between chord tones, chord-extension notes, tritone approaches to the root); chord 'stabs' land on off-beats with 2-3 note voicings rather than full block chords. The texture blends 'walking bass, inner voices, and lead lines into a single texture.' Voicings must keep the bass string accessible.",
-          "voicingStyleTags": ["pass"],
-          "playStyleTags": ["sequential", "hybrid-pick"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "pass"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "hybrid-pick"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "requireRootInBass": true,
             "minSoundingNotes": 2
@@ -284,9 +399,19 @@
           "id": "drop-2-and-drop-3-chord-melody",
           "name": "Drop-2 and drop-3 chord-melody harmonization",
           "summary": "Pass's typical chord-melody technique harmonizes the melody with drop-2 and drop-3 voicings. Drop-2 keeps melody on top of a 4-note voicing on adjacent strings; drop-3 spreads the voicing wider with a 'skip' in the middle. The melody is on the top string of the voicing; the chord tones fill in below.",
-          "voicingStyleTags": ["pass", "drop-2", "drop-3"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "voicingStyleTags": [
+            "pass",
+            "drop-2",
+            "drop-3"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -303,9 +428,14 @@
           "id": "harmonic-restraint",
           "name": "Harmonic restraint — don't reharmonize every note",
           "summary": "Pass's published advice: 'You don't need a chord for every note' — add color through alterations rather than constant reharmonization. On ii-V-I, he often bypasses the ii ('forget the II — focus on the V'). The aesthetic privileges voice-leading economy over harmonic density. 'You don't have to play bass, chord, melody all the time — dip in and out between all three.'",
-          "voicingStyleTags": ["pass"],
+          "voicingStyleTags": [
+            "pass"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 2
           },
@@ -322,9 +452,16 @@
           "id": "runs-from-chord-shapes",
           "name": "Single-note runs from chord shapes",
           "summary": "Improvise melodically by playing single notes drawn from the chord shape currently held. The held shape acts as a position anchor; soloing fingers move between the chord tones without requiring a separate scale framework. Underpins his single-note-to-chord transitions in solo arrangements.",
-          "voicingStyleTags": ["pass"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "pass"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -342,9 +479,18 @@
           "id": "six-chord-forms-position-system",
           "name": "Six Chord Forms as positional substrate",
           "summary": "Pass's framework divides the fingerboard into six overlapping positional regions named for the chord shape that anchors each one — C, A, G, E, D, and Intermediate Forms — each spanning roughly five to six frets. Choosing a voicing is therefore also choosing a position: the player picks the Form whose chord shape lets the melody, bass, and inner voices sit inside one hand position. This is the spatial substrate that makes the walking-bass-plus-chord-stabs and runs-from-chord-shapes principles physically executable.",
-          "voicingStyleTags": ["pass"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
+          "voicingStyleTags": [
+            "pass"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody",
+            "comping"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -358,9 +504,17 @@
           "id": "three-to-four-note-voicings-with-voice-leading",
           "name": "Three- to four-note voicings linked by voice-leading",
           "summary": "For unaccompanied solo work Pass deliberately reduces voicings to three or four sounding notes and connects successive chords through common tones or stepwise inner-voice motion. Full six-string block chords are avoided as the default. The principle complements drop-2/drop-3 chord-melody — drop voicings supply the shape, this principle constrains the density and the linkage between adjacent chords. Engine signal: floor voicings at three sounding notes; rank candidates that share tones with the previous voicing higher.",
-          "voicingStyleTags": ["pass"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "pass"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -376,9 +530,17 @@
           "id": "dominant-alteration-substitution-lattice",
           "name": "Dominant alteration and tritone substitution lattice",
           "summary": "A written 'simple' dominant chord licenses an entire family of altered and extended substitutes — 9, 13, 9(6), 11, +9, b9, +5, b5 — plus the tritone substitute and its altered family. In the *Joe Pass Guitar Method* this is stated as an explicit rule for the whole 'Blues for Nina / Nobs / Alison / Grete' set: any of these alterations 'may be substituted for simple Dominants.' On Joe's Blues, plain G7 expands to G13, G9, G9(6), G7+9, G7(b9); E7 expands to E+9/Em9/E13/E9 or the tritone family Bb9/Bb+9/Bbm9/Bb13. Engine signal: when ranking voicings against a notated dominant, the altered/extended family and the tritone substitute should both be eligible candidates carrying Pass's style tag.",
-          "voicingStyleTags": ["pass"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
+          "voicingStyleTags": [
+            "pass"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody",
+            "comping"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -394,7 +556,12 @@
       "id": "martin-taylor",
       "name": "Martin Taylor",
       "lived": "1956-",
-      "traditions": ["jazz", "chord-melody", "solo-guitar", "fingerstyle"],
+      "traditions": [
+        "jazz",
+        "chord-melody",
+        "solo-guitar",
+        "fingerstyle"
+      ],
       "instrument": "6-string",
       "biography": "Scottish virtuoso whose solo fingerstyle approach extends the Django Reinhardt and Joe Pass traditions with greater fluidity in thumb-bass / chord / melody independence. Played a decade with Stéphane Grappelli; authored Solo Jazz Guitar (Mel Bay), Single Note Soloing (Mel Bay), the Fingerstyle Jazz Guitar DVD with Grossman's Guitar Workshop, and runs the Martin Taylor Guitar Academy with extensive online lessons. Cites Bill Evans and Art Tatum as keyboard influences for melody-bass separation.",
       "principles": [
@@ -402,9 +569,16 @@
           "id": "alternating-thumb-bass",
           "name": "Alternating thumb-bass strokes",
           "summary": "The right-hand thumb alternates between the 6th and 5th strings (or 6th/4th depending on chord) to maintain continuous bass support without interrupting melodic flow. Demonstrated in Taylor's '4 Bar 4 Shapes' etude: thumb keeps a walking pulse while the fingers play melody and chord stabs above. The thumb is mechanically independent of the fingers — neither waits for the other.",
-          "voicingStyleTags": ["taylor"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "taylor"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "requireRootInBass": true,
             "minSoundingNotes": 3
@@ -422,9 +596,15 @@
           "id": "melody-bass-separation",
           "name": "Melody-bass separation (Tatum/Evans-derived)",
           "summary": "Clear textural separation between melody (top voice) and bass (thumb), with chord work as a third middle layer. Taylor cites Bill Evans and Art Tatum as keyboard influences for this approach — the goal is to sound like two players, not one. Distinguishes itself from Django by greater independence between layers rather than Django's parallel-voicings style.",
-          "voicingStyleTags": ["taylor"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "taylor"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -441,9 +621,16 @@
           "id": "internal-dynamics",
           "name": "Internal dynamics across voices",
           "summary": "Taylor's own term: 'internal dynamics' — don't treat every note the same. Bass gets a specific touch (often softer, percussive); melody comes out louder; chord stabs sit in the middle. Voicings are selected partly for whether they support this dynamic stratification — voicings that put bass on a louder open string aren't useful if the bass needs to recede.",
-          "voicingStyleTags": ["taylor"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "taylor"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -458,9 +645,15 @@
           "id": "natural-and-artificial-harmonics",
           "name": "Natural and artificial harmonics in arrangement",
           "summary": "Taylor incorporates both natural harmonics (open strings at fret-12 / fret-7 nodes) and artificial harmonics (right-hand harp-harmonic technique, related to Chet Atkins / Lenny Breau) as melodic colors. Voicings designed to terminate on or transition to a harmonic exploit the upper-string register that fretted notes can't access.",
-          "voicingStyleTags": ["taylor"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "taylor"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -477,7 +670,12 @@
       "id": "wes-montgomery",
       "name": "Wes Montgomery",
       "lived": "1923-1968",
-      "traditions": ["jazz", "bebop", "hard-bop", "blues"],
+      "traditions": [
+        "jazz",
+        "bebop",
+        "hard-bop",
+        "blues"
+      ],
       "instrument": "6-string (Gibson L-5 CES)",
       "biography": "Self-taught Indianapolis guitarist whose innovations after 1959 reshaped jazz guitar: thumb-attack right hand, parallel-octave melodic statements, and block-chord chorus climaxes built directly from melodic shape. Active recording career 1959-1968 (Riverside, Verve, A&M) with canonical statements on Smokin' at the Half Note (1965) and The Incredible Jazz Guitar of Wes Montgomery (1960). No instructional book of his own; documentation is via transcription collections and biographical studies.",
       "principles": [
@@ -485,9 +683,16 @@
           "id": "three-tier-chorus-development",
           "name": "Three-tier chorus development",
           "summary": "A solo arcs through three distinct textural tiers: single-note lines (statement), parallel octaves (intensification), block-chord harmonization (climax). Each tier carries the same melodic logic; the chord tier is melody-led, not chord-led — the top voice of the chord IS the melody, with chord tones filled in below. The arc is documented across nearly every extended Wes solo from 'West Coast Blues' onward.",
-          "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "montgomery"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -511,9 +716,15 @@
           "id": "octave-passage-construction",
           "name": "Octave-passage construction",
           "summary": "Parallel octaves played between non-adjacent strings — strings 6 and 4, 5 and 3, 4 and 2, or 3 and 1 depending on position. The thumb mutes the intervening string while striking both target strings. Octave passages are melodically motivated lines, not just doubled single-note lines: pitch contour and rhythm match the surrounding tier's logic.",
-          "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "montgomery"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 2,
             "maxMutedStrings": 4
@@ -530,9 +741,17 @@
           "id": "block-chord-drop-2-predominance",
           "name": "Block-chord drop-2 predominance",
           "summary": "Wes's block-chord soloing uses drop-2 voicings as the primary vehicle — voicings on adjacent strings with the second-from-top voice dropped an octave. The melody lives on the top string of the voicing; chord tones fill in below. Voice-leading between adjacent block chords is typically smooth in the top voice with parallel inner motion.",
-          "voicingStyleTags": ["montgomery", "drop-2"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "montgomery",
+            "drop-2"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "maxStretch": 5
           },
@@ -554,9 +773,18 @@
           "id": "thumb-attack-articulation",
           "name": "Thumb-attack articulation",
           "summary": "Right-hand technique uses the thumb only — no plectrum and no multi-finger fingerstyle. The thumb downstrokes single notes, brushes adjacent strings for octaves, and rakes across the chord for block voicings. The resulting tone is warmer and less defined than a pick attack; the constraint also influences voicing choice — block chords with the bass on the lower strings are thumb-friendly, while sweeps across all six strings are not.",
-          "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["solo-guitar", "comping", "chord-melody"],
+          "voicingStyleTags": [
+            "montgomery"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "comping",
+            "chord-melody"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -570,9 +798,18 @@
           "id": "upper-structure-triad-substitution",
           "name": "Upper-structure triad substitution",
           "summary": "Over a ii7-V7 (or single dominant), Wes voices an upper-structure chord that omits the root: e.g., a DbMaj7 shape over Bbm7 (the 3-5-9-11), then the same DbMaj7 shape carries forward over the following Eb7 (becoming b7-9-sus4-13). Wes treats the entire ii-V interaction as a unified 'Db major field,' reducing cognitive load while generating sophisticated harmonic color. Lines and chord stabs both draw from this field — single-note phrases imply complex harmony.",
-          "voicingStyleTags": ["montgomery"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody", "comping"],
+          "voicingStyleTags": [
+            "montgomery"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody",
+            "comping"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3,
             "requireRootInBass": false
@@ -597,7 +834,12 @@
       "id": "lenny-breau",
       "name": "Lenny Breau",
       "lived": "1941-1984",
-      "traditions": ["jazz", "country", "flamenco", "classical-influenced"],
+      "traditions": [
+        "jazz",
+        "country",
+        "flamenco",
+        "classical-influenced"
+      ],
       "instrument": "6-string and 7-string (high A)",
       "biography": "Canadian guitarist (1941-1984) who synthesized jazz, country, flamenco, folk, and classical idioms. Renowned for right-hand finger independence — bass, chord, and melody as three simultaneously moving voices — and for taking Chet Atkins's harp-harmonic technique to unprecedented levels. Later in his career played a custom 7-string with a high A tuned two octaves above the 5th string. Cited as a primary influence by Bill Frisell, Pat Metheny, and many others.",
       "principles": [
@@ -605,9 +847,16 @@
           "id": "three-independent-voices",
           "name": "Three independent voices on six strings",
           "summary": "Bass, chord, and melody played simultaneously via fingerstyle, with right-hand finger independence treating each voice on its own timeline. Breau implied 'two guitarists playing together at times' (Guitar World) — left-hand fretting and right-hand articulation both required mechanical independence between thumb (bass) and fingers (chord + melody). The chord voice is often 2-3 notes (not a full block) to leave room for the bass and melody.",
-          "voicingStyleTags": ["breau"],
-          "playStyleTags": ["sequential", "block"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "breau"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "block"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -629,9 +878,15 @@
           "id": "harp-harmonics-cascades",
           "name": "Harp-harmonics cascades (Atkins-derived)",
           "summary": "Artificial-harmonic technique developed by Chet Atkins and brought to a higher level by Breau. Right hand: thumb or index finger touches a node 12 frets above the fretted position while another finger (typically ring) plucks the string, producing a harmonic at that fretted note's pitch. Cascading between fretted notes and harmonics creates harp-like textures with notes ringing across non-adjacent strings.",
-          "voicingStyleTags": ["breau"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar"],
+          "voicingStyleTags": [
+            "breau"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -651,9 +906,16 @@
           "id": "two-note-bass-implied-harmony",
           "name": "Implied harmony from two-note bass",
           "summary": "Breau's signature device: imply a full chord from just two low-register notes (often root + 7th, or root + 3rd, or 3rd + 7th — the guide tones), leaving the upper strings free for melody. The voicing is minimal in the bass register but the implication is rich — the listener fills in the missing voices. Predates and underpins his three-voice approach when bass is held to two notes only.",
-          "voicingStyleTags": ["breau"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["solo-guitar", "chord-melody"],
+          "voicingStyleTags": [
+            "breau"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 2,
             "maxMutedStrings": 4
@@ -671,9 +933,13 @@
           "id": "high-a-seven-string",
           "name": "7-string with high A (later career)",
           "summary": "Late in his career, Breau played a custom 7-string with a high A tuned two octaves above the 5th string. The high A extends melody range above the 1st-string E without retuning, allowing piano-like simultaneous bass + chord + high melody — Breau's stated goal was to 'replicate on guitar a pianist's capacity for simultaneous linear and chordal development.' Distinct from Van Eps's 7-string (low A); Breau adds at the TOP, Van Eps at the bottom.",
-          "voicingStyleTags": ["breau"],
+          "voicingStyleTags": [
+            "breau"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["solo-guitar"],
+          "applies_to_modes": [
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -690,7 +956,11 @@
       "id": "jim-hall",
       "name": "Jim Hall",
       "lived": "1930-2013",
-      "traditions": ["jazz", "cool-jazz", "post-bop"],
+      "traditions": [
+        "jazz",
+        "cool-jazz",
+        "post-bop"
+      ],
       "instrument": "6-string",
       "biography": "Influential jazz comper and soloist (1930-2013) whose voicings emphasize space, fourths, and conversational interaction. Studied composition and arrangement formally; recordings with Bill Evans, Sonny Rollins, Paul Desmond, and Art Farmer defined a quieter, more dialogic approach to jazz guitar accompaniment. Authored Exploring Jazz Guitar (Hal Leonard) and Jazz Guitar Environments (1994).",
       "principles": [
@@ -698,9 +968,15 @@
           "id": "guide-tone-voicings",
           "name": "Guide-tone (3 and 7) voicings",
           "summary": "Hall's comping foundation: 3rd and 7th of the chord on the middle strings, often as two-note voicings or grace-noted into fuller shapes. Guide tones imply the harmony's quality (major/minor/dominant) and resolve smoothly between adjacent chords with minimal motion. Foundation for the rest of the Hall vocabulary — fuller voicings layer above the guide tones.",
-          "voicingStyleTags": ["hall"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["comping"],
+          "voicingStyleTags": [
+            "hall"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "comping"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 2
           },
@@ -722,9 +998,16 @@
           "id": "fourth-stacks-and-open-voicings",
           "name": "Stacked fourths and open voicings",
           "summary": "Hall's signature 'fourths' sound: voicings built from stacked perfect fourths rather than triadic thirds — beautiful and harmonically ambiguous, doesn't commit to a single tonality. Often complemented with bass notes for grounding and counter-melodies on top. Hall avoids root-position triads; open voicings with wide intervals between adjacent voices keep the register wide.",
-          "voicingStyleTags": ["hall"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["comping", "chord-melody"],
+          "voicingStyleTags": [
+            "hall"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -745,9 +1028,15 @@
           "id": "space-and-implied-harmony",
           "name": "Space and implied harmony",
           "summary": "Hall's comping deliberately leaves space — fewer notes per voicing (often 2-3), strategic silences. The voicing's job is to imply the chord, not exhaustively spell it. This works as 'a second part in the arrangement rather than just filling harmonic space' (jazzguitar.be) — the comp is a melodic line as much as a harmonic support.",
-          "voicingStyleTags": ["hall"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["comping"],
+          "voicingStyleTags": [
+            "hall"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "comping"
+          ],
           "tolerance_hints": {
             "maxMutedStrings": 4,
             "minSoundingNotes": 2
@@ -765,9 +1054,17 @@
           "id": "small-motifs-and-melody-on-top",
           "name": "Small motifs with melody on top of comp",
           "summary": "Even in comping, Hall plays small melodic motifs on the top strings above the guide-tone middle voices. The result is a layered texture: harmonic support in the middle, conversational melody on top. Voicings are chosen to free up the top 1-2 strings for this motivic melody.",
-          "voicingStyleTags": ["hall"],
-          "playStyleTags": ["block", "sequential"],
-          "applies_to_modes": ["comping", "chord-melody"],
+          "voicingStyleTags": [
+            "hall"
+          ],
+          "playStyleTags": [
+            "block",
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 3
           },
@@ -786,7 +1083,11 @@
       "id": "johnny-smith",
       "name": "Johnny Smith",
       "lived": "1922-2013",
-      "traditions": ["jazz", "cool-jazz", "standards"],
+      "traditions": [
+        "jazz",
+        "cool-jazz",
+        "standards"
+      ],
       "instrument": "6-string",
       "biography": "Master of close-voiced chord-melody (1922-2013). His 1952 'Moonlight in Vermont' (Royal Roost) became a template for the genre — tight closed voicings that 'are a finger stretch on guitar' and 'pianistic' in feel. Authored the Johnny Smith Approach to Guitar (Mel Bay). His playing combines closed-position chord voicings with 'rapidly ascending lines... more diatonic than chromatically-based' (Django-like but diatonic).",
       "principles": [
@@ -794,9 +1095,15 @@
           "id": "tight-closed-voicings",
           "name": "Tight closed voicings",
           "summary": "Closely-voiced chord-melody — all four voices within an octave, often within a 4-fret span. Produces a unified vertical sound rather than a wide-spread texture. The voicings are 'a finger stretch on guitar' precisely because pianistic close-position spelling doesn't lay out under-the-hand on a guitar fretboard; Smith made them work through deliberate left-hand mechanics.",
-          "voicingStyleTags": ["smith"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["chord-melody"],
+          "voicingStyleTags": [
+            "smith"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "maxStretch": 4,
             "minSoundingNotes": 4
@@ -818,9 +1125,15 @@
           "id": "pianistic-wide-stretch",
           "name": "Pianistic wide-stretch chord voicings",
           "summary": "Smith's voicings cover 'a large section of real estate on the guitar neck' — his other signature alongside close voicings is the wide-stretch chord where adjacent voices are placed across non-adjacent strings or wider fret spans for piano-like sonority. The two approaches (tight closed AND wide stretch) coexist; arrangements move between them depending on which sonority the melody calls for.",
-          "voicingStyleTags": ["smith"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["chord-melody"],
+          "voicingStyleTags": [
+            "smith"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "chord-melody"
+          ],
           "tolerance_hints": {
             "maxStretch": 7,
             "minSoundingNotes": 4
@@ -838,9 +1151,16 @@
           "id": "diatonic-melodic-lines",
           "name": "Diatonic single-note lines (Django-derived but diatonic)",
           "summary": "Smith's single-note playing inherits Django Reinhardt's rapid-ascending-line aesthetic but stays more diatonically rooted, less chromatically-driven than bebop vocabulary. The diatonicism makes the lines blend smoothly into the close-voiced chord-melody context — chromatic interpolations would clash with the close diatonic stack.",
-          "voicingStyleTags": ["smith"],
-          "playStyleTags": ["sequential"],
-          "applies_to_modes": ["chord-melody", "solo-guitar"],
+          "voicingStyleTags": [
+            "smith"
+          ],
+          "playStyleTags": [
+            "sequential"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -857,7 +1177,10 @@
       "id": "jody-fisher",
       "name": "Jody Fisher",
       "lived": "1957-",
-      "traditions": ["jazz", "pedagogical"],
+      "traditions": [
+        "jazz",
+        "pedagogical"
+      ],
       "instrument": "6-string",
       "biography": "Educator (1957-) whose Alfred Music series — Complete Jazz Guitar Method (Beginning / Intermediate / Mastering), Jazz Guitar Harmony, Chord Tone Soloing — systematized jazz guitar study for generations of self-taught players. Fisher's contribution is pedagogical structure rather than distinctive personal style: he codified the standard voicing vocabulary (drop-2, drop-3, extended harmonies, altered chords) into an ordered curriculum and provided 'hundreds of chord voicings and improvisation ideas' across the series.",
       "principles": [
@@ -865,9 +1188,18 @@
           "id": "pedagogical-voicing-taxonomy",
           "name": "Pedagogical voicing taxonomy",
           "summary": "Fisher categorizes voicings systematically for teaching: drop-2 (drop the second-from-top from a close-position stack), drop-3 (drop the third-from-top), abbreviated voicings, extended-harmony voicings (9ths/11ths/13ths), altered-chord formulas. The taxonomy isn't novel — it's the standard pedagogical framework — but Fisher's curriculum-builder organization is what makes it teachable to self-learners.",
-          "voicingStyleTags": ["fisher", "drop-2", "drop-3"],
-          "playStyleTags": ["block"],
-          "applies_to_modes": ["chord-melody", "comping"],
+          "voicingStyleTags": [
+            "fisher",
+            "drop-2",
+            "drop-3"
+          ],
+          "playStyleTags": [
+            "block"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping"
+          ],
           "tolerance_hints": {
             "minSoundingNotes": 4
           },
@@ -889,9 +1221,15 @@
           "id": "etude-and-song-driven-practice",
           "name": "Etude- and song-driven practice methodology",
           "summary": "Fisher's pedagogical structure pairs every new concept (chord type, voicing family, substitution rule) with concrete etudes AND songs that exercise it. The principle for voicing-selection: a voicing is properly learned when it's been used in BOTH an abstract exercise (etude) and a musical context (song). Carries into the plugin domain as a preference for voicings that the user has explicit musical context for, not just position-tabular acquaintance.",
-          "voicingStyleTags": ["fisher"],
+          "voicingStyleTags": [
+            "fisher"
+          ],
           "playStyleTags": [],
-          "applies_to_modes": ["chord-melody", "comping", "solo-guitar"],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "solo-guitar"
+          ],
           "tolerance_hints": {},
           "references": [
             {
@@ -901,6 +1239,711 @@
             }
           ],
           "example_voicing_signatures": []
+        }
+      ]
+    },
+    {
+      "id": "benson",
+      "name": "George Benson",
+      "lived": "1943-",
+      "traditions": [
+        "jazz",
+        "soul-jazz",
+        "hard-bop",
+        "r&b"
+      ],
+      "instrument": "6-string",
+      "biography": "Jazz guitarist and vocalist whose recording career spans from the Jack McDuff trio (early 1960s) through the soul-jazz crossover era of Breezin' (1976) to the vocal-pop work that defined his commercial peak. Originally trained as a bebop single-line player, Benson's harmonic vocabulary draws on tertian chord construction, the modal-substitution catalog of the natural-major harmonic field, and the chromatic color scales (harmonic minor, melodic minor, harmonic major) layered over diatonic progressions. The seven-volume George Benson Method (Jupiter Musical Group, 2019, co-authored with Peter Farrell) is the canonical written distillation of his playing approach. Vol. 1 (Chord Construction & Beginning Harmony) is the foundation; Vols. 2-7 build on it through advanced harmony, technique, approach tones, melodic-minor world, the Giant Lines, and the blues.",
+      "works": [
+        {
+          "id": "method-vol-1-chord-construction",
+          "title": "The George Benson Method, Vol. 1 — Chord Construction & Beginning Harmony",
+          "year": 2019,
+          "instrument_scope": "6-string",
+          "summary": "Vol. 1 is a strict bottom-up curriculum that moves from notation literacy to a working theory of diatonic harmony on the guitar. Chapters 1-3 establish notational vocabulary, the diatonic/chromatic interval system, and the Circle of Fourths/Fifths as the system of key relationships. Chapter 4 — the densest chapter — constructs the chord universe by tertian stacking (Triads, Tetrads, Extended Chords). Chapters 5-6 organize those chords into harmonic fields and the seven modes and prescribe how to practice them. Chapter 7 extends the field idea to Harmonic Minor, Melodic Minor, and Harmonic Major as coloristic devices layered over existing chords rather than as progression engines. The book's load-bearing thesis: the fretboard is a matrix to be visualized chord-first, organized into four root-string zones (6th/5th/4th/3rd-strings, the last only for triads), anchored by bass-note Guide Notes.",
+          "references": [
+            {
+              "source": "Benson, George and Peter Farrell. The George Benson Method, Vol. 1 — Chord Construction & Beginning Harmony. Jupiter Musical Group Ltd., 2019.",
+              "citation": "319 PDF pages; book pages 1-292. Vol. 1 of a 7-volume series."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-1-chord-construction:fretboard-matrix",
+              "name": "Fretboard-as-Matrix Visualization System",
+              "summary": "Benson's load-bearing organizing system: the fretboard is a matrix to be navigated chord-first, with arpeggios, scales, and phrases derived from chord knowledge rather than the reverse. The Root splits the fretboard into left and right sides, the layout repeats at the 12th fret, and two Guide Notes on the 5th and 6th strings serve as the Root reference for every interval and chord shape. Chord shapes are organized into four root-string zones (6th, 5th, 4th, and 3rd-string for triads only). A foundational methodological commitment runs through Chapters 6 and 7: locate the bass-note root on the 5th and 6th strings first, and defer 4th-string voicings until those are mastered. The book also prescribes a Study Devices practice protocol (one key at a time, always with a rhythmic groove, mastery before key changes, 6th/5th-string voicings before 4th-string ones) as a practice prescription that surrounds the system rather than functioning as a voicing-engine rule.",
+              "members": [
+                {
+                  "id": "zone-6th-string",
+                  "name": "6th-String Root Zone",
+                  "summary": "Chord shapes anchored to a root on the low-E (6th) string."
+                },
+                {
+                  "id": "zone-5th-string",
+                  "name": "5th-String Root Zone",
+                  "summary": "Chord shapes anchored to a root on the A (5th) string."
+                },
+                {
+                  "id": "zone-4th-string",
+                  "name": "4th-String Root Zone",
+                  "summary": "Chord shapes anchored to a root on the D (4th) string; deferred until 6th/5th-string fluency."
+                },
+                {
+                  "id": "zone-3rd-string",
+                  "name": "3rd-String Root Zone (triads only)",
+                  "summary": "Triad-only zone anchored on the G string."
+                },
+                {
+                  "id": "guide-notes",
+                  "name": "Guide Notes (5th and 6th strings)",
+                  "summary": "Memorized natural-note anchors that serve as the Root reference for every interval and chord shape."
+                },
+                {
+                  "id": "octave-mirror",
+                  "name": "12th-Fret Octave Mirror",
+                  "summary": "The fretboard layout repeats at the 12th fret, allowing octave-equivalent transfer of any shape."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "bass-note-visualization",
+                  "name": "Visualization via Bass Note",
+                  "summary": "Anchor chord study to roots on the 5th and 6th strings rather than to scale shapes; move between zones by relocating the bass root.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Visualization via bass note",
+                      "quote_excerpt": "anchors chord study to roots on the 5th and 6th strings"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Universal fretboard-visualization rule",
+                      "quote_excerpt": "locate the chord's bass-note root on the 5th and 6th strings only"
+                    }
+                  ]
+                },
+                {
+                  "id": "defer-4th-string-voicings",
+                  "name": "Defer 4th-String Voicings Until 6th/5th Mastery",
+                  "summary": "Master 6th- and 5th-string voicings before moving traversal into the 4th-string zone.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Study Devices protocol",
+                      "quote_excerpt": "6th/5th-string voicings before 4th-string ones"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Universal fretboard-visualization rule",
+                      "quote_excerpt": "4th-string chords deferred until comfort"
+                    }
+                  ]
+                },
+                {
+                  "id": "twelfth-fret-mirror",
+                  "name": "12th-Fret Octave Mirror",
+                  "summary": "Any shape can be relocated by the 12-fret octave repeat as a position shift.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Spatial framework",
+                      "quote_excerpt": "the fretboard repeats at the 12th fret"
+                    }
+                  ]
+                },
+                {
+                  "id": "proximity-chord-selection",
+                  "name": "Proximity-Based Chord Selection",
+                  "summary": "When moving between chords, prefer voicings close to one another on the fretboard.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Study devices",
+                      "quote_excerpt": "choosing chords close to one another for proximity"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "shapes-with-intervals",
+                  "name": "Learn Shapes and Intervals Together",
+                  "summary": "Shapes and intervals must be learned as a single unit, anchored by the two Guide Notes that serve as the Root reference.",
+                  "engine_payload": {
+                    "kind": "_pending:shapes-with-intervals-coupling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Shapes vs intervals warning",
+                      "quote_excerpt": "shapes and intervals must be learned together"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-1-chord-construction:chord-families",
+              "name": "Chord-Family System (Triads, Tetrads, Extended)",
+              "summary": "Chapter 4 partitions the chord universe into three families - Triads, Tetrads, and Extended Chords - all justified by tertian harmony (R, 3, 5, 7, 9, 11, 13). The signature device is the Chord Skeleton: pre-set Root/3rd/5th shapes on the 6th, 5th, and 4th strings with right-side and left-side variants. Voicings are continually shaped by a load-bearing instrument constraint: unlike the piano, the guitar must edit and omit notes.",
+              "members": [
+                {
+                  "id": "triads",
+                  "name": "Triads",
+                  "summary": "Four qualities (major, minor, diminished, augmented); three inversion positions (root, first, second)."
+                },
+                {
+                  "id": "tetrads",
+                  "name": "Tetrads",
+                  "summary": "Seventh, Sixth, and Added-Tone subfamilies with a 4-position inversion framework."
+                },
+                {
+                  "id": "extended",
+                  "name": "Extended Chords",
+                  "summary": "9ths, 11ths, and 13ths as tertian-with-exceptions."
+                },
+                {
+                  "id": "suspended",
+                  "name": "Suspended Chords",
+                  "summary": "sus2/sus4 defined strictly as 3rd-replacement, visualized by anchoring to known dominant-7 shapes."
+                },
+                {
+                  "id": "chord-skeletons",
+                  "name": "Chord Skeletons",
+                  "summary": "Pre-set Root/3rd/5th shapes on the 6th, 5th, and 4th strings with right-side and left-side variants."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "smallest-movement-voice-leading",
+                  "name": "Smallest-Movement Voice Leading",
+                  "summary": "Between adjacent chords, prefer the voicing that moves each voice the smallest distance.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Voice leading",
+                      "quote_excerpt": "voice leading is governed by the smallest-movement rule"
+                    }
+                  ]
+                },
+                {
+                  "id": "sus-anchored-to-dominant-7",
+                  "name": "Sus Chords Anchored to Dominant-7 Shapes",
+                  "summary": "Move into a suspended voicing by replacing the 3rd within a known dominant-7 shape.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Suspended chords",
+                      "quote_excerpt": "visualizing them by anchoring to known dominant-7 shapes"
+                    }
+                  ]
+                },
+                {
+                  "id": "4th-string-from-6th-5th",
+                  "name": "4th-String Extended Voicings Derived From 6th/5th",
+                  "summary": "Map 4th-string extended voicings as derivations from 6th- and 5th-string shapes, typically starting from the 7th or 6th of the chord.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "4th-string extended voicings",
+                      "quote_excerpt": "derivations from 6th- and 5th-string shapes"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "drop2-drop3-tetrads-only",
+                  "name": "Drop 2 / Drop 3 Restricted to Tetrads",
+                  "summary": "Drop 2 and Drop 3 voicing transformations are restricted to tetrads.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Tetrad Chords",
+                      "quote_excerpt": "Drop 2 / Drop 3 voicing transformations restricted to tetrads"
+                    }
+                  ]
+                },
+                {
+                  "id": "no-inversions-symmetric",
+                  "name": "No Inversions for Symmetric Chords",
+                  "summary": "Diminished and augmented chords have no inversions because they are symmetric.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Triads",
+                      "quote_excerpt": "diminished and augmented chords have no inversions because they are symmetric"
+                    }
+                  ]
+                },
+                {
+                  "id": "omit-5th-in-13ths",
+                  "name": "Omit the 5th in 13th Chords",
+                  "summary": "In 13th-chord voicings the 5th is almost always omitted.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Extended Chords",
+                      "quote_excerpt": "the 5th is almost always omitted in 13th chords"
+                    }
+                  ]
+                },
+                {
+                  "id": "no-b9-above-bass",
+                  "name": "No b9 Between Bass and Top on Major/Minor",
+                  "summary": "On major and minor chords, avoid a flat-9 interval between the bass note and the top note of the voicing.",
+                  "engine_payload": {
+                    "kind": "_pending:forbidden-vertical-interval"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Voicing prohibitions",
+                      "quote_excerpt": "avoiding a flat-9 between bass and top note on major/minor chords"
+                    }
+                  ]
+                },
+                {
+                  "id": "sharp11-vs-natural11",
+                  "name": "#11 vs Natural 11 Rule",
+                  "summary": "Use #11 on major and dominant 7 chords to avoid clashing with the major 3rd; minor chords take the natural 11 freely.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Extended Chords",
+                      "quote_excerpt": "use #11 on major and dominant 7 to avoid clashing with the major 3rd"
+                    }
+                  ]
+                },
+                {
+                  "id": "sus-is-3rd-replacement",
+                  "name": "Sus Is 3rd-Replacement Only",
+                  "summary": "Suspended chords are defined strictly as 3rd-replacement (sus2 or sus4), never as additions.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Suspended chords",
+                      "quote_excerpt": "defined strictly as 3rd-replacement (sus2/sus4)"
+                    }
+                  ]
+                },
+                {
+                  "id": "guitar-must-edit-and-omit",
+                  "name": "Guitar Must Edit and Omit Notes",
+                  "summary": "Unlike the piano, the guitar must edit and omit notes; this constraint drives nearly every voicing choice.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Instrument constraint",
+                      "quote_excerpt": "the guitar must edit and omit notes"
+                    }
+                  ]
+                },
+                {
+                  "id": "unmarked-7-is-minor",
+                  "name": "Unmarked 7 Is Minor (Maj7 Must Be Marked)",
+                  "summary": "By notation convention, an unmarked 7 means minor 7; a major 7th must be explicitly indicated.",
+                  "engine_payload": {
+                    "kind": "_pending:notation-default"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Tetrad Chords",
+                      "quote_excerpt": "an unmarked 7 is minor (major 7 must be indicated)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-1-chord-construction:harmonic-fields",
+              "name": "Harmonic Field System (Diatonic Modes and Substitutions)",
+              "summary": "Chapter 5 builds the harmonic field by stacking thirds on each degree of the natural major scale, yielding seven diatonic chords in Roman numerals (I, IIm, IIIm, IV, V, VIm, VIIm) and pairing each degree with one of the seven modes (Ionian through Locrian). Scale notes are classified as Chord Notes, Extended Notes, Avoid Notes, and Characteristic Notes. Chapter 6 then prescribes a degree-by-degree substitution catalog grounded in modal character; listed extensions are melodic options, not mandatory voicing components.",
+              "members": [
+                {
+                  "id": "i-ionian",
+                  "name": "I (Ionian)"
+                },
+                {
+                  "id": "iim-dorian",
+                  "name": "IIm (Dorian)"
+                },
+                {
+                  "id": "iiim-phrygian",
+                  "name": "IIIm (Phrygian)"
+                },
+                {
+                  "id": "iv-lydian",
+                  "name": "IV (Lydian)"
+                },
+                {
+                  "id": "v-mixolydian",
+                  "name": "V (Mixolydian)"
+                },
+                {
+                  "id": "vim-aeolian",
+                  "name": "VIm (Aeolian)"
+                },
+                {
+                  "id": "viim-locrian",
+                  "name": "VIIm (Locrian)"
+                },
+                {
+                  "id": "natural-major-field",
+                  "name": "Natural Major Harmonic Field"
+                },
+                {
+                  "id": "natural-minor-field",
+                  "name": "Natural Minor Harmonic Field"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "v-dom-to-sus-substitution",
+                  "name": "V Dominant-to-Sus Substitution",
+                  "summary": "On the V degree, substitute G7 with Gsus9/Gsus13 (Dm/G as mixolydian) when a suspended-dominant color is desired.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "V dominant-to-sus substitution",
+                      "quote_excerpt": "G7 to Gsus9/Gsus13, Dm/G as mixolydian"
+                    }
+                  ]
+                },
+                {
+                  "id": "iiim-slash-voicings",
+                  "name": "IIIm Phrygian Slash-Chord Recasting",
+                  "summary": "On the IIIm degree, recast as slash voicings like Cmaj7/E, C/E, and Esus(b9) including the Jobim/Villa-Lobos Em7(b9).",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "IIIm phrygian additions",
+                      "quote_excerpt": "Em7(b6), Cmaj7/E, C/E, Esus(b9) and the Jobim/Villa-Lobos Em7(b9)"
+                    }
+                  ]
+                },
+                {
+                  "id": "viim-locrian-recast",
+                  "name": "VIIm Locrian Recast as G7(9)/B",
+                  "summary": "Recast the VIIm Bo as G7(9)/B as the locrian-compatible substitute.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "VIIm locrian avoid-note rule",
+                      "quote_excerpt": "recasting Bo as G7(9)/B"
+                    }
+                  ]
+                },
+                {
+                  "id": "i-c6-cmaj7-interchange",
+                  "name": "I Degree C6/Cmaj7 Interchange",
+                  "summary": "On the I degree, freely interchange C6 and Cmaj7, with a b9-conflict exception when the melody is the octave.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "I degree C6/Cmaj7 interchange",
+                      "quote_excerpt": "C6/Cmaj7 interchange with a b9-conflict exception"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "modes-drive-harmony-and-melody",
+                  "name": "Modes Drive Both Harmony and Melody",
+                  "summary": "Each chord's correct scale choice and available tensions are determined by the mode paired with its degree.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "7 Modes",
+                      "quote_excerpt": "modes drive both harmony and melody by revealing each chord's tensions"
+                    }
+                  ]
+                },
+                {
+                  "id": "avoid-notes-not-endings",
+                  "name": "Avoid Notes Usable Mid-Phrase, Never as Endings",
+                  "summary": "Avoid Notes are usable mid-phrase but never as ending tones.",
+                  "engine_payload": {
+                    "kind": "_pending:avoid-note-suppression"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Avoid Notes",
+                      "quote_excerpt": "usable mid-phrase but never as ending tones"
+                    }
+                  ]
+                },
+                {
+                  "id": "extensions-are-melodic-options",
+                  "name": "Listed Extensions Are Melodic Options, Not Voicing Requirements",
+                  "summary": "Extended notes need not sit in the voicing - many belong only as passing tones in the melody over the chord.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Extended notes clarification",
+                      "quote_excerpt": "listed extended notes are melodic passing-tone options, not mandatory voicing components"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "VERY IMPORTANT rule",
+                      "quote_excerpt": "extended notes need not sit in the voicing"
+                    }
+                  ]
+                },
+                {
+                  "id": "characteristic-notes-define-mode",
+                  "name": "Characteristic Notes Define Modal Identity",
+                  "summary": "Each mode is identified by characteristic notes that should be present (e.g., Lydian's #11, Mixolydian's b7).",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Characteristic Notes",
+                      "quote_excerpt": "those that give the mode its identity"
+                    }
+                  ]
+                },
+                {
+                  "id": "viim-9th-forbidden",
+                  "name": "9th Forbidden on the VIIm Locrian Chord",
+                  "summary": "Forbid the 9th on the VII chord because it produces a b9 avoid note against the root.",
+                  "engine_payload": {
+                    "kind": "_pending:degree-extension-forbidden"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "VIIm locrian avoid-note rule",
+                      "quote_excerpt": "forbidding the 9th on the VII chord because it produces a b9 avoid note"
+                    }
+                  ]
+                },
+                {
+                  "id": "iim-dorian-extensions",
+                  "name": "IIm Dorian Extensions With m6 Deferred",
+                  "summary": "On the IIm dorian degree, add Dm7(9)/(11)/(13) but defer m6.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "IIm dorian extensions",
+                      "quote_excerpt": "Dm7(9)/(11)/(13) with m6 deferred"
+                    }
+                  ]
+                },
+                {
+                  "id": "vim-aeolian-extensions",
+                  "name": "VIm Aeolian Extensions and Slash Voicings",
+                  "summary": "On the VIm aeolian degree, allow Am7(9)/(11)/(b6) plus Dm7/A and Fmaj7/A slash voicings.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "VIm aeolian extensions",
+                      "quote_excerpt": "Am7(9)/(11)/(b6) plus Dm7/A and Fmaj7/A slash voicings"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-1-chord-construction:chromatic-color-scales",
+              "name": "Chromatic Color-Scale System (Harmonic Minor, Melodic Minor, Harmonic Major)",
+              "summary": "Chapter 7 builds its framework on the functional definition of the leading tone as the VII degree of the Natural Major Scale - the half-step tension the Natural Minor lacks. This absence motivated raising the natural minor's VII to produce the Harmonic Minor Scale, then the Melodic Minor Scale (treated per the Bach Scale as one symmetric form), and finally Rimsky-Korsakov's Harmonic Major Scale. These parent families each generate seven scale modes - deliberately called scale modes rather than harmonic fields - because their derived chord families are not progression-guiding structures but coloristic devices layered over existing chords.",
+              "members": [
+                {
+                  "id": "harmonic-minor",
+                  "name": "Harmonic Minor Scale",
+                  "summary": "Im with min 3rd / min 6th / maj 7th; restores the leading tone to the natural minor."
+                },
+                {
+                  "id": "melodic-minor-bach",
+                  "name": "Melodic Minor Scale (Bach Scale form)",
+                  "summary": "Im with min 3rd / maj 6th / maj 7th, treated as one symmetric form."
+                },
+                {
+                  "id": "harmonic-major",
+                  "name": "Harmonic Major Scale",
+                  "summary": "Rimsky-Korsakov's mid-20th-century scale: major scale with b6."
+                },
+                {
+                  "id": "altered-scale",
+                  "name": "VII Altered Scale (from Melodic Minor)"
+                },
+                {
+                  "id": "lydian-augmented",
+                  "name": "bIII Lydian Augmented (from Melodic Minor)"
+                },
+                {
+                  "id": "lydian-dominant",
+                  "name": "IV Lydian Dominant (from Melodic Minor)"
+                },
+                {
+                  "id": "hm-lydian-augmented",
+                  "name": "bVI Lydian Augmented #2/#5 (from Harmonic Major)"
+                },
+                {
+                  "id": "locrian-bb7",
+                  "name": "VIIm Locrian bb7 (from Harmonic Major)",
+                  "summary": "Sources o7(b13) and (11) colors."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "color-layered-over-existing",
+                  "name": "Color Scales Layer Over Existing Chords",
+                  "summary": "Derived chord families are not progression-guiding; introduce them by layering coloristic tension over an existing diatonic chord, not by substituting the chord's function.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Derived chord families as color",
+                      "quote_excerpt": "coloristic devices that add tension on top of existing chords"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "leading-tone-as-color-source",
+                  "name": "Leading-Tone Restoration Generates Color Scales",
+                  "summary": "Raising the natural minor's VII restores the leading tone and motivates the Harmonic Minor, Melodic Minor, and Harmonic Major families as color sources.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Leading tone definition",
+                      "quote_excerpt": "raising its VII to produce the Harmonic Minor Scale"
+                    }
+                  ]
+                },
+                {
+                  "id": "mode-avoid-and-characteristic",
+                  "name": "Each Derived Mode Specified by Avoid and Characteristic Notes",
+                  "summary": "Each derived scale mode is specified by its avoid notes and characteristic notes (e.g., Am(maj7) avoids the minor 6th and features the major 7th).",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Avoid notes and characteristic notes",
+                      "quote_excerpt": "Am(maj7) avoids the minor 6th and features the major 7th"
+                    }
+                  ]
+                },
+                {
+                  "id": "extended-as-melodic-passing",
+                  "name": "Extended Notes as Passing Tones, Not Voicing Requirements",
+                  "summary": "VERY IMPORTANT rule: extended notes need not sit in the voicing - many belong only as passing tones in the melody over the chord.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "VERY IMPORTANT rule",
+                      "quote_excerpt": "many belong only as passing tones in the melody"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "_placeholder:method-vol-2-advanced-harmony",
+          "title": "The George Benson Method, Vol. 2 — Advanced Harmony"
+        },
+        {
+          "id": "_placeholder:method-vol-3-technique-arpeggios-secret-of-two-chords",
+          "title": "The George Benson Method, Vol. 3 — George Benson Technique, Arpeggios, The Secret of the Two Chords"
+        },
+        {
+          "id": "_placeholder:method-vol-4-approach-tones-modal-world",
+          "title": "The George Benson Method, Vol. 4 — Approach Tones, Dorian/Mixolydian/Harmonic Minor World"
+        },
+        {
+          "id": "_placeholder:method-vol-5-melodic-minor-bebop-symmetric",
+          "title": "The George Benson Method, Vol. 5 — Melodic Minor World, Bebop Scales, Symmetric Ideas and Concepts"
+        },
+        {
+          "id": "_placeholder:method-vol-6-secret-of-giant-lines",
+          "title": "The George Benson Method, Vol. 6 — The Secret of the Giant Lines"
+        },
+        {
+          "id": "_placeholder:method-vol-7-ultimate-advanced-blues",
+          "title": "The George Benson Method, Vol. 7 — Ultimate Advanced Blues Ideas"
         }
       ]
     }
