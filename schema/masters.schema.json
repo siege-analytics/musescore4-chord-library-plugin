@@ -162,7 +162,7 @@
     "engine_payload": {
       "type": "object",
       "required": ["kind"],
-      "description": "Each rule carries one engine_payload. `kind` must be one of the 12 named kinds traced to predecessor session 260521-aware-nebula's plans/schema-systems-model.md (lines 121-134), OR a `_pending:<kebab>` placeholder for kinds awaiting definition. A glossary defining each kind's semantics is a separate work item — until then these names are nominal labels, not contracts.",
+      "description": "Each rule carries one engine_payload. `kind` must be one of the 12 named kinds defined in docs/payload-kinds.md (#298), OR a `_pending:<kebab>` placeholder for rules that don't fit any named kind. See docs/payload-kinds.md for per-kind semantics, required/optional fields, worked examples, and boundary notes. Stretches — coercing a rule into a wrong name — are the failure mode the glossary exists to prevent; when in doubt, use `_pending:`.",
       "properties": {
         "kind": {
           "anyOf": [
