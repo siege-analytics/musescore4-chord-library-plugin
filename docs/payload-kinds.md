@@ -156,7 +156,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `bonus`/`penalty`.
 - `applies_to_chord_types` — optional.
 
-**Worked example.** **TODO**: write when the first rule explicitly using `ColorToneRequire` against specific named degrees lands in a rebuild doc. Today the kind exists only as the predecessor's one-line comment in `plans/schema-systems-model.md` line 132 ("voicings exposing color tones rank higher"). The Phrygian "characteristic note: b2" pattern in Benson Vol 1's Stage 4 is the closest concrete usage, but it was filed by Stage 4 against this kind without prior rebuild-doc precedent — so citing it would be self-referential.
+**Worked example.** Joe Pass R5.5 (`joe-pass:dominant-substitution-lattice`): "Color tones (b9, +9, b5, +5) are baseline in dom7 lines, not optional." Encoded as `{ kind: "ColorToneRequire", required_degrees_options: ["b9", "+9", "b5", "+5"], applies_to_chord_types: ["dom7"], bonus: 15 }`. Source: `plans/pass-system-rebuild.md` System 5 R5.5, citing Method ch1-6 p. 9: "Against almost any Dominant 7th Chord, I will include the b9, +9, b5, or +5 in my lines." This is the first rebuild-doc citation that grounds `ColorToneRequire` against specific degrees with explicit rationale.
 
 **Boundary notes.** This is a SINGLE-VOICING content rule about which tones must/should appear. NOT about how to handle non-chord tones in a melodic line (that's `NCTHarmonization`). NOT about "avoid notes" — those are tones to AVOID exposing, which is the inverse and currently has no kind (Benson Vol 1's "Avoid Note Suppression" was filed under `NCTHarmonization` and arguably belongs under `_pending:avoid-note-suppression` — see Audit).
 
@@ -168,7 +168,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `appetite` — `0` (never harmonize NCT) through `1.0` (always harmonize).
 - `nct_treatment_per_type` — optional map `{passing: 0.3, neighbor: 0.5, suspension: 0.8, ...}`.
 
-**Worked example.** **TODO**: write when the first rule explicitly using `NCTHarmonization` against a melodic NCT context lands in a rebuild doc. Today the kind exists only as the predecessor's one-line comment in `plans/schema-systems-model.md` line 133 ("harmonize/skip non-chord tones with appetite N"). No rebuild-doc cites it against a specific rule.
+**Worked example.** Joe Pass R4.2 (`joe-pass:harmonic-restraint`): "Don't harmonize every note — you don't need a chord for every note." Encoded as `{ kind: "NCTHarmonization", appetite: 0.3 }`. Source: `plans/pass-system-rebuild.md` System 4 R4.2, citing Sam Blakelock interview quote of Pass; corroborated by Method's improvisation chapters where single-note lines dominate page-count. Low appetite (0.3) encodes Pass's restraint — the inverse of an aggressive harmonizer like Greene who would carry harmony under every melody note.
 
 **Boundary notes.** **This is about MELODY-DRIVEN harmonization** — given a non-chord tone in the melody, do you find a voicing that includes it (harmonize) or leave it bare? **It is NOT about "avoid notes" in the modal-harmony sense.** Avoid notes are mode-degree-specific notes that the modal taxonomy says should not be ended on or sustained over the underlying chord; that is a different concept and currently has no dedicated kind. Benson Vol 1's "Avoid Note Suppression" was filed here in the systems-draft and is one of the three audit findings below.
 
@@ -203,6 +203,8 @@ If no name above matches what your rule does, use `_pending:<short-kebab-slug>`.
 | `_pending:avoid-note-suppression` | Don't FEATURE / sustain mode-specific "avoid notes" over the underlying chord; inverse of `NCTHarmonization` which is about harmonizing-NCTs, not suppressing avoid notes | Benson Vol 1 Harmonic Fields (regenerated systems-draft per #298 audit) |
 | `_pending:practice-prescription` | Rule that prescribes practice workflow (sequence, key-coverage, mastery-before-progression) rather than a voicing-engine constraint | Van Eps R1.2 (all-keys Solfeggio); Benson Study Devices Protocol (folded into summary prose per #298 audit) |
 | `_pending:right-hand-technique-tag` | Documentation-only right-hand technique tagging; future tagging on selected voicings, no v1 engine ranking impact | Van Eps R3.1 (pulsation picking + top-voice emphasis) |
+| `_pending:degree-bypass` | A rule that elides a specific scale-degree chord from the progression entirely (no replacement); structurally distinct from `SubstitutionExpand` which expands the candidate pool | Joe Pass R4.4 ("Forget the II — focus on the V") |
+| `_pending:tritone-substitution` | The specific tritone-related-pair symmetry within dominant family — preserves alteration palette across the symmetric root pair; narrower mechanic than `SubstitutionExpand` | Joe Pass R5.2 (tritone color-passthrough p. 25) |
 
 These are candidate names for future kind-additions, each warranting its own ticket per #256's `_pending:` workflow.
 

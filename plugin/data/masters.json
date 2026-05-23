@@ -847,6 +847,553 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "joe-pass:six-chord-forms",
+          "name": "Six Chord Forms (Position System)",
+          "summary": "Pass partitions the fretboard into six overlapping positional regions, each anchored on a chord shape: C, A, G, E, D, and Intermediate (top part of C Form). Each Form occupies ~5-6 frets, defines a scale-fingering window, and serves as the spatial reference for chord-melody and improvisation work. Position is identified by which Form anchors the hand; movement between Forms uses pivot-finger shifts.",
+          "members": [
+            {
+              "id": "c-form",
+              "name": "C Form",
+              "summary": "Anchor at C major shape; canonical pivot for Pass's chord-melody."
+            },
+            {
+              "id": "a-form",
+              "name": "A Form"
+            },
+            {
+              "id": "g-form",
+              "name": "G Form"
+            },
+            {
+              "id": "e-form",
+              "name": "E Form"
+            },
+            {
+              "id": "d-form",
+              "name": "D Form",
+              "summary": "First inversion of C Form."
+            },
+            {
+              "id": "intermediate-form",
+              "name": "Intermediate Form",
+              "summary": "Top part of C Form; secondary."
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-pivot-finger-shift",
+              "name": "Pivot-finger shift to next Form",
+              "summary": "To move between Forms, use the 1st or 4th finger to play two consecutive notes; the second note lands the hand in the next Form.",
+              "engine_payload": {
+                "kind": "StringSetTransition",
+                "pivot_finger_options": [
+                  1,
+                  4
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "ch5-1, p. 19: 'one can shift to any string by using either the first finger or fourth finger to play two notes. This will place the hand on the next Chord Form.'"
+                }
+              ]
+            },
+            {
+              "id": "R1.2-same-form-continuity",
+              "name": "Same-Form continuity preferred",
+              "summary": "While the musical context permits, stay in one Form across consecutive voicings to keep scale fingerings and melody-line landing positions consistent.",
+              "engine_payload": {
+                "kind": "PositionContinuity",
+                "system_ref": "joe-pass:six-chord-forms",
+                "same_region_threshold_frets": 6
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Implicit across pp. 4-21; explicit cross-ref ch8-3 p. 23: 'When playing a Dominant 7th Chord or Scale, one Chord Form must be kept in mind.'"
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "id": "P1-chord-form-order",
+              "name": "Chord-form preference order",
+              "summary": "Pass mentions A, E, C, D as the four core Forms; G and Intermediate are secondary. A and E come first in his enumeration.",
+              "engine_payload": {
+                "kind": "PositionContinuity",
+                "preferred_form_order": [
+                  "a-form",
+                  "e-form",
+                  "c-form",
+                  "d-form",
+                  "g-form",
+                  "intermediate-form"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 6: 'By mastering all the scales in the A — E — C/D Chord Forms, which are basically similar, the student will have covered the fingerboard quite thoroughly.'"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "joe-pass:three-harmonic-families",
+          "name": "Three Harmonic Families (Major / Minor / Dominant)",
+          "summary": "Pass partitions all chord qualities into three families that share voicing-pool characteristics. Major covers maj6/maj7/maj9/maj13/6-9; Minor covers m6/m7/m9/m-maj7/m11; Dominant covers dom7/dom9/dom13 and ALL altered/extended dominants, with diminished and augmented as subspecies of Dominant. Within a family, voicing-level substitution is free (a written maj7 admits maj6, maj9, maj13, 6/9 with no harmonic re-analysis).",
+          "members": [
+            {
+              "id": "major-family",
+              "name": "Major family",
+              "summary": "Covers maj6, maj7, maj9, maj13, 6/9."
+            },
+            {
+              "id": "minor-family",
+              "name": "Minor family",
+              "summary": "Covers m6, m7, m9, m-maj7, m11."
+            },
+            {
+              "id": "dominant-family",
+              "name": "Dominant family",
+              "summary": "Covers dom7/9/13 and all altered/extended dominants; diminished and augmented are subspecies."
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-family-coherent-comping",
+              "name": "Family-coherent comping preferred",
+              "summary": "When traversing a chord progression, voicings drawn from the same family share recognition cues; mixing families is fine but is itself a compositional choice.",
+              "engine_payload": {
+                "kind": "FamilyCoherence",
+                "system_ref": "joe-pass:three-harmonic-families"
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 16: 'the underlying chord sequence for this study should be analyzed, remembering that it can be broken down into three simple chord types: Major, Minor, and Dominant 7th (Aug./Dim.).'"
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.3-within-family-substitution",
+              "name": "Within-family substitution is free",
+              "summary": "A written maj7 admits maj6, maj9, maj13, 6/9 as voicing-level substitutes — same family, same listener recognition.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "expansion_within_family": true
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 16 + cross-reference Complete Chord Melody Module 2 which credits this concept to Pass by name."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "joe-pass:voicing-density-and-voice-leading",
+          "name": "Voicing Density and Voice Leading",
+          "summary": "Pass treats voicing-internal density and inter-voicing motion as coupled. Solo work runs on 3-4 sounding notes; walking-bass texture drops to 2-3-note stabs; 5-6-note block chords are the avoided default. Voice motion preferences are common-tone first, stepwise inner as fallback.",
+          "members": [
+            {
+              "id": "shell-2-note",
+              "name": "2-note shell"
+            },
+            {
+              "id": "core-3-note",
+              "name": "3-note core"
+            },
+            {
+              "id": "full-4-note",
+              "name": "4-note full voicing"
+            },
+            {
+              "id": "block-5-plus",
+              "name": "5+ block (avoided default)"
+            },
+            {
+              "id": "drop-2",
+              "name": "Drop-2 voicing shape"
+            },
+            {
+              "id": "drop-3",
+              "name": "Drop-3 voicing shape"
+            },
+            {
+              "id": "walking-bass-plus-stab",
+              "name": "Walking bass + 2-note chord stab"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R3.1-2-voice-motion-preferences",
+              "name": "Common-tone preferred, stepwise inner as fallback",
+              "summary": "Voicings should lead into one another or have a common tone connecting them; stepwise inner-voice motion is the fallback when no common tone is available.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "common-tone",
+                  "stepwise-inner",
+                  "leap",
+                  "parallel"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 30: 'voicings should lead into one another or have a common tone connecting them.' Worked example pp. 31-32 (Dm9 → C13 → C7(b5) → C9(6)/C7 → Fmaj7) demonstrates per-transition shared tones."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.4a-density-ceiling-solo",
+              "name": "Density ceiling — 4 sounding notes in solo work",
+              "summary": "Five- or six-note block chords are NOT Pass's default for solo work.",
+              "engine_payload": {
+                "kind": "DensityCeiling",
+                "max_sounding_notes": 4,
+                "context_filter": "solo"
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 30: 'All changes should be reduced to three- or four-note chords.'"
+                }
+              ]
+            },
+            {
+              "id": "R3.4b-density-floor-solo",
+              "name": "Density floor — 3 sounding notes in solo work",
+              "summary": "Pass's solo arrangements use at least 3 sounding notes; bare 2-note voicings are walking-bass territory, not solo.",
+              "engine_payload": {
+                "kind": "DensityFloor",
+                "min_sounding_notes": 3,
+                "context_filter": "solo"
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 30 same passage: 'three- or four-note chords' establishes 3 as the floor for solo contexts."
+                }
+              ]
+            },
+            {
+              "id": "R3.5-walking-bass-texture",
+              "name": "Walking-bass texture with 2-note chord stabs",
+              "summary": "Bass walks every beat; chord stabs land off-beats with 2-3-note voicings rather than full block chords.",
+              "engine_payload": {
+                "kind": "TextureCycle",
+                "texture_sequence": [
+                  "bass",
+                  "chord-stab"
+                ],
+                "stab_density": 2
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Joe's Blues worked example pp. 25-29; corroborated by PR #239 walking-bass-plus-chord-stabs principle (originally from Joe Pass Guitar Style 1971)."
+                }
+              ]
+            },
+            {
+              "id": "R3.6-drop-shapes-default",
+              "name": "Drop-2 and Drop-3 are the default chord-melody shapes",
+              "summary": "Method's pp. 31-32 worked examples are predominantly drop-2 shapes; drop-3 is the secondary chord-melody shape.",
+              "engine_payload": {
+                "kind": "_pending:voicing-respacing",
+                "shapes": [
+                  "drop-2",
+                  "drop-3"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "pp. 31-32 worked examples; explicit drop-2 / drop-3 terminology elsewhere in Pass's secondary literature."
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "id": "P3-voice-motion-order",
+              "name": "Voice-motion preference order",
+              "summary": "Pass's explicit preference: common-tone first, then stepwise inner, then leap, parallel last (avoided).",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "common-tone",
+                  "stepwise-inner",
+                  "leap",
+                  "parallel"
+                ],
+                "bonus_per_position": [
+                  20,
+                  10,
+                  0,
+                  -5
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 30 same passage as R3.1."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "joe-pass:harmonic-restraint",
+          "name": "Harmonic Restraint (Three-Textures Cycling)",
+          "summary": "The question of whether to harmonize a given melody note at all. Pass cycles through three textures within one solo arrangement — harmonize, leave-as-single-note, dip-out-to-bass-only — weaving rather than maintaining a single texture. Color comes from chord alteration (System 5), not from harmonizing every note.",
+          "members": [
+            {
+              "id": "harmonize",
+              "name": "Harmonize the melody note"
+            },
+            {
+              "id": "leave-as-single-note",
+              "name": "Leave melody note bare (no harmonization)"
+            },
+            {
+              "id": "dip-out-to-bass-only",
+              "name": "Drop to bass-only texture momentarily"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R4.1-texture-cycling",
+              "name": "Cycle between bass/chord/melody textures within an arrangement",
+              "summary": "The arrangement weaves between three textures rather than maintaining one. Per Pass's own framing: 'You don't have to play bass, chord, melody all the time — dip in and out between all three.'",
+              "engine_payload": {
+                "kind": "TextureCycle",
+                "texture_sequence": [
+                  "bass",
+                  "chord",
+                  "melody"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Secondary-source quote of Pass, corroborated by Method's improvisation chapters where single-note lines dominate page-count."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R4.2-low-nct-harmonization",
+              "name": "Don't harmonize every note (low NCT-harmonization appetite)",
+              "summary": "Pass's restraint: 'You don't need a chord for every note.' Solo arrangements deliberately leave melodic NCT passages as bare single-note lines.",
+              "engine_payload": {
+                "kind": "NCTHarmonization",
+                "appetite": 0.3
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Sam Blakelock interview quoting Pass; corroborated by Method's improvisation chapters' page-count dominance of single-note lines over chord-density."
+                }
+              ]
+            },
+            {
+              "id": "R4.4-bypass-ii-in-ii-V",
+              "name": "Bypass the ii in ii-V-I — focus on the V",
+              "summary": "Pass's specific habit of leaving the ii bar as a single-note line and harmonizing only the V resolution. Functional shorthand: the V carries the ii's information.",
+              "engine_payload": {
+                "kind": "_pending:degree-bypass",
+                "bypass_degree": "ii"
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Pass quote: 'Forget the II — focus on the V.' Secondary-source corroborated; Method's worked examples consistently apply this in ii-V passages."
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "id": "P4-nct-harmonization-appetite",
+              "name": "Low NCT-harmonization appetite",
+              "summary": "Lower than the bookshelf default; encodes Pass's restraint distinct from Greene's aggressive harmonization.",
+              "engine_payload": {
+                "kind": "NCTHarmonization",
+                "appetite": 0.3
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "Same Blakelock-quoted passage as R4.2."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "joe-pass:dominant-substitution-lattice",
+          "name": "Dominant Substitution Lattice",
+          "summary": "Pass's richest system and the engine-active one. Any written dominant chord admits an expansion-set of related qualities (dom9, dom13, dom7+9, dom7b9, dom7+5, dom7b5, dom7b13, dom-alt). Tritone-related pairs and diminished-symmetry quartets group roots; color tones (b9, +9, b5, +5) are baseline-not-optional even when 'playing the written changes'.",
+          "members": [
+            {
+              "id": "dom7",
+              "name": "dom7 (root quality)"
+            },
+            {
+              "id": "dom9",
+              "name": "dom9"
+            },
+            {
+              "id": "dom13",
+              "name": "dom13"
+            },
+            {
+              "id": "dom7+9",
+              "name": "dom7+9"
+            },
+            {
+              "id": "dom7b9",
+              "name": "dom7b9"
+            },
+            {
+              "id": "dom7+5",
+              "name": "dom7+5"
+            },
+            {
+              "id": "dom7b5",
+              "name": "dom7b5"
+            },
+            {
+              "id": "dom7b13",
+              "name": "dom7b13"
+            },
+            {
+              "id": "dom-alt",
+              "name": "dom-alt (general altered)"
+            },
+            {
+              "id": "tritone-pair",
+              "name": "Tritone-related root pair (C7 ↔ F#7)",
+              "summary": "Twelve canonical pairs covering all roots."
+            },
+            {
+              "id": "diminished-quartet",
+              "name": "Diminished-symmetry root quartet",
+              "summary": "{D7, F7, Ab7, B7}, {Db7, E7, G7, Bb7}, {C7, Eb7, Gb7, A7} — three quartets cover all twelve."
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R5.2-tritone-color-passthrough",
+              "name": "Tritone substitution carries color alteration through",
+              "summary": "E7 admits Bb9/Bb+9/Bbm9/Bb13 — same alteration palette on the tritone-related root. The symmetric-pair member carries the same color tones.",
+              "engine_payload": {
+                "kind": "_pending:tritone-substitution",
+                "preserves_alteration": true
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 25 (ch9-2): 'Bm7 can be replaced by F13/F9/F+9/Fm9. Bm7 can be changed to a Dominant 7th (B7) or B9/B13.'"
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R5.3-tune-wide-alteration-permission",
+              "name": "Tune-wide alteration permission",
+              "summary": "Throughout, +9/b9/13/9(6)/11/+5/b5 may be substituted for simple Dominants. This rule licenses substitution across the entire piece, not just one chord position.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "target_quality": "dom7",
+                "expansion_set": [
+                  "dom7",
+                  "dom9",
+                  "dom13",
+                  "dom6",
+                  "dom6/9",
+                  "dom11",
+                  "dom7+9",
+                  "dom7b9",
+                  "dom7+5",
+                  "dom7b5",
+                  "dom7b13",
+                  "dom-alt"
+                ],
+                "applies_to_contexts": [
+                  "entire-tune"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 30 (ch10-4): 'Throughout, +9/b9/13/9(6)/11/+5/b5 may be substituted for simple Dominants.'"
+                }
+              ]
+            },
+            {
+              "id": "R5.5-color-tones-baseline",
+              "name": "Color tones (b9, +9, b5, +5) are baseline in dom7 lines, not optional",
+              "summary": "Even when playing the written changes, Pass includes a color tone (b9, +9, b5, or +5) in his dom7 lines as the baseline expectation, not as an embellishment.",
+              "engine_payload": {
+                "kind": "ColorToneRequire",
+                "required_degrees_options": [
+                  "b9",
+                  "+9",
+                  "b5",
+                  "+5"
+                ],
+                "applies_to_chord_types": [
+                  "dom7"
+                ],
+                "bonus": 15
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "p. 9 (ch1-6): 'Against almost any Dominant 7th Chord, I will include the b9, +9, b5, or +5 in my lines.'"
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "id": "P5-substitution-aggressiveness",
+              "name": "High substitution aggressiveness",
+              "summary": "Pass's appetite for substitution is high — R5.3's 'throughout, may be substituted' + ch9-4 'Students must be able to choose freely from the alternatives' both signal aggressive expansion.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "appetite": 0.8,
+                "preferred_classes": [
+                  "primary-alteration",
+                  "tritone-sub",
+                  "ii-as-tritone-V"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Pass, Joe. The Joe Pass Guitar Method. 1977. Chappell Music / Hal Leonard HL00347734.",
+                  "citation": "pp. 25, 30; ch9-4 'choose freely from the alternatives'."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
