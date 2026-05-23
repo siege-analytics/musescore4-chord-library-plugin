@@ -201,6 +201,303 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "works": [
+        {
+          "id": "1939-method",
+          "title": "The George Van Eps Method for Guitar",
+          "year": 1939,
+          "instrument_scope": "6-string",
+          "summary": "Van Eps's primary-source pedagogy. 42-page method published by Epiphone Inc. The method's organizational principle is the harmonized scale — every chord-quality category begins by harmonizing the corresponding scale in triads, practiced across six string-set fingerings, in all 12 keys per the Solfeggio principle. Layered on top are Van Eps's signature techniques: outer-voice anchor with chromatic inner motion (the 'lap piano' texture), pulsation picking with top-voice emphasis, and left-hand finger-flattening and string-deadening as extensions of the standard four-finger reach.",
+          "references": [
+            {
+              "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939). 42 pages.",
+              "citation": "Primary source verified in PR #238; predecessor research doc at docs/research/masters/george-van-eps.md."
+            }
+          ],
+          "systems": [
+            {
+              "id": "van-eps:1939-method:harmonized-scale-foundation",
+              "name": "Harmonized-Scale Foundation",
+              "summary": "Every chord-quality category in Van Eps's method begins by harmonizing the corresponding scale in triads. Major chords (Ex. 1-25) start with the harmonized major scale; minor chords (Ex. 26-32) with harmonized minor; 7th chords (Ex. 33-47) with the 7th-arpeggio scale; diminished chords (Ex. 48-82) with harmonized diminished. The harmonized scale IS the vocabulary; voicings derive from running it through six string-set fingerings, practiced in all 12 keys via the Solfeggio principle.",
+              "members": [
+                {
+                  "id": "major-harmonized-scale",
+                  "name": "Major harmonized scale"
+                },
+                {
+                  "id": "minor-harmonized-scale",
+                  "name": "Minor harmonized scale"
+                },
+                {
+                  "id": "dominant-harmonized-scale",
+                  "name": "7th-arpeggio harmonized scale"
+                },
+                {
+                  "id": "diminished-harmonized-scale",
+                  "name": "Diminished harmonized scale"
+                },
+                {
+                  "id": "string-set-6-5-4",
+                  "name": "String set 6-5-4 fingering"
+                },
+                {
+                  "id": "string-set-5-4-3",
+                  "name": "String set 5-4-3 fingering"
+                },
+                {
+                  "id": "string-set-4-3-2",
+                  "name": "String set 4-3-2 fingering"
+                },
+                {
+                  "id": "string-set-3-2-1",
+                  "name": "String set 3-2-1 fingering"
+                },
+                {
+                  "id": "string-set-6-5-4-3",
+                  "name": "Four-note string set 6-5-4-3"
+                },
+                {
+                  "id": "string-set-5-4-3-2",
+                  "name": "Four-note string set 5-4-3-2"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "R1.1-string-set-traversal",
+                  "name": "String-set traversal of harmonized scale",
+                  "summary": "A harmonized scale moves across string sets preserving the triad relationships. Ex. 1 works the harmonized C-major scale through six string-set forms.",
+                  "engine_payload": {
+                    "kind": "_pending:string-transference"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Method p.6 'Explanation of the String Chart' + Ex. 1 instructions (p.8): six-form scope from 1st-form to 6th-form covering the fingerboard."
+                    }
+                  ]
+                },
+                {
+                  "id": "R1.2-all-keys-practice",
+                  "name": "All-keys practice doctrine (Solfeggio)",
+                  "summary": "Each harmonized scale form must be practiced in all 12 keys before moving to the next form.",
+                  "engine_payload": {
+                    "kind": "_pending:practice-prescription"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Foreword: 'Think of the tonic of every key as do.' Solfeggio principle as the practice-sequencing rule."
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "R1.3-harmonized-scale-substitution",
+                  "name": "Substitute within harmonized-scale equivalents",
+                  "summary": "A I-chord voicing in C major admits substitutes from the harmonized-scale (Em7 as I-function, Am7 as I-function). Triadic-first framing distinguishes this from Greene's 4-note chord-scale-equivalence.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Method's I/iii/vi function-sharing pattern as the practical implementation of the harmonized-scale-first pedagogy."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "van-eps:1939-method:inner-voice-independence",
+              "name": "Inner-Voice Independence",
+              "summary": "Van Eps's defining 'lap piano' texture — outer voices anchor while inner voices move with strict contrapuntal independence. Chromatic inner motion is the FIRST preference (distinct from Pass's common-tone-first and Greene's stepwise-inner-first). Each voice treated as an independent contrapuntal line, not as parts of a chord that happen to land at the same time.",
+              "members": [
+                {
+                  "id": "outer-voices",
+                  "name": "Outer voices (bass + top)",
+                  "summary": "Anchor role: hold or move slowly"
+                },
+                {
+                  "id": "inner-voices",
+                  "name": "Inner voices (alto + tenor)",
+                  "summary": "Motion role: carry the harmonic motion"
+                },
+                {
+                  "id": "chromatic-inner-motion",
+                  "name": "Chromatic inner motion",
+                  "summary": "Default motion class"
+                },
+                {
+                  "id": "stepwise-inner-motion",
+                  "name": "Stepwise inner motion"
+                },
+                {
+                  "id": "suspension-resolution-motion",
+                  "name": "Suspension/resolution inner motion"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "R2.1-outer-voices-anchor",
+                  "name": "Outer voices anchor while inner voices carry motion",
+                  "summary": "Bass and top voice hold or move slowly while inner voices carry the harmonic motion.",
+                  "engine_payload": {
+                    "kind": "_pending:inner-voice-counterpoint"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Ex. 14, 18, 20, 37, 57, 60-65, 67-68, 82 — documented across the Method per PR #238 research doc."
+                    }
+                  ]
+                },
+                {
+                  "id": "R2.2-chromatic-inner-default",
+                  "name": "Inner voices move chromatically by default",
+                  "summary": "Not just stepwise — chromatic. Ex. 37 (chromatic 10ths with middle voice) is the canonical demonstration.",
+                  "engine_payload": {
+                    "kind": "_pending:inner-voice-counterpoint"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Ex. 37: chromatic 10ths between outer voices with middle voice carrying chromatic motion."
+                    }
+                  ]
+                },
+                {
+                  "id": "R2.3-voice-as-independent-line",
+                  "name": "Each voice has its own contrapuntal line",
+                  "summary": "Voices are independent contrapuntal lines, not parts of a chord that happen to coincide. The 'pianistic' framing.",
+                  "engine_payload": {
+                    "kind": "_pending:inner-voice-counterpoint"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Foundational framing across the Method; the lap-piano analogy Van Eps repeats throughout."
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "R2.4-voicing-conversion-preserves-independence",
+                  "name": "Voicings convert preserving voice independence",
+                  "summary": "Adjacent voicings must be reachable without breaking the multi-voice texture.",
+                  "engine_payload": {
+                    "kind": "_pending:inner-voice-counterpoint"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Implicit constraint across the worked exercises; shared with Greene's R4.5 per cross-master comparison in the rebuild notes."
+                    }
+                  ]
+                },
+                {
+                  "id": "R2.5-prefer-tenths-outer-voices",
+                  "name": "Prefer 10ths between outer voices in chromatic-inner contexts",
+                  "summary": "Ex. 37 specifically uses chromatic 10ths between bass and top voice with middle voice carrying motion.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Ex. 37: '10ths' is the outer-voice interval setup that enables chromatic middle-voice motion."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "van-eps:1939-method:right-hand-technique",
+              "name": "Right-Hand Pulsation Technique",
+              "summary": "Van Eps's pulsation-picking technique with top-voice dynamic emphasis. Wrist axis pivots over the top voice, producing rhythmic pulsation; picking accents the highest sounding pitch. Documentation-only in v1; engine integration is future work (likely surfaces as a playStyleTag on selected voicings when Van Eps is active).",
+              "members": [
+                {
+                  "id": "pulsation-picking",
+                  "name": "Pulsation picking (wrist-axis pivot)"
+                },
+                {
+                  "id": "top-voice-dynamic-emphasis",
+                  "name": "Top-voice dynamic emphasis"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "R3.1-pulsation-accent-top-voice",
+                  "name": "Pulsation accent on top voice",
+                  "summary": "Right-hand wrist pivots over the top voice; picking accents the highest sounding pitch.",
+                  "engine_payload": {
+                    "kind": "_pending:right-hand-technique-tag"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Method p.3 'Pick and Wrist Action' + Ex. 2 instructions."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "van-eps:1939-method:left-hand-mechanics",
+              "name": "Left-Hand Mechanics (Flattening + Deadening)",
+              "summary": "Finger-flattening as virtual fifth finger (a single fretting finger flattens across adjacent strings to add a note without changing finger count); string-deadening for open voicings (specific strings dampened to allow open-string sympathetic notes without unwanted strings ringing).",
+              "members": [
+                {
+                  "id": "finger-flattening",
+                  "name": "Finger flattening across adjacent strings"
+                },
+                {
+                  "id": "string-deadening",
+                  "name": "String deadening for open voicings"
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "R4.1-finger-flattening-extension",
+                  "name": "Add note via finger flattening",
+                  "summary": "Single fretting finger flattens across two adjacent strings to add a sounding note. Voicings exceeding four-finger count become accessible. Van Eps treats this as a virtual fifth finger.",
+                  "engine_payload": {
+                    "kind": "_pending:flattened-finger-extension"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Method exercises that introduce 5-note voicings without five distinct fingers. The 'fifth finger' technique is Van Eps's own framing."
+                    }
+                  ]
+                },
+                {
+                  "id": "R4.2-string-deadening-enables-open",
+                  "name": "String deadening enables open-voicing patterns",
+                  "summary": "Specific strings dampened by the fretting hand to allow open-string sympathetic notes without unwanted strings ringing. Used in open voicings where the voicing requires specific bass-treble separation.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
+                      "citation": "Method's open-voicing exercises where the dampening pattern is part of the voicing's executable form."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "_placeholder:harmonic-mechanisms",
+          "title": "Harmonic Mechanisms for Guitar (3 volumes, Mel Bay, 1980-1982)",
+          "year": "1980-1982",
+          "instrument_scope": "7-string (low A)",
+          "summary": "7-string content pending PDF acquisition. Will contain: diagonal barre technique (Van Eps's fret-10+ innovation); 7th-string bass walking with the low-A as a bass-line resource; inner-voice independence extended to SATB+ topology (6- or 7-voice textures); the 'harmonic mechanisms' approach as Van Eps's mature systematization of inner-voice motion across 7-string voicings."
+        }
       ]
     },
     {
