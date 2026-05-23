@@ -227,6 +227,18 @@ Preferences: `preferencesFor(store, masterId)` (walks works), `findPreferenceByI
 
 `counts(store)` reports `{ masters, principles, systems, works }`. `systems` includes work-scoped systems.
 
+### Provenance at promotion (#303 resolution)
+
+**The audit chain breaks at masters.json promotion.** The schema does NOT grow a `derived_from` field on `master.systems[].rules[]`. Reasoning:
+
+- The pipeline (`pipelines/master-distillation/`) writes a full audit chain under `plugin/data/masters-corpus/<master>/<work>/`: chapter files with verbatim quotes, summaries, derived/systems-draft.json with `references[]` per rule, derived/STATEMENT.md weaving systems with citations.
+- The Stage B per-master PR (Benson #304, Van Eps #305, Pass #306, and the rest of #277-#285) is the load-bearing **human quality gate**: the maintainer reads the draft, verifies it against source, and commits a curated subset into masters.json. Once committed, the maintainer's review IS the trail.
+- Reconstructing the trail to the source quote is always possible by traversing back to `masters-corpus/<master_id>/<work_id>/` for masters that used the pipeline. For masters whose systems came from a manually-authored rebuild doc (Van Eps, Pass, Greene, etc.), the audit trail lives in the predecessor session's `plans/*-system-rebuild.md`.
+
+**`references[]` on `master.systems[].rules[]` is informal, not schema-required.** Where they appear (Benson's rules, Pass's rules, Van Eps's rules), they happen to encode provenance because the source pipeline/rebuild had it. The schema's `$defs/rule` permits the field via `additionalProperties: true` but does not require it. A future Stage B PR may or may not carry references[] forward — both are valid.
+
+**Why not formalize?** Adding `derived_from` would force every Stage B PR to maintain the field manually after the human-review pass (the engine doesn't consume it; the maintainer becomes the source of truth on what's committed). The cost is real and the value is recoverable by traversing back to the audit dir. The schema stays minimal.
+
 ---
 
-*Last updated: 2026-05-22*
+*Last updated: 2026-05-23*
