@@ -25,8 +25,13 @@ from pathlib import Path
 
 from lib import provenance
 from lib.llm import LLMRequest, request_llm
-from lib.paths import BookPaths
+from lib.paths import BookPaths, rel_to_repo
 
+# The 12 authoritative engine_payload.kind names. Defined in
+# docs/payload-kinds.md (#298) — when adding/removing a kind, update
+# both this list AND docs/payload-kinds.md AND the enum in
+# schema/masters.schema.json. A test in tests/test_pipeline.py
+# asserts the three sources agree.
 ALLOWED_KINDS = [
     "PositionContinuity",
     "VoiceMotion",
@@ -41,6 +46,43 @@ ALLOWED_KINDS = [
     "NCTHarmonization",
     "TextureCycle",
 ]
+
+# Per-rule schema. Every rule MUST carry references[] with at least one
+# entry pointing back at the chapter quote(s) the rule was derived from.
+# This is the structural defense against the stretch failure mode noted
+# in #298's Audit section (Benson Vol 1's DensityCeiling-for-no-b9, etc.)
+# — without a source quote, a reviewer can't audit a kind assignment.
+_RULE_SCHEMA = {
+    "type": "object",
+    "required": ["id", "name", "engine_payload", "references"],
+    "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "summary": {"type": "string"},
+        "engine_payload": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": {"kind": {"type": "string", "minLength": 1}},
+            "additionalProperties": True,
+        },
+        "references": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": ["chapter_n"],
+                "properties": {
+                    "chapter_n": {"type": "integer", "minimum": 1},
+                    "topic": {"type": "string"},
+                    "quote_excerpt": {"type": "string"},
+                    "page": {"type": "integer", "minimum": 1},
+                },
+                "additionalProperties": True,
+            },
+        },
+    },
+    "additionalProperties": True,
+}
 
 # Validation schema mirrors a subset of schema/masters.schema.json for
 # the systems[] array we generate. We don't validate the full master
@@ -62,8 +104,9 @@ SYSTEMS_DRAFT_SCHEMA = {
                     "name": {"type": "string", "minLength": 1},
                     "summary": {"type": "string"},
                     "members": {"type": "array"},
-                    "traversal_rules": {"type": "array"},
-                    "modification_rules": {"type": "array"},
+                    "traversal_rules": {"type": "array", "items": _RULE_SCHEMA},
+                    "modification_rules": {"type": "array", "items": _RULE_SCHEMA},
+                    "preferences": {"type": "array", "items": _RULE_SCHEMA},
                     "references": {"type": "array"},
                 },
                 "additionalProperties": True,
@@ -106,8 +149,8 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     _write_statement(book, statement, model, source_pdf_name)
 
     return [
-        _rel_to_repo(book, book.systems_draft),
-        _rel_to_repo(book, book.statement),
+        rel_to_repo(book.systems_draft),
+        rel_to_repo(book.statement),
         f"derived {len(systems_payload['systems'])} system(s); "
         f"see {book.systems_draft.name}",
     ]
@@ -177,8 +220,19 @@ Guidance:
 - If the book teaches a system you can't structure as members+rules,
   describe it in `summary` and leave members/rules empty rather than
   inventing.
-- Do not include `references[]` — that gets added by a later step
-  pointing back at chapter files.
+
+EVERY rule (traversal_rule, modification_rule, preference) MUST carry a
+`references[]` array with at least one entry pointing back at the chapter
+quote that backs the rule. Reference shape:
+
+  { "chapter_n": <int>, "topic": "<topic label from chapter file>",
+    "quote_excerpt": "<5-15 word snippet of the source quote>",
+    "page": <int, optional> }
+
+If a rule has no source quote it does not belong in the systems-draft —
+write it into the system's `summary` field or omit it. References make
+every kind assignment auditable; without them, this draft cannot be
+reviewed against the source.
 """
 
 
@@ -224,14 +278,16 @@ def _derive_systems(
 
 def _validate_engine_kinds(payload: dict) -> None:
     """Verify every engine_payload.kind is either in ALLOWED_KINDS or
-    matches `_pending:<kebab>`. Schema-level enforcement; raises on miss.
+    matches `_pending:<kebab>`. Walks all three rule-bearing buckets:
+    traversal_rules, modification_rules, AND preferences. Raises on
+    miss. Authoritative kind set lives in docs/payload-kinds.md (#298).
     """
     import re
 
     pending_pat = re.compile(r"^_pending:[a-z0-9-]+$")
     offenders: list[str] = []
     for system in payload.get("systems", []):
-        for rules_key in ("traversal_rules", "modification_rules"):
+        for rules_key in ("traversal_rules", "modification_rules", "preferences"):
             for rule in system.get(rules_key, []) or []:
                 kind = (rule.get("engine_payload") or {}).get("kind")
                 if kind is None:
@@ -241,13 +297,14 @@ def _validate_engine_kinds(payload: dict) -> None:
                 if pending_pat.match(kind):
                     continue
                 offenders.append(
-                    f"system '{system.get('id')}' rule '{rule.get('id')}': "
-                    f"kind '{kind}'"
+                    f"system '{system.get('id')}' "
+                    f"{rules_key}['{rule.get('id')}']: kind '{kind}'"
                 )
     if offenders:
         raise ValueError(
             "Stage 4 produced engine_payload.kind values that are neither "
-            "in the predecessor's 12 names nor `_pending:<kebab>`: "
+            "in the 12 named kinds (see docs/payload-kinds.md) nor "
+            "`_pending:<kebab>`: "
             + "; ".join(offenders[:5])
             + (f"; +{len(offenders) - 5} more" if len(offenders) > 5 else "")
         )
@@ -360,9 +417,3 @@ def _write_statement(
     book.statement.write_text(text_out)
 
 
-def _rel_to_repo(book: BookPaths, p: Path) -> str:
-    repo_root = book.run_dir.parent.parent.parent
-    try:
-        return str(p.relative_to(repo_root))
-    except ValueError:
-        return str(p)

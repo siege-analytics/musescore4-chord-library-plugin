@@ -76,6 +76,16 @@ def main() -> int:
             if len(parts) == 3:
                 body = parts[2]
 
+        # Only consider blockquotes that appear AFTER the first `## `
+        # heading — that's where topic-organized quotes live. The
+        # document-level callout block (Verbatim-quote constraint) sits
+        # before any `## ` and gets skipped.
+        first_topic = body.find("\n## ")
+        if first_topic == -1:
+            # No topic sections (chapter with no extracted quotes).
+            continue
+        body = body[first_topic:]
+
         # Collect contiguous blockquote spans (the body of one quote may
         # be multiple `>` lines). Group consecutive blockquote lines.
         current: list[str] = []

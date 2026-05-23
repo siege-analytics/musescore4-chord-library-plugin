@@ -21,7 +21,7 @@ from pathlib import Path
 
 from lib import provenance
 from lib.llm import LLMRequest, request_llm
-from lib.paths import BookPaths
+from lib.paths import BookPaths, rel_to_repo
 
 
 def run(cfg: dict, book: BookPaths) -> list[str]:
@@ -44,7 +44,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     for ch in chapters:
         summary_path = book.chapter_summary(ch["n"])
         if summary_path.exists():
-            outputs.append(_rel_to_repo(book, summary_path))
+            outputs.append(rel_to_repo(summary_path))
             continue
         chapter_md = book.chapter_file(ch["n"]).read_text()
         body = _strip_frontmatter(chapter_md)
@@ -61,7 +61,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
             book, ch, summary_text, per_chapter_model, source_pdf_name
         )
         chapter_summaries.append((ch, summary_text))
-        outputs.append(_rel_to_repo(book, book.chapter_summary(ch["n"])))
+        outputs.append(rel_to_repo(book.chapter_summary(ch["n"])))
 
     # If any chapters were already done (from a prior resume), include
     # their summaries in the book-level input.
@@ -77,7 +77,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     _write_book_summary(
         book, book_summary_text, book_model, source_pdf_name
     )
-    outputs.append(_rel_to_repo(book, book.book_summary))
+    outputs.append(rel_to_repo(book.book_summary))
 
     return outputs
 
@@ -253,10 +253,3 @@ def _strip_frontmatter(md: str) -> str:
     return parts[2].lstrip("\n")
 
 
-def _rel_to_repo(book: BookPaths, p: Path) -> str:
-    """Best-effort path relative to repo root for orchestrator output."""
-    repo_root = book.run_dir.parent.parent.parent
-    try:
-        return str(p.relative_to(repo_root))
-    except ValueError:
-        return str(p)

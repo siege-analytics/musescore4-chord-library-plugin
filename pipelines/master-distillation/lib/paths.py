@@ -100,3 +100,16 @@ class BookPaths:
             self.committed_derived_dir,
         ):
             d.mkdir(parents=True, exist_ok=True)
+
+
+def rel_to_repo(p: Path) -> str:
+    """Render `p` relative to the repo root for orchestrator output.
+
+    Falls back to the absolute path if `p` is outside the repo. Uses the
+    canonical REPO_ROOT anchor rather than magic-counting parents from
+    the run dir, which is fragile to directory restructures.
+    """
+    try:
+        return str(p.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(p)

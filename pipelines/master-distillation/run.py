@@ -181,6 +181,15 @@ def _run_next(run_id: str) -> int:
         print(f"  response: {pending.response_path}")
         print()
         print(
+            "Fill the response file using any LLM interface (Craft Agents, "
+            "Claude CLI, local Ollama wrapper, hand-typed). Re-running this "
+            "stage will not regenerate the request prompt; if you want to "
+            "edit it, edit the request file directly, then write the "
+            "response. The pipeline does NOT auto-retry on schema or "
+            "fidelity failure — edit the response file and re-resume."
+        )
+        print()
+        print(
             "Run the LLM (e.g. via call_llm) using the request file, "
             "save the parsed JSON response to the response path, then "
             "run `run.py --resume " + run_id + "`."

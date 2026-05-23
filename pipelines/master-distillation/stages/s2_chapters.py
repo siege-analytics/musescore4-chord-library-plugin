@@ -25,7 +25,7 @@ from pathlib import Path
 
 from lib import provenance, text
 from lib.llm import LLMRequest, request_llm
-from lib.paths import BookPaths
+from lib.paths import BookPaths, rel_to_repo
 
 TOC_RESPONSE_SCHEMA = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -90,7 +90,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
 
     outputs: list[str] = [
         f"detected {len(chapters)} chapter(s)",
-        str(book.chapter_bounds.relative_to(book.run_dir.parent.parent.parent)),
+        rel_to_repo(book.chapter_bounds),
     ]
 
     # --- 2a. Pre-write ALL per-chapter request files so the agent/human
@@ -100,9 +100,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     for ch in chapters:
         ch_md_path = book.chapter_file(ch["n"])
         if ch_md_path.exists():
-            outputs.append(
-                str(ch_md_path.relative_to(book.run_dir.parent.parent.parent.parent))
-            )
+            outputs.append(rel_to_repo(ch_md_path))
             continue
         _write_extract_request(book, transcript, ch, model)
         pending_chapters.append(ch)
@@ -113,9 +111,7 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     for ch in pending_chapters:
         quotes = _consume_extract_response(cfg, book, transcript, ch, model)
         _write_chapter_file(book, ch, quotes, model)
-        outputs.append(
-            str(book.chapter_file(ch["n"]).relative_to(book.run_dir.parent.parent.parent.parent))
-        )
+        outputs.append(rel_to_repo(book.chapter_file(ch["n"])))
 
     return outputs
 
@@ -265,6 +261,16 @@ def _write_extract_request(
     request_path.write_text(json.dumps(req.to_dict(), indent=2) + "\n")
 
 
+# NOTE on retries (behaviour change from the initial scaffold):
+# The original implementation embedded a MAX_EXTRACT_RETRIES=2 loop that
+# auto-regenerated the request prompt with a tightening hint on
+# fidelity failure. The pre-write-all-requests refactor (#297 second
+# commit) dropped that loop. Today, on fidelity failure, the stage
+# raises and the maintainer/agent edits the response file directly
+# (or re-fills it) and re-runs `resume`. The orchestrator's
+# awaiting-llm message names this explicitly.
+
+
 def _consume_extract_response(
     cfg: dict,
     book: BookPaths,
@@ -354,6 +360,16 @@ def _write_chapter_file(
         "",
         f"_Pages {source_pages}._",
         "",
+        "> **Verbatim-quote constraint.** The quotes below are exact substrings "
+        "of the raw transcript produced by `pdftotext`. The transcript may "
+        "contain extraction artifacts where the book's typeface confuses the "
+        "tool — e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. "
+        "**Do NOT manually fix these in this file**: the quote-fidelity "
+        "validator compares against the raw transcript, so a 'fixed' quote "
+        "will fail verification and break Stage 2 idempotency. If a future "
+        "pipeline iteration adds artifact-normalization, it must normalize "
+        "the transcript and these files together.",
+        "",
     ]
     if not quotes:
         lines.append(
@@ -386,12 +402,17 @@ def _source_pdf(book: BookPaths) -> str:
 
     Avoids a second config read; the state file path leads to the
     config which leads to the PDF. We only need the basename for
-    provenance, so a fallback to the work_id is acceptable."""
-    try:
-        import tomllib
+    provenance, so a fallback to the work_id is acceptable.
 
+    Catches only the specific failure modes the lookup chain can produce
+    (missing file, malformed TOML, missing config-key). A broader
+    `except Exception` would hide real bugs in the call site.
+    """
+    import tomllib
+
+    try:
         state = json.loads(book.state_file.read_text())
         cfg = tomllib.loads(Path(state["config"]).read_text())
         return cfg["source"]["pdf"]
-    except Exception:
+    except (FileNotFoundError, json.JSONDecodeError, tomllib.TOMLDecodeError, KeyError):
         return book.work_id  # fallback; better than nothing

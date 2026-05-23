@@ -28,7 +28,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from lib.paths import BookPaths
+from lib.paths import BookPaths, rel_to_repo
 
 
 def run(cfg: dict, book: BookPaths) -> list[str]:
@@ -50,10 +50,10 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     raw_text, pages_index = _extract_per_page(src_pdf)
 
     book.raw_transcript.write_text(raw_text)
-    outputs.append(str(book.raw_transcript.relative_to(book.run_dir.parent.parent.parent)))
+    outputs.append(rel_to_repo(book.raw_transcript))
 
     book.pages_json.write_text(json.dumps(pages_index, indent=2) + "\n")
-    outputs.append(str(book.pages_json.relative_to(book.run_dir.parent.parent.parent)))
+    outputs.append(rel_to_repo(book.pages_json))
 
     # Summary line printed via outputs return — orchestrator prints them.
     n_pages = len(pages_index["pages"])
