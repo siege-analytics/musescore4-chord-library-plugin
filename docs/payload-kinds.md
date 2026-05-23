@@ -205,6 +205,7 @@ If no name above matches what your rule does, use `_pending:<short-kebab-slug>`.
 | `_pending:right-hand-technique-tag` | Documentation-only right-hand technique tagging; future tagging on selected voicings, no v1 engine ranking impact | Van Eps R3.1 (pulsation picking + top-voice emphasis) |
 | `_pending:degree-bypass` | A rule that elides a specific scale-degree chord from the progression entirely (no replacement); structurally distinct from `SubstitutionExpand` which expands the candidate pool | Joe Pass R4.4 ("Forget the II — focus on the V") |
 | `_pending:tritone-substitution` | The specific tritone-related-pair symmetry within dominant family — preserves alteration palette across the symmetric root pair; narrower mechanic than `SubstitutionExpand` | Joe Pass R5.2 (tritone color-passthrough p. 25) |
+| `_pending:fixed-soprano-tour` | Hold the top voice constant; cycle through all voicings of the chord underneath; the canonical chord-melody engine of Greene's V-System | Ted Greene R1.3 (V-system fixed soprano tour, tedgreene.com archive) |
 
 These are candidate names for future kind-additions, each warranting its own ticket per #256's `_pending:` workflow.
 

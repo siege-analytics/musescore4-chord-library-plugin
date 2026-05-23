@@ -647,6 +647,569 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "ted-greene:v-system",
+          "name": "V-System (14 Four-Note Voicing Groups)",
+          "summary": "Greene partitions all 4-note voicings into 14 V-groups ordered by compactness (V-1 is the closest cluster; V-14 the widest, though V-13/V-14 are LESS spread than V-11/V-12 — a Greene-specific quirk). Each of the 43 unique 4-note chord qualities has exactly one instance per V-group. The fixed-soprano tour — hold the melody note constant and cycle through all 14 V-groups — is the canonical chord-melody engine for Greene-active sections.",
+          "members": [
+            {
+              "id": "v-1",
+              "name": "V-1"
+            },
+            {
+              "id": "v-2",
+              "name": "V-2"
+            },
+            {
+              "id": "v-3",
+              "name": "V-3"
+            },
+            {
+              "id": "v-4",
+              "name": "V-4"
+            },
+            {
+              "id": "v-5",
+              "name": "V-5"
+            },
+            {
+              "id": "v-6",
+              "name": "V-6"
+            },
+            {
+              "id": "v-7",
+              "name": "V-7"
+            },
+            {
+              "id": "v-8",
+              "name": "V-8"
+            },
+            {
+              "id": "v-9",
+              "name": "V-9"
+            },
+            {
+              "id": "v-10",
+              "name": "V-10"
+            },
+            {
+              "id": "v-11",
+              "name": "V-11"
+            },
+            {
+              "id": "v-12",
+              "name": "V-12"
+            },
+            {
+              "id": "v-13",
+              "name": "V-13"
+            },
+            {
+              "id": "v-14",
+              "name": "V-14"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-v-group-cycling",
+              "name": "V-group cycling generates all 14 voicings of a quality",
+              "summary": "A given chord quality can be expressed in any of the 14 V-groups. Cycling generates all 14.",
+              "engine_payload": {
+                "kind": "_pending:voicing-respacing",
+                "via": "v-group-conversion"
+              },
+              "references": [
+                {
+                  "source": "James Hober V-System tutorials at tedgreene.com",
+                  "citation": "Corpus: 01_WhoIsJamesHober.txt + V-System exposition. Cross-ref Chord Chemistry (1971)."
+                }
+              ]
+            },
+            {
+              "id": "R1.2-v-group-conversion",
+              "name": "V-group Conversion: move one note by octave to shift V-group",
+              "summary": "Greene's 'Conversion' method — moving one note up or down by an octave shifts the voicing to a different V-group. The method specifies which moves correspond to which transitions.",
+              "engine_payload": {
+                "kind": "_pending:voicing-respacing",
+                "via": "single-voice-octave"
+              },
+              "references": [
+                {
+                  "source": "tedgreene.com V-System archive (estate-authorized PDFs).",
+                  "citation": "Hober's tutorials enumerate the conversion table."
+                }
+              ]
+            },
+            {
+              "id": "R1.3-fixed-soprano-tour",
+              "name": "Fixed soprano tour — cycle V-groups underneath a held melody note",
+              "summary": "Hold the top voice constant on a chosen melody note; cycle through all 14 V-groups to reveal every way the system harmonizes underneath. The canonical chord-melody engine for Greene-active sections.",
+              "engine_payload": {
+                "kind": "_pending:fixed-soprano-tour"
+              },
+              "references": [
+                {
+                  "source": "tedgreene.com V-System archive.",
+                  "citation": "Hober's 'Who Is James' chapter; the canonical pedagogical use of the V-system."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.4-density-floor-4-notes",
+              "name": "Density floor: 4 sounding notes (V-system by definition)",
+              "summary": "V-System is by definition 4-note voicings. 3-note variants belong to a separate system.",
+              "engine_payload": {
+                "kind": "DensityFloor",
+                "min_sounding_notes": 4
+              },
+              "references": [
+                {
+                  "source": "V-system definition (Hober + Chord Chemistry).",
+                  "citation": "Constitutive of the V-system identity."
+                }
+              ]
+            },
+            {
+              "id": "R1.5-v-group-substitution",
+              "name": "Substitute V-group for V-group within chord position",
+              "summary": "When voicing a chord, V-group choice is preferred per phrase context — closer V-groups for inner-voice movement; wider V-groups for register variety.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "within": "v-system"
+              },
+              "references": [
+                {
+                  "source": "tedgreene.com archive.",
+                  "citation": "Worked examples across the corpus."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ted-greene:chord-scale-equivalence",
+          "name": "Chord-Scale Equivalence (Substitution Lattice)",
+          "summary": "For each chord quality in a key, a list of equivalent voicings derived from the chord scale. In C major, the I (Cmaj7) admits voicings drawn from the C-major chord-scale; substitutes include Em7 (iii7) as a I-function chord. The equivalence class is open vocabulary, derived per-chord from the diatonic chord-scale system.",
+          "members": [
+            {
+              "id": "i-chord-equivalents",
+              "name": "I-chord equivalents (Cmaj7, Em7-as-I, Am7-as-I)"
+            },
+            {
+              "id": "ii-chord-equivalents",
+              "name": "ii-chord equivalents"
+            },
+            {
+              "id": "iii-chord-equivalents",
+              "name": "iii-chord equivalents"
+            },
+            {
+              "id": "iv-chord-equivalents",
+              "name": "IV-chord equivalents (Fmaj7, ii7-over-IV, Dm7-as-IV)"
+            },
+            {
+              "id": "v-chord-equivalents",
+              "name": "V-chord equivalents (G7, its altered family, sus variants)"
+            },
+            {
+              "id": "vi-chord-equivalents",
+              "name": "vi-chord equivalents"
+            },
+            {
+              "id": "vii-chord-equivalents",
+              "name": "vii-chord equivalents (B half-diminished, alternatives)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-string-transference",
+              "name": "String transference",
+              "summary": "A voicing on one string set transfers to another string set preserving relative chord position. Makes Greene's substitutions also positional.",
+              "engine_payload": {
+                "kind": "_pending:string-transference"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "'Diatonic Chord Scales (Major Keys) and String Transference' section; 7 occurrences in OCR."
+                }
+              ]
+            },
+            {
+              "id": "R2.2-within-chord-scale-traversal",
+              "name": "Within-chord-scale equivalents share notes (common-tone)",
+              "summary": "Moving between chord-scale equivalents is fluid; equivalents share notes by construction.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "common-tone",
+                  "stepwise-inner"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Inherent property of diatonic chord-scale derivation."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.3-substitute-equivalent-for-written",
+              "name": "Substitute any chord-scale equivalent for the written chord",
+              "summary": "Any chord in a chord-scale equivalence class may substitute for any other. Broader than functional substitution.",
+              "engine_payload": {
+                "kind": "_pending:chord-scale-equivalence",
+                "scope": "per-chord"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Distinguishing Greene's framework from functional-harmony substitution."
+                }
+              ]
+            },
+            {
+              "id": "R2.4-tune-wide-application",
+              "name": "Chord-scale equivalence applies tune-wide",
+              "summary": "Like Pass's R5.3 tune-wide alteration permission, Greene's chord-scale equivalence applies across the whole tune in a key.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "applies_to_contexts": [
+                  "entire-tune"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Pervasive application throughout MCP's worked examples."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ted-greene:diatonic-substitution-lattice",
+          "name": "Diatonic Substitution Lattice (Cycle Patterns)",
+          "summary": "Named progression patterns from Modern Chord Progressions — distinct from chord-scale equivalence (which is at the level of single chords). Cycles include I-vi-ii-V, iii-vi-ii-V (the ii7-over-IVmaj7 preference), diatonic cycle of 5ths in major and minor keys, all-dominant III7-VI7-II7-V7, mixed-mode cycles, tritone subs.",
+          "members": [
+            {
+              "id": "i-vi-ii-v-cycle",
+              "name": "I-vi-ii-V (standard tin-pan-alley cadence)"
+            },
+            {
+              "id": "iii-vi-ii-v-cycle",
+              "name": "iii-vi-ii-V (Greene's preferred substitute for I-vi-ii-V)"
+            },
+            {
+              "id": "diatonic-fifths-major",
+              "name": "Diatonic cycle of 5ths in major keys"
+            },
+            {
+              "id": "all-dominant-cycle",
+              "name": "III7-VI7-II7-V7 (all-dominant / secondary dominants)"
+            },
+            {
+              "id": "mixed-mode-cycle",
+              "name": "I-VI7-II7-V7 (mixed-mode alternation with all-dominant)"
+            },
+            {
+              "id": "tritone-sub-patterns",
+              "name": "Tritone substitutions on cycle dominants"
+            },
+            {
+              "id": "minor-key-cycles",
+              "name": "Substitute cycles in minor keys"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R3.2-tonicization",
+              "name": "Tonicization at each cycle position",
+              "summary": "Each chord in a cycle can be tonicized — becomes a dominant-7 of its successor (producing III7-VI7-II7-V7).",
+              "engine_payload": {
+                "kind": "FamilyCoherence",
+                "via": "secondary-dominant"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "'III7 VI7 II7 V7' cycle chapter."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.3-cycle-variant-substitution",
+              "name": "Substitute one cycle variant for another",
+              "summary": "I-vi-ii-V → iii-vi-ii-V (the ii7-over-IVmaj7 preference); III7-VI7-II7-V7 → I-VI7-II7-V7 (mixed mode); tritone substitution on any dominant.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "substitution_classes": [
+                  "cycle-variant",
+                  "tritone-sub"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "MCP's catalog of cycle variants."
+                }
+              ]
+            },
+            {
+              "id": "R3.4-ii7-preferred-over-ivmaj7",
+              "name": "ii7 preferred over IVmaj7 in IV-V-I",
+              "summary": "IVmaj7's root-to-7 major-7 interval is strident; ii7's minor-7 interval is mild. Engine signal: rank ii7 voicings higher than IVmaj7 voicings for the IV function.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "preferred_for": "iv-function",
+                "preferred_value": "ii7"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Existing PR #237 ii7-over-IVmaj7-substitution principle, sourced from MCP."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ted-greene:inner-voice-counterpoint",
+          "name": "Inner-Voice Counterpoint (SATB Texture)",
+          "summary": "Greene's most distinctive contribution and the most relational of his systems. Melody stays on top; inner voices (alto, tenor) move stepwise between chord changes; bass anchors with chord roots or moves stepwise/by-fifth to produce a true counterpoint line. Unlike Pass's harmonic restraint, Greene's framework prefers to harmonize every melody note.",
+          "members": [
+            {
+              "id": "soprano",
+              "name": "Soprano (carries melody)"
+            },
+            {
+              "id": "alto",
+              "name": "Alto (inner motion)"
+            },
+            {
+              "id": "tenor",
+              "name": "Tenor (inner motion)"
+            },
+            {
+              "id": "bass",
+              "name": "Bass (anchor or walking counterpoint)"
+            },
+            {
+              "id": "counterpoint-1-to-1",
+              "name": "1-to-1 counterpoint (note-against-note)"
+            },
+            {
+              "id": "counterpoint-2-to-1",
+              "name": "2-to-1 counterpoint"
+            },
+            {
+              "id": "counterpoint-3-to-1",
+              "name": "3-to-1 counterpoint"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R4.1-inner-voices-stepwise",
+              "name": "Inner voices move stepwise between chord changes",
+              "summary": "Melody on top; inner voices (alto, tenor) move stepwise. Greene's contrapuntal default.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order_inner": [
+                  "stepwise-inner",
+                  "common-tone"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Chord Chemistry. Dale Zdenek Publications, 1971.",
+                  "citation": "Existing PR #237 voice-leading-inner-motion principle, sourced from Chord Chemistry."
+                }
+              ]
+            },
+            {
+              "id": "R4.2-bass-anchors-or-walks",
+              "name": "Bass anchors or walks as counterpoint",
+              "summary": "Bass voice anchors with chord roots or moves stepwise/by-fifth to produce a true counterpoint line.",
+              "engine_payload": {
+                "kind": "_pending:inner-voice-counterpoint",
+                "bass_role": "anchor-or-walk"
+              },
+              "references": [
+                {
+                  "source": "Ted Greene lesson archive at masters-corpus/greene/",
+                  "citation": "Corpus: 1-to-1BaroqueCounterpoint_OrganizedOver3UnitBassLines_TedGreene_1984-01-14.txt."
+                }
+              ]
+            },
+            {
+              "id": "R4.3-common-tone-soprano",
+              "name": "Common-tone preferred for soprano between consecutive voicings",
+              "summary": "When adjacent chords share a possible melody pitch, prefer that pitch — melody note is the 'fixed' voice.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order_soprano": [
+                  "common-tone",
+                  "stepwise"
+                ]
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Chord Chemistry. Dale Zdenek Publications, 1971.",
+                  "citation": "Greene's chord-melody pedagogy throughout."
+                }
+              ]
+            },
+            {
+              "id": "R4.4-sequential-articulation",
+              "name": "Sequential articulation: bass plucked first, inner voices in sequence, melody on top",
+              "summary": "Technique rule — affects voicing texture without changing voicing shape.",
+              "engine_payload": {
+                "kind": "_pending:right-hand-technique-tag",
+                "sequence": "bass-then-inner-then-melody"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Existing PR #237 sequential-articulation principle + Greene's 1995 letter to Bruce."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R4.5-conversion-preserving-independence",
+              "name": "Conversion between voicings preserves voice independence",
+              "summary": "Greene's Conversion method (V-system R1.2) serves this rule — voicings should be reachable without breaking the multi-voice texture.",
+              "engine_payload": {
+                "kind": "_pending:inner-voice-counterpoint",
+                "preserve_independence": true
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Chord Chemistry. Dale Zdenek Publications, 1971.",
+                  "citation": "Combined with V-system's Conversion table."
+                }
+              ]
+            },
+            {
+              "id": "R4.6-high-harmonization-appetite",
+              "name": "High NCT-harmonization appetite (harmonize aggressively)",
+              "summary": "Greene's framework prefers to harmonize every melody note (or nearly every). Inverse of Pass's R4.2.",
+              "engine_payload": {
+                "kind": "NCTHarmonization",
+                "appetite": 0.85
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Chord Chemistry. Dale Zdenek Publications, 1971.",
+                  "citation": "Pervasive across Greene's pedagogy."
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "id": "P4-high-harmonization-appetite",
+              "name": "High NCT-harmonization appetite",
+              "summary": "Greene harmonizes almost every melody note — the opposite extreme from Pass.",
+              "engine_payload": {
+                "kind": "NCTHarmonization",
+                "appetite": 0.85
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Chord Chemistry. Dale Zdenek Publications, 1971.",
+                  "citation": "Defining preference contrast with Pass."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ted-greene:symmetric-movement",
+          "name": "Symmetric Movement (Non-Functional Planing)",
+          "summary": "Non-functional chord movement by intervallic symmetry. Shifting all voices by the named interval moves to a new symmetric voicing — whole-tone planing produces 6-cycle voicings; minor-third 4-cycle; major-third 3-cycle; half-step is fully chromatic.",
+          "members": [
+            {
+              "id": "whole-tone-planing",
+              "name": "Whole-tone planing (6-cycle)"
+            },
+            {
+              "id": "minor-third-planing",
+              "name": "Minor-third planing (4-cycle)"
+            },
+            {
+              "id": "major-third-planing",
+              "name": "Major-third planing (3-cycle)"
+            },
+            {
+              "id": "half-step-planing",
+              "name": "Half-step planing (chromatic)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R5.1-plane-the-chord-shape",
+              "name": "Plane the chord shape by symmetric interval",
+              "summary": "Move all voices by the symmetric interval to produce the next voicing.",
+              "engine_payload": {
+                "kind": "SymmetryMovement",
+                "cycle_length_per_interval": {
+                  "whole-tone": 6,
+                  "minor-third": 4,
+                  "major-third": 3,
+                  "half-step": 12
+                }
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Chapter 6 'Moving Voices'."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R5.2-symmetric-related-substitution",
+              "name": "Substitute symmetric-related voicing for written voicing",
+              "summary": "Within a symmetric movement class, any of the symmetric-related voicings can substitute.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "via": "symmetric-class"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Chapter 6 worked examples."
+                }
+              ]
+            },
+            {
+              "id": "R5.3-symmetric-melody-harmonization",
+              "name": "Use symmetric planing to harmonize chromatic melody lines",
+              "summary": "When melody moves by a symmetric interval, planing the voicing by that interval is a natural harmonization.",
+              "engine_payload": {
+                "kind": "SymmetryMovement",
+                "drives": "melody-following"
+              },
+              "references": [
+                {
+                  "source": "Greene, Ted. Modern Chord Progressions: Jazz and Classical Voicings for Guitar. Dale Zdenek Publications, 1976.",
+                  "citation": "Corpus material on planing as harmonization technique."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
