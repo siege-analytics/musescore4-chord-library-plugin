@@ -199,6 +199,10 @@ If no name above matches what your rule does, use `_pending:<short-kebab-slug>`.
 | `_pending:flattened-finger-extension` | Adding a sounding note via finger flattening; `OmissionAllow` is omission only | Van Eps R4.1 |
 | `_pending:upper-structure-triad` | Substitute is a triad above implied root, not a chord-quality substitution | Wes upper-structure system |
 | `_pending:voicing-respacing` | Drop-2 / Drop-3 / drop-2+4 close-to-open transforms | Benson Vol 1 ch4 |
+| `_pending:forbidden-vertical-interval` | Rule that forbids a specific interval between voices in a single voicing (e.g. no b9 between bass and top); `DensityCeiling` is note-count, structurally different | Benson Vol 1 Chord Families (regenerated systems-draft per #298 audit) |
+| `_pending:avoid-note-suppression` | Don't FEATURE / sustain mode-specific "avoid notes" over the underlying chord; inverse of `NCTHarmonization` which is about harmonizing-NCTs, not suppressing avoid notes | Benson Vol 1 Harmonic Fields (regenerated systems-draft per #298 audit) |
+| `_pending:practice-prescription` | Rule that prescribes practice workflow (sequence, key-coverage, mastery-before-progression) rather than a voicing-engine constraint | Van Eps R1.2 (all-keys Solfeggio); Benson Study Devices Protocol (folded into summary prose per #298 audit) |
+| `_pending:right-hand-technique-tag` | Documentation-only right-hand technique tagging; future tagging on selected voicings, no v1 engine ranking impact | Van Eps R3.1 (pulsation picking + top-voice emphasis) |
 
 These are candidate names for future kind-additions, each warranting its own ticket per #256's `_pending:` workflow.
 
