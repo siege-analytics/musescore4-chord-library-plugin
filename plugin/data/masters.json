@@ -2071,6 +2071,175 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "martin-taylor:alternating-thumb-bass",
+          "name": "Alternating-Thumb Bass (Patterned)",
+          "summary": "Right-hand thumb plays bass in alternating-string pattern (boom-chick-style, Reinhardt + folk-fingerstyle derived). Distinct from Breau's three-voice (Taylor's is more rhythmically regular) and Pass's walking-bass (Taylor's is patterned, not improvised).",
+          "members": [
+            {
+              "id": "root-fifth-alternation",
+              "name": "Root + 5th alternation on adjacent low strings"
+            },
+            {
+              "id": "thumb-walking-passing",
+              "name": "Thumb walks in passing-tone contexts (borrows from Pass)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-thumb-alternates-root-fifth",
+              "name": "Thumb alternates between root and 5th of the chord",
+              "summary": "Boom-chick pattern on adjacent low strings.",
+              "engine_payload": {
+                "kind": "_pending:bass-pattern-generation",
+                "pattern": "root-fifth-alternation"
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #224 alternating-thumb-bass principle."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.3-pattern-over-static-root",
+              "name": "Substitute alternating-thumb-bass for static-root bass in solo arrangements",
+              "summary": "Default bass texture for Taylor-active solo contexts.",
+              "engine_payload": {
+                "kind": "_pending:bass-pattern-generation"
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Beyond Chord Melody series."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "martin-taylor:melody-bass-separation",
+          "name": "Strict Melody-Bass Separation",
+          "summary": "Tatum/Bill-Evans-derived pianistic split — melody on treble strings (fingers), bass on bass strings (thumb), chord stabs fill the middle. Melody and bass move independently in time AND direction; contrary motion common.",
+          "members": [
+            {
+              "id": "treble-melody",
+              "name": "Treble melody (fingers)"
+            },
+            {
+              "id": "bass-thumb",
+              "name": "Bass thumb"
+            },
+            {
+              "id": "middle-chord-stabs",
+              "name": "Middle chord stabs"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-independent-motion",
+              "name": "Melody and bass move independently",
+              "summary": "Contrary motion is common.",
+              "engine_payload": {
+                "kind": "_pending:inner-voice-counterpoint",
+                "voice_count": 3
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Tatum/Bill-Evans-derived pianistic split."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.2-prefer-clear-separation-voicings",
+              "name": "Prefer voicings allowing simultaneous melody-on-top + bass-on-bottom with clear separation",
+              "summary": "3-voice or wider density.",
+              "engine_payload": {
+                "kind": "DensityFloor",
+                "min_sounding_notes": 3
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Voice-separation constraint."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "martin-taylor:internal-dynamics",
+          "name": "Internal Voice Dynamics",
+          "summary": "Dynamic variation BETWEEN voices in the same voicing — bass louder, melody softer, chord stabs medium. Internal dynamic profile of a voicing is itself a compositional choice. Likely a playback affordance rather than a voicing selector.",
+          "members": [
+            {
+              "id": "bass-prominent-profile",
+              "name": "Bass-prominent dynamic profile"
+            },
+            {
+              "id": "melody-prominent-profile",
+              "name": "Melody-prominent dynamic profile"
+            },
+            {
+              "id": "balanced-profile",
+              "name": "Balanced dynamic profile"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.2-mark-dynamic-profile",
+              "name": "Mark voicings with a dynamic_profile per voice",
+              "summary": "Engine produces a chosen profile per voicing.",
+              "engine_payload": {
+                "kind": "_pending:internal-voice-dynamics"
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Lower v1 priority; playback affordance."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "martin-taylor:harmonics-vocabulary",
+          "name": "Harmonics Vocabulary",
+          "summary": "Natural + artificial harmonics as melodic resource. Used for chord coloring and melodic statements at structural points (intros, codas, melodic peaks) — not just timbral decoration.",
+          "members": [
+            {
+              "id": "natural-harmonics",
+              "name": "Natural harmonics (open-string nodes)"
+            },
+            {
+              "id": "artificial-harmonics",
+              "name": "Artificial harmonics (fretted + tapped)"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R4.2-substitute-harmonic-for-fingered",
+              "name": "Substitute harmonic for fingered note where timbre suits",
+              "summary": "Related to Breau's harp-harmonics — possibly subsumed under one harmonics-vocabulary payload.",
+              "engine_payload": {
+                "kind": "_pending:harp-harmonics"
+              },
+              "references": [
+                {
+                  "source": "plans/taylor-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Generalizes Breau's harp-harmonics use case."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -2235,6 +2404,238 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "wes-montgomery:chorus-architecture",
+          "name": "Three-Tier Chorus Architecture",
+          "summary": "Wes's canonical solo arc spans multiple choruses with a one-directional textural climb: tier-1 single-notes → tier-2 octaves → tier-3 block chords. Each tier reuses the melodic shape established in tier-1.",
+          "members": [
+            {
+              "id": "tier-1-single-notes",
+              "name": "Tier 1: Single-note lines"
+            },
+            {
+              "id": "tier-2-octaves",
+              "name": "Tier 2: Octave doublings"
+            },
+            {
+              "id": "tier-3-block-chords",
+              "name": "Tier 3: Block chord harmonization"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-monotonic-climb",
+              "name": "Climb is monotonic across choruses",
+              "summary": "Once a higher tier is reached, return to a lower tier is uncommon.",
+              "engine_payload": {
+                "kind": "_pending:form-aggregate-tier-progression"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #227 three-tier-chorus-development principle."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.3-section-density-escalation",
+              "name": "Section-aggregate density escalation",
+              "summary": "Each successive chorus uses denser texture (1 → 2 → 4 sounding notes).",
+              "engine_payload": {
+                "kind": "_pending:form-aggregate-tier-progression"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Tier-by-tier density progression."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wes-montgomery:octave-melody",
+          "name": "Octave-Doubled Melody",
+          "summary": "Single melody note becomes two notes an octave apart, played together. Thumb-led with lower note often slightly behind the upper. Octave passages move parallel (no internal voice-leading).",
+          "members": [
+            {
+              "id": "octave-5-3",
+              "name": "Octave on string set 5-3 (root on 5, octave on 3)"
+            },
+            {
+              "id": "octave-4-2",
+              "name": "Octave on string set 4-2"
+            },
+            {
+              "id": "octave-6-4",
+              "name": "Octave on string set 6-4"
+            },
+            {
+              "id": "chromatic-octave-approach",
+              "name": "Chromatic octave approach to chord tone"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-parallel-octave-motion",
+              "name": "Octave passages move parallel",
+              "summary": "Both notes move together; no internal voice-leading.",
+              "engine_payload": {
+                "kind": "_pending:octave-doubling"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #227 octave-passage-construction principle."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.3-octave-substitution-in-tier-2",
+              "name": "Substitute octave-pair for single note in tier-2 phrases",
+              "summary": "Voicing pool restricts to 2-note octave voicings when tier-2 active.",
+              "engine_payload": {
+                "kind": "_pending:octave-doubling",
+                "tier_conditional": true
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Tier-2 voicing pool filter."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wes-montgomery:block-chord-drop2",
+          "name": "Block Chord Drop-2",
+          "summary": "Third-tier texture: 4-note block chords using drop-2 voicings. Top voice carries the melody (chord-melody texture). Consecutive block chords tend to stay on one string set across a phrase.",
+          "members": [
+            {
+              "id": "drop-2-block",
+              "name": "Drop-2 4-note block voicing"
+            },
+            {
+              "id": "drop-3-block",
+              "name": "Drop-3 wider-register block voicing"
+            },
+            {
+              "id": "closed-block",
+              "name": "Closed block (cluster)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R3.1-same-string-set-consecutive",
+              "name": "Consecutive block chords share string-set",
+              "summary": "Block-chord passages stay on one string set; move by position rather than transference.",
+              "engine_payload": {
+                "kind": "PositionContinuity"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Wes's tier-3 articulation across recordings."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.3-drop-2-default",
+              "name": "Drop-2 is the default tier-3 voicing",
+              "summary": "Engine ranks category 'drop-2' voicings higher than other 4-note shapes when tier-3 active.",
+              "engine_payload": {
+                "kind": "_pending:voicing-respacing",
+                "shape": "drop-2"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #227 block-chord-drop-2-predominance principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wes-montgomery:thumb-attack",
+          "name": "Thumb-Attack Articulation",
+          "summary": "Wes used his thumb (not a pick) as the primary attack, giving his sound its characteristic warm/round timbre. Every attack is a thumb downstroke. Limits maximum tempo; influences rhythmic feel.",
+          "members": [
+            {
+              "id": "thumb-led",
+              "name": "Thumb-led (canonical Wes)"
+            },
+            {
+              "id": "downstroke-only",
+              "name": "Downstroke-only attacks"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R4.1-downstroke-only-thumb",
+              "name": "Downstroke-only with thumb",
+              "summary": "No alternate picking; every attack is a thumb downstroke.",
+              "engine_payload": {
+                "kind": "_pending:right-hand-technique-tag",
+                "technique": "thumb-downstroke-only"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #227 thumb-attack-articulation principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wes-montgomery:upper-structure-triad-substitution",
+          "name": "Upper-Structure Triad Substitution Over Altered Dominants",
+          "summary": "Substitution over altered dominants via superimposed triads (e.g., Db major triad over C7 produces C7b9b13; D triad produces C7#11; Eb triad produces C7#9; F# triad gives a fully altered C7). The substitute is a TRIAD positioned above an implied dominant root — structurally distinct from chord-quality substitution.",
+          "members": [
+            {
+              "id": "db-over-c7",
+              "name": "Db triad over C7 → b9, b13"
+            },
+            {
+              "id": "d-over-c7",
+              "name": "D triad over C7 → 9, #11"
+            },
+            {
+              "id": "eb-over-c7",
+              "name": "Eb triad over C7 → #9 (b3)"
+            },
+            {
+              "id": "fsharp-over-c7",
+              "name": "F# triad over C7 → fully altered"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R5.2-expand-dom7alt-with-ust",
+              "name": "Expand candidate pool for dom7alt with upper-structure-triad voicings",
+              "summary": "When written chord is dom7alt, candidate voicings include traditional altered-dominant voicings AND superimposed-triad voicings.",
+              "engine_payload": {
+                "kind": "_pending:upper-structure-triad"
+              },
+              "references": [
+                {
+                  "source": "plans/wes-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #227 upper-structure-triad-substitution principle."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -2356,6 +2757,169 @@
             }
           ],
           "example_voicing_signatures": []
+        }
+      ],
+      "systems": [
+        {
+          "id": "lenny-breau:three-voice-independence",
+          "name": "Three-Voice Independence",
+          "summary": "Three simultaneously-moving lines on 6 strings — thumb plays bass independently while fingers play chord stabs and melody. Each voice has its own rhythmic identity. Distinct from Greene's SATB four-voice and Van Eps's outer/inner four-voice.",
+          "members": [
+            {
+              "id": "thumb-bass",
+              "name": "Thumb-bass (independent line)"
+            },
+            {
+              "id": "chord-stab",
+              "name": "Chord stab (middle voice)"
+            },
+            {
+              "id": "melody",
+              "name": "Melody (treble voice)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-rhythmic-independence",
+              "name": "Bass walks while chord pulses while melody sings",
+              "summary": "Each voice has its own rhythmic identity.",
+              "engine_payload": {
+                "kind": "_pending:inner-voice-counterpoint",
+                "voice_count": 3
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 three-voice-independence principle."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.3-voicings-leaving-room",
+              "name": "Prefer voicings that leave room for the three-voice texture",
+              "summary": "Avoid voicings that conflict with the bass-line or block the melody string.",
+              "engine_payload": {
+                "kind": "DensityCeiling",
+                "max_sounding_notes": 3
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Three-voice texture constraint."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lenny-breau:harp-harmonics-cascades",
+          "name": "Harp-Harmonics Cascades",
+          "summary": "Right hand plucks a string while right-hand index/middle taps a node 12 frets above, producing artificial harmonic in cascading patterns. Atkins-derived technique. Used for chord-melody where timbre suits (slow ballads, intros).",
+          "members": [
+            {
+              "id": "harp-harmonic-arpeggio",
+              "name": "Harp-harmonic cascading arpeggio"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.2-harmonics-for-plain-notes",
+              "name": "Substitute harmonics for plain notes where timbre suits",
+              "summary": "Slow ballads and intros use harmonics as the primary attack.",
+              "engine_payload": {
+                "kind": "_pending:harp-harmonics"
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 harp-harmonics principle, Atkins-derived."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lenny-breau:implied-harmony-via-bass",
+          "name": "Implied Harmony via Bass",
+          "summary": "2-note voicings (bass + melody only) where inner harmony is IMPLIED rather than played. Bass-led variant of Hall's space-doctrine. Bass note suggests harmonic root; melody fills out the implied chord-tone color.",
+          "members": [
+            {
+              "id": "bass-plus-melody-only",
+              "name": "Bass + melody (no chord stab)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R3.1-bass-suggests-root-melody-fills-color",
+              "name": "Bass note suggests harmonic root; melody fills chord-tone color",
+              "summary": "The listener completes the harmony.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "common-tone",
+                  "stepwise"
+                ]
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Sparse-texture chord-melody."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.2-substitute-2-note-for-4-note",
+              "name": "Substitute 2-note bass-melody voicing for 4-note in sparse contexts",
+              "summary": "Sparse-texture preference.",
+              "engine_payload": {
+                "kind": "DensityCeiling",
+                "max_sounding_notes": 2,
+                "context_filter": "sparse"
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 implied-harmony-via-bass principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lenny-breau:7-string-high-a",
+          "name": "7-String High-A Melody Range",
+          "summary": "7-string with HIGH A (A4, above standard e) — distinct from Van Eps's LOW A (below E). Adds a melody-range string above the standard sound box. Melody runs on high-A while standard 6-string territory handles bass + chord.",
+          "members": [
+            {
+              "id": "high-a-melody-line",
+              "name": "Melody on high-A string"
+            },
+            {
+              "id": "standard-6-string-territory",
+              "name": "Standard 6 strings carry bass + chord"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R4.2-high-a-melody-substitution",
+              "name": "Substitute high-A melody line for melody-on-top in solo or accompanied-lead",
+              "summary": "Tuning-specific affordance for the high-A configuration.",
+              "engine_payload": {
+                "kind": "_pending:tuning-specific-melody-range",
+                "tuning": "breau-7-high-a"
+              },
+              "references": [
+                {
+                  "source": "plans/breau-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 7-string-high-a principle."
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2484,6 +3048,200 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "jim-hall:guide-tone-comping",
+          "name": "Guide-Tone Comping (3-7 Voicings)",
+          "summary": "2-note voicings of just the 3rd and 7th of the chord; rarely root. For dom7 = {3, b7}; for maj7 = {3, 7}; for m7 = {b3, b7}. Voice-leading by half-step (canonical 7→3 resolution on V7→I).",
+          "members": [
+            {
+              "id": "dom7-guide-tone",
+              "name": "dom7 guide tone {3, b7}"
+            },
+            {
+              "id": "maj7-guide-tone",
+              "name": "maj7 guide tone {3, 7}"
+            },
+            {
+              "id": "m7-guide-tone",
+              "name": "m7 guide tone {b3, b7}"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-half-step-7-to-3",
+              "name": "Half-step 7→3 voice-leading on V→I",
+              "summary": "When chord changes, guide-tone voicing moves to the new chord's 3 and 7, often via half-step.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "half-step",
+                  "common-tone"
+                ]
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Canonical V7→I guide-tone resolution."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.2-substitute-3-7-for-4-note",
+              "name": "Substitute 3-7 voicing for any standard 4-note voicing in comping",
+              "summary": "Rank 2-note voicings high under context: comping or ensemble.",
+              "engine_payload": {
+                "kind": "DensityCeiling",
+                "max_sounding_notes": 2,
+                "context_filter": "comping"
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 guide-tone-comping principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jim-hall:quartal-and-open-voicings",
+          "name": "Quartal and Open Voicings",
+          "summary": "Stacks of fourths (quartal) and open voicings with large intervals between voices (often a 10th between bass and next voice). Quartal voicings move in parallel; substitute for traditional drop-2/drop-3 in modal contexts.",
+          "members": [
+            {
+              "id": "quartal-stack",
+              "name": "Quartal stack (4ths)"
+            },
+            {
+              "id": "open-voicing-10th",
+              "name": "Open voicing with 10th between bass and next voice"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-quartal-parallel-motion",
+              "name": "Quartal voicings move in parallel",
+              "summary": "Same shape transposed, leveraging quartal harmony's interval-invariance.",
+              "engine_payload": {
+                "kind": "SymmetryMovement",
+                "interval": "fourth"
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Quartal harmony's defining property."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.2-quartal-in-modal-contexts",
+              "name": "Substitute quartal voicing for drop-2/drop-3 in modal contexts",
+              "summary": "Engine preference rank-order boosts quartal in modal contexts (m7, sus, modal-major-7).",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "applies_to_contexts": [
+                  "modal"
+                ]
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 quartal-voicing principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jim-hall:space-doctrine",
+          "name": "Space Doctrine (Voice Less)",
+          "summary": "Voicings are NOT placed on every available beat. Hall's signature is the implied harmony in the gaps. Per-beat probability of voicing decreases under Hall-active.",
+          "members": [
+            {
+              "id": "voice-this-beat",
+              "name": "Voice this beat"
+            },
+            {
+              "id": "rest-this-beat",
+              "name": "Rest this beat (implied harmony)"
+            },
+            {
+              "id": "implied-harmony-this-beat",
+              "name": "Implied harmony (no voicing, listener completes)"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.2-reduce-voicing-frequency",
+              "name": "Reduce voicing frequency below default",
+              "summary": "Per-beat probability of voicing decreases. Hall voices ~50% of available beats vs Pass's ~80%+.",
+              "engine_payload": {
+                "kind": "_pending:voicing-frequency-modulation",
+                "appetite": 0.5
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 implied-harmony principle."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jim-hall:motif-and-melody",
+          "name": "Motif and Melody",
+          "summary": "Short melodic statements (2-4 note motifs) with chord support below. Motivic development typical of Hall's compositional formal training.",
+          "members": [
+            {
+              "id": "short-motif",
+              "name": "Short 2-4 note motif"
+            },
+            {
+              "id": "motif-repetition-with-chord-variation",
+              "name": "Motif repeats with chord variation underneath"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R4.1-motivic-development",
+              "name": "Melody motif repeats with chord variation underneath",
+              "summary": "Engine signal: form-level motif tracker.",
+              "engine_payload": {
+                "kind": "_pending:form-aggregate-motif-tracking"
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Hall's compositional pedigree."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R4.2-melody-on-top-strict",
+              "name": "Prefer voicings whose top voice contains the motivic pitch",
+              "summary": "Melody-on-top constraint.",
+              "engine_payload": {
+                "kind": "ColorToneRequire",
+                "required_position": "top-voice"
+              },
+              "references": [
+                {
+                  "source": "plans/hall-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Chord-melody convention applied strictly."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -2578,6 +3336,152 @@
           ],
           "example_voicing_signatures": []
         }
+      ],
+      "systems": [
+        {
+          "id": "johnny-smith:close-voicing-stretch",
+          "name": "Close Voicing with Stretch Tolerance",
+          "summary": "4-note voicings spanning ≤5 frets, all voices within an octave or close. The defining Smith texture. Stretch tolerance is HIGHER than most masters — close voicings that require larger finger stretches are accepted under Smith-active where they'd be filtered out for others.",
+          "members": [
+            {
+              "id": "close-voicing-4-note",
+              "name": "Close 4-note voicing (≤5 frets)"
+            },
+            {
+              "id": "tight-cluster",
+              "name": "Tight cluster (3-fret span)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-stepwise-close-motion",
+              "name": "Consecutive close voicings move stepwise",
+              "summary": "Minimal hand motion; voicings nest within a 3-fret span across a phrase.",
+              "engine_payload": {
+                "kind": "VoiceMotion",
+                "preferred_order": [
+                  "common-tone",
+                  "stepwise-inner"
+                ]
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Moonlight in Vermont (1952) reference recording."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R1.2-close-voicing-default",
+              "name": "Close voicing default over drop-2",
+              "summary": "Contrast with Pass and Wes (drop-2-default).",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "preferred_category": "close-voicing"
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "PR #237 close-voicing principle."
+                }
+              ]
+            },
+            {
+              "id": "R1.3-high-stretch-tolerance",
+              "name": "Higher finger-stretch tolerance than most masters",
+              "summary": "Accept close voicings other masters would reject for finger reach.",
+              "engine_payload": {
+                "kind": "_pending:finger-stretch-tolerance",
+                "tolerance": "high"
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Per-master stretch ceiling."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "johnny-smith:pianistic-wide-stretch",
+          "name": "Pianistic Wide-Stretch Voicings",
+          "summary": "Voicings with internal intervals exceeding an octave. Smith's 'pianistic' voicings. Appear at melodic peaks and resolutions — register-conditional, not comping default.",
+          "members": [
+            {
+              "id": "wide-spread-open",
+              "name": "Wide-spread open voicing (>octave between voices)"
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R2.2-register-conditional-wide",
+              "name": "Substitute wide-stretch when melody hits high register",
+              "summary": "Register-conditional preference — when current register is high, wide-stretch preferred; otherwise close-voicing.",
+              "engine_payload": {
+                "kind": "SubstitutionExpand",
+                "register_condition": "high"
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Register-conditional preference, parallel to Wes's tier-conditional motion order."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "johnny-smith:diatonic-line-vocabulary",
+          "name": "Diatonic Line Vocabulary",
+          "summary": "Single-note lines drawn from diatonic chord-scales. Stays IN the key. Django-influenced rhythmic feel. Chromatic approach is rare (unlike Pass).",
+          "members": [
+            {
+              "id": "diatonic-line",
+              "name": "Diatonic line (in-key)"
+            },
+            {
+              "id": "chord-tone-target",
+              "name": "Chord-tone target landing"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R3.1-target-chord-tones",
+              "name": "Lines target chord tones; chromatic approach rare",
+              "summary": "Diatonic-by-default.",
+              "engine_payload": {
+                "kind": "ColorToneRequire",
+                "required_at_resolution": "chord-tone"
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Smith's diatonic vocabulary."
+                }
+              ]
+            }
+          ],
+          "modification_rules": [
+            {
+              "id": "R3.2-restrict-pitch-vocabulary",
+              "name": "Restrict line-pitch vocabulary to diatonic",
+              "summary": "For solo and accompanied-lead contexts.",
+              "engine_payload": {
+                "kind": "_pending:line-pitch-vocabulary-restriction",
+                "vocabulary": "diatonic"
+              },
+              "references": [
+                {
+                  "source": "plans/smith-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Existing scale-pairing mechanism."
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -2646,6 +3550,78 @@
             }
           ],
           "example_voicing_signatures": []
+        }
+      ],
+      "systems": [
+        {
+          "id": "jody-fisher:pedagogical-organization",
+          "name": "Pedagogical Organization (A-Lessons / B-Lessons)",
+          "summary": "Fisher's distinctive teaching structure: parallel A-lessons (chords/harmony) + B-lessons (improvisation) across his three volumes. Each chapter has a concept → etude → song-application. Documentation-only for v1 engine; may surface in a future practice-mode UI.",
+          "members": [
+            {
+              "id": "a-lesson",
+              "name": "A-lesson (chords + harmony)"
+            },
+            {
+              "id": "b-lesson",
+              "name": "B-lesson (improvisation)"
+            },
+            {
+              "id": "etude",
+              "name": "Etude (mechanical exercise)"
+            },
+            {
+              "id": "song-application",
+              "name": "Song-application (composed tune)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R1.1-a-and-b-parallel",
+              "name": "A-lessons and B-lessons run in parallel",
+              "summary": "A1/B1, A2/B2, etc. are paired but independent tracks.",
+              "engine_payload": {
+                "kind": "_pending:pedagogical-organization"
+              },
+              "references": [
+                {
+                  "source": "plans/fisher-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Fisher Vol 1-3 (Alfred Publishing) structure."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jody-fisher:etude-and-song-driven-practice",
+          "name": "Etude- and Song-Driven Practice",
+          "summary": "Fisher's commitment to demonstrating every concept with both an etude (mechanical) AND a full song (musical context). Composed tunes ('Noah's Groove', 'Ruby My Deerfly', 'Modelicious', 'Blue Tofu') are pedagogical artifacts as much as music.",
+          "members": [
+            {
+              "id": "etude-form",
+              "name": "Etude (mechanical, scale-specific)"
+            },
+            {
+              "id": "song-form",
+              "name": "Song (full tune in chord-melody context)"
+            }
+          ],
+          "traversal_rules": [
+            {
+              "id": "R2.1-etudes-before-songs",
+              "name": "Etudes practiced before songs",
+              "summary": "Mechanical drilling precedes musical application.",
+              "engine_payload": {
+                "kind": "_pending:practice-prescription"
+              },
+              "references": [
+                {
+                  "source": "plans/fisher-system-rebuild.md (predecessor session 260521-aware-nebula)",
+                  "citation": "Fisher Vol 1 'Practicing' appendix."
+                }
+              ]
+            }
+          ]
         }
       ]
     },

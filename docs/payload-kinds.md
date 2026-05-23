@@ -206,6 +206,17 @@ If no name above matches what your rule does, use `_pending:<short-kebab-slug>`.
 | `_pending:degree-bypass` | A rule that elides a specific scale-degree chord from the progression entirely (no replacement); structurally distinct from `SubstitutionExpand` which expands the candidate pool | Joe Pass R4.4 ("Forget the II — focus on the V") |
 | `_pending:tritone-substitution` | The specific tritone-related-pair symmetry within dominant family — preserves alteration palette across the symmetric root pair; narrower mechanic than `SubstitutionExpand` | Joe Pass R5.2 (tritone color-passthrough p. 25) |
 | `_pending:fixed-soprano-tour` | Hold the top voice constant; cycle through all voicings of the chord underneath; the canonical chord-melody engine of Greene's V-System | Ted Greene R1.3 (V-system fixed soprano tour, tedgreene.com archive) |
+| `_pending:octave-doubling` | 2-note octave-pair texture; both notes move parallel, no internal voice-leading | Wes Montgomery R2.1 (octave-melody, PR #227) |
+| `_pending:voicing-frequency-modulation` | Per-beat voicing presence (silent-beats-as-output, not as failure); affects when to voice, not what to voice | Jim Hall R3.2 (space-doctrine; PR #237 implied-harmony) |
+| `_pending:harp-harmonics` | Right-hand artificial-harmonic technique used as melodic/coloristic resource; Atkins-Breau-Taylor | Lenny Breau R2.2 + Martin Taylor R4.2 |
+| `_pending:finger-stretch-tolerance` | Per-master stretch ceiling; some masters accept close voicings requiring larger finger reaches that other masters reject | Johnny Smith R1.3 (close-voicing stretch) |
+| `_pending:bass-pattern-generation` | Patterned bass (alternating-thumb boom-chick) distinct from walking-bass (per-beat improvised) | Martin Taylor R1.1 + R1.3 (alternating-thumb-bass) |
+| `_pending:internal-voice-dynamics` | Per-voice dynamic profile within a single voicing (bass louder, melody softer, etc.); playback affordance rather than voicing selector | Martin Taylor R3.2 (internal-dynamics) |
+| `_pending:form-aggregate-tier-progression` | Form-level rule modulating voicing density across sections (e.g., Wes chorus-by-chorus tier progression); operates at Phase H, not per-voicing | Wes Montgomery R1.1 + R1.3 (three-tier chorus architecture) |
+| `_pending:form-aggregate-motif-tracking` | Form-level rule tracking motifs across phrases (Hall's motif repeats with chord variation); Phase H affordance | Jim Hall R4.1 (motif-and-melody) |
+| `_pending:tuning-specific-melody-range` | Affordance for tuning-specific note-range (e.g., Breau's high-A 7-string giving a melody range above standard 6-string) | Lenny Breau R4.2 (7-string-high-a) |
+| `_pending:line-pitch-vocabulary-restriction` | Restrict improvised-line pitch vocabulary to a named set (diatonic, chromatic, modal) | Johnny Smith R3.2 (diatonic-line-vocabulary) |
+| `_pending:pedagogical-organization` | Documentation-only meta-system for teaching-track structure (A-lessons, B-lessons, etude→song); not a voicing-engine rule | Jody Fisher R1.1 (Complete Jazz Guitar Method Vol 1-3) |
 
 These are candidate names for future kind-additions, each warranting its own ticket per #256's `_pending:` workflow.
 
