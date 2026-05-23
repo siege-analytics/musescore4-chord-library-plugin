@@ -20,6 +20,8 @@ When writing a rule, ask the two questions in order:
 
 When in doubt: `_pending:`. Three of Benson Vol 1's rules in `derived/systems-draft.json` were filed under wrong names that this glossary surfaces (see the Audit section at the end).
 
+**Note on field names.** The example payload field names below (`system_ref`, `same_region_threshold_frets`, `preferred_order`, `min_sounding_notes`, etc.) are **illustrative**, drawn from the predecessor's `schema-systems-model.md` examples. They are not normative until engine code consumes them. A future PR that wires up engine implementation may rename or restructure these fields; the glossary's field listings should be updated then. What's authoritative today is only `kind` (the enum value) and `_pending:<kebab>` (the escape).
+
 ---
 
 ## Traversal kinds
@@ -141,7 +143,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `applies_to_chord_types` — array of chord qualities or families.
 - `applies_to_contexts` — optional.
 
-**Worked example.** "The 5th is almost always omitted in 13th chords" — encoded as `{ kind: "OmissionAllow", omissible_degrees: ["5"], applies_to_chord_types: ["dom13", "maj13", "min13"] }`. Source: pattern visible across Van Eps and Pass rebuild docs; also matches the `tolerance_hints.minSoundingNotes` migration path per `plans/schema-systems-model.md` line 278.
+**Worked example.** "The 5th is almost always omitted in 13th chords" — encoded as `{ kind: "OmissionAllow", omissible_degrees: ["5"], applies_to_chord_types: ["dom13", "maj13", "min13"] }`. Sources: this example is plausible but not a verbatim rebuild-doc citation; `plans/schema-systems-model.md` line 278 mentions the `tolerance_hints.minSoundingNotes` migration path (related but not exactly this rule), and `plans/vaneps-system-rebuild.md` line 156 cites `OmissionAllow` as partial coverage of Van Eps's R4.2. **TODO**: replace this constructed example with a verbatim rebuild-doc citation once a master's rebuild explicitly encodes omission-allow against a specific degree.
 
 **Boundary notes.** This is about which tones MAY be omitted, not which must be. NOT about which tones must be present (that's `ColorToneRequire`). NOT about avoid notes in melodic context (that's `NCTHarmonization`'s territory). Van Eps R4.1 note-addition-by-flattening goes the OTHER way (adding a note), which existing `OmissionAllow` doesn't cover — that's `_pending:flattened-finger-extension`.
 
@@ -154,7 +156,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `bonus`/`penalty`.
 - `applies_to_chord_types` — optional.
 
-**Worked example.** A Phrygian-mode voicing prefers exposing the b2 ("characteristic note: b2"). Encoded as `{ kind: "ColorToneRequire", required_degrees: ["b2"], applies_to_chord_types: ["phrygian-context-chords"], bonus: 10 }`. Source: pattern from Stage 4 of Benson Vol 1 derivation; the predecessor's `plans/schema-systems-model.md` line 132 one-liner.
+**Worked example.** **TODO**: write when the first rule explicitly using `ColorToneRequire` against specific named degrees lands in a rebuild doc. Today the kind exists only as the predecessor's one-line comment in `plans/schema-systems-model.md` line 132 ("voicings exposing color tones rank higher"). The Phrygian "characteristic note: b2" pattern in Benson Vol 1's Stage 4 is the closest concrete usage, but it was filed by Stage 4 against this kind without prior rebuild-doc precedent — so citing it would be self-referential.
 
 **Boundary notes.** This is a SINGLE-VOICING content rule about which tones must/should appear. NOT about how to handle non-chord tones in a melodic line (that's `NCTHarmonization`). NOT about "avoid notes" — those are tones to AVOID exposing, which is the inverse and currently has no kind (Benson Vol 1's "Avoid Note Suppression" was filed under `NCTHarmonization` and arguably belongs under `_pending:avoid-note-suppression` — see Audit).
 
@@ -166,7 +168,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `appetite` — `0` (never harmonize NCT) through `1.0` (always harmonize).
 - `nct_treatment_per_type` — optional map `{passing: 0.3, neighbor: 0.5, suspension: 0.8, ...}`.
 
-**Worked example.** No explicit citation in rebuild docs; this kind is currently underspecified. Per `plans/schema-systems-model.md` line 133 one-liner: "harmonize/skip non-chord tones with appetite N." A worked example will land when the first NCT-driven rule is encoded in a rebuild doc.
+**Worked example.** **TODO**: write when the first rule explicitly using `NCTHarmonization` against a melodic NCT context lands in a rebuild doc. Today the kind exists only as the predecessor's one-line comment in `plans/schema-systems-model.md` line 133 ("harmonize/skip non-chord tones with appetite N"). No rebuild-doc cites it against a specific rule.
 
 **Boundary notes.** **This is about MELODY-DRIVEN harmonization** — given a non-chord tone in the melody, do you find a voicing that includes it (harmonize) or leave it bare? **It is NOT about "avoid notes" in the modal-harmony sense.** Avoid notes are mode-degree-specific notes that the modal taxonomy says should not be ended on or sustained over the underlying chord; that is a different concept and currently has no dedicated kind. Benson Vol 1's "Avoid Note Suppression" was filed here in the systems-draft and is one of the three audit findings below.
 
@@ -179,7 +181,7 @@ These act on a single voicing in isolation, before or independent of consecutive
 - `beat_pattern` — optional grouping (e.g. `[1, 2, 3, 4]`).
 - `applies_to_contexts` — optional.
 
-**Worked example.** No explicit citation in rebuild docs surveyed; this kind is currently underspecified beyond the predecessor's one-liner ("cycle between bass/chord/melody textures"). The natural use case is Pass's solo-guitar walking-bass-plus-chord-stab texture, which is mentioned in `plans/pass-system-rebuild.md` but not yet bound to this kind in the rebuild text. A worked example will land when the first texture-cycling rule is encoded.
+**Worked example.** **TODO**: write when the first rule explicitly using `TextureCycle` against a beat-pattern texture-cycling rule lands in a rebuild doc. The natural candidate (Pass's solo-guitar walking-bass-plus-chord-stab texture) is mentioned in `plans/pass-system-rebuild.md` but not bound to this kind there. Today the kind exists only as the predecessor's one-line comment in `plans/schema-systems-model.md` line 134.
 
 **Boundary notes.** This is a STRUCTURAL rule about which voices sound when. NOT about chord density per voicing (that's `DensityFloor` / `DensityCeiling`). NOT about voicing transitions (those are traversal kinds). Benson Vol 1's Stage 4 used this kind for the "Study Devices Protocol" rule which is arguably a stretch — the Study Devices Protocol is a practice prescription, not a beat-level texture-cycling rule (see Audit).
 
