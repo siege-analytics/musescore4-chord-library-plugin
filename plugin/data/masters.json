@@ -5075,6 +5075,844 @@
           ]
         }
       ]
+    },
+    {
+      "id": "peter-bernstein",
+      "name": "Peter Bernstein",
+      "lived": "1967-",
+      "traditions": [
+        "jazz",
+        "post-bop",
+        "bebop"
+      ],
+      "instrument": "6-string",
+      "biography": "Brooklyn-born jazz guitarist whose playing and teaching extend the post-bop lineage of Wes Montgomery, Grant Green, and Jim Hall. Sideman recordings with Lou Donaldson, Sonny Rollins, Diana Krall, and Larry Goldings situate his aesthetic in a melody-primary, narrative-driven approach to improvisation that treats jazz as a language rather than a vocabulary of scales. Bernstein teaches privately and at NYU; the 2023 master's thesis by Nico Moreno (also at NYU) is the canonical written distillation of his teaching, transcribed from Bernstein-consented lesson recordings. The masters.json entry is sourced from the Moreno thesis, not from a Bernstein-authored method.",
+      "works": [
+        {
+          "id": "improvisation-method-as-documented-2023",
+          "title": "An approach to Jazz Improvisation: A method by Peter Bernstein (as documented by Nico Moreno, NYU 2023)",
+          "year": 2023,
+          "instrument_scope": "6-string",
+          "summary": "A master's-thesis-shaped distillation of Bernstein's private and NYU lessons, transcribed from Bernstein-consented lesson recordings. The document organizes Bernstein's teaching into eight conceptual themes: jazz as a language and the importance of narrative; how to learn a tune; the primacy of the melody; the relation between chords and melody; language, rhythm, and meaning; comping and supporting the melody; harmonic movement, tension, and substitutions; and expanding the vocabulary (creating ideas around target notes, creating ideas from a shape, the narrative of the solo). The thesis is explicit that Bernstein's own teaching lacks a strict methodical structure and that every concept is contextualized in specific musical material rather than presented as standalone theory — the document supplies the structure that Bernstein's informal pedagogy intentionally does not.",
+          "references": [
+            {
+              "source": "Moreno, Nico. \"An approach to Jazz Improvisation: A method by Peter Bernstein.\" Master's Thesis, NYU Jazz Studies Program, 2023. Supervisor: Dr. David Schroeder.",
+              "citation": "30-page master's thesis transcribed from Bernstein-consented lesson recordings; covers eight conceptual themes plus closing remarks on Bernstein's aesthetic path."
+            }
+          ],
+          "systems": [
+            {
+              "id": "peter-bernstein:improvisation-method-as-documented-2023:melodic-narrative",
+              "name": "Melodic Narrative System (Jazz as Language)",
+              "summary": "Bernstein's load-bearing conceptual system: improvisation is language use, not scale deployment. Every concept is anchored to a specific tune rather than to an abstract harmonic exercise; the standard is a poem and the melody is its story. The system's central aesthetic - connected narrative outranks correctness-of-notes - unifies vocabulary acquisition (by listening and imitation), the practice unit (small phrases, not transcribed choruses), and the evaluative criterion for any played line (does it tell a story?). Contrast, silence, and rhymes are the narrative grammar; target notes are the structural landing points around which lines are built.",
+              "members": [
+                {
+                  "id": "tune-as-poem",
+                  "name": "Tune-as-Poem",
+                  "summary": "Each standard treated as a poem whose syntax, word-assembly, and rhymes the player is studying."
+                },
+                {
+                  "id": "melody-as-story",
+                  "name": "Melody-as-Story",
+                  "summary": "Within the poem, the melody is the story itself; harmony and ornamentation are supporting customs."
+                },
+                {
+                  "id": "phrase-as-unit",
+                  "name": "Phrase as Unit of Vocabulary",
+                  "summary": "Small phrases (not full transcribed choruses) are the practice and recombination unit."
+                },
+                {
+                  "id": "target-note",
+                  "name": "Target Note",
+                  "summary": "The melody's own landing points on chord tones - the structural basis for improvised lines."
+                },
+                {
+                  "id": "contrast",
+                  "name": "Contrast",
+                  "summary": "Soft against loud, short against long, serious against lighthearted - the engine of narrative engagement."
+                },
+                {
+                  "id": "silence",
+                  "name": "Silence",
+                  "summary": "Spaces between notes serve as punctuation between ideas."
+                },
+                {
+                  "id": "rhyme",
+                  "name": "Rhyme",
+                  "summary": "Motifs connected across time via call-and-response or parallel tension-resolution."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "lines-lead-to-target-notes",
+                  "name": "Build Lines That Lead to Melody's Target Notes",
+                  "summary": "Identify the melody's target notes and build improvised lines that lead to them, starting simply and growing in complexity.",
+                  "engine_payload": {
+                    "kind": "_pending:target-note-arrival"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Lines leading to target notes",
+                      "quote_excerpt": "build melodic lines that lead to them, starting simply"
+                    },
+                    {
+                      "chapter_n": 8,
+                      "topic": "Melody target notes as basis",
+                      "quote_excerpt": "the melody's own target notes are the basis for improvisation"
+                    }
+                  ]
+                },
+                {
+                  "id": "narrative-outranks-correctness",
+                  "name": "Connected Narrative Outranks Correctness of Notes",
+                  "summary": "Prefer ideas that relate to each other with purpose over notes that merely work over the chords.",
+                  "engine_payload": {
+                    "kind": "_pending:narrative-coherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Narrative vs notes that work",
+                      "quote_excerpt": "ideas that relate to each other with purpose"
+                    }
+                  ]
+                },
+                {
+                  "id": "contrast-as-engine",
+                  "name": "Contrast as Narrative Engine",
+                  "summary": "Use contrast - soft against loud, short against long, serious against lighthearted - to sustain narrative engagement across a solo.",
+                  "engine_payload": {
+                    "kind": "_pending:narrative-contrast"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Contrast as narrative tool",
+                      "quote_excerpt": "soft against loud, short against long, serious against lighthearted"
+                    }
+                  ]
+                },
+                {
+                  "id": "strategic-subdivisions",
+                  "name": "Withhold Dense Subdivisions Until Late",
+                  "summary": "Pace dense rhythmic subdivisions to be withheld early and deployed later to build anticipation.",
+                  "engine_payload": {
+                    "kind": "_pending:pacing-subdivisions"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Strategic use of subdivisions",
+                      "quote_excerpt": "withholds dense subdivisions early and deploys them later"
+                    }
+                  ]
+                },
+                {
+                  "id": "silence-as-punctuation",
+                  "name": "Silence as Punctuation Between Ideas",
+                  "summary": "Treat silences as punctuation between ideas, not as gaps to be filled.",
+                  "engine_payload": {
+                    "kind": "_pending:silence-as-punctuation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Silence as punctuation",
+                      "quote_excerpt": "the linguistic role of silence as punctuation between ideas"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Rhythm gives notes meaning",
+                      "quote_excerpt": "rhythm and the spaces between notes are what convert"
+                    }
+                  ]
+                },
+                {
+                  "id": "rhymes-connect-motifs",
+                  "name": "Rhymes Connect Motifs Across Time",
+                  "summary": "Use rhymes - call-and-response or parallel tension-resolution - to link motifs across the form.",
+                  "engine_payload": {
+                    "kind": "_pending:motivic-rhyme"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Rhymes between ideas",
+                      "quote_excerpt": "connecting motifs across time through call-and-response"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "concepts-live-in-tunes",
+                  "name": "Every Concept Anchored to a Specific Tune",
+                  "summary": "No concept is presented as an abstract system; every idea is anchored to a specific tune.",
+                  "engine_payload": {
+                    "kind": "_pending:tune-contextualization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "No strict method",
+                      "quote_excerpt": "almost never explains a concept without anchoring it to a specific tune"
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "Concepts live in tunes",
+                      "quote_excerpt": "all ideas are presented inside specific tunes"
+                    }
+                  ]
+                },
+                {
+                  "id": "cadenza-definitive-ending",
+                  "name": "Cadenzas Require Definitive Endings",
+                  "summary": "End cadenzas with definitive, unambiguous endings under the performer's control (parking-a-car, ending-a-conversation analogies).",
+                  "engine_payload": {
+                    "kind": "_pending:definitive-ending"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Cadenzas need clear endings",
+                      "quote_excerpt": "definitive, unambiguous endings under the performer's control"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "peter-bernstein:improvisation-method-as-documented-2023:melody-primary-improvisation",
+              "name": "Melody-Primary Improvisation System",
+              "summary": "Codifies the method's load-bearing pedagogical rule: melody is primary and harmony exists to serve it. The order-of-operations is explicit - the first practice task on any tune is to play the melody as a monophonic instrument, with attention to lyric syllables as a guide to articulation, before any harmonic embellishment. Target notes are the operational link between the melody and the harmony: when the melody lands on a specific chord tone, the player notes it and lets it dictate voicing choice. The 'juggling on a unicycle' maxim warns against texture-overload at the cost of melodic feel.",
+              "members": [
+                {
+                  "id": "monophonic-delivery",
+                  "name": "Monophonic Melody Delivery",
+                  "summary": "Play the tune as a single line with attention to lyric syllables."
+                },
+                {
+                  "id": "shell-voicing-entry",
+                  "name": "Conservative Shell Voicing",
+                  "summary": "Root-3-7 shell voicings as the chord layer added after melody mastery."
+                },
+                {
+                  "id": "extension-layer",
+                  "name": "Extension and Signature Run Layer",
+                  "summary": "Extensions and signature runs added only after the melody-chord relationship is heard."
+                },
+                {
+                  "id": "melody-target-note",
+                  "name": "Melody Target Note",
+                  "summary": "The specific chord tone the melody lands on; dictates voicing choice."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "step-1-before-step-12",
+                  "name": "Step 1 Before Step 12",
+                  "summary": "Complete melody mastery before any harmonic embellishment; do not rush to step 12 before step 1.",
+                  "engine_payload": {
+                    "kind": "_pending:practice-ordering"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Step 1 before step 12",
+                      "quote_excerpt": "must not rush to step 12 before completing step 1"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Melody as monophonic delivery",
+                      "quote_excerpt": "play the melody as a monophonic instrument"
+                    }
+                  ]
+                },
+                {
+                  "id": "conservative-chord-entry",
+                  "name": "Enter With Conservative Shell Voicings",
+                  "summary": "On solo guitar, enter with conservative shell voicings and only then expand to extensions and signature runs.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Conservative chord entry",
+                      "quote_excerpt": "enters with conservative shell voicings"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "melody-dictates-chord-choice",
+                  "name": "Target Note Dictates Voicing Choice",
+                  "summary": "When the melody lands on a specific chord tone, that note dictates voicing choice (e.g., Dm6 vs Dm7 chosen by whether the melody is the 6 or the b7).",
+                  "engine_payload": {
+                    "kind": "_pending:melody-driven-voicing"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Melody dictates chord choice",
+                      "quote_excerpt": "the melody lands on a specific chord tone and lets it dictate voicing choice"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Dm6 vs Dm7 from melody",
+                      "quote_excerpt": "the melody's b7 overrides the default minor-tonic Dm6"
+                    }
+                  ]
+                },
+                {
+                  "id": "never-sacrifice-melody-phrasing",
+                  "name": "Place Chords Only in Spaces the Melody Allows",
+                  "summary": "Chords are placed in the spaces the melody allows, never the reverse; never sacrifice melody phrasing for harmony.",
+                  "engine_payload": {
+                    "kind": "_pending:melody-primacy-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Never sacrifice melody phrasing",
+                      "quote_excerpt": "chords are placed in the spaces the melody allows"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Juggling on a unicycle",
+                      "quote_excerpt": "warns against texture-overload at the cost of melodic feel"
+                    }
+                  ]
+                },
+                {
+                  "id": "tensions-as-flavor",
+                  "name": "Memorize Tensions by Sensory Flavor",
+                  "summary": "Tensions are memorized by sensory flavor rather than symbol manipulation; a single pitch carries different flavors under different chords.",
+                  "engine_payload": {
+                    "kind": "_pending:flavor-memorization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Chords as flavor/spice",
+                      "quote_excerpt": "tensions are memorized by sensory flavor rather than symbol manipulation"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "A note's flavor depends on harmony",
+                      "quote_excerpt": "a single pitch carries different flavors under different chords"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "peter-bernstein:improvisation-method-as-documented-2023:comping-aesthetic",
+              "name": "Comping Aesthetic System (Dressing the Notes)",
+              "summary": "Applies the melody-first hierarchy to accompaniment via the signature 'dressing the notes' metaphor: comping's job is to give each melody note the right outfit so it feels important. The concrete practice rule is to begin with root-3-7 voicings only, internalize their relationship to the melody, and add extensions only after that relationship is heard. The chapter prescribes a two-phase comping-construction procedure - design a guide-tone line per chord as a secondary melody, then fill the inner voices to dress those guide tones. Tension and resolution are generated even inside a single sustained chord, and rhythm in comping is elevated to equal status with voicing choice.",
+              "members": [
+                {
+                  "id": "root-3-7-shell",
+                  "name": "Root-3-7 Shell Voicing",
+                  "summary": "The basic chord layer that establishes the melody-chord relationship before extensions are added."
+                },
+                {
+                  "id": "guide-tone-line",
+                  "name": "Guide-Tone Line",
+                  "summary": "A self-designed melodic line through each chord, functioning as a secondary melody under the tune."
+                },
+                {
+                  "id": "inner-voice-dressing",
+                  "name": "Inner-Voice Dressing",
+                  "summary": "Inner voices filled around the guide-tone line to dress those guide tones."
+                },
+                {
+                  "id": "extension-outfit",
+                  "name": "Extension-as-Outfit (e.g., B7#11)",
+                  "summary": "A tension chosen so the melody note becomes a color rather than a doubling."
+                },
+                {
+                  "id": "rhythmic-motif",
+                  "name": "Rhythmic Motif",
+                  "summary": "A borrowed or developed rhythmic cell (e.g., Star Eyes intro) used as a developable comping unit."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "foundation-before-embellishment",
+                  "name": "Foundation Before Embellishment",
+                  "summary": "Begin with root-3-7 voicings and add extensions only after the relationship between basic chords and melody is internalized.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Start with root, third, seventh",
+                      "quote_excerpt": "begin with root-3-7 voicings only, internalize the relationship"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Foundation before embellishment",
+                      "quote_excerpt": "a layered foundation-before-embellishment discipline"
+                    }
+                  ]
+                },
+                {
+                  "id": "two-phase-comping-construction",
+                  "name": "Two-Phase Comping Construction",
+                  "summary": "First design your own guide-tone line per chord as a secondary melody; then fill the inner voices to dress those guide tones.",
+                  "engine_payload": {
+                    "kind": "_pending:guide-tone-then-dress"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Build own guide tones",
+                      "quote_excerpt": "design your own guide-tone line per chord as a secondary melody"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Fill in around guide tones",
+                      "quote_excerpt": "fill the inner voices to dress those guide tones"
+                    }
+                  ]
+                },
+                {
+                  "id": "comping-mirrors-solo-targets",
+                  "name": "Comping Voicing Tops Mirror Solo Target Notes",
+                  "summary": "The top voicings used while comping are drawn from the same melodic target notes used as solo landing points - one system covers two roles.",
+                  "engine_payload": {
+                    "kind": "_pending:unified-target-system"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Comping voicings mirror solo targets",
+                      "quote_excerpt": "drawn from the same melodic target notes he uses as solo landing points"
+                    }
+                  ]
+                },
+                {
+                  "id": "internal-motion-within-chord",
+                  "name": "Internal Tension/Resolution Within a Single Chord",
+                  "summary": "Generate internal tension and resolution even when a single chord is sustained over multiple measures; locate creative work in tension zones rather than at resolutions.",
+                  "engine_payload": {
+                    "kind": "_pending:internal-tension-motion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Internal motion within a single chord",
+                      "quote_excerpt": "generate internal tension/resolution even when a single chord is sustained"
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Tension is where creativity lives",
+                      "quote_excerpt": "locate creative work in tension zones rather than at resolutions"
+                    }
+                  ]
+                },
+                {
+                  "id": "responsive-flexible-groove",
+                  "name": "Bend Groove to the Soloist",
+                  "summary": "The comper bends groove to the soloist's reality rather than the reverse.",
+                  "engine_payload": {
+                    "kind": "_pending:soloist-responsive-comping"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Flexible groove with soloist",
+                      "quote_excerpt": "bends groove to the soloist's reality rather than the reverse"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "dress-the-notes",
+                  "name": "Dress the Notes",
+                  "summary": "Choose each voicing so the melody note becomes an important color, not a weak doubling (e.g., substitute B7#11 so the melody is the tension rather than the doubled bass).",
+                  "engine_payload": {
+                    "kind": "_pending:dressing-the-notes"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Dressing the notes",
+                      "quote_excerpt": "give each melody note the right outfit so it feels important"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "B7#11 outfit example",
+                      "quote_excerpt": "the melody note becomes a tension rather than being weakly doubled"
+                    }
+                  ]
+                },
+                {
+                  "id": "rhythm-equal-to-voicing",
+                  "name": "Rhythm Equal to Voicing in Comping",
+                  "summary": "Rhythm in comping is as load-bearing as voicing; borrow rhythmic motifs (e.g., Parker's 'Star Eyes' intro) as developable units.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythm-of-comping"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Rhythm equal to chords",
+                      "quote_excerpt": "rhythm is elevated to equal status with voicing choice"
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Borrow rhythmic motifs for comping",
+                      "quote_excerpt": "borrowing rhythmic motifs such as the intro of Parker's Star Eyes"
+                    }
+                  ]
+                },
+                {
+                  "id": "reharm-anticipates-melody",
+                  "name": "Reharmonize to Anticipate the Soloist's Melody",
+                  "summary": "Extend comping into real-time reharmonization that anticipates the soloist's notes while preserving the song's harmonic narrative.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Reharm to anticipate melody",
+                      "quote_excerpt": "real-time reharmonization that anticipates the soloist's notes"
+                    }
+                  ]
+                },
+                {
+                  "id": "under-resolve-the-i",
+                  "name": "Under-Resolve the I Chord",
+                  "summary": "Avoid overemphasizing the I chord; substitute a V-derived I69 to keep tension unresolved over the tonic and avoid the root of the I chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Avoid the root of the I chord",
+                      "quote_excerpt": "substituting a V-derived I69 to keep tension unresolved"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Don't overemphasize the I chord",
+                      "quote_excerpt": "the forward-motion rule of under-resolving the I chord"
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-ii-v-substitution",
+                  "name": "Tritone-Distance ii-V Over a Resolving Dominant",
+                  "summary": "Insert a ii-V at the tritone distance over a resolving dominant; rhythmic placement of the substitution matters as much as its harmonic logic.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Tritone ii-V substitution",
+                      "quote_excerpt": "inserting a tritone-distance ii-V over a resolving dominant"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Rhythmic placement of substitutions",
+                      "quote_excerpt": "rhythmic placement of the substitution matters as much"
+                    }
+                  ]
+                },
+                {
+                  "id": "voice-leading-as-choir",
+                  "name": "Voice Leading as Choir Writing",
+                  "summary": "Treat each string as a singer in a choir, giving each line a beautiful melodic shape (Jim Hall framing).",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Voice leading as choir writing",
+                      "quote_excerpt": "each string is a singer in a choir to be given a beautiful melodic line"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "peter-bernstein:improvisation-method-as-documented-2023:vocabulary-development",
+              "name": "Vocabulary Development System (Recursive Variation and Target-Note Practice)",
+              "summary": "The apparatus by which a player expands the internalized library of phrases that improvisation recombines. Vocabulary is acquired the way children learn to speak - by listening and imitation - and creativity is defined operationally as recursive variation: ten ideas from one, then ten from each of those. The chapter enumerates three named variation methods (ear-led free variation, phrases built around a single target note, phrases around two simultaneous target notes) and pairs them with a permissive chromatic stance under the 'party for the target' analogy: diatonic notes are family, chromatic notes are friends and neighbors. The system closes with two practice meta-rules - practice away from the instrument so imagination leads the fingers, and learn classic lines first then progressively abstract them.",
+              "members": [
+                {
+                  "id": "free-variation",
+                  "name": "Ear-Led Free Variation",
+                  "summary": "Variation that preserves the line's overall structure while changing notes by ear."
+                },
+                {
+                  "id": "single-target-variation",
+                  "name": "Single Target-Note Variation",
+                  "summary": "Phrases built around a single chosen target note from the chord."
+                },
+                {
+                  "id": "two-target-variation",
+                  "name": "Two Simultaneous Target Notes",
+                  "summary": "Phrases built around two target notes at once."
+                },
+                {
+                  "id": "diatonic-family",
+                  "name": "Diatonic 'Family' Notes",
+                  "summary": "Diatonic notes around a target - the 'family' in the party-for-the-target analogy."
+                },
+                {
+                  "id": "chromatic-neighbors",
+                  "name": "Chromatic 'Friends and Neighbors'",
+                  "summary": "Chromatic notes that can approach any target if they serve the line."
+                },
+                {
+                  "id": "classic-line",
+                  "name": "Classic Line",
+                  "summary": "Canonical phrase learned by imitation, the starting unit for abstraction."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "recursive-variation-ten-from-one",
+                  "name": "Recursive Variation: Ten From One",
+                  "summary": "Generate ten variations from a single idea, then ten more from each of those - creativity defined as recursive variation generation.",
+                  "engine_payload": {
+                    "kind": "_pending:recursive-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Creativity as variation generation",
+                      "quote_excerpt": "ten ideas from one, then ten from each of those"
+                    }
+                  ]
+                },
+                {
+                  "id": "open-approach-variation",
+                  "name": "Open (Ear-Led) Variation Preserving Structure",
+                  "summary": "Generate ear-led free variations that preserve the line's overall structure.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-led-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Open approach to variation",
+                      "quote_excerpt": "ear-led free variation that preserves the line's overall structure"
+                    }
+                  ]
+                },
+                {
+                  "id": "phrases-around-target",
+                  "name": "Phrases Built Around a Target Note",
+                  "summary": "Build phrases that orbit a single chosen chord-tone target.",
+                  "engine_payload": {
+                    "kind": "_pending:target-note-orbit"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Target notes around a chord tone",
+                      "quote_excerpt": "phrases built around a chosen target note from the chord"
+                    }
+                  ]
+                },
+                {
+                  "id": "two-note-target-practice",
+                  "name": "Two-Note Target Practice",
+                  "summary": "Build phrases around two simultaneous target notes.",
+                  "engine_payload": {
+                    "kind": "_pending:two-note-target"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Two-note target practice",
+                      "quote_excerpt": "phrases built around two simultaneous target notes"
+                    }
+                  ]
+                },
+                {
+                  "id": "shape-based-idea-generation",
+                  "name": "Shape-Based Idea Generation",
+                  "summary": "Play what you see inside a fingerboard shape and evaluate by ear, distinguishing intentional phrasing from 'pressing the buttons'.",
+                  "engine_payload": {
+                    "kind": "_pending:shape-based-ideation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Shape-based idea generation",
+                      "quote_excerpt": "playing what you see inside a fingerboard shape and then evaluating by ear"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Phrasing vs pressing buttons",
+                      "quote_excerpt": "distinguishing intentional phrasing from pressing the buttons"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "party-for-the-target",
+                  "name": "Party for the Target (Any Note Can Approach Any Target)",
+                  "summary": "Permissive chromatic stance: diatonic notes are family, chromatic notes are friends and neighbors, so any note can approach any target if it serves the line.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Party-for-the-target analogy",
+                      "quote_excerpt": "diatonic notes are family and chromatic notes are friends and neighbors"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Chromatic notes around target",
+                      "quote_excerpt": "any note can approach any target"
+                    }
+                  ]
+                },
+                {
+                  "id": "vocabulary-by-imitation",
+                  "name": "Acquire Vocabulary by Listening and Imitation",
+                  "summary": "Acquire vocabulary the way children learn to speak - by listening and imitation, not from books; recombine known phrases under a syntax rather than generating tokens in real time.",
+                  "engine_payload": {
+                    "kind": "_pending:imitation-acquisition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "How children learn language",
+                      "quote_excerpt": "the way children learn to speak by listening and imitation"
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "Generate vs. recombine",
+                      "quote_excerpt": "recombining known phrases under a syntax rather than generating tokens"
+                    }
+                  ]
+                },
+                {
+                  "id": "tunes-over-solos",
+                  "name": "Tunes Outrank Solos as Vocabulary Source",
+                  "summary": "The composer's own ideas in the tune are the most concentrated vocabulary source, so tunes outrank transcribed solos; the practice unit is the small phrase, not the full chorus.",
+                  "engine_payload": {
+                    "kind": "_pending:tune-as-source"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Tunes over solos",
+                      "quote_excerpt": "tunes outrank solos as the source of concentrated vocabulary"
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Skips transcription, learns phrases",
+                      "quote_excerpt": "the practice unit is the small phrase, not the full transcribed chorus"
+                    }
+                  ]
+                },
+                {
+                  "id": "practice-away-from-instrument",
+                  "name": "Practice Away From the Instrument",
+                  "summary": "Sing ideas over the song's form away from the instrument so imagination leads the fingers - the 'proper chain of command'.",
+                  "engine_payload": {
+                    "kind": "_pending:away-from-instrument-practice"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Practice away from the instrument",
+                      "quote_excerpt": "singing ideas over the song's form, establishing a proper chain of command"
+                    }
+                  ]
+                },
+                {
+                  "id": "learn-classic-then-abstract",
+                  "name": "Learn Classic Lines, Then Progressively Abstract",
+                  "summary": "Learn classic lines first and then progressively abstract them into variations - impressionistic abstraction of the masters rather than literal reproduction.",
+                  "engine_payload": {
+                    "kind": "_pending:classic-then-abstract"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Learn classic lines, then abstract",
+                      "quote_excerpt": "learn classic lines first and then progressively abstract them"
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Impressionist analogy",
+                      "quote_excerpt": "impressionistic abstraction of the great masters rather than literal reproduction"
+                    }
+                  ]
+                },
+                {
+                  "id": "fingering-serves-articulation",
+                  "name": "Fingering Serves Articulation",
+                  "summary": "Choose fingering to serve articulation rather than convenience; assign the strongest fingers (middle or ring) to melodic target notes for tonal weight.",
+                  "engine_payload": {
+                    "kind": "_pending:articulation-fingering"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Fingering serves articulation",
+                      "quote_excerpt": "fingering is chosen to serve articulation rather than convenience"
+                    },
+                    {
+                      "chapter_n": 9,
+                      "topic": "Strong fingers on target notes",
+                      "quote_excerpt": "strongest fingers (middle or ring) are assigned to melodic target notes"
+                    }
+                  ]
+                },
+                {
+                  "id": "single-string-intervals",
+                  "name": "Feel Intervals on a Single String",
+                  "summary": "Play intervals on a single string with a subtle slide to emulate horn phrasing.",
+                  "engine_payload": {
+                    "kind": "_pending:single-string-slide"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Single-string intervals and slides",
+                      "quote_excerpt": "playing them on a single string with a subtle slide to emulate horn phrasing"
+                    }
+                  ]
+                },
+                {
+                  "id": "one-shape-moving-hand",
+                  "name": "One Shape, Moving Hand",
+                  "summary": "Maintain a single chord shape and shift the hand around the neck rather than reshaping fingers for each chord.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "One shape, moving hand",
+                      "quote_excerpt": "maintaining a single chord shape and shifting the hand around the neck"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
