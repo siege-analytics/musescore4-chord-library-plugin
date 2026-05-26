@@ -1,0 +1,732 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-23T22-12-11-bruno-art-of-picking",
+    "stage": "s4",
+    "source_pdf": "Jimmy-Bruno-The-Art-Of-Picking.pdf",
+    "extracted_at": "2026-05-23T22:30:48+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jimmy-bruno",
+  "work_id": "the-art-of-picking",
+  "systems": [
+    {
+      "id": "jimmy-bruno:the-art-of-picking:directional-picking",
+      "name": "Directional Picking",
+      "summary": "Bruno's central system: three directional stroke rules (down to higher string, up to lower string, alternate on same string) applied across all textures (scales, arpeggios, skips, bebop). Justified by economy of motion. The system enumerates the stroke-type vocabulary as members and codifies both the core rules and the sanctioned exceptions (rest start, triplet drill, big-band emphasis, rhythmic break, hard skip+accent override).",
+      "members": [
+        {
+          "id": "down-up-stroke",
+          "name": "Down-up stroke",
+          "summary": "Default stroke; trains downbeat accent."
+        },
+        {
+          "id": "up-down-stroke",
+          "name": "Up-down stroke",
+          "summary": "Inverted-accent stroke; upstroke carries the downbeat."
+        },
+        {
+          "id": "mixed-stroke",
+          "name": "Mixed strokes",
+          "summary": "Alternates accents between down and up."
+        },
+        {
+          "id": "in-between-stroke",
+          "name": "In-between stroke",
+          "summary": "Hardest stroke; pick moves between two strings (adjacent or skipped)."
+        },
+        {
+          "id": "consecutive-down-stroke",
+          "name": "Consecutive down-stroke",
+          "summary": "Multiple notes on adjacent strings picked with successive down-strokes."
+        },
+        {
+          "id": "consecutive-up-stroke",
+          "name": "Consecutive up-stroke",
+          "summary": "Multiple notes on adjacent strings picked with successive up-strokes."
+        },
+        {
+          "id": "same-string-reversal",
+          "name": "Same-string sixteenth reversal",
+          "summary": "Direction reversal occurring on a single string with repeated notes."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "down-on-higher-string",
+          "name": "Down-stroke when crossing to a higher string",
+          "summary": "When the next note is on a higher string, use a down-stroke.",
+          "engine_payload": {
+            "kind": "_pending:directional-stroke-higher"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Core picking rules",
+              "quote_excerpt": "When going to a higher string, use a down-stroke",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "id": "up-on-lower-string",
+          "name": "Up-stroke when crossing to a lower string",
+          "summary": "When the next note is on a lower string, use an up-stroke.",
+          "engine_payload": {
+            "kind": "_pending:directional-stroke-lower"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Core picking rules",
+              "quote_excerpt": "When going to a lower string, use an up-stroke",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "id": "alternate-on-same-string",
+          "name": "Alternate strokes on the same string",
+          "summary": "When two consecutive notes lie on the same string, alternate down and up.",
+          "engine_payload": {
+            "kind": "_pending:same-string-alternation"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Core picking rules",
+              "quote_excerpt": "When playing on one string, use alternate strokes",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "id": "economy-of-motion-justification",
+          "name": "Economy of motion governs traversal",
+          "summary": "The pick lands where it next needs to be; minimize travel between notes on different strings.",
+          "engine_payload": {
+            "kind": "_pending:economy-of-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Motivation for the rule",
+              "quote_excerpt": "one concept or rule that causes the pick to travel the least amount of distance",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "id": "string-skip-same-rule",
+          "name": "String-skip directional rule",
+          "summary": "Directional rule applies identically when skipping non-adjacent strings: down to higher, up to lower.",
+          "engine_payload": {
+            "kind": "_pending:string-skip-directional"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "String skipping rule",
+              "quote_excerpt": "When skipping strings the same rule applies",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "scale-traversal-uniform",
+          "name": "Directional rule applies across all six major-scale fingerings",
+          "summary": "Down-on-higher / up-on-lower governs every string crossing in the 6V2/5V2/6V4/5V4/6H2/5H2 fingerings.",
+          "engine_payload": {
+            "kind": "_pending:scale-traversal-uniform"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Picking rule generalizes to scales",
+              "quote_excerpt": "six basic fingerings for the major scales",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "arpeggio-traversal-unified",
+          "name": "Arpeggio traversal is the same directional rule",
+          "summary": "Sweep-style arpeggios are not a separate technique; they are the higher/lower rule on arpeggio notes.",
+          "engine_payload": {
+            "kind": "_pending:arpeggio-directional"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Sweep picking rejection",
+              "quote_excerpt": "Higher string = down stroke Lower string = up stroke",
+              "page": 21
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Picking unified across textures",
+              "quote_excerpt": "picking for single lines is different than picking for arpeggios",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "position-dictates-picking",
+          "name": "Fingerboard position dictates picking pattern",
+          "summary": "Relocating an identical phrase to a different position changes which notes land on which strings, thus changing the stroke sequence.",
+          "engine_payload": {
+            "kind": "_pending:position-dictates-picking"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Position shift changes picking",
+              "quote_excerpt": "same phrase in the 7th position. This changes the picking considerably",
+              "page": 34
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "triplet-exception-three-down-three-up",
+          "name": "Triplet exception: three down then three up",
+          "summary": "For repeating triplet arpeggio patterns across three adjacent strings (drill only), suspend alternation and use three consecutive downs then three consecutive ups.",
+          "engine_payload": {
+            "kind": "_pending:triplet-consecutive-exception"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Triplet exception to alternate picking",
+              "quote_excerpt": "when playing triplets with a repeating pattern... it is better to break the rule",
+              "page": 6
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Three-down then three-up",
+              "quote_excerpt": "three down-strokes followed by three up-strokes",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "triplet-exception-confined-to-drill",
+          "name": "Triplet exception confined to drill, not real phrases",
+          "summary": "In actual melodic lines, the triplet exception reverts to strict alternation.",
+          "engine_payload": {
+            "kind": "_pending:exception-scoped-to-drill"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Rule applies in real phrases",
+              "quote_excerpt": "if I had to play a triplet phrase in the context of a line... I would adhere to the rule",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "rest-start-stroke-freedom",
+          "name": "Phrase after rest may start with either stroke",
+          "summary": "When a rest separates phrases, the next phrase can begin with either a down- or an up-stroke.",
+          "engine_payload": {
+            "kind": "_pending:rest-start-stroke-freedom"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Rule exception at rests",
+              "quote_excerpt": "when there is a rest between phrases, it is possible to break the rule",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "big-band-consecutive-downs",
+          "name": "Consecutive down-strokes for big-band accent",
+          "summary": "To emulate big-band horn-section accents, use consecutive down-strokes to emphasize specific notes.",
+          "engine_payload": {
+            "kind": "_pending:big-band-consecutive-downs"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Consecutive down strokes for emphasis",
+              "quote_excerpt": "consecutive down strokes to emphsis certain notes... big band type phrase",
+              "page": 49
+            }
+          ]
+        },
+        {
+          "id": "slur-equivalent-to-consecutive-downs",
+          "name": "Slurs as substitute for consecutive downs",
+          "summary": "The same big-band phrase may be articulated with slurs instead of consecutive down-strokes.",
+          "engine_payload": {
+            "kind": "_pending:slur-substitute-for-consecutive-down"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Slurs as alternative to consecutive downs",
+              "quote_excerpt": "same type phrase with slurs",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "rhythmic-break-two-downs",
+          "name": "Rhythmic break licenses two down-strokes",
+          "summary": "When a rhythmic break separates notes, two consecutive down-strokes may be used instead of strict alternation.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-break-consecutive-downs"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Rhythmic breaks justify two down strokes",
+              "quote_excerpt": "rhythmic break between notes, you may want to use to down strokes",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "hard-skip-accent-override",
+          "name": "Hard skip+accent override to alternate picking",
+          "summary": "For the combination of in-between stroke, string skip, and up-stroke accent, Bruno prefers strict alternate down-up picking over his own directional rule.",
+          "engine_payload": {
+            "kind": "_pending:master-override-alternate"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Accent on up-stroke skip",
+              "quote_excerpt": "easier to play them with alternating down - up strokes",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "slurred-triplet-bebop-preference",
+          "name": "Prefer slurred triplets over picked triplets in bebop",
+          "summary": "In bebop phrases, slurred triplets are preferred over picked triplets because they sound more horn-like.",
+          "engine_payload": {
+            "kind": "_pending:slurred-triplet-preference"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Picked vs slurred preference",
+              "quote_excerpt": "I prefer the 2nd example; it sounds more horn-like",
+              "page": 36
+            }
+          ]
+        },
+        {
+          "id": "slur-as-articulation-mechanic",
+          "name": "Slurring substitutes pick strokes with hammer/pull",
+          "summary": "Articulation is produced by picking one note and sounding two via hammer-on or pull-off, replacing a pick stroke.",
+          "engine_payload": {
+            "kind": "_pending:slur-substitution"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Slurring mechanic",
+              "quote_excerpt": "Pick one note and play two notes",
+              "page": 38
+            }
+          ]
+        },
+        {
+          "id": "same-string-slur-constraint",
+          "name": "Slurs require notes on the same string",
+          "summary": "Hammer-on and pull-off articulation requires the two notes to lie on a shared string.",
+          "engine_payload": {
+            "kind": "_pending:same-string-slur-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Same-string slur rule",
+              "quote_excerpt": "moving the slur over any two notes that are on the same string",
+              "page": 41
+            }
+          ]
+        },
+        {
+          "id": "long-short-cadence",
+          "name": "Long-short ending articulation",
+          "summary": "Phrase endings articulated with a long-short rhythmic gesture on the last two notes.",
+          "engine_payload": {
+            "kind": "_pending:long-short-cadence"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Long-short ending articulation",
+              "quote_excerpt": "play these last two notes, long, short",
+              "page": 39
+            }
+          ]
+        }
+      ],
+      "preferences": [
+        {
+          "id": "practice-both-starting-strokes",
+          "name": "Practice every exercise starting with both strokes",
+          "summary": "Each exercise must be drilled starting from both a down-stroke and an up-stroke; tonal difference should be slight.",
+          "engine_payload": {
+            "kind": "_pending:bidirectional-practice"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Practice both starting strokes",
+              "quote_excerpt": "practice all the exercises starting with both strokes",
+              "page": 6
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Practice both starting strokes",
+              "quote_excerpt": "Try starting any phrase with both strokes, down and up",
+              "page": 24
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Start with both strokes",
+              "quote_excerpt": "START THIS EXERCISE WITH BOTH STROKES, DOWN AND UP",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "precision-over-speed",
+          "name": "Precision over speed",
+          "summary": "Rhythmic evenness of 8th notes is more important than tempo at the consecutive-strokes stage.",
+          "engine_payload": {
+            "kind": "_pending:precision-over-speed"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Precision over speed",
+              "quote_excerpt": "precision of the 8th notes is more important than speed",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "articulation-over-speed",
+          "name": "Articulation over speed in arpeggios",
+          "summary": "Keeping arpeggio notes from ringing into each other is more important than playing fast.",
+          "engine_payload": {
+            "kind": "_pending:articulation-over-speed"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Articulation over speed",
+              "quote_excerpt": "Articulatioin is more important han speed",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "fingering-enables-speed",
+          "name": "Fingering, not picking aggression, enables speed",
+          "summary": "Arrange arpeggios on adjacent strings so the directional rule yields fluent consecutive strokes; speed follows from fingering choice.",
+          "engine_payload": {
+            "kind": "_pending:fingering-enables-speed"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Fingering enables speed",
+              "quote_excerpt": "the fingering makes the speed possible",
+              "page": 24
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Adjacent-string arpeggio design",
+              "quote_excerpt": "fingerings that place notes on adjacent strings",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "music-drives-picking",
+          "name": "Music drives picking, not the fretboard",
+          "summary": "The picking mechanism serves musical intent; the fingerboard must not dictate the line.",
+          "engine_payload": {
+            "kind": "_pending:music-drives-picking"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Music drives picking, not fretboard",
+              "quote_excerpt": "NOT let the fingerboard make the music",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "no-ringing-mute",
+          "name": "Notes must not ring into each other",
+          "summary": "Consecutive-stroke and in-between-stroke drills require muting; sustained ringing is disallowed.",
+          "engine_payload": {
+            "kind": "_pending:no-ringing-mute-requirement"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "In-between stroke definition",
+              "quote_excerpt": "Do not let notes ring!",
+              "page": 10
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Consecutive down-to-up strokes",
+              "quote_excerpt": "Do not let notes ring!",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "tempo-prescription",
+          "name": "Practice tempo MM 60-120",
+          "summary": "All exercises are practiced starting at MM 60-120 before increasing speed.",
+          "engine_payload": {
+            "kind": "_pending:tempo-prescription"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Tempo prescription",
+              "quote_excerpt": "practice these exercise at MM 60 to 120",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "sequential-study-order",
+          "name": "Sequential study order; no skipping",
+          "summary": "Exercises must be studied A-to-Z; the student should not skip around the book.",
+          "engine_payload": {
+            "kind": "_pending:sequential-study-order"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Sequential study order",
+              "quote_excerpt": "not a good idea to skip around in this book",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "repetition-over-analysis",
+          "name": "Repetition over analysis",
+          "summary": "Drill strokes until they become automatic; do not overanalyze right-hand movements mid-stroke.",
+          "engine_payload": {
+            "kind": "_pending:repetition-over-analysis"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Repetition over analysis",
+              "quote_excerpt": "key is repetition. Do not overanalyze your right hand movements",
+              "page": 51
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jimmy-bruno:the-art-of-picking:right-hand-mechanics",
+      "name": "Right-Hand Mechanics",
+      "summary": "The physical preconditions for the directional-picking system: motion from the elbow with a still wrist, and a strict no-anchor right hand whose fingers do not touch the strings, pick guard, or guitar body.",
+      "members": [
+        {
+          "id": "wrist",
+          "name": "Wrist",
+          "summary": "Held straight but not stiff; does not tilt or drive motion."
+        },
+        {
+          "id": "elbow",
+          "name": "Elbow",
+          "summary": "Source of picking motion."
+        },
+        {
+          "id": "right-hand-fingers",
+          "name": "Right-hand fingers",
+          "summary": "Must float free of all contact surfaces."
+        },
+        {
+          "id": "palm",
+          "name": "Palm",
+          "summary": "May rest lightly on the strings."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "elbow-drives-motion",
+          "name": "Motion comes from the elbow",
+          "summary": "Picking motion is generated at the elbow; the wrist remains still and untilted.",
+          "engine_payload": {
+            "kind": "_pending:elbow-driven-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Right-hand position",
+              "quote_excerpt": "The movement should come from the elbow",
+              "page": 5
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Wrist and elbow mechanics",
+              "quote_excerpt": "the movement is from the elbow",
+              "page": 7
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "no-anchor-fingers",
+          "name": "Right-hand fingers must not touch the guitar",
+          "summary": "Fingers must not contact strings, bridge, or any other part of the guitar.",
+          "engine_payload": {
+            "kind": "_pending:no-anchor-fingers"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Right-hand position",
+              "quote_excerpt": "Do not touch the strings, bridge or any other part of the guitar",
+              "page": 5
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Right-hand finger contact rule",
+              "quote_excerpt": "Do not touch the guitar with the fingers of the right hand",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "id": "no-pick-guard-contact",
+          "name": "No pick-guard contact",
+          "summary": "Right-hand fingers must not touch the pick guard or strings, reinforcing free-floating posture.",
+          "engine_payload": {
+            "kind": "_pending:no-pick-guard-contact"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Pick guard contact rule",
+              "quote_excerpt": "Do not touch the pick guard or strings",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "relaxed-hand",
+          "name": "Relaxed right hand, wrist, and elbow",
+          "summary": "The right hand, wrist, and elbow must remain relaxed; never tense or tight.",
+          "engine_payload": {
+            "kind": "_pending:relaxed-hand"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Right-hand position",
+              "quote_excerpt": "always be relaxed and never tense or tight",
+              "page": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jimmy-bruno:the-art-of-picking:major-scale-fingerings",
+      "name": "Six Essential Major-Scale Fingerings",
+      "summary": "Bruno's V/H taxonomy of six core major-scale shapes used as the substrate for applying the directional picking rule in Chapter 4. V denotes two-notes-per-string verticals; H denotes position-shift horizontals; the numeral indexes the root string.",
+      "members": [
+        {
+          "id": "6V2",
+          "name": "6V2 fingering",
+          "summary": "Root on 6th string, V2 (two-notes-per-string) shape."
+        },
+        {
+          "id": "5V2",
+          "name": "5V2 fingering",
+          "summary": "Root on 5th string, V2 shape."
+        },
+        {
+          "id": "6V4",
+          "name": "6V4 fingering",
+          "summary": "Root on 6th string, V4 variant."
+        },
+        {
+          "id": "5V4",
+          "name": "5V4 fingering",
+          "summary": "Root on 5th string, V4 variant."
+        },
+        {
+          "id": "6H2",
+          "name": "6H2 fingering",
+          "summary": "Root on 6th string, H (horizontal/position-shift) shape."
+        },
+        {
+          "id": "5H2",
+          "name": "5H2 fingering",
+          "summary": "Root on 5th string, H shape."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "string-crossing-notation",
+          "name": "String-crossing notation marks where the directional rule applies",
+          "summary": "Asterisks above scale-fingering exercises mark higher- vs lower-string moves, making the directional rule visible at every transition.",
+          "engine_payload": {
+            "kind": "_pending:string-crossing-notation"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "String-crossing notation legend",
+              "quote_excerpt": "** = moving to HIGHER STRING",
+              "page": 15
+            },
+            {
+              "chapter_n": 4,
+              "topic": "String-crossing notation legend",
+              "quote_excerpt": "* = moving to LOWER STRING",
+              "page": 15
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "six-fingerings-anchor",
+          "name": "Anchored to Six Essential Fingerings system",
+          "summary": "The six shapes are keyed to Bruno's companion book Six Essential Fingerings for the Jazz Guitarist, which is the framework these picking exercises apply to.",
+          "engine_payload": {
+            "kind": "_pending:six-fingerings-anchor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Six essential fingerings reference",
+              "quote_excerpt": "see my book Six Essential Fingerings for the Jazz Guitarist",
+              "page": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+---
+run_id: 2026-05-23T22-12-11-bruno-art-of-picking
+stage: s3
+source_pdf: Jimmy-Bruno-The-Art-Of-Picking.pdf
+model: claude-sonnet
+extracted_at: 2026-05-23T22:25:26+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — the-art-of-picking
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+# The Art of Picking — Book-Level Distillation
+
+## Central Thesis
+
+Jimmy Bruno's *The Art of Picking* (2002) is built on a three-rule directional picking system introduced in Chapter 1 and reaffirmed throughout: use a down-stroke when crossing to a higher string, an up-stroke when crossing to a lower string, and alternate strokes when staying on the same string. The justification is economy of motion — the pick is always positioned where it next needs to be — and Bruno frames adopting the system as deliberately breaking the entrenched strict-alternate-picking habit, which he warns will feel awkward before paying off. The mechanical preconditions are equally load-bearing: a relaxed wrist with motion driven from the elbow, and a strict no-anchor right hand whose fingers must not touch the strings, pick guard, or guitar body (Chapters 1–2).
+
+## Pedagogical Arc
+
+The book progresses from rule statement to musical application in a deliberately sequential order Bruno forbids the student from skipping. Chapter 1 states the rules and the practice conventions (MM 60–120, always practice each exercise starting with both a down-stroke and an up-stroke). Chapter 2 isolates the three stroke types — down-up, up-down, and the difficult in-between stroke — drilled on every string and on adjacent-string double-stops. Chapter 3 adds consecutive same-direction strokes as core jazz vocabulary, with a strict no-ringing/muting requirement and a precision-over-speed mandate. Chapters 4–6 generalize the rule to larger textures: the six basic major-scale fingerings (4), arpeggios (5), and string skipping (6). Chapters 7–8 turn the mechanism toward musical material — typical bebop phrases (7) and articulations (8). Chapter 9 explicitly licenses rule-breaking under stylistic and rhythmic conditions, and Chapter 10 closes with a meta-rule about habit formation.
+
+## Characteristic Systems and Terminology
+
+Bruno's scale work in Chapter 4 is keyed to his companion volume *Six Essential Fingerings for the Jazz Guitarist*, and he introduces a V/H taxonomy for the six core major-scale shapes — 6V2, 5V2, 6V4, 5V4, 6H2, 5H2 — where V denotes two-notes-per-string verticals and H denotes position-shift horizontals, the numeral indexing the root string. He layers a string-crossing notation onto exercises (asterisks marking higher- vs. lower-string moves) so the directional rule is visible at every transition. The stroke vocabulary (down-up, up-down, in-between, consecutive down, consecutive up) and the adjacent-string double-stop as the canonical vehicle for the in-between stroke recur as fixed terminology throughout.
+
+## Recurring Bruno Moves
+
+Four characteristic moves surface across chapters. First, **economy of motion** is the engine of the whole system — the pick lands where it next needs to be (Chapters 1, 6). Second, an **anti-sweep-picking polemic** in Chapter 5 dismisses sweep picking as a separate technique, reframing it as nothing more than the higher/lower string rule applied to arpeggios; Bruno insists fingering choice, not picking aggression, unlocks speed, citing sextuplet minor-11 runs and two-octave minor 9th arpeggios built on adjacent-string fingerings. Third, **articulation over speed** governs both arpeggio study (note separation as the central challenge in Chapter 5) and bebop phrasing (slurred triplets and inflection-through-hammer/pull in Chapters 7–8). Fourth, a **horn-line aesthetic** runs through the musical chapters: slurred triplets are preferred because they sound more saxophone-like (7), arpeggio vocabulary is justified by reference to saxophone and piano phrasing rather than guitar idiom (5), and the sanctioned rule-break of consecutive down-strokes in Chapter 9 is justified as emulating big-band horn-section accents.
+
+## Sanctioned Exceptions
+
+Bruno is unusually explicit about when his own rules are suspended. Chapter 3 introduces the triplet exception: repeating triad-arpeggio triplet patterns across three adjacent strings are drilled as three consecutive downs followed by three consecutive ups, with the caveat that this lives in the drill — in real melodic lines strict alternation returns. Chapter 5 allows phrases that start after a rest to begin with either stroke. Chapter 6 records a pragmatic confession: for the hardest combination of accents, in-between stroke, and string skipping, Bruno himself finds alternate down-up easier than his own system — a notable moment of the master overriding his framework on experience. Chapter 9 codifies two further exceptions: consecutive down-strokes for big-band accent emphasis (with slurs offered as an equivalent), and two consecutive down-strokes when a rhythmic break separates notes.
+
+## Aesthetic Axiom and Closing Method
+
+Chapter 5 contains the book's aesthetic axiom: **music drives picking, not the fretboard** — the picking mechanism serves musical intent and must never let fingerboard convenience dictate the line. Chapter 7 supplies its mechanical counterpart: fingerboard position dictates picking pattern, so the same phrase relocated to a different position must be re-picked. Chapter 8 reframes articulations as inflections, by analogy to speech, and codifies slur placement as a creative decision the student internalizes rather than a fixed prescription, including the long-short cadence gesture and the same-string slur requirement. Chapter 10 closes the book with a meta-rule: picking is a habit, habits are hard but not impossible to break, advanced players will struggle most, and the prescription is repetition over analysis — drill until second nature and do not overanalyze the right hand mid-stroke.

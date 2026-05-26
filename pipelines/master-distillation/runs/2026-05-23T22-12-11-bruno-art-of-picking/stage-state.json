@@ -1,0 +1,67 @@
+{
+  "run_id": "2026-05-23T22-12-11-bruno-art-of-picking",
+  "config": "pipelines/master-distillation/configs/bruno-art-of-picking.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-23T22:12:11+00:00",
+      "ended_at": "2026-05-23T22:12:11+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-23T22-12-11-bruno-art-of-picking/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-23T22-12-11-bruno-art-of-picking/pages.json",
+        "extracted: 51 pages, 140,447 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-23T22:20:06+00:00",
+      "ended_at": "2026-05-23T22:20:07+00:00",
+      "outputs": [
+        "detected 10 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-23T22-12-11-bruno-art-of-picking/chapter-bounds.json",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch01.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch02.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch03.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch04.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch05.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch06.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch07.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch08.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch09.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/chapters/ch10.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-23T22:25:26+00:00",
+      "ended_at": "2026-05-23T22:25:26+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/the-art-of-picking-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-23T22:30:48+00:00",
+      "ended_at": "2026-05-23T22:30:48+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/derived/systems-draft.json",
+        "plugin/data/masters-corpus/jimmy-bruno/the-art-of-picking/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}
