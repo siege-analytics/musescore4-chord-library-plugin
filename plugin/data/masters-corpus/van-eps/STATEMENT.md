@@ -10,27 +10,61 @@ companion to the per-work statements at
 Harmonic Mechanisms remain pending acquisition; a `_placeholder:harmonic-mechanisms`
 entry in `masters.works[]` preserves that gap.
 
-## 1. Central thesis: the guitar as lap piano
+> **A note on instrument-as-thesis.** Most of the principles in the
+> `van-eps` master entry can be stated without naming the instrument they
+> were written for. That is a curatorial convenience. **The instrument is
+> not incidental.** Van Eps's mature conception is a four-voice
+> SATB-shaped polyphony that the 7-string guitar (low A, Mel Bay editions
+> from c. 1980 onward) was specifically commissioned to host; the 1939
+> Method documents what was reachable on 6 strings before that instrument
+> existed in Van Eps's hands. Read the composite below with that
+> instrument-as-structural-enabler reading active throughout.
+
+## 1. Central thesis: a four-voice polyphony that requires the 7-string to be fully itself
 
 Van Eps's career-long thesis is that the guitar should be played as a
 self-contained polyphonic instrument — what he repeatedly calls a "lap piano"
 — rather than as a melodic single-line instrument with chordal accompaniment.
-The two works are different surface treatments of that single underlying
-claim. Both insist that every musical event on the instrument is a stack of
-independent contrapuntal voices, not a block of pitches that happens to sound
-together. Both organize practice around sustaining outer voices while inner
-voices animate the harmony beneath. Both treat the harmonized scale as the
-generative engine and the harmonic-mechanism vocabulary (triads → tetrads →
-extensions) as the substrate.
+The thesis is *four-voice* polyphony, not generic-chordal-playing: every
+musical event is a stack of independent contrapuntal voices distributed
+across register the way a string quartet or a piano left-and-right hand
+distribute voices. Bass, tenor, alto, soprano (or, in Van Eps's
+working idiom, bass / inner-low / inner-high / top), each carrying its own
+line, each maintained without crowding its neighbors.
 
-Vol 1 opens with the explicit framing: "My books contain no single voice
-studies as such. All of the studies employ two or more voices" (Harmonic
-Mechanisms Vol 1, ch. 1). The 1939 Method makes the same commitment
-operationally: every exercise from Ex. 1 forward is a chordal study, never a
-single-line scale (1939 Method, Foreword + Ex. 1, p. 8). The two works
-differ in pedagogical scope and instrumental scope — the 1939 Method is a
-six-string distillation, Vol 1 a seven-string treatise — but they share a
-structural backbone.
+That conception has a hard structural prerequisite: a bass voice with enough
+register independence to stay below the inner voices without competing for
+finger position. **On a six-string guitar tuned to standard pitch, that bass
+voice is constrained.** The bass occupies the bottom string and the lowest
+positions; the inner voices that should animate above the bass end up
+sharing fingers and frets with the bass voice itself, forcing voice-leading
+compromises throughout. The 1939 Method documents what is reachable in this
+constrained register economy: three-voice textures with sustained outer
+voices, a single inner line animating between them, and a bass that holds
+chord roots more than it walks. **On a seven-string guitar with a low A
+extending the bass register a fourth below standard low E, that constraint
+relaxes.** A genuine bass voice — walking, registrating, maintaining its own
+line — becomes possible WITHOUT crowding the inner voices, and the
+four-voice SATB distribution Van Eps is after becomes physically realizable.
+
+This is not a "Vol 1 is just bigger" reading. The two works are not two
+sizes of the same conception. The 1939 Method is **Van Eps's pre-7-string
+practice**: it surfaces every technique mechanism (pulsation picking,
+finger-flattening, string-deadening) the player will need to operate the
+6-string under constraint, and it documents the three-voice textures
+that constraint admits. *Harmonic Mechanisms Vol 1* is **Van Eps's
+post-7-string practice**: it assumes the bass voice is freed, and it
+proceeds to exhaustively work the four-voice polyphony that only becomes
+possible once the register economy is fixed. The instrument change between
+the two works isn't surface; it's load-bearing.
+
+Vol 1 opens with the framing that makes this commitment explicit: "My books
+contain no single voice studies as such. All of the studies employ two or
+more voices" (Harmonic Mechanisms Vol 1, ch. 1). The 1939 Method makes the
+same commitment operationally — every exercise from Ex. 1 forward is a
+chordal study, never a single-line scale (1939 Method, Foreword + Ex. 1,
+p. 8) — but with the trailing implication that "two or more voices" in 1939
+typically means **three**, while in Vol 1 it typically means **four**.
 
 ## 2. The 1939 Method as introductory distillation (~42 pp)
 
@@ -107,23 +141,85 @@ second finger plays the double stop in flattened position (just the first
 joint flat, not the whole finger)" (Harmonic Mechanisms Vol 1, ch. 9,
 p. 185).
 
-## 4. Shared structural backbone
+## 4. The 7-string as structural enabler
 
-Four concepts are unambiguously load-bearing in both works, and these are
-the cross-work principles captured in `masters.json` `van-eps.principles[]`:
+The transition from 1939 (6-string) to *Harmonic Mechanisms* (7-string) is
+not a wider canvas for the same approach. It is the change of physical
+substrate that makes Van Eps's mature conception physically realizable. The
+register economy of the 7-string is what makes Vol 1's machinery possible
+in three specific ways:
 
-**Outer-voice anchor with inner-voice motion.** The 1939 Method documents
-this device across more than a dozen exercises, most explicitly Ex. 82:
-"the third and fourth fingers play the two upper voices in quarter notes
-while the first and second fingers sustain the lower voices in whole
-notes" (1939 Method, Ex. 82). Vol 1 elevates the device to the central
-load-bearing system of the entire book — every chord exercise is a
-four-part polyphonic texture, and the chapter 4 anchor-and-move drill
-"Run the moving voice up and down repeatedly in each station while making
-sure to sustain the whole note" (Harmonic Mechanisms Vol 1, ch. 4, p. 70)
-is the physical foundation for everything that follows. Chapter 6 makes
-the sustain demand explicit: "keep the pressure applied firmly while the
-quarter notes are in motion" (Harmonic Mechanisms Vol 1, ch. 6, p. 134).
+**Bass-voice independence.** On 6 strings, the bass voice and the lowest
+inner voice contend for the same register and frequently the same fingers.
+Voice-leading the bass independently — letting it walk, registrate down,
+hold pedal — without dragging the inner voice along is structurally
+difficult below the 5th fret. On 7 strings the low A opens a fourth of
+additional bass register below the 6-string low E. The bass voice can hold
+a pedal at the 7th-string 3rd fret while the inner voices animate in the
+middle of the 6th and 5th strings, with no register collision. Vol 1's
+chapter 4 anchor-and-move exercises and chapter 7 alternating-bass
+chromatic exercises both assume this independence; their 1939 corollaries
+are necessarily more cramped.
+
+**SATB-shaped four-part voicings.** Tertian construction (triads → tetrads
+→ extended chords) is workable on 6 strings but the resulting four-note
+voicings are register-compressed: bass and tenor competing for the bottom
+two strings, alto and soprano on the top three, voice-leading constrained
+to step motion within a single fret cluster. On 7 strings the four voices
+can occupy four distinct register zones with proper distance between them,
+and the chord-quality categories (major / minor / dominant / diminished /
+augmented / half-diminished) become exercise-able as genuine four-voice
+voicings rather than as compressed-four-voice approximations. Vol 1's
+chapter 2 'The Mighty Triads' and chapters 8–9 'Super and Sub' inversion
+work both proceed from this register stratification.
+
+**Walking-bass-plus-comping textures.** The signature Van Eps texture of a
+walking bass line under sustained chordal harmony is a 7-string
+realization. On 6 strings, walking the bass and sustaining chords above is
+possible (and 1939's Ex. 14, 20, 57, 60–65 demonstrate the device with
+3-voice textures) but the chord voicings have to be open and the bass has
+to step rather than walk in the modern sense. On 7 strings the bass can
+walk in quarter notes through a fully realized register-distinct line while
+the four-part chord voicings are sustained and animated above — the texture
+that defines Van Eps's mature playing and that *Harmonic Mechanisms*
+documents systematically. Vols 2 and 3 (pending) extend this into the
+explicit 7th-string-bass-walking exercises.
+
+The 1939 Method is unambiguously a 6-string method by a player who would
+later acquire the 7-string, find that it relaxed the constraints he had
+been working around, and write the comprehensive treatise that the relaxed
+constraint made possible. The two works share concepts but not their
+*load-bearing-ness*: techniques that are constrained workarounds in 1939
+become full-fledged systems in Vol 1.
+
+## 5. What survives the instrument change (cross-work principles)
+
+Four concepts are unambiguously load-bearing in both works — but the
+*shape* they take is different on 6 vs. 7 strings. These are the
+cross-work principles captured in `masters.json` `van-eps.principles[]`,
+with the per-reference `instrument_caveat` field flagging cases where the
+1939 version is a different-shape approximation rather than a 1:1
+corollary:
+
+**Outer-voice anchor with inner-voice motion.** *Concept-shape differs by
+instrument.* The 1939 Method documents the device across more than a
+dozen exercises, most explicitly Ex. 82: "the third and fourth fingers
+play the two upper voices in quarter notes while the first and second
+fingers sustain the lower voices in whole notes" (1939 Method, Ex. 82) —
+but on 6 strings, the "lower voices" are typically a single bass voice
+plus one inner voice, and the inner motion is constrained to the alto
+register. Vol 1 elevates the device to the central load-bearing system
+of the entire book — every chord exercise is a *four-part* polyphonic
+texture (bass, inner-low, inner-high, top) with the bass holding pedal
+on the 7th string while *both* inner voices animate independently above
+it. The chapter 4 anchor-and-move drill "Run the moving voice up and
+down repeatedly in each station while making sure to sustain the whole
+note" (Harmonic Mechanisms Vol 1, ch. 4, p. 70) is the physical
+foundation for everything that follows; chapter 6 makes the sustain
+demand explicit: "keep the pressure applied firmly while the quarter
+notes are in motion" (Harmonic Mechanisms Vol 1, ch. 6, p. 134). The
+1939 device is a 3-voice approximation; the Vol 1 device is the full
+4-voice realization.
 
 **Six fingering forms across string sets.** The 1939 Method introduces
 the six-form scope in the Ex. 1 instructions, with the String Chart on
@@ -143,16 +239,21 @@ interesting and informative" (Harmonic Mechanisms Vol 1, ch. 2, p. 19).
 The harmonized scale is the vocabulary; voicings are derived by running
 that scale through the string-set fingerings.
 
-**Four-part chord construction (triads → tetrads → extensions).** The
-1939 Method follows the major → minor → 7th-arpeggio → diminished
-sequence implicitly. Vol 1 makes the tertian stacking explicit: triads
-first, then tetrads (seventh chords), then extended chords (9ths, 11ths,
-13ths), with extensions treated as substitution-expansions of their
-parent tetrads. The chord-quality categories are formalized as the six
-top-level family bins: major, minor, dominant, diminished, augmented,
-half-diminished.
+**Four-part chord construction (triads → tetrads → extensions).**
+*Concept-shape differs by instrument.* The 1939 Method follows the
+major → minor → 7th-arpeggio → diminished sequence and treats four-voice
+voicings as register-compressed bass-and-three-voice shapes on the
+6-string. Vol 1 makes the tertian stacking explicit AND assumes the
+7-string register stratification: triads first, then tetrads (seventh
+chords), then extended chords (9ths, 11ths, 13ths), with each voicing
+distributed across four register-distinct zones — bass on 7th string,
+inner-low on 5th/6th, inner-high on 3rd/4th, top on 1st/2nd. The
+chord-quality categories are formalized as six top-level family bins:
+major, minor, dominant, diminished, augmented, half-diminished. The
+1939 four-note voicings work but are register-compressed; the Vol 1
+voicings have proper voice-leading room throughout.
 
-## 5. Where the two works diverge
+## 6. Where the two works diverge — beyond register economy
 
 The 1939 Method emphasizes **technique mechanics**: how to pulse-pick,
 how to flatten a finger to extend the reach, how to deaden specific
@@ -185,7 +286,7 @@ finger-flattening-fifth-finger — carry references to both works in
 provenance (`work_id`, `chapter_n`, `topic`, `quote_excerpt`) per the
 Vol 1 reference shape established in the work-level statement.
 
-## 6. Volumes 2 and 3 (pending)
+## 7. Volumes 2 and 3 (pending)
 
 The `_placeholder:harmonic-mechanisms` entry in `masters.works[]`
 preserves the gap for the remaining two Mel Bay volumes. Pending
@@ -202,7 +303,7 @@ specific page content) must be preserved. The corpus tree under
 work directory; Vols 2 and 3 will live in sibling directories with
 the same per-work `derived/STATEMENT.md` convention when they land.
 
-## 7. Companion documents
+## 8. Companion documents
 
 This statement is intentionally a synthesis, not a substitute. For
 work-internal exposition, see:
