@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1
+stage: s3
+source_pdf: George Van Eps Harmonic Mechanisms for Guitar, Volume 1 -- George Van Eps [Van Eps, George] -- 2016 -- Mel Bay Publications, Inc_ -- d73148f4fc6a6f38407f26a61541d763 -- Anna’s Archive.pdf
+source_pages: 146-165
+model: claude-haiku
+extracted_at: 2026-05-26T18:32:48+00:00
+schema_version: 0.1
+---
+
+# Chapter 7 — Chromatic Triads with Pedal and Alternating Bass
+
+_Distillation; backed by `chapters/ch07.md`._
+
+Chapter 7 builds chromatic triads against pedal tones and alternating bass lines, opening with Van Eps's thesis on extended fingerings—reach is a product of relaxed tendon control rather than hand size (Long reaches via relaxation)—developed only through gradual in-context practice rather than mechanical wedges (Develop reach gradually), with tensing identified as the counterproductive failure mode that actually shortens reach (Forcing shortens reach). The chapter's central drill is positioned as a universal scale-construction engine: chromatic third-to-tenth exercises, taken in all forms and positions, generate every major, minor, diminished, and augmented scale (Constructing all scales from chromatic exercises), and the student is explicitly authorized to fragment these written forms into custom 1-, 2-, or 4-note drills (Construct your own exercises). Two load-bearing practice rules govern execution—treat each measure as a separate exercise with the whole-note pedal sustained for the full bar (Treat each measure separately), and recognize that the sustained outer voice is itself describing the parent scale beneath the moving chromatic inner line, Van Eps's outer-voice-anchor principle in operation (Sustained note describes the scale). The signature left-hand demand of the chapter is the single-finger chromatic walk, where one finger must smoothly sound two or three successive half steps while the pedal stays held (Same finger across half steps), and the chapter notes that minor modes require their own treatment rather than transposition of major-key forms because the minor third interval refuses to parallel the major (Minor modes can't parallel major). Functional/contextual chord labeling is also established—the same voicing's symbol depends on its use in a progression (Chord symbol depends on use).

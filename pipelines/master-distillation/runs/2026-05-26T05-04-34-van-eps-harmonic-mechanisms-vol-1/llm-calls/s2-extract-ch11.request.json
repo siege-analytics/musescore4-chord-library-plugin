@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: Super and Sub Series: Open Voicings, Multi-Voice Motion and Harmonic Variation\nPages 254-262 of the book.\n\n<<<CHAPTER TEXT\n\nSUPER AND SUB SERIES - Open Voicings MAJOR & MINOR\nRoot Position\n\nMiddle Voice Super\n\n2 1D/3 _\nsee ie alg teifee te iPS te 3% t=\ncK : r\n\n1s 1S 2 = ZS\n1D/3 -\nile 2 1. 1[oS she ifs te\ncn Sar '\nlz 1S \u00a5\nLower v/s\nC eE= z ==: ea fe fea a iz\n\" t f + = va \u2014]\niw tele 3 2 se Le 3 es =\u2014 =\n2D/3 1D/3 .\nPas phe A je phe aaa\nCm & 5 E \u2014\u2014} \u2014 =|\niv3e wilt awe tse =\nUpper Voice Sub ws\n1 1 3a\ncE z 2/8 1 3a jee te lao fe set \u00ae 1a \u2014\u2014\n> = = == : : 4\n2 2 27 2S\n2D/3 1D/3 1 3\nBS 1 ents 1g 20 lethe ioe 3 joo te\nCm [FE t \u2014 | : q\nt i | zi\n2 2S 3ho 3S a\n1D/3 _ \u2019\n20/8: iin 4 36 32 te WS 20 oS to\nCc 3 => - te ' .\n2S Exmal 2S a +\n> ps 3 re 3, 342 t.\nCm = rt? at\u00e9 :\n25 1S 24> i= +\nOpen Voicing\n1D/3 \u00b0\n8 Lower: : pale z ie ey ts 2 -\n_= , 4\nSe a oe al ls ow ye fe ck a ad ss\n\u00a2 eo __is is the\n: = f 1 \u2014\nww wee is seis eo is te te\n\nIn all of these studies, it\u2019s very necessary to note the subtle differences in shapes and notation when\nchanging from one set to another - some shapes and fingerings will be identical, but the notation is\nnot. 248\n\n\nSUPER AND SUB SERIES\nMULTI-VOICE MOTION\n\nTwo voices in motion while sustaining a third, requires a few long reaches. If at first some of the reaches are too great,\nit is permissible to treat the half note as though it were a quarter note\u2014to let go of the half note after sounding the\ntriad. However, endeavor to sustain the half note full value.\n\nHearing and understanding the voice motion even though it is slightly disconnected is just as important as being able\nto physically sound all of the notes as written, because the harmonic knowledge is necessary.\n\nFrom the creative i is usel less it is with harmonic knowledge and a sound\nunderstanding of voice motion.\n\nThe ability to recognize, analyze, and assimilate melodic and harmonic voice motion is very necessary to the\nart of improvisation.\n\n249\n\n\nSuper and Sub series examples of multi - voice motion - Major and Minor\nBoth Upper Voices in Super Motion\n1st\nInversions\nC\n3/3\n2/3\n1/3\n3/3\n2/3\n1/3\n3/3\n2/3\n1/3\nUpper and Lower Voices in Super Motion\nC\n3/3\n2/3\n1/3\n3/3\n2/3\n1/3\n3/3\n2/2 3/3\n1/2\n1/3\nBoth Upper Voices in Super Motion\n2nd\nInversions\nC\n3/3\n2/3\n1/3\n3/3\n2/3\n1/3\nUpper and Lower Voices in Super Motion\nC\n3/3\n2/3\n1/3\n3/3\n2/3\n1/3\nCm\n3/3\n2/3\n1/3\n\n\nSuper and Sub series examples of multi - voice motion - Major and Minor\n\nBoth Upper Voices in Super Motion\n\nRoot 3/3 2/3\n\nTriads\n\nPlace all of these examples in all keys\n\nMiddle and Lower Voices in Super Motion 1/3 1\n2/3\n\nQa\no\nBS\n3\n~.\n\nUpper and Lower Voices in Super Motion 1/3\n3/3 2/3\n\nUpper and Middle Voices in Super Counter Motion\n\u2014 4/3 3/3 2/3\n\nInversion f as =\nCc a Ss +2\n\n251\n\n\nSuper and Sub series examples of multi - voice motion - Major and Minor\n\nCounter and Parallel Motion\n\n3/3 2/2) 2/3 2\n1/3\nse 1 $m og 40 4% og FS org me {3 i(f# 3} 4\n\n\u2018v\n4\n4\nC)\n\u00ae\n()\n\n= i \u2014\n\nBoth Lower Voices in Sub Motion\n4/3 3/3 2/3 ae 26\n\nIst\nInversion [FE\n\n2 3 2 3s\n\nUpper Voice Motion Sub - Middle Voice Motion Super\n\n252\n\n\nSuper and Sub Series - closed to open voicing in progressive steps - 2 bars equal one station key of C\n\nMajor - there are many other fingerings and string combinations - experiment with them\n\nA3 3/B3 B2 3/3 B2/3 3/33, B2\n\u2014 \u2014\u2014\"\nt 4\na\n2/B3_B1\n2/3 3/3 oe BMS, 6 ge i\n=== = z =|\nB1/3 2/B3\n17/8 as tee 20 te 3 |\nE= f == j\n1/3 io\nle ita ta ta 2\n\u2014= H]\n\nPlace in all keys - Major and both Minors - sustain the middle voice - reverse the direction of voice\n\nmotion = open to closed\n\nBar 1 explanation\n\n2nd Finger\nArched\n\nWhil\n\nFlat\nsustaining \"G'\n\nStrings Lo\n\nsuxiain the \u201cG\". Thix type of Fingering\n\nis found in bars:7-9-11\n\nulso in many other places\n\n253\n\n\nHARMONIC MINOR\nSuper and Sub series\nkey of C Minor - all B's natural\n\n3/3 B2/3 3/B3 B2 2/3 3/3 B2/3 Bl\nx + ; \u2014- tt= =|\n[PeRg ag i F See \u2014\u2014\u2014\u2014|\ns e To is se ow a a\n2/3 B1 1/D3 B1\n\nle le 20\n\n|\n\nB1/3 1/D3, B1\nB1/3 1/D3,B1 2/3 1/3 3a\n14/55 io re the [a 3\u00a9 ipo 26 ,po the 1 se Wf.\n\n\u2014 pase Z =|\n\niI\nsi\na\n\nB1/3 Bl B1/3 4\n41o nod sa {2 41s se re te 22 7s 2 \u2014\npe 3 2 = = =\n\u00a3 = is \u2014s =|\n\nSee Major Instructions\n\nThe examples below are two steps from both scales, first Major then Minor employing Various\nfingering mechanisms repeatedly - apply this format to all of the steps - be aware of the similies\n\nB2/3 B3/3 B2/3 3/3 A3 3/3 A3\na t\n\u2014 =f =r re :\nrw ie SF ie Sse TF Te 37 16 37 ie \u201ce_ so Ce se\n\nRepeating steps of any study over and over is very good for finger control\n\n254\n\n\nSuper and Sub series HARMONIC MINOR\n\n- Examples of left hand finger team articulation -\nThe deleted middle voice of the Ist inversion triad that begins each station is marked with a cross = +\nIn example 1, the entire one octave scale is played on string sets shown in bar 1\n\n1 3/B2 3/2 2/2\n\nExample\nLoe 8\nm\n\n=\n\u2018Gt ae UF -\n\n3 4 5\n2 1eucte 5 cig ts _\u00a2\nr + \u2014 sf =\nes = \u2014\u2014o =) = oi.\n1\n6, ottellg 3# \u00a2 \u00ab a oe to lg it \u00a2 \u00ab . \u00a9 20 \u20182 iti $2 so 2\nbe a+ = SSH\n\n1 4/B2 4/2 3/2\n\n2\nExample i 2.\nMS ee (a ee |\n:\n\nar Po =s a\n3/2\ni 4 5 3/B2 2/2.\na feet eis i6 se oe pe tie fg oes\n2/2\n\u2018 3/ps/ 3/2 1/2 7 2/pe\u201d 1/2 1 2/B3\u00b0 1/2,\n4g i She +o 1g i8 \u00a2 \u00a9 . \u00a9 s:cl2# iif $2. 2\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014 fo = Al\n1 3/B2 3/2 4/B2 3/B2 2 3/B2 3/2 3/B2 2/B2\nExample A\u20141t\n. = = = =o = ee\nAm c= a a = = re =\nGF Pp I\n3/2 fi 3/2 2/B2 5 3/: 2/2\n3/B2 3/B2 2/B2 3/B2 3/B2 a 3/B2 2/B2\nz = = : oe = = =\u2014i = = = 7\nEs = ot\n3/2 1/B2 3/2 2/B2 2/B2 2/2 2/B2 1/B2\n3/B2 a/pa\u201d 7 s/pe\u2019 3/B2 2/2 1/B2. 2/B2\u00b0 3/B2 1/B2 1/2\n21 3@ |e sete ie le lize 1236 tie leseia\n\n2\ni\n\nApply these team principles to the melodic Minor - mixed Minor - Major etc\n\n\nSUPER AND SUB\nHARMONIC VARIATIONS ON BASIC TRIAD SCALES\n\nhow a sixteen step independent chroma\u2019\nnnect the normal steps employ the use of accide in super and sub position\u2014 the normal\n\nthat\n\nTRIAD VOICES SUPER AND SUB - contrary multi-voice motion - chromatic upper voice -\nSuper & Sub Notes Sharp & Flat\n\nMAJOR and MINOR\n\nMajor\n\nMajor\n\nMajor\n\nMinor\n\nMinor\n\nEnd of? Lhe Super & Sub Series\n\n256\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}
