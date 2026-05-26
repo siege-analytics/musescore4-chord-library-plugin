@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
+stage: s3
+source_pdf: complete_chord_melody.pdf
+source_pages: 112-136
+model: claude-haiku
+extracted_at: 2026-05-23T23:30:33+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — Module 3 - Painting by Numbers and Arrangement Examples
+
+_Distillation; backed by `chapters/ch04.md`._
+
+Chapter 4 completes the 'painting by numbers' arranging method and addresses what to do when the rule's strict output isn't playable. Chords get placed on the first melody note of each bar and at chord changes (Where to place chords), with the single load-bearing rule being to pick voicings whose top note is the same interval as the melody note relative to the underlying chord (Painting by numbers rule), softened by a carve-out that a voicing can be slightly adapted as long as the melody note ends up on top (Adapt voicing for melody). Dictionary lookup is keyed on three inputs: the melody string, the chord type at that moment, and the melody note's interval relative to that chord (Three voicing-lookup inputs), and a dictionary voicing is transposed into the tune's key by sliding the shape until its top note lands on the melody fret (Transpose by sliding shape). The chapter's pedagogical center of gravity is restraint: less is more, since chords placed selectively are easier on the hands and usually imply the harmony adequately (Less is more), and playability beats ambition because easier voicings flow musically better (Playability over ambition). O'Rourke gives three remediation strategies for awkward passages — cut notes out of the chord (Three options for hard passages), substitute a different harmonization device such as parallel octaves or diads (Diads/octaves alternative), or remove the difficult voicing entirely, which he calls out as his own most-used escape valve (Removing chord entirely). The chapter closes by locating the 'jazzy' sound specifically in extensions and tensions added to dominant chords as the targeted chord type for color (Tension from dominants).

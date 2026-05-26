@@ -1,0 +1,36 @@
+# Per-book config for the master-distillation pipeline.
+# Fourth book through the pipeline. Greg O'Rourke (Jazz Guitar Online)
+# is a contemporary teach-yourself author — judgment call at Stage B
+# whether to promote him into masters.json as a "master" or to keep the
+# pipeline output curatorial only. We run the pipeline either way to
+# capture the structured-systems content.
+
+[master]
+id = "greg-orourke"
+name = "Greg O'Rourke"
+
+[work]
+id = "complete-chord-melody"
+title = "Complete Chord Melody"
+year = 2020
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/complete_chord_melody.pdf"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"

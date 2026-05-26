@@ -1,0 +1,639 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-23T23-23-45-orourke-complete-chord-melody",
+    "stage": "s4",
+    "source_pdf": "complete_chord_melody.pdf",
+    "extracted_at": "2026-05-23T23:32:30+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "greg-orourke",
+  "work_id": "complete-chord-melody",
+  "systems": [
+    {
+      "id": "greg-orourke:complete-chord-melody:chord-melody-paint-by-numbers",
+      "name": "Chord-Melody Paint-by-Numbers Method (Four-Step Recipe)",
+      "summary": "The book's central thesis and operating system: a four-step chord-melody recipe that drives every later chapter as either a constraint, lookup table, or escape hatch on one of its four steps. Step 1 picks a suitable tune (ballads, not bebop, since slower tempos with longer-held melody notes are practically easier). Step 2 transposes the tune into a workable key where the melody sits on the top 3 strings between roughly the 3rd and 9th frets, avoiding the two failure modes (too high sounds thin, too low sounds dark and muddy). Step 3 learns the melody on the top 2-3 strings, imposing a horizontal rather than positional fretting approach with an explicit carve-out that occasional dips to the 3rd or 4th string are fine. Step 4 voices chords below the melody using the load-bearing painting-by-numbers rule: pick voicings whose top note is the same interval as the melody note relative to the underlying chord, applied to the first melody note of each bar and at chord changes, since the guitar's quick decay lets a chord change imply sustain. The interval-analysis linchpin is governed by the explicit golden rule (intervals relate to the current chord, not the overall key) backed by the major-scale-of-the-current-chord's-root reference and a closed chord-tone vocabulary (1, b9, 9, b3, 3, 11, #11, 5, b13, 13, b7, 7, plus PT). Dictionary lookup is keyed on melody string + chord type + interval, and a dictionary shape is transposed by sliding it until its top note lands on the melody fret.",
+      "members": [
+        {
+          "id": "step-1-pick-tune",
+          "name": "Step 1: Pick a Suitable Tune",
+          "summary": "Ballad-not-bebop selection rule: slower tempos with longer-held melody notes are practically easier for beginners."
+        },
+        {
+          "id": "step-2-transpose",
+          "name": "Step 2: Transpose Into a Workable Key",
+          "summary": "Find a key where the melody sits on the top 3 strings between roughly the 3rd and 9th frets."
+        },
+        {
+          "id": "step-3-melody-top-strings",
+          "name": "Step 3: Learn the Melody on the Top 2-3 Strings",
+          "summary": "Horizontal rather than positional fretting on the top strings, with carve-out dips to the 3rd or 4th string allowed."
+        },
+        {
+          "id": "step-4-voice-chords-below",
+          "name": "Step 4: Voice Chords Below the Melody",
+          "summary": "Painting-by-numbers voicing selection: top note of the voicing equals the melody note's interval relative to the underlying chord."
+        },
+        {
+          "id": "chord-tone-vocabulary",
+          "name": "Closed Chord-Tone Interval Vocabulary",
+          "summary": "Fixed dictionary index keys: 1, b9, 9, b3, 3, 11, #11, 5, b13, 13, b7, 7, plus PT (passing tone) as escape hatch."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "range-rule-of-thumb",
+          "name": "Top-3-Strings, 3rd-to-9th-Fret Range Rule",
+          "summary": "Transpose into a key where the melody sits on the top 3 strings between roughly the 3rd and 9th frets to avoid thin (too high) or dark/muddy (too low) results.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Range rule of thumb",
+              "quote_excerpt": "melody sits on the top 3 strings between roughly the 3rd and 9th frets"
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Range failure modes",
+              "quote_excerpt": "too high sounds thin, too low sounds dark and muddy"
+            }
+          ]
+        },
+        {
+          "id": "horizontal-melody-fingering",
+          "name": "Horizontal Melody Fingering on Top Strings",
+          "summary": "The top-string canvas forces a horizontal rather than positional fretting approach, with occasional dips to the 3rd or 4th string permitted.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Horizontal melody fingering",
+              "quote_excerpt": "horizontal rather than positional fretting approach"
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Top-2-string melody constraint",
+              "quote_excerpt": "occasional dips to the 3rd or 4th string are fine"
+            }
+          ]
+        },
+        {
+          "id": "transpose-by-sliding-shape",
+          "name": "Transpose Dictionary Shape by Sliding to Melody Fret",
+          "summary": "A dictionary voicing is transposed into the tune's key by sliding the shape along the neck until its top note lands on the target melody fret.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Transpose by sliding shape",
+              "quote_excerpt": "sliding the shape until its top note lands on the melody fret"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "painting-by-numbers-rule",
+          "name": "Painting-by-Numbers Voicing Selection Rule",
+          "summary": "Pick voicings whose top note is the same interval as the melody note relative to the underlying chord; the voicing may be slightly adapted as long as the melody note ends up on top.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Painting by numbers rule",
+              "quote_excerpt": "voicings whose top note is the same interval as the melody note"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Adapt voicing for melody",
+              "quote_excerpt": "voicing can be slightly adapted as long as the melody note ends up on top"
+            }
+          ]
+        },
+        {
+          "id": "golden-rule-interval-analysis",
+          "name": "Golden Rule: Intervals Relate to Current Chord, Not Key",
+          "summary": "The most common beginner mistake is labeling intervals against the overall key rather than the current chord; the reference is always the major scale of the current chord's root.",
+          "engine_payload": {
+            "kind": "_pending:interval-reference-frame"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Golden rule of interval analysis",
+              "quote_excerpt": "labeling intervals against the overall key rather than the current chord"
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Major scale reference rule",
+              "quote_excerpt": "reference is always the major scale of the current chord's root"
+            }
+          ]
+        },
+        {
+          "id": "dont-harmonize-every-note",
+          "name": "Don't Harmonize Every Melody Note",
+          "summary": "Place chords selectively on long-held notes and at chord changes, exploiting the guitar's quick decay so that a chord change implies sustain rather than holding the note out.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Don't harmonize every note",
+              "quote_excerpt": "you don't need a chord on every melody note"
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Place chords on long notes",
+              "quote_excerpt": "placing chords on long-held notes"
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Sustain workaround",
+              "quote_excerpt": "chord change to imply sustain rather than holding the note out"
+            }
+          ]
+        },
+        {
+          "id": "passing-tone-escape-hatch",
+          "name": "PT (Passing-Tone) Label as Escape Hatch",
+          "summary": "Unharmonized chromatic melody notes get the PT label rather than a chord-tone interval, and a melody note that anticipates the next chord is labeled against that next chord.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Passing-tone label",
+              "quote_excerpt": "PT (passing tone) escape hatch for unharmonized chromatic notes"
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Melody anticipates next chord",
+              "quote_excerpt": "melody note anticipating the next chord is labeled against that next chord"
+            }
+          ]
+        },
+        {
+          "id": "remediation-options",
+          "name": "Three Remediation Strategies for Awkward Passages",
+          "summary": "When a strict painting-by-numbers output is unplayable, cut notes out of the chord, substitute parallel octaves or diads, or remove the difficult voicing entirely (the author's most-used escape valve).",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Three options for hard passages",
+              "quote_excerpt": "cut notes out of the chord"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Diads/octaves alternative",
+              "quote_excerpt": "substitute a different harmonization device such as parallel octaves or diads"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Removing chord entirely",
+              "quote_excerpt": "remove the difficult voicing entirely"
+            }
+          ]
+        },
+        {
+          "id": "playability-over-ambition",
+          "name": "Playability Over Ambition (Less Is More)",
+          "summary": "Easier voicings flow musically better; chords placed selectively are easier on the hands and usually imply the harmony adequately.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Less is more",
+              "quote_excerpt": "chords placed selectively are easier on the hands"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Playability over ambition",
+              "quote_excerpt": "playability beats ambition because easier voicings flow musically better"
+            }
+          ]
+        },
+        {
+          "id": "rhythmic-adjustment",
+          "name": "Sanctioned Rhythmic Adjustment of Melody for Fingering",
+          "summary": "Rhythmic adjustment of the melody is acceptable to facilitate fretboard jumps, framed as a sanctioned rule rather than a compromise.",
+          "engine_payload": {
+            "kind": "_pending:melody-rhythm-flex"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Manipulate melody rhythm for fingering",
+              "quote_excerpt": "rhythmic adjustment of the melody is acceptable to facilitate fretboard jumps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "greg-orourke:complete-chord-melody:three-harmonic-families",
+      "name": "Three Harmonic Families Taxonomy",
+      "summary": "Chapter 2's organizing taxonomy partitions the chord universe into three harmonic families - Major, Minor, and Dominant - with minor refined into m7 and m7b5 sub-families and dominant refined into natural ('7') and altered ('7alt') sub-families. The sub-family distinction is what drives major-vs-minor ii-V-i voicing choice. The chapter also formalizes the chord-construction principles that back the taxonomy: a chord symbol is an attempt to describe a sound, chords are built by stacking thirds, and 9/11/13 extensions are explained as continuing to stack thirds past the 7th. A final terminological rule - surrounding chords define a chord's name as much as its notes do - foreshadows the substitution machinery of Chapter 7.",
+      "members": [
+        {
+          "id": "family-major",
+          "name": "Major Family"
+        },
+        {
+          "id": "family-minor-m7",
+          "name": "Minor Family - m7 Sub-Family"
+        },
+        {
+          "id": "family-minor-m7b5",
+          "name": "Minor Family - m7b5 Sub-Family"
+        },
+        {
+          "id": "family-dominant-natural",
+          "name": "Dominant Family - Natural ('7') Sub-Family"
+        },
+        {
+          "id": "family-dominant-altered",
+          "name": "Dominant Family - Altered ('7alt') Sub-Family"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "subfamily-drives-iivi-choice",
+          "name": "Sub-Family Distinction Drives ii-V-i Voicing Choice",
+          "summary": "Refinement of minor into m7 vs m7b5 and dominant into natural vs altered is what drives major-vs-minor ii-V-i voicing selection.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor and dominant sub-families",
+              "quote_excerpt": "sub-family distinction drives major-vs-minor ii-V-i voicing choice"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "stacking-thirds-construction",
+          "name": "Stacking Thirds as Construction Principle",
+          "summary": "Chords are built by stacking thirds, and 9/11/13 extensions are explained as continuing to stack thirds past the 7th.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Stacking thirds",
+              "quote_excerpt": "stacking thirds as the core construction principle"
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Second-octave structures",
+              "quote_excerpt": "9/11/13 extensions as continuing to stack thirds past the 7th"
+            }
+          ]
+        },
+        {
+          "id": "context-defines-chord-name",
+          "name": "Surrounding Chords Define a Chord's Name",
+          "summary": "Surrounding chords define a chord's name as much as its notes do, which foreshadows substitution machinery.",
+          "engine_payload": {
+            "kind": "_pending:context-defined-naming"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Context defines chord name",
+              "quote_excerpt": "surrounding chords define a chord's name as much as its notes do"
+            }
+          ]
+        },
+        {
+          "id": "tension-from-dominants",
+          "name": "Color Localized in Dominant Extensions and Tensions",
+          "summary": "The 'jazzy' sound is located specifically in extensions and tensions added to dominant chords as the targeted chord type for color.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Tension from dominants",
+              "quote_excerpt": "extensions and tensions added to dominant chords as the targeted chord type for color"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "greg-orourke:complete-chord-melody:chord-collection-library",
+      "name": "Chord Collection Library (ii-V-I Dictionary Keyed by String Set and Melody Note)",
+      "summary": "The central indexing unit of the method: a chord collection is a group of chords covering every diatonic interval as the top note, which is what makes the dictionary indexable by melody note. The dictionary is structured around ii-V-I because that single progression covers all three harmonic families, and collections are duplicated into 1st-string and 2nd-string variants to match the top-2-string melody constraint. Chapter 8 consolidates the collections into a four-way split by quality and string set: Major ii-V-I on string set 4321 and on string set 5432, and Minor ii-V-i on the same two string sets with b5 and b9 alterations characteristic of the minor cadence. A separate section catalogues altered/extended dominants as the method's color resource, and a solo-guitar voicing section backs Module 4 with 6th-string-root shell voicings plus a catalog of extensions stacked on those shells.",
+      "members": [
+        {
+          "id": "major-iivi-4321",
+          "name": "Major ii-V-I, String Set 4321"
+        },
+        {
+          "id": "major-iivi-5432",
+          "name": "Major ii-V-I, String Set 5432"
+        },
+        {
+          "id": "minor-iivi-4321",
+          "name": "Minor ii-V-i, String Set 4321 (b5 / b9 alterations)"
+        },
+        {
+          "id": "minor-iivi-5432",
+          "name": "Minor ii-V-i, String Set 5432 (b5 / b9 alterations)"
+        },
+        {
+          "id": "altered-extended-dominants",
+          "name": "Altered / Extended Dominants Catalog"
+        },
+        {
+          "id": "shell-voicings-6th-root",
+          "name": "Solo-Guitar Shell Voicings, 6th-String Root"
+        },
+        {
+          "id": "shell-extension-catalog",
+          "name": "Shell Voicing Extensions Catalog"
+        },
+        {
+          "id": "first-string-collections",
+          "name": "1st-String Top-Note Variants"
+        },
+        {
+          "id": "second-string-collections",
+          "name": "2nd-String Top-Note Variants"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "three-input-lookup",
+          "name": "Three-Input Dictionary Lookup",
+          "summary": "Dictionary lookup is keyed on three inputs: the melody string, the chord type at that moment, and the melody note's interval relative to that chord.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Three voicing-lookup inputs",
+              "quote_excerpt": "melody string, chord type, and melody note's interval relative to that chord"
+            }
+          ]
+        },
+        {
+          "id": "string-set-variants",
+          "name": "1st-String and 2nd-String Top-Note Variants",
+          "summary": "Collections are duplicated into 1st-string and 2nd-string variants to match the top-2-string melody constraint from Module 1.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "2nd-string collection rationale",
+              "quote_excerpt": "1st-string and 2nd-string variants to match the top-2-string melody constraint"
+            }
+          ]
+        },
+        {
+          "id": "string-set-4321-vs-5432",
+          "name": "String-Set 4321 vs 5432 Split by Quality",
+          "summary": "ii-V-I voicings are catalogued in a four-way split: major and minor cadences each on both the 4321 and 5432 string sets.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Major II V I string set 4321",
+              "quote_excerpt": "major ii V I on string set 4321 and on string set 5432"
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Minor II V I string set 4321",
+              "quote_excerpt": "minor ii V i on the same two string sets with the b5 and b9 alterations"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "collection-covers-diatonic-intervals",
+          "name": "A Collection Covers Every Diatonic Interval as Top Note",
+          "summary": "A chord collection is defined as a group of chords covering every diatonic interval as the top note, which is what makes the dictionary indexable by melody note.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Chord collection definition",
+              "quote_excerpt": "group of chords covering every diatonic interval as the top note"
+            }
+          ]
+        },
+        {
+          "id": "iivi-covers-three-families",
+          "name": "ii-V-I as the Single Progression Covering All Three Families",
+          "summary": "The dictionary is structured around ii-V-I precisely because that single progression covers all three harmonic families.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Why ii V I for collections",
+              "quote_excerpt": "ii-V-I covers all three harmonic families"
+            }
+          ]
+        },
+        {
+          "id": "shell-extensions-stack",
+          "name": "Shell Voicing Extensions Stacked on 6th-String-Root Shells",
+          "summary": "The solo-guitar harmonic vocabulary is built on 6th-string-root shells with a catalog of extensions stacked on top of those shells.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Shell voicings root on 6th",
+              "quote_excerpt": "6th-string-root shell voicings plus a catalog of extensions stacked on top"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "greg-orourke:complete-chord-melody:voicing-construction-rules",
+      "name": "Voicing Construction Rules (Omittable Notes, Shells, Density)",
+      "summary": "The load-bearing instrument constraint of the method: the gap between the theoretically correct chord and the playable guitar voicing, filled by an explicit omittable-notes list and a shell-voicing primitive. Chapter 2 establishes the omittable-notes priority - 5th, root, 11th, and 9th first, with 3rd and 7th sometimes omittable in complex chords. Chapter 5 makes the shell voicing (root, 3rd, and 7th only) the primitive for solo-guitar arranging, derived from bar chords by dropping the 5th first, with the 6th as a substitute for the 7th for a warmer color and a general rule to avoid doubled notes unless the doubling happens to sound good. Bass-on-5th/6th-strings prominence is the load-bearing difference from trio playing, with bass-too-close-to-upper-harmony as the diagnostic for thin arrangements and a key-selection preference for A, E, or D so open strings can carry bass.",
+      "members": [
+        {
+          "id": "shell-voicing-primitive",
+          "name": "Shell Voicing (Root, 3rd, 7th)",
+          "summary": "The solo-guitar voicing primitive: root, 3rd, and 7th only, derived from bar chords."
+        },
+        {
+          "id": "omittable-notes-priority",
+          "name": "Omittable-Notes Priority List",
+          "summary": "5th, root, 11th, 9th first; 3rd and 7th sometimes omittable in complex chords."
+        },
+        {
+          "id": "bass-on-low-strings",
+          "name": "Bass on 5th and 6th Strings",
+          "summary": "Greater prominence of bass on the 5th and 6th strings since there is no bass player to cover that role."
+        },
+        {
+          "id": "open-string-key-preference",
+          "name": "Open-String Keys (A, E, D)",
+          "summary": "Prefer A, E, or D so open strings can carry bass notes and free the fretting hand."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "bass-upper-proximity-diagnostic",
+          "name": "Bass-Too-Close-to-Upper-Harmony Diagnostic",
+          "summary": "The diagnostic for thin-sounding arrangements is bass voiced too close to the upper harmony.",
+          "engine_payload": {
+            "kind": "_pending:bass-upper-spacing"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Bass-upper proximity issue",
+              "quote_excerpt": "bass voiced too close to the upper harmony"
+            }
+          ]
+        },
+        {
+          "id": "open-string-key-selection",
+          "name": "Key Selection Favors Open-String Bass (A, E, D)",
+          "summary": "Prefer A, E, or D so open strings can carry bass notes and free the fretting hand.",
+          "engine_payload": {
+            "kind": "_pending:open-string-key-bias"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Open-string keys",
+              "quote_excerpt": "prefer A, E, or D so open strings can carry bass notes"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "omittable-notes-list",
+          "name": "Omittable-Notes Priority: 5th, Root, 11th, 9th, Then 3rd/7th",
+          "summary": "Bridge the gap between the theoretically correct chord and the playable guitar voicing by omitting in priority order: 5th, root, 11th, 9th first; 3rd and 7th sometimes omittable in complex chords.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Omittable notes list",
+              "quote_excerpt": "5th, root, 11th, and 9th, with 3rd and 7th sometimes omittable"
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Theoretical vs playable",
+              "quote_excerpt": "gap between the theoretically correct chord and the playable guitar voicing"
+            }
+          ]
+        },
+        {
+          "id": "shell-voicing-drop-5th",
+          "name": "Shell Voicing: Drop the 5th First",
+          "summary": "The shell voicing (root, 3rd, 7th) is derived from bar chords by dropping the 5th first as the rule for which note to cut.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Shell voicing definition",
+              "quote_excerpt": "shell voicing - root, 3rd, and 7th only"
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Drop the 5th",
+              "quote_excerpt": "dropping the 5th first as the rule for which note to cut"
+            }
+          ]
+        },
+        {
+          "id": "6-or-7-substitution",
+          "name": "6th Substitutable for 7th for Warmer Color",
+          "summary": "The 6th is available as a substitute for the 7th for a warmer, more resolved color.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "6 or 7 substitution",
+              "quote_excerpt": "6th available as a substitute for the 7th for a warmer, more resolved color"
+            }
+          ]
+        },
+        {
+          "id": "avoid-doubled-notes",
+          "name": "Avoid Doubled Notes Unless the Doubling Sounds Good",
+          "summary": "General refinement rule: avoid doubled notes unless the doubling happens to sound good.",
+          "engine_payload": {
+            "kind": "_pending:avoid-doubling"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Avoid doubled notes",
+              "quote_excerpt": "avoid doubled notes unless the doubling happens to sound good"
+            }
+          ]
+        },
+        {
+          "id": "four-finger-maximum",
+          "name": "Voicings Cap at Four Notes (Right-Hand Constraint)",
+          "summary": "Voicings cap at four notes and the pinky is omitted from the picking hand; plucked notes must sound simultaneously to register as a chord.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Four-finger maximum, skip pinky",
+              "quote_excerpt": "voicings cap at four notes and the pinky is omitted"
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Sound multi-string notes simultaneously",
+              "quote_excerpt": "plucked notes must sound simultaneously to register as a chord"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

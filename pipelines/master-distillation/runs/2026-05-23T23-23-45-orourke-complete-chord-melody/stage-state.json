@@ -1,0 +1,65 @@
+{
+  "run_id": "2026-05-23T23-23-45-orourke-complete-chord-melody",
+  "config": "pipelines/master-distillation/configs/orourke-complete-chord-melody.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-23T23:23:45+00:00",
+      "ended_at": "2026-05-23T23:23:45+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-23T23-23-45-orourke-complete-chord-melody/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-23T23-23-45-orourke-complete-chord-melody/pages.json",
+        "extracted: 318 pages, 225,034 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-23T23:28:42+00:00",
+      "ended_at": "2026-05-23T23:28:43+00:00",
+      "outputs": [
+        "detected 9 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-23T23-23-45-orourke-complete-chord-melody/chapter-bounds.json",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch01.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch02.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch03.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch04.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch05.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch06.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch07.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch08.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/chapters/ch09.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-23T23:32:30+00:00",
+      "ended_at": "2026-05-23T23:32:30+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/complete-chord-melody-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-23T23:38:58+00:00",
+      "ended_at": "2026-05-23T23:38:58+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/derived/systems-draft.json",
+        "plugin/data/masters-corpus/greg-orourke/complete-chord-melody/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}
