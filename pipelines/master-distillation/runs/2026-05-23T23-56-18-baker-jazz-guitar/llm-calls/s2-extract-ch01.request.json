@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Chord Fundamentals and Chord Exercises (Lessons 1-5)\nPages 3-6 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nPART ONE\nLESSON 1\n\nFirst we shall work with chords. Chords are very important to a jazz musician. The old style of strumming chords\nfor guitar will never do in modern playing, so we will have to work out a complete system. With this style of\nchords you will learn to play chord solos, make all kinds of introductions, play background for horn players, and all\nkinds of tricky fill-ins.\n\nBelow you have 26 chords which you must learn to use right away. There are more chords to learn, but these are\nthe most important. We have to limit ourselves to the most important chords, because, as you know, there are so\nmany meaningless chords for guitar that this has to be done.\n\nFor your first lesson you are to just study them, try to finger them, learn names of them, and so on.\nIf you will notice, some of these chords are designed for the key of G major and some for C major. These are the\ntwo keys that we are going to work with first. From these keys we will transpose to all of the other keys.\n\nIt is very important that everything in the book be transposed to all of the other keys. You should be able to play\nany song in any key by the time you finish this book, and learning to transpose is the only thing that can help\nyou to do this.\n\nGet a music writing book, and write everything in it for retaining as you go on.\n\nOo \u00ae \u00a9 \u00a9 \u00a9 O\u00a9 @\u00ae\n\nG Gma7 Gma6 Ami? Ami6 D13)5b9 Gma7\nQO A, F T \u00a7 1\n\\ 16) 2@L] Core ! ra\nLeet LY ppiae a a ik 2m +H 3 =\n: Se TTA y 4\n\nGma7 or Emi9 A13b9 D13 D13b9 Gma6 Dil D7b5\n; 2 | HH\nrte et CE Het Ho teteer 4H\n2\u20ac0 4 4 ions\nO\n\nCma7 Cma6 Dmi7 Dmi6\n\nC6)9 G13\n\n\n\nMICKEY BAKER'S JAZZ GUITAR\n3\nLESSON 2\nNow we shall go into Chord Exercises.\nTake your G Chords which are the first three chords in Lesson One, and practice them chromatically always up the neck of your guitar as shown below.\nCHORDS 1, 2 And 3\nG Gma7 Gma6 Gma7 Ab Abma7 Abma6 Abma7 Eb Ebma7 Ebma6 Ebma7\nCHORDS 2 And 3\nGma7 Gma6 Abma7 Abma6 Ama7 Ama6 Ema7 Ebma6\nCHORDS 4 And 5\nAmi7 Ami6 Bbmi7 Bbmi6 Bmi7 Bmi6 Fmi7 Fmi6\nNow We Combine Chords 2, 3, 4 And 5\nGma7 Gma6 Ami7 Ami6 Abma7 Abma6 Bbmi7 Bbmi6 Cma7 Cma6 Dmi7 Dmi6\nWith Chords 4, 5 And 6\nAmi7 Ami6 Ami7 b5b9 Bbmi7 Bbmi6 Bbmi7 b5b9 Eb13 Fmi7 Fmi6 Fmi7 b5b9\nNow With Chords 2, 4, 6 And 9\nD13 Eb13 G13\n\n4\nMICKEY BAKER'S JAZZ GUITAR\nLESSON 3\nNow that you have a general idea of how the Chords should sound, let's put them to a little work.\nFirst, I'm going to write out the standard changes as they are in some songs, and below them I will write the new ones, the way they should be played against the old ones.\nBy the way, you are only using Chords No. 1, 2, 3, 4, 5, 6 for these Exercises. Just transpose them to the proper keys.\nStandard\nG Gmi G Gdim Ami D7 G Gdim Ami D7\nNew\nGma7 Gma6 Gmi7 Gmi6 Gma7 Gma6 Bmi7 Bbmi7 Ami7 Ami6 Ami7 b5b9 Gma7 Bbmi7 Ami7 b5b9\nStandard\nBbmi Eb7 Bbmi Eb7 Ab Ab6 Ab Ab6 Bbmi Eb7 Bbmi Eb7 Ab Ab6 Ab\nNew\nBbmi7 Bbmi6 Bbmi7 b5b9 Abma7 Abma6 Bbmi7 Bbmi6 Eb13 Abma7 Abma6\nStandard\nAmi E7 Am E7 Am D7\nNew\nAmi7 Ami6 Bmi7 Bmi6 Ami7 Ami6 Bbmi7 Bbmi6 Ami7 Ami6 Ami7 b5b9 D13\nStandard\nC7 F F#dim\nNew\nGmi7 Gmi6 Gmi7 C13 b5b9 Fma7 Gmi7 Ami7 Gmi7 Fma7 Gmi7 Ami7 Abmi7\nStandard\nBb C7 F7 Bb F7\nNew\nBbma7 Bbma6 Gmi7 Gmi6 Cmi7 Cmi6 Cmi7 b5b9 F13 Bbma7 Dbmi7 Cmi7 b5b9\n\nMICKEY BAKER'S JAZZ GUITAR\n5\nLESSON 4\nBefore I take you into Lesson 4, I want to remind you that every lesson in this book is important, (so you are not to skip anything!!). Give every Exercise all the study you can.\nIn Lesson 3 you had Chord Exercises in the key of F, G, A\u266d and B\u266d. The six chords that we used for those four keys are the most important Rhythm Chords in these keys.\nIn Lesson 4 we are going to work out examples on how to use these new chords in place of the standards. We are still using Chords No. 1 to 6. This will be done the same way as in Lesson 3.\nOn the top line will be the Standard Chords and on the bottom line, the best way to use the new ones.\nStandard\nG\nD7\nD7\nG\nAmi\nNew\nG\nGma7\nGma6 Gma7\nAmi7 Ami6\nAmi7\nD13\nb5b9\nGma7 Gma6\nAmi7 Ami6\nStandard\nG\nG\u266ddim\nAmi\nD7\nG\nAmi\nD7\nG\nEmi\nAmi\nD7\nNew\nGma7 B\u266dmi7\nAmi7\nD13\nb5b9\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nGma7 Gma6\nAmi7 Ami6\nStandard\nG\nG7\nC\nCmi\nG\nG\u266ddim\nAmi\nD7\nNew\nGma7 Gma6\nDmi7 Dmi6\nCma7 Cma6\nCmi7 Cmi6\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nStandard\nG\nG\u266ddim\nAmi\nD7\nG\nG\u266ddim\nAmi\nD7\nG\nG7\nC\nCmi\nG\nAmi\nD7\nNew\nGma7 Gma6\nAmi7 Ami6\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nGma7 Dmi6\nCma7 Cmi7\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nStandard\nG\nG7\nC7\nG\nG\u266ddim\nNew\nGma7 Gma6\nDmi7 Dmi6\nGmi7 Gmi6\nGma7 Ami7\nBmi7 B\u266dmi7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

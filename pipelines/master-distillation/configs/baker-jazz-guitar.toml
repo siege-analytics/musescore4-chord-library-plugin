@@ -1,0 +1,43 @@
+# Per-book config for the master-distillation pipeline.
+# Fifth book through the pipeline AND the first one to use the OCR branch
+# (#315). Mickey Baker's 1955 method is a scanned-image PDF — pdftotext
+# extracts ~0 chars. Pipeline routes Stage 1 through cyberpower (tesseract
+# first-pass + qwen2.5vl:7b rescue for low-confidence pages).
+
+[master]
+id = "mickey-baker"
+name = "Mickey Baker"
+
+[work]
+id = "complete-course-in-jazz-guitar"
+title = "Mickey Baker's Complete Course in Jazz Guitar (1955)"
+year = 1955
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/Mickey-Baker-s-Jazz-Guitar.pdf"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"

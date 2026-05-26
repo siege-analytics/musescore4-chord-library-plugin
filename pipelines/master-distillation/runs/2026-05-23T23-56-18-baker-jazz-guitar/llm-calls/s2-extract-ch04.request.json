@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Vamps and Fill-ins (Lessons 13-14)\nPages 12-14 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER\u2019S JAZZ GUITAR 11\nc C  Gdim Dmi _G+7\n. f f- f- f- 7 a Lf # 75 q f- f f- f- f Yi ff ff\n@ @3)\nCma7 Emi7Ebmi{ Dmi7 G13 |[{Cma7 \u2014 Ami7 Emi? Ebmi7 |Dmi7 G7#5b9\n: Tf F f- Y aT 4 Ya i : f- f ff Lf- ff Ff f- a\nCma7 Cma6 Dmi7 Dmi6 |}Cma7 Ebmi7 G13>5b9]| Emi? Ebmi7 | Dmi7 G13b5b9\nn ff LH Ff #- f- a a tf- Ff : + f- \u2014f f- f- f- f fF\nC DT GT Cc AT GT\n; Zz 7 -\u2014}- f- f- f f- f f- f- f- # f ff : + f f ra f- wa f- f- FH\n\n\u00a9 \u00a9\n\nC)\n\nCma7 Cma6 |Ami'\n\na]\n\nAmi6| Dmi7 $5>9|Cma7 Cma6 |f]Cma7 Cma6\n\nG13\n\nOO \u00a9\n\n\u00ae \u00ae\n\nEmi7 #559]\n\no FA 2 , A AA. , Ae A AT. A A A Ad oO \u00a2 , A YM A 7 a A A Ad\n\u2019 a AA \u2019 a0 4 A_A LL idl. Li LA. \u2019 40 a Ya a LA \u2019 MF wa A\n\u00ae \u00a9|@@/O Qe Of O/@ eF \u00a9O@\u00ae\nCma7 Cma6 | Ami7 D13] Dmi? b5b9Cma7 Cma6 ma? Cma6 |Emi7 Emi\u00e9) Dmi7 Di6| Dini bSbg\n: Ahh. Y MF st vA AL. YM i , MF A AS AA Ad im i 7a A W MF A _f.\n*\u00a3a , MT A LL Li it. Lt... WF 4 LA. YM im a a A La\nCc Ami Fmi C7 Fmi\na tf /- /- f f- f- tf- f- f- f- f- Lf. \u2018 F- fF ff f\u2014- f- f- ff f:\n\nCy Ay 4 Y a Y A a a\n\n\u00a9 \u00ae|@ @| \u00a96/\u00ae \u00a9 \u00ae\u00a92| @e|@@\nCma7 Cma6\u00e9 [Bmi? Bmi6| Ami7 Fmi7 Fmi6 Gmi7 b5b9| Fma7 Fma6|Fmi7 Fni6\u00e9\nn ff- Tf f; - ar an \u00a32. # Lt Lt HL \u00a2 ff- FT:\n\n\u00ae \u00a9\n\n\u00ae \u00a9\n\nCma7 Cma6 |Bmi7 Bmi6\n\nE\u00ae\n\n@ INF @\n() |\n(Ss) |i\n\nE\n:\ni\n\na\n\nCma7 Cma6\n\n@ \u00a9\n\nFma? Fma6| Fmi7 Fmi6\u00e9\n\ncy A wa A\n\nff.\n\nbl\nPea\n\ni\n\nN\ni\u00bb\nas\n\nhe\nfae\n\u2018|\n\nLL -\n\nay a7 A Y MF i\n\nYF a\n\n\u2018he\n~\n\nte\nNy\n\n\u2019 aw A ut\na A Yaw a Y a a)\n\nPractice each of these examples a dozen times a day.\n\n\n\n12 MICKEY BAKER\u2019S JAZZ GUITAR\n\nLESSON 12\n\nYou see that I have one line for standard chords and two lines for the new chord. This is all done for a good rea-\nson. With our new chords we only have two sets for each key. Like in the key of C major, one set of chords starts\nat the third position and the other set at the 8th position. This helps you in many ways. One is that we eliminate\nall of those unnecessary chords that there are for guitar. Another great help is that once you master both sets for\neach key, you will be able to transpose from one key to another with great ease.\n\nGetting back to the chords, you may notice that most of the time when we have a seventh chord, we substitute\n\n- minor chords in their place. If the chord is G7, I may use Dmi7 to Dmi6, or Dmi7 to G13, or something like\n\nthat. The fifth of any dominant chord can be substituted in place of the Dominant itself. Let\u2019s say that you have\ntwo bars of D7. All right, the 5th of D is A. All you have to do is count up with your fingers D, E, F, G, then A.\nA-minor is a very close relative to D7. Now you know that if you have a dominant 7 chord you can substitute its\ntelative minor which is the 5th of the chord.\n\nIn order to really get an understanding of this, you must write out all dominant 7 chords from C7 up to B7 and\nbeside them put the relative minor like this: \u2014 the Sth of C7 is G minor, the 5th of D\u00a27 is A\u2019 minor, and go\nalways up to B7 and Ff minor. After you have done this I want you to make chord charts similar to that of Lesson\nNo. 11 in the keys of D\u00e9, FE, F, G, A\u2019 and Be. By doing this you will get all of your most important chords on\ncharts for each key to refer to.\n\nI think that the best thing for you to do is to make up a scrap book, and put all of this material in it for reference\nat all times. Now, if you can\u2019t understand all of what I\u2019m trying to tell you right away, don\u2019t worry too much\nabout it. But if you keep reviewing each lesson that you don\u2019t quite understand it will all come to you as you\nkeep studying.\n\nJust remember that every lesson is important, and should be studied over and over again.\n\nLESSON 13\nNow we come to vamps. Vamps are very important in jump tunes and novelty tunes.\nThere are many ways to play these vamps, but I\u2019m only writing out the most important progressions for now.\n\nAfter you have worked these vamps out in this key which is C major, transpose them to the keys of: D\u00e9, E\u00e9, F,\nG, A, and B\u00e9, then make up charts similar to this one in each key. Then practice them in every key.\n\nTry playing these vamps string bass style (see Lesson No. 8) and arpeggio style. This will make the vamp sound\nfuller and better.\n\n\nMICKEY BAKER'S JAZZ GUITAR\n13\nStandard\nC Gdim Dmi G7 C Gdim Dmi G7 C C7 F Fmi C Gdim Dmi G7\nNew\n16 4 18 23 16 4 18 23 16 6 C13 2 4 16 18 21 G7\nCma7 Ami7 Dmi7 G13 Cma7 Ami7 Dmi7 G13 Cma7 b5b9 Fma7 Fmi7 Cma7 Ebmi7 Dmi7 #5b9\n16 21 A7 #5b9 Dmi7 #5b9 A7 G7 Cma7 #5b9 Dmi7 #5b9 Cma7 C13b9 Fma6 Fmi7 Emi7 Ebmi7 Dmi7 G13b9\n2 3 4 5 Cma7 Cma6 Dmi7 Dmi6 Cma7Cma6 Dmi7 Dmi6 Cma7 C7 Fma7 Fmi7 Cma7 Ebmi7 Dmi7 b5b9\n2 26 4 6 G13 G13 12 16 18 4 6 G13b9\nCma7 C#dim Dmi7 b5b9 Cma7 C#dim Dmi7 b5b9 Cma6 C7 Fma7 Fmi7 Emi7 Ebmi7 Dmi7 G13b9\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

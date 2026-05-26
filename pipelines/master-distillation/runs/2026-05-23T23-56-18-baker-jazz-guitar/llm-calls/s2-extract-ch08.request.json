@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Part Two Opens: Time Values, Wrist Development and Scales (Lessons 24-26)\nPages 27-30 of the book.\n\n<<<CHAPTER TEXT\n\n126 MICKEY BAKER\u2019S JAZZ GUITAR\n\nPART TWO\n\nNow that you know how to use chords, let\u2019s go into the most important study\nwhich is solo work. This is where guitarists have the most trouble. Solo work\nis really very simple if you know how to do it. Of course, I know it seems\nimpossible to stand up and take a solo if you\u2019re not familiar with the rudi-\nments of the idea.\n\nBut before we go into this I want to make a few points clear to you, and you\nshould always keep this in mind. It is impossible for anyone to teach you how\nto feel music, that is, to stand up and play solos one after another. This has\nto come from your soul. Now, in order to develop a soul for music, these\nare the things you must do constantly. Practice playing your guitar with\nrecords, listen to solos by horn players, learn to steal solos from records.\nAnything that you hear another musician play, try to play it yourself. Strum\nthe chords to any song that you like and hum ideas, \u2014 then apply the ideas\nto the guitar. This will be hard to do at first and some of it may sound silly,\nbut if you keep doing this long enough you will develop an ear for music,\nand once you have an ear you'll be stealing solos from everybody and building\nyour own ideas around them. You will also develop a beautiful soul for music\nwhich will in time enable you to play anything you want to at will.\n\nAnother very important thing for you to do is to hang around jam sessions.\nDo as much sitting with other musicians as possible. Doing this will help to\ndevelop an ear for music and it also helps with your timing. If you know\nanother guitarist get together with him as much as possible, \u2014 let him strum\nchords for you while you take solos, and you do likewise for him.\n\nIn PART TWO of this book I have set down all the material that is neces-\nsary to make you a solo guitarist. So, follow my instructions to the letter, and\nremember everything that I have told you.\n\nAlso, give each Lesson at least two hours study a day!\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR 27\n\nLESSON 24\n\nI know that you are eager to run right through this material, but remember, if you rush these lessons you won't\nknow any more when you finish the book than you did when you started. So let's just take our time and do each\nlesson as I tell you to.\n\nFirst, we have exercises from Lesson 24 to 30. Each one is as important to you as eating and sleeping, because\nwithin these 28 exercises lies the key to solo work. So you are to live with them for the rest of your life. I know\nyou can\u2019t learn them within the few weeks that I have them set in. It took years for me to master them myself. So\nevery time you pick up your instrument you should go over each exercise.\n\nRemember, don\u2019t rush! Go into this section of the book very slowly. Take each exercise and practice it as slowly\nas possible. Only increase the tempo when you can play it relaxed at a slow tempo. Remember, if you cannot piay\nan exercise slowly, you surely can\u2019t play it fast.\n\nEvery exercise and solo in this book is to be played with an up and down stroke. In order to play with an up\n\nand down stroke you must start right now. Anything that you play from now on, you are to use up and down\nstrokes.\n\nYou are to learn the name of these exercises by heart from one end of the guitar to the other. This will not only\nmake you more familiar with your instrument, but each of these runs will play a very important part in your solo\nwork,\n\nTIME VALUES AND EXERCISES\n(In The Key Of C, 1st Position)\n\nThe sign \"X\" is for open string.\nThe sign \"S\" is for the string.\n\nThe sign \"F\" is for the fingering.\n\nEx, 1\nAA MALY AY vA\n\u2014\u2014- | ==\n\u2014\u2014\u2014= pf \u2014 Fe Pe Pt \u2014\noe oe \" Sa\nSs. 5 4 3 2 1 2 4 2 3 2 3. 62 4 2 5\nF, 3 2 x 1 3.21 21 x 1 x 1 2 1 3\ni | a\nrn \u2014t | i T + t }\nSS ee ee \u2014\u2014\u2014\u2014  \u2014\u2014\u2014\u2014\nSs. 5 4 4 4 3\u00b0 3 2 2 5 2 42 42 42 3.2 3\n2\nF. 3 x 2 3 x 2x iil 3.61 xl 21 3\u00b041 x l 21 ae\nLA n\nSS\n| ==. = |\nDy) oe a\nSs. 2 3 3\u00b03 4 44 5 23 2 83 2 3\u00b092 4 2 4 2 4 2 5\nF, 1 4 2x3 2x 3 14 x 2ii1 x 13 1 21 x 1 3\n\n\n28 MICKEY BAKER\u2019S JAZZ GUITAR\nEx, 2\n\n2 = Oe\n\u2014 i\n\nr34 r\u20143\u2014 c\u20143\u2014 c-3e\n\nne34 3A UL IA\n\nSo _\u2014\u2014 \u2014\u2014\u2014\u2014_\nAV ANVAY\nEx. 3 3\u20141 rc 3 3 3\n\u2014 soot =\nf-\u2014t \u2014 + +\u2014 + \u2014\u2014 \u2014 T <x\nf | -O\u2014 oe \u2014 | \u2014\nry\nEx. 4 3 i\n\u201c| \u201c7 \u2014\u2014 3\n\u2014\u2014 T tt \u201ctT \u2014 \u2014 | i SE oa \u2014F _ 1]\nas \u2014\u2014 on a\nLESSON 25\nWRIST DEVELOPMENT\n(With Up And Down Strokes)\n16th NOTES\nEx. 5\n\u00a5YV AVA\n\u2018a AviAv ;\n\n(eee ESSE Ee eeerr:\n| tod\n\nEx. 6 QUARTER And 16th. NOTES\n\nnD)\nAN AV\nS. 5 2 a\na, |\n\u2014\u2014\u2014\u2014\nS$. 32 2\nFl 41 i\n\n32nd. And 8th, NOTES\n\nAEx. 7 . 1\n4 i\nSee\n\n*Practice all exercises with Down and Up Strokes first, AVAVAYV.\nThen with up and down. VAVAVAY.\n\n\n\n29\n\nLESSON 26\nSCALES AND EXERCISES\n(In The Key Of A Minor)\n\nHARMONIC MINOR\nMELODIC MINOR\n\nMORE WRIST DEVELOPMENT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nr\n\n9\n10\n\nRAs II\n\nEx.\n\nEx.\n\u201d +\n\nTON\n\nyore\n\nON\n\noo\n\naN\n\nuw\n\nMa\n\ni\u2014\n\nFASTER\n\n\u2014s\n\n==\n\n+}\n\n12\n\n11\n\nEx,\nEx.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

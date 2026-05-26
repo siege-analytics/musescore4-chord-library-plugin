@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Bridges and Last Lesson in Chord Progressions (Lessons 15-16)\nPages 15-17 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nLESSON 14\n\n/\n| Hi\n\nlere are a few more nice vamp ideas for fill-ins when you play behind horn players. We have to change our key\n\nfor this to get the best results.\n\nIn order to work out these vamps, I will have to introduce a few new chords. We will call them chords No. 27,\n\n28, 29 and 30.\n\nThis can\u2019t be done so easily in the key of C major, so we move up to the key of G major.\nAfter y\n\n;\n\nke each one separately and transpose it to as many keys\n\nou have learned these vamps in Key of G major ta\n\nbe done separately, because you can\u2019t play them all in every key.\n\nas you possibly can. They will have to\n\nD11\n\nG13\n\nGma6\n\nEb7\n\n<;\u2014 Open string root\n\n\u00a9 @\n\nLan)\n\nLand\n\nLe]\n\n2\n\nLa)\n\nLal\n\n\u00ae@@OO\u00aeO\u00ae\n\nGma7 Gma6 Ami7 Ami6\u00e9 Bmi7 Bbmi7 Ami7 b5b9 Gma7 G13 Cma6 CHdim Dma6 Emi7 Ami7 b5b9\n\nca\n\nD13b9\n\nman\n\nGma6 Eb7 D11 Eb7 Gma6\n\nD13b9\n.\na\n\nD13b9\n\nYan at YO 9\n\n#dim Dma\u00e9 Emi? Ami? $559\n\nGma6 CHdim Cma6 CHdim Gma6\n\nim Gma6 G13 Cma6\u00e9 C\n\nOEOROROROMOROM OM,\n\nGe)\nga\n\n\u00a9)\nD13b9\n\n229\n\n{\nTt\n\nLay\n\n4 1\nrr vt\n@ @)\nma6 CHdim Gma6\u00e9\nyA\n\nLan]\nYa i\n\ntam}\n\nGma6 Eb7 D11 Eb7 Gma6\n\nGrnc\n\nam\nv\n\nui\nv\n\na6\n\nZf-\n\nff\n\nfi\n\n~_ oma\u00e9 CHdim Cma6 Cfdim Gm\n\noe\n4\n\n' Mf\n\n\n\nMICKEY BAKER'S JAZZ GUITAR\n15\nLESSON 15\nNow we will work with bridges.\nIn this Lesson I have written out three of the most used bridges in Jazz. They are written as always, standard chords at the top, and new chords at the bottom of each example.\nThese bridges are for the key of C major. After you have worked them out, transpose them to the keys of D\u266d, E\u266d, F, G, A\u266d and B\u266d. Then make up charts in each key.\nIf you should come across a few chord progressions that are very hard to play, work on them continually until you can play them comfortably.\nE7\nA7\nD7\nG7\n18 23\nBmi7 E13\n18 23\nBmi7 E13\n2 5\nEmi7 Emi6\n18 23\nAmi7 D13\n4 5\nDmi7 Dmi6\n4\nDmi7 b5b9\n4 5\nBmi7 Bmi6\n18 23\nEmi7 A13\nAmi7 A13\n4 5\nAmi7 Ami6\n18 23\nG7\nDmi7 G13\n18 23\nG7\nDmi7 #5b9\nC\nF\nD7\nG7\n18 23\nGmi7 C13\n18 21\nGmi7 C13 #5b9\n15 16\nFma7 Fma6\n18 23\nAmi7 D13\n4 5\nDmi7 Dmi6\n4 6\nG13\nDmi7 b5b9\n4 5\nGmi7 Gmi6\n4 6\nC7\nGmi7 b5b9\n2 3\nFma7 Fma6\n4 5\nAmi7 Ami6\n18 23\nDmi7 G13\n18 21\nG7\nDmi7 #5b9\nE7\nAmi\nD7\nG7\n4 5\nBmi7 Bmi6\n13 14\nE11 E7b5\n4 5\nAmi7 Ami6\n4 5\nAmi7 Ami6\n13 14\nD11 D7b5\n18 23\nDmi7 G13\n18 24\nDmi7 G7b5\n18 23\nBmi7 E13\n18 24\nBmi7 E7b5\n18 19\nAmi7 Ami6\n18 23\nAmi7 D13\n18 24\nAmi7 D7b5\n4 5\nDmi7 Dmi6\n13 14\nG11 G7b5\n\n\nLESSON 16\n\nNow for the last lesson in chord progressions.\n\nIf you are still a little shaky on your chords, and feel that you don't know them too well up to this point, review these lessons two or three times a week, and you will find that everything will come to you as you keep studying.\n\nThis Lesson is the key to all of the other lessons. Here I have written out the best possible way to connect one chord to another using the dominant as leading chord for each example.\n\nFirst we have dominant to dominant connections, second, we have dominant to minor connections and third, dominant to major connections. With these few chord connections you can build progressions around any song. All you have to do is keep working with them until you find the one that fits best. As you work with these chords you will begin to develop an ear for them. Then as soon as you hear a song you will know just what chord connections to use.\n\nAfter you have worked each of these examples out, make up charts similar to this one in the keys of Db, Eb, F, G, Ab and Bb (See lesson No. 12)\n\nStandard\n\nG7 | C7 | G7 | Cmi | G7 | Cma\n---|---|---|---|---|---\nNew | 18 | 23 | 4 | 5 | Gmi7 Gmi6\n     | Dmi7 G13 | 18 | 23 | 18 | 19\n     | Dmi7 G13 | 18 | 23 | 18 | 19\n     | Dmi7 G7b5 | 13 | 14 | 18 | 24\n     | C11 C7b5 | Dmi7 G7b5 | Cmi7 Cmi6 | 18 | 24\n     | Dmi7 G7b5 | Cmi7 Cmi6 | 18 | 24\n     | G13 | 5 | 18 | 21\n     | Dmi7 Dmi6 | 4 | 5 | 4 | 5\n     | Dmi7 C13 | Dmi7 Dmi6 | 4 | 5 | 4 | 5 | 2 | 3\n     | G11 G7b5 | 13 | 14 | 18 | 24\n     | Cmi7 C7b5 | Dmi7 Ddim | 4 | 26\n     | Dmi7 G13b5b9 | Cmi7 Cmi6 | 4 | 6\n     | Dmi7 G13b5b9 | Cma7 Cma6\n     | Dmi6 | 23 | C13 | 13 | 14\n     | G11 G7b5 | Cmi7 Cmi6 | 13 | 14\n     | Cma7 Cma6\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

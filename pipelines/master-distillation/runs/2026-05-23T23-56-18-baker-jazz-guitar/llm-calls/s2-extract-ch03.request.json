@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: Chords in C/Db/Eb, Harmonic Structure and Chord Progressing (Lessons 9-12)\nPages 9-12 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nThen practice them in all four of these keys until you can feel comfortable playing them.\n\nLESSON 7\n\nAfter you have mastered these examples in G, you are to write out similar examples in the keys of F, A\u00e9 and B\u00e9.\n\nAnother thing you must do, is to try making other intro\u2019s by changing these around in as many ways as you can.\nThis may not be so easy at first, but if you devote enough time to it, you will find yourself making all kinds of\nintro\u2019s from these few chords.\n\nThey are your most important melody chords for these four keys. So give them all the attention you possibly can.\n\nAnother way to get new ideas is to change the rhythm of the introduction. Try playing them in arpeggio style,\nor try playing the bottom note of the chord first, then the chord.\n\nUse every trick that you can think of to develop new ideas.\n\nIn this Lesson I have a few ideas on how to use the Arpeggio, and the string bass.\n\nLESSON 8\n\nUsing Introduction No. 2 in Lesson No. 6 work them out and try to make up new ones.\n\nIntro. 2:\nGma7___ A13b9 Ami7  D13b5b9 _ Gma7 _A13b9 sami =: DBHSHO\n: \u00a3 + fy\no 2 o :\nJ \u201cbel = Hel eel se ae -\nArpeggio:\n7 9-\ny * sam = fi o\u2014 :\nCc el be 7 eLDbe\n\nString Bass:\n\n=) a\n\nPil\n\nie\n\nmelsihe\n\n\n\n; MICKEY BAKER\u2019S JAZZ UITAR a. 9\n\n|\n\nLESSON 9\n\nNow we come to Chords in the key of C, D\u00e9 and E+ Major. I do hope that you have followed my instructions to\nthe letter up until now, because if you don\u2019t understand your lessons from one to seven, you surely won't under-\nstand these lessons to follow.\n\nJust to make sure review all of your work up to Lesson No. 8, and make doubly sure that you have done every\nlesson as I have told you to do.\n\nFirst, we will work out Chord Exercises as we did in Lesson No. 2. These exercises are to be worked always up and\ndown the finger board, just as you have done with all of the other chords.\n\nChords No. 15, 16 And 17\n\nC Cma7 Cma6 Cma7 Db Dbma7 Dbma6 Dbma7 G Gma7 Gma6 Gma7\nTf Lf ff + f- fF f\u00a2- Hf Lf Ff f- Uy Uy #; \u00a3 Lf- f, A Lf t\nChords No. 16 And 17\nCma7 Cma6 Dbma7 Dbma6 Dma7? Dma6 Ebma7 Ebma6 Gma7 Gma6\nL- f Lf\u2014 Lf Pf fF Lf Lf- ff 4 Pp +e tft Tf SF =|\nChords No. 18 And 19\nDmi7 Dmi6 Ebmi7 Ebmi6 Emi? Emi6 Fmi7 Fmi6 Ami7 Ami6\nLf Sf L, f- ra a ft ff Lf- ff up. to. tf- Af rai\nChords No. 16, 17, 18 And 19\nCma7 Cma6 Dmi7 Dmi6 Dbma7 Dbma6 EbmiT Ebmi\u00e9 Gma7 Gma6 = Ami7 Ami6\nf- f- tr HT Ht- Lf TH- tf f- f- tf 4p +e Pf Ht- Lf Lf-\nChords No. 16, 21 And 18\nBb7 b7 DT C7\nCma7 ATH5b9 Dmi7G7#5b9 Dbma7 #5b9 Ebmi7 Beb9 Fma7 #5b9 Gmi7  $5b9\nn Lf- ff- ff Lr 0 F c u Lf- Sf ff Pf :\nChords No. 18, 21 And 22 :\nG7 G7 b7 b7 7\n\n. . C7\nDmi7 \u00a35b9  C(6)9 #5b9 Ebmi? Bho D\u00bb6)9 ao Gmi7 S549 F(6)9 $5b9\n7; \u00a3 tt Pf tr Lf- Lf ff Lf bia P + & Pf Ff Lf- rar yam i\n\n\n\nMICKEY BAKER'S JAZZ GUITAR\n\nLESSON 10\n\nIn this Lesson we are going to work on the harmonic structuce of these chords. You know, of course, that this is\nnot a course in harmony, but I feel it my duty to give you a little better understanding of how to use these chords.\n\nNow then, any chord on a major mode can be used in place of the major triad.\n\nLet\u2019s say that you have one bar of C major, or even two bars:\u2014\n\nCc Cc Cc\nf- va F ya 7 A 7 i Sk. vd fh. \u00a3.. y A \u00a5\nZz. Zz Zz 2 Zz y Zz Zz Zz Zz Z Zz\n\nWe don't want to strum a C major chord for the whole two bars, because it doesn\u2019t have enough color, and be-\nsides it sounds corny, so we add color by using progressions that are adaptable as follows:\u2014\n\nc Cma7 Cma6 \u2014_Cma7 Cma7  Cma6 Cma7 Cma6\nZz. Zz. Z 7 AERO J Z Z y Z 7-7 Zz Zz\nZz Z Zz. Zz y or Z Zz Zz Zz Zz Zz. Zz Z\n\nIn most all cases these progressions are adaptable. The same thing is true with the minor and dominant chords.\nSuch as, if you have a Dmi chord (Any minor chord can be used on the minor mode) Dmi6, Dmi7 and Dmi9\nare adaptable, because they are all on the same mode. With dominant chords there is no limit to what can be done.\nFor instance if you have a G7 Chord \u2014 you could use G13, G9, G7#5+9, G13#549, G75, G11, G1349 and so on.\nIt all depends on how the chords are progressing. You just can\u2019t throw these chords in any place, they have to be\npart of some kind of progression. In the lessons that follow I have written as many chord progressions that are\nneeded to teach you how to use these new chords. They are all in the key of C major. I want you to study them\nuntil you know them by heart.\n\nThis can\u2019t be done overnight. It took me years to figure them out, so it should take you at least two or three months\nto learn them in the key of C major alone.\n\nLESSON 11\nCHORD PROGRESSING\n\nThe circled number over each chord indicates which\n(See Lesson 1)\n\nchord is to be used.\n\nStandard\nCc\n\\Z Y A 2 <a 4 Cw 4\nfe A 4._.\u00e9\u2014 2 Lf\nCma7 Cma6\nCm Av A \u2019 a A Ce Aa\nOar 47 4 ik a a)\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR 11\nc C  Gdim Dmi _G+7\n. f f- f- f- 7 a Lf # 75 q f- f f- f- f Yi ff ff\n@ @3)\nCma7 Emi7Ebmi{ Dmi7 G13 |[{Cma7 \u2014 Ami7 Emi? Ebmi7 |Dmi7 G7#5b9\n: Tf F f- Y aT 4 Ya i : f- f ff Lf- ff Ff f- a\nCma7 Cma6 Dmi7 Dmi6 |}Cma7 Ebmi7 G13>5b9]| Emi? Ebmi7 | Dmi7 G13b5b9\nn ff LH Ff #- f- a a tf- Ff : + f- \u2014f f- f- f- f fF\nC DT GT Cc AT GT\n; Zz 7 -\u2014}- f- f- f f- f f- f- f- # f ff : + f f ra f- wa f- f- FH\n\n\u00a9 \u00a9\n\nC)\n\nCma7 Cma6 |Ami'\n\na]\n\nAmi6| Dmi7 $5>9|Cma7 Cma6 |f]Cma7 Cma6\n\nG13\n\nOO \u00a9\n\n\u00ae \u00ae\n\nEmi7 #559]\n\no FA 2 , A AA. , Ae A AT. A A A Ad oO \u00a2 , A YM A 7 a A A Ad\n\u2019 a AA \u2019 a0 4 A_A LL idl. Li LA. \u2019 40 a Ya a LA \u2019 MF wa A\n\u00ae \u00a9|@@/O Qe Of O/@ eF \u00a9O@\u00ae\nCma7 Cma6 | Ami7 D13] Dmi? b5b9Cma7 Cma6 ma? Cma6 |Emi7 Emi\u00e9) Dmi7 Di6| Dini bSbg\n: Ahh. Y MF st vA AL. YM i , MF A AS AA Ad im i 7a A W MF A _f.\n*\u00a3a , MT A LL Li it. Lt... WF 4 LA. YM im a a A La\nCc Ami Fmi C7 Fmi\na tf /- /- f f- f- tf- f- f- f- f- Lf. \u2018 F- fF ff f\u2014- f- f- ff f:\n\nCy Ay 4 Y a Y A a a\n\n\u00a9 \u00ae|@ @| \u00a96/\u00ae \u00a9 \u00ae\u00a92| @e|@@\nCma7 Cma6\u00e9 [Bmi? Bmi6| Ami7 Fmi7 Fmi6 Gmi7 b5b9| Fma7 Fma6|Fmi7 Fni6\u00e9\nn ff- Tf f; - ar an \u00a32. # Lt Lt HL \u00a2 ff- FT:\n\n\u00ae \u00a9\n\n\u00ae \u00a9\n\nCma7 Cma6 |Bmi7 Bmi6\n\nE\u00ae\n\n@ INF @\n() |\n(Ss) |i\n\nE\n:\ni\n\na\n\nCma7 Cma6\n\n@ \u00a9\n\nFma? Fma6| Fmi7 Fmi6\u00e9\n\ncy A wa A\n\nff.\n\nbl\nPea\n\ni\n\nN\ni\u00bb\nas\n\nhe\nfae\n\u2018|\n\nLL -\n\nay a7 A Y MF i\n\nYF a\n\n\u2018he\n~\n\nte\nNy\n\n\u2019 aw A ut\na A Yaw a Y a a)\n\nPractice each of these examples a dozen times a day.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}
