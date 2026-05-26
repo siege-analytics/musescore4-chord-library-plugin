@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Appendix 1 - Chord Dictionaries\nPages 264-285 of the book.\n\n<<<CHAPTER TEXT\n\nAppendix 1 - Chord\n   Dictionaries\n\n\nChord Melody Dictionary (Featured in Module 3)\n\nThis page features a handy reference of all the chord voicings that comprise the chord dictionary\ncovered in Module 3.\n\nWe thought it would be a good idea to include these in one place as a quick reference for you when\ncreating chord melody arrangements.\n\n\nMAJOR II V I CHORDS \u2013 STRING SET 4321\n\nCmaj7 (I)\n\n\nDm7 (ii)\n\n\nG7 (V)\n\n\nMAJOR II V I CHORDS \u2013 STRING SET 5432\n\nCmaj7 (I)\n\n\nDm7 (ii)\n\n\nG7 (V)\n\n\nMINOR II V I CHORDS \u2013 STRING SET 4321\n\nCm7 (i)\n\n\nDm7b5 (ii)\n\n\nG7b9 (V)\n\n\nMINOR II V I CHORDS \u2013 STRING SET 5432\n\nCm7 (i)\n\n\nDm7b5 (ii)\n\n\nG7b9 (V)\n\n\nTENSIONS & EXTENSIONS ON DOMINANT CHORDS\n\n\n                        2 1 \" 3\n\n\n\n\n    --\n              ---       ----\n6         37\ufffd       38 -e\n            -\n     --\n    \ufffd\n          I         I             II\n          I         I             11\n          I         I             I\u25a0\n          I         I             I\u25a0\n\n\n\ufffd3-,.\n ..,          1          5\n                         6\n\ufffd4\n\ufffds            45         5\n\n\nSolo Guitar Chord Dictionary (Featured in Module 4)\n\nHere\u2019s an overview of useful solo guitar voicings as featured in module 4.\n\n\n\n\nSHELL VOICINGS\n\nRoot on the 6th String\n\n\n\n\nRoot on the 5th String\n\n\nSHELL VOICING EXTENSIONS\n\nCmaj7 \u2013 Root on String 6\n\n\n\n\nC7 \u2013 Root on String 6\n\n\nCm7 \u2013 Root on String 6\n\n\n\n\nFmaj7 \u2013 Root on String 5\n\n\nF7 \u2013 Root on String 5\n\n\nFm7 \u2013 Root on String 5\n\n\n    Appendix 2 -\nFingerstyle Training\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

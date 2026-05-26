@@ -1,0 +1,64 @@
+{
+  "quotes": [
+    {
+      "topic": "Top-2-string melody constraint",
+      "verbatim_quote": "In order to fit our chord voicings underneath the melody notes, we need to change the fingering of\nthe melody to sit on the top 2 (or 3) strings.\n\nNote: it’s ok to occasionally dip down the 3rd or even the 4th string if necessary – don’t get too rigid\nabout only sticking to 2 strings!",
+      "why_load_bearing": "Reaffirms the top-2-string canvas rule with the explicit carve-out that prevents over-rigid fingering."
+    },
+    {
+      "topic": "Write down the arrangement",
+      "verbatim_quote": "Whatever method you choose, it’s important to write down your arrangement somehow. Writing gives\nyou the ability to keep track of your ideas and thus refine them more easily (which can be difficult to\ndo if you are arranging entirely by ear).",
+      "why_load_bearing": "Process rule: the arrangement must be notated (paper or software) for iterative refinement to work."
+    },
+    {
+      "topic": "Basic comping before voicing",
+      "verbatim_quote": "Something good to do before getting into the nitty-gritty of what voicings to use is to simply learn\nthe basic chords of the song as if comping in a band.\n\nThis is another way to train your ears to the chord progression and is a gentle way to dip your toes\ninto applying chords to your chosen tune.",
+      "why_load_bearing": "Pre-step in the method: comp the song first so the ear knows the harmony before voicing selection."
+    },
+    {
+      "topic": "Harmonic analysis goals",
+      "verbatim_quote": "We are aiming to get 3 outcomes from this:\n\n1. To work out the quality of each chord in the progression (major, minor, dominant).\n2. To observe any key changes in the tune.\n3. To see if we can spot common chord sequences in the progression, such as ii – V – Is etc.",
+      "why_load_bearing": "Defines the three specific outputs the analysis pass must produce before voicing assignment."
+    },
+    {
+      "topic": "Roman numeral conventions",
+      "verbatim_quote": "Harmonic analysis uses the following conventions:\n\n   Roman numbers are designated to indicate a chord’s function.\n   Upper case Roman numerals indicate a chord being major or dominant.\n   Lower case Roman numerals indicate a chord being minor.",
+      "why_load_bearing": "Notation rules that make the analysis output legible to other musicians and to the reader's own future self."
+    },
+    {
+      "topic": "Why interval analysis",
+      "verbatim_quote": "If we know what interval a melody note is in relation to a given chord, we will be able to find an\nappropriate voicing from our chord dictionary with that interval as the top note chord.",
+      "why_load_bearing": "States the bridge between melody analysis and dictionary lookup — the linchpin of the painting-by-numbers method."
+    },
+    {
+      "topic": "Interval relates to current chord",
+      "verbatim_quote": "The interval number we give a melody note must relate to the current chord in the\n progression – NOT the overall key of the progression. This is a common mistake beginner\n arrangers often make.",
+      "why_load_bearing": "Flags the most common student error and the correct mental model for interval labeling."
+    },
+    {
+      "topic": "Chord-tone vocabulary",
+      "verbatim_quote": "The interval numbers are the chord tone numbers, and could be one of the following:\n\n 1, b9, 9, b3, 3, 11, #11, 5,b13, 13, b7, 7",
+      "why_load_bearing": "Closed vocabulary of interval labels the dictionary is indexed on — essential for the lookup step."
+    },
+    {
+      "topic": "Passing-tone label",
+      "verbatim_quote": "Often in jazz melodies, the chromatic notes in a melody can be considered passing tones if they\n are not on a strong downbeat and simply lead to a stronger chord tone, so you can use the label\n PT for those.",
+      "why_load_bearing": "Defines the PT escape hatch for chromatic melody notes that don't get harmonized."
+    },
+    {
+      "topic": "Major scale reference rule",
+      "verbatim_quote": "To find the correct interval number, you always refer to the major scale of the current chord.",
+      "why_load_bearing": "Defines the reference scale used for labeling — not the chord's own scale, but always major-scale-of-the-root."
+    },
+    {
+      "topic": "Golden rule of interval analysis",
+      "verbatim_quote": "Always relate the interval to the chord at that point in the chord progression.",
+      "why_load_bearing": "O'Rourke's headline golden rule for the whole interval-analysis pass."
+    },
+    {
+      "topic": "Melody anticipates next chord",
+      "verbatim_quote": "Sometimes a melody note anticipates the next chord so is considered an interval of that\nchord (see the ends of bar 1, 3, 5, 7).",
+      "why_load_bearing": "Edge-case rule for how to handle melody notes that arrive before their harmonic context changes."
+    }
+  ]
+}
