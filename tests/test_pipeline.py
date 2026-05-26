@@ -354,3 +354,67 @@ def test_systems_draft_schema_requires_references_per_rule():
     rule_schema = s4_systems._RULE_SCHEMA
     assert "references" in rule_schema["required"]
     assert rule_schema["properties"]["references"]["minItems"] == 1
+
+
+# ---------------------------------------------------------------------------
+# Stage 1 — form-feed indexer + OCR config (#315)
+# ---------------------------------------------------------------------------
+
+from stages import s1_extract  # noqa: E402
+
+
+def test_form_feed_indexer_basic_shape():
+    """Three form-feed-delimited pages → 3 page records + per-page-end markers."""
+    raw = "page one\fpage two\fpage three\f"
+    transcript, idx = s1_extract._index_form_feed_transcript(raw)
+    assert len(idx["pages"]) == 3
+    assert idx["pages"][0]["n"] == 1
+    assert idx["pages"][0]["preview"] == "page one"
+    assert idx["pages"][2]["preview"] == "page three"
+    # Page-end markers separate pages in the transcript so Stage 2 can locate
+    # boundaries deterministically.
+    assert "<!-- page 1 end -->" in transcript
+    assert "<!-- page 3 end -->" in transcript
+
+
+def test_form_feed_indexer_drops_trailing_empty_chunk():
+    """pdftotext appends a final \\f; the trailing empty chunk must not become
+    a phantom page."""
+    raw = "only page\f"
+    _, idx = s1_extract._index_form_feed_transcript(raw)
+    assert len(idx["pages"]) == 1
+
+
+def test_form_feed_indexer_page_start_offsets_are_monotonic():
+    """Each page's `start` must be >= the previous page's start + length."""
+    raw = "alpha\fbeta\fgamma\f"
+    _, idx = s1_extract._index_form_feed_transcript(raw)
+    starts = [p["start"] for p in idx["pages"]]
+    assert starts == sorted(starts)
+    for prev, curr in zip(idx["pages"], idx["pages"][1:]):
+        assert curr["start"] >= prev["start"] + prev["length"]
+
+
+def test_form_feed_indexer_strips_c0_control_chars_with_aligned_offsets():
+    """C0 control chars must be stripped BEFORE indexing so the returned
+    transcript offsets line up with the returned transcript. Regression
+    test: an earlier rebase shape had the strip AFTER indexing, which
+    misaligned per-page offset lookups by the count of stripped chars."""
+    raw = "alpha\x01beta\fgamma\x02delta\f"
+    transcript, idx = s1_extract._index_form_feed_transcript(raw)
+    assert "\x01" not in transcript
+    assert "\x02" not in transcript
+    p1 = idx["pages"][0]
+    p2 = idx["pages"][1]
+    assert transcript[p1["start"]:p1["start"] + p1["length"]] == "alphabeta"
+    assert transcript[p2["start"]:p2["start"] + p2["length"]] == "gammadelta"
+
+
+def test_ocr_defaults_cover_required_keys():
+    """OCR_DEFAULTS must define every key _extract_with_ocr reads from cfg,
+    so a config without an [ocr] block still runs."""
+    required = {
+        "host", "user", "vision_model",
+        "confidence_threshold", "min_chars_per_page", "render_dpi",
+    }
+    assert required <= set(s1_extract.OCR_DEFAULTS.keys())

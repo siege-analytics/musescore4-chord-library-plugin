@@ -36,18 +36,17 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     if not src_pdf.exists():
         raise FileNotFoundError(f"source PDF not found: {src_pdf}")
 
-    if cfg.get("source", {}).get("needs_ocr"):
-        raise NotImplementedError(
-            "OCR branch not implemented yet; will land in a follow-up "
-            "alongside the first scanned-image book (e.g. Van Eps 1939)."
-        )
-
     outputs: list[str] = []
+    ocr_summary: str | None = None
 
-    # Extract text via pdftotext (broadly available; deterministic
-    # per-page output with -layout for column-aware extraction). Falls
-    # back to `markitdown` if pdftotext is absent.
-    raw_text, pages_index = _extract_per_page(src_pdf)
+    if cfg.get("source", {}).get("needs_ocr"):
+        raw_text, pages_index, ocr_summary = _extract_with_ocr(
+            src_pdf, book, cfg.get("ocr", {})
+        )
+    else:
+        # Native digital extraction via pdftotext (preferred — deterministic
+        # per-page output with -layout) with markitdown fallback.
+        raw_text, pages_index = _extract_per_page(src_pdf)
 
     book.raw_transcript.write_text(raw_text)
     outputs.append(rel_to_repo(book.raw_transcript))
@@ -59,6 +58,8 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     n_pages = len(pages_index["pages"])
     n_chars = len(raw_text)
     outputs.append(f"extracted: {n_pages} pages, {n_chars:,} characters")
+    if ocr_summary:
+        outputs.append(ocr_summary)
 
     return outputs
 
@@ -68,15 +69,13 @@ def _extract_per_page(pdf_path: Path) -> tuple[str, dict]:
 
     pages_index shape:
       { "pages": [ { "n": 1, "start": 0, "length": 1234, "preview": "..." }, ... ] }
+
+    C0-control-char stripping happens INSIDE _index_form_feed_transcript
+    so the indexed offsets match the returned transcript exactly — both
+    the pdftotext and OCR paths go through the same indexer.
     """
     if shutil.which("pdftotext"):
-        raw, idx = _extract_with_pdftotext(pdf_path)
-        # Strip C0 control chars (\x00-\x08, \x0b, \x0c, \x0e-\x1f) that
-        # some PDFs leak via stylized bullet glyphs — they break JSON
-        # when faithfully copied into subagent response files. Keep
-        # \t (\x09), \n (\x0a), \r (\x0d).
-        raw = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", raw)
-        return raw, idx
+        return _extract_with_pdftotext(pdf_path)
     if shutil.which("markitdown"):
         return _extract_with_markitdown(pdf_path)
     raise RuntimeError(
@@ -93,36 +92,46 @@ def _extract_with_pdftotext(pdf_path: Path) -> tuple[str, dict]:
         capture_output=True,
         text=True,
     )
-    raw = result.stdout
-    # Split on form-feed; each chunk is one page. pdftotext appends a
-    # trailing \f after the last page.
+    return _index_form_feed_transcript(result.stdout)
+
+
+def _index_form_feed_transcript(raw: str) -> tuple[str, dict]:
+    """Convert a \\f-delimited transcript into (transcript, pages_index).
+
+    Strips C0 control chars (\\x00-\\x08, \\x0b, \\x0e-\\x1f) before
+    indexing — some PDFs leak these via stylized bullet glyphs and break
+    JSON when faithfully copied into subagent response files. \\t (\\x09),
+    \\n (\\x0a), \\r (\\x0d), \\f (\\x0c) are all preserved — the form feed
+    is the page-boundary delimiter we split on, so stripping it would
+    collapse the entire document into one page. Stripping BEFORE indexing
+    keeps the returned offsets aligned with the returned transcript.
+
+    Shared by the pdftotext path and the OCR path; both produce
+    form-feed-delimited output by convention. Inserts an explicit
+    `<!-- page N end -->` marker between pages so downstream stages can
+    locate boundaries deterministically. The marker is OUTSIDE the
+    per-page char count, so quote-fidelity validation still works
+    against the original page text.
+    """
+    raw = re.sub(r"[\x00-\x08\x0b\x0e-\x1f]", "", raw)
     chunks = raw.split("\f")
-    # Drop a final empty trailing chunk if present.
     if chunks and chunks[-1] == "":
         chunks = chunks[:-1]
-
     pages = []
     offset = 0
     transcript_parts = []
     for i, chunk in enumerate(chunks, start=1):
-        preview = _preview(chunk)
         pages.append({
             "n": i,
             "start": offset,
             "length": len(chunk),
-            "preview": preview,
+            "preview": _preview(chunk),
         })
         transcript_parts.append(chunk)
         offset += len(chunk)
-        # Insert an explicit page-break marker into the transcript so
-        # downstream stages can locate page boundaries deterministically.
-        # The marker itself is OUTSIDE the per-page char-count above, so
-        # quote-fidelity validation still works against original page text.
         transcript_parts.append(f"\n<!-- page {i} end -->\n")
         offset += len(transcript_parts[-1])
-
-    transcript = "".join(transcript_parts)
-    return transcript, {"pages": pages}
+    return "".join(transcript_parts), {"pages": pages}
 
 
 def _extract_with_markitdown(pdf_path: Path) -> tuple[str, dict]:
@@ -157,3 +166,120 @@ def _preview(text: str) -> str:
         if stripped:
             return stripped[:80]
     return ""
+
+
+# ---------------------------------------------------------------------------
+# OCR path (cyberpower remote runner)
+# ---------------------------------------------------------------------------
+
+OCR_DEFAULTS = {
+    "host": "cyberpower",
+    "user": "dheerajchand",
+    "vision_model": "qwen2.5vl:7b",
+    "confidence_threshold": 0.70,
+    "min_chars_per_page": 40,
+    "render_dpi": 200,
+}
+
+
+def _extract_with_ocr(
+    pdf_path: Path, book: BookPaths, ocr_cfg: dict
+) -> tuple[str, dict, str]:
+    """Run the OCR pipeline on a scanned PDF via the cyberpower remote.
+
+    Steps: pdftoppm → rsync to remote inbox → ssh run.sh → rsync outbox
+    back → re-use the form-feed indexer to build (transcript, pages_index).
+    Returns the same (transcript, pages_index) shape as the pdftotext path,
+    plus a one-line OCR summary the orchestrator can display.
+    """
+    cfg = {**OCR_DEFAULTS, **(ocr_cfg or {})}
+    host = cfg["host"]
+    user = cfg["user"]
+    remote = f"{user}@{host}"
+
+    for binary in ("pdftoppm", "rsync", "ssh"):
+        if not shutil.which(binary):
+            raise RuntimeError(f"OCR branch requires `{binary}` in PATH")
+
+    image_dir = book.run_dir / "ocr-input"
+    output_dir = book.run_dir / "ocr-output"
+    image_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # 1. pdftoppm — render each page to PNG. Output filenames are
+    # `page-NN.png` (zero-padded to match the page count digits).
+    subprocess.run(
+        [
+            "pdftoppm",
+            "-png",
+            "-r", str(cfg["render_dpi"]),
+            str(pdf_path),
+            str(image_dir / "page"),
+        ],
+        check=True,
+    )
+
+    # 2. rsync images → cyberpower inbox.
+    remote_inbox = f"~/jazz-ocr/inbox/{book.run_id}/"
+    subprocess.run(
+        ["ssh", remote, f"mkdir -p {remote_inbox}"],
+        check=True,
+    )
+    subprocess.run(
+        [
+            "rsync", "-a", "--delete",
+            f"{image_dir}/",
+            f"{remote}:{remote_inbox}",
+        ],
+        check=True,
+    )
+
+    # 3. ssh exec the runner with config-derived env overrides.
+    env_prefix = (
+        f"OCR_VISION_MODEL={cfg['vision_model']} "
+        f"OCR_CONF_THRESHOLD={cfg['confidence_threshold']} "
+        f"OCR_MIN_CHARS_PER_PAGE={cfg['min_chars_per_page']} "
+    )
+    subprocess.run(
+        ["ssh", remote, f"{env_prefix}bash ~/jazz-ocr/bin/run.sh {book.run_id}"],
+        check=True,
+    )
+
+    # 4. rsync results back.
+    remote_outbox = f"~/jazz-ocr/outbox/{book.run_id}/"
+    subprocess.run(
+        [
+            "rsync", "-a",
+            f"{remote}:{remote_outbox}",
+            f"{output_dir}/",
+        ],
+        check=True,
+    )
+
+    transcript_file = output_dir / "raw-transcript.txt"
+    confidence_file = output_dir / "page-confidence.json"
+    if not transcript_file.exists():
+        raise RuntimeError(
+            f"OCR transcript missing after remote run: {transcript_file}"
+        )
+
+    raw = transcript_file.read_text()
+    # C0-control-char stripping is now centralized inside
+    # _index_form_feed_transcript so the OCR path and pdftotext path
+    # both get the same offset-aligned guarantee.
+    transcript, pages_index = _index_form_feed_transcript(raw)
+
+    summary = "ocr: tesseract-only"
+    if confidence_file.exists():
+        conf_data = json.loads(confidence_file.read_text())
+        records = conf_data.get("pages", [])
+        rescued = [r for r in records if r.get("engine") != "tesseract"]
+        if rescued:
+            summary = (
+                f"ocr: {len(records)} pages, "
+                f"{len(rescued)} rescued via {cfg['vision_model']}"
+            )
+        else:
+            summary = f"ocr: {len(records)} pages, all tesseract"
+
+    return transcript, pages_index, summary
