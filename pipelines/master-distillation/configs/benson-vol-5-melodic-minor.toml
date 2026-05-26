@@ -1,0 +1,31 @@
+# Queued via #329. Stage B: sibling work[] under benson master. Largest book in the queue (434 pp); expect Stage 4 subagent timeout protocol from Van Eps Vol 1 to apply.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-5-melodic-minor"
+title = "The George Benson Method, Vol. 5 — Melodic Minor World, Bebop Scales, Symmetric Ideas and Concepts"
+year = 2019
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-5-Melodic-Minor-World-Bebop-Scales-Symmetric-Ideas-and-Concepts-Â©-1st-Edition.pdf"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
