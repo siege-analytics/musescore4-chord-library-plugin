@@ -26,6 +26,7 @@ import json
 import re
 import shutil
 import subprocess
+import time
 from pathlib import Path
 
 from lib.paths import BookPaths, rel_to_repo
@@ -234,23 +235,60 @@ def _extract_with_ocr(
         check=True,
     )
 
-    # 3. ssh exec the runner with config-derived env overrides.
+    # 3. ssh-launch the runner under nohup so it's INDEPENDENT of this
+    # SSH session. The remote process survives laptop sleep / lid close /
+    # SSH disconnect — only the local poll loop (next step) cares about
+    # connectivity, and that re-establishes on wake. If the laptop dies
+    # entirely mid-run, the remote runner still finishes and the outbox
+    # is recoverable via `ocr/reingest.py <run_id>`.
     env_prefix = (
         f"OCR_VISION_MODEL={cfg['vision_model']} "
         f"OCR_CONF_THRESHOLD={cfg['confidence_threshold']} "
         f"OCR_MIN_CHARS_PER_PAGE={cfg['min_chars_per_page']} "
     )
+    launch_cmd = (
+        f"nohup bash -c '{env_prefix}~/jazz-ocr/bin/run.sh {book.run_id}' "
+        f"</dev/null >~/jazz-ocr/{book.run_id}.log 2>&1 & disown; "
+        f"sleep 1; pgrep -af 'ocr_runner.*{book.run_id}' >/dev/null"
+    )
     subprocess.run(
-        ["ssh", remote, f"{env_prefix}bash ~/jazz-ocr/bin/run.sh {book.run_id}"],
+        ["ssh", remote, launch_cmd],
         check=True,
     )
 
-    # 4. rsync results back.
-    remote_outbox = f"~/jazz-ocr/outbox/{book.run_id}/"
+    # 4. Poll cyberpower until the runner exits and the outbox transcript
+    # appears. Robust to laptop sleep (the poll just pauses on sleep and
+    # resumes on wake — the remote runner doesn't care).
+    remote_outbox = f"~/jazz-ocr/outbox/{book.run_id}"
+    poll_interval = 30
+    while True:
+        probe = subprocess.run(
+            ["ssh", remote,
+             f"if pgrep -f 'ocr_runner.*{book.run_id}' >/dev/null; then "
+             f"echo RUNNING; "
+             f"elif [ -f {remote_outbox}/raw-transcript.txt ]; then "
+             f"echo DONE; "
+             f"else "
+             f"echo CRASHED; "
+             f"fi"],
+            capture_output=True, text=True, check=True,
+        )
+        status = probe.stdout.strip()
+        if status == "DONE":
+            break
+        if status == "CRASHED":
+            raise RuntimeError(
+                f"OCR runner exited without producing outbox. "
+                f"Check ~/jazz-ocr/{book.run_id}.log on {host}."
+            )
+        # status == "RUNNING": keep waiting.
+        time.sleep(poll_interval)
+
+    # 5. rsync results back.
     subprocess.run(
         [
             "rsync", "-a",
-            f"{remote}:{remote_outbox}",
+            f"{remote}:{remote_outbox}/",
             f"{output_dir}/",
         ],
         check=True,
