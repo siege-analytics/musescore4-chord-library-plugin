@@ -47,7 +47,79 @@
               "quote_excerpt": "Most of the studies in these books are based on, and relate to the “triad” in one form or another"
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-major-triads-3voice-6string",
+              "name": "1939 harmonized major scale in 3-voice triads (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "Ex. 1, p. 8 (harmonized major scale in triads)",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    4,
+                    5,
+                    6
+                  ],
+                  "inner": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "motion_pattern": "parallel-triadic-scale-ascent"
+              },
+              "notes": "1939 Ex. 1 walks closed-position triads up the harmonized major scale; the typical 6-string assignment uses three adjacent strings per fingering form (sets 1|3, 2|3, 3|3). Register-compressed: bass and inner share the lower strings."
+            },
+            {
+              "id": "vol1-mighty-triads-4voice-7string",
+              "name": "Vol 1 'Mighty Triads' as four-voice voicing (7-string)",
+              "instrument_scope": "7-string-low-A",
+              "source_work": "harmonic-mechanisms-vol-1",
+              "source_citation": "Chapter 2, p. 19 ('The Mighty Triads')",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner-low",
+                  "inner-high",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    7
+                  ],
+                  "inner_low": [
+                    5,
+                    6
+                  ],
+                  "inner_high": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "parallel-four-part-scale-ascent"
+              },
+              "notes": "Vol 1 ch. 2 treats the triad as substrate for four-part SATB-shaped voicings on 7-string: bass on the low-A 7th string, inner voices stratified on 5/6 and 3/4, top on 1/2. Register-distinct (no collision between bass and inner-low)."
+            }
+          ]
         },
         {
           "id": "six-fingering-string-sets",
@@ -82,7 +154,88 @@
               "quote_excerpt": "When the Ist-2nd-4th-strings are employed (skipping the 3rd string) it is termed a broken set"
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-string-chart-6string-sets",
+              "name": "1939 String Chart six-form fingerings (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "String Chart, p. 6; Ex. 1 fingering-form instructions, p. 8",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "inner": [
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "top": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                },
+                "motion_pattern": "string-set-traversal-1|3-2|3-3|3"
+              },
+              "notes": "1939 documents three adjacent string sets (1|3, 2|3, 3|3) traversing the fingerboard. Each set is one of six fingering forms; the register window shifts up the neck as the set moves toward the bass strings. No broken/divided sets in 1939 — those arrive in Vol 1."
+            },
+            {
+              "id": "vol1-string-set-symbol-7string",
+              "name": "Vol 1 String Set Symbol System (7-string adjacent + broken + divided)",
+              "instrument_scope": "7-string-low-A",
+              "source_work": "harmonic-mechanisms-vol-1",
+              "source_citation": "Chapter 12, p. 258 ('String Set Symbol System'); Chapter 6 broken-set introduction",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner-low",
+                  "inner-high",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    5,
+                    6,
+                    7
+                  ],
+                  "inner_low": [
+                    4,
+                    5,
+                    6
+                  ],
+                  "inner_high": [
+                    2,
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "motion_pattern": "string-set-traversal-adjacent-broken-divided"
+              },
+              "notes": "Vol 1 formalizes adjacent sets (1/3, 2/3, 3/3, 4/3), broken sets that skip one intermediate string (1/B3, B1/3, etc.), and divided sets that skip two (D1/4, 1/D3). Register-strings shown here are the typical assignment; exact strings depend on which set is selected and which voice carries which line."
+            }
+          ]
         },
         {
           "id": "outer-voice-anchor-inner-motion",
@@ -127,7 +280,79 @@
               "quote_excerpt": "Run the moving voice up and down"
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-ex82-3voice-anchor",
+              "name": "1939 Ex. 82 outer-anchor with inner motion (6-string, 3-voice)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "Ex. 82 (last diminished exercise; 'third and fourth fingers play the two upper voices in quarter notes while the first and second fingers sustain the lower voices in whole notes')",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [
+                  "bass",
+                  "top"
+                ],
+                "moving_voices": [
+                  "inner"
+                ],
+                "register_strings": {
+                  "bass": [
+                    5,
+                    6
+                  ],
+                  "inner": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "anchored-outers-single-inner-walk"
+              },
+              "notes": "Three-voice texture: a single bass voice and a single top voice are sustained while one inner line animates in the alto register. Bass and inner share the lower strings and frequently the same hand position — the 6-string register cramp Van Eps documents but does not solve until the 7-string."
+            },
+            {
+              "id": "vol1-ch4-anchor-and-move-4voice",
+              "name": "Vol 1 ch. 4 anchor-and-move (7-string, 4-voice with 7th-string pedal)",
+              "instrument_scope": "7-string-low-A",
+              "source_work": "harmonic-mechanisms-vol-1",
+              "source_citation": "Chapter 4, p. 70 ('Run the moving voice up and down repeatedly in each station while making sure to sustain the whole note'); Chapter 6, p. 134 ('keep the pressure applied firmly while the quarter notes are in motion')",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [
+                  "bass",
+                  "top"
+                ],
+                "moving_voices": [
+                  "inner-low",
+                  "inner-high"
+                ],
+                "register_strings": {
+                  "bass": [
+                    7
+                  ],
+                  "inner_low": [
+                    5,
+                    6
+                  ],
+                  "inner_high": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "7th-string-pedal-bass-with-two-independent-inner-walks"
+              },
+              "notes": "Four-voice realization: bass holds pedal on the 7th string while two independent inner voices animate above it and the top voice sustains. The two inner voices are stratified across the 5/6 and 3/4 string zones — only possible because the bass has vacated those strings for the 7th."
+            }
+          ]
         },
         {
           "id": "chromatic-tenths-with-middle-voice",
@@ -164,7 +389,78 @@
               "quote_excerpt": "Sixths opening up to tenths"
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-ex37-chromatic-tenths-6string",
+              "name": "1939 Ex. 37 chromatic 10ths with sustained middle voice (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "Ex. 37 ('the middle note remains the same while the other two voices move around the middle voice in chromatic tenths'; first exercise using a broken set of three strings)",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [
+                  "inner"
+                ],
+                "moving_voices": [
+                  "bass",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    4,
+                    5
+                  ],
+                  "inner": [
+                    3
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "parallel-chromatic-tenths-around-static-middle"
+              },
+              "notes": "Broken set of three strings (one intermediate string skipped) carries the 10th interval. Register-compressed on 6-string: the outer voices move in parallel chromatic 10ths while the middle voice is held; the bass voice cannot walk independently because it is locked into the lower side of the 10th."
+            },
+            {
+              "id": "vol1-ch5-7-sixths-to-tenths-7string",
+              "name": "Vol 1 ch. 5/7 sixths-opening-to-tenths with 7th-string bass (7-string)",
+              "instrument_scope": "7-string-low-A",
+              "source_work": "harmonic-mechanisms-vol-1",
+              "source_citation": "Chapter 5 ('Sixths opening up to tenths'); Chapter 7 chromatic third-to-tenth exercises",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [
+                  "inner-high"
+                ],
+                "moving_voices": [
+                  "bass",
+                  "inner-low",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    7
+                  ],
+                  "inner_low": [
+                    5,
+                    6
+                  ],
+                  "inner_high": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "outer-pair-tenths-expansion-with-independent-7th-string-bass"
+              },
+              "notes": "Vol 1 lifts Ex. 37's device into register-distinct territory: the chromatic-tenths pair occupies inner-low and top, the sustained middle remains in the inner-high zone, and the bass is freed onto the 7th string to walk or pedal independently of the 10ths."
+            }
+          ]
         },
         {
           "id": "pulsation-picking-top-voice-emphasis",
@@ -195,7 +491,41 @@
               "citation": "Generic citation of the 1939 method as primary source for the pulsation-picking right-hand mechanic with top-voice dynamic emphasis; Harmonic Mechanisms Vol 1 (2016) treats right-hand attack only in passing (e.g., ch. 6 'left and right hand attack must be together') and does not name pulsation picking. No Vol 1 corollary."
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-pulsation-picking-top-voice",
+              "name": "1939 pulsation picking with top-voice dynamic emphasis (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "'Pick and Wrist Action' section, p. 3; Ex. 2 instructions, p. 9 ('The pick passes over each string and accents it with a slight kick, which is more of a pulsation')",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    3,
+                    4
+                  ],
+                  "inner": [
+                    2,
+                    3
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "single-stroke-pulsation-with-wrist-over-top-voice"
+              },
+              "notes": "Right-hand technique rather than a voicing shape per se. The signature consumed by the engine is: a 3-voice closed voicing where the top voice is dynamically emphasized via wrist position; D string sounds softly, G louder, B loudest. No Vol 1 corollary — pulsation picking is not named in Vol 1."
+            }
+          ]
         },
         {
           "id": "finger-flattening-fifth-finger",
@@ -235,7 +565,82 @@
               "quote_excerpt": "The first joint of the second finger plays the double stop in flattened position"
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-ex16-finger-flatten-seed",
+              "name": "1939 Ex. 16 finger-flattening seed (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "Ex. 16 ('the breaking, or flattening from an arched position, of the first joint of the fingers... flatten the first joint of the second finger to produce the added note, which brings this principle into the classification of a fifth finger')",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [
+                  "bass"
+                ],
+                "moving_voices": [
+                  "inner-low",
+                  "inner-high",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    5,
+                    6
+                  ],
+                  "inner_low": [
+                    4
+                  ],
+                  "inner_high": [
+                    3
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "four-note-voicing-with-second-finger-flatten-across-adjacent-string"
+              },
+              "notes": "A four-note voicing fit on 6-string only because the second finger flattens its first joint to cover one extra string at the same fret — a 'virtual fifth finger.' Without the flatten, only four fingers and four notes; with it, the voicing accommodates a fifth chord tone."
+            },
+            {
+              "id": "vol1-ch12-fifth-finger-formal-7string",
+              "name": "Vol 1 ch. 12 Fifth Finger Principle formalized (7-string)",
+              "instrument_scope": "7-string-low-A",
+              "source_work": "harmonic-mechanisms-vol-1",
+              "source_citation": "Chapter 12, p. 263 ('the knack of sounding two notes simultaneously that are not located on the same fret, with one finger'); Chapter 9, p. 185 (joint-level execution: 'The first joint of the second finger plays the double stop in flattened position')",
+              "voicing_signature": {
+                "voices": 4,
+                "anchored_voices": [
+                  "bass"
+                ],
+                "moving_voices": [
+                  "inner-low",
+                  "inner-high",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    7
+                  ],
+                  "inner_low": [
+                    5,
+                    6
+                  ],
+                  "inner_high": [
+                    3,
+                    4
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "four-part-voicing-with-second-finger-flatten-spanning-non-collinear-double-stop"
+              },
+              "notes": "Vol 1 generalizes the flatten beyond same-fret adjacent-string: the second-finger first joint sounds two notes on different frets ('not located on the same fret'). On 7-string with the bass relegated to the 7th string, the flattened finger is free to operate higher in the voicing without contending for the bass register."
+            }
+          ]
         },
         {
           "id": "string-deadening-for-open-voicings",
@@ -265,7 +670,40 @@
               "citation": "Generic citation of the 1939 method as primary source for string-deadening as an enabler of open voicings. Harmonic Mechanisms Vol 1 (2016) addresses spacing-for-audibility (ch. 1) and selective string-set choice as the structural mechanism for open voicings rather than naming string-deadening as a discrete technique. No Vol 1 corollary."
             }
           ],
-          "example_voicing_signatures": []
+          "example_voicing_signatures": [],
+          "applied_lessons": [
+            {
+              "id": "1939-ex58-string-deaden-open-voicing",
+              "name": "1939 Ex. 58 string-deadening for open diminished voicings (6-string)",
+              "instrument_scope": "6-string",
+              "source_work": "1939-method",
+              "source_citation": "Ex. 58 footnote ('the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string... The pick strikes that string, but the left hand finger does not let it sound clearly')",
+              "voicing_signature": {
+                "voices": 3,
+                "anchored_voices": [],
+                "moving_voices": [
+                  "bass",
+                  "inner",
+                  "top"
+                ],
+                "register_strings": {
+                  "bass": [
+                    5,
+                    6
+                  ],
+                  "inner": [
+                    3
+                  ],
+                  "top": [
+                    1,
+                    2
+                  ]
+                },
+                "motion_pattern": "open-voicing-via-deadened-intermediate-string"
+              },
+              "notes": "Enables open voicings on non-adjacent strings while the pick sweeps cleanly across all strings: a left-hand finger touches the intermediate (skipped) string to silence it. The voicing's sounding voices live on non-adjacent strings; the muted string is structural-skipped, not unused. No Vol 1 corollary — Vol 1 reaches the same openness via string-set selection (broken/divided sets) rather than deadening."
+            }
+          ]
         }
       ],
       "works": [
