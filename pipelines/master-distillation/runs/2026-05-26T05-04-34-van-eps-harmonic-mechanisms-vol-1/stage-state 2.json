@@ -1,0 +1,34 @@
+{
+  "run_id": "2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1",
+  "config": "pipelines/master-distillation/configs/van-eps-harmonic-mechanisms-vol-1.toml",
+  "stages": {
+    "s1": {
+      "status": "running",
+      "started_at": "2026-05-26T05:04:34+00:00",
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s2": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s3": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s4": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}
