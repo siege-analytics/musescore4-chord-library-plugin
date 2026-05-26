@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: Scale Runs, Minor/Dominant/Diminished Runs and Blues Pattern (Lessons 27-31)\nPages 30-34 of the book.\n\n<<<CHAPTER TEXT\n\n29\n\nLESSON 26\nSCALES AND EXERCISES\n(In The Key Of A Minor)\n\nHARMONIC MINOR\nMELODIC MINOR\n\nMORE WRIST DEVELOPMENT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nr\n\n9\n10\n\nRAs II\n\nEx.\n\nEx.\n\u201d +\n\nTON\n\nyore\n\nON\n\noo\n\naN\n\nuw\n\nMa\n\ni\u2014\n\nFASTER\n\n\u2014s\n\n==\n\n+}\n\n12\n\n11\n\nEx,\nEx.\n\n\n\n30 MICKEY BAKER\u2019S JAZZ GUITAR\n\nLESSON 27\nSCALE RUNS\n| (In F Position)\nEx. 13 b\n_ a fe sie ief- =f\n432112 3%4 = =\nF.321 112 3\n\nis\nfi\nHh\n7\n;\n\nSCALE RUNS\nEx. 14 (in D2 Position)\nf b\nre t } 1 r T\n1 t ~o\n%5439223 46 L\nF,L43 1 2 My 134 b\nb L -o\u2014 7 7\nt\u2014} i f = f\ne ~\noff Te \u2014\u2014 ==\nfo =e tet #\nLESSON 28\nMINOR 7th RUNS\nPractice chromatically (As in Lesson 27)\nEx. 15 onl\n\u00b0 . Bmi7 F#mi7 2 he\nB q a\nbmi7 bo be ; ot = be.\nrtp\u2014te\u2014 +}\nSs. 2 1 1 1 1 2 3\nF. 3 2 1 4 4 1 2 3\nA Vv AUY\nA VoOoA\nEx. 16 . Dmi7\nFmi7 Fimi7\n\n==! Soe eee eae\nYs. 4 3 2 :\n\n2 2 2 3 4\nF. 3 1 1 4 4 1 1 3\n\n*You are to use the same fingering, up and down the fingerboard.\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nLESSON 29\nDOMINANT 7th AND 9th RUNS ie\nEx. 19 F\u00a59 b\nD9 t\u2014 Ve\np\u2014? __+ toe ft FE fhe\nI _ tf = 4p to. I I\nS. 3 2 2 1 1 2 2 3\nF. 2 1 4 3 3 4 1 2\nF7 + Eb7 b\n[ no | ioe\nS. 4 3 2 2 2 2 3 4\nF, 3 2 1 4 4 1 2 3\nEx, 21 D7 yor BT \u2019\n\u2014\u2014\u2014 2 .\n$ at at t a =\u2014 up-to t f\u00b0. \u2014 :\nSs. 5 4 3 3 3 3 4 5\nF. 4 3.421 4 4 1 3 4\nEx, 22 F#7 Dv\nF7 Eb7 b b\n$ \u2014\u2014 | up to tte ave =a = \u00a3\n\u2014 o = : r eS\nSs. 4 3 2 2 2 2 3 4\nF, 1 2 1 4 4 1 2 1\nEx. 23\nFT EDT P be. be be be :\n} = up-to ye Jule ra t\n\nSs. 4 4 3 2 2 1 1 2\nF. 1 3 2 1 4 2 1 4\n\nuse the same fingering going up and down the fingerboard.\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\n32\nLESSON 30\nDIMINISHED RUNS\n| Edim\nEx, 24 :\n\" Abdim Adim tte fijs, @ \u00a3\nb ho Fite \u2014=\nf | \u2014s ~ t na\nt ra a t t tp\u2014to \u2014\u2014\ny 2 om\nS.1 1 2 3 3 2 1 1\nF.4 1 2 4 4 2 1 4\nEx. 25 Fedim Bdi Cdim Le &\nA Fdim, eee \u2014 -~\u2014, e- -\u2014\nfore ence\nnie\nS.4 3 3 2 2 3 3 4\nF.3 1 4 3 3 4 1 8\nEx, 26\n: Cdim\nEdin 5 L \u20143\u2014 Ce. @ #2.\n] = up-to} te\nS.4 \u20184 4 4 3 2 2 1\nFol 2 3 4 2 1 4 92\nG DIM. GOING UP THE FINGERBOARD\nEx, 27 b f=\noe 4 of rt\n} | a t vs\nothe pete \u2014e $\n866556554 554 4544344334332 33213211\nFl414 31242 1414314214143143 14314314\nG DIM. GOING DOWN THE FINGERBOARD\nEx. 28\nDeb\n\u2018a t Zs ae re\n} } I @ t +o J\ni \u2014_ a ea bere\nLESSON 31\n\nNow that you have your key runs in your head, \u2014 of course, I know that you haven\u2019t mastered them yet, but you\n\nshould at least know where to find any run that I tell you.\nyour guitar, you\u2019re not ready for this lesson.\n\nAnd if you can\u2019t find these runs every place on\n\nThe Biues play a very important part in modern jazz, so we are going to start our solo work with blues patterns.\n\nThe keys that the blues are played in mostly, are: \u2014F, G, A\u2019, BS and C. So these are the keys that you are to\nconcentrate on for now. These simple patterns that I have written out in the next few lessons are to be trans-\nposed to all five of these keys. Now I am using these runs just as they were in the exercise, so all you have to\ndo is to find the right one.\n\n\n\n33\n\n|\n| -\nig\n| 2\nwn\ntal\n\u2014]\nad\n_)\n\u00b0\na\nr=]\neo\n-\no\no\n&\nJ\n\u00b0\n(--)\n\nZ\n\nVa\n\nI\nt\n\n\u20142-\n\ne\n\nEmi7 Run\n\n\u2014~@~\n\nPp oo\n\nNe\n\nN=\n\nAe\nOr\n\ntO\n\nAmi? Run \u2014\u2014\u2014\u2014\u2014\u2014_\u2014_\nete.\n\nr OO ee\n\nBLUES No. 2\n\nEmi7 Run\n\nBounce tempo\n\nG7 Run\n\n> 34!\n\nm3\n|\n\nI\n\nam] oo. 37\n\nm3\n\nI\nT\n\nmi\n\n==\n\nI\n\n=\n\ni\neal\n\n@ re)\nCz\n\n~~\n\nBmi7 Ru\n\n\u2014\n\nI 3\n\u2014,\ne\n\n\u2014\n_\n\n=a\n\nede\n\nas\n\nae\n\nNA\n\n1\nPeg She\n\n1\nAmi7 Ru\n\n1\na\n\nWe\n\n1\n+\n\ni. BJ\n\nNe\nor\nrp wo\n\nfo wi te\n\nBLUES No. 3\n\nEmi7 Run\n\nBounce tempo\n\naH\n\noR\n\n\u201co~\n\n.\n\n2.\nTT\n\nFan\n\naA\nr\n\nQ.\n\noN,\n\nyz\n\nae\n\nAN\n\noO 6\nANN\n\nrie\n\nom\n\no7\n\nby\n\n}\nLa\n\nmist\nCor)\n\nait\n\nAs\naa\n\nAe\n\nON\n\nArs\nee\n\nDS) baw\n\nf=\n\n(\u2014\u2014\u2014\u2014\u2014 Riff Ru\n\nfe -\u00bb\n\n6\n\nae\nas\nan\nAd\nCON\n\nAa\nAOD\n\nNs\n\na\n\nC9 Run\n\nbe.\n\nrt\n\nNs\n\nPare\n\nNeva\n\ni\n\u2014\u2014\n\nar\n\np Ov\n\nNt\nAe\n\nwere\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

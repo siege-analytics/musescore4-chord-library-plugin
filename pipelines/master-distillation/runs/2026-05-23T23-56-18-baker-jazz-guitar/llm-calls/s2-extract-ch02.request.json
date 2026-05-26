@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Melody Chord Progressions, Introductions, Arpeggio and String Bass Styles (Lessons 6-8)\nPages 6-9 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER'S JAZZ GUITAR\n5\nLESSON 4\nBefore I take you into Lesson 4, I want to remind you that every lesson in this book is important, (so you are not to skip anything!!). Give every Exercise all the study you can.\nIn Lesson 3 you had Chord Exercises in the key of F, G, A\u266d and B\u266d. The six chords that we used for those four keys are the most important Rhythm Chords in these keys.\nIn Lesson 4 we are going to work out examples on how to use these new chords in place of the standards. We are still using Chords No. 1 to 6. This will be done the same way as in Lesson 3.\nOn the top line will be the Standard Chords and on the bottom line, the best way to use the new ones.\nStandard\nG\nD7\nD7\nG\nAmi\nNew\nG\nGma7\nGma6 Gma7\nAmi7 Ami6\nAmi7\nD13\nb5b9\nGma7 Gma6\nAmi7 Ami6\nStandard\nG\nG\u266ddim\nAmi\nD7\nG\nAmi\nD7\nG\nEmi\nAmi\nD7\nNew\nGma7 B\u266dmi7\nAmi7\nD13\nb5b9\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nGma7 Gma6\nAmi7 Ami6\nStandard\nG\nG7\nC\nCmi\nG\nG\u266ddim\nAmi\nD7\nNew\nGma7 Gma6\nDmi7 Dmi6\nCma7 Cma6\nCmi7 Cmi6\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nStandard\nG\nG\u266ddim\nAmi\nD7\nG\nG\u266ddim\nAmi\nD7\nG\nG7\nC\nCmi\nG\nAmi\nD7\nNew\nGma7 Gma6\nAmi7 Ami6\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nGma7 Dmi6\nCma7 Cmi7\nBmi7 B\u266dmi7\nAmi7\nD13\nb5b9\nStandard\nG\nG7\nC7\nG\nG\u266ddim\nNew\nGma7 Gma6\nDmi7 Dmi6\nGmi7 Gmi6\nGma7 Ami7\nBmi7 B\u266dmi7\n\n6 MICKEY BAKER\u2019S JAZZ GUITAR\n\n, oT G GT c Cmi D7\nft f- f- f- SF # f- F- f- f- ya f of\nD13 D13\nAmi7 Ami6| Ami? 5Sb9 | Gma7 Dmi6 Cma7 Cmi7 | Bmi7 Bbmi7 Ami7 5b9\n7 aw J YA A 7 a i vA . y A T. Zz. vA A vA vg Z.\n' a 2 if \u2019 Aw 2 LL Zz. \u00a3\u00a3. vA va Tr Y 4 4 v4 vA\n| LESSON 5\n\n| Now that you have mastered Lesson No. 4 this fifth lesson should be easy. You are to make similar examples of\n' Lesson No. 4.\n\nIn the keys of F, Ao and B\u00e9 major, simply take three pieces of manuscript paper, and transpose Lesson No. 4 to\neach key. After you have done this and you are sure that they are right, practice each example until you know\nthem all by heart in each key.\n\n| Take your time and don\u2019t rush through them, this is very important!\n\n| LESSON 6\n\nNow for melody chord progressions.\nWe are still working in the keys of F, G, A\u2019 and B\u00e9. We will work with the keys of C, D\u00e9 and Ee later.\n\nLet\u2019s work on simple introductions first. Try these examples in G major. You may find some of these very hard to\nplay, but if you practice them chromatically up and down the finger board you will soon become accustomed to them.\n\na\nHee} Le Cree! Hee HE te\nara a rte] 66 a\n. corsa Hr \u2014 re\nntro. J O Chorus:\n\nft Am7 All D113. Octave Am7 All D13 D13b9 Gma6 D13b9 Gma\n\nmy\nJ Y aa ff. ff\nf- 4 4. t-4~\nt J} \u2018a 2\nT TT ty\n\nTN\n+N\nTA\n\nTN\n\nran) ran at \u2018a ra) \u2018an\n7, 7S. Tf ya 7-7 , a T_T.\nya A y aa 77 ya 74 \u2019 a y a A\n{\u2014Tt {\u2014f tT tf it\nt r\u2014 t\u2014t Tt t\n\n1\nT T\n\n+\n\ni i ]\nTr Tt\n\nGmaT  A13b9 Ami7 D13b5b9 Gmat A13b9 Ami7 D13b5>9 Gma\ne \" \u2014\nYs\nJ\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nGma\n\nD13b9\n\nGma6\u00e9\nof IN\n77 ZZ.\n\n, a A a\n| ae 6\nT TT\n\nD113 D13b9\n\nmins\n\na:\n~\n\n7\n\nGma6\u00e9 A13b9\n\nD13\n\nGma6\u00e9 A13>b9 Gma6\n\nY Aw 4\n\nJf ff ff\nF A\n\nL.\n\note\n\nound\n\nfH\n\neetee\n\nGma6 D13b9 Octave Gma\n\n~*~\nvA\n.\n+\nLs\n\nAmi7\n\nGma7\n\nAmi7\n\nAmi7\na\n, aw J\ny a\n{\u2014T\nrT\n\nGma7\n=\n\n{\u2014-f\n\nrT\n\nGma7\nvA\n\n\u00a2-\n\nT\n\nFae ITT 9\n\nAmi7\nain\nvi\nyA\nwl\nms\n\nAmi7 A13b9\n: 7H\njt}\nLm\n\noN\nFa\nWA\nJ.\n\u201cT\n\nG13b9\nv 4\n+\n\nGma7\n7\nff\naa\ni\nTT\n\nGma\n1 , a A 2\n\n11 D7b5\n\nJE,\nFi\n4\nI\n+\n\nD13b9. p\n\n\u2014~\nuu\n\n\u00a5\n\n\u00a5 4\n\nPIE III\n\nAmi7 Ami7 All\nri\nf-\nT\n\n#11 F#7b5\n\nvm\n\u2014*\nva\nZ.\n1\n+\n\nGma7 E11 E7b5 Ami7 F\nvA\nf\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\nThen practice them in all four of these keys until you can feel comfortable playing them.\n\nLESSON 7\n\nAfter you have mastered these examples in G, you are to write out similar examples in the keys of F, A\u00e9 and B\u00e9.\n\nAnother thing you must do, is to try making other intro\u2019s by changing these around in as many ways as you can.\nThis may not be so easy at first, but if you devote enough time to it, you will find yourself making all kinds of\nintro\u2019s from these few chords.\n\nThey are your most important melody chords for these four keys. So give them all the attention you possibly can.\n\nAnother way to get new ideas is to change the rhythm of the introduction. Try playing them in arpeggio style,\nor try playing the bottom note of the chord first, then the chord.\n\nUse every trick that you can think of to develop new ideas.\n\nIn this Lesson I have a few ideas on how to use the Arpeggio, and the string bass.\n\nLESSON 8\n\nUsing Introduction No. 2 in Lesson No. 6 work them out and try to make up new ones.\n\nIntro. 2:\nGma7___ A13b9 Ami7  D13b5b9 _ Gma7 _A13b9 sami =: DBHSHO\n: \u00a3 + fy\no 2 o :\nJ \u201cbel = Hel eel se ae -\nArpeggio:\n7 9-\ny * sam = fi o\u2014 :\nCc el be 7 eLDbe\n\nString Bass:\n\n=) a\n\nPil\n\nie\n\nmelsihe\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

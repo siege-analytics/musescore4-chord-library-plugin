@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s3
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+source_pages: 52-58
+model: claude-haiku
+extracted_at: 2026-05-26T18:07:03+00:00
+schema_version: 0.1
+---
+
+# Chapter 12 — Reviews, Solo Sketches, Riffs and Groove Riffs (Lessons 44-48)
+
+_Distillation; backed by `chapters/ch12.md`._
+
+Chapter 12 consolidates the riff-and-position machinery from Chapter 11 through review solos, sketches, and a new concept — the groove riff. Baker prescribes transposition-by-writing as a reading-building drill (Writing out builds reading) and directs the student to study run-to-run transitions explicitly (Analyze run connections), reinforcing the earlier rule that riffs may be forced against foreign progressions (Forcing riffs against foreign changes) and re-prescribing the sung-against-the-chord verification step (Sing riffs over progressions). The chapter extends Baker's position framework by introducing an additional 3rd position spanning the 3rd–6th frets (New 3rd position for solos, Range of the new position) with explicit key applicability (A-flat, B-flat, C, D-flat, E-flat major, marginally usable for F and G). The load-bearing new term is the groove riff, defined as a riff whose first and last courses match and which is repeated consecutively (Groove riff definition); its use is scoped to blues and vamp progressions, conventionally placed at the start and end of a song (Where to use groove riffs), and operationalized as the same run repeated across the first and last 12 bars of a blues (Repetition over 12 bars). Baker's characteristic move is the strict position-discipline he then imposes: the entire groove-riff solo must be executed without leaving the 3rd position (Solo entirely in 3rd position).

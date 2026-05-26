@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Chords with Two Names, Intros, Bop Blues, Endings and Sequences (Lessons 19-23)\nPages 19-26 of the book.\n\n<<<CHAPTER TEXT\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\n~\n\nG13b9\n\nDmi9\n\nFma6\n\nGma6\n\nG13_9\n\nDmi9\n\nFma6\n\nGma6\n\no\nPe ee\nasl NN\n\n} LC ss\noO\na\n\u2014(hN\nSANT\nSIN\n=]\n3|N\nTSI INN\n\nt \u2014<\n\n} o\nPale\n\nT Oo\nNN\njel 2a,\nod | te\nPett &\\N\nREPT & |My\nNN\n~r iN\nPett \u00aba || N\nHettt E 1K\nfet Bay\nNN\nre | NN\n\u201cot | fe\n1 r EN\n\nres)\n\nL\n\nNN\nPTS | IN\nT elk\nfH |\nNN\nFein\nret | [N\na N\npee & |\n\nG13b9\n\nI\nDmiT\n\nEmi? Ebmi7\n\naf\na\n\nNe)\ng\n+t oO bee\nHH\nN\n\u2018al a ~\ntt\nmauled\nes N+\npe\noifs+\nes\nserra s (Wt\nea!\nrt Nt\ni\u2018\nas\nang\nPs,\nat 3 |S\nNN\ni Ne) in\nei Nt +\ni SINE I\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR 19\n\n| LESSON 19\n\n| In this lesson we are going back to harmony just a little bit, and I will try to explain about chords with two names.\n| Also, I am introducing a few more chords.\n| When we are in one key a chord may be Gma? while still in another key \u2014 the same chord has a different name,\n| Emi7. Below I have analyzed the harmonic structure of these chords. You are to learn both names of these chords\nin all keys.\nIts best to write them out in your work book like this, Gma6 is also Emi7; A\u2019ma6 is also Fmi7. Do this chromat-\nically always up the finger board with each chord, because in the next few lessons I'm using these chords, and\nboth names in some progressions. A lot of these progressions will not be diagrammed as they were before. I'll\nsimply write the chord and put its number over it, so it will be up to you to find them.\n\nNEW CHORDS\nGma7 G13 GTHS\na | $2\nKK a0] \u2018i\n\nBELOW WE HAVE AN ANALYSIS OF CHORDS WITH TWO NAMES\n\nGma6\u00e9 Emi7 Gma6 Emi7\n6th Heth) Root Root_f 7th Root Ft} 6th Root\n\nze \u20147th\n3rd \u2014FH TE sth Sth-F#t\\sra 0 Fd H~ sth ard HHH ch\n\nGna7 Emi9 G7HS Db9bs\n\n|\n7th z \u2014Root 3rd 7 b5th\n\nCy 3rd \u2014] a =_a\nRoot ie Sth azaee 7th 3rd Dh $s we 9th\n3rd +~7th Sth\u2014 PETE oh 7th\n\nRoot omitted Root omitted\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\n20\n\nLESSON 20\n(Intro\u2019s In G Major)\n\nSlowly\n\na\n\nmt\n\nBmi7\n\nCmi7\n\nTi\n\nBmi7\n\nar}\n\nAmi7\n\nGma7T\n\nBounce\n\nD139\n\nGma6\n\n+++ ett\n\nD13b9\nTon\n\nAll\n\nym ew\n\nzy\n\nAll\n\nial\n\nAll\n\nZ,\nLZi7 t\nLa\n\nSlowly\n\nD13p9\nt\n\nAll\n\u2014\n\ngeet\n\nTT\n\nD13>9 Gma7 Ami7 BmiT Gma6\u00e9\nra\n\nAmi9\nA.\n+\u2014f-\nJ\n\nmet\n\nGma7 Ami7 Bmi7 Gm6\n\nBounce\n\nil\n\nLi\n\nj_f__/ _f .\n(\u2014{\u2014t-\u00a2\n\nD13$\u00a55b9\n\nfff\n(\u2014(\u2014{-\u00a2\n\nG6)9\n\nD13b9\n\u00a5 a\n\nAll\n7\nfF\n\njeu\n\nD13b9 All Dma6 Bb7\n7s\n\nAll\n\nTi\n\nDma6 Bb7\n\ntt\ney\no\n\n\n\nMICKEY BAKER'S JAZZ GUITAR\n21\nLESSON 21\nBOP BLUES PROGRESSIONS IN G MAJOR\n32\nG13\nG13\nG7#5\nGmi7\nGmi6\nF#ma7\n2\n4\n5\n2\nGma7\nAbmi7\nAmi7\nBbmi7\nBmi7\nCmi7\nBbmi7\nAmi7\nD13b9\nGma6\nD13b9\n11\n12\n11\n32\nG13\nG13\nG7#5\nGmi7\nGmi6\nF#ma7\n2\n4\n3\n3\n4\n4\n30\n10\n32\n11\nGma7\nAmi7\nBmi7\nBmi7\nBbmi7\nAmi7\nA11\nD13\nD9b5\nG13\nD13b9\n2\n29\n3\n26\n3\n10\n33\n32\n32\nGma7\nG13\nCma6\nC#dim\nDma6\nCma6\nG13\nG9b5\nC13\nC13\n3\n3\n4\n4\n11\n12\n11\nDma6\nCma6\nBmi7\nBbmi7\nAmi7\nD13b9\nGma6\nD13b9\n\nLESSON 22\nENDINGS IN G MAJOR\n\nGma7\nFma7\nBbma7\nAbma7\nGma7\n\nAmi7\nD13b5b9\nGma7\n\nGma7\nBbma7\nAbma7\nF#ma7\nGma7\n\nAmi7\nD13\nD13b5b9\nGma7\n\nGma6\nC#dim\nCma6\nD13b5b9\nGma7\n\nENDINGS IN C MAJOR\n\nDmi\nFmi\nCma7\n\nDmi7\nFmi7\nCma7\n\nDmi7\nG7\nC(6)9\n\nDmi9\nG13b5\nC(6)9\n\nDmi7\nG7#5b9\nC(6)9\n\nMICKEY BAKER'S JAZZ GUITAR\n23\nLESSON 23\nIn this, our last lesson in chord study, I have written out some of the most used chord progressions in Jazz today. These are standard changes, and if you analyze them and work with them long enough, you will find that they appear in many different songs in various places.\nThere are eleven different examples and below each example I have the new changes that sound best in their places. Work them out thoroughly in the keys that they are in, then make up charts of each in all of the other keys: F, G, Ab, Bb, C, Db, and Eb. Then work them out in these new keys.\nThese charts will be very helpful to you in transposing from one key to another. They will also play a very important part in Lesson No. 35 and 46 (See Lesson No. 45 and 46).\n8 BAR SEQUENCES\n(Chord Cycles)\nNo. 1\nStandard:\nC7\nFmi\nG7\nG7\nG+7\nC\nNew:\nGmi7 Gmi6\nGmi7 C7b5\nFmi7 Fmi6\nDmi7 Dmi6\nDmi7 G13b5b9\nCma7 Ebmi7\nDmi7 G13b9\nNo. 2\nGb\nGbmi\nDb\nEb7\nAb7\nDb\nAbdim Ebmi Ab7\nGbma7 Gbma6mi7 Gbmi6\nGb\nDb\nDb\nBb\nBb\nEb\nmi7 mi6\nmi7 Ab13\nEb\nmi7 Ab7 #5b9\nDb\nBb7\nma7 #5b9\nEb\nAb7\nmi7 #5b9\nNo. 3\nEb\nBbmi\nC7\nFmi\nAbmi Bb7\nEb7\nAb\nAbmi\nEb\nBb7\nEb\nEbma7 Bbmi7\nC7\nFmi7 Abmi7\nBb7\nBbmi7 b5b9\nma7 mi7\nEb13\nAb\nAb\nEb\nGb\nma7 mi7\nFmi7 #5b9\n\n\n24\nMICKEY BAKER'S JAZZ GUITAR\nNo. 4\nC7\nF\nGmi\nC7\nF\nF#dim\nGmi7 Gmi6\nGmi7 C13b5b9 Fma7 F13 Bbma6 Bdim Cma6 Bbma6 Ami7 Abmi7\nNo. 5\nG\nGmi\nG\nG#dim\nAmi\nD7\nG\nD7\nGma7 Gma6 Gmi7 Gmi6 Gma7 Ami7 Bb Ami7 Ami6 Ami7 Ami6 D13 b5b9 Gma7 mi7 Ami7 D13b9\nNo. 6\nBbmi Eb7\nAb\nAb Adim Bbmi Eb7\nAb\nBb mi7 mi6 Bb Eb13 Ab Bb ma7 mi7 Cmi7 Bmi7 Bbmi7 mi6 Bb Eb13 Ab ma7 Ab ma6\nNo. 7\nBb\nC7\nF7\nBb\nF7\nBbma7 Bbma6 Gmi7 C13 Cmi7 Cmi6 Cmi7 F13b5b9 Bbma7 Dbmi7 Cmi7 F13b5b9\nNo. 8\n16 BAR SEQUENCES\n(Chord Cycles)\nStandard:\nG\nEb7\nG\nE7\nAmi\nE7\nAmi\nEb7\nD7\nNew:\nGma7 Gma6 Bbmi7 Bbmi6 Gma7 Gma6 Bmi7 Bmi6 E11 E7b5\nAmi7 Ami6 E11 E7b5 Ami7 Ami6 Bbmi7 Bbmi6 Ami7 Ami6 Ami7 D13b5b9\n\nMICKEY BAKER'S JAZZ GUITAR\n25\nNo. 9\nG Gmi F Fmi Eb D7 Gmi G D7\nGma7 Gma6 Gmi7 Gmi6 Gmi7 C13b5b9 Fma7 Fma6 Fmi7 Fmi6\nEbma7 Ebma6 D11 D7b5 Gmi7 Gmi6 Gma7 Gma6 Ami7 Ami6 Ami7 D13b5b9\nNo. 10\nF7 Bb7 Eb7 Ab C7\nCmi7 Cmi6 Fmi7 Bb13 Bbmi7 Bbmi6\nBbmi7 Eb13b5b9 Abma7 Ab13 Dbma6 Ddim Ebma6 Dbma6 C7#5b9 C7\nNo. 11\nF Cmi D7 G7 C7 F F7 Bb Bbmi D7 G7 C7\nFma7 Bbmi7 Ami7 Ami6 Dmi7 G13 Gmi7 Gmi6 Gmi7 b5b9 Fma7 Fma6 Cmi7 Cmi6\nBbma7 Bbma6 Bbmi7 Bbmi6 Ami7 Ami6 Dmi7 G13 Gmi7 Gmi6 Gmi7 C13b5b9\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

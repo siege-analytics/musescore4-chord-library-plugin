@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s3
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+source_pages: 27-30
+model: claude-haiku
+extracted_at: 2026-05-26T18:07:03+00:00
+schema_version: 0.1
+---
+
+# Chapter 8 — Part Two Opens: Time Values, Wrist Development and Scales (Lessons 24-26)
+
+_Distillation; backed by `chapters/ch08.md`._
+
+This chapter opens Part Two (Lessons 24-26) and pivots from chord study to single-note technique, framing Lessons 24-30 as a set of 28 exercises that constitute the lifelong mechanical foundation for all solo work (28 exercises as key to solo work). Baker establishes the load-bearing technique rules that govern the rest of the book: practice every exercise as slowly as possible and only raise the tempo when relaxed (Slow practice rule); use up-and-down alternate picking on everything from this point forward (Up-and-down stroke mandate); and drill each exercise in two picking-orientation passes — down-up first, then up-down (Picking sequence drill). He pairs the mechanical regime with a non-negotiable ear-training routine — playing along with records, stealing horn solos, strumming chords and humming ideas (Ear development practice) — and insists that timing is developed socially at jam sessions rather than alone (Jam sessions for timing), with a concrete two-hours-per-lesson daily quantum (Two hours per lesson). The chapter also defines the symbol legend X (open string), S (string), and F (fingering) used across every Part Two diagram (Notation key for tablature) and requires the student to memorize each exercise's name end-to-end on the neck so the runs function later as a callable named vocabulary (Memorize exercise names).

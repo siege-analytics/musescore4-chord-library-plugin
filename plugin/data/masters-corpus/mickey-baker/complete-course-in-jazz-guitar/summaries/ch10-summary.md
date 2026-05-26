@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s3
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+source_pages: 34-41
+model: claude-haiku
+extracted_at: 2026-05-26T18:07:03+00:00
+schema_version: 0.1
+---
+
+# Chapter 10 — Review, Major/Minor/Dominant Runs, Run Connections and Blues Solos (Lessons 32-37)
+
+_Distillation; backed by `chapters/ch10.md`._
+
+This chapter (Lessons 32-37) extends the chords-with-two-names principle from Lesson 19 into the solo domain, establishing the central improvisational license of Baker's method: a minor-7 run substitutes freely for its relative major chord, because the same relative rule that applies to chords applies to runs (Relative run substitution), and the iii-min7 / I-maj7 pair (Bmi7 for Gma7) is added to the toolkit (Close relatives in solos). Baker plants a V7/IV7 substitution at bars 9-10 of the blues so that ii-min7 runs (Ami7 over D7, Gmi7 over C7) sit on those bars (ii-V over bars 9-10) and codifies the always-alter-the-V-into-I voice-leading rule that bridges his chord subs to his run choices (Altered dominant principle), with the workhorse Ami7 to Cmi7 to G major recipe over V to I as the template (Substituting minor-7 runs over V). The characteristic moves generalize beyond blues to ballads and bounce tunes (Universal application), and the chapter operationalizes the leap from imitation to invention with quantified drills: write at least three new solos for each blues example (Make up new solos drill), strum-and-hum the runs against the changes (Hum runs against chords), vary tempo and timing to generate fresh material (Tempo and timing variation), and transpose Lesson 36 across six keys at one day per key while keeping identical fingering and only changing position between the 7th and 12th frets (Transpose blues solos; Blues solo position). Load-bearing rules surfaced: fill-in scaffolded improvisation where blank bars carry a labeled run-type (Fill-in solo method); the riff run is flagged as a deferred category outside the chord-derived system (Riff runs deferred); and the over-arching aesthetic is blending, not throwing runs together (Blend over throw-together).
