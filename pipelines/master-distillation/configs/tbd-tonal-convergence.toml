@@ -1,0 +1,39 @@
+# Queued via #329. Stage B: AUTHOR TBD. Read Stage 1 transcript to identify; promote/skip per #320.
+
+[master]
+id = "_pending:tbd-master"
+name = "(TBD post-OCR)"
+
+[work]
+id = "system-of-tonal-convergence"
+title = "A System of Tonal Convergence"
+year = 2000
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/A System of Tonal Convergence.pdf"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"

@@ -1,0 +1,31 @@
+# Queued via #329. Stage B: sibling work[] under benson master. Replaces _placeholder slot if it exists.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-2-advanced-harmony"
+title = "The George Benson Method, Vol. 2 — Advanced Harmony"
+year = 2019
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-2-Advanced-Harmony-1st-Edition.pdf"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
