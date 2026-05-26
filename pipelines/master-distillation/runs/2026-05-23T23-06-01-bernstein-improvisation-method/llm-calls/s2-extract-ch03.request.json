@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: How to Learn a Tune\nPages 5-5 of the book.\n\n<<<CHAPTER TEXT\n\nconstitutes a musical phrase or idea and recognizing what distinguishes a song from a collection\nof notes that happen to fit the chords. He conveyed to me that each tune is like a poem, teaching\nus the syntax of language and how to assemble words and set up rhymes, and every song has\nsomething to teach about this music. He drew an analogy to songs being akin to plays or movies,\nwhere the melody represents the story itself\u2014the core element. The customs, lights, and props\nserve as complementary elements that need to be properly oriented towards the story.\n\nTo further illustrate this concept of narrative, he offered an analogy, comparing learning to tell\nstories from a tune to a comedian crafting jokes. Comedians learn numerous common jokes,\nallowing them to understand setups, narratives, and punchlines that resonate with the audience.\nSimilarly, songs teach us how to tell relatable stories. I recall asking him once if he transcribed\nsolos, and he mentioned that he did it when he was in music school upon request, but he stopped\ndoing it afterward. He prefers to learn small phrases. However, more importantly, he emphasized\nthat learning tunes is more significant than learning solos or phrases because the ideas found in\njazz compositions are the best ideas the composers could come up with, which is why they\ndecided to create a tune around them. Therefore, studying tunes and dedicating time to exploring\nthose phrases is a great way to comprehend the most beautiful aspects of the language.\n\n\nHow to learn a tune\n\nI have always been impressed by the vast repertoire of tunes he knows. Even before I started\ntaking lessons with him, I would come across versions played by him for almost every tune I\nwanted to learn. Now, during our lessons, I have realized that his knowledge extends even\nfurther, including tunes I haven't even heard of. Bernstein has immersed himself in so many\ntunes that learning new ones has become second nature to him. His ability to analyze and\ninternalize them is truly remarkable. He is widely recognized for his exceptional rendition of\nstandard tunes, and I\u2019m constantly amazed by the profound level of analysis he applies to each\none we explore in our lessons. Bernstein possesses a masterful understanding of the fundamental\nelements that contribute to the greatness of a tune, and he skillfully expands upon these elements\nto construct captivating narratives. These can range from simple rhythmic figures to more\nintricate aspects like the core notes of a melody.\n\nHe likes to perform solo versions of the tunes we play during our lessons. In these instances, he\ntakes advantage of the freedom that comes with playing alone, allowing his exploration to take\nhim to a multitude of musical destinations. It\u2019s in these moments that I truly grasp the depth of\nhis artistic explorations. I\u2019ve come to realize that what we hear on stage or in recordings is just a\npiece of the vast range of ideas Bernstein can delve into when interpreting a tune. During some\nof the lessons, Bernstein enjoyed teaching me tunes in a primarily oral traditional manner. He\nwould play the sections one by one and elucidate his thought process when learning the tune. We\ndidn't rely on lead sheets or any type of charts during these sessions. I found these lessons\n\n                                                                                                    5\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}

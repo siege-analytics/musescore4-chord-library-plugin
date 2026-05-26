@@ -1,0 +1,36 @@
+# Per-book config for the master-distillation pipeline.
+# Third book through the pipeline. Peter Bernstein is the master; the
+# source is Nico Moreno's NYU master's thesis (2023) documenting
+# Bernstein's teaching — an "analyzed-by-others" source (same shape as
+# Wes / Charlie predecessor analyses), not a primary-source method
+# authored by the master himself.
+
+[master]
+id = "peter-bernstein"
+name = "Peter Bernstein"
+
+[work]
+id = "improvisation-method-as-documented-2023"
+title = "An approach to Jazz Improvisation: A method by Peter Bernstein (as documented by Nico Moreno, NYU 2023)"
+year = 2023
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/Desktop/parse_these/An approach to Jazz Improvisation A method by Peter Bernstein.pdf"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
