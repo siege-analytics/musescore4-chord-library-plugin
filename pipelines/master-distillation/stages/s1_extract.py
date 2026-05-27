@@ -22,8 +22,10 @@ any failed pages.
 
 from __future__ import annotations
 
+import getpass
 import json
 import re
+import shlex
 import shutil
 import subprocess
 import time
@@ -32,22 +34,92 @@ from pathlib import Path
 from lib.paths import BookPaths, rel_to_repo
 
 
+# ---------------------------------------------------------------------------
+# Source-PDF locator (local vs remote)
+# ---------------------------------------------------------------------------
+#
+# The pipeline supports source PDFs that live locally OR on a remote host
+# (typically cyberpower). When `source.host` is set in the config, Stage 1
+# invokes pdftotext / pdftoppm on the remote host instead of the laptop.
+# This is symmetric with the existing OCR-on-cyberpower architecture and
+# avoids the "rsync PDF to laptop" or "rsync images to cyberpower" steps
+# for the common case where the canonical PDF corpus lives on the remote.
+
+
+class SourceLocator:
+    """Either a local Path or a (user, host, remote-path-string) triple."""
+
+    def __init__(self, source_cfg: dict):
+        self.host: str | None = source_cfg.get("host")
+        if self.host:
+            self.user: str = source_cfg.get("user") or getpass.getuser()
+            # Don't expanduser; that resolves against the LOCAL home dir.
+            # The remote shell will expand `~` itself when we ssh-execute.
+            self.remote_path: str = source_cfg["pdf"]
+            self.local_path: Path | None = None
+        else:
+            self.user = ""
+            self.remote_path = ""
+            self.local_path = Path(source_cfg["pdf"]).expanduser()
+
+    @property
+    def is_remote(self) -> bool:
+        return self.host is not None
+
+    @property
+    def remote_user_host(self) -> str:
+        return f"{self.user}@{self.host}"
+
+    @property
+    def remote_quoted_path(self) -> str:
+        """Path quoted for embedding in a remote bash command.
+
+        Replaces `~/` with `$HOME/` (since ~ doesn't expand inside any
+        quoting) then wraps in DOUBLE quotes so embedded spaces are
+        protected while $HOME still expands. Double quotes are safe for
+        the characters that appear in real jazz-book filenames: spaces,
+        commas, parens, apostrophes. They would NOT be safe against
+        embedded `"` or `$`/`` ` ``/`\\` — those don't appear in the
+        corpus, but we escape `"` defensively anyway.
+        """
+        path = self.remote_path
+        if path.startswith("~/"):
+            path = "$HOME/" + path[2:]
+        return '"' + path.replace('"', '\\"') + '"'
+
+    def verify_exists(self) -> None:
+        """Raise FileNotFoundError if the source PDF can't be reached."""
+        if self.is_remote:
+            r = subprocess.run(
+                ["ssh", self.remote_user_host,
+                 f"test -f {self.remote_quoted_path}"],
+                check=False,
+            )
+            if r.returncode != 0:
+                raise FileNotFoundError(
+                    f"source PDF not found on {self.host}: {self.remote_path}"
+                )
+        else:
+            assert self.local_path is not None
+            if not self.local_path.exists():
+                raise FileNotFoundError(f"source PDF not found: {self.local_path}")
+
+
 def run(cfg: dict, book: BookPaths) -> list[str]:
-    src_pdf = Path(cfg["source"]["pdf"]).expanduser()
-    if not src_pdf.exists():
-        raise FileNotFoundError(f"source PDF not found: {src_pdf}")
+    src = SourceLocator(cfg["source"])
+    src.verify_exists()
 
     outputs: list[str] = []
     ocr_summary: str | None = None
 
     if cfg.get("source", {}).get("needs_ocr"):
         raw_text, pages_index, ocr_summary = _extract_with_ocr(
-            src_pdf, book, cfg.get("ocr", {})
+            src, book, cfg.get("ocr", {})
         )
     else:
         # Native digital extraction via pdftotext (preferred — deterministic
         # per-page output with -layout) with markitdown fallback.
-        raw_text, pages_index = _extract_per_page(src_pdf)
+        raw_text, pages_index = _extract_per_page(src)
 
     book.raw_transcript.write_text(raw_text)
     outputs.append(rel_to_repo(book.raw_transcript))
@@ -65,30 +137,51 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
     return outputs
 
 
-def _extract_per_page(pdf_path: Path) -> tuple[str, dict]:
+def _extract_per_page(src: SourceLocator) -> tuple[str, dict]:
     """Return (full transcript, pages_index).
 
     pages_index shape:
       { "pages": [ { "n": 1, "start": 0, "length": 1234, "preview": "..." }, ... ] }
 
-    C0-control-char stripping happens INSIDE _index_form_feed_transcript
-    so the indexed offsets match the returned transcript exactly — both
-    the pdftotext and OCR paths go through the same indexer.
+    Dispatches local vs. remote based on src.is_remote. Remote path runs
+    pdftotext via ssh; local path runs it directly. Both feed the same
+    `_index_form_feed_transcript` helper so the strip + offset invariants
+    hold regardless of where pdftotext executed.
     """
+    if src.is_remote:
+        return _extract_with_pdftotext_remote(src)
     if shutil.which("pdftotext"):
-        return _extract_with_pdftotext(pdf_path)
+        return _extract_with_pdftotext_local(src.local_path)
     if shutil.which("markitdown"):
-        return _extract_with_markitdown(pdf_path)
+        return _extract_with_markitdown(src.local_path)
     raise RuntimeError(
         "no PDF extractor found. Install pdftotext (poppler-utils) or "
         "markitdown."
     )
 
 
-def _extract_with_pdftotext(pdf_path: Path) -> tuple[str, dict]:
+def _extract_with_pdftotext_local(pdf_path: Path) -> tuple[str, dict]:
     """pdftotext -layout -enc UTF-8 emits a form-feed (\\f) between pages."""
     result = subprocess.run(
         ["pdftotext", "-layout", "-enc", "UTF-8", str(pdf_path), "-"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return _index_form_feed_transcript(result.stdout)
+
+
+def _extract_with_pdftotext_remote(src: SourceLocator) -> tuple[str, dict]:
+    """Run pdftotext on the remote host via ssh; capture stdout locally.
+
+    The remote shell expands `~` in the path; we shell-quote the path
+    via shlex.quote() to handle spaces and special chars safely.
+    """
+    remote_cmd = (
+        f"pdftotext -layout -enc UTF-8 {src.remote_quoted_path} -"
+    )
+    result = subprocess.run(
+        ["ssh", src.remote_user_host, remote_cmd],
         check=True,
         capture_output=True,
         text=True,
@@ -184,56 +277,81 @@ OCR_DEFAULTS = {
 
 
 def _extract_with_ocr(
-    pdf_path: Path, book: BookPaths, ocr_cfg: dict
+    src: SourceLocator, book: BookPaths, ocr_cfg: dict
 ) -> tuple[str, dict, str]:
     """Run the OCR pipeline on a scanned PDF via the cyberpower remote.
 
-    Steps: pdftoppm → rsync to remote inbox → ssh run.sh → rsync outbox
-    back → re-use the form-feed indexer to build (transcript, pages_index).
-    Returns the same (transcript, pages_index) shape as the pdftotext path,
-    plus a one-line OCR summary the orchestrator can display.
+    Two source flavors:
+    - Source on cyberpower (src.is_remote): pdftoppm runs on cyberpower
+      directly into the inbox. No local image staging, no rsync-up.
+    - Source on laptop: pdftoppm runs locally; images rsync up to the
+      inbox (the original architecture).
+
+    Both flavors then ssh-launch the nohup'd runner, poll for completion,
+    rsync results back, and run the form-feed indexer.
     """
     cfg = {**OCR_DEFAULTS, **(ocr_cfg or {})}
-    host = cfg["host"]
-    user = cfg["user"]
+    # When source is remote, prefer the source's host/user to keep all
+    # remote work on one machine. Falls back to OCR_DEFAULTS otherwise.
+    if src.is_remote:
+        host = src.host
+        user = src.user
+    else:
+        host = cfg["host"]
+        user = cfg["user"]
     remote = f"{user}@{host}"
 
-    for binary in ("pdftoppm", "rsync", "ssh"):
+    for binary in ("rsync", "ssh"):
         if not shutil.which(binary):
             raise RuntimeError(f"OCR branch requires `{binary}` in PATH")
+    if not src.is_remote and not shutil.which("pdftoppm"):
+        raise RuntimeError("local OCR source requires `pdftoppm` in PATH")
 
-    image_dir = book.run_dir / "ocr-input"
     output_dir = book.run_dir / "ocr-output"
-    image_dir.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. pdftoppm — render each page to PNG. Output filenames are
-    # `page-NN.png` (zero-padded to match the page count digits).
-    subprocess.run(
-        [
-            "pdftoppm",
-            "-png",
-            "-r", str(cfg["render_dpi"]),
-            str(pdf_path),
-            str(image_dir / "page"),
-        ],
-        check=True,
-    )
-
-    # 2. rsync images → cyberpower inbox.
     remote_inbox = f"~/jazz-ocr/inbox/{book.run_id}/"
-    subprocess.run(
-        ["ssh", remote, f"mkdir -p {remote_inbox}"],
-        check=True,
-    )
-    subprocess.run(
-        [
-            "rsync", "-a", "--delete",
-            f"{image_dir}/",
-            f"{remote}:{remote_inbox}",
-        ],
-        check=True,
-    )
+
+    if src.is_remote:
+        # 1+2 combined: ssh-run pdftoppm on cyberpower writing directly
+        # into the inbox. No local image dir; no rsync-up step. Symmetric
+        # with the OCR-runner being on cyberpower already.
+        remote_inbox_quoted = shlex.quote(remote_inbox.replace("~", "$HOME"))
+        ppm_cmd = (
+            f"mkdir -p {remote_inbox_quoted} && "
+            f"pdftoppm -png -r {cfg['render_dpi']} "
+            f"{src.remote_quoted_path} {remote_inbox_quoted}page"
+        )
+        subprocess.run(
+            ["ssh", remote, ppm_cmd],
+            check=True,
+        )
+    else:
+        # Local pdftoppm → local image dir → rsync up.
+        image_dir = book.run_dir / "ocr-input"
+        image_dir.mkdir(parents=True, exist_ok=True)
+        subprocess.run(
+            [
+                "pdftoppm",
+                "-png",
+                "-r", str(cfg["render_dpi"]),
+                str(src.local_path),
+                str(image_dir / "page"),
+            ],
+            check=True,
+        )
+        subprocess.run(
+            ["ssh", remote, f"mkdir -p {remote_inbox}"],
+            check=True,
+        )
+        subprocess.run(
+            [
+                "rsync", "-a", "--delete",
+                f"{image_dir}/",
+                f"{remote}:{remote_inbox}",
+            ],
+            check=True,
+        )
 
     # 3. ssh-launch the runner under nohup so it's INDEPENDENT of this
     # SSH session. The remote process survives laptop sleep / lid close /
