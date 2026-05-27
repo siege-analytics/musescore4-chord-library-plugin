@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: corpus-only per #320.
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "jens-larsen"
+name = "Jens Larsen"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
-instrument_scope = "any"
+id = "modern-jazz-guitar-concepts"
+title = "Modern Jazz Guitar Concepts"
+year = 2018
+instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Fundamental Changes/Modern Jazz Guitar Concepts/jens-larsen-modern-jazz-guitar-concepts_compress.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

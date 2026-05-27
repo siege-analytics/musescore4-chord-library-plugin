@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: sibling work[] under joe-pass.
+# Queued via #334. Stage B: sibling work[] under existing martin-taylor master (currently no works[]).
 
 [master]
-id = "joe-pass"
-name = "Joe Pass"
+id = "martin-taylor"
+name = "Martin Taylor"
 
 [work]
-id = "guitar-chords"
-title = "Joe Pass Guitar Chords"
-year = 2005
+id = "complete-jazz-guitar-method"
+title = "Martin Taylor's Complete Jazz Guitar Method Compilation"
+year = 2015
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Theory/Pass, Joe - Guitar Chords (2005).pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Fundamental Changes/Martin Taylor's Complete Jazz Guitar Method Compilation/883234647-Martin-Taylors-Complete-Jazz-Guitar-Method-Compilation-Master-Jazz-Guitar-ChordMelody-Walking-Basslines-SingleNote-Soloing-Play-Jazz-Guitar-Full-Downl.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

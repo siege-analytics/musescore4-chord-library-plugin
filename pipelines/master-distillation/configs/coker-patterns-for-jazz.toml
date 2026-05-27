@@ -1,17 +1,19 @@
-# Queued via #329. Stage B: AUTHOR TBD. Same series as configs 11 + 12. PowerPDF/VSPDF.DLL producer metadata, no author in PDF properties.
+# Queued via #334. Stage B: sibling work[] under NEW jerry-coker master. The canonical 1970 edition.
 
 [master]
-id = "_pending:tbd-master"
-name = "(TBD post-OCR)"
+id = "jerry-coker"
+name = "Jerry Coker"
 
 [work]
-id = "chord-melody-series-1-beginning"
-title = "(Mystery series) 1 — Beginning"
-year = 2000
-instrument_scope = "6-string"
+id = "patterns-for-jazz"
+title = "Patterns for Jazz"
+year = 1970
+instrument_scope = "any"
 
 [source]
-pdf = "~/Desktop/parse_these/1- Beginning.pdf"
+pdf = "~/jazz_docs/Guitar/Theory/Patterns For Jazz/Coker, Jerry - Patterns for Jazz (1970).pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

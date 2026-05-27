@@ -1,17 +1,19 @@
-# Queued via #329. Stage B: AUTHOR TBD. Read Stage 1 transcript to identify; promote/skip per #320.
+# Queued via #334. Stage B: NEW master gene-bertoncini. EXEGETICAL: arranges jazz-standards repertoire in chord-melody idiom. Manhattan School of Music jazz guitar faculty.
 
 [master]
-id = "_pending:tbd-master"
-name = "(TBD post-OCR)"
+id = "gene-bertoncini"
+name = "Gene Bertoncini"
 
 [work]
-id = "system-of-tonal-convergence"
-title = "A System of Tonal Convergence"
-year = 2000
+id = "arrangements-for-solo-guitar"
+title = "Arrangements for Solo Guitar"
+year = 1990
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/A System of Tonal Convergence.pdf"
+pdf = "~/jazz_docs/iGigbook/data/sync/_m Bertoncini Arrangements for Solo Guitar.pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]
