@@ -418,3 +418,61 @@ def test_ocr_defaults_cover_required_keys():
         "confidence_threshold", "min_chars_per_page", "render_dpi",
     }
     assert required <= set(s1_extract.OCR_DEFAULTS.keys())
+
+
+# ---------------------------------------------------------------------------
+# SourceLocator (#331 remote-source refactor)
+# ---------------------------------------------------------------------------
+
+
+def test_source_locator_local_only():
+    """When `host` is omitted, the locator stays local and resolves the path."""
+    s = s1_extract.SourceLocator({"pdf": "~/test.pdf"})
+    assert not s.is_remote
+    assert s.local_path == Path("~/test.pdf").expanduser()
+
+
+def test_source_locator_remote():
+    """When `host` is set, the locator is remote and keeps the path string
+    unmodified (so the remote shell can expand `~`)."""
+    s = s1_extract.SourceLocator({
+        "host": "cyberpower",
+        "user": "dheerajchand",
+        "pdf": "~/jazz_docs/foo.pdf",
+    })
+    assert s.is_remote
+    assert s.remote_user_host == "dheerajchand@cyberpower"
+    assert s.remote_path == "~/jazz_docs/foo.pdf"
+
+
+def test_source_locator_remote_user_defaults_to_current():
+    """If `user` is omitted, fall back to the local username (current process)."""
+    import getpass
+    s = s1_extract.SourceLocator({"host": "cyberpower", "pdf": "/abs/path.pdf"})
+    assert s.user == getpass.getuser()
+
+
+def test_remote_quoted_path_expands_tilde():
+    """`~/` MUST become `$HOME/` so the remote bash expands it correctly.
+    Regression: an earlier shape used shlex.quote() which wrapped the whole
+    path including ~ in single quotes, preventing expansion."""
+    s = s1_extract.SourceLocator({
+        "host": "h", "user": "u", "pdf": "~/foo/bar.pdf",
+    })
+    quoted = s.remote_quoted_path
+    assert quoted.startswith('"$HOME/')
+    assert "~" not in quoted
+
+
+def test_remote_quoted_path_handles_spaces_and_apostrophes():
+    """Real jazz-book filenames have spaces, commas, parens, apostrophes.
+    Double-quote wrapping protects them all without breaking $HOME expansion."""
+    s = s1_extract.SourceLocator({
+        "host": "h", "user": "u",
+        "pdf": "~/Music/Baker, Mickey - Mickey Baker's Jazz Guitar.pdf",
+    })
+    quoted = s.remote_quoted_path
+    assert quoted.startswith('"$HOME/Music/')
+    assert quoted.endswith('.pdf"')
+    # apostrophe survives inside double quotes
+    assert "Baker's" in quoted
