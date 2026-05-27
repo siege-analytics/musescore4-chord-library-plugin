@@ -1,17 +1,19 @@
-# Queued via #329. Stage B: AUTHOR TBD. Same series as 10 + 12.
+# Queued via #334. Stage B: sibling work[] under jody-fisher.
 
 [master]
-id = "_pending:tbd-master"
-name = "(TBD post-OCR)"
+id = "jody-fisher"
+name = "Jody Fisher"
 
 [work]
-id = "chord-melody-series-2-intermediate"
-title = "(Mystery series) 2 — Intermediate"
-year = 2000
+id = "jazz-guitar-method-vol-2-intermediate"
+title = "Jazz Guitar Method, Vol 2 (Intermediate)"
+year = 1996
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/2- Intermediate.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jody Fisher/Fisher, Jody - Jazz Guitar Method, Vol 2 (Intermediate).pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

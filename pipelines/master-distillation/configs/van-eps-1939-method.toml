@@ -1,4 +1,4 @@
-# Queued via #329. Stage B: FILL existing van-eps:1939-method work entry (currently has summary+references only; no corpus or systems[]).
+# Queued via #334. Stage B: FILL existing van-eps:1939-method slot (currently has summary+refs only, no corpus or systems[]).
 
 [master]
 id = "van-eps"
@@ -11,7 +11,9 @@ year = 1939
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/The_George_Van_Eps_Method_for_Guitar.documents.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/George Van Eps/Van Eps, George - The Method for Guitar.pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

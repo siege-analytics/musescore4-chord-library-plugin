@@ -1,4 +1,4 @@
-# Queued via #329. Stage B: sibling work[] under mickey-baker master (Vol 1 promoted in #319).
+# Queued via #334. Stage B: sibling work[] under existing mickey-baker master.
 
 [master]
 id = "mickey-baker"
@@ -11,7 +11,9 @@ year = 1959
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/mickey-baker-complete-course-in-jazz-guitar-2pdf_compress.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Mickey Baker/Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

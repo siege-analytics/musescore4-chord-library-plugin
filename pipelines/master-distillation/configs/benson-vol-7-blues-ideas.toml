@@ -1,4 +1,4 @@
-# Queued via #329. Stage B: sibling work[] under benson master.
+# Queued via #334. Stage B: sibling work[] under benson master.
 
 [master]
 id = "benson"
@@ -6,12 +6,14 @@ name = "George Benson"
 
 [work]
 id = "method-vol-7-blues-ideas"
-title = "The George Benson Method, Vol. 7 — Ultimate Advanced Blues Ideas"
+title = "The George Benson Method, Vol 7 — Ultimate Advanced Blues Ideas"
 year = 2019
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-7-Ultimate-Advanced-Blues-Ideas-Â©-1st-Edition.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/George Benson Method/Benson, George - The George Benson Method, Vol 7 (Ultimate Advanced Blues Ideas).pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = false
 
 [stages.s1]

@@ -1,93 +1,114 @@
-# Pipeline queue
+# Pipeline queue (post-#334 cyberpower-routing rewrite)
 
-A flat inventory of every PDF that has a config in `configs/`. Use this to decide
-what to run next and to track Stage B disposition.
+Every config in `configs/` is either already-promoted (status ✅) or queued
+to run via `source.host = "cyberpower"` against the canonical PDF corpus at
+`~/jazz_docs/...` on cyberpower. Local-laptop PDFs are no longer needed.
 
 ## Conventions
 
-- **Status**: ✅ promoted to masters.json · 🟦 in pipeline · 🟨 queued, not started · 🟥 skip-promote, corpus-only · ❓ author TBD post-OCR
-- **OCR?**: y = needs_ocr=true; cyberpower OCR branch routes it
-- **Source**: digital (pdftotext) or scanned (OCR via #316/#318)
-- Per-config disposition is in the config file's header comment
+- **Status**: ✅ promoted to masters.json · 🟦 in pipeline · 🟨 queued · 🟥 skip-promote, corpus-only · 📚 exegetical (NEW master with exegesis_of[] pending #333)
+- **OCR?**: y = `needs_ocr=true`; cyberpower OCR runner routes via #316/#318
+- All PDFs verified to exist on cyberpower via batch ssh-test before this PR shipped (36/36)
 
-## Already-promoted (no work needed)
+## Already-promoted
 
 | Master | Work | Stage B PR | Source |
 |---|---|---|---|
-| benson | method-vol-1-chord-construction | #304 | digital (319pp) |
-| jimmy-bruno | the-art-of-picking | #313 | digital (51pp) |
-| peter-bernstein | improvisation-method-as-documented-2023 | #314 | digital (30pp) |
-| mickey-baker | complete-course-in-jazz-guitar | #319 | OCR (65pp) |
-| van-eps | harmonic-mechanisms-vol-1 | #322 | OCR (334pp) |
-| greg-orourke | complete-chord-melody | #321 corpus-only | digital (318pp) |
+| benson | method-vol-1-chord-construction | #304 | digital |
+| jimmy-bruno | the-art-of-picking | #313 | digital |
+| peter-bernstein | improvisation-method-as-documented-2023 | #314 | digital |
+| mickey-baker | complete-course-in-jazz-guitar | #319 | OCR |
+| van-eps | harmonic-mechanisms-vol-1 | #322 | OCR |
+| greg-orourke | complete-chord-melody | #321 corpus-only | digital |
 
-## Queue (20 configs, ready to run)
-
-OCR-required books route through the cyberpower OCR branch. Digital books run
-straight through pdftotext. Order below is the suggested run order.
+## Queue (36 configs, all routed to cyberpower)
 
 ### Tier 1 — Fill existing master slots (high curatorial value, low risk)
 
-| # | Config | Master:Work | Pages | OCR? | Stage B shape | Status |
-|---|---|---|---|---|---|---|
-| 1 | `van-eps-1939-method.toml` | van-eps:1939-method | 42 | y | FILL existing slot (master entry pre-dates pipeline; has summary+refs only, no corpus or systems[]) | 🟨 |
-| 2 | `baker-vol-2.toml` | mickey-baker:complete-course-vol-2 | 49 | y | Sibling work[] | 🟨 |
-| 3 | `pass-guitar-method.toml` | joe-pass:guitar-method | 34 | y | Sibling work[] | 🟨 |
-| 4 | `pass-guitar-chords.toml` | joe-pass:guitar-chords | 26 | y | Sibling work[] | 🟨 |
-| 5 | `greene-modern-chord-progressions.toml` | ted-greene:modern-chord-progressions | 106 | y | Sibling work[] | 🟨 |
+| # | Config | Master:Work | Pages | OCR? | Notes |
+|---|---|---|---|---|---|
+| 1 | `van-eps-1939-method` | van-eps:1939-method | 42 | y | FILL existing slot (currently summary+refs only, no corpus/systems) |
+| 2 | `greene-chord-chemistry` | ted-greene:chord-chemistry | TBD | y | Sibling work — THE canonical Greene text |
+| 3 | `greene-single-note-soloing-vol-1` | ted-greene:single-note-soloing-vol-1 | TBD | y | Sibling work |
+| 4 | `greene-modern-chord-progressions` | ted-greene:modern-chord-progressions | 106 | y | Sibling work |
+| 5 | `pass-guitar-method` | joe-pass:guitar-method | 34 | y | Sibling work |
+| 6 | `pass-guitar-chords` | joe-pass:guitar-chords | 26 | y | Sibling work |
+| 7 | `baker-vol-2` | mickey-baker:complete-course-vol-2 | 49 | y | Sibling work |
+| 8 | `fisher-jazz-guitar-method-vol-1` | jody-fisher:jazz-guitar-method-vol-1-beginning | 98 | y | Sibling work (master currently has no works[]) |
+| 9 | `fisher-jazz-guitar-method-vol-2` | jody-fisher:jazz-guitar-method-vol-2-intermediate | 98 | y | Sibling work |
+| 10 | `fisher-jazz-guitar-method-vol-3` | jody-fisher:jazz-guitar-method-vol-3-mastering-chord-melody | 63 | y | Sibling work |
+| 11 | `taylor-complete-method-compilation` | martin-taylor:complete-jazz-guitar-method | TBD | y | Sibling — fills empty martin-taylor.works[] |
 
 ### Tier 2 — New primary-source masters
 
-| # | Config | Master:Work | Pages | OCR? | Stage B shape | Status |
-|---|---|---|---|---|---|---|
-| 6 | `martino-linear-expressions.toml` | pat-martino:linear-expressions | 63 | y | NEW master | 🟨 |
-| 7 | `coker-elements-jazz-language.toml` | jerry-coker:elements-of-the-jazz-language | 154 | y | NEW master | 🟨 |
+| # | Config | Master:Work | Pages | OCR? | Notes |
+|---|---|---|---|---|---|
+| 12 | `martino-linear-expressions` | pat-martino:linear-expressions | 63 | y | NEW master |
+| 13 | `martino-tonal-convergence` | pat-martino:system-of-tonal-convergence | TBD | y | Sibling — NEW pat-martino has TWO real works |
+| 14 | `coker-elements-jazz-language` | jerry-coker:elements-of-the-jazz-language | 154 | y | NEW master |
+| 15 | `coker-patterns-for-jazz` | jerry-coker:patterns-for-jazz | TBD | y | Sibling (1970 edition; canonical) |
+| 16 | `bergonzi-melodic-rhythms-vol-4` | jerry-bergonzi:melodic-rhythms-vol-4 | TBD | y | NEW master (Inside Improvisation series) |
+| 17 | `galbraith-jazz-solo-guitar` | barry-galbraith:jazz-solo-guitar | TBD | y | NEW master (recognized chord-melody specialist) |
+| 18 | `aebersold-vol-1-how-to-play-jazz` | jamey-aebersold:vol-1-how-to-play-jazz-and-improvise | TBD | y | NEW master (foundational Vol 1) |
 
-### Tier 3 — Benson sibling works (digital, batchable)
+### Tier 3 — Benson sibling works (digital, big books)
 
-| # | Config | Master:Work | Pages | OCR? | Stage B shape | Status |
-|---|---|---|---|---|---|---|
-| 8 | `benson-vol-2-advanced-harmony.toml` | benson:method-vol-2-advanced-harmony | 322 | n | Sibling work[] | 🟨 |
-| 9 | `benson-vol-3-technique-arpeggios.toml` | benson:method-vol-3-technique-arpeggios | 351 | n | Sibling work[] | 🟨 |
-| 10 | `benson-vol-4-approach-tones.toml` | benson:method-vol-4-approach-tones | 372 | n | Sibling work[] | 🟨 |
-| 11 | `benson-vol-5-melodic-minor.toml` | benson:method-vol-5-melodic-minor | 434 | n | Sibling work[] (largest book in queue) | 🟨 |
-| 12 | `benson-vol-6-giant-lines.toml` | benson:method-vol-6-giant-lines | 145 | n | Sibling work[] | 🟨 |
-| 13 | `benson-vol-7-blues-ideas.toml` | benson:method-vol-7-blues-ideas | 227 | n | Sibling work[] | 🟨 |
+| # | Config | Master:Work | Pages | OCR? | Notes |
+|---|---|---|---|---|---|
+| 19 | `benson-vol-2-advanced-harmony` | benson:method-vol-2-advanced-harmony | 322 | n | Sibling |
+| 20 | `benson-vol-3-technique-arpeggios` | benson:method-vol-3-technique-arpeggios | 351 | n | Sibling |
+| 21 | `benson-vol-4-approach-tones` | benson:method-vol-4-approach-tones | 372 | n | Sibling |
+| 22 | `benson-vol-5-melodic-minor` | benson:method-vol-5-melodic-minor | 434 | n | Sibling (largest book in queue; tight-cap Stage 4) |
+| 23 | `benson-vol-6-giant-lines` | benson:method-vol-6-giant-lines | 145 | n | Sibling |
+| 24 | `benson-vol-7-blues-ideas` | benson:method-vol-7-blues-ideas | 227 | n | Sibling |
 
-### Tier 4 — Author/disposition TBD (decide at Stage B per #320)
+### Tier 4 — Exegetical (NEW masters, exegesis_of[] populated after #333 lands)
 
-| # | Config | Master:Work (provisional) | Pages | OCR? | Stage B disposition | Status |
-|---|---|---|---|---|---|---|
-| 14 | `tbd-reharmonization-techniques.toml` | _pending:tbd-master | 190 | y | Identify author from Stage 1 transcript; promote (if recognized) or corpus-only (per #320) | ❓ |
-| 15 | `tbd-tonal-convergence.toml` | _pending:tbd-master | 84 | y | Same: identify from Stage 1; promote or corpus-only | ❓ |
-| 16 | `tbd-chord-melody-series-1-beginning.toml` | _pending:tbd-master | 98 | y | Identify from Stage 1; corpus-only is most likely outcome given series style | ❓ |
-| 17 | `tbd-chord-melody-series-2-intermediate.toml` | _pending:tbd-master | 98 | y | Same series as 16 | ❓ |
-| 18 | `tbd-chord-melody-series-3-mastering.toml` | _pending:tbd-master | 63 | y | Same series as 16 | ❓ |
+| # | Config | Master:Work | Pages | OCR? | Notes |
+|---|---|---|---|---|---|
+| 25 | `faria-brazilian-guitar-book` | nelson-faria:brazilian-guitar-book | TBD | y | 📚 NEW. Brazilian/jazz exegesis of Jobim & bossa-nova lineage. |
+| 26 | `bertoncini-arrangements-solo-guitar` | gene-bertoncini:arrangements-for-solo-guitar | TBD | y | 📚 NEW. Chord-melody arrangements of standards repertoire. |
 
-### Tier 5 — Corpus-only (per #320 criterion)
+### Tier 5 — Corpus-only per #320 (contemporary teach-yourself / academic textbook)
 
-| # | Config | Master:Work | Pages | OCR? | Stage B disposition | Status |
-|---|---|---|---|---|---|---|
-| 19 | `orourke-beginners-guide.toml` | greg-orourke:beginners-guide-to-jazz-guitar | 197 | n | Corpus-only (same author as #321 skip-promote) | 🟥 |
-| 20 | `all-fourths-tuning.toml` | _pending:tbd-master | 66 | n | Alt-tuning niche material. Corpus-only or skip entirely; decide at Stage B | ❓ |
+| # | Config | Master:Work | Pages | OCR? | Notes |
+|---|---|---|---|---|---|
+| 27 | `felts-reharmonization-techniques` | randy-felts:reharmonization-techniques | 190 | y | 🟥 Berklee academic textbook author |
+| 28 | `laukens-jazz-guitar-patterns-vol-1` | dirk-laukens:jazz-guitar-patterns-vol-1 | TBD | y | 🟥 jazzguitar.be |
+| 29 | `laukens-beginners-guide` | dirk-laukens:beginners-guide | 197 | y | 🟥 |
+| 30 | `laukens-jazz-guitar-chord-dictionary` | dirk-laukens:jazz-guitar-chord-dictionary | TBD | y | 🟥 |
+| 31 | `laukens-tritone-substitution-licks` | dirk-laukens:tritone-substitution-licks | TBD | y | 🟥 |
+| 32 | `warnock-beginners-guide` | matt-warnock:beginners-guide-to-jazz-guitar | TBD | y | 🟥 Contemporary online instructor |
+| 33 | `larsen-modern-jazz-guitar-concepts` | jens-larsen:modern-jazz-guitar-concepts | TBD | y | 🟥 |
+| 34 | `greenan-jazz-standards-playbook` | brent-greenan:jazz-standards-playbook | TBD | y | 🟥 |
+| 35 | `heussenstamm-goldmine-100-jazz-lessons` | heussenstamm-silbergleit:goldmine-100-jazz-lessons | TBD | y | 🟥 Online-lesson compilation |
+| 36 | `carter-fingerstyle-jazz` | bill-carter:complete-fingerstyle-jazz-guitar | TBD | y | 🟥 Mel Bay teach-yourself genre |
+
+## Out of scope (NOT queued; per project decisions)
+
+- **Foundational theory** per (2a) in May 27 session: Schillinger, Hindemith, Slonimsky, Russo, Aebersold Free Jazz Handbook. These pre-date or sit outside the jazz-guitar-master tradition.
+- **Alt-tuning niche material**: All Fourths Tuning for Jazz Guitar (master would be obscure; track only if revisited).
+- **Fakebooks / repertoire**: Real Book, Aebersold play-alongs, Charlie Parker Omnibook, Brazilian Real Book, etc. — engine consumes, doesn't ingest.
+- **iGigbook system content**: app config, the iGigBook DVD notes / Setup notes, etc.
+- **Country & Fingerstyle**: outside the jazz-guitar-master initiative.
+- **Private materials**: Trevor's teaching, "Heads as Scale Practice" co-authored, Equipment manuals.
+- **Audio albums**: Ted Greene "Solo Guitar 1977" (.flac files), backing tracks under Fundamental Changes/Jazz Guitar Chord Mastery.
 
 ## Operational notes
 
-- **Run one book at a time.** Cyberpower vision-rescue contention means concurrent Stage 1 runs serialize on Ollama anyway. Sequential is cleaner.
-- **Per-book branch.** Each run gets its own `feature/<book-slug>` branch off `develop`; Stage B is the merge point. Mirrors what we did for Bruno / Bernstein / Baker / Van Eps Vol 1.
-- **Stage 4 subagent timeout protocol.** For books over ~150 pages (Benson Vols 2-5, Reharmonization Techniques), use the tight-cap Stage 4 prompt shape from Van Eps Vol 1's PR #322 to avoid the systems-draft subagent stream timeout.
-- **Stage B promotion eligibility.** Per #320, anything not clearly primary-source by a recognized jazz-tradition figure stays under `masters-corpus/` without masters.json promotion. Promote later if the criterion ticket #320 resolves to a less restrictive rule.
+- **Run one book at a time.** Cyberpower vision-rescue serializes on Ollama anyway.
+- **Per-book branch.** `feature/<book-slug>` off `develop`; Stage B merges into develop.
+- **For books over ~150 pages** (most of Tier 3 + Tier 4 Felts): apply tight-cap Stage 4 prompt from PR #322 to avoid systems-draft subagent timeout.
+- **Recovery**: if local orchestrator dies mid-run, `python3 pipelines/master-distillation/ocr/reingest.py <run-id>` pulls the cyberpower outbox + rebuilds Stage 1 outputs.
 
 ## How to run a queued book
 
 ```bash
-# new run from config
 python3 pipelines/master-distillation/run.py new-run \
   pipelines/master-distillation/configs/<config-slug>.toml
 
-# at each `awaiting-llm` gate, fill the response file via subagent / direct write
+# at each `awaiting-llm` gate, fill the response file via subagent
 # at each `awaiting-review` gate, run --advance to move forward
-
 python3 pipelines/master-distillation/run.py advance <run-id>
 python3 pipelines/master-distillation/run.py resume <run-id>
 
@@ -97,4 +118,4 @@ python3 pipelines/master-distillation/ocr/reingest.py <run-id>
 
 ## Refs
 
-#220 #297 #313 #314 #315 #316 #318 #319 #320 #321 #322 #323 #324 #325 #326 #327 #328 #329.
+#220 #297 #313 #314 #315 #316 #318 #319 #320 #321 #322 #323 #324 #325 #326 #327 #328 #329 #330 #331 #332 #333 #334.

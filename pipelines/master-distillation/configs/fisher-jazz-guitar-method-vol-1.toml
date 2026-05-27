@@ -1,17 +1,19 @@
-# Queued via #329. Stage B: AUTHOR TBD. Read Stage 1 transcript to identify; promote/skip per #320. Title is well-known but multiple books share it; possibly Felts (Berklee) or other.
+# Queued via #334. Stage B: sibling work[] under existing jody-fisher master (currently no works[]).
 
 [master]
-id = "_pending:tbd-master"
-name = "(TBD post-OCR)"
+id = "jody-fisher"
+name = "Jody Fisher"
 
 [work]
-id = "reharmonization-techniques"
-title = "Reharmonization Techniques"
-year = 2000
+id = "jazz-guitar-method-vol-1-beginning"
+title = "Jazz Guitar Method, Vol 1 (Beginning)"
+year = 1995
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/Reharmonization Techniques.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jody Fisher/Fisher, Jody - Jazz Guitar Method, Vol 1 (Beginning).pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

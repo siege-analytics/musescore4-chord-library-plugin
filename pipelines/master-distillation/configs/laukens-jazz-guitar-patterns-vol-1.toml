@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: corpus-only per #320. Laukens = jazzguitar.be; same skip-promotion convention as #321 O'Rourke.
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "dirk-laukens"
+name = "Dirk Laukens"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
-instrument_scope = "any"
+id = "jazz-guitar-patterns-vol-1"
+title = "Jazz Guitar Patterns, Vol 1"
+year = 2018
+instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Dirk Laukens/Laukens, Dirk - Jazz Guitar Patterns, Vol 1.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

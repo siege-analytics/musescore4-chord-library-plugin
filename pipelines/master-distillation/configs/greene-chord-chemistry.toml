@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: sibling work[] under existing ted-greene master. The canonical Greene text.
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "ted-greene"
+name = "Ted Greene"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
-instrument_scope = "any"
+id = "chord-chemistry"
+title = "Chord Chemistry"
+year = 1971
+instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Ted Greene/Chord Chemistry by Ted Greene.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

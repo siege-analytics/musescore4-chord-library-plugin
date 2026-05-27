@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: corpus-only per #320. Compilation of online jazz-guitar lessons; not a primary-source master.
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "heussenstamm-silbergleit"
+name = "Heussenstamm & Silbergleit"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
-instrument_scope = "any"
+id = "goldmine-100-jazz-lessons"
+title = "Goldmine — 100 Jazz Lessons"
+year = 2010
+instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Heussenstamm & Silbergleit - Goldmine 100 Jazz Lessons.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

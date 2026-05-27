@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: NEW master nelson-faria. EXEGETICAL: treats the Jobim / bossa-nova / Brazilian tradition as the implicit corpus. Pending #333 schema, will get exegesis_of:[{master_id:_pending:antonio-carlos-jobim, ...}].
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "nelson-faria"
+name = "Nelson Faria"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
-instrument_scope = "any"
+id = "brazilian-guitar-book"
+title = "Brazilian Guitar Book"
+year = 1995
+instrument_scope = "6-string"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/iGigbook/data/sync/_g Brazilian guitar book Nelson Faria.pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true

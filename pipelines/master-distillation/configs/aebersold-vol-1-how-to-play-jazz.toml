@@ -1,17 +1,19 @@
-# Queued via #329. Stage B: AUTHOR TBD. Same series as 10 + 11.
+# Queued via #334. Stage B: NEW master jamey-aebersold. Canonical jazz pedagogue; foundational Vol 1.
 
 [master]
-id = "_pending:tbd-master"
-name = "(TBD post-OCR)"
+id = "jamey-aebersold"
+name = "Jamey Aebersold"
 
 [work]
-id = "chord-melody-series-3-mastering"
-title = "(Mystery series) 3 — Mastering Chord Melody"
-year = 2000
-instrument_scope = "6-string"
+id = "vol-1-how-to-play-jazz-and-improvise"
+title = "Aebersold Vol 1 — How to Play Jazz and Improvise"
+year = 1967
+instrument_scope = "any"
 
 [source]
-pdf = "~/Desktop/parse_these/3 - Mastering Chord Melody.pdf"
+pdf = "~/jazz_docs/Guitar/Fakebooks/Jamey Aebersold/Aebersold, Jamey - Vol 001, How to Play and Improvise Jazz.pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = true
 
 [ocr]

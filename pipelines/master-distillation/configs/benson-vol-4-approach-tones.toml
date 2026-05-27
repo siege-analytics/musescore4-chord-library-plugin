@@ -1,4 +1,4 @@
-# Queued via #329. Stage B: sibling work[] under benson master.
+# Queued via #334. Stage B: sibling work[] under benson master.
 
 [master]
 id = "benson"
@@ -6,12 +6,14 @@ name = "George Benson"
 
 [work]
 id = "method-vol-4-approach-tones"
-title = "The George Benson Method, Vol. 4 — Approach Tones, Dorian, Mixolydian and Harmonic Minor World"
+title = "The George Benson Method, Vol 4 — Approach Tones, Dorian, Mixolydian & Harmonic Minor World"
 year = 2019
 instrument_scope = "6-string"
 
 [source]
-pdf = "~/Desktop/parse_these/George Benson Method/THE-GEORGE-BENSON-METHOD-VOL-4-Approach-Tones-Dorian-Mixolydian-and-Harmonic-Minor-World-1st-Edition.pdf"
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/George Benson Method/Benson, George - The George Benson Method, Vol 4 (Approach Tones, Dorian, Mixolydian & Harmonic Minor World).pdf"
+host = "cyberpower"
+user = "dheerajchand"
 needs_ocr = false
 
 [stages.s1]

@@ -1,17 +1,17 @@
-# Queued via #334. Stage B: NEW master jerry-coker.
+# Queued via #334. Stage B: corpus-only per #320 (Berklee academic textbook author; not a primary-source playing master).
 
 [master]
-id = "jerry-coker"
-name = "Jerry Coker"
+id = "randy-felts"
+name = "Randy Felts"
 
 [work]
-id = "elements-of-the-jazz-language"
-title = "Elements of the Jazz Language for the Developing Improviser"
-year = 1991
+id = "reharmonization-techniques"
+title = "Reharmonization Techniques"
+year = 2002
 instrument_scope = "any"
 
 [source]
-pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jerry Coker/Coker, Jerry - Elements of the Jazz Language.pdf"
+pdf = "~/jazz_docs/Guitar/Theory/Felts, Randy - Reharmonization Techniques (2002).pdf"
 host = "cyberpower"
 user = "dheerajchand"
 needs_ocr = true
