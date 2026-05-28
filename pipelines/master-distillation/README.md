@@ -14,6 +14,10 @@ This pipeline makes **no LLM API calls** and depends on **no LLM SDK**. Stages t
 
 No surprise spend lives in `git diff`. Cost responsibility sits at the human/agent layer.
 
+## Bucket criterion (M / P / L / R / S)
+
+Not every book in the queue becomes a master entry. The decision is governed by [PROMOTION-CRITERION.md](PROMOTION-CRITERION.md) — five buckets (`master` / `pedagogue` / library / rules / skip) along two evaluation axes (impact, distinctiveness). #345 supersedes the older binary criterion (#320).
+
 ## What the pipeline produces
 
 Per book, COMMITTED under `plugin/data/masters-corpus/<master>/<work>/`:

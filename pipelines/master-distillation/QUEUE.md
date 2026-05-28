@@ -6,7 +6,8 @@ to run via `source.host = "cyberpower"` against the canonical PDF corpus at
 
 ## Conventions
 
-- **Status**: ✅ promoted to masters.json · 🟦 in pipeline · 🟨 queued · 🟥 skip-promote, corpus-only · 📚 exegetical (NEW master with exegesis_of[] pending #333)
+- **Status**: ✅ promoted to masters.json · 🟦 in pipeline · 🟨 queued · 🎓 pedagogue · 📚 library/reference (L) · ⚙️  rules/algorithmic (R) · ⏭️  skip (S) · 🟥 corpus-only (no pipeline)
+- **Bucket criterion**: see [PROMOTION-CRITERION.md](PROMOTION-CRITERION.md) — M/P/L/R/S taxonomy (#345 supersedes #320)
 - **OCR?**: y = `needs_ocr=true`; cyberpower OCR runner routes via #316/#318
 - All PDFs verified to exist on cyberpower via batch ssh-test before this PR shipped (36/36)
 
