@@ -9316,6 +9316,120 @@
       ],
       "instrument": "6-string",
       "biography": "Brooklyn-born jazz guitarist whose playing and teaching extend the post-bop lineage of Wes Montgomery, Grant Green, and Jim Hall. Sideman recordings with Lou Donaldson, Sonny Rollins, Diana Krall, and Larry Goldings situate his aesthetic in a melody-primary, narrative-driven approach to improvisation that treats jazz as a language rather than a vocabulary of scales. Bernstein teaches privately and at NYU; the 2023 master's thesis by Nico Moreno (also at NYU) is the canonical written distillation of his teaching, transcribed from Bernstein-consented lesson recordings. The masters.json entry is sourced from the Moreno thesis, not from a Bernstein-authored method.",
+      "principles": [
+        {
+          "id": "jazz-as-language-narrative-outranks-correctness",
+          "name": "Jazz as language — narrative outranks correctness",
+          "summary": "Bernstein's load-bearing conceptual frame: improvisation is language use, not scale deployment. Every concept is anchored to a specific tune rather than presented as abstract harmonic theory — the standard is a poem and the melody is its story. Vocabulary is acquired the way children learn to speak (listening and imitation); the unit of practice is the small phrase, not the transcribed chorus. The evaluative criterion is whether the line tells a story, not whether the notes are 'correct.' Contrast, silence, and rhymes are the narrative grammar; target notes are the structural landing points. This inverts academic chord-scale-drill pedagogy, which Bernstein names as the failure the method exists to correct.",
+          "voicingStyleTags": [
+            "bernstein",
+            "narrative"
+          ],
+          "playStyleTags": [
+            "narrative",
+            "tune-anchored",
+            "phrase-as-unit"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "solo-guitar",
+            "chord-melody"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Moreno, Eric. *An Approach to Jazz Improvisation: A Method by Peter Bernstein*. NYU MM thesis, 2023.",
+              "citation": "Chapter 1 (oral tradition / no formal system); Chapter 2 (jazz-as-language analogy); Chapter 8 (narrative-outranks-correctness aesthetic stated explicitly); Chapter 9 (contrast / silence / rhyme as narrative grammar)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "melody-primary-step-1-before-step-12",
+          "name": "Melody is primary — Step 1 before Step 12",
+          "summary": "Bernstein's load-bearing pedagogical rule: melody is primary and harmony exists to serve it. The first practice task on any tune is to play the melody as a monophonic instrument — attending to lyric syllables as articulation cues — BEFORE any harmonic embellishment. A player must not rush to 'step 12' (harmonic dressing) before completing 'step 1' (melody mastery). Target notes operationally link melody and harmony: when the melody lands on a specific chord tone, the player notes it and lets it dictate voicing choice. Worked example: Dm6 vs Dm7 — if the melody lands on b7, the b7 overrides the default minor-tonic Dm6. The 'juggling on a unicycle' maxim warns against texture-overload at the cost of melodic feel.",
+          "voicingStyleTags": [
+            "bernstein",
+            "melody-target-driven"
+          ],
+          "playStyleTags": [
+            "melody-first",
+            "monophonic-delivery"
+          ],
+          "applies_to_modes": [
+            "solo-guitar",
+            "chord-melody",
+            "comping"
+          ],
+          "tolerance_hints": {
+            "melodyDictatesVoicing": true
+          },
+          "references": [
+            {
+              "source": "Moreno, Eric. *An Approach to Jazz Improvisation: A Method by Peter Bernstein*. NYU MM thesis, 2023.",
+              "citation": "Chapter 4 codifies the rule and the Dm6/Dm7 worked example; reasserted across Chapters 5, 8."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "dressing-the-notes-comping-aesthetic",
+          "name": "Dressing the notes — root-3-7 first, extensions only after the relationship is heard",
+          "summary": "The melody-first hierarchy applied to accompaniment: comping's job is to give each melody note the right outfit so it feels important. Concrete practice rule: begin with root-3-7 shell voicings only, internalize their relationship to the melody, add extensions only after that relationship is heard. Two-phase comping-construction procedure: (1) design a guide-tone line per chord as a secondary melody, then (2) fill inner voices to dress those guide tones. Tension and resolution are generated even inside a single sustained chord. Rhythm in comping is elevated to equal status with voicing choice. Two contrarian harmonic moves licensed: under-resolving the I chord and tritone-distance ii-V over a resolving dominant — both treated as forward-motion devices.",
+          "voicingStyleTags": [
+            "bernstein",
+            "shell",
+            "guide-tone-line"
+          ],
+          "playStyleTags": [
+            "dressing-the-notes",
+            "shell-first",
+            "rhythmic-comping"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3,
+            "preferShellBeforeExtensions": true
+          },
+          "references": [
+            {
+              "source": "Moreno, Eric. *An Approach to Jazz Improvisation: A Method by Peter Bernstein*. NYU MM thesis, 2023.",
+              "citation": "Chapter 5 (dressing-the-notes metaphor + root-3-7 → extensions order); Chapter 6 (chords as tools, not destinations); Chapter 8 (tritone ii-V over resolving dominant)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "vocabulary-by-listening-imitation-and-away-from-instrument-practice",
+          "name": "Vocabulary acquisition by listening + imitation; practice away from the instrument",
+          "summary": "Improvisation is recombination of known phrases under a syntax, not real-time token generation. Vocabulary is built the way children learn to speak — by listening and imitation. Practice happens away from the instrument so imagination leads and the fingers follow; lessons are taught orally without lead sheets. Tritone ii-V substitution and three named variation methods are taught as recombination operators on existing phrases, not as exercises in isolation. Target-note practice anchors the player's recombination to the tune's structural landings. Permissive chromatic stance: any note can be made to work if it is delivered with intention and arrival.",
+          "voicingStyleTags": [
+            "bernstein",
+            "phrase-based"
+          ],
+          "playStyleTags": [
+            "phrase-recombination",
+            "listening-led",
+            "tritone-sub"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Moreno, Eric. *An Approach to Jazz Improvisation: A Method by Peter Bernstein*. NYU MM thesis, 2023.",
+              "citation": "Chapter 7 (tritone ii-V + variation methods + target-note practice + permissive chromatic stance); Chapter 3 (tunes outranking solos, oral transmission)."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "improvisation-method-as-documented-2023",
@@ -10142,7 +10256,7 @@
           ]
         }
       ],
-      "status": "corpus_only"
+      "status": "promoted"
     },
     {
       "id": "mickey-baker",
