@@ -273,6 +273,11 @@ OCR_DEFAULTS = {
     "confidence_threshold": 0.70,
     "min_chars_per_page": 40,
     "render_dpi": 200,
+    # F8 fix (#339): wall-clock cap on the remote-runner poll loop. If
+    # Ollama wedges and ocr_runner hangs, the orchestrator polls forever
+    # without this. 120 min is generous for 500-page books at observed
+    # rates; longer real-world runs go through reingest.py on timeout.
+    "max_wait_minutes": 120,
 }
 
 
@@ -377,8 +382,16 @@ def _extract_with_ocr(
     # 4. Poll cyberpower until the runner exits and the outbox transcript
     # appears. Robust to laptop sleep (the poll just pauses on sleep and
     # resumes on wake — the remote runner doesn't care).
+    #
+    # F8 fix (#339): bounded by max_wait_minutes. If Ollama wedges, the
+    # remote pgrep keeps returning RUNNING forever; without the cap the
+    # orchestrator polls indefinitely. On timeout we raise — the remote
+    # runner may still complete, in which case `reingest.py <run_id>` is
+    # the recovery path.
     remote_outbox = f"~/jazz-ocr/outbox/{book.run_id}"
     poll_interval = 30
+    max_wait_seconds = cfg["max_wait_minutes"] * 60
+    poll_start = time.monotonic()
     while True:
         probe = subprocess.run(
             ["ssh", remote,
@@ -399,7 +412,16 @@ def _extract_with_ocr(
                 f"OCR runner exited without producing outbox. "
                 f"Check ~/jazz-ocr/{book.run_id}.log on {host}."
             )
-        # status == "RUNNING": keep waiting.
+        # status == "RUNNING": check wall-clock cap before sleeping again.
+        elapsed = time.monotonic() - poll_start
+        if elapsed > max_wait_seconds:
+            raise RuntimeError(
+                f"OCR runner timed out after {cfg['max_wait_minutes']} min "
+                f"(still RUNNING on {host}). The remote runner may yet "
+                f"complete; recover via "
+                f"`python3 pipelines/master-distillation/ocr/reingest.py "
+                f"{book.run_id}`."
+            )
         time.sleep(poll_interval)
 
     # 5. rsync results back.
