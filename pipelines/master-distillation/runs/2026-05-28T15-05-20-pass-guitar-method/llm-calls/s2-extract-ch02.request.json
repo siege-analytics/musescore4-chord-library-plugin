@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: PRACTICE PATTERNS\nPages 11-16 of the book.\n\n<<<CHAPTER TEXT\n\n10|\nInter. Form (4) (3) (2) (1) (2) (3)\n(4) (5) (6) (5) (4)\nD Form (5) (4) (3) (2) (1)\n8va-\n(2) (3) (4)\n8va-\n(2) (3) (4)\n8va-\n(2) (1) (4) (3) (1) (4) (3) (4)\nC DOMINANT 7th ALTERED SCALE E Form\n(6)\nG DOMINANT 7th ALTERED SCALE E Form\n(6)\nPicking. In my own playing I use alternate picking generally. When I shift from string to string, I use down-picking regardless of whether I am shifting to lower or higher strings. Picking is something the student will develop through practice. However, it is essential to be aware of all the ways there are. My habit of alternate picking is peculiar to my style. The student must find his own which will best suit his personal concept.\nPICKING EXAMPLE\n(5) (4) (3) (3) (2) (2) (1) (1) (2) (2) (2) (3) (3)\n\nPractice Patterns\n\nThe Practice Patterns which follow will aid the student in\ndeveloping his own ideas. It is recommended that these\npatterns be practiced in all keys and scales. By inventing his\nown patterns the guitarist will gain a sense of melodic\nconstruction that will be uniquely his own. This will be a\ngreat advantage in improvising.\n\nTry taking a chord sequence such as C\u2014 A7 \u2014 Dmin \u2014 G7\n\u2014 C and constructing an eighth-note exercise over four or\neight bars. Then try to extend the chord sequence using\n\nC MAJOR EXERCISE\n\neighth- or sixteenth-notes. While striving to establish con-\ntinuity and a melodic sense through scales and patterns,\nalways keep in mind that the music must come from the\nhead, not simply from the fingers running up and down the\nneck. It is important to sing or hum the musical ideas one\nwants to play while playing them [See page 14}.\n\nThe following Practice Patterns should be practiced in all\nChord Forms and keys. The first four examples can be ex-\ntended at least to eight bars.\n\n(Ascending and descending within\n\neu\n\neS\nel\n\nEXERCISE IN THIRDS\n\nEXERCISES IN SCALE PATTERNS\n\nthe limits of the Chord Forms)\n\ni ete. T T I\n\nEIC.\n\n\u2014\n\neo\n\n7 eo\n\nVARIOUS COMBINED PATTERNS\n\nh | I\n\nirs 1 i i\n\nA? \u2014 \u2014 \u2014\u2014\u2014\nSy \u2014s = + f 2\n\neo e e t |\n\np\u2014 == \u2014\u2014\u2014 |\nA. i inal \u2018 I i o o\n\nLy) @ \u00a2\n\n\n\n12|\n\nSTUDY IN 8th NOTES A Form\n\n) t \u2014\u2014\u2014\nfes = tT 2 \u2014\u2014\u2014\u2014\nOF -@ ~ @\nray\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014 ; t\n\u00a5 {\u2014\u2014T - z t z r\newes\neo\np) ~ = e_#_-_*_#_-# ? 2\n\u2014 \u2014\u2014 oo \u2014 \u2014 t t\nDV) \u2014\np f i \u2014\u2014 7\n\u2014\u2014 === 5 SSS \u2014s\nt T ar A\n\u00a9 I J\nce e@ @ o o\n#: Spt ft ae\n\u201coe -o \u2014\n\u2014p\\\u2014e\u2014# 9 = \u2014 =\n\u2014\u2014 a \u2014\u2014! a\nO) a\nf) = | \u2014\n\u2014\u2014-\u2014\u2014 o- = st? \u00a2 |\nFF \u2014 o oe 1 |\n@\n\nIMPROVISED PATTERNS A Form (C Minor)\n\nThe above study can be played in any of the Chord Forms.\nNote the various patterns: thirds, scales, trills, etc.\n\nr }\n\nae === = = =\u2014s\nwa cs t I T oJ\n\nty) o @ e\n\nOb- 7A. i {\n\nAb {by \u2014a \u2014 ze. \u2014\u2014 t t t\n\n@ = i x\n\n2-(b\\e\n\nNo. a o- o e eo\n\nvam. t = = ~ t t\nxy \u201c\n\not\n=) b T \u2014 |\nxy -\u2014}\u2014+ +4 o == a j t ==\n) she -@\n\ni) i | af 2\n\n. eo\n\n2 os T\n\n<y -\u2014\u2014\u2014} T 2 = 2 = =\n\ne \u2014\u2014\u2014\u2014 \u2014\u2014 \u00a2\n\nql\n\n\ni13\n\nWhole Tone Scale\n\n%e\n\n1\nT\nbe\n\nelu \u2018aaa\nQiu\na 2\nZ qt\ni a\ni\nry i\nis\na\nY LI\nPp al\na\nthe ell\nie 3 oe\nsy\n| et\nLae\ntr 4\nAD\n\u00bb +\nns 4\nhy\n1 q\na\n| | eu\nah\n\u00a2q SNe\n\nDOMINISHED SCALE PATTERN\n\nan\n\n+5\na\nSS\nwe\nA\neh\nshy]\n1 ap\nlH e\nL| ll\ni 4\n)\nq\n\u00a2!\nNPN]\nNe NO\n\neo\na\n\nDOMINANT 7th SCALE PATTERN\n\nLd\nelt\n| \\)\ne al | ly\nq [R\na | ig} .\n| tt Sah\nih\n&\nnh)\ncS ae\ni\n| | \u00a2\naL\nallie Age Wee\n\n\n\n=\n\nbe\n\n7]\n\n@\n\nG7\ni\n\u2014\n\nCmaj7\n\n14| EXERCISE USING CHORD SEQUENCE\n\nDm7\n{\u2014\n\nG7\n\nD7\n\nFmaj\nBb7\nCmaj7\n\nC7\n\nthe g\n\noS\n2\n\nD7\n\nG7\nG7\n\nbu\n\nC7\n\nD7\n\nFm7\nAT\n\nCmaj7\nFm\n\nbe\n\nAT\n+t\nfe\n\nbe Cmaj\n\noct\n\nbe eb\n\nAT\nC7\nbe\n\nt\n\nadil\n\n{A5\n\nNN\n\nCmaj\nG7\nE7\nG7\n\nFmaj\nnf be\n\n\n\nG7 c F G7 I15\n\nh f 1\n\"A i i + >\ni | = = = = =I = Zz eo @\nS hd Jee oe \u00e9\na 2 D> bet \u00bb Bog D7 GT\nae betes ee :\nCy) : it \u2014 +\u2014Uy = \u2014 ++\nCc G7 G7 Cc e \u00a3\nh \u2014<\u2014<\u2014\u2014 at\na\u201d a i 1 T\n6 a ===\nmT = eS =\nCY) if zZ o ae ae @\nEXAMPLE OF FREE IMPROVISATION should be analyzed, remembering that it can be broken\nThe student should try to create some melodic patterns of down into three simple chord types: Major, Minor, and\nhis own. Also, the underlying chord sequence for this study Dominant 7th (Aug./Dim.).\n\nfay f . 1 | 7\ni\n\ni\nl\nt\n\n\\4\nNS\nfn\n\n{xi}\n\ne\n4\n\n6 |e {he \u2014\u00bb \u2014\u2014s\nb; === =e c=\nO)\npt: ra Boyar, +b\n{e5\u2014T + - # mina - 1 ie | t J\n\u201coy i\" t t | - 7\nbe\nal o\npF Ff Ee it te ett lee ===S=s\n5 f ;-\u2014t tt\nVy T\noy\ni\n& 3 = ==\nse 3 z ae a ij a # +\nfy _|\naz tee\n\nKS i\nef\n\ntH\n\ni\n\n:\n,\n\n:\n\nla\nM4\n\ne\n\nCOPD\nST\nelu\nalt\n|\n\n}\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

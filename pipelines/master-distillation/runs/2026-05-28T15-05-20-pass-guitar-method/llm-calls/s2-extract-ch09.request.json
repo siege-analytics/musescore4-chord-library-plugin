@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: BLUES FOR NINA\nPages 29-29 of the book.\n\n<<<CHAPTER TEXT\n\n|S al] <oH ut\n<a wl \u2018\nxs\ndin |\na\na )\ni\" Jail 4 } =\nbt Roe\na ie\nBRN\n' HM\n= o ial\n[ - \u201cTH ig\nUT wo lel si\n7 t Mw l] q@ a ia) ] Py\nAe 4 =\nNy a W 2\n8 Xt id MU\n4 2 he\n| Dei . aia UT 3\nAe. AB ry\nAe sist <le\n' eq elt I,\nA\ni) el aD\n2 (Tt bs PRD aL\na\na <| ry a ] Is\ne a el\noe i\n\u00ab\nleisy\n| q\naA\nr 4\nit .\ns fF 3 g 2(\nat aos *& Be ts\nnh Ae q AO\n\n28|\n\n3\njo\u2014\u2014\n\nbe\nD\n\n> \u20143\u2014\nb.\n:\n\n4 108 |,\n\n=>\n\nb\n\nA\n\nhe\n\nXY\n\n109\n\n112\n\nA\nt +\n\nvi\n\n<q\n\n<4!\n\n116\n\ne|\n\nel\n\ntal\n\n117\n\n120\n\n119\n\nnah)\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

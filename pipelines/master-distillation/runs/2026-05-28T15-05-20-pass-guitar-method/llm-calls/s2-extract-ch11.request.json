@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: ALISON\nPages 31-31 of the book.\n\n<<<CHAPTER TEXT\n\nNobs\n\nJOE PASS\n\nTriplet feel\n\nAT\nhet nN \u2014 5\nar su Ty 1 t\n=== ke a\n\n) \u2014 \u2014 LJ\nD7\n\np+ \u2014 | s+ \u2014\n{\u2014 Yr\n\nae SS SS SE ea\n\nAl E7\n\n[\n|\n\nell\n\nall |\n\n{si}\n\nCT\n= ! \u201c\noa -} t { at \u2014os\n\n\u00a9 q\na re\nCopyright \u00a9 1976 by Pablito Publishing Company\n\u00a91977 under U.C.C. by Pablito Publishing Company\n\nChappell & Co., Inc., administrator for the world\nInternational Copyright Secured/ALL RIGHTS RESERVED\n\nEXAMPLE OF CHORD VOICING\n\n(C7) (F7) (Bbmaj7) (Eb)\n\nn_\u00a9? F13 Bbm7 Ebmaj7\n\n_\n\n= = o@ o@ i\nor == = a\n2\nEXAMPLES OF VOICE LEADING\na Dm7 G7(13) G7(+5) Cmaj7 or Cm9 voice leading\nae ee\neo Ld \u2014 = $ oe\noe x 2 .\n(Dm7) . ,\nDm9 C13 G7(+5/b9) \u2014-C9(6) (c) Fmaj7 voice leading\n- po e po he be o bo be\n-@- \u2014\n= = $ + .\nwe oe\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}
