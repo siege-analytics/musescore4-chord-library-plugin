@@ -39,8 +39,13 @@ def run_js(modules, test_code):
         else:
             mod_paths.append(os.path.join(MODEL_DIR, m))
 
-    cmd = ["node", JS_RUNNER] + mod_paths + ["--", test_code]
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO_ROOT, timeout=30)
+    # #343: pass test code via stdin to avoid platform argv limits
+    # (Windows WinError 206 / Linux E2BIG) when JSON payloads grow.
+    cmd = ["node", JS_RUNNER] + mod_paths + ["--", "-"]
+    result = subprocess.run(
+        cmd, input=test_code, capture_output=True, text=True,
+        cwd=REPO_ROOT, timeout=30,
+    )
 
     if result.returncode != 0 and not result.stdout.strip():
         return {"pass": False, "results": [], "error": result.stderr or "Node.js failed"}
@@ -1742,22 +1747,25 @@ class TestMastersStore:
 
     def test_loads_repo_masters_json(self):
         # Regression fence: the actual plugin/data/masters.json must parse
-        # and meet the AC (≥ 7 masters, ≥ 1 principle each).
+        # and meet the AC (≥ 7 masters, ≥ 1 principle each PROMOTED master).
+        # Corpus-only masters (status="corpus_only") legitimately have 0
+        # principles per the skip-promotion-but-keep-corpus pattern (#320).
         import json as _json
-        with open(os.path.join(REPO_ROOT, "plugin", "data", "masters.json")) as f:
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "masters.json"), encoding="utf-8") as f:
             data = _json.load(f)
         result = run_js(["MastersStore.js"], f"""
             var s = parseStore({_json.dumps(_json.dumps(data))});
             var c = counts(s);
             _results.push({{ pass: c.masters >= 7, message: "at least 7 masters ("+c.masters+")" }});
             _results.push({{ pass: c.principles >= 7, message: "at least 7 principles ("+c.principles+")" }});
-            // Each master has at least one principle.
+            // Each PROMOTED master has at least one principle.
             for (var i = 0; i < s.masters.length; i++) {{
                 var m = s.masters[i];
+                if (m.status === "corpus_only") continue;
                 var ok = m.principles && m.principles.length > 0;
                 _results.push({{
                     pass: ok,
-                    message: "master " + m.id + " has principles (" + (m.principles ? m.principles.length : 0) + ")"
+                    message: "promoted master " + m.id + " has principles (" + (m.principles ? m.principles.length : 0) + ")"
                 }});
                 if (!ok) _pass = false;
             }}
