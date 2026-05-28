@@ -41,10 +41,13 @@ def run_js(modules, test_code):
 
     # #343: pass test code via stdin to avoid platform argv limits
     # (Windows WinError 206 / Linux E2BIG) when JSON payloads grow.
+    # encoding="utf-8" is required because subprocess defaults to
+    # locale.getpreferredencoding() (cp1252 on Windows), which can't
+    # encode characters like → (→) used in test payloads.
     cmd = ["node", JS_RUNNER] + mod_paths + ["--", "-"]
     result = subprocess.run(
         cmd, input=test_code, capture_output=True, text=True,
-        cwd=REPO_ROOT, timeout=30,
+        cwd=REPO_ROOT, timeout=30, encoding="utf-8",
     )
 
     if result.returncode != 0 and not result.stdout.strip():
