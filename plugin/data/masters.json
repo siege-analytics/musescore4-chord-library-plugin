@@ -5291,6 +5291,705 @@
       "status": "promoted"
     },
     {
+      "id": "jens-larsen",
+      "name": "Jens Larsen",
+      "lived": "active 2010s–present",
+      "traditions": [
+        "modern jazz",
+        "post-bop",
+        "online jazz pedagogy"
+      ],
+      "instrument": "6-string guitar",
+      "biography": "Jens Larsen is a Danish jazz guitarist and educator active in the modern jazz pedagogical tradition. Through book-length works in the Fundamental Changes series and an extensive online presence, his teaching codifies a structured vocabulary of arpeggio substitutions, chromatic enclosures, and altered/diminished scale applications, organized around shared-tone analysis and voice-leading discipline. Biography placeholder; refine with maintainer review on next pass.",
+      "principles": [],
+      "works": [
+        {
+          "id": "modern-jazz-guitar-concepts",
+          "title": "Modern Jazz Guitar Concepts",
+          "year": 2018,
+          "instrument_scope": "6-string",
+          "summary": "Pedagogical text on improvisation as a unified harmonic and melodic system. Six chapters proceed cumulatively from diatonic substitution (Ch. 1), through chromatic enclosures (Ch. 2), harmonic minor on the V chord (Ch. 3), the altered scale (Ch. 4), and the half-whole diminished scale (Ch. 5), to a complete solo analysis integrating all prior material (Ch. 6). The book's central premise is that every arpeggio and scale choice must be grounded in shared tones with the underlying chord; voice-leading by common tone, contrary motion, or encirclement is the criterion by which the book asks students to evaluate every melodic choice.",
+          "references": [
+            {
+              "source": "Larsen, Jens. Modern Jazz Guitar Concepts. Fundamental Changes Music Publishing, 2018.",
+              "citation": "Primary source for the four derived systems. Chapter-loop run 2026-05-28T15-05-20-larsen-modern-jazz-guitar-concepts; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/jens-larsen/modern-jazz-guitar-concepts/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "jens-larsen:modern-jazz-guitar-concepts:harmonic-substitution-lattice",
+              "name": "Harmonic Substitution Lattice",
+              "summary": "The book's central system: a graph of diatonic and non-diatonic arpeggios organized by their shared-tone relationships to underlying chord tones. Members are the substitution arpeggio types available over each chord quality. Traversal rules govern moves between arpeggios within a bar or across changes — primarily by common tone, guide-tone preservation, or root-interval relationship (3rd, 5th, 7th). Modification rules govern how a given arpeggio is altered: shell-voicing reduction, reframing pentatonics as extended arpeggios, scale rerooting for non-diatonic options, chord-tone omission, and avoidance of unintended sus4 colors. Established in Chapter 1, this system is the lens through which the entire book operates.",
+              "members": [
+                {
+                  "id": "m7-diatonic",
+                  "name": "Diatonic 7th Chord Arpeggio"
+                },
+                {
+                  "id": "m7b5-on-3rd",
+                  "name": "m7b5 on the 3rd of Dominant"
+                },
+                {
+                  "id": "arpeggio-on-5th",
+                  "name": "Arpeggio on the 5th of Chord"
+                },
+                {
+                  "id": "arpeggio-on-7th",
+                  "name": "Arpeggio on the 7th of Chord"
+                },
+                {
+                  "id": "shell-voicing",
+                  "name": "Shell Voicing (Root + 3rd + 7th)"
+                },
+                {
+                  "id": "pentatonic-as-extended-arpeggio",
+                  "name": "Pentatonic Reframed as Extended Arpeggio"
+                },
+                {
+                  "id": "quartal-arpeggio",
+                  "name": "Quartal / Quintal Arpeggio"
+                },
+                {
+                  "id": "tritone-substitute-arpeggio",
+                  "name": "Tritone Substitute Arpeggio"
+                },
+                {
+                  "id": "non-diatonic-constructed-arpeggio",
+                  "name": "Non-Diatonic Constructed Arpeggio"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "guide-tone-arpeggio-selection",
+                  "name": "Guide-Tone Arpeggio Selection",
+                  "summary": "Select the substitute arpeggio whose notes contain the chord's defining 3rd and 7th intervals.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Identifying guide tones of altered dominant",
+                      "quote_excerpt": "defining tones of a Bb7alt chord are the 3rd and 7th (F and Ab)",
+                      "page": 54
+                    }
+                  ]
+                },
+                {
+                  "id": "shared-tone-arpeggio-move",
+                  "name": "Shared-Tone Arpeggio Move",
+                  "summary": "Move to a substitute arpeggio by maximizing notes held in common with the underlying chord.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Diatonic 7th chord substitution",
+                      "quote_excerpt": "Fmaj7 and Am7 have three notes in common",
+                      "page": 14
+                    }
+                  ]
+                },
+                {
+                  "id": "arpeggio-root-hierarchy",
+                  "name": "Arpeggio Root Hierarchy (3rd > 5th > 7th)",
+                  "summary": "Prefer arpeggio rooted on the chord's 3rd; treat 5th- and 7th-rooted options with increasing caution.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Higher-chord-tone arpeggio caution",
+                      "quote_excerpt": "arpeggios from the higher notes (5th and 7th), you include fewer notes",
+                      "page": 15
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "Arpeggio-on-the-3rd rule",
+                      "quote_excerpt": "playing a m7b5 chord on the 3rd of a dominant 7 chord",
+                      "page": 15
+                    }
+                  ]
+                },
+                {
+                  "id": "5th-of-ii-targets-3rd-of-v",
+                  "name": "5th-of-II Arpeggio Targets 3rd of V",
+                  "summary": "Arpeggiate from the 5th of the II chord to voice-lead toward the 3rd of the following V chord.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "5th of II chord targets 3rd of V",
+                      "quote_excerpt": "Playing an arpeggio from the 5th of the II chord",
+                      "page": 49
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-substitute-traversal",
+                  "name": "Tritone Substitute Traversal",
+                  "summary": "Replace an altered dominant arpeggio with the arpeggio of its tritone substitute, preserving guide tones.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "E7 as tritone substitute",
+                      "quote_excerpt": "E7 is the tritone substitute of Bb7",
+                      "page": 54
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "shell-voicing-reduction",
+                  "name": "Shell Voicing Reduction",
+                  "summary": "Reduce any chord to root, 3rd, and 7th only to create a spare melodic skeleton.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Shell voicing definition",
+                      "quote_excerpt": "shell voicing is a chord voicing that use only the root, 3rd and 7th",
+                      "page": 19
+                    }
+                  ]
+                },
+                {
+                  "id": "pentatonic-reframe-as-extended-arpeggio",
+                  "name": "Pentatonic Reframe as Extended Arpeggio",
+                  "summary": "Reinterpret a pentatonic scale as a named extended arpeggio to make its harmonic function explicit.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "D Minor Pentatonic as Dm7add11",
+                      "quote_excerpt": "notes of D Minor Pentatonic as though they are an arpeggio and they spell a Dm7add11",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "non-diatonic-arpeggio-construction",
+                  "name": "Non-Diatonic Arpeggio Construction by Scale Rerooting",
+                  "summary": "Derive non-diatonic arpeggios by reading scale tones starting from an alternate root degree.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Bbm7b5 constructed from harmonic minor",
+                      "quote_excerpt": "construct this arpeggio with notes from the scale",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-tone-omission-for-open-sound",
+                  "name": "Chord Tone Omission for Open Sound",
+                  "summary": "Omit a defining chord tone (e.g. the 3rd) to create an open, ambiguous line acceptable within a clear harmonic context.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "omitting chord tone for open sound",
+                      "quote_excerpt": "omitted the 3rd (Bb) of Gm7 which immediately makes the line more open sounding",
+                      "page": 52
+                    }
+                  ]
+                },
+                {
+                  "id": "sus4-avoidance-over-dominant",
+                  "name": "Sus4 Tension Avoidance over Dominant",
+                  "summary": "Avoid the 11th (C over G7) when an unwanted sus4 color is undesirable; deploy only with intent.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "G7sus4 tension via C note",
+                      "quote_excerpt": "Playing a C over a G7 chord will suggest a G7sus4 sound",
+                      "page": 23
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jens-larsen:modern-jazz-guitar-concepts:chromatic-enclosure-system",
+              "name": "Chromatic Enclosure System",
+              "summary": "Governs how non-chord chromatic and diatonic passing tones are organized around target chord tones to produce characteristic bebop and hardbop melodic language. Members are enclosure construction types and resolution placement positions. Traversal rules specify where chromatic notes land in the rhythmic grid (off-beats) and how the improviser moves from one enclosure to the next target note. Modification rules govern when a diatonic substitute replaces a chromatic note and how beat-2 placement displaces resolution to beat 4 for a modern unresolved effect.",
+              "members": [
+                {
+                  "id": "two-note-enclosure",
+                  "name": "Two-Note Enclosure"
+                },
+                {
+                  "id": "four-note-enclosure",
+                  "name": "Four-Note Enclosure"
+                },
+                {
+                  "id": "enclosure-strong-beat-resolution",
+                  "name": "Strong-Beat Resolution Placement"
+                },
+                {
+                  "id": "enclosure-off-beat-displacement",
+                  "name": "Off-Beat Displacement (Metheny Style)"
+                },
+                {
+                  "id": "diatonic-substitution-for-gap",
+                  "name": "Diatonic Note Substitution for Missing Half-Step"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "chromatic-notes-on-off-beats",
+                  "name": "Chromatic Notes on Off-Beats",
+                  "summary": "Place all chromatic passing notes on off-beats, keeping strong chord tones on the beat.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-placement-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "chromatic notes on off-beats",
+                      "quote_excerpt": "chromatic notes are generally placed on the off-beats",
+                      "page": 29
+                    }
+                  ]
+                },
+                {
+                  "id": "enclosure-anchored-to-chord-scale-tones",
+                  "name": "Enclosure Must Target Chord / Scale Tone",
+                  "summary": "Every enclosure must resolve to a chord or scale tone; enclosures floating free of harmonic targets are forbidden.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "enclosures must target chord/scale tones",
+                      "quote_excerpt": "main purpose is to target or gravitate towards scale / chord tones",
+                      "page": 42
+                    }
+                  ]
+                },
+                {
+                  "id": "beat-2-enclosure-off-beat-displacement",
+                  "name": "Beat-2 Enclosure Displacement",
+                  "summary": "Place an enclosure on beat 2 so it resolves on beat 4, producing a Metheny-esque unresolved sound.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-placement-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "off-beat enclosure placement (Metheny)",
+                      "quote_excerpt": "placed on beat 2, so that it will resolve on beat 4",
+                      "page": 41
+                    }
+                  ]
+                },
+                {
+                  "id": "legato-chromatic-accent",
+                  "name": "Legato Technique for Chromatic Softening",
+                  "summary": "Use hammer-ons, pull-offs, and slides so chromatic passing notes remain soft while scale tones are accented.",
+                  "engine_payload": {
+                    "kind": "_pending:articulation-rule"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "legato technique for chromaticism",
+                      "quote_excerpt": "passing note is accented and the scale note is softer",
+                      "page": 29
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "diatonic-gap-fill",
+                  "name": "Diatonic Gap Fill When Half-Step Absent",
+                  "summary": "When a chromatic half-step gap does not exist between two enclosure notes, substitute the diatonic note above.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "diatonic note substitution for chromatic gap",
+                      "quote_excerpt": "not possible to add a chromatic note in between, I added a G note",
+                      "page": 37
+                    }
+                  ]
+                },
+                {
+                  "id": "four-note-enclosure-dual-function",
+                  "name": "Four-Note Enclosure: Suspension vs. Tension-Pull",
+                  "summary": "Deploy a four-note enclosure either to create a suspended sound preceding a chord tone, or as a tension-and-pull device driving toward resolution.",
+                  "engine_payload": {
+                    "kind": "_pending:enclosure-function-select"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "four-note enclosure: two functions",
+                      "quote_excerpt": "precede a chord tone to create a suspended sound, or they can be used as a way of",
+                      "page": 39
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jens-larsen:modern-jazz-guitar-concepts:diminished-symmetry-triad-system",
+              "name": "Diminished Symmetry Triad System",
+              "summary": "Exploits the half-whole diminished scale's minor-third symmetry to generate the four embedded major triads and deploy them as upper-structure melodic material over dominant 7th chords (notably the 13b9 voicing). Members are the four major triads and their inversions. Traversal rules govern common-tone voice-leading, encirclement, and positional cycling. Modification rules apply the minor-third symmetry axiom to transpose any shape by m3, select triad pairs for specific extensions, and bridge to the altered scale via the B major triad.",
+              "members": [
+                {
+                  "id": "triad-f-major",
+                  "name": "F Major Triad (root upper-structure)"
+                },
+                {
+                  "id": "triad-ab-major",
+                  "name": "Ab Major Triad"
+                },
+                {
+                  "id": "triad-b-major",
+                  "name": "B Major Triad"
+                },
+                {
+                  "id": "triad-d-major",
+                  "name": "D Major Triad"
+                },
+                {
+                  "id": "triad-inversion-set",
+                  "name": "Triad Inversions (Root, 1st, 2nd)"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "minor-third-symmetry-rotation",
+                  "name": "Minor-Third Symmetry Rotation",
+                  "summary": "Transpose any triad shape or arpeggio by minor thirds to access all four positions within the diminished scale.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Minor 3rd Symmetry for Arpeggio Transposition",
+                      "quote_excerpt": "Half Whole Diminished scale can be moved in minor 3rds",
+                      "page": 65
+                    }
+                  ]
+                },
+                {
+                  "id": "common-tone-triad-chain",
+                  "name": "Common-Tone Triad Chaining",
+                  "summary": "Connect consecutive triads by linking shared top or bottom notes across the triad boundary.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Triad chaining by common notes",
+                      "quote_excerpt": "linking the top two notes of the D triad to the lowest two notes of the Ab triad",
+                      "page": 74
+                    }
+                  ]
+                },
+                {
+                  "id": "encirclement-triad-transition",
+                  "name": "Encirclement as Triad-to-Triad Transition",
+                  "summary": "Use the last two notes of one triad to encircle the first note of the next triad.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Triad chaining — encirclement",
+                      "quote_excerpt": "last two notes of one triad to encircle the first note of the next",
+                      "page": 74
+                    }
+                  ]
+                },
+                {
+                  "id": "positional-cycling-before-neck-cross",
+                  "name": "Positional Cycling Before Neck Cross",
+                  "summary": "Cycle through all four triad inversions in a single neck position before crossing to the next position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Cycling Triads in Position Up the Neck",
+                      "quote_excerpt": "cycling through the triads in a single position before moving to the next position",
+                      "page": 68
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "color-tone-triad-pair-selection",
+                  "name": "Color-Tone Triad Pair Selection",
+                  "summary": "Select the Ab+D triad pair to express b9+#9+13 color over F7; use B+Ab pair for #11+b9+#9 color.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Ab and D Triads Conveying F7 Extensions",
+                      "quote_excerpt": "Ab and D major triads conveys the sound of an F7",
+                      "page": 70
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "B and Ab triads — b9 #9 #11 colour",
+                      "quote_excerpt": "B and Ab major triads … b9, #9 and #11",
+                      "page": 77
+                    }
+                  ]
+                },
+                {
+                  "id": "root-triad-color-omission",
+                  "name": "Root-Position Triad Omission for Colour",
+                  "summary": "Omit the F major triad (root upper-structure) because it adds no harmonic colour over F7.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "F major triad colour",
+                      "quote_excerpt": "don't often use the F major triad because it doesn't add any colour",
+                      "page": 74
+                    }
+                  ]
+                },
+                {
+                  "id": "altered-diminished-bridge",
+                  "name": "Altered-Diminished Bridge via B Major Triad",
+                  "summary": "Use the B major triad to bridge from diminished to altered territory, since it is shared by both scales.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "B Major Triad Intervals Against F Root",
+                      "quote_excerpt": "B major triad is not unique to the diminished sound",
+                      "page": 72
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jens-larsen:modern-jazz-guitar-concepts:melodic-line-construction",
+              "name": "Melodic Line Construction System",
+              "summary": "A system for assembling complete jazz improvisation lines from named melodic gestures: ascending arpeggio + descending scale (the master's signature shape), Coltrane 1-2-3-5 and 1-b3-4-5 groupings, motif repetition with alteration, and the counterpoint rule that large intervals resolve stepwise in the opposite direction. Traversal rules specify gesture-to-gesture connections; modification rules govern rhythmic subdivision variation, scale-tone interpolation, and motivic alteration. This system wraps the harmonic substitution lattice and chromatic enclosure systems in a procedural envelope.",
+              "members": [
+                {
+                  "id": "ascending-arpeggio-descending-scale",
+                  "name": "Ascending Arpeggio + Descending Scale"
+                },
+                {
+                  "id": "coltrane-1235-pattern",
+                  "name": "Coltrane 1-2-3-5 Pattern (and reverse)"
+                },
+                {
+                  "id": "motif-repeat-with-alteration",
+                  "name": "Motif Repeat with Alteration"
+                },
+                {
+                  "id": "large-interval-stepwise-resolution",
+                  "name": "Large-Interval Stepwise Resolution"
+                },
+                {
+                  "id": "triad-sequence-1-3-5",
+                  "name": "Triad in 1-3-5 Sequence / Quartal Pattern"
+                },
+                {
+                  "id": "scale-tone-interpolation",
+                  "name": "Scale-Tone Interpolation in Arpeggio"
+                },
+                {
+                  "id": "rhythmic-subdivision-variation",
+                  "name": "Rhythmic Subdivision Variation"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "target-note-approach",
+                  "name": "Target-Note Approach",
+                  "summary": "Organize the line by working backward from a specific chord tone to reach on the next strong beat.",
+                  "engine_payload": {
+                    "kind": "_pending:target-note-approach"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "motif-based vs target-note approach",
+                      "quote_excerpt": "both motif-based and target note ideas in your arsenal",
+                      "page": 48
+                    }
+                  ]
+                },
+                {
+                  "id": "motif-sequencing-across-changes",
+                  "name": "Motif Sequencing Across Chord Changes",
+                  "summary": "Carry a rhythmic or intervallic motif across a chord change by restating it on the new harmony's arpeggio.",
+                  "engine_payload": {
+                    "kind": "_pending:motivic-sequencing"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "motif-based vs target-note approach",
+                      "quote_excerpt": "descending Bbmaj7 arpeggio motif is repeated using the descending E diminished arpeggio",
+                      "page": 48
+                    }
+                  ]
+                },
+                {
+                  "id": "counterpoint-large-interval-resolution",
+                  "name": "Counterpoint Large-Interval Stepwise Resolution",
+                  "summary": "After a large ascending interval, resolve the line stepwise in the opposite (descending) direction.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Counterpoint rule: large intervals resolve stepwise",
+                      "quote_excerpt": "large ascending intervals with a stepwise movement in the opposite direction",
+                      "page": 21
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Ascending 6th interval — counterpoint rule",
+                      "quote_excerpt": "tension of the large ascending interval is resolved with step-wise motion",
+                      "page": 76
+                    }
+                  ]
+                },
+                {
+                  "id": "harmonic-minor-dominant-pull",
+                  "name": "Harmonic Minor Dominant Pull",
+                  "summary": "Over the V chord, apply harmonic minor material to create a pull toward the next tonic chord.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Bar 4 — harmonic minor pull",
+                      "quote_excerpt": "harmonic minor on Bb7 to pull towards the Eb7",
+                      "page": 82
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "repeat-with-slight-alteration",
+                  "name": "Melodic Repeat with Slight Alteration to Fit New Harmony",
+                  "summary": "Restate a melodic phrase on a new chord, changing only one or two notes to align with the new harmony.",
+                  "engine_payload": {
+                    "kind": "_pending:motivic-alteration"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Bars 5-6 — repeated statement with alteration",
+                      "quote_excerpt": "repeats it over the Edim chord, altering it slightly to fit",
+                      "page": 82
+                    }
+                  ]
+                },
+                {
+                  "id": "rhythmic-subdivision-embellishment",
+                  "name": "Rhythmic Subdivision Embellishment",
+                  "summary": "Introduce triplet or sixteenth-note subdivisions within an eighth-note arpeggio line to vary phrasing and imply passing chords.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Rhythmic variation with triplet passing notes",
+                      "quote_excerpt": "8th note triplet is used for the chromatic passing notes",
+                      "page": 59
+                    }
+                  ]
+                },
+                {
+                  "id": "scale-tone-interpolation-rule",
+                  "name": "Scale-Tone Interpolation to Avoid Predictability",
+                  "summary": "Add scale tones between arpeggio notes while ensuring chord tones still land on the beat.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Embellishing arpeggios with scale tones",
+                      "quote_excerpt": "Embellishing an arpeggio by adding scale notes in between",
+                      "page": 76
+                    }
+                  ]
+                },
+                {
+                  "id": "coltrane-pattern-minor-variant",
+                  "name": "Coltrane Pattern Minor Variant (1-b3-4-5)",
+                  "summary": "On minor chords, apply the 1-b3-4-5 variant of the Coltrane pattern to break up scalic lines.",
+                  "engine_payload": {
+                    "kind": "_pending:pattern-variant-select"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Chapter assignments: II V I lick writing",
+                      "quote_excerpt": "Coltrane patterns (1 2 35 on a major chord, 1 b3 4.5 on a minor chord)",
+                      "page": 24
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "Coltrane 1-2-3-5 pattern",
+                      "quote_excerpt": "Coltrane patterns are a useful way to break up scalic lines",
+                      "page": 17
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "promoted"
+    },
+    {
       "id": "benson",
       "name": "George Benson",
       "lived": "1943-",
