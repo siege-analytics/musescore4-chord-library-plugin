@@ -2762,7 +2762,521 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "works": [
+        {
+          "id": "guitar-method",
+          "title": "The Joe Pass Guitar Method",
+          "year": 1977,
+          "instrument_scope": "6-string",
+          "summary": "Joe Pass guitar method published 1977 by Chappell. 34-page method organizing scalar and harmonic instruction around the Chord Forms (A, E, C, D, G, Intermediate) as fingerboard navigational anchors. Covers scale-to-chord pairing rules (diminished scales over Dom7; whole-tone scales over Dom7+5), dominant flexibility and tritone substitution, voicing economy (3-4 note reduction with stepwise or common-tone voice leading), and four composition studies (Joe's Blues, Blues for Nina, NOBS-Alison-Grete) as applied laboratories. Ear-verification — that learned material must pass through the ear before application — is the non-negotiable governor throughout.",
+          "references": [
+            {
+              "source": "Pass, Joe. The Joe Pass Guitar Method. Chappell & Co. (1977). 34 pages.",
+              "citation": "Primary source extracted via #297 master-distillation pipeline; promoted under #347 batch-1."
+            }
+          ],
+          "systems": [
+            {
+              "id": "joe-pass:guitar-method:chord-forms-navigation",
+              "name": "Chord Forms Navigation System",
+              "summary": "The central navigational system of the Joe Pass Guitar Method. Chord Forms (A, E, C, D, G, and Intermediate) serve as vertical anchors on the fingerboard, providing a framework within which scalar and melodic material becomes automatic. The system defines six Form members as position-regions, specifies how the player moves between them via pivot-finger shifts (1st or 4th finger), mandates practice across all Forms in both chromatic and Form order, and requires every scale-line exercise to begin and end with the parent chord voicing so that melody is always tethered to harmony. Mastery of A–E–C/D Forms is prioritized as the most efficient path to full fingerboard coverage. The ear-verification rule — that learned patterns must pass through the ear before application — is the non-negotiable governor of the entire system.",
+              "members": [
+                {
+                  "id": "a-form",
+                  "name": "A Chord Form",
+                  "summary": "One of the three primary Forms covering the fingerboard thoroughly."
+                },
+                {
+                  "id": "e-form",
+                  "name": "E Chord Form",
+                  "summary": "One of the three primary Forms; structurally similar to A Form."
+                },
+                {
+                  "id": "c-form",
+                  "name": "C Chord Form",
+                  "summary": "Primary Form; related to D Form."
+                },
+                {
+                  "id": "d-form",
+                  "name": "D Chord Form",
+                  "summary": "Structurally equivalent to C Form at a different register."
+                },
+                {
+                  "id": "g-form",
+                  "name": "G Chord Form",
+                  "summary": "Contains note-choice decisions (B on d or g string)."
+                },
+                {
+                  "id": "intermediate-form",
+                  "name": "Intermediate Chord Form",
+                  "summary": "Sixth Form; scale practice exception (no root-to-root requirement)."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "pivot-finger-shift",
+                  "name": "Pivot-Finger Position Shift",
+                  "summary": "Use the 1st or 4th finger to play two notes when shifting from one Chord Form position to the next.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Position shifting technique",
+                      "quote_excerpt": "shift to any string by using either the first finger or fourth finger to play two notes",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "form-order-practice",
+                  "name": "Form-Order and Chromatic-Order Practice Traversal",
+                  "summary": "Traverse all Forms either in chromatic key order within a single Form, or in Form order (C–A–G–E–Intermediate–D) for a given key, covering two octaves per scale.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Scale practice order (chromatic vs. Form)",
+                      "quote_excerpt": "practice in all Forms either chromatically or in Form order",
+                      "page": 8
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-frame-scale-lines",
+                  "name": "Chord-Frame Scale-Line Traversal",
+                  "summary": "Every scale-line exercise must begin and end with the parent chord voicing, anchoring melodic traversal to its harmonic origin.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Scale lines chord foundation",
+                      "quote_excerpt": "chords on which these scale lines are based should be played at the beginning and ending of each exercise",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-neck-extension",
+                  "name": "Chromatic Half-Step Neck Extension",
+                  "summary": "Extend chromatic patterns up the neck by half-steps, moving through successive Form positions.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Chromatic Patterns practice",
+                      "quote_excerpt": "starting with open E, then moving up by half-steps to extend the exercise",
+                      "page": 18
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "form-extrapolation",
+                  "name": "Scale Extrapolation Across All Forms",
+                  "summary": "Any scale given in abbreviated form must be repeated by the student in all six Forms with the same fingering.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Other Scales in all Forms",
+                      "quote_excerpt": "These scales should be repeated in all Forms; the fingering is the same",
+                      "page": 5
+                    }
+                  ]
+                },
+                {
+                  "id": "aec-priority",
+                  "name": "A–E–C/D Form Priority Rule",
+                  "summary": "Prioritize mastery of A, E, and C/D Forms first; together they cover the fingerboard thoroughly.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "A–E–C/D Forms coverage rule",
+                      "quote_excerpt": "By mastering all the scales in the A — E — C/D Chord Forms, which are basically similar, the student will have covered the fingerboard quite thoroughly",
+                      "page": 5
+                    }
+                  ]
+                },
+                {
+                  "id": "ear-verification",
+                  "name": "Ear-Verification Rule",
+                  "summary": "All learned material must pass through the ear before being applied; mechanical application without listening is prohibited.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Dom 7th / Augmented / Diminished relationship",
+                      "quote_excerpt": "the student is cautioned to use his ears",
+                      "page": 8
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "Music from the Head, Not Fingers",
+                      "quote_excerpt": "music must come from the head, not simply from the fingers running up and down the neck",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "dom7-flat-seventh-rule",
+                  "name": "Dominant 7th Flat-Seventh Form Rule",
+                  "summary": "When improvising on a Dominant 7th, anchor to the Basic Chord Form and simply flat the seventh tone to reduce mistakes.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Dominant 7th chord form rule",
+                      "quote_excerpt": "By constantly using and thinking in terms of the Basic Chord Forms and simply flatting the seventh tone",
+                      "page": 23
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "joe-pass:guitar-method:dominant-flexibility-substitution",
+              "name": "Dominant Flexibility and Substitution System",
+              "summary": "This system governs how the player selects, alters, and substitutes dominant chords across the blues and jazz repertoire taught in the method. Its members are the dominant chord quality families: plain dominant 7th, extended dominants, altered dominants, augmented dominant, tritone substitute family, and compound altered dominants. Traversal rules describe scale-to-dominant pairings (diminished scales for dom7, whole-tone scales for dom7+5). Modification rules define interchangeability of extended and altered dominants with plain dominants, tritone substitution (E7 ↔ Bb9 family), and compound altered dominants for chromatic voice movement. Free ear-driven choice among available substitutions is the governing principle.",
+              "members": [
+                {
+                  "id": "plain-dom7",
+                  "name": "Plain Dominant 7th",
+                  "summary": "Base dominant chord; e.g. G7, C7, D7."
+                },
+                {
+                  "id": "extended-dom",
+                  "name": "Extended Dominants",
+                  "summary": "Dominant chords with added 9/11/13/9(6); e.g. G9, G13, G11."
+                },
+                {
+                  "id": "altered-dom",
+                  "name": "Altered Dominants",
+                  "summary": "Dominant chords with b5, +5, +9, b9; e.g. G7(+9), G7(b9)."
+                },
+                {
+                  "id": "augmented-dom",
+                  "name": "Augmented Dominant (Dom7+5)",
+                  "summary": "Dominant chord exclusively paired with whole-tone scale."
+                },
+                {
+                  "id": "tritone-sub-family",
+                  "name": "Tritone Substitute Family",
+                  "summary": "Chords a tritone away from the target dominant; e.g. Bb9 family for E7."
+                },
+                {
+                  "id": "compound-altered-dom",
+                  "name": "Compound Altered Dominant",
+                  "summary": "Combined altered extensions for chromatic resolution; e.g. G7(+5/b9) to C9(6)."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "diminished-scale-dom7-pairing",
+                  "name": "Diminished Scale Exclusive Dom7 Pairing",
+                  "summary": "The three diminished scales are played exclusively against Dominant 7th chords.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Diminished Scales chord usage",
+                      "quote_excerpt": "are all to be played against Dominant 7th Chords",
+                      "page": 20
+                    }
+                  ]
+                },
+                {
+                  "id": "whole-tone-augmented-dom-pairing",
+                  "name": "Whole-Tone Scale Dom7+5 Pairing",
+                  "summary": "The two whole-tone scales fit exclusively with Dominant 7+5 chords.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Whole Tone Scale chord fit",
+                      "quote_excerpt": "There are but two Whole Tone Scales. They will fit with all Dominant 7 +5 Chords",
+                      "page": 20
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-derived-melody",
+                  "name": "Chord-Derived Melodic Line Generation",
+                  "summary": "Melodic patterns grow out of the chord at the start of each line; lines are chord-first, not scale-first.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Melodic patterns from chords",
+                      "quote_excerpt": "melodic/scale patterns, in the following examples, grow out of the chords at the beginning of each line",
+                      "page": 21
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "extended-altered-dom-substitution",
+                  "name": "Extended/Altered Dominant Free Substitution",
+                  "summary": "Any of +9, b9, 13, 9(6), 11, +5, b5 extensions may be freely substituted for a plain dominant chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Dominant chord substitutions",
+                      "quote_excerpt": "+9/b9/13/9(6)/11/-+5/b5 may be substituted for simple Dominants",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-substitution",
+                  "name": "Tritone Substitution Rule",
+                  "summary": "E7 and the Bb9 family are interchangeable; tritone-equivalent dominants substitute freely.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "E7 and tritone substitutions",
+                      "quote_excerpt": "E7 can be replaced with E+9/Em9/E13/E9 or Bb 9/Bb+9/Bb m9/Bb13/Bb9",
+                      "page": 24
+                    }
+                  ]
+                },
+                {
+                  "id": "g7-color-variants",
+                  "name": "Tonic Dominant Color Variant Palette",
+                  "summary": "For the tonic dominant (G7), any of G13, G9, G9(6), G7+9, G7(b9) may be used as color substitutions.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "G7 chord substitutions",
+                      "quote_excerpt": "variants may be used in place of G7: G13, G9, G9(6), G7 +9, G7(b9)",
+                      "page": 24
+                    }
+                  ]
+                },
+                {
+                  "id": "compound-altered-dom-resolution",
+                  "name": "Compound Altered Dominant Chromatic Resolution",
+                  "summary": "Compound altered dominants (G7+5/b9) resolve to extended tonics (C9(6)) for chromatic voice movement.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Voice leading example B",
+                      "quote_excerpt": "G7(+5/b9) —-C9(6) (c) Fmaj7 voice leading",
+                      "page": 31
+                    }
+                  ]
+                },
+                {
+                  "id": "bar8-turnaround-substitution",
+                  "name": "Turnaround Bar Pivot Substitution",
+                  "summary": "In bar 8, Bm7 may be replaced with F-family dominants or converted to B7/B9/B13 in the second half of the bar.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Bar 8 Bm7 substitutions",
+                      "quote_excerpt": "In bar 8 Bm7 can be replaced by F13/F9/F +9/Fm9",
+                      "page": 24
+                    }
+                  ]
+                },
+                {
+                  "id": "ear-driven-harmonic-autonomy",
+                  "name": "Ear-Driven Harmonic Choice Verification",
+                  "summary": "Students freely choose from available alternatives and verify each improvised phrase against the chord they have chosen.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Free choice in chording and improvisation",
+                      "quote_excerpt": "Students must be able to choose freely from the alternatives available",
+                      "page": 24
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "joe-pass:guitar-method:voicing-economy-and-voice-leading",
+              "name": "Voicing Economy and Voice-Leading System",
+              "summary": "This system governs how chords are voiced and connected across a progression. Members are voicing-density categories (three-note, four-note, thick/rejected) and the harmonic-function chord types (tonic, subdominant, supertonic ii, dominant V, substituted). Two complementary rules govern movement: voicings must connect by stepwise voice motion or share a common tone, and all chord changes must be reduced to three or four notes. Demonstrated in NOBS (Ch. 10) and applied in Alison (Ch. 11) where F13, Bbm7, and Ebmaj7 substitute into the C7–F7–Bbmaj7–Eb backbone, and the ii–V–I with altered dominant extensions (Dm7–G7(13)/G7(+5)–Cmaj7) serves as the core template.",
+              "members": [
+                {
+                  "id": "three-note-voicing",
+                  "name": "Three-Note Voicing",
+                  "summary": "Minimum density; preferred economy voicing."
+                },
+                {
+                  "id": "four-note-voicing",
+                  "name": "Four-Note Voicing",
+                  "summary": "Maximum permitted density under the economy rule."
+                },
+                {
+                  "id": "thick-voicing-rejected",
+                  "name": "Thick/Dense Voicing (Rejected)",
+                  "summary": "Voicings exceeding four notes; explicitly prohibited."
+                },
+                {
+                  "id": "tonic-chord",
+                  "name": "Tonic Chord (I)",
+                  "summary": "Root-function chord; e.g. Cmaj7, Bbmaj7, C9(6)."
+                },
+                {
+                  "id": "subdominant-chord",
+                  "name": "Subdominant Chord (IV)",
+                  "summary": "Fourth-function chord; e.g. F7, Bbmaj7, Ebmaj7."
+                },
+                {
+                  "id": "supertonic-chord",
+                  "name": "Supertonic Chord (ii)",
+                  "summary": "Second-function chord; e.g. Dm7, Dm9."
+                },
+                {
+                  "id": "dominant-chord",
+                  "name": "Dominant Chord (V)",
+                  "summary": "Fifth-function chord including altered forms."
+                },
+                {
+                  "id": "substituted-chord",
+                  "name": "Substituted Harmony",
+                  "summary": "Chord substituting for a functional root; e.g. F13 over C7."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "stepwise-or-common-tone",
+                  "name": "Stepwise Motion or Common-Tone Connection",
+                  "summary": "Voicings must either lead into one another through stepwise motion or share a common tone.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Voice leading / common tones",
+                      "quote_excerpt": "voicings should lead into one another or have a common tone connecting them",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "ii-v-i-template",
+                  "name": "ii–V–I Altered Dominant Voice-Leading Template",
+                  "summary": "The ii–V–I with altered dominant extensions is the core voice-leading template.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Voice leading example A",
+                      "quote_excerpt": "Dm7 G7(13) G7(+5) Cmaj7 or Cm9 voice leading",
+                      "page": 31
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-voicing-substitution-backbone",
+                  "name": "Chord-Voicing Substitution Over Backbone",
+                  "summary": "Substituted voicings move over the underlying functional backbone (C7–F7–Bbmaj7–Eb).",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Chord voicing examples",
+                      "quote_excerpt": "(C7) (F7) (Bbmaj7) (Eb)",
+                      "page": 31
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "density-ceiling-four-notes",
+                  "name": "Four-Note Density Ceiling",
+                  "summary": "All chord changes must be reduced to three or four notes; no voicing may exceed this density.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Chord reduction rule",
+                      "quote_excerpt": "All changes should be reduced to three- or four-note chords",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "altered-dom-color-tone-require",
+                  "name": "Altered Dominant Color-Tone Requirement for Voice Leading",
+                  "summary": "In the ii–V–I template, the dominant must carry at least one altered extension to generate chromatic voice motion.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Voice leading example A",
+                      "quote_excerpt": "G7(13) G7(+5) Cmaj7",
+                      "page": 31
+                    },
+                    {
+                      "chapter_n": 11,
+                      "topic": "Voice leading example B",
+                      "quote_excerpt": "G7(+5/b9) —-C9(6)",
+                      "page": 31
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "martin-taylor",

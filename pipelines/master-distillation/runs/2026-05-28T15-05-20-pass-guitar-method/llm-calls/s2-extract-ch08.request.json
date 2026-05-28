@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: JOE'S BLUES\nPages 24-28 of the book.\n\n<<<CHAPTER TEXT\n\nJAZZ LICKS\nC7\n|23\n\n24| Phrase Variations b\n\nf)- 2 o e 2 \" n\nG 4 be # & = = 7 # o-5 a 2 =\nyy 2 \u00a5 o T \u2014 o v a o T t T\nDO} j j = \u2014__\n3 3\n| a eel Py oss be bk \u2014\n\"2 eo \u2014s \" nm 1 Be al a #. 4 ul ri =| \u20181 =\nee Ie eee ae ec ve oe! s\nSS = == /\n3\nn 2 Dt. a be. 22. be f 4, be &  . be &\nMa of ot\" \u2014\u2014 oo fae ae \u2014\u2014==\n5 4 +} \u2014f Tal L TT t \u2014T T i Sy. aa\noe ra j :\n. We .\nbe \u00bb \u00b0 be. EF \u00a3b te be Che =\npte \u2014 i pup fee EE\ntes t i \u2014 + } &\naera 1 cel\nO) F\n\nJoe\u2019s Blues\n\nJoe\u2019s Blues is based on the blues in the key of G; the chord\nchanges are basically G7 \u2014 C7 \u2014 D7. These appear in the\nfirst twelve bars to indicate the sequence. The following\nvariants may be used in place of G7: G13, G9, G9(6), G7 +9,\nG7(b9). Db9 in the fourth measure can be played in the same\nway. In bar 8 Bm7 can be replaced by F13/F9/F +9/Fm9. Bm7\ncan be changed to a Dominant 7th (B7) or B9/B13. The\nsubstitutions can be made in the second half of bar 8. E7 can\nbe replaced with E+9/Em9/E13/E9 or Bb 9/Bb+9/Bb m9/\nBb13/Bb9. Bar 9 can be altered in much the same way since\nthese chords are interchangeable.\n\nStudents must be able to choose freely from the alternatives\navailable not only in chording but also in solo improvisa-\ntion. In Joe\u2019s Blues the student should check out each\nphrase against the chord he thinks is being used.\n\n\n\nJoe\u2019s Blues\n\nIntro. > \u2014~_\nA\n\nJOE PASS\n\ne aa eo <beovr\nfy a = 2 e e = =\nAe # B i\n= @\nrubato Ves be hd\nf+ \u2014_\nard I t i\nG Soe \u2014 b 9 oe\n4 andl = = = \u2014t T Tt tT + |\neo 74 Id \u2014s\nthe vw\n< \u2014 in tempo\nG7\nhw} f be ry\naul be & t \u00a2 1 5 = + 7 cd il t i\n> o i oe ey Tal bul v oe t fal\n>) ] | \u2014\u2014\n4G7 \u2014\u2014_\noe\nDEF te 2 ,\n* o\u2014\nc= \u2014 3 fe\n3\nC7\n5C7 ee. 3 3\ni *\nVe\n} = a a\nBm7\n\nik\n\nTf Ty\nYY ~ Tt 1\n>) ' U3 l ]\nG7 P 2 he\na sabe b 6\n\u2014_ | os i i. Dp\nva rT T *\nT T | T\nS \u2014\nhe 4\npes 48? 42\n\u2014\n7 - p> \u2014 oF ra\nYY int if j\u2014 iol =\nv T T \u2122T\n18 _\u2014~\n@\n= = 4,\nT cd\n\u201coS 1 T T t T\n3 3 |\n- A\n21 ee eet e\n1 \u2014\u2014 L ? im oe. t\nVY \u2014_f T = T\neu 3 e a\n\nCopyright \u00a9 1977 by Joe Pass\n\nInternational Copyright Secured/ALL RIGHTS RESERVED\n\n\n\nor a\n\nbe\nve\n\n<q\n\nrl\n\nel\n\n~ nO | F\n5 a 4 \u00e9 . = iM | Du\n\u00a7 ell el < re rll\n\u201cUS | 8\nA es 4 Alt me it\ni \\ mn) ddl | |\n1H y how 4/9H ] <\niT ha < i a yonn | LU\n4h | \u00bb\ni Al\n| q I \u2018\n: fl , 5 ! * < ell\nq |\n4! aS \" | Ks % ull\n{et RS | 4 < rs Lf 1 ~\n3% aa ( a <on 7 x x | eq <s (8\nMw rill vena ne well \u201cis res\nel ay anne cy el ( in\n4 ality ill i Sy | is I Ih <\nal ll\nau L hi <a ; P \\q \u201c Hh .\na r <a LL\nel He 4 4 il ' Hl! (II .\n. a7] ry hs WU <\nte % ca : | .\n\n8ths------------ 2 errr rrr rrr\n2\n\n\u2014~e\n\nA\n\n\u201c . . sll\n8 ai ss as # 8 Rilke BE at\nBe = at at a o&: \u2014\nAo Ade Age ~ |OU Ce Age AGe ee\n\n26|\n\n42\n\nye\note\neae\n\n41\n45\n\n448\n\noe)\n\nry)\nfe\n\nry)\n\n\n\n47\n48\n49\n50\n51\n52\n53\ndelay 16ths\n54\n55\ndelay triplets\n56\n57\n58\n59\n60\n61\nBass solo\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80\n81\n82\n83\n84\n85\n86\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

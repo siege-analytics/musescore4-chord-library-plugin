@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: CHROMATIC PATTERNS\nPages 17-17 of the book.\n\n<<<CHAPTER TEXT\n\nbe.\n\nf | n of :\nLI re I I\n\u00bb mn) \u00bb 4\n$l |\n\n4 a || \u00bb |\n\niho 4 i r wu\n\ni Ltt etl 3 s\n\nlk\nLL li Uy ,\nI ot i :\nH LS | 7% rT 4\nrn das | 4h ee a \\ |\nr ry T?\nre | | | l l ,\n\n| p 4 1 ty\n1 | ins. e i| 4 ATs! A)\n\nSS: | | | i)\nis; : yd i t * M\nhi i i 1 oh il\n\n\u00bb i\u2018 | aa 1 | | :\nii\nLd nN 2! | tos | i re\niy st i sg : I\nau\n1} NT] @ : \\\nte. tH T rs \\ it il\nik 4 Lig hy Hl 4 1\n| 4 pied il ee i mh)\n5] Hl Ho 4\n; RL Si ia | :\nm hy | [2 1h ae rs th + \u201c2 UT\nre\n| rT] {sfx} aS a ry\nBR Bhi q| i \\ hy\nrT? i} ha \u201cs 1\nnah \u00a2 if | a TR te \u00ab|\na .\\\nNa ee alli a Tee ag. jo =e Aull lh De he\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}

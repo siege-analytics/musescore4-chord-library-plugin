@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-pass-guitar-method
+stage: s3
+source_pdf: Pass, Joe - Guitar Method (1997).pdf
+source_pages: 31-31
+model: claude-haiku
+extracted_at: 2026-05-28T15:50:13+00:00
+schema_version: 0.1
+---
+
+# Chapter 11 — ALISON
+
+_Distillation; backed by `chapters/ch11.md`._
+
+Chapter 11 presents advanced chord voicing and voice-leading techniques through the song 'Alison,' demonstrating how to substitute and extend jazz chords like F13, Bbm7, and Ebmaj7 over a foundational C7-F7-Bbmaj7-Eb progression. The chapter establishes the ii-V-I progression with altered dominant extensions (such as G7(13) and G7(+5)) as a core voice-leading template, and introduces compound altered dominants with extended tonics (exemplified by G7(+5/b9) resolving to C9(6)) for achieving chromatic voice movement. A triplet feel is specified as the rhythmic framework for executing these harmonic concepts, tying together the voicing substitutions and voice-leading resolutions within a cohesive interpretive approach to the tune.

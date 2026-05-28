@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: CHORD SEQUENCES\nPages 20-21 of the book.\n\n<<<CHAPTER TEXT\n\nea\nel\net\nell\nLL\n\nbe fe\n\nil\n\nDIMINISHED CHORD LINES or D7 (59/+9), F7, Ab7, B7\nThere are only three Diminished Scales. The five examples\n\n1\n\nare all to be played against Dominant 7th Chords. Find the\nchords beyond the B7 given.\n\nn T T\nT t T\n\nNS\n\nTTR\n\n\u00b0\nte\n\n\u00bb\n\n_\ntte\n\nry\nTp\ne\n.\n\nre\n\nai\n\n!\nmah)\n|\nnh)\n\nre\n\nTh\nTh\n\n,\n\nLi\n\nTTS\nTe\n\nThere are but two Whole Tone Scales. They will fit with all\nDominant 7 +5 Chords. Additional Augmented Scale Lines\n\nC AUGMENTED (whole tone)\n\nshould be developed by the student which will fit Dominant\n7th Chords.\n\na \u2014~\nn,n tf 2 tf tte bey\na / nt # bea\n$ t 1 = t\n\n@ T\n\ne 2 eb 6\na = id \u2014te\n4 bul\nSe} a\n4 \u2014 i \u2014\"t\n\no eo\n\nf) ere \u00a9 te be # 2 T\nA 4 t + Pg be t\nShae \u2014\u2014\u2014\u2014= \u2014\u2014t {\u2014t# te $e\ncy) r oe\nyn 4\nvA 1\n(5, i to\naera je\n) t\u00a2 bt \u00a9\n\n| |\n4\n\n\n20|\nC\u266d5 Dominant Scale Lines with added tones.\nCm(7/6/9) Minor Scale Lines with added tones.\n(6th) (9th)\n(7)\n(7th)\nChord Sequences\nThe melodic/scale patterns, in the following examples, grow out of the chords at the beginning of each line, which should be apparent when they are played. It may help the student to develop his own ideas by first putting the changes on tape and playing lines against them or having someone else play the changes with the student. These changes should be played out of tempo so that the student can establish a long line and fully realize the potential richness of each chord.\nCmaj7(6/9)\nCm9\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}
