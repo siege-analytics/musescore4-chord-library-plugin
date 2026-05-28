@@ -8568,6 +8568,107 @@
       ],
       "instrument": "6-string",
       "biography": "Philadelphia-born jazz guitarist trained in the bebop tradition; sideman with Buddy Rich and Lionel Hampton in the 1970s before establishing his own quartet and a long pedagogical career. Bruno's published method centers on right-hand technique as a habit-formation problem: a three-rule directional picking system (down to higher string, up to lower, alternate on same string), justified by economy of motion, replaces strict alternate picking as the basis for jazz line playing. The Art of Picking (2002) is the canonical written distillation of this approach; companion volumes (notably Six Essential Fingerings for the Jazz Guitarist) supply the scale/fingering substrate the picking method is applied to.",
+      "principles": [
+        {
+          "id": "three-rule-directional-picking",
+          "name": "Three-rule directional picking — down to higher, up to lower, alternate same string",
+          "summary": "Bruno's central system. Three rules govern every pick stroke: down-stroke when crossing to a higher string, up-stroke when crossing to a lower string, alternate strokes when staying on one string. The justification is economy of motion — the pick is always positioned where it next needs to be. Bruno frames adoption as a deliberate break from the entrenched strict-alternate-picking habit and warns the student that the new motion feels awkward before paying off. The same rule extends without modification to non-adjacent (skipped) strings, all six major-scale fingerings, and arpeggios.",
+          "voicingStyleTags": [
+            "bruno"
+          ],
+          "playStyleTags": [
+            "directional-picking",
+            "alternate"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Bruno, Jimmy. The Art of Picking. Mel Bay Publications, 2002.",
+              "citation": "Chapter 1 (core rules + economy-of-motion justification); Chapters 2-6 (uniform application across strokes, scales, arpeggios, string skipping)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "fingerboard-position-dictates-picking",
+          "name": "Fingerboard position dictates picking pattern (second-tier load-bearing rule)",
+          "summary": "Relocating an identical phrase to a different position changes which notes land on which strings, and the pick sequence must be redrawn accordingly. The picking pattern is not a property of the line; it is a property of the line-in-this-position. Combined with the directional rule, this means the student must internalize the rule deeply enough to re-derive picking on the fly when transposing position. It also means fingering choices (which position) have consequences for picking — fingering enables speed, not the reverse.",
+          "voicingStyleTags": [
+            "bruno"
+          ],
+          "playStyleTags": [
+            "directional-picking",
+            "position-aware"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Bruno, Jimmy. The Art of Picking. Mel Bay Publications, 2002.",
+              "citation": "Chapter 7 develops the principle explicitly with the 7th-position example showing the same phrase requires a different pick sequence."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "no-anchor-elbow-driven-right-hand",
+          "name": "No-anchor, elbow-driven, relaxed right-hand mechanics",
+          "summary": "Mechanical preconditions for the directional system: the right hand has no anchor — fingers must not touch the strings, pick guard, or any other part of the guitar. Motion is driven from the elbow, not the wrist or fingers, and the wrist is held relaxed. These are not aesthetic preferences but the physical substrate that makes the directional rule executable; the system fails if the hand is anchored or the wrist is rigid. Bruno treats this as equal in importance to the directional rules themselves.",
+          "voicingStyleTags": [
+            "bruno"
+          ],
+          "playStyleTags": [
+            "no-anchor",
+            "elbow-driven",
+            "relaxed-wrist"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo",
+            "comping-rhythm"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Bruno, Jimmy. The Art of Picking. Mel Bay Publications, 2002.",
+              "citation": "Chapters 1-2 specify the no-anchor + elbow-driven + relaxed-wrist preconditions; reinforced throughout subsequent chapters."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "music-drives-picking-with-sanctioned-exceptions",
+          "name": "Music drives picking — sanctioned exceptions for musical intent",
+          "summary": "The aesthetic axiom: the picking mechanism serves musical intent, not fingerboard convenience. Bruno explicitly licenses rule-breaking under stylistic and rhythmic conditions: big-band accents permit consecutive down-strokes (or slurs as equivalent); rhythmic breaks license two consecutive downs; bebop prefers slurred over picked triplets ('more horn-like'); rests permit either starting stroke; the triplet drill exception (three down then three up) is confined to drill, not real phrases; Bruno himself prefers strict alternate down-up for the hardest skip+accent+in-between combination. The exceptions are not loopholes — they are the framework by which musical taste overrides mechanical convenience.",
+          "voicingStyleTags": [
+            "bruno"
+          ],
+          "playStyleTags": [
+            "bebop-articulation",
+            "slur-preference",
+            "big-band-accent"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Bruno, Jimmy. The Art of Picking. Mel Bay Publications, 2002.",
+              "citation": "Chapter 5 (music-drives-picking axiom); Chapters 3, 6, 7, 8, 9 (the catalog of sanctioned exceptions, each tied to a specific musical context)."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "the-art-of-picking",
@@ -9303,7 +9404,7 @@
           ]
         }
       ],
-      "status": "corpus_only"
+      "status": "promoted"
     },
     {
       "id": "peter-bernstein",
