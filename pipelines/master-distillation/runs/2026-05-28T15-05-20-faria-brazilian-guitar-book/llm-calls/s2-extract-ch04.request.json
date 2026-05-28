@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: PART IV - Frevo\nPages 104-117 of the book.\n\n<<<CHAPTER TEXT\n\nFrevo\n\n102\n\nGeneral Outline:\n\nMusic from the north east of Brazil, more specifically from Recife (Pernambuco),\nFrevo emerged at the end of the last century from the interaction between music\nand folkloric dances.\n\nThe first frevo groups were derived from military bands, using primarily martial\nband instruments (saxophones, piccolo flute, trombone, tuba, clarinet, snare drum\nand a handy cymbal).\n\nPrimarily dance oriented, the frevo is basically a march, with syncopated figures in\nthe melody and in the rhythmic patterns, usually up tempo.\n\nSubdivisions:\nMarcha-rancho: Slow to medium tempo, usually in minor keys and sometimes\nusing 3/4 time signature.\n\nFrevo-ventania: A frevo played at a very fast tempo.\n\nMusical characteristics:\n\nFrevo is usually written in 2/4 although you can find the use of 3/4 or 4/4. The\nexamples in this book are written in 4/4. The melodic accent comes on the up\nbeat and the melodies are pretty much syncopated.\n\nThe guitar has been used in frevo more recently. Usually the melody is played on a\npiccolo flute with a large use of melodic embellishments and counterpoint. The\nbass part is much like a jazz \u201cwalking bass\u201d, playing even quarter notes, and the\nharmonies are quite simple, usually turnarounds.\n\n\nGeneral Outline\n\nMusical examples:\n\n\u201cNinho de vespa\u201d (Dori Caymmi)\n\n|\n\u00e9\n\nil OY i\nL\n\n\u201cMascara Negra\u201d (Z\u00e9 Keti)\n\ni]\ncd =\nI g\nt g\na 2\n|| o)\nai \u00b0\n2\nw\nLH Q\na ~<)\nfot)\n| co)\n%w\ntH S\nne S\n\n7\n\n=\n\ni\nry\n\nTNT\n\n103\n\n\nFrevo\n\nBasic Pattern and Variations for Rhythm Guitar\n\n1. Basic Pattern:\n\nBasically what we find in the right hand guitar patterns are simulations of a frevo\nensemble rhythm section. Keep in your mind that the syncopations are played on\nthe top voices of the chord, while the bass note comes on the beat.\n\n, |\npot 5d. x Fingers 1,2 & 3\nFs rs Thumb\nI r | r\nYou can also feel it in 4/4 time signature.\n\u2014_\u2014\u2014T /__  cemmecaeenamaae | L\n\u2014 = x a] Fingers 1,2 &3\n\na K < \u201cThumb\n\n_ | [\n\nAs in other Brazilian styles, the bass line keeps switching between the root and\nthe fifth of the chord, and it's a better choice to play the fifth below the root.\nIf the bass note is already placed on the 6th string, you may keep the same note\nfor the whole measure.\n\nMusical example:\nThis example applies the basic pattern on a typical frevo turnaround.\n\nCmaj9/G G\u00b0 G74 G9\naa = aan on\n\n5 a. rT \u2014\n(aa ee = = Se Se\n\non Se a a a 2 E \u00a3 2 =\nro oF oF FF\n\n104\n\n\nBasic Pattern & Variations\n\n2. Variations:\n\nIn this section, following cach variation you'll find one or more musical examples\nshowing the pattern applied to standard progressions in the Brazilian repertoire.\n\nEach variation can be played through the entire song or you can switch between\nthe variations to create a new pattern. It's also common to use a different pattern\nat the end of a section or a \"cadenza\".\n\nVARIATION #1\n\nIn this variation you'll find a new syncopation in the 3rd beat.\n\n\u2014_\nTF\n\nMusical example:\n\nC69 A2(alt) A7(b13) Dmll G7(alt)G7(b9)\nr cane enema Coun oh\n5 3 3 3\n\n105\n\n\nFrevo\nVARIATION #2\nMusical example:\nTRACK 57\nDm7/A\n3\nAb\u00b0\nCm7/G\n1\nGb\u00b0\n\nBasic Pattern & Variations\n\nVARIATION #3\neee | =o \u2014\u2014\n| =\n= \u2014\u2014 as\nfe\nat\n\nA a OX Va (Oe Me VA\n(an OR A ee a a\nKg gg gS }\u2014 $$:\n\n=e\nom\nFF\n|\nFl\nms\na\nea\n\n107\n\n\nFrevo\n\nVARIATION #4\n\nThis is a good example of a variation playing only the up beats of the measure.\n\n\\\n)\n\nhy ) 4 SN\nbp\u2019 yp\u2019\n\nHe\n\nre\n\nel\n\n+e\n\n71\nqT\n\nMusical examples:\nExample 1\n\nYou can play this example using straight 8th notes, muting the down beats with\nyour left hand.\n\nb\nLe\naoa,\n12]\n\nkt!\n\nLle|\n\nbe]\n\nrel\n\nNP\n\n108\n\n\nBasic Pattern & Variations\n\nExample 2\n\nIn this example I use the pattern \u201cvariation #4\u201d only in the last bar.\n\nCmaj9/G G\u00b0\n==\na= S=\n2\n\npf 4, FL\n\n\u2018S\n\n2 a\n\nroF oF\n\neA e1eql_\n\n109\n\n\nFrevo\n\nVARIATION #5\n\nThis variation is an example of a \u201cmarcha rancho\u201d in 3/4 meter.\n\n\u2014L\n\nAm\u00ae9 Am9(b6)\n\u2014\u2014 a\n3\n\n\u2014s \u2014 ee\nr if\n\nahh\n\n110\n\n\n\nBasic Pattern & Variations\n\nLenny Andrade and Romero Lubambo\n\n111\n\n\nFrevo\n\ncA\n\nIloid\n\nby Nelson Faria\n\n9\n\nG13\n\nDm9\n\nvi\nv\n\nG13\n\nD9\n\nA7(b13)\n\na\n\nwe\ni\n\nat\n\n+\n\nae\n\n*\n\nsee\n\nae\n\"4\n\n[eft\ni\n\nial\ni\nT\n\nG13. C4 |!\n\nDm9\n\nA7\n\nEm7\n\n=\n\nco\n\nAb?4(9)\n\nFeD,\n13\n\nG74(9)\n\nBb?4(9)\n\nh\n\nVy\n7.4\n(s_\u00a2\n\nEm9\n\nE9\n\nE\u20194(9)\n\nF74(9)\nfh.\n\nC0\n\nB74(9)\n\nD9\nc7\n\nt\n\nD74(9)\n\nE9\n\n112\n\n\nSong Example\n\nloid (page 2)\nB\u20194(9) A%4(9) Ab/4(9) Ab9 Db/Ab\nf~\nA & \u00a2 be 'o be Ae\nAi weet ca tite =\nANS? ames Tjt\n& Vel\nAb? Ab?4(9) Ab9 G13\n4 be. be\n7. = f\u2014F pee\n& eet t\n\u00a9 \u2014_\nG13 c% Dm9 G13\n\u2014 te\n4 A . a eo = nN\nPoet =. ret Pas tee f f.\n5) = L = | I\nC%y A7(b13) D9 G13\nA a ae ee\n= =]\nra Robe oe ree ot\nXY T AL iv al il I r Lt \u00a5_ ie 1\n\u2014a\u2014 = \u20184 \u2014_ \u2014\nc% Eb? Em? AZ Dm9 G13 C% C%\nfo e\nA ef (Foyt pom pee \u2014 3 - ml =\nBt Saat gee Sse\nASS7 aI Ai T 4b if 14\nOS) 4 el fe T\n\nThis song was recorded on my CD \u201cIoid\u201d \u2014 Perfil Musical, 1993.\n\nThe musicians who performed on this track are:\n\nNelson Faria - Guitars\n\nAdriano Giffoni - Acoustic Bass\nRodolfo Cardoso - Drums\n\nCarlos Malta - Saxophones and Flutes\nMarco Lobo - Percussion\n\nHamleto Stamato - Keyboards\n\n113\n\n\nFrevo\n\nAccompaniment example of the Frevo style.\n\nsan\n\nThe following example is a accompaniment suggestion for the song \u201cIoid\u201d.\n\nC69\n\nDm9\n\nD9\n\nG13\n\nG4\n\nDm7 Ab7 G7 Db7 C\u00ae9\n\nEm7 Bb7 A7 Eb7\n\n|e\n\nla\n=<\n\n114\n\n\nAccompaniment Example\n\nC69\n\nG13\n\nDm9\n\nA7(b13)\n\n3\n\n3\n\nD9\n\nEb9\n\nC%9\n\nEm7 Bb? A7 Eb? Dm7 Ab? G7 Db7 C\u00ae9\n\nF\u20194(13)\n\nAb\u2019 4(9)\n\nBb\u20194(9)\n\nG74(9)\n\nT\nBI\n\n0 be\n\nQ\n118 =\nLaas 3\nF\n3\nhon \u00e9\n|e\nben\nL_=<\n|e\nle_\nbem\nI~\n=\nOS\na\neS\n~\n\n115\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

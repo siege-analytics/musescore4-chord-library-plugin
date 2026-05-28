@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: nelson-faria\nWork id: brazilian-guitar-book\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:42:31+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 brazilian-guitar-book\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\n## Overall Arc and Pedagogical Structure\n\nNelson Faria's book is organized as a systematic survey of five core Brazilian guitar styles\u2014Samba, Bossa Nova, Choro, Frevo, and Bai\u00e3o\u2014each occupying its own self-contained part. The book moves from the most foundationally important rhythmic style (Samba, whose syncopation clich\u00e9 is declared the single most critical figure a student must internalize) through progressively distinct regional and historical forms, ending with the northeastern Bai\u00e3o. The pedagogical structure is consistent throughout: each style is introduced via a core pattern, then expanded into a numbered series of variations (Samba receives seventeen; Bossa Nova four; Frevo five; Bai\u00e3o five) that the student is expected to learn, mix, and deploy contextually rather than apply mechanically. The book is explicitly a performance methodology, not a theoretical survey\u2014it trains the body as much as the mind, repeatedly prescribing off-guitar exercises to build rhythmic independence before executing patterns on the instrument.\n\n## The Master's Characteristic Method: Two-Layer Texture and Body-Percussion Training\n\nAcross every chapter, Faria's signature technical approach is the strict separation of the guitar into two independent rhythmic streams: the **thumb** anchors bass notes on the beat while **fingers 1, 2, and 3** handle the syncopated upper voices. This division of labor, introduced in Chapter 1 for Samba, is re-affirmed as the load-bearing architecture in Chapters 2, 4, and 5. The method's most characteristic pedagogical move is the **off-guitar clapping exercise**: the student claps the upper-voice rhythm and taps the lower-voice rhythm with the foot before approaching the instrument, internalizing bipartite independence kinesthetically. This body-percussion training appears explicitly in Chapters 1, 2, 3, and 5, making it a cross-style methodological constant rather than a style-specific tip.\n\n## Bass-Line Rules and Left-Hand Prescription\n\nFaria is unusually prescriptive about bass construction. The **root/fifth alternation rule**\u2014with the fifth preferentially voiced *below* the root\u2014governs bass lines in Samba (Chapter 1), Bossa Nova (Chapter 2), and Frevo (Chapter 4). Chapter 1 refines this further: when the bass operates syncopated and independently, the thumb handles it; in block-style textures, the index finger takes over instead. Chapter 4 adds that frevo bass lines keep the sixth string rooted where possible. Left-hand fingering is not left to the student's discretion: Chapter 1 specifies exact fingerings for individual variations (e.g., 3-1-4-2 for Variation #3, 4-1-1-3-2 for Variation #17) and introduces problem-solving techniques such as thumb-over and split-finger barres for wide stretches. Chapter 2 provides explicit five-note chord fingering for dense voicings. Prescription at this granularity signals that Faria treats fingering decisions as stylistically load-bearing, not merely ergonomic.\n\n## Style-Specific Systems and Terminology\n\nEach chapter introduces a discrete terminological vocabulary. Chapter 1's key term is the **samba syncopation clich\u00e9**, the irreducible rhythmic figure from which all seventeen variations derive, plus named sub-styles like **Partido Alto** and the **batucada** texture (which mixes syncopated and non-syncopated rhythms across four measures). Chapter 2's organizing concept is the **clave**\u2014the rhythmic cell that must remain directionally consistent throughout a Bossa Nova performance\u2014with variations extending from a single measure to **extended patterns** spanning two measures and employing staccato articulation or 16th-note displacement. Chapter 3 (Choro) specifies a **three-part form (A, B, C)** modulating to the V or IV key center in part C, a harmonic vocabulary of triads, seventh chords, and **inverted diminished chords**, and guitar patterns that simulate the **pandeiro** (a Brazilian frame drum). Chapter 4 names the **walking-bass analogy** (drawn explicitly from jazz) for frevo's root-fifth bass movement and introduces **marcha rancho** as a 3/4 variant treated in Variation #5. Chapter 5 identifies Bai\u00e3o's modal grounding in the **mixolydian and lydian b7 modes**, its simulation of **cowbell and berimbau** timbres through specific right-hand techniques, and the **pedal-tone rule** (syncopated bass against on-beat upper voices).\n\n## Variation Deployment as Performance Technique\n\nA rule that recurs across all five styles is that numbered variations are not simply technical exercises but **deployable performance options**. Faria explicitly states in Chapters 1, 3, 4, and 5 that variations can be mixed within a song and that pattern changes are idiomatic at **cadenzas and section endings**. This frames the entire variation system as a vocabulary of compositional gestures: the student learns not just *how* to play each pattern but *when* to switch, making contextual deployment a formal part of the method. Chapter 3 reinforces this with the observation that changing patterns at section endings is a Choro convention, not merely a pedagogical liberty. The cumulative effect across all five parts is a model of Brazilian guitar performance in which rhythmic variety within a song is achieved by cycling through a learned set of style-consistent variations rather than through improvised deviation from a single pattern.\n\n## What the Book Teaches, Synthesized\n\nTaken as a whole, the book teaches a **modular, body-first methodology for Brazilian rhythm guitar** in which every style reduces to (a) a foundational two-layer texture separating thumb-bass from finger-upper-voices, (b) a core rhythmic clich\u00e9 or cell that must be internalized kinesthetically before being executed on the guitar, (c) a numbered set of variations derived from that cell through systematic transformation (register switching, staccato, syncopation displacement, meter change), and (d) a performance convention that treats those variations as a deployable repertoire switched at structurally meaningful moments. The harmonic language across styles is deliberately kept simple\u2014root-fifth bass, triads and seventh chords, occasional diminished harmony\u2014because the book's pedagogical weight falls entirely on rhythm and texture, not harmony. The student who completes all five parts will have internalized a unified physical technique (the thumb/finger split), a common practice discipline (body-percussion pre-training), and a set of style-specific rhythmic vocabularies they can apply, mix, and time with structural intention.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 25-61\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:41:13+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 PART I - Samba\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 teaches the foundational techniques and rhythmic concepts of samba guitar, beginning with the samba syncopation clich\u00e9\u2014the single most important rhythmic figure that must become intuitive to the student. The core technical rule assigns the right hand fingers 1, 2, and 3 to syncopated upper voices while the thumb plays the on-beat bass note, a division of labor that governs all variations and which the student should practice away from the guitar by clapping high voices and tapping the low with the foot. The bass line operates under a root/fifth rule with the fifth preferentially voiced below the root, and when syncopated independently, requires the thumb for the bass line but the index finger in block-style situations\u2014distinctions that preserve the samba feel while maintaining rhythmic independence. The chapter introduces seventeen variations (numbered #1 through #17) that systematically explore techniques including mirror-image two-measure forms, agog\u00f4 simulation through voice-register switching, the batucada style that mixes syncopated and non-syncopated rhythms over four measures, and named sub-styles like Partido Alto. Left-hand fingering is prescribed specifically for each variation (such as 3-1-4-2 for Variation #3 and 4-1-1-3-2 for Variation #17), with problem-solving strategies like thumb-over technique and split-finger barres for wide stretches. The chapter establishes that variations can be mixed within a song and deployed strategically at cadenzas and section endings, teaching the student to apply patterns contextually rather than mechanically.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 63-86\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:41:13+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 PART II - Bossa Nova\n\n_Distillation; backed by `chapters/ch02.md`._\n\nChapter 2 teaches the bossa nova rhythm by grounding all right-hand patterns in the \"clave,\" a foundational rhythmic cell that must remain directionally consistent throughout a piece, with the core technique split between fingers handling syncopated upper voices and thumb anchoring bass notes on root-fifth alternation. The chapter introduces four variations of increasing complexity\u2014Variation #1 adds 16th-note syncopation equivalent to samba patterns, Variation #2 extends to two-measure units, Variation #3 employs staccato articulation with registral reduction, and Variation #4 serves specific performance contexts like singer's pauses with optional 16th-note displacement\u2014each with precise fingering and harmonic-rhythmic alignment rules. Characteristic of the method's pedagogical approach, Faria prescribes off-guitar practice (clapping the bass-upper voice split) to internalize the rhythmic independence before executing it on the instrument, and provides explicit five-note chord fingering instruction for dense voicings. The load-bearing terminology introduced is \"clave\" (the rhythmic cell), \"syncopation\" (as applied to upper-voice displacement), and the concept of \"extended patterns\" spanning multiple measures.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 88-102\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:41:13+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 PART III - Choro\n\n_Distillation; backed by `chapters/ch03.md`._\n\nChapter 3 teaches the essential characteristics and performance practices of choro, a Brazilian style defined by 16th-note melodies in 2/4 (or 3/4 waltz) time, played by a small ensemble of flute, cavaquinho, and seven-stringed guitar with frequent soloist improvisation. The harmonic vocabulary centers on triads, seventh chords, and diminished chords typically in inverted positions, with a strong emphasis on bass-line movement, while the form follows a standard three-part structure (A, B, C) that modulates to the V or IV chord key center in part C. Guitar patterns in choro simulate pandeiro (a percussion instrument) rhythms, requiring the guitarist to coordinate high and low voices as independent rhythmic streams\u2014a skill developed through left-hand muting practice and body-percussion exercises (hand-clapping and foot-tapping). The chapter introduces the practical flexibility of switching between multiple rhythmic variations throughout a song and the idiomatic convention of changing patterns at section endings or cadenzas, establishing variation deployment as a core performance technique in the style.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 104-117\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:41:13+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 PART IV - Frevo\n\n_Distillation; backed by `chapters/ch04.md`._\n\nChapter 4 introduces frevo, a syncopated march style that is dance-oriented, typically up tempo, and most commonly written in 4/4 time with melodic accents on the upbeat. The guitar's foundational pattern places syncopations on the top voices of the chord while the bass note (which alternates between the chord's root and fifth, preferably with the fifth below the root) lands on the beat, mirroring the \"walking bass\" approach of jazz. The chapter establishes that frevo bass lines keep the sixth string rooted where possible and that harmonies are simple, usually turnarounds. Faria teaches five variations that can be deployed individually throughout a song or mixed to create new patterns, with distinct rhythmic characters: Variation #1 introduces new syncopation on the third beat, Variation #4 demonstrates an up-beat-only texture (optionally executed with left-hand muting of downbeats), and Variation #5 illustrates marcha rancho in 3/4 meter. The load-bearing terminology introduced includes the frevo's syncopated rhythmic character, the bass-root-fifth alternation pattern, the walking-bass analogy, and the concept of structural variation deployment across sections and cadenzas.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s3\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 118-146\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:41:13+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 PART V - Bai\u00e3o\n\n_Distillation; backed by `chapters/ch05.md`._\n\nChapter 5 teaches the foundational patterns and variations of bai\u00e3o, a Brazilian rhythmic style originating from the northeast (Cear\u00e1, Maranh\u00e3o, and Bahia) that emerged in the 1940s from the bumba-meu-boi folk dance. The core technique centers on a two-layer texture: upper voices that simulate percussion instruments (cowbell, berimbau) against syncopated pedal-tone bass lines, all grounded in the mixolydian and lydian b7 modes with simple harmonic movement. Faria introduces five key variations\u2014cowbell/syncopated bass, berimbau open-string technique, broken chords style, and salsa-inflected bass syncopation\u2014each deployable either continuously through a song or mixed to create new patterns, with the characteristic load-bearing terminology being the pedal-tone rule (syncopated bass against on-beat upper voices) and the cross-training practice method of clapping high voices while tapping low voices with the foot to internalize the bipartite rhythm.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s2\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 25-61\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:33:52+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 PART I - Samba\n\n_Pages 25-61._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## samba syncopation clich\u00e9\n\n> The last figure (syncopating every beat of the measure), is a rhythmic \u201cclich\u00e9\u201d\n> that you'll find in almost every samba melody. So | suggest that you practice this\n> pattern until it gets familiar and intuitive to you.\n\n**Significance (p. 23).** This identifies the single most important rhythmic figure in samba melody and instructs the student to internalize it as a foundational pattern.\n\n## right hand basic samba technique\n\n> Notice that the syncopation is usually done with the\n> right hand fingers 1, 2 and 3 (playing the top voices of the chord), while the bass\n> note (played with the right hand thumb), comes on the beat.\n\n**Significance (p. 25).** This is the core technical rule for samba guitar: it assigns specific right-hand fingers to specific rhythmic roles (syncopated voices vs. on-beat bass), establishing the division of labor that underlies every variation.\n\n## bass line root/fifth rule\n\n> The bass line keeps switching between the root and the fifth of the chord, and it\u2019s\n> a better choice to play the fifth below the root. If the bass note is already placed\n> on the 6th string, you may keep the same note for the whole measure.\n\n**Significance (p. 25).** This rule governs bass-line construction for all samba patterns, specifying both the harmonic content (root/fifth alternation) and the preferred voicing direction (fifth below root).\n\n## practicing patterns away from guitar\n\n> It's also a good idea to practice away from the guitar, clapping hands on the high\n> voices and tapping the low voices with your foot.\n\n**Significance (p. 25).** This practice technique internalizes the polyrhythmic independence between treble and bass parts before applying it on the instrument.\n\n## Variation #1: agog\u00f4 simulation\n\n> to simulate the \u201cagogd\u201d (a percussion instrument made of two cowbells\n> \u2014 hi and low pitches ~ held together) you can play the chord changes, switching\n> from low to high voices, as suggested.\n>\n> Notice that \u201cvariation #1\u201d is the basic pattern in the first measure and its mirror\n> image in the second measure.\n\n**Significance (p. 26).** Defines both the structural logic of Variation #1 (mirror-image two-measure form) and the orchestral concept of voice-register switching as a way to simulate a specific percussion instrument.\n\n## syncopated bass thumb/index rule\n\n> To keep the samba feel and play the bass line at the same time, you must play the\n> bass line with the thumb when it occurs as an independent line and with the first\n> \u201cfinger\u201d (index) when it occurs in a \u201cblock style\u201d situation.\n\n**Significance (p. 30).** This is an explicit right-hand fingering rule for handling a syncopated independent bass line without losing the samba rhythmic feel.\n\n## Variation #3 left-hand fingering\n\n> The chords must be fingered (left hand fingers) from top to bottom 3-1-4-2.\n\n**Significance (p. 30).** Prescribes an unconventional but specific left-hand fingering order required to execute the Variation #3 transcription cleanly.\n\n## Variation #6: syncopating every beat\n\n> This pattern is the result of syncopating every beat in a measure. This makes a\n> strong counterpoint between the bass line (on the beat) and the chord changes.\n\n**Significance (p. 33).** Defines the conceptual identity of Variation #6 and articulates the counterpoint principle\u2014on-beat bass against off-beat chords\u2014that distinguishes this pattern.\n\n## Variation #7: Partido Alto\n\n> This pattern outlines a samba variation known as \u201cPartido alto.\u201d\n\n**Significance (p. 33).** Names and defines a distinct samba sub-style (Partido alto), tying the rhythmic pattern to a specific genre category within the broader samba family.\n\n## Variation #9: batucada style\n\n> Now we have an extended pattern (4 measures long). This pattern mixes\n> syncopated and non-syncopated rhythms, generating a \"batucada\u201d style pattern.\n\n**Significance (p. 39).** Defines the batucada concept and identifies the structural technique\u2014mixing syncopated and non-syncopated rhythms over a four-measure cycle\u2014that produces it.\n\n## Variation #15: fill-in usage rule\n\n> Use this pattern to fill in spaces at the singer's pause or at the end of a section.\n\n**Significance (p. 44).** Gives a functional performance rule specifying when to deploy this variation, teaching the student to think contextually rather than mechanically.\n\n## Variation #17: thumb-over or split fingering\n\n> To play the bass line on the chord \u201cDb9\u201d you must hold the notes Ab and Db at\n> the same time. Either use the \u201cthumb over\u201d technique or the left hand fingering\n> 4-1-1-3-2 (from top to bottom) or play the Ab and Db notes by pressing your\n> second finger (left hand) in between the 5th and 6th strings.\n\n**Significance (p. 47).** Presents three concrete left-hand solutions\u2014thumb-over, a specific fingering sequence, and a split-finger barre\u2014for a specific chord voicing problem, teaching problem-solving strategies for wide stretches.\n\n## switching variations within a song\n\n> Each variation can be played through an entire song or you can switch between\n> the variations to create a new pattern. It\u2019s also common to use a different pattern\n> at the end of a section or-a \u201ccadenza.\u201d\n\n**Significance (p. 26).** This rule guides the practical application of all the variations, establishing that mixing patterns is idiomatic and pointing out the structural moment (cadenza/section end) where variation changes are most appropriate.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s2\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 63-86\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:35:33+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 PART II - Bossa Nova\n\n_Pages 63-86._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Bossa Nova clave definition\n\n> The \u201cclave\u201d is a rhythmic \u201ccell\u201d that\u2019s the root of most rhythmic patterns.\n\n**Significance (p. 61).** Defines the foundational rhythmic concept from which all bossa nova guitar patterns in this chapter are derived.\n\n## Clave inversion rule\n\n> The \u201cclave\u201d can be played as shown above or inverted, but once the\n\n**Significance (p. 61).** States the critical performance rule that clave direction must remain consistent throughout a piece, making reversal a stylistic error.\n\n## Right hand pattern basis\n\n> The \u201cbossa nova\u201d right hand patterns are based on the \u201cclave\u201d figure.\n\n**Significance (p. 62).** Establishes the direct structural link between the clave cell and the guitar right-hand patterns.\n\n## Syncopation vs. thumb technique\n\n> Notice that on the guitar, the syncopation is played on the top voices of the\n\n**Significance (p. 62).** Defines the core right-hand technique split: fingers handle syncopated upper voices while the thumb anchors the beat on bass notes.\n\n## Bass line root-fifth switching\n\n> Like samba patterns, the bass line usually keeps switching between the root\n\n**Significance (p. 62).** Gives the bass-line construction rule and the preferred voicing direction (fifth below root), with the open 6th-string exception.\n\n## Practice method away from guitar\n\n> It\u2019s also a good idea to practice away from the guitar, clapping hands on the\n\n**Significance (p. 62).** Prescribes a body-independence drill that internalises the rhythmic split between bass and upper voices.\n\n## Variation #1 samba relationship\n\n> This variation is the basic pattern with a 16th note syncopation on the Ist\n\n**Significance (p. 63).** Defines Variation #1 technically and establishes the conceptual equivalence of samba and bossa nova patterns.\n\n## Variation #2 extended pattern\n\n> We now have an example of an extended pattern (2 measures long). You can\n\n**Significance (p. 64).** Introduces the concept of a two-measure pattern unit and gives the practical performance context.\n\n## Five-note chord right-hand fingering\n\n> To play the five-note chords in this example, you must use right hand fingers 1,\n\n**Significance (p. 66).** Provides explicit right-hand fingering instruction for dense voicings, extending the three-finger technique to five voices.\n\n## Variation #4 usage context\n\n> This pattern is very useful at the singer\u2019s pause or at the end of a\n\n**Significance (p. 68).** Gives a practical performance-context rule for when Variation #4 is idiomatically appropriate.\n\n## Variation #4 16th-note syncopation option\n\n> You can also syncopate by a 16th note.\n\n**Significance (p. 68).** Introduces a 16th-note displacement sub-variant of Variation #4.\n\n## Harmony change before syncopated note\n\n> Notice that the harmony changes a 16th note\n\n**Significance (p. 69).** States a precise rule about the offset between harmonic rhythm and rhythmic syncopation, a subtle bossa nova detail.\n\n## Variation #3 short-note upper-voice style\n\n> It\u2019s basically the \u201cvariation #3\u201d, but using short notes, and playing only the\n\n**Significance (p. 67).** Identifies staccato articulation and registral reduction as a distinct sub-technique applied to an existing variation.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s2\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 88-102\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:36:55+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 PART III - Choro\n\n_Pages 88-102._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## choro origins and instrumentation\n\n> The term \u201cchoro\u201d was generically used to describe a small group (flute, cavaquinho\n> and seven stringed guitar), often with one group member as a soloist (improvisor).\n> Actually it is also played with other instrumentation (clarinet, trombone and a\n> few percussion instruments \u2014 particularly \u201cpandeiro\u201d and \u201csurdo\u201d). ,\n\n**Significance (p. 86).** Defines the canonical choro ensemble and names the specific instruments a guitarist must understand when situating their role in the style.\n\n## choro melodic characteristics\n\n> Most choro melodies are based on 16th notes with frequent use of melody\n> embellishments. It\u2019s usually written in 2/4, but you will also find it in 3/4 (choro\n> waltz).\n\n**Significance (p. 86).** Gives the two defining rhythmic and metric rules a player must know to recognize and perform authentic choro phrasing.\n\n## choro harmony rules\n\n> In the harmony the use of triads, seventh and diminished chords are common,\n> usually in an inverted position. The bass line is also very important.\n\n**Significance (p. 86).** States the harmonic vocabulary and the structural priority of inverted voicings and bass movement that distinguish choro accompaniment from other styles.\n\n## choro form structure\n\n> The choro form is frequently divided in 3 parts \u2014 A, B and C \u2014 with a modulation\n>\n> to the V or IV chord key center in the part C.\n\n**Significance (p. 86).** Defines the standard three-part form and the characteristic modulation rule that a guitarist must follow to navigate choro repertoire correctly.\n\n## pandeiro pattern on guitar\n\n> Like other Brazilian styles, the patterns that we use on the guitar for the choro are\n> simulations of the rhythm section. This basic pattern is a typical \u201cpandeiro\u201d\n> pattern applied to the guitar.\n\n**Significance (p. 88).** Establishes that choro guitar rhythm is a percussive simulation of the pandeiro, which governs how all subsequent patterns are understood.\n\n## muting practice technique\n\n> You can practice these patterns and variations muting the strings with your left\n> hand. It\u2019s also a good idea to practice away from the guitar, clapping hands in the\n> high voices and tapping the low voices with your foot.\n\n**Significance (p. 88).** Provides a concrete two-part practice method\u2014left-hand muting and body-percussion subdivision\u2014for internalizing the rhythmic independence between high and low voices.\n\n## switching between variations\n\n> Each variation can be played through the entire song or you can switch between\n> the variations to create a new pattern. It\u2019s also common to use a different pattern\n> or add bass line movements at the end of a section or a \u201ccadenza.\u201d\n\n**Significance (p. 89).** Gives the practical rule for deploying multiple rhythmic variations within a single performance, including the convention of changing patterns at section endings.\n\n## variation #5 placement rule\n\n> You can use this pattern through the entire song or at the end of a section.\n\n**Significance (p. 93).** Specifies the correct musical context for Variation #5, teaching when this particular pattern is idiomatic.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s2\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 104-117\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:38:08+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 PART IV - Frevo\n\n_Pages 104-117._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Frevo rhythmic character\n\n> Primarily dance oriented, the frevo is basically a march, with syncopated figures in\n> the melody and in the rhythmic patterns, usually up tempo.\n\n**Significance (p. 102).** Defines the foundational rhythmic identity of frevo: syncopation and tempo context that governs all the guitar patterns.\n\n## Frevo time signature\n\n> Frevo is usually written in 2/4 although you can find the use of 3/4 or 4/4. The\n> examples in this book are written in 4/4. The melodic accent comes on the up\n> beat and the melodies are pretty much syncopated.\n\n**Significance (p. 102).** Gives essential metric and accentuation rules for reading and performing frevo examples.\n\n## Frevo bass and harmony style\n\n> The\n> bass part is much like a jazz \u201cwalking bass\u201d, playing even quarter notes, and the\n> harmonies are quite simple, usually turnarounds.\n\n**Significance (p. 102).** Cross-references frevo bass to jazz walking bass and notes turnaround-based harmony, shaping how to comp.\n\n## Right-hand pattern: syncopation placement\n\n> Keep in your mind that the syncopations are played on\n> the top voices of the chord, while the bass note comes on the beat.\n\n**Significance (p. 104).** Core rule for basic frevo guitar pattern: prescribes which voices carry the syncopation and which carry the downbeat pulse.\n\n## Bass note: root vs. fifth\n\n> As in other Brazilian styles, the bass line keeps switching between the root and\n> the fifth of the chord, and it's a better choice to play the fifth below the root.\n> If the bass note is already placed on the 6th string, you may keep the same note\n> for the whole measure.\n\n**Significance (p. 104).** Governs left-hand voicing choices for every frevo chord, dictating the idiomatic bass motion.\n\n## Using and combining variations\n\n> Each variation can be played through the entire song or you can switch between\n> the variations to create a new pattern. It's also common to use a different pattern\n> at the end of a section or a \"cadenza\".\n\n**Significance (p. 105).** Pedagogical rule explaining structural deployment of variations across a performance.\n\n## Variation #1: new syncopation\n\n> In this variation you'll find a new syncopation in the 3rd beat.\n\n**Significance (p. 105).** Labels the technical difference introduced in Variation #1.\n\n## Variation #4: up-beat only pattern\n\n> This is a good example of a variation playing only the up beats of the measure.\n\n**Significance (p. 108).** Defines Variation #4 as a fully up-beat texture, an important rhythmic concept in frevo accompaniment.\n\n## Variation #4: left-hand muting technique\n\n> You can play this example using straight 8th notes, muting the down beats with\n> your left hand.\n\n**Significance (p. 108).** Introduces a left-hand muting technique as an alternative execution for Variation #4.\n\n## Variation #5: marcha rancho in 3/4\n\n> This variation is an example of a \u201cmarcha rancho\u201d in 3/4 meter.\n\n**Significance (p. 110).** Connects Variation #5 to marcha-rancho, showing how the 3/4 feel is realised on guitar.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book\nstage: s2\nsource_pdf: _g Brazilian guitar book Nelson Faria.pdf\nsource_pages: 118-146\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:39:42+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 PART V - Bai\u00e3o\n\n_Pages 118-146._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Bai\u00e3o origin and style\n\n> Music from the north east of Brazil, more specifically from Ceara, Maranhao and\n> Bahia, Baiao is derived from a folk dance (bumba-meu-boi) and emerged as a\n> musical style in the 40's.\n\n**Significance (p. 119).** Establishes geographic and historical origin of bai\u00e3o.\n\n## Bai\u00e3o modal and harmonic characteristics\n\n> The baiao melodies are usually in the mixolydian or lydian b7 modes. It\u2019s written\n> in 4/4 but you can find also the use of binary meters (2/4 or 2/2).\n>\n> The harmonies are quite simple with much use of pedal tones in the bass.\n\n**Significance (p. 119).** Defines the two primary modal flavors and the signature bass-pedal harmonic approach for bai\u00e3o.\n\n## Basic pattern practice advice\n\n> You can practice these patterns and variations using a static seventh chord (mixolydian mode).\n>\n> It's also a good idea to practice away from the guitar, clapping the high voices and\n> tapping the low voices with your foot.\n\n**Significance (p. 121).** Cross-training technique for internalizing the two-layer bai\u00e3o texture.\n\n## Variation application strategy\n\n> Each variation can be played through the entire song or you can switch between\n> the variations to create new patterns.\n\n**Significance (p. 122).** Performance rule for deploying variations: sustain one or mix.\n\n## Variation #1 \u2013 cowbell/syncopated bass texture\n\n> In this variation the upper side of the chord simulates a cowbell pattern playing\n> straight quarter notes, while the bass part plays a syncopated counterpoint.\n\n**Significance (p. 122).** Defines the two-voice rhythmic architecture of Variation #1.\n\n## Variation #1 \u2013 lydian b7 context\n\n> This example applies the pattern on a typical lydian b7 mode progression.\n\n**Significance (p. 122).** Anchors the variation to the genre's characteristic modal context.\n\n## Variation #1 \u2013 pedal-tone rule (Vera Cruz)\n\n> Notice the use of a syncopated pedal tone against the upper voices of the chord,\n> played on the beat.\n\n**Significance (p. 123).** Teaches the specific voice-leading rule that defines this bai\u00e3o texture.\n\n## Variation #2 \u2013 berimbau open-string technique\n\n> This is a typical baido clich\u00e9 on the lydian b7 mode, using a G open string\n> simulating a \u201cberimbau\u201d pattern.\n\n**Significance (p. 124).** Introduces a characteristic open-string device that mimics the berimbau.\n\n## Variation #4 \u2013 broken chords style\n\n> This pattern is specifically used in the \u201cbroken chords\u201d style.\n\n**Significance (p. 125).** Names a distinct textural category within bai\u00e3o guitar accompaniment.\n\n## Variation #5 \u2013 salsa flavor via bass syncopation\n\n> Notice the syncopation of the bass line. It gives a \u201csalsa\u201d flavor on baiao patterns.\n\n**Significance (p. 126).** Teaches how bass rhythmic choice inflects the genre feel toward salsa.\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for nelson-faria/brazilian-guitar-book; use _pending: when unsure about kind."
+}
