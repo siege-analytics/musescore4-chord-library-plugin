@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch14",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 14: Mixing up different groups of consecutive eighth notes\nPages 64-67 of the book.\n\n<<<CHAPTER TEXT\n\nHemidias\n\nELODIC RHVINHS\n\n| oO\n-\n\nw Tune 6 + Into Somewhere (C Instruments)\npack 13 - slow |\n| eco\n\nGA\n\nBb_7 : Eb7\n\n\u2014\u2014_a== FS FFL LP LIP\n\nGA B-7 E79\noe oo \u2014_ =r CAD LP Pf =\nA- Ba E7?9 A-7\n\nSF\n\n\n\nTune 6 Into Somewhere (Bb Instruments)\nTrack 13 - slow\nTrack 14 - fast\nA\u0394\nC-7\nF7\nA\u0394\nC#-7\nF#7b9\nB-\nC#\u00f8\nF#7b9\nB-7\nF7#11\nB-7\nE7b9\nA\u0394\nC-7\nF7\nA\u0394\nC#-7\nF#7b9\nB-7\nC#-7\nF#7\nB-7\nE7\nA\u0394\nB-7\nE7\n\nTune 6 Into Somewhere (E\u266d Instruments)\n13 - slow\n14 - fast\nE\u0394\nG-7\nC7\nE\u0394\nG#-7\nC#7b9\nF#-\nG#o\nC#7b9\nF#-7\nC7#11\nF#-7\nB7b9\nE\u0394\nG-7\nC7\nE\u0394\nG#-7\nC#7b9\nF#-7\nD7#11\nG#-7\nC#7\nF#-7\nB7\nE\u0394\nF#-7\nB7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 14 extraction"
+}

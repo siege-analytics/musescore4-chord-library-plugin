@@ -1,0 +1,112 @@
+{
+  "run_id": "2026-05-28T15-05-20-bergonzi-melodic-rhythms-vol-4",
+  "config": "pipelines/master-distillation/configs/bergonzi-melodic-rhythms-vol-4.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bergonzi-melodic-rhythms-vol-4/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bergonzi-melodic-rhythms-vol-4/pages.json",
+        "re-ingested: 117 pages, 66,825 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-28T18:13:45+00:00",
+      "ended_at": "2026-05-28T18:13:45+00:00",
+      "outputs": [
+        "detected 29 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bergonzi-melodic-rhythms-vol-4/chapter-bounds.json",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch01.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch02.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch03.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch04.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch05.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch06.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch07.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch08.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch09.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch10.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch11.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch12.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch13.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch14.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch15.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch16.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch17.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch18.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch19.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch20.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch21.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch22.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch23.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch24.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch25.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch26.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch27.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch28.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/chapters/ch29.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-28T18:22:53+00:00",
+      "ended_at": "2026-05-28T18:22:53+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch15-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch16-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch17-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch18-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch19-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch20-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch21-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch22-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch23-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch24-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch25-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch26-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch27-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch28-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/summaries/ch29-summary.md",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/melodic-rhythms-vol-4-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-28T18:33:49+00:00",
+      "ended_at": "2026-05-28T18:33:49+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/derived/systems-draft.json",
+        "plugin/data/masters-corpus/jerry-bergonzi/melodic-rhythms-vol-4/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

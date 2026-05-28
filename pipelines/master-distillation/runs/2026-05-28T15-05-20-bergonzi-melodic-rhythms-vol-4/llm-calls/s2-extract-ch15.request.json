@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch15",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 15: Consecutive 16th notes\nPages 68-71 of the book.\n\n<<<CHAPTER TEXT\n\nHOMTOLAS\n\nAfter trying these rhythms on Tune 6 go back and try playing them through Tunes 1-5. When you\nhave become comfortable using these rhythms exclusively without stopping try combining any\ntwo of them to make a 6/4 rhythm. Here is an example:\n\n~~\n\nif\n{\nL\nf\n\nTN\nVer\n\na ne\n\nTry combining four of them to create a line with 3/4 phrasing over 4/4 that is less obvious, for\n\nexample:\n\n@ @ @) \u00ae\n\nrN\n\nco\n\nNeedless to say this becomes inexhaustible. You might try using different combinations every day.\nOnce you have gone through the exercises in this chapter try just playing random 3/4 over 4/4\nusing one 3/4 rhythm, then another and another without any program in mind. This really gets it\ninto your unconscious mind. You could also try composing some 3/4 rhythms and making them\n\nyour own.\n\n\n\n| \u2014 \u2014 \u2014_ mee Ue CO \u2014_ = = mH HE EE eam =\n\n9/4 Rhythms Over 4/4\n\nIn the same fashion that you played 3/4 over 4/4 (Chapter 16) try 5/4 over 4/4. takes five bars of\n4/4 to equal four bars of 5/4. To check yourself out when practicing these rhythms the pattern\nshould hit one on the sixth bar.\n\n5/4 Ruyrums\n\na\n\nWeyl\n\n\u2014TN\n\nnese\nTN\nN\nLN\nTT\n\njay\nTTS\n\n5\n\neR\nnN\naS\nvN\ni\nLN\nHN\nHy\n\nEtt\n\n\n\nS/k RUYTWMS OVER ASG\n\nHere is that first 5/4 rhythm written out over 4/4. Try writing the rhythms out like this if it helps.\nBe patient with yourself as it can take years to work this material out!\n\n\u2018\n\nok\n\n\n\nH/4 Rhythms Over 4/4\n\nAs with the 3/4 and 5/4 rhythms try these 7/4 rhythms over 4/4. When playing a 7/4 rhythm it\ntakes seven bars to work out so that on the eighth bar you are starting on beat one again.\n\n7/4 Ruyttims\n\nFZ\nEt\n\nva\n\nWN\n\n!\n\nPr ee ee ee ee ee ee ee ee\ned\nre\n\u00a2\n;\ni\n\nYs,\n\u2014TWN\nri\u2122\n\u2018e\n\nLe\nxm\nLisl\nPN,\nJe\ni\nae\n\ni\n\nHe\nxXIN\nLisl\nx\nNe!\nNe\nv\n\n=\n\nEN\n\ncn\nNS\n\u2014M\n\nTN\nrN\nter\n\nam 2\n\noN\nhy\nin|\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 15 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch23",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 23: More time zones\nPages 94-103 of the book.\n\n<<<CHAPTER TEXT\n\nHORE TIME LONES\n\nTo continue getting into the polyrhythm mode try composing several other lines and adapting\nthem with the above 12 gears. Also, try playing the line in repeat mode while slowing down or\nspeeding up and keeping the original tempo in your mind. If nothing more these exercises will help\nto make your time more elastic and fluid and will give playing eighth notes a different perspective.\nAnother way to achieve similar results is to try playing scale sequences in 5, 7, or 9. Here are some\nexamples.\n\nThis is a four-notes scale sequence played in 5/2:\n\n> 5\n\nTe\n\nhi % \u00bb al\n=f \u2014\u2014\u2014 og\ni fant t i mal fed eo.\nYS if | Yt\n. : ia\n5 5\n: : co\ni i] eo!\nT f { i ia @ ao i\n{ \u2014| ~. ed o\u2014_\u2014\u2014_\u2014 i\n\u2014 \u2014\u2014 oa = es \u00b0 f \u2014\n5\nol\nf o_\u201d\n|\n5\n\n]\n\nif i T T i {]\nGaara jo \u00b0 ee \u2014..\na : \u2014 \u2014\n7 5\n5 5\n> \u00b0 \u2014 \u2014\nad i 1\nQ-\u2014 iad o\u2014* a\noe i |\n\nwn\n\n\n\nFLODtC RUYTMHS\n\nu\n| \u00a7\n\u2018\nea\n\u2018lee oe\na\n\\ .\ne\nL\nBm my in KR e K\ni ih a\n\u2018\nSON\n205 \u2018. , \u2018\nSos 8 e\nZS q\n2 \u2018 i ce Al\n2 \u00a2 r e |\naS. rs ha mi)\n~ 8 mI\n2 a KR s NK s e\n2 \u20ac\n$8 e ity\nz pg a\na 3\n\u2014E 2 Tt eu [i\n5 2\n5 . . lil\n| ,\n\\ \u201c \u00b0 g\netn s iy anne ST B\na mn ani) nf\n| | \u00ae\n\u2018 \u201c rte 5\n: yo , j\ni Cm aCe sem oo\n\n\n\nHORE TIME LONES\n\n7 7\nA . \u2018 | i etc.\n- i [ oe _ 7 ~~ _\u2014\u2014\n5 \u2014s o-\n- \u2014e\n7\n\u2019\n7\nA | \u2019 i etc.\no i :\n\u00a9 \u00b0 \u2014\u2014gt\neo\n7 7\na 7\n| | j | 7 7 - etc.\n\u2014 a = =\n\u2014 So a z oe 3 =\n7\nNine-note sequences (played over four beats or two beats depending on the tempo).\npe\n-.. _\n\u00a9 fee\ne Lt | Le |\n9\n| f\nt | {\npeas !\n9\nT | i 9\nfe ou? \u2014_ a \u2014\u2014\n}$\u2014\u2014\u2014}~. i . = i | T I \u2018 T\nx? [even ae a f \u00a9 de nes o_o To\n\nCompose your own sequences and get inside the polyrhythmic gears. Once you get the feel of a\nparticular gear try to improvise on or against tunes. Sometimes it can definitely feel as if you are\nplaying against the tune if the rhythm section is already playing other cross rhythms or poly-\nrhythms, Practicing all of these lines and sequences is meant to help develop rhythmic ear training\n\nas opposed to adding melodic vocabulary.\n\n\n\n-_\n\nELODIC RAYTNNS\n\nr IN QUINTUPLETS\n\nAnother way to practice rhythmic ear training is to try playing the modes in different groupings.\nHere are the modes written out in quintuplets, play each one twice. Note that as you play through\n\nthe modes you are changing one note every time you change modes. Go th rough all of the modes\n\nchanging one note until you finally change the root and then start all over again!\n\nG LypDiAN\n\n4 pene te te ft. te ft. \u2014_\n\nWa my { t ii 4. a ia\n= eres T f i | { i [ { 4 .\nee eee\n\n5 5\nG IonIAN\nec @\n\u2014-}\u2014 of F 2 @\n=y \u2014 i ee i\n_ t li T { i i if { f - )-.\naa a - mt = \u2014 ===\neee\n5\nrs ft .\n. f f i a as S\n= a\nsacs 5 5 \u2014\u2014\u2014\ns s\nG Dortan ,\no\n\nray o 2 oR | #& # _\n\nf= \u2014_ \u2014\u2014 oe\n\ne l | 5 5 i\n\n5 5\nG AEOLIAN ,\n\nA j oe \u00a9 @ \u00bb 2\n62 pe =\neo a, 3 a\n\n5 7 5\n\nGo\u00bb LyDIAN\n\nbe\n\no\n,\na ae\n\nce ee\n\n\u2014\u2014\u2014\n5\n\nbe a\na Lg De be =\n\nSew pee ee \u2014\n\u00e9s\n\n>\n\n|\n\n\n\nMORE TIKE\n\nFONDS\n\nMObES IN SEPTUPLETS\n\nNext try the modes in septuplets.\n\nG Lyptan\n\nG Tonian\n\nh\n\n\u2014 7\n\ni\n!\n\n;\n\na)\na.\noH\n\n!\n7\n\n\u201coe | |\n\nG MIXOLYDIAN\n\nsane\nHy\n4\n\nr\n:\ne |\n\nG Dorian\n\no\u2014\u2014#\n\n?__\u00a2 4 \u2014\n\nG PuryGIAN\n\noe\n\nGb LypiAn\n\nd __ | o be o-\u00bb-\n, ee ee | ee ee\ni a\ne J t\n\nul\n\n\nELOBIC RAY THMS\n\nbes IN NonTuPLets\n\nG LYDIAN\n\nry\n\nTyp.\n1%\n\u00bb\n:\n\n.\nf i\n9\nG AEOLIAN\nbe\u00bb\np - bee? =\nOe\ne 7\n9 9\nG PuryGIAN\nM) ; Pa of? be be C.@ 9 \u2014\u2014\na er ee oe\ne Lt i 1\n9 9\n\nG Locrian\n\n\n\nNORE TLHE TONES\n\nMOvES IN TRIPLETS\n\nBecoming adept at playing all of these polyrhythms isn\u2019t a weekly pursuit but rather a long range\n\nendeavour!\n\nG LybDiAN\n\nG IONIAN\nCw\n3\n\n0 peo e et Fi Ft eo, , a\n= H rs a _ eg\ncon a E ee ee\n\nPa) 3 3 \u2014\n\n3\n\nG MIXxoLyDIAN\n\nie\n\nb\n=.) \u2014 \u2014e eee PR Reo es\n\nie\n\nme\n\n3\npm og eaten ER tee\ni \u2014 = j \u2014 5 | oe =a ma\ns \u2014\u2014 5 3 = \u2014\n\n\n\n+\n\nBroken Quintuplets, Septuplets, and Nonuplets\n\nUsing any of the preceding tunes next practice some varying time zones and see if you can incor-\n\nporate some broken quintuplets, septuplets, or nonuplets.\n\nExamples of broken quintuplets: Try these over 4/4.\n\n4\n\n1 J\nrcy o7] 7 7] [ ey rt \u2014_+\n\u00a9 a ae if a, an \u2014f\n\n| |\n5 U 5 en J\ney % f 1 at\ni a Ca a ee a ci es nee ae 4\nCt i | | Cf\nSs S 5 bg\ncv =e V2 RYs \u2014H\nfe A a a a ae re a ee\nCe Ct ee |\n5 i 5 5 5\n(OA\n_! ce |\n5 WL 5 -\u2014--__\nC7 4 a ee et ee eae\n! eel a\ny 5 L\n\nCompose some other broken quintuplet rhythms and play them on a tune. Also, these rhythms\n\ncould be 5 over 4, or 5 over 3.\n\n\n\nExamples of broken septuplets:\n\n7\n7\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n\n7\n7\n7\n7\n\n7\n7\n\nAs with the quintuplets, compose some other broken septuplet rhythms and practice them over tunes. You can try those septuplet rhythms over four beats, three beats, or two beats.\n\nMLLODIC RAY EAM\n\nExamples of broken nonuplets:\n\npoe\n\nCompose other broken nonuplets and play them over two, three, or four beats.\n\n|\n\n\u20ac id + aa ; t Z t ans + 4 c+ * 4 4 ft\npl i\n9 9 9 t 9\nt\n\u20ac t am L t t TZ wi z wh wa\n/ | I {\n9 \u2014 9\u2014\u2014_ 9 9 9 \u2014\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 23 extraction"
+}

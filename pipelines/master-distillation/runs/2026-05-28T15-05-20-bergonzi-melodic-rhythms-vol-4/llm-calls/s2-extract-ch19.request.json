@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch19",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 19: 4/4 rhythms over 3/4\nPages 81-84 of the book.\n\n<<<CHAPTER TEXT\n\n\u2018DEC RHYTHMS\n\nTune 8 + One Heart (E> Instruments)\n\n479 FET B7\n2.\neee Ot i\nL- ZL L | L van LO LL pf ZL Le \u2014 =\n\n\n\n_\n\nPracticing these following rhythms has the same intent as the preceding chapter, the difference\n\n| Half-Time Quarter-Note Triplet Feel\n\nt\n\nbeing that these rhythms are twice as long as the ones in Chapter 20.\n\ny\n{\n1. f@ }\n2 rey va \u00a3\nXx e if 4 \u00a9\nP|\nL 3 1 L 3\nry \u00a3\n3. fet 2\n~ {\nfe =\n\u00a3\n5. =\nne sees ae ee ee\n{2 \u00a3. [ \u00a3\n6. e + e\nL 3 L 3 J L 3 J\n:\n& { {\n\u2019 ee 3 = + e}\n3\n| p |\n|\nL 3 Jj L 3 J L L\u2014 3\n\n\n\n8.\n9.\n10.\n3\n3\n3\n3\n3\n3\n3\n3\n3\n3\n3\n3\n\n)*) Time Zones (Polyrhythms\n\nOne way to approach varying time zones is to talk about the different gears that might fit into the\ntempo at large. In this chapter we will consider five different time zones or gears to play in. It\u2019s\n\nsomething like driving a five-speed car.\n\u00a2 The quarter-note triplet gear\n\u00a2 The eighth-note gear\n\u00a2 The triplet gear\n\u00a2 The sixteenth-note gear\n\u00a2 The sextuplet gear (sixteenth-note triplets)\n\nThe aim of this chapter is to expand your vocabulary by adapting lines to these varying time zones\nor gears. Here is a common II-7 - V7 line:\n\nG-7 C7\n\n|\nae\na\nvT\ne\net\na\nQ\n\nIn this line there are eight notes per measure or 16 notes in all. To make this line feel comfortable\nin triplet gear you need to leave off the first four or the last four notes. In this case we'll leave off\nthe last four. Set your metronome between 50 and 60 for the half note and play the line in its origi-\nnal form. While playing the line as eighth notes take notice of your articulations and accents. Next\nplay it in triplets, leaving-off the last four notes. .\n\n~ 3\nDr \u2014\u2014_ \u2014\nOe i i i oe\nPi ee Ld\n3\n\nContinue repeating the line until you are in the groove of triplets and phrasing them as if they\nwere eighth notes.\n\nNext try playing the line as quarter-note triplets. Again repeat the line over and over until you feel\nthat groove.\n\na ee eT ee\neT \u2014\u2014\u2014\nND t ; \u2014Z a 2 i\n\ne T o i\n\nEA\na\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 19 extraction"
+}

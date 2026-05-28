@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch27",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 27: Downbeat \u2013 upbeat (quarter-note playing)\nPages 110-112 of the book.\n\n<<<CHAPTER TEXT\n\nThe Half Note, Quarter Note, and Dotted Quarter &\n.\n\nVery often, less is more. Playing less notes at times allows the music to breath more. It also gives\nthe rhythm section space for a little interaction and dialogue. Try playing solos on any of the tunes\nusing only half notes, quarter notes, and dotted quarters. How rigidly you interpret this is entirely\n\nup to you. Sometimes a little limitation can be a great teacher.\n\nAccents\n\nreally swinging trombone player and when | asked him about his approach his answer was, \u201cI play\naccents and the fills around them.\u201d\n\nTry taking any tune and playing just accents as if you were the saxophone or trumpet section in a\nbig band. After playing through several choruses, slowly fill in around the accents.\n\nVery often players ask: \u201cHow do I connect with the rhythm section?\u201d I can remember hearing a P\n| 7\nFeeling the Music in |, 2, or 4\n\nTo enhance your flexibility with the time it is great practice to play tunes with different time feel-\nings in mind. Play a tune first thinking and feeling the tune in four, feel and think four beats to the\nmeasure. Next play that tune in two, feeling and thinking of the tune in half time (feeling beats\none and three}. Notice that your ideas seem to take a different shape and that your feeling of the\ntune can be more relaxed.\n\nFast tempo tunes are easier to play when you are feeling the tune in two. Sometimes to get a more j\nlyrical feel on a tune, or even a ballad feel you can think in one, one beat per measure. If the tune is\n\naround 400, of course thinking in one is easier. I\n\nPlayers often seem to feel more free when playing ballads. They are able to play slow, or fast, play\nacross the time or change time zones. This is more difficult to do when the tune is medium or\nmedium up and the band is walking in four. Sometimes the soloist seems to be trapped in playing [\nall eighth notes. (All eighth notes isn\u2019t necessarily bad, the right player makes ir sound like the\nright thing to do.) But if you want to get out of that zone for contrast try feeling the music in two\nor one. Try even perceiving a fast tune as a ballad. j\n\nry i\n\n\nThe Metronome\n\nSome people say that it is best to practice with a metronome and others are dead against it. T feel\nthat the metronome is a useful tool in that it can keep you honest. The metronome doesn\u2019t lie. On\nthe other hand, it can also make you dependent on an outside click rather than on your own inter-\n\nnalized time. It\u2019s good to be able to play with or without one. Time is not metronomic so one needs\nto learn to be flexible.\n\nTry playing in back of the time or on top of the time. Try using the metronume on 2 and 4, or land\n3, or just 3, or just 4, or on the and of 2 and 4:\n\nLid\n\nfe. ci \u00a3\n\n|\n\nx\u2014N\n\nAlso, practice without using a metronome. Internalize the rhythm section. Try to meditate on a\ntempo. Pick a tempo and try to just hear quarter notes, then add triplets or whatever the appropri-\nate rhythms are that you want to hear. Notice that when you become tranquil inside you then have\na better perception of the time. Relax, above all, relax!\n\nhid\n\n\n\nRhythmizing Scale Sequences\n\nBelow are several scale or modal sequences to work with. Some are repeated but written as descend- |\n\ning rather than ascending. You can use these or any of your own for th\u00e9-next exercises.\n\nSCALE SEQUENCES [\netc.\n[ 4\u2014\u2014t {oT\npres o oe a ne ae\nGye eo fey Steg te ee\ny es ore ee eee ae ee op a\n~ \u2014 \u2014_\n4 = : | 7 etc.\na\nta t oe ow\no \u2014\u2014\u2014\netc.\n2 \u2014\u2014 ; ae\n\u2019 , | o- _\nOe a ee\noege fe \u00a9\n\n|\n\ni\n:\n:\nit\n\nNav \" I |\ne\nA etc.\nvi n t ,\na a\n. \u00b0 |\n_ 4 ~~ | t im _. \u2014\u2014 \u2014 etc,\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 27 extraction"
+}
