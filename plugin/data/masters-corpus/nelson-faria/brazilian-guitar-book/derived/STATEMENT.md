@@ -1,0 +1,152 @@
+---
+run_id: 2026-05-28T15-05-20-faria-brazilian-guitar-book
+stage: s4
+source_pdf: _g Brazilian guitar book Nelson Faria.pdf
+model: claude-sonnet
+extracted_at: 2026-05-28T23:49:38+00:00
+schema_version: 0.1
+---
+
+# The Brazilian Guitar Book (Nelson Faria) — Statement of Outputs
+
+## Overview
+
+Nelson Faria's book is a systematic, performance-oriented survey of five core Brazilian guitar styles—Samba, Bossa Nova, Choro, Frevo, and Baião—arranged as self-contained parts that the student works through in sequence. The book-level distillation describes its pedagogical arc as moving from the most foundationally important rhythmic style (Samba, whose syncopation cliché is declared "the single most critical figure a student must internalize") through progressively distinct regional and historical forms, ending with the northeastern Baião. The method is explicitly a *performance methodology*, not a theoretical survey: it trains the body as much as the mind, and the harmonic language across all five styles is deliberately kept simple so that the book's full pedagogical weight can fall on rhythm and texture.
+
+The master's characteristic technical signature, running without interruption across every chapter, is the strict separation of the guitar into two independent rhythmic streams: the right-hand **thumb** anchors bass notes on the beat (alternating root and fifth), while **fingers 1, 2, and 3** handle the syncopated upper voices. This division of labor is introduced in Chapter 1 for Samba and reaffirmed identically in Chapters 2, 4, and 5, with an adapted form in Chapter 3 for Choro's pandeiro simulation. The method's most characteristic pedagogical move—the **off-guitar clapping exercise**, in which the student claps upper-voice rhythms and taps the lower voice with the foot before approaching the instrument—appears explicitly in Chapters 1, 2, 3, and 5, making it a cross-style methodological constant.
+
+Taken as a whole, the book teaches a modular, body-first methodology in which every style reduces to (a) a foundational two-layer texture, (b) a core rhythmic cell internalized kinesthetically before being executed on the guitar, (c) a numbered set of variations derived from that cell through systematic transformation, and (d) a performance convention that treats those variations as a deployable repertoire switched at structurally meaningful moments. The student who completes all five parts will have internalized a unified physical technique, a common practice discipline, and five style-specific rhythmic vocabularies they can apply, mix, and time with structural intention (book-level distillation, "What the Book Teaches, Synthesized").
+
+---
+
+## Systems
+
+### Two-Layer Thumb-Finger Texture System
+
+This system is the load-bearing technical architecture of the entire book. The guitar is divided at all times into two independent rhythmic streams: the right-hand thumb plays on-beat bass notes (alternating root and fifth, fifth preferably voiced below the root), while fingers 1, 2, and 3 play the syncopated upper voices. This division is introduced for Samba in Chapter 1, reaffirmed identically for Bossa Nova (Chapter 2) and Frevo (Chapter 4), adapted for Baião's pedal-tone texture (Chapter 5), and present in adapted form in Choro's pandeiro simulation (Chapter 3). The system also includes a sub-layer for contexts where the bass line moves syncopated and independently, and prescribes specific body-percussion pre-training before any on-instrument execution.
+
+**Members:**
+- Thumb Bass Layer — right-hand thumb playing on-beat bass notes, alternating root and fifth
+- Finger Upper-Voice Layer — right-hand fingers 1, 2, and 3 playing syncopated upper voices
+- Syncopated Independent Bass Sub-Layer — variant of the thumb layer where the bass moves syncopated and independently (thumb), or switches to index finger in block-style contexts
+
+**Traversal Rules:**
+
+- **Thumb On-Beat Bass Assignment** (`VoiceMotion`) — thumb always assigned to the beat bass note; fingers 1–3 always assigned to syncopated upper voices. *Citations:* Chapter 1 summary; ch01.md p. 25 ("syncopation is usually done with the right hand fingers 1, 2 and 3"); Chapter 4 summary; ch04.md p. 104 ("syncopations are played on the top voices of the chord").
+- **Syncopated Bass: Thumb vs. Index Finger Switch** (`_pending:finger-role-context-switch`) — use thumb when the bass line is syncopated and independent; switch to index finger in block-style situations. *Citations:* Chapter 1 summary; ch01.md p. 30 ("play the bass line with the thumb when it occurs as an independent line").
+- **Body-Percussion Pre-Training** (`_pending:kinesthetic-pre-internalization`) — before executing the split on the instrument, clap the high voices and tap the low voices with the foot. *Citations:* Chapter 1 summary; ch01.md p. 25; Chapter 2 summary; ch02.md p. 62; Chapter 3 summary; ch03.md p. 88; Chapter 5 summary; ch05.md p. 121.
+
+**Modification Rules:**
+
+- **Bass Root/Fifth Alternation with Fifth-Below Preference** (`VoiceMotion`) — bass alternates root and fifth; fifth preferentially voiced below the root; if already on 6th string, hold for the whole measure. *Citations:* Chapter 1 summary; ch01.md p. 25; Chapter 2 summary; ch02.md p. 62; Chapter 4 summary; ch04.md p. 104.
+- **Staccato Articulation and Registral Reduction** (`_pending:articulation-density-reduction`) — upper-voice layer modified to use short (staccato) notes and reduced register positions, as in Bossa Nova Variation #3. *Citations:* Chapter 2 summary; ch02.md p. 67.
+- **Five-Note Chord Right-Hand Finger Extension** (`DensityCeiling`) — for dense five-voice voicings, extend beyond the standard three-finger upper technique. *Citations:* Chapter 2 summary; ch02.md p. 66.
+- **Left-Hand Muting of Downbeats** (`_pending:percussive-mute-suppression`) — in up-beat-only textures, mute the downbeats with the left hand for a fully syncopated, percussive character. *Citations:* Chapter 4 summary; ch04.md p. 108.
+
+---
+
+### Variation Deployment System
+
+Across all five Brazilian styles, the numbered rhythmic variations are not merely technical exercises but a deployable performance vocabulary—a compositional grammar for rhythmic variety within a song. The system encompasses the full variation inventories for all five styles (Samba #1–#17, Bossa Nova #1–#4, Choro pandeiro variants, Frevo #1–#5, Baião #1–#5) plus the structurally privileged moments (cadenzas and section endings) where variation changes are idiomatic. Faria states this principle explicitly in Chapters 1, 3, 4, and 5 (book-level distillation, "Variation Deployment as Performance Technique").
+
+**Members:**
+- Samba Variations #1–#17 — seventeen variations derived from the samba syncopation cliché
+- Bossa Nova Variations #1–#4 — four variations derived from the clave cell
+- Choro Pandeiro Variations — pandeiro-simulating rhythmic patterns for choro accompaniment
+- Frevo Variations #1–#5 — five variations including new-beat syncopations, up-beat-only texture, and 3/4 marcha rancho
+- Baião Variations #1–#5 — five variations including cowbell, berimbau, broken chords, and salsa-inflected bass
+- Cadenza / Section Ending — the structurally privileged moment where variation changes are idiomatic
+
+**Traversal Rules:**
+
+- **Variation Switch at Cadenza or Section Ending** (`TextureCycle`) — changing from one variation to another is most idiomatic at section endings or cadenzas. *Citations:* Chapter 1 summary; ch01.md p. 26; Chapter 3 summary; ch03.md p. 89; Chapter 4 summary; ch04.md p. 105.
+- **Sustain-One or Mix-Many Choice** (`TextureCycle`) — any single variation may be sustained through an entire song, or multiple variations may be mixed. *Citations:* Chapter 1 summary; ch01.md p. 26; Chapter 4 summary; ch04.md p. 105; Chapter 5 summary; ch05.md p. 122.
+- **Fill-In Variation at Singer's Pause** (`_pending:contextual-slot-placement`) — certain variations (Samba #15, Bossa Nova #4) are designated for deployment at the singer's pause or end of section. *Citations:* Chapter 1 summary; ch01.md p. 44; Chapter 2 summary; ch02.md p. 68.
+
+**Modification Rules:**
+
+- **16th-Note Displacement Sub-Variant** (`_pending:rhythmic-displacement`) — a variation can be modified by displacing its syncopated notes by a 16th note. *Citations:* Chapter 2 summary; ch02.md pp. 68–69.
+- **Meter-Change Variant (3/4 Marcha Rancho)** (`_pending:metric-recontextualization`) — a variation can be transformed into a different meter variant (3/4) while remaining in the same style's inventory. *Citations:* Chapter 4 summary; ch04.md p. 110.
+
+---
+
+### Style-Specific Rhythmic Cell System
+
+Each of the five Brazilian styles is organized around a single foundational rhythmic cell from which all variations are derived: the **samba syncopation cliché**, the **bossa nova clave** (direction must be fixed), the **choro pandeiro simulation**, the **frevo syncopated march figure**, and the **baião pedal-tone counterpoint** (grounded in mixolydian or lydian b7). This system sits above the universal two-layer texture as the per-style grammar layer (book-level distillation, "Style-Specific Systems and Terminology").
+
+**Members:**
+- Samba Syncopation Cliché — the irreducible rhythmic figure found in almost every samba melody
+- Bossa Nova Clave — the rhythmic cell that is the root of all bossa nova patterns; direction must be fixed
+- Choro Pandeiro Pattern — guitar patterns that simulate the pandeiro rhythm
+- Frevo Syncopated March Cell — syncopated march figure with melodic accent on the upbeat
+- Baião Pedal-Tone Cell — syncopated pedal-tone bass against on-beat upper voices, in mixolydian or lydian b7
+
+**Traversal Rules:**
+
+- **Clave Direction Invariance** (`_pending:cell-direction-lock`) — the bossa nova clave may be played in normal or inverted form, but once a direction is chosen it must remain consistent throughout the performance. *Citations:* Chapter 2 summary; ch02.md p. 61.
+- **Samba Cliché as Variation Root** (`FamilyCoherence`) — all samba variations are derived from the core syncopation cliché. *Citations:* Chapter 1 summary; ch01.md p. 23.
+- **Pandeiro Simulation Constraint** (`FamilyCoherence`) — choro guitar patterns are understood and executed as simulations of the pandeiro. *Citations:* Chapter 3 summary; ch03.md p. 88.
+- **Baião Pedal-Tone Rule** (`VoiceMotion`) — baião texture requires the bass to play a syncopated pedal tone while upper voices play on the beat. *Citations:* Chapter 5 summary; ch05.md pp. 119, 123.
+
+**Modification Rules:**
+
+- **Batucada Syncopation Mixing** (`_pending:rhythmic-texture-mixing`) — the samba cell can be extended to a four-measure cycle mixing syncopated and non-syncopated rhythms. *Citations:* Chapter 1 summary; ch01.md p. 39.
+- **Register Voice-Switching for Agogô Simulation** (`_pending:register-switch-simulation`) — the upper-voice layer can be modified by switching between low and high register positions to simulate the two-pitch agogô. *Citations:* Chapter 1 summary; ch01.md p. 26.
+- **Berimbau Open-String Device** (`_pending:open-string-timbre-simulation`) — the baião cell can be modified by using an open string as a drone to simulate the berimbau timbre. *Citations:* Chapter 5 summary; ch05.md p. 124.
+- **Modal Context Assignment for Baião** (`ColorToneRequire`) — baião patterns are assigned to mixolydian or lydian b7 modal contexts. *Citations:* Chapter 5 summary; ch05.md pp. 119, 121.
+
+---
+
+### Choro Form and Harmony System
+
+Choro is the only style in the book with a prescribed macro-formal structure that governs harmonic navigation: a three-part A-B-C form in which Part C modulates to the V or IV key center. The harmonic vocabulary is also prescribed—triads, seventh chords, and inverted diminished chords—with bass-line movement treated as structurally primary. This system operates above both the texture layer and the variation layer (Chapter 3 summary; ch03.md).
+
+**Members:**
+- Choro Section A — first part of the three-part choro form
+- Choro Section B — second part of the three-part choro form
+- Choro Section C — third part; modulates to the V or IV chord key center
+- Triad and Seventh Chord — core harmonic vocabulary of choro accompaniment
+- Inverted Diminished Chord — diminished chords typically voiced in inverted positions
+
+**Traversal Rules:**
+
+- **Section C Modulation to V or IV Key Center** (`_pending:formal-section-modulation`) — when navigating to Section C, the harmony modulates to the key center of the V or IV chord. *Citations:* Chapter 3 summary; ch03.md p. 86.
+
+**Modification Rules:**
+
+- **Diminished Chord Inversion Preference** (`VoiceMotion`) — diminished chords in choro are preferentially voiced in inverted positions rather than root position. *Citations:* Chapter 3 summary; ch03.md p. 86.
+
+---
+
+## Pending Work
+
+The following `_pending:<kebab>` `engine_payload.kind` values appear in the systems-draft. Each signals a rule that has been identified from the source but for which no resolved engine primitive has yet been assigned:
+
+- `_pending:finger-role-context-switch` (Two-Layer Texture) — context-sensitive switch between thumb and index finger for bass-line assignment depending on whether the bass is syncopated-independent or block-style.
+- `_pending:kinesthetic-pre-internalization` (Two-Layer Texture) — the body-percussion pre-training protocol (clap high voices, tap low voices) prescribed before on-instrument execution.
+- `_pending:articulation-density-reduction` (Two-Layer Texture) — staccato articulation plus reduction of active register positions in the upper-voice layer (Bossa Nova Variation #3).
+- `_pending:percussive-mute-suppression` (Two-Layer Texture) — left-hand muting of downbeats in up-beat-only textures (Frevo Variation #4).
+- `_pending:contextual-slot-placement` (Variation Deployment) — designation of specific variations for structural slots (singer's pause, section end).
+- `_pending:rhythmic-displacement` (Variation Deployment) — fine-grained 16th-note offset transformation applied to a variation.
+- `_pending:metric-recontextualization` (Variation Deployment) — re-placement of a variation into a different meter (3/4 marcha rancho).
+- `_pending:cell-direction-lock` (Style-Specific Cell) — session-scope invariance of the bossa nova clave direction (normal or inverted) once chosen.
+- `_pending:rhythmic-texture-mixing` (Style-Specific Cell) — extended-cycle (four-measure) mixing of syncopated and non-syncopated rhythms (batucada).
+- `_pending:register-switch-simulation` (Style-Specific Cell) — register alternation in upper voices to simulate two-pitch percussion (agogô).
+- `_pending:open-string-timbre-simulation` (Style-Specific Cell) — open-string drone designation to simulate the berimbau.
+- `_pending:formal-section-modulation` (Choro Form and Harmony) — form-section-to-key-center mapping for the macro-formal modulation rule.
+
+---
+
+## Provenance Notes
+
+All four systems are derived from the book-level distillation (stage s3) aggregated from per-chapter summaries (ch01.md–ch05.md), cross-referenced against the systems-draft JSON. Page numbers reflect the values embedded in the systems-draft `references` arrays, drawn from the source PDF *The Brazilian Guitar Book* by Nelson Faria.
+
+**By chapter:**
+
+- **Chapter 1 (Samba, pp. 25–61)** is the most richly sourced chapter, contributing foundational principles to all four systems. Specific left-hand fingering prescriptions (3-1-4-2 for Variation #3; 4-1-1-3-2 for Variation #17) are noted in the book-level distillation but did not yield a freestanding system; they appear as modification-rule annotations within the Two-Layer Texture System because the distillation frames fingering as ergonomic amplification of the texture rules.
+- **Chapter 2 (Bossa Nova, pp. 63–86)** contributes the clave direction-invariance rule, the staccato/density-reduction and five-note chord modifications, and the 16th-note displacement and fill-in slot rules.
+- **Chapter 3 (Choro, pp. 88–102)** is the sole source for the Choro Form and Harmony System (no parallel in any other chapter). It also contributes to the Style-Specific Rhythmic Cell System (pandeiro simulation) and Variation Deployment traversal rules. The left-hand muting practice described here is subsumed under the body-percussion pre-training rule.
+- **Chapter 4 (Frevo, pp. 104–117)** contributes to all three cross-style systems. The walking-bass jazz analogy is noted conceptually but did not yield a separate system because the underlying root-fifth bass rule is captured in the Two-Layer Texture System. The marcha-rancho 3/4 variant is captured as `_pending:metric-recontextualization`.
+- **Chapter 5 (Baião, pp. 118–146)** contributes the pedal-tone rule, the berimbau open-string device, the modal context assignment, and the cowbell timbre simulation. A general cowbell-timbre rule beyond the open-string berimbau device was not resolved to a discrete primitive and remains implicit in the system summary.
+
+**No chapter failed to contribute to the systems.** Chapter 3 is the only chapter whose contribution is primarily formal-harmonic; all other chapters contribute primarily textural/rhythmic material that aggregates across the Two-Layer Texture, Variation Deployment, and Style-Specific Rhythmic Cell systems.

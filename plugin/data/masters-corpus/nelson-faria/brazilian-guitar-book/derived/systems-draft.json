@@ -1,0 +1,595 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-faria-brazilian-guitar-book",
+    "stage": "s4",
+    "source_pdf": "_g Brazilian guitar book Nelson Faria.pdf",
+    "extracted_at": "2026-05-28T23:49:38+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "nelson-faria",
+  "work_id": "brazilian-guitar-book",
+  "systems": [
+    {
+      "id": "nelson-faria:brazilian-guitar-book:two-layer-texture",
+      "name": "Two-Layer Thumb-Finger Texture System",
+      "summary": "The load-bearing technical architecture of the entire book: the guitar is divided into two independent rhythmic streams at all times. The thumb anchors bass notes on the beat (root/fifth alternation, fifth preferably below root); fingers 1, 2, and 3 handle the syncopated upper voices. This division of labor is introduced in Chapter 1 for Samba, reaffirmed identically in Chapters 2, 4, and 5, and adapted for Choro's pandeiro simulation in Chapter 3. The members are the two voice layers; the traversal rules govern how the thumb assigns to bass strings and how fingers assign to upper voices; the modification rules govern alterations to articulation, register, and density within each layer.",
+      "members": [
+        {
+          "id": "thumb-bass-layer",
+          "name": "Thumb Bass Layer",
+          "summary": "Right-hand thumb playing on-beat bass notes, alternating root and fifth of the chord."
+        },
+        {
+          "id": "finger-upper-voice-layer",
+          "name": "Finger Upper-Voice Layer",
+          "summary": "Right-hand fingers 1, 2, and 3 playing syncopated upper voices of the chord."
+        },
+        {
+          "id": "syncopated-independent-bass-sub-layer",
+          "name": "Syncopated Independent Bass Sub-Layer",
+          "summary": "Variant of the thumb layer where the bass line moves syncopated and independently, still assigned to the thumb (or index in block-style contexts)."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "thumb-on-beat-bass-assignment",
+          "name": "Thumb On-Beat Bass Assignment",
+          "summary": "The thumb is always assigned to the bass note landing on the beat; fingers 1-3 are always assigned to the syncopated upper voices.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "right hand basic samba technique",
+              "quote_excerpt": "syncopation is usually done with the right hand fingers 1, 2 and 3",
+              "page": 25
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Right-hand pattern: syncopation placement",
+              "quote_excerpt": "syncopations are played on the top voices of the chord",
+              "page": 104
+            }
+          ]
+        },
+        {
+          "id": "syncopated-bass-thumb-vs-index-switch",
+          "name": "Syncopated Bass: Thumb vs. Index Finger Switch",
+          "summary": "When the bass line is syncopated and independent, use the thumb; when it occurs in a block-style situation, switch to the index finger.",
+          "engine_payload": {
+            "kind": "_pending:finger-role-context-switch"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "syncopated bass thumb/index rule",
+              "quote_excerpt": "play the bass line with the thumb when it occurs as an independent line",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "body-percussion-pre-training",
+          "name": "Body-Percussion Pre-Training",
+          "summary": "Before executing the two-layer split on the instrument, internalize bipartite independence by clapping the high voices and tapping the low voices with the foot.",
+          "engine_payload": {
+            "kind": "_pending:kinesthetic-pre-internalization"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "practicing patterns away from guitar",
+              "quote_excerpt": "practice away from the guitar, clapping hands on the high voices",
+              "page": 25
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Practice method away from guitar",
+              "quote_excerpt": "practice away from the guitar, clapping hands on the high voices",
+              "page": 62
+            },
+            {
+              "chapter_n": 3,
+              "topic": "muting practice technique",
+              "quote_excerpt": "practice away from the guitar, clapping hands in the high voices",
+              "page": 88
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Basic pattern practice advice",
+              "quote_excerpt": "practice away from the guitar, clapping the high voices and tapping",
+              "page": 121
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "bass-root-fifth-alternation",
+          "name": "Bass Root/Fifth Alternation with Fifth-Below Preference",
+          "summary": "The bass layer alternates between the root and fifth of the chord; the fifth is preferentially voiced below the root; if the bass is already on the 6th string, hold the same note for the whole measure.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "bass line root/fifth rule",
+              "quote_excerpt": "bass line keeps switching between the root and the fifth of the chord",
+              "page": 25
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Bass line root-fifth switching",
+              "quote_excerpt": "Like samba patterns, the bass line usually keeps switching between the root",
+              "page": 62
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Bass note: root vs. fifth",
+              "quote_excerpt": "bass line keeps switching between the root and the fifth of the chord",
+              "page": 104
+            }
+          ]
+        },
+        {
+          "id": "staccato-registral-reduction",
+          "name": "Staccato Articulation and Registral Reduction of Upper Voices",
+          "summary": "The upper-voice layer can be modified to use short (staccato) notes and reduced to fewer register positions, as in Bossa Nova Variation #3.",
+          "engine_payload": {
+            "kind": "_pending:articulation-density-reduction"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Variation #3 short-note upper-voice style",
+              "quote_excerpt": "basically the \"variation #3\", but using short notes",
+              "page": 67
+            }
+          ]
+        },
+        {
+          "id": "five-note-chord-finger-extension",
+          "name": "Five-Note Chord Right-Hand Finger Extension",
+          "summary": "For dense voicings requiring five simultaneous voices, the standard three-finger upper technique is extended to include additional right-hand fingers.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Five-note chord right-hand fingering",
+              "quote_excerpt": "To play the five-note chords in this example",
+              "page": 66
+            }
+          ]
+        },
+        {
+          "id": "left-hand-muting-downbeats",
+          "name": "Left-Hand Muting of Downbeats",
+          "summary": "In up-beat-only textures, the down beats are muted with the left hand to produce a fully syncopated, percussive character.",
+          "engine_payload": {
+            "kind": "_pending:percussive-mute-suppression"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Variation #4: left-hand muting technique",
+              "quote_excerpt": "muting the down beats with your left hand",
+              "page": 108
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nelson-faria:brazilian-guitar-book:variation-deployment",
+      "name": "Variation Deployment System",
+      "summary": "Across all five Brazilian styles taught in the book, numbered rhythmic variations are not merely technical exercises but a deployable performance vocabulary. The members are the numbered variation sets for each style (Samba 1\u201317, Bossa Nova 1\u20134, Choro, Frevo 1\u20135, Bai\u00e3o 1\u20135). The traversal rules govern when and how to move between variations within a performance: any variation can sustain through an entire song, or variations can be mixed mid-song, with section endings and cadenzas being the idiomatic switch points. This system turns the variation inventory into a compositional grammar for rhythmic variety.",
+      "members": [
+        {
+          "id": "samba-variations",
+          "name": "Samba Variations #1\u2013#17",
+          "summary": "Seventeen variations derived from the samba syncopation clich\u00e9."
+        },
+        {
+          "id": "bossa-nova-variations",
+          "name": "Bossa Nova Variations #1\u2013#4",
+          "summary": "Four variations derived from the clave cell."
+        },
+        {
+          "id": "choro-variations",
+          "name": "Choro Pandeiro Variations",
+          "summary": "Pandeiro-simulating rhythmic patterns for choro accompaniment."
+        },
+        {
+          "id": "frevo-variations",
+          "name": "Frevo Variations #1\u2013#5",
+          "summary": "Five variations including new-beat syncopations, up-beat-only texture, and 3/4 marcha rancho."
+        },
+        {
+          "id": "baiao-variations",
+          "name": "Bai\u00e3o Variations #1\u2013#5",
+          "summary": "Five variations including cowbell, berimbau, broken chords, and salsa-inflected bass."
+        },
+        {
+          "id": "cadenza-section-ending",
+          "name": "Cadenza / Section Ending",
+          "summary": "The structurally privileged moment where variation changes are idiomatic."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "variation-switch-at-cadenza",
+          "name": "Variation Switch at Cadenza or Section Ending",
+          "summary": "Changing from one variation to another is most idiomatic at section endings or cadenzas across all five styles.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "switching variations within a song",
+              "quote_excerpt": "common to use a different pattern at the end of a section",
+              "page": 26
+            },
+            {
+              "chapter_n": 3,
+              "topic": "switching between variations",
+              "quote_excerpt": "use a different pattern or add bass line movements at the end of a section",
+              "page": 89
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Using and combining variations",
+              "quote_excerpt": "common to use a different pattern at the end of a section or a cadenza",
+              "page": 105
+            }
+          ]
+        },
+        {
+          "id": "sustain-or-mix-choice",
+          "name": "Sustain-One or Mix-Many Choice",
+          "summary": "Any single variation may be sustained through an entire song, or multiple variations may be mixed to create new composite patterns.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "switching variations within a song",
+              "quote_excerpt": "Each variation can be played through an entire song or you can switch between",
+              "page": 26
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Using and combining variations",
+              "quote_excerpt": "Each variation can be played through the entire song or you can switch between",
+              "page": 105
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Variation application strategy",
+              "quote_excerpt": "Each variation can be played through the entire song or you can switch between",
+              "page": 122
+            }
+          ]
+        },
+        {
+          "id": "fill-in-context-placement",
+          "name": "Fill-In Variation at Singer's Pause",
+          "summary": "Certain variations (e.g., Samba #15, Bossa Nova #4) are specifically designated for deployment at the singer's pause or end of section.",
+          "engine_payload": {
+            "kind": "_pending:contextual-slot-placement"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Variation #15: fill-in usage rule",
+              "quote_excerpt": "Use this pattern to fill in spaces at the singer's pause",
+              "page": 44
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Variation #4 usage context",
+              "quote_excerpt": "This pattern is very useful at the singer's pause",
+              "page": 68
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "sixteenth-displacement-subvariant",
+          "name": "16th-Note Displacement Sub-Variant",
+          "summary": "A variation can be modified by displacing its syncopated notes by a 16th note, creating a sub-variant.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-displacement"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Variation #4 16th-note syncopation option",
+              "quote_excerpt": "You can also syncopate by a 16th note",
+              "page": 68
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Harmony change before syncopated note",
+              "quote_excerpt": "Notice that the harmony changes a 16th note",
+              "page": 69
+            }
+          ]
+        },
+        {
+          "id": "meter-change-variant",
+          "name": "Meter-Change Variant (3/4 Marcha Rancho)",
+          "summary": "A variation can be transformed into a different meter variant (3/4 marcha rancho) while remaining in the same style's inventory.",
+          "engine_payload": {
+            "kind": "_pending:metric-recontextualization"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Variation #5: marcha rancho in 3/4",
+              "quote_excerpt": "This variation is an example of a marcha rancho in 3/4 meter",
+              "page": 110
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nelson-faria:brazilian-guitar-book:style-rhythmic-cell",
+      "name": "Style-Specific Rhythmic Cell System",
+      "summary": "Each of the five Brazilian styles is organized around a single foundational rhythmic cell from which all variations are derived. For Samba the cell is the syncopation clich\u00e9; for Bossa Nova it is the clave (which must remain directionally fixed throughout a performance); for Choro it is the pandeiro simulation pattern; for Frevo it is the syncopated march figure with upbeat accent; for Bai\u00e3o it is the pedal-tone counterpoint. The members are these five style cells. The traversal rules govern how cells constrain variation generation and how the clave direction must hold. This system is the per-style grammar layer sitting above the universal two-layer texture.",
+      "members": [
+        {
+          "id": "samba-syncopation-cliche",
+          "name": "Samba Syncopation Clich\u00e9",
+          "summary": "The irreducible rhythmic figure found in almost every samba melody."
+        },
+        {
+          "id": "bossa-nova-clave",
+          "name": "Bossa Nova Clave",
+          "summary": "The rhythmic cell that is the root of all bossa nova patterns; direction must be fixed."
+        },
+        {
+          "id": "choro-pandeiro-pattern",
+          "name": "Choro Pandeiro Pattern",
+          "summary": "Guitar patterns that simulate the pandeiro rhythm."
+        },
+        {
+          "id": "frevo-syncopated-march-cell",
+          "name": "Frevo Syncopated March Cell",
+          "summary": "Syncopated march figure with melodic accent on the upbeat."
+        },
+        {
+          "id": "baiao-pedal-tone-cell",
+          "name": "Bai\u00e3o Pedal-Tone Cell",
+          "summary": "Syncopated pedal-tone bass against on-beat upper voices; mixolydian or lydian b7."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "clave-direction-invariance",
+          "name": "Clave Direction Invariance",
+          "summary": "The bossa nova clave may be played in normal form or inverted, but once a direction is chosen it must remain consistent throughout the performance.",
+          "engine_payload": {
+            "kind": "_pending:cell-direction-lock"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Clave inversion rule",
+              "quote_excerpt": "can be played as shown above or inverted, but once the pattern begins",
+              "page": 61
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Bossa Nova clave definition",
+              "quote_excerpt": "The clave is a rhythmic cell that's the root of most rhythmic patterns",
+              "page": 61
+            }
+          ]
+        },
+        {
+          "id": "samba-cliche-as-variation-root",
+          "name": "Samba Clich\u00e9 as Variation Root",
+          "summary": "All samba variations are derived from the core syncopation clich\u00e9.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "samba syncopation clich\u00e9",
+              "quote_excerpt": "practice this pattern until it gets familiar and intuitive to you",
+              "page": 23
+            }
+          ]
+        },
+        {
+          "id": "pandeiro-simulation-constraint",
+          "name": "Pandeiro Simulation Constraint",
+          "summary": "Choro guitar patterns are understood and executed as simulations of the pandeiro.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "pandeiro pattern on guitar",
+              "quote_excerpt": "patterns that we use on the guitar for the choro are simulations of the rhythm section",
+              "page": 88
+            }
+          ]
+        },
+        {
+          "id": "baiao-pedal-tone-rule",
+          "name": "Bai\u00e3o Pedal-Tone Rule",
+          "summary": "Bai\u00e3o texture requires the bass to play a syncopated pedal tone while upper voices play on the beat.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Variation #1 \u2013 pedal-tone rule (Vera Cruz)",
+              "quote_excerpt": "syncopated pedal tone against the upper voices of the chord, played on the beat",
+              "page": 123
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Bai\u00e3o modal and harmonic characteristics",
+              "quote_excerpt": "harmonies are quite simple with much use of pedal tones in the bass",
+              "page": 119
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "batucada-syncopation-mixing",
+          "name": "Batucada Syncopation Mixing",
+          "summary": "The samba cell can be extended to a four-measure cycle that mixes syncopated and non-syncopated rhythms to produce the batucada style.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-texture-mixing"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Variation #9: batucada style",
+              "quote_excerpt": "pattern mixes syncopated and non-syncopated rhythms, generating a batucada style pattern",
+              "page": 39
+            }
+          ]
+        },
+        {
+          "id": "register-voice-switching-agogo",
+          "name": "Register Voice-Switching for Agog\u00f4 Simulation",
+          "summary": "The upper-voice layer can be modified by switching between low and high register positions to simulate the two-pitch agog\u00f4.",
+          "engine_payload": {
+            "kind": "_pending:register-switch-simulation"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Variation #1: agog\u00f4 simulation",
+              "quote_excerpt": "to simulate the agog\u00f4 you can play the chord changes, switching from low to high voices",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "berimbau-open-string-device",
+          "name": "Berimbau Open-String Device",
+          "summary": "The bai\u00e3o cell can be modified by using an open string as a drone to simulate the berimbau timbre.",
+          "engine_payload": {
+            "kind": "_pending:open-string-timbre-simulation"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Variation #2 \u2013 berimbau open-string technique",
+              "quote_excerpt": "using a G open string simulating a berimbau pattern",
+              "page": 124
+            }
+          ]
+        },
+        {
+          "id": "modal-context-assignment",
+          "name": "Modal Context Assignment for Bai\u00e3o",
+          "summary": "Bai\u00e3o patterns are assigned to mixolydian or lydian b7 modal contexts.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Bai\u00e3o modal and harmonic characteristics",
+              "quote_excerpt": "baiao melodies are usually in the mixolydian or lydian b7 modes",
+              "page": 119
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Basic pattern practice advice",
+              "quote_excerpt": "practice these patterns and variations using a static seventh chord",
+              "page": 121
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nelson-faria:brazilian-guitar-book:choro-form-harmony",
+      "name": "Choro Form and Harmony System",
+      "summary": "Choro is the only style in the book with a prescribed macro-formal structure that governs harmonic navigation: a three-part A-B-C form in which Part C modulates to the V or IV key center. The harmonic vocabulary is also prescribed: triads, seventh chords, and inverted diminished chords, with bass-line movement treated as structurally primary. This system is smaller and more style-specific than the others\u2014it operates above the texture and variation layers and governs the large-scale harmonic trajectory of a choro performance.",
+      "members": [
+        {
+          "id": "choro-section-a",
+          "name": "Choro Section A",
+          "summary": "First part of the three-part choro form."
+        },
+        {
+          "id": "choro-section-b",
+          "name": "Choro Section B",
+          "summary": "Second part of the three-part choro form."
+        },
+        {
+          "id": "choro-section-c",
+          "name": "Choro Section C",
+          "summary": "Third part; modulates to the V or IV chord key center."
+        },
+        {
+          "id": "triad-seventh-chord",
+          "name": "Triad and Seventh Chord",
+          "summary": "Core harmonic vocabulary of choro accompaniment."
+        },
+        {
+          "id": "inverted-diminished-chord",
+          "name": "Inverted Diminished Chord",
+          "summary": "Diminished chords typically voiced in inverted positions."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "section-c-modulation-rule",
+          "name": "Section C Modulation to V or IV Key Center",
+          "summary": "When navigating to Section C of the choro form, the harmony modulates to the key center of the V or IV chord.",
+          "engine_payload": {
+            "kind": "_pending:formal-section-modulation"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "choro form structure",
+              "quote_excerpt": "choro form is frequently divided in 3 parts \u2014 A, B and C \u2014 with a modulation to the V or IV",
+              "page": 86
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "diminished-chord-inversion-preference",
+          "name": "Diminished Chord Inversion Preference",
+          "summary": "Diminished chords in choro are preferentially voiced in inverted positions rather than root position.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "choro harmony rules",
+              "quote_excerpt": "triads, seventh and diminished chords are common, usually in an inverted position",
+              "page": 86
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
