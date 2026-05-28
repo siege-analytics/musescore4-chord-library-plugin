@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-van-eps-1939-method
+stage: s3
+source_pdf: Van Eps, George - The Method for Guitar.pdf
+source_pages: 8-17
+model: claude-haiku
+extracted_at: 2026-05-28T17:22:12+00:00
+schema_version: 0.1
+---
+
+# Chapter 2 — With Major Chords
+
+_Distillation; backed by `chapters/ch02.md`._
+
+Chapter 2 introduces six distinct fingering forms for harmonized major scale triads, each covering specific key ranges and requiring separate practice as long, medium, and condensed forms across different string sets. The master's characteristic approach emphasizes foundational position systems and voice independence, as evidenced by the requirement to sustain inner voices while the melody moves and the explicit instruction to practice all three forms equally for balanced technique. Key load-bearing terminology includes arpeggio picking (defined as a pulsation technique using pick stops on downstrokes rather than forcibly striking strings), legato shift (quick accurate position changes with equal note values and no sliding at modulation points), finger flattening (the method's most advanced left-hand principle, requiring sustained adjacent notes during the maneuver), and sequence form (the three-steps-up-and-back structural pattern). The chapter establishes critical execution rules: maintaining even tempo across mixed note values, avoiding the common error of rushing the final note in each measure, ensuring clean octave crossings in condensed forms, and practicing barre variations with each finger in turn, all building toward the culminating goal of a seamless two-octave harmonized scale.

@@ -764,6 +764,41 @@
                 {
                   "id": "string-set-5-4-3-2",
                   "name": "Four-note string set 5-4-3-2"
+                },
+                {
+                  "id": "form-1",
+                  "name": "First Form",
+                  "summary": "Played on the second and first string sets; long form; key range C up to F."
+                },
+                {
+                  "id": "form-2",
+                  "name": "Second Form",
+                  "summary": "Played entirely on the second string set; long form; key range C up to C# (D if possible)."
+                },
+                {
+                  "id": "form-3",
+                  "name": "Third Form",
+                  "summary": "Played on second and first string sets with crossover on a different scale degree than Form 1; long form; key range C up to F."
+                },
+                {
+                  "id": "form-4",
+                  "name": "Fourth Form",
+                  "summary": "Played on the third, second, and first string sets; long form; key range Ab up to Db (D if possible)."
+                },
+                {
+                  "id": "form-5",
+                  "name": "Fifth Form",
+                  "summary": "Condensed form; key range Ab up to E."
+                },
+                {
+                  "id": "form-6",
+                  "name": "Sixth Form",
+                  "summary": "Most condensed form; key range F# up to C#."
+                },
+                {
+                  "id": "form-minor",
+                  "name": "Harmonized Minor Scale Forms",
+                  "summary": "Six parallel forms applied to the harmonized minor scale, including broken string sets, open voicings, and diminished variants."
                 }
               ],
               "traversal_rules": [
@@ -794,6 +829,108 @@
                       "citation": "Foreword: 'Think of the tonic of every key as do.' Solfeggio principle as the practice-sequencing rule."
                     }
                   ]
+                },
+                {
+                  "id": "legato-shift-between-forms",
+                  "name": "Legato Shift Between Forms",
+                  "summary": "Position changes between forms must be executed without sliding, with a momentary pressure release and the next formation pre-built during the hand's motion.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Legato practice principle",
+                      "quote_excerpt": "changes from formation to formation must be executed in the least amount of time",
+                      "page": 6
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "modulation technique rule",
+                      "quote_excerpt": "Do not slide the left hand in the modulation. It should be a fast, accurate change.",
+                      "page": 15
+                    }
+                  ]
+                },
+                {
+                  "id": "string-set-crossover",
+                  "name": "String-Set Crossover Between Forms",
+                  "summary": "When moving between forms that cross string sets, the octave jump must be executed cleanly with fingers landing surely, distinguishing long-jump hazard (extended forms) from cross-string hazard (condensed forms).",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "left-hand distance judgement",
+                      "quote_excerpt": "crossing over the sets of strings to jump the octave presents a different problem as this must be done cleanly",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "sequence-form-traversal",
+                  "name": "Sequence-Form Traversal Pattern",
+                  "summary": "Within each form, the harmonized scale is traversed in a three-steps-up-and-back pattern, ascending then reversing descending.",
+                  "engine_payload": {
+                    "kind": "_pending:step-sequence-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "sequence form definition",
+                      "quote_excerpt": "three steps up and return on the first triad, then, on the second triad, etc., ascending; the reverse, descending",
+                      "page": 10
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-symmetry-jump",
+                  "name": "Diminished Symmetry Four-Fret Jump",
+                  "summary": "Diminished voicings repeat every four frets, so traversal between them uses the same fingering transposed up or down by four frets with fast, slide-free jumps.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Diminished chord repeats every four frets",
+                      "quote_excerpt": "the diminished chord repeats itself every four frets. Therefore it is necessary to have a good foundation in order to judge the distance between triads.",
+                      "page": 28
+                    }
+                  ]
+                },
+                {
+                  "id": "rocker-arm-legato-transition",
+                  "name": "Rocker-Arm Legato Transition for Diminished Triads",
+                  "summary": "Alternating first and fourth fingers like a rocker arm achieves legato across diminished triad sequences without sliding or sounding all four notes simultaneously.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Rocker-arm finger alternation",
+                      "quote_excerpt": "The first and fourth fingers should alternate like the ends of a rocker arm. In other words the first finger should remain down until the fourth comes down",
+                      "page": 28
+                    }
+                  ]
+                },
+                {
+                  "id": "two-octave-form-linkage",
+                  "name": "Two-Octave Form Linkage",
+                  "summary": "After all six forms are perfected individually, lower and upper forms are joined without a break to produce a seamless two-octave harmonized scale.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "two-octave scale assembly",
+                      "quote_excerpt": "After all the forms have been perfected join them up with the harmonized scale an octave higher and practice without a break.",
+                      "page": 13
+                    }
+                  ]
                 }
               ],
               "modification_rules": [
@@ -808,6 +945,38 @@
                     {
                       "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
                       "citation": "Method's I/iii/vi function-sharing pattern as the practical implementation of the harmonized-scale-first pedagogy."
+                    }
+                  ]
+                },
+                {
+                  "id": "barre-finger-variation",
+                  "name": "Barre-Finger Substitution Across Fingers",
+                  "summary": "Any barre chord position must be practiced with each finger (1st, 2nd, 3rd, 4th) performing the barre in turn, expanding the technique beyond a single default finger.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "barre finger variations",
+                      "quote_excerpt": "the second triad should be played not only with a Barre of the fourth finger as marked, but also with Barres of the third, second and first fingers alternately",
+                      "page": 12
+                    }
+                  ]
+                },
+                {
+                  "id": "seventh-arpeggio-range-truncation",
+                  "name": "Seventh-Arpeggio Range Truncation",
+                  "summary": "Full-fingerboard arpeggio forms that exceed the instrument's range are modified by omitting the first measure descending (if too low) or the fifth measure ascending (if too high).",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Seventh arpeggio fingerboard range",
+                      "quote_excerpt": "can be moved up and down the fingerboard by leaving out the first measure when descending (if too low) and leaving out the fifth measure when ascending (if too high)",
+                      "page": 24
                     }
                   ]
                 }
@@ -914,6 +1083,38 @@
                       "citation": "Ex. 37: '10ths' is the outer-voice interval setup that enables chromatic middle-voice motion."
                     }
                   ]
+                },
+                {
+                  "id": "sustained-inner-voices",
+                  "name": "Inner-Voice Sustain Under Moving Melody",
+                  "summary": "Inner voices must sustain their full written value while the melodic line moves, enforcing voice independence within each form.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "sustained inner voices rule",
+                      "quote_excerpt": "Make sure they sustain their full value. Practice all three forms equally as the purpose throughout this method is balanced technique.",
+                      "page": 14
+                    }
+                  ]
+                },
+                {
+                  "id": "contrary-motion-stretch",
+                  "name": "Contrary Motion Voice Expansion",
+                  "summary": "Two voices are set in contrary motion — moving in opposite directions simultaneously — to stretch the hand's span as a modification of standard parallel-motion form traversal.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Contrary motion / hand gymnastics",
+                      "quote_excerpt": "Contrary motion is introduced in this stretching exercise. This comes more under the heading of hand gymnastics.",
+                      "page": 27
+                    }
+                  ]
                 }
               ]
             },
@@ -929,6 +1130,21 @@
                 {
                   "id": "top-voice-dynamic-emphasis",
                   "name": "Top-voice dynamic emphasis"
+                },
+                {
+                  "id": "arpeggio-picking",
+                  "name": "Arpeggio Picking (Pulsation)",
+                  "summary": "Downstrokes pulsed with a slight kick, stopped against the next-highest string; upstrokes return freely without a stop."
+                },
+                {
+                  "id": "alternate-picking",
+                  "name": "Alternate Picking",
+                  "summary": "Downstrokes on beats 1 and 3, upstrokes on beats 2 and 4 within a triad measure."
+                },
+                {
+                  "id": "arc-path-picking",
+                  "name": "Arc-Path Pick Return (Open Voicing)",
+                  "summary": "Pick travels a small arc around the upper string after a downstroke to avoid deadening a sustaining voice before striking the middle note."
                 }
               ],
               "traversal_rules": [
@@ -943,6 +1159,78 @@
                     {
                       "source": "Van Eps, George. The George Van Eps Method for Guitar. Epiphone Inc., NY (ca. 1939)",
                       "citation": "Method p.3 'Pick and Wrist Action' + Ex. 2 instructions."
+                    }
+                  ]
+                },
+                {
+                  "id": "picking-mode-assignment",
+                  "name": "Picking-Mode Assignment by Exercise Type",
+                  "summary": "Arpeggio picking is the default for harmonized scale studies; alternate picking is assigned specifically to second and fourth triads in minor contexts.",
+                  "engine_payload": {
+                    "kind": "_pending:mode-assignment"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Harmonized minor scale study",
+                      "quote_excerpt": "Give this exercise the same treatment as Ex. 1, such as arpeggio picking, etc.",
+                      "page": 18
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Alternate picking / up-strokes",
+                      "quote_excerpt": "this exercise uses alternate picking, which means that the second and fourth triads in the measure are played with up-strokes",
+                      "page": 25
+                    }
+                  ]
+                },
+                {
+                  "id": "up-stroke-revision-drill",
+                  "name": "Up-Stroke Retrospective Revision Drill",
+                  "summary": "All prior down-stroke-only exercises are revisited with up-strokes and then with alternating strokes, requiring up-strokes to match down-stroke speed and tone.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Up-stroke revision drill",
+                      "quote_excerpt": "Go back through the book now, taking all exercises in which down-strokes only were used and practice them using up-strokes. Then practice them using up and down strokes alternately.",
+                      "page": 39
+                    }
+                  ]
+                },
+                {
+                  "id": "dynamic-axis-rule",
+                  "name": "Dynamic Axis Rule (Wrist Over Highest Note)",
+                  "summary": "The wrist axis is positioned directly over the highest note being played so that the top voice predominates dynamically across all chord voicings and positions.",
+                  "engine_payload": {
+                    "kind": "_pending:dynamic-axis"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Wrist stroke and dynamic axis",
+                      "quote_excerpt": "The axis of your wrist should be directly over the highest note as the top note should predominate.",
+                      "page": 4
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "arc-path-for-open-voicing",
+                  "name": "Arc-Path Modification for Open-Voicing Contexts",
+                  "summary": "In open-voicing exercises where a sustained voice sits above the target string, the pick-return path is modified from a straight return to a small arc around the upper string.",
+                  "engine_payload": {
+                    "kind": "_pending:pick-path-modification"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Up-stroke arc around upper string",
+                      "quote_excerpt": "After the down-stroke the pick should travel in a small returning arc around the upper string so you will not touch it and stop its vibration.",
+                      "page": 32
                     }
                   ]
                 }
@@ -992,6 +1280,58 @@
                   ]
                 }
               ]
+            },
+            {
+              "id": "van-eps:1939-method:solfeggio-transposition",
+              "name": "Solfeggio All-Keys Transposition System",
+              "summary": "The Solfeggio system is the method's key-equality framework: every exercise is conceived relative to 'do' (the tonic of whatever key is being played), and this relativization obligates the student to practice each exercise in all twelve keys without favoring any. The system is not a separate exercise block but a governing rule applied to every form, every technique, and every exercise introduced in all three chapters. It prevents the common pedagogical failure of privileging easy keys (C, G, D) at the expense of the rest. The method's key-range tables per fingering form (Chapter 2) define where each form can be transposed within this system.",
+              "members": [
+                {
+                  "id": "tonic-do",
+                  "name": "Tonic as 'Do'",
+                  "summary": "Each key's tonic is treated as 'do', making all twelve keys structurally identical in the method's framework."
+                },
+                {
+                  "id": "twelve-key-cycle",
+                  "name": "Twelve-Key Practice Cycle",
+                  "summary": "Every exercise is practiced in all twelve keys; the key-range tables per form define the practical limits of transposition on the guitar."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "key-equality-traversal",
+                  "name": "Key-Equality Traversal Rule",
+                  "summary": "No key receives privileged practice attention; the student moves through all twelve keys without stopping to favor familiar keys.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Solfeggio / all-keys practice",
+                      "quote_excerpt": "Through this system all keys are equal and therefore you will not favor any particular key or keys.",
+                      "page": 2
+                    }
+                  ]
+                },
+                {
+                  "id": "form-range-bounded-transposition",
+                  "name": "Form-Range-Bounded Transposition",
+                  "summary": "Each fingering form is transposed only within its prescribed key range; transpositions outside that range require switching to a different form.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "key ranges per form",
+                      "quote_excerpt": "1st form—from C up to F … 4th form—from A flat up to D flat (D if possible) … 6th form—from F sharp up to C sharp",
+                      "page": 8
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": []
             }
           ]
         },

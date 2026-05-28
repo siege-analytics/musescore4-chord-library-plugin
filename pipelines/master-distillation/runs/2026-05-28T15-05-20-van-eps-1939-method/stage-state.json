@@ -1,0 +1,60 @@
+{
+  "run_id": "2026-05-28T15-05-20-van-eps-1939-method",
+  "config": "pipelines/master-distillation/configs/van-eps-1939-method.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-van-eps-1939-method/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-van-eps-1939-method/pages.json",
+        "re-ingested: 42 pages, 57,314 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-28T17:21:04+00:00",
+      "ended_at": "2026-05-28T17:21:04+00:00",
+      "outputs": [
+        "detected 3 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-van-eps-1939-method/chapter-bounds.json",
+        "plugin/data/masters-corpus/van-eps/1939-method/chapters/ch01.md",
+        "plugin/data/masters-corpus/van-eps/1939-method/chapters/ch02.md",
+        "plugin/data/masters-corpus/van-eps/1939-method/chapters/ch03.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-28T17:23:42+00:00",
+      "ended_at": "2026-05-28T17:23:42+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/van-eps/1939-method/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/van-eps/1939-method/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/van-eps/1939-method/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/van-eps/1939-method/1939-method-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-28T17:30:39+00:00",
+      "ended_at": "2026-05-28T17:30:39+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/van-eps/1939-method/derived/systems-draft.json",
+        "plugin/data/masters-corpus/van-eps/1939-method/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}
