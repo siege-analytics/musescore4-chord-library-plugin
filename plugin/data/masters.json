@@ -10370,6 +10370,126 @@
       ],
       "instrument": "6-string",
       "biography": "Kentucky-born guitarist whose recording career bridged the 1950s R&B/early-rock-and-roll session world (Mickey & Sylvia's \"Love Is Strange\", Atlantic and Savoy sessions for Ray Charles, Big Joe Turner, Ruth Brown, LaVern Baker) and the Paris-based jazz expat community where he lived from the 1960s onward. The Complete Course in Jazz Guitar (Lewis Music Publishing Co., 1955) — universally known as Mickey Baker's Vol. 1 — is among the most-cited and most-used jazz-guitar method books ever written; its 26 lessons introduce the working-musician's chord vocabulary (the \"Baker chords\"), substitution lattice, comping and rhythm patterns, and single-note line vocabulary as a unified practical system rather than a theoretical exposition. A Volume 2 followed.",
+      "principles": [
+        {
+          "id": "numbered-finite-vocabulary-with-transposition-mandate",
+          "name": "Numbered, finite chord vocabulary + universal transposition mandate",
+          "summary": "Baker prunes the guitar's chord universe to 26 essential shapes (Chapter 1), later extended to 30 (Chapter 5), and references every voicing by number rather than by Roman-numeral function. The mechanical definition of mastery is transposition: every voicing must be physically rewritten — by hand — into a manuscript notebook in every key, with practical target lists (seven keys for vamps, six for intros, five horn-friendly keys for blues runs) contracting the universal mandate to working-guitarist reality. Drill is chromatic up-and-down-the-neck, with two governing positions per key (additional 3rd-fret position for Ab/Bb/C/Db/Eb).",
+          "voicingStyleTags": [
+            "baker",
+            "numbered-vocabulary",
+            "transposed-shape"
+          ],
+          "playStyleTags": [
+            "block",
+            "shape-drill",
+            "chromatic-position-shift"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "shapeIsKeyTransposable": true,
+            "twoPositionsPerKey": true
+          },
+          "references": [
+            {
+              "source": "Baker, Mickey. Complete Course in Jazz Guitar Vol. 1. Lewis Music Publishing, 1955.",
+              "citation": "Chapter 1 (26-chord catalog + transposition mandate); Chapter 4 (two-positions-per-key); Chapter 5 (Chords 27-30, key-specific); Chapter 12 (additional 3rd position)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "four-named-substitution-principles-as-lattice",
+          "name": "Substitution lattice: two-names + relative-minor + tritone-equivalent + dominant-as-connector",
+          "summary": "Four named substitution principles co-operate as a lattice. (1) Two-names: one shape carries two functional identities (Gma6 = Emi7, Ama6 = Fmi7), internalized under both names in all keys. (2) Dominant-to-relative-minor: any dominant-7 can be replaced by the minor a fifth above it (G7 by Dmi7), drilled as a 12-row written chart C7→B7. (3) Root-omitted tritone-equivalent voicing: G7#5 = Db9b5 — same shape, different root. (4) Dominant-as-leading-chord: every chord-to-chord connection can be built by inserting the appropriate dominant between them, organized into three categories (dominant-to-dominant, dominant-to-minor, dominant-to-major). Load-bearing constraint: substitutions must serve voice-leading and an actual progression, never be 'thrown in' for color.",
+          "voicingStyleTags": [
+            "baker",
+            "tritone-sub",
+            "two-names"
+          ],
+          "playStyleTags": [
+            "block",
+            "voice-led-substitution"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody"
+          ],
+          "tolerance_hints": {
+            "substitutionMustServeVoiceLeading": true
+          },
+          "references": [
+            {
+              "source": "Baker, Mickey. Complete Course in Jazz Guitar Vol. 1. Lewis Music Publishing, 1955.",
+              "citation": "Chapter 4 (relative-minor chart); Chapter 7 (two-names + tritone-equivalent); Chapter 5 + Lesson 16 (dominant-as-leading-chord, flagged as 'the key to all of the other lessons')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "movement-displaces-strumming",
+          "name": "Adaptable voicings and moving textures displace strumming",
+          "summary": "The book's central architectural polemic: static two-bar rhythm strumming is 'corny'; what makes the music jazz is motion through adaptable voicings. Two textures replace strumming as the comping default — arpeggio comping and walking-string-bass — and intros, vamps, and fill-ins are taught explicitly as motion devices that prevent the texture from stalling. Open-string-root horn-backing voicings (Chords 27-30) are the vamp-shape vocabulary; the two-line standard-vs-new format (original changes above, Baker's reharmonization below) is the visual signature of the substitution-driven motion-first philosophy.",
+          "voicingStyleTags": [
+            "baker",
+            "open-string-root",
+            "arpeggio-comping",
+            "walking-bass"
+          ],
+          "playStyleTags": [
+            "arpeggio-comp",
+            "walking-bass",
+            "vamp"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "solo-guitar",
+            "ensemble-chord-melody"
+          ],
+          "tolerance_hints": {
+            "allowWalkingBassUnderChord": true
+          },
+          "references": [
+            {
+              "source": "Baker, Mickey. Complete Course in Jazz Guitar Vol. 1. Lewis Music Publishing, 1955.",
+              "citation": "Chapter 1 (no-strumming polemic); Chapter 2 (arpeggio + walking-string-bass textures); Chapter 4 (vamps, fill-ins); Chapter 5 (Chords 27-30 horn-backing voicings)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "relative-run-substitution-unifies-chords-and-solos",
+          "name": "Relative-run substitution unifies chord study with solo study",
+          "summary": "Part Two extends the relative-substitution principle from chords into single-note runs: an Ami7 run can be played over D7, a Gmi7 run over C7. The same lattice (chord = relative chord; minor a fifth above the dominant) that licenses chord substitution in Part One also licenses run substitution in Part Two — so the player's vocabulary doubles in coverage without doubling in memorization cost. Riffs are introduced as 'ideas put together and forced against the chord' — structurally justified for vamp changes that move too fast for chord-tone runs. Solo construction (Chapter 13) closes with two methods: chords run around the implied melody under a 7th-11th-fret position lock, and the solo pattern as a per-course rhythmic frame.",
+          "voicingStyleTags": [
+            "baker",
+            "relative-sub",
+            "horn-friendly-keys"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "line",
+            "riff-based"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "solo-guitar",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Baker, Mickey. Complete Course in Jazz Guitar Vol. 1. Lewis Music Publishing, 1955.",
+              "citation": "Chapter 8 (alternate picking + 28-exercise mechanical foundation); Chapters 9-10 (scale/minor/dominant/diminished runs + relative-substitution extended to runs); Chapter 11 (riffs); Chapter 13 (solo construction methods)."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "complete-course-in-jazz-guitar",
@@ -11106,7 +11226,7 @@
           ]
         }
       ],
-      "status": "corpus_only"
+      "status": "promoted"
     }
   ]
 }
