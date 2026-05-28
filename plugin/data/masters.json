@@ -5301,7 +5301,107 @@
       ],
       "instrument": "6-string guitar",
       "biography": "Jens Larsen is a Danish jazz guitarist and educator active in the modern jazz pedagogical tradition. Through book-length works in the Fundamental Changes series and an extensive online presence, his teaching codifies a structured vocabulary of arpeggio substitutions, chromatic enclosures, and altered/diminished scale applications, organized around shared-tone analysis and voice-leading discipline. Biography placeholder; refine with maintainer review on next pass.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "shared-tone-arpeggio-substitution",
+          "name": "Substitute arpeggios by shared-tone preservation, not by root",
+          "summary": "The improviser does not arpeggiate the root chord; instead they select the substitute arpeggio whose notes maximally overlap the underlying chord's guide tones (3rd and 7th) and color tones (9, 11, 13, altered extensions). The canonical example is G#m7b5 over Bb7alt: G# preserves F (the b7 of Bb), and the m7b5 arpeggio efficiently expresses the altered dominant's b9, #9, b13 sonority. The hierarchy is 3rd-rooted > 5th-rooted > 7th-rooted; each step trades shared-tones for color.",
+          "voicingStyleTags": [
+            "larsen"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "line"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Larsen, Jens. Modern Jazz Guitar Concepts. Fundamental Changes, 2018.",
+              "citation": "Chapter 1 (Diatonic Substitution) establishes the framework; Chapter 4 (Altered Scale) develops the m7b5-on-3rd-of-altered-dominant case explicitly with the Bb7alt → G#m7b5 example on p.54."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "chromatic-enclosure-of-target-tones",
+          "name": "Chromatic enclosure as the default approach to chord tones",
+          "summary": "Target chord tones are approached not directly but via chromatic neighbors above and below, encircling the target before resolving onto it. This produces the 'bebop-line' surface texture but Larsen frames it pedagogically: the enclosure construction is taught as a shape (e.g. upper-chromatic + lower-chromatic + target) that can be transposed across chord tones, scale degrees, and harmonic functions. The shape generalizes; the specific notes follow from the underlying harmony.",
+          "voicingStyleTags": [
+            "larsen"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "line",
+            "chromatic"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Larsen, Jens. Modern Jazz Guitar Concepts. Fundamental Changes, 2018.",
+              "citation": "Chapter 2 (Chromatic Enclosures) is the dedicated treatment; enclosures recur in Chapters 3-6 as a connective device across all subsequent material."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "diminished-symmetry-upper-structure",
+          "name": "Diminished symmetry generates upper-structure color over altered dominants",
+          "summary": "Four major triads embedded within each half-whole diminished scale (a minor-third-stack symmetry) become upper-structure devices for altered dominant tension. The line player selects among these triads to color the underlying altered dominant; the symmetry guarantees that each triad preserves the dominant's b9/#9/#11/13 sonority differently. Taught as a color palette, not a mechanical scale fragment.",
+          "voicingStyleTags": [
+            "larsen"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "line",
+            "altered-dominant"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Larsen, Jens. Modern Jazz Guitar Concepts. Fundamental Changes, 2018.",
+              "citation": "Chapter 5 (Half-Whole Diminished Scale) develops the four-triad framework; Chapter 6's solo analysis demonstrates application in cadential contexts."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "voice-leading-common-tone-contrary-motion-encirclement",
+          "name": "Voice-leading via common tone, contrary motion, or encirclement",
+          "summary": "Every melodic move between phrases or chord changes must be justified by one of three voice-leading principles: a shared common tone held across the change, contrary motion (line moves opposite to the bass or to an implied second voice), or encirclement (line approaches the next target tone by chromatic neighbors). Large intervals must be balanced by stepwise resolution in the opposite direction. This is the criterion by which the book asks students to evaluate every melodic choice.",
+          "voicingStyleTags": [
+            "larsen"
+          ],
+          "playStyleTags": [
+            "sequential",
+            "line",
+            "voice-leading"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Larsen, Jens. Modern Jazz Guitar Concepts. Fundamental Changes, 2018.",
+              "citation": "Counterpoint rule (large interval → stepwise opposite-direction resolution) appears across multiple chapters as a consistent connective tissue; Chapter 6 makes the voice-leading-as-criterion claim explicit through bar-by-bar solo analysis."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "modern-jazz-guitar-concepts",
