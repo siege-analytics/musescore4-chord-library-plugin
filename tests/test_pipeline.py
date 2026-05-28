@@ -416,8 +416,15 @@ def test_ocr_defaults_cover_required_keys():
     required = {
         "host", "user", "vision_model",
         "confidence_threshold", "min_chars_per_page", "render_dpi",
+        "max_wait_minutes",  # #339 F8 fix
     }
     assert required <= set(s1_extract.OCR_DEFAULTS.keys())
+
+
+def test_ocr_defaults_max_wait_minutes_is_positive():
+    """The poll-loop cap (#339 F8) must be a positive number; 0 would
+    immediately timeout, negative would loop forever (elapsed > -N false)."""
+    assert s1_extract.OCR_DEFAULTS["max_wait_minutes"] > 0
 
 
 # ---------------------------------------------------------------------------

@@ -11,6 +11,17 @@
 #       reingest.py which has the canonical indexer.)
 #   $STATE_DIR/<slug>.done or .error
 #   $LOG_DIR/<slug>.stdout, $LOG_DIR/<slug>.stderr
+#
+# Exit codes:
+#   0 = success (.done marker written)
+#   2 = config / runner missing / source PDF missing
+#   3 = OCR runner finished but outbox missing transcript
+#   4 = pdftotext returned nonzero
+#
+# Single-writer invariant: acquire_lock is non-atomic but the daemon's
+# is_locked() check before dispatch ensures only one process_one.sh
+# instance runs per slug at a time. Running two daemons concurrently
+# would violate this.
 
 set -euo pipefail
 
@@ -63,16 +74,28 @@ if [ "$NEEDS_OCR" = "1" ] || [ "$NEEDS_OCR" = "true" ]; then
     OCR_RUN_ID="$SLUG"   # use slug as the run_id so paths are stable
     OCR_INBOX="$HOME/jazz-ocr/inbox/$OCR_RUN_ID"
     OCR_OUTBOX="$HOME/jazz-ocr/outbox/$OCR_RUN_ID"
+    OCR_INBOX_COMPLETE_MARKER="$OCR_INBOX/.pdftoppm-complete"
     mkdir -p "$OCR_INBOX"
 
-    if ! ls "$OCR_INBOX"/page-*.png >/dev/null 2>&1; then
+    # F1 fix (#339): use an explicit .pdftoppm-complete marker instead of
+    # a page-glob existence check. If a prior run was killed mid-render,
+    # the inbox would contain SOME page PNGs but be incomplete. The old
+    # check would skip re-rendering and feed a partial inbox to the OCR
+    # runner, producing silent under-extraction with a .done marker.
+    # The marker is written ONLY after pdftoppm exits successfully.
+    if [ -f "$OCR_INBOX_COMPLETE_MARKER" ]; then
+        log_line "$SLUG" "skipping pdftoppm (.pdftoppm-complete marker present)" \
+            | tee -a "$STDOUT_LOG"
+    else
+        # Clear any stale PNGs from a prior partial render before re-doing.
+        rm -f "$OCR_INBOX"/page-*.png
         log_line "$SLUG" "running pdftoppm into $OCR_INBOX" \
             | tee -a "$STDOUT_LOG"
         pdftoppm -png -r "$OCR_RENDER_DPI" "$PDF_PATH" "$OCR_INBOX/page" \
             >>"$STDOUT_LOG" 2>>"$STDERR_LOG"
-    else
-        log_line "$SLUG" "skipping pdftoppm (inbox already populated)" \
-            | tee -a "$STDOUT_LOG"
+        # Write marker only after success. If pdftoppm fails, set -e
+        # causes process_one.sh to exit; no marker, no false skip on retry.
+        date -Iseconds > "$OCR_INBOX_COMPLETE_MARKER"
     fi
 
     log_line "$SLUG" "running OCR runner" | tee -a "$STDOUT_LOG"
