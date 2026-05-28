@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch13",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 13: Three consecutive eighth-note triplets\nPages 61-63 of the book.\n\n<<<CHAPTER TEXT\n\nMixing Up Different Groups of\nConsecutive Eighth Notes\n\nReview oF CHarters 3-8 * CONSECUTIVE EIGHTH NOTES\n\nTo review material presented in Chapters 3-8, practice playing broken eighth-note solos using\nvarying groupings of eighth notes as in the following example.\n\nMPLE: TUNE 5 ~ Lt Happened\n\nZim Mm me =\n~\n\noO\nEPA 4 E\u00b07 8 FA7 oo 6 Feo7 7\na Oe _ \u00b0 \\. i \u2018....... 4\n\u2014\u2014 = i SN Kot bef ia j\ny. a yy 0 oe\nan id or Loy toot ei ee\n\u2018enamel aa e 7 fe a er\nre eB kB,\n+4 N N | Z _\n\nWho's counting? The seasoned improviser is not counting the number of eighth notes as he or she\nplays. But practicing in this way and playing these exercises does give the improviser a new aware-\nness of what it is he or she is playing.\n\n1 Review OF CHAPTERS 9-13 * CONSECUTIVE TRIPLETS\n\nTo review the material pertaining to consecutive triplets in Chapters 9-13, try playing broken trip-\nlet solos on Tune 5 using a variety of triplet groupings as in the following example.\n\ni EbA E\u00b07\nfal\n\n3 r\u20143 3\ni i t iS ii im p f 3 3\nt iw 2 z i i 1 t i\" ey Se i \u2014\n@. eo. -0 i T | L Lf a vv, if i or\no ote Se \u2014\u2014 a a\n\u2014 :\n- \u2014\n\n\u00a2 : ]\n|\n. |\nne\ni\nWe\ni\nHH |\nJ\n1!\nLL\n\n\nConsecutive 16th Notes\n\nTo practice playing consecutive sixteenth notes take the material presented in Chapters 3-8 on\nconsecutive eighth notes and convert them to sixteenth-note exercises by doubling up. For exam-\nple, (the first rhythm of Chapter 3) four consecutive eighth notes and two quarter-note rests,\nbecomes four consecutive sixteenth-notes and one quarter-note rest.\n\nbecomes\n\nCc\nAU\n\nrN\n1,\n+\nTN\na\n\nThe exercises are then all in 2/4 time so you can repeat the 2/4 phrase twice to make a 4/4 bar.\n\nEXAMPLE:\nbecomes\n% z 2 z z\n~\u2014f\u2014f f \u20ac \u2014f fF _\u2014\u2014\u2014 ons |\nCC ! a a |\nEXAMPLE: 4 CONSECUTIVE NOTES\nbecomes\n{z cY) ey \u00a3. 7 7d 7a ey |\nie sa se ae a\nt\nLo \u2014\u2014 7 =\u2014 7\nEXAMPLE: 5 CONSECUTIVE NOTES uetle : ae\nbecomes\n|\nrey \u00a3\nSS ee eee prey Za\n\nCIE} == \u201c\u2014=\u2014\n\nEXAMPLE: 6 CONSECUTIVE NOTES\n\nbecomes\n\nz 71 7\nL i\n\nHie:\n\na A\nt\n\nLe =\n\nrN\nrN\niN\n1ele!\nrN\ni.|\n~\nele!\n\nI\nIL\nll\n\nThis way of practicing sixteenth notes is very valuable for double-time plaving. It helps the impro-\nviser to actually create when playing sixteenth notes rather than being limited to a Few pet phrases.\nPlaying consecutive groups of five, six, or seven sixteenth notes is very close to playing long [\ndouble-time lines. Broken sixteenth-note lines are also very effective. All of these rhythms depend\n\na great deal on the tempo of the tune.\n\n\n\nHemiolas\n\nThis chapter presents 3/4 rhythms to be played over 4/4 tunes. Practicing this rhythmic technique\nhelps the improviser to become independent of bar lines and makes one\u2019s playing more horizontal.\nPlaying 3/4 rhythms over 4/4 tunes insures that the player is beginning phrases from various\nbeats within the bar and not starting every line on only beat one. Practicing this technique opens a\nwindow in the mind that hears bigger spaces of time, like four-bar phrases or eight-bar phrases, or\nsixteen bars. Tt also effects the improviser\u2019s melodic choices because you are sometimes anticipat-\ning the next chord.\n\nOnce you\u2019ve practiced these rhythms you will notice a greater sense of form control even when\nyou aren\u2019t playing them. Try to practice these rhythms with a play along and also without a play\nalong while your right foot taps beat one and your left foot taps beat 3. Also, try singing the\n\nrhythms to coordinate where beat one is in relation to the thythm.\n\nIn the following chart the 3/4 rhythm is shown and then written out over a 4/4 time signature. It\ntakes four bars of 3/4 to equal three bars of 4/4. The 3/4 rhythm starts again on the first beat after\nit has been played through three bars of 4/4.\n\nTry playing these rhythms on Tune 6 (Into Somewhere).\n\nRHYTHM WRITTEN OVER 4/4\n\n]\n\u00a3 | = \u00a2. \u00a3 + t *\neo \u20ac ~ f- e aa 7 a el]\na\na a\nE a \"\nia L f ra 77 L u ra \u00a3\nrE i { i aa f\u2014f\ni ] | Lu LJ Le! _]\n1 1 _\n\u00a3 Fre 00 + i 2 \u00a3 vA \u201cI\n_. f- ia On lcm Pa ra ra { PS \u00a3 {\ni | 1 i i I t i\n\n\u2014\na oT\n.\nSoh\nLJ\nHl)\nmI\n[|\n\nLl\n|\nie\n\ntu. L\n\na\nle\nie\n\n| le\nie\n\n+e]\n\nIe\n\nmo\nAe\nx\nxX\nx\nx\ne\nXx\n~e\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 13 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: Five consecutive eighth-note triplets\nPages 49-52 of the book.\n\n<<<CHAPTER TEXT\n\nPLC RATT S\n\n10 SSS See a\n|\n3 a en\n\n1 fea ee ee \u2014\u2014\u2014\u2014\u2014\u2014 a\n\nTo get used to playing exercise #13, try playing the same four-note melody starting on the differ-\n\nent beats, for example:\n\u20143\u2014 p34 [3-4\n\u2014 a = t t = f ny\nf | ai { i or he ie\n} ~~ j\n\n3 L-3\n\nNow try to play the four-note melody wherever it appears in the bar with the same\n\n4. Try this 5/4 triplet rhythm over 4/4,\n\n=\n\nff \u2014 ko\n\nST CEES _ i\n3 3 3\n\n16, Practice plaving these preceding triplet groupings randomly.\n\narticulation.\n\n\nTune 5 \u266b It Happened (C Instruments)\nTrack 11 - slow\nTrack 12 - fast\nEb\u0394\nE\u00b07\nF-7\nF#\u00b07\nEb\u0394/G\nEb7\nAb\u0394\nG\u00f8\nC7b9b13\nF-7\nDb7#11\nEb\u0394\nD\u00f8\nG7b9\nC-7\nF7\nF-7\nBb7\nEb\u0394\nE\u00b07\nF-7\nF#\u00b07\nEb\nEb7\nAb\u0394\nG\u00f8\nC7b9b13\nF-7\nDb7#11\nEb\u0394\nC7b9\nF-7\nBb7\nEb\nC7\nF-7\nBb7\n\nmie Bids\n\n= Tune 5 \u00a2 It Happened (Bb Instruments)\n| - slow i\n\nTrack 12 = fast |\n\n\n\nTune 5 It Happened (Eb Instruments)\nTrack 11 - slow\nTrack 12 - fast\nC\u0394\nC#7\nD-7\nD#7\nC\u0394/E\nC7\nF\u0394\nE\u00f8\nA7b9b13\nD-7\nBb7#11\nC\u0394\nB\u00f8\nE7b9\nA-7\nD7\nD-7\nG7\nC\u0394\nC#7\nD-7\nD#7\nC\nC7\nF\u0394\nE\u00f8\nA7b9b13\nD-7\nBb7#11\nC\u0394\nA7b9\nD-7\nG7\nC\nA7\nD-7\nG7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

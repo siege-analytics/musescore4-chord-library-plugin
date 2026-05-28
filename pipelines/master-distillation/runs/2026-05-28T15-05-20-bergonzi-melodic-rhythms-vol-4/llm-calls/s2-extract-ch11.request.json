@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: Six consecutive eighth-note triplets\nPages 53-56 of the book.\n\n<<<CHAPTER TEXT\n\ntive Consecutive tighth-Note Triplets\n\nUsing Tune 5 (/t Happened), practice the following triplet rhythms. Each consists of two or three\neighth-note triplet groupings but only five of the notes are sounded.\n\n1. fG\u2014--4*-/ ye \u00a3 t\nL\n3 a Soe)\n2 ay z 2 1\neee\n|\na ee 3\n3. eae a\nCit an [Te\nYojey?\n2 fer, =\n\nh\n\nat\n6 & ay af Cama\nXS = a ar A ra L it)\ny { i { y D\na 3 Lj\n\ni\n|\nL\n\n\n\nPRIPLET GROUPINGS a\n\ns [ey\nLo 3d 3\n9. {\u20ac Zi 4k \u201ct t=? Z *\na a 3\n10. FE 4 \u2014\u20ac 2\n\u2014\niL 3\u2014J 3\n11. f\u00e9 \u2014\u2014f tt\n\u2014\n3 LL 3-\n2. f\u00e9 $i \u2014-4\n3 Lo 3-4 Le 3\n13. F\u00e9 at ttt\n3\u00b0 423-7 3 3 Lege Lg 3\n14. Try playing this 7/4 rhythm over 4/4.\nva x ee\n#f a + 7 \u00a3 a \u201cf vi f- 4 f L L\nLo a yoo\na ee ee See] 3 L344 3 a oe\n\n15. Practice playing five consecutive eighth-note triplets randomly.\n\nan\nOL TT lr rrr LL rr LL rr lL lL lL lL lL lL SS oo\u2014,l\u2014\u2014eElll\u2014=eet\u2014\u2018<\u00e9iszdrT\n\n\nSix Consecutive Eighth-Note Triplets\n\nUsing Tune 5 (It Happened), practice the following triplet rhythms.\n\n1. [C]\n   3\n   3\n\n2. [C]\n   3\n   3\n   3\n\n3. [C]\n   3\n   3\n   3\n\n4. [C]\n   3\n   3\n\n5. [C]\n   3\n   3\n   3\n\n6. [C]\n   3\n   3\n   3\n\n7. [C]\n   3\n   3\n\nFRIPLET GROUPINGS\n\n8. [CF\nLo 3 3 3\nt\n9. TE {4\nLog a) 3\n10. TE { 7\n3 3\n11. 1 a\n3 Le 3-H Loe ZI\n12. F\u00e9 \u2014\n3 a Ln 3\n3 {2 ey a4 | Lyi\n\u00ae pepe etre | a; =<\n_ 7 LL Ld / V\n3\u00b0 3 tj 3 a Sere eae ee en\n14. Try this 7/4 rhythm over 4/4.\nrey\nf z t foe f t\n{ LL! |\n3 3 (3 3 3 3 be. 3\n\n15. Practice playing six consecutive eighth-note triplets randomly.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}

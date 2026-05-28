@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch20",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 20: In the pocket\nPages 85-87 of the book.\n\n<<<CHAPTER TEXT\n\nDIC RNYTAMS\n\nPlay it as sixteenth notes using the whole line.\n\n6 6\n\n|\nJ\n\n7 =\nibe f -\nFe e_-*\u2014o- wd =\n\nTry playing this line moving from one gear to another.\n\nee ee 3 TZ ay\n\\\n\u201c] n ] | t T OES oa\nobs | i 1 t { Ihe in t\nok A ae o a 2 @ \u2014 =\n| 3\n+4 ; 4 { = Z ! | = 0\nHalf oe \u2014 pe a Jae |\nPy) e Tg\n3 3\nZS xi o be =} {+} \u2014 4\n: \u2014\u2014 2 a\n3 3\na\u201d i oa il ome ' a = \u2014\n= a a = : ; \u2018 | f pe\u2014\u2014- a t\n= L oe oe be:\n\n\n\nTIME TONES\n\nTo become very fluid at this try changing from one gear to another in the middle of the line, for\n\nexample:\n\n\\\n\n3 \u2014\nfh t _\u2014 zi\n\n4 \u2014\u2014_ te \u2014 a \u00b0 al Pole\nry) a ee\n\n3\n\u2014_\u2014_\u2014OOT TT\n\nA pad etc.\n~\u2014 f + i _ iad 2 ke iol t\u2014\u2014} t\n| (an i De T ae. aed 2\nad os a - ~\n\nRather than practicing this in a programmed fashion try using this technique randomly and spon-\ntaneously. In other words, don\u2019t predetermine where or how you are going to change gears but do\nuse the same line. This practice will improve your ability to change gears using different lines.\n\nHere is another I{-7 - V7 line to practice:\n\nte\n\nD7\n\n2\n{\n\na\n\nei\n\nThe above line in five gears:\n\nL. rm 37 3 po 3 3\npete Poe eye\nee I i | i i i | { oe 2\nOE er\n\nry =\n2.\n\n4 2 oie f \u00a9 t \u00b0 bh\n\nAe \u2014* | \u2014\u2014- a a\n6c \u2014 ee\n5) \u2014 =\nFor triplets try leaving off the first four notes.\n3.\n\nf \u00ab La\n\nprop ttt iw Pe te Pg te\nta \u20ac \u2014 : t : a t ! as\nANEW ee here ae\ne \u00b0 3 3 3\n\n\n\nBe RIP TEMS\n\n4\n\nTry composing your own lines and adapting them to varying time zones. These lines do not have to\nbe over particular chords or scales. You can practice this with any melody that you like the sound of\nwithout harmonic implications.\n\n+. . . .\nNext, take any eighth-note scale sequences or intervallic sequences that you play and practice\n\nthem as triplets. Here are some examples:\n\nLE SEQUENCE:\n\nRIPLETS:\n\u2014o e .-\n\u2014\u2014\u2014 \u2014 \u2014s\nCe \u00b0 ' oe ee\n\u00a5 T iu a. t if - [ pam [\ne - 3 J etc.\n3 3 3\n\n| CALE SEQUENCE:\n\nnl\net\n\n| )\ny = i { i\ny A\n\n| RIPLETS:\n|\n|\n\n3\n1 __\u2014\ni\n| etc.\nBevscuic SEQUENCE:\n#4 be.\n2 be a\n| \u2014 Deby b \u00ae\u2014be\nit hase } | Ss \u2018|\nt : { t { t t PO\nI T T i t t\netc.\ni...\nr 2\n4 * be \u00b0 \u00a9 be a * be\n= rd oe ry er i\n6\u00e9 \u2018 a\n=ae \" _ \u2014 ]\n- 7 s\ne 3 3 H ate,\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 20 extraction"
+}

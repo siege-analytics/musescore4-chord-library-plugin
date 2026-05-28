@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Playing three consecutive eighth notes\nPages 38-39 of the book.\n\n<<<CHAPTER TEXT\n\nTune 4 It's No One But You (C Instruments)\nTrack 9 - slow\nTrack 10 - fast\nG-7\nC7\nF\u0394\nD7b9\nG-7\nC7\nF\u0394\nC-7\nF7\nBb-7\nEb7\nAb\u0394\nDb7\nC\u0394\nA7\nD-7\nG7\nC\nA-7\nD7\nG-7\nC7\nF\u0394\nD7b9\nG-7\nC7\nC-7\nF7\nBb\u0394\nBb-7\nEb7\nA-7\nAb-7\nDb7\nG-7\nC7\nF\u0394\nA-7\nD7\n\n| Me\n\nTune 4 \u00a2 It\u2019s No One But You (B) Instruments)\nL. 9 - slow\n\n| Track 10 -\n\nae |\n\n| A-7 D7\n\nGA E79\nT ~ T ~~ al\nEz a ae oe\nGA D-7 G7\n\nFl _\n\nSf- Sf\u201d \u2014\u2014 f f- Sf- =\nBoA E57\nZL Lf LZ L- ff |\nD B-7 E7\nLZ aa Lf ae ft\nGA E7??\nSf\u201d Sf\u201d Sf. Sf- Sf\nD-7 G7\n\nff. [ f f- J. f.\nf. - ff. Lf 7A ft\nB-7 Bb-7 Eb7\n\nVA it f. f -. ya \u2014]\nGA B-7 E7\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

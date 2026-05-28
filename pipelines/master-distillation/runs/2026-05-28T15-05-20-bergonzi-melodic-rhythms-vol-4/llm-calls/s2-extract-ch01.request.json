@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Notes Per Bar\nPages 7-15 of the book.\n\n<<<CHAPTER TEXT\n\nMELODIC RHYTHMS\n\nEXAMPLE: TUNE 1\n5 NOTES PER BAR USING DIFFERENT RHYTHMS\n\nC\u0394\nDb\u0394\n\nBb-7\nEb7\nAb\u0394\n\nG-7\nC7\nF\u0394\n\nA-7\nD7\nEb-7\nAb7\nD-7\nG7\n\nC\u0394\nDb\u0394\n\nBb-7\nEb7\nGb7\nF7\n\nD\u00f8\nG7b9\nC\u0394\nA7b9\n\nD-7\nG7\nF\nC\nA7\nD-7\nG7\n\nNeedless to say, using different rhythms in every bar is more sophisticated but it is not necessarily more effective. This exercise improves your awareness of which rhythms you are using as well as your awareness of where you are in the bar. More notes per bar is not better than a few, just different.\n\nTune 1 | Sleep Walk (C Instruments)\nTrack 3 - slow\nTrack 4 - fast\nC\u0394\nD\u266d\u0394\nB\u266d-7\nEb7\nA\u266d\u0394\nG-7\nC7\nF\u0394\nA-7\nD7\nEb-7\nAb7\nD-7\nG7\nC\u0394\nD\u266d\u0394\nB\u266d-7\nEb7\nGb7\nF7\nD\u266d\nG7\u266d9\nC\u0394\nA7\nD-7\nG7\nD-7\nG7\nC\u0394\nA7\nD-7\nG7\n\nTune 1 \u00a2 Sleep Walk (Bb Instruments)\n\nBacio RHYTHMS\n\nEbA\n\nFi\n\nf-\n\nBbA\n\nF7\n\nGA\n\nD7\n\nA7\n\nBb7\n\nF-7\n\nE7\n\nEbA\n\nG7\n\nAb7\n\nF7\n\nB7\n\nDA\n\nA7?9\n\nA7\n\nE-7\n\nB7\n\nDA\n\nA7\n\n\n\nTune 1 Sleep Walk (E\u266d Instruments)\nTrack 3 - slow\nTrack 4 - fast\nA\u0394\nB\u266d\u0394\nG-7\nC7\nF\u0394\nE-7\nA7\nD\u0394\nF#-7\nB7\nC-7\nF7\nB-7\nE7\nA\u0394\nB\u266d\u0394\nG-7\nC7\nEb7\nD7\nB\u266d\nE7\u266d9\nA\u0394\nF#7\nB-7\nE7\nB-7\nE7\nA\u0394\nF#7\nB-7\nE7\n\nHELODIC RAYINKY\n\nEXAMPLE:\n\nCA\n\nThe next step is to try playing a specific number of notes but this time play them independent of\nbar lines. In other words, pick a specific number of notes and then play that grouping as many or\ni . . . . \u2018 :\n\nfew times as you like within a bar, over the bar, or through the bar. The following example uses\nthree-note groupings within and over the bar lines.\n\nDbA\n\nf _ n - S\ntye oo - To a\n\nnit\n\n\u2018\n\na\n\n\u20ac\n\nof\n\net t T\n\nEb7\n\n\u2014\n|\n\nyrs\n\nN\n\na =\n\nAnother idea to consider is that your note groupings don\u2019t necessarily have to be connected. In this\nfollowing example I am thinking of three note groupings although the listener wouldn\u2019t be able to\ntell that because the groupings are overlapped. The point being made here is that practicing in this\nway can lead you to new or different rhythmic ideas. How I\u2019m thinking about these groupings of\nnotes will effect the articulation of the lines.\n\n\\.\n\nhe\n\ni\nher\nble!\n\neu\n. iene\n\nAs you can see this exercise can be as exoteric or esoteric as you like depending on your own imag-\nination. It creates rhythms that you might not ordinarily play and it also serves as a useful tool to\nbegin hearing polyrhythms. For example, take a five-note grouping, they could be played as simply\nas this:\n\niL\n\nor or this\n\nThe five notes can be played as 1 beat or 1 1/2 beats. 2 beats, 3 beats, or + beats, etc.\n\n\n\n22 Rhythms :\n\nThis chapter contains 22 one-bar rhythms as well as a new tune to work with. Try playing each I\n\none-bar rhythm through Tune 2. Play each rhythm and feel it as if you were a rhythm instrument,\nfeel the rhythm inside your body. Play through each of the 22 rhythms and get a feel for very I\none. Of course, add to the list! The chart is limited to primarily quarter notes and eighth notes. Six-\n\nteenth notes and triplets have been purposely omitted at this point.\n\nAff\n\n\nA as 4 cea\n| mn wi) AI | \u2014\u2014 '\nHT a\n\u201c a4 i\ni Ni\n\u2122\nee \u00a5 wt ALT | ry |\naan : |\naw ma > KLE\nOh 7 eae -e I\na\na | Ca \u201c, Oe KL ie\nwe Se Se ee o we RO we |\naa F ey a \u2014 rr\n~_ > Naa\n0) ~4 Ai Ki\nOe _\n= - \\\n~ No i a Na \u2018|\n~ 7 aH {| me >\n= : ah\n@ ALIN _ I~ LIN NEON\nA me\nN is a\nN Tt |\nCe | iH EPA. oa 4, ia al ty bi\n= Ce iS ie w w k SI kD Ss wD Qi\n\n\n\nTune 2 Wine Tasting (C Instruments)\nTrack 5 - slow\nTrack 6 - fast\nF\u0394\nEb7#11\nA\u00f8\nD7alt.\nG-7\nBb-\u0394\nEb7#11\nF\u0394\nD-7\nG-7\nC7\nE\u00f8\nA7b9\nD-7\nG7\nG-7\nC7\nF\u0394\nEb7#11\nA\u00f8\nD7alt.\nG-7\nBb-\u0394\nEb7#11\nF\u0394\nD-7\nB-7\nE7alt.\nA-7\nD-7\nG-7\nC7\nF\nD7b9\nG-7\nC7\n\nMELODIC RHYTHMS\nTune 2 Wine Tasting (B\u266d Instruments)\nTrack 5 - slow\nTrack 6 - fast\nG\u0394\nF7#11\nB\u00f8\nE7alt.\nA-7\nC-\u0394\nF7#11\nG\u0394\nE-7\nA-7\nD7\nF#\u00f8\nB7\u266d9\nE-7\nA7\nA-7\nD7\nG\u0394\nF7#11\nB\u00f8\nE7alt.\nA-7\nC-\u0394\nF7#11\nG\u0394\nE-7\nC#-7\nF7alt.\nB-7\nE-7\nA-7\nD7\nG\nE7\u266d9\nA-7\nD7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}
