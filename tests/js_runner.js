@@ -21,7 +21,16 @@ if (sepIdx < 0) {
 }
 
 const modulePaths = args.slice(0, sepIdx);
-const testCode = args.slice(sepIdx + 1).join(' ');
+// #343: read test code from stdin when the arg after `--` is `-` (or absent).
+// Passing large test code as a CLI arg hits platform argv limits on Windows
+// (WinError 206) and Linux (E2BIG) when JSON payloads grow.
+let testCode;
+const tail = args.slice(sepIdx + 1);
+if (tail.length === 0 || (tail.length === 1 && tail[0] === '-')) {
+    testCode = fs.readFileSync(0, 'utf8');
+} else {
+    testCode = tail.join(' ');
+}
 
 // Create a sandbox context with common globals
 const sandbox = {

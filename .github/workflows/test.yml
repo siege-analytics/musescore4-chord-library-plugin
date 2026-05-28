@@ -35,7 +35,8 @@ jobs:
           node-version: "20"
 
       - name: Install Python dependencies
-        run: pip install jsonschema pytest
+        # #343: pyguitarpro is required by tests/test_core.py::TestExports::test_gp5_export_runs
+        run: pip install jsonschema pytest pyguitarpro
 
       - name: Verify Node.js available
         run: node --version
