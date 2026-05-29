@@ -1,0 +1,624 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-greene-modern-chord-progressions",
+    "stage": "s4",
+    "source_pdf": "Modern Chord Progressions - Jazz And Classical Voicings For Guitar - Ted Greene.pdf",
+    "extracted_at": "2026-05-29T05:23:05+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "ted-greene",
+  "work_id": "greene-modern-chord-progressions",
+  "systems": [
+    {
+      "id": "ted-greene:greene-modern-chord-progressions:harmonic-formula-traversal",
+      "name": "Harmonic Formula Traversal System",
+      "summary": "The central system of the book. Greene organizes the fingerboard as a set of named harmonic formulas \u2014 I vi ii V, iii vi ii V, iii7 VI7 ii7 V7, the diatonic cycle of 4ths, III7 VI7 II7 V7, and their variants \u2014 each treated as a reusable compositional and improvisational template. The system's traversal logic is built on two complementary movement principles: (1) stepwise diatonic voice leading, where each voice ascends or descends to the next scale-degree of the same name, and (2) cycle-of-4ths root motion, where each root sits a fourth above the previous. String transference is the guitar-specific mechanism that extends these movements beyond the physical range of a single string group. The modification rules govern voicing density \u2014 omitting 5ths or roots is explicitly permitted \u2014 and prescribe that every formula must be explored across the full fingerboard in multiple keys. The ear is the final authority on register and transposition decisions.",
+      "members": [
+        {
+          "id": "formula-i-vi-ii-v",
+          "name": "I vi ii V (and iii vi ii V)",
+          "summary": "Foundational diatonic turnaround; most common opener formula."
+        },
+        {
+          "id": "formula-i-iii-iv-v",
+          "name": "I iii IV V (I)",
+          "summary": "First formula introduced; teaches extensions and the triad-symbol convention for labeling formulas."
+        },
+        {
+          "id": "diatonic-chord-scale",
+          "name": "Diatonic Chord Scale",
+          "summary": "Ordered sequence of chords built exclusively from major-scale notes, each voice moving stepwise to the next scale degree of the same name."
+        },
+        {
+          "id": "cycle-of-4ths",
+          "name": "Diatonic Cycle of 4ths (I IV vii\u00b0 iii vi ii V I)",
+          "summary": "Each chord root a fourth higher than the previous; reducible to two alternating descending chord scales."
+        },
+        {
+          "id": "formula-iii7-vi7-ii7-v7",
+          "name": "iii7 VI7 ii7 V7 (and I VI7 ii7 V7)",
+          "summary": "Introduction of chromatic dominant substitution into an otherwise diatonic formula."
+        },
+        {
+          "id": "formula-iii7-vi7-ii7-v7-diatonic",
+          "name": "iii7 vi7 II7 V7 (and I vi7 II7 V7)",
+          "summary": "Derived from iii7 vi7 ii7 V7 by raising the 3rd of the ii7 chord by one fret."
+        },
+        {
+          "id": "formula-iii7-vi7-ii7-v7-altered",
+          "name": "III7 VI7 II7 V7",
+          "summary": "Fully chromaticized formula using altered dominant 7th chords throughout; the final formula in the book."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "stepwise-voice-motion",
+          "name": "Stepwise Diatonic Voice Motion",
+          "summary": "Each voice in a chord moves up (or down) to the next note of the major scale bearing the same chord-tone name, producing the next diatonic chord in the scale.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Building a chord scale by stepwise voice motion",
+              "quote_excerpt": "MOVING EACH NOTE IN THE CHORD UP TO THE NEXT NOTE",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "cycle-of-4ths-root-motion",
+          "name": "Cycle-of-4ths Root Motion",
+          "summary": "Each chord root is a diatonic fourth higher than the previous root; the cycle is reducible to two alternating descending chord scales.",
+          "engine_payload": {
+            "kind": "_pending:cycle-root-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Cycle of 4ths definition",
+              "quote_excerpt": "each chord root is a 4th higher than the previous",
+              "page": 49
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Good I-to-IV connection method",
+              "quote_excerpt": "two chord scales descending, while they alternate with each other",
+              "page": 49
+            }
+          ]
+        },
+        {
+          "id": "string-transference-upward",
+          "name": "String Transference \u2014 Moving to Higher Strings",
+          "summary": "Relocate a chord voicing to the next higher string group: retain shape, raise any note landing on the 2nd string by one fret, then drop the whole chord five frets.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "String transference \u2014 moving to higher strings",
+              "quote_excerpt": "move all the notes in the chord over to the next higher group of strings",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "id": "string-transference-downward",
+          "name": "String Transference \u2014 Moving to Lower Strings",
+          "summary": "Relocate a chord voicing to the next lower string group: retain shape, lower any note landing on the 3rd string by one fret, then raise the whole chord five frets.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "String transference \u2014 moving to lower strings",
+              "quote_excerpt": "move all the notes in the chord over to the next lower group of strings",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "whole-fingerboard-exploration",
+          "name": "Whole-Fingerboard Exploration via Key Transposition",
+          "summary": "Every harmonic formula must be explored across the entire fingerboard from multiple angles; key changes prevent monotony.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Fingerboard exploration purpose",
+              "quote_excerpt": "exploring the entire fingerboard from many different angles",
+              "page": 26
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Key-change freshness technique",
+              "quote_excerpt": "changing the key can be like a breath of fresh air",
+              "page": 27
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Practicing cycles across full neck",
+              "quote_excerpt": "practice each cycle in all octaves on each string set",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "v-to-i-resolution",
+          "name": "V7 to I Resolution (Standing Cadential Rule)",
+          "summary": "V7 chords must periodically resolve to I to maintain functional-harmonic grounding; rule recurs across chapters 7, 9, 10, 11.",
+          "engine_payload": {
+            "kind": "_pending:cadential-resolution"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "V to I resolution rule",
+              "quote_excerpt": "You should always try resolving the V to I",
+              "page": 26
+            },
+            {
+              "chapter_n": 9,
+              "topic": "resolve V7 to I",
+              "quote_excerpt": "Remember to resolve the V7's to I's occasionally",
+              "page": 61
+            },
+            {
+              "chapter_n": 10,
+              "topic": "V7 resolution practice directive",
+              "quote_excerpt": "Remember to try resolving the V7's to I, occasionally",
+              "page": 74
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Resolve V7 to I reminder",
+              "quote_excerpt": "Don't forget to occasionally try resolving the V7's to I's",
+              "page": 79
+            }
+          ]
+        },
+        {
+          "id": "descending-as-well-as-ascending",
+          "name": "Bidirectional Chord Scale Practice",
+          "summary": "Every chord scale must be practiced descending as well as ascending.",
+          "engine_payload": {
+            "kind": "_pending:bidirectional-scale-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Descending chord scale rule",
+              "quote_excerpt": "Remember to go down in all your chord scales, too",
+              "page": 23
+            }
+          ]
+        },
+        {
+          "id": "cycle-start-degree-flexibility",
+          "name": "Cycle Start-Degree Flexibility",
+          "summary": "Diatonic cycles and chord-scale patterns may begin on any scale degree; the interval motion defines the pattern, not the starting point.",
+          "engine_payload": {
+            "kind": "_pending:cycle-root-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Cycle start chord flexibility",
+              "quote_excerpt": "common for the cycle to begin on other chords than the I",
+              "page": 49
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Chord-scale start degree flexibility",
+              "quote_excerpt": "patterns using chord scales can start on any degree of a scale",
+              "page": 22
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "omission-of-5th-or-root",
+          "name": "Omission of 5th or Root Allowed",
+          "summary": "The 5th or root may be omitted from any voicing; ear-appeal and smooth voice leading take priority over theoretical completeness.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "missing chord tones rule",
+              "quote_excerpt": "missing tones are either the 5th or the root",
+              "page": 15
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Chord analysis defined",
+              "quote_excerpt": "many chord forms leave out 5ths or roots",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "id": "register-ear-governs-transposition",
+          "name": "Ear-Governed Register / Transposition",
+          "summary": "Register and transposition decisions are governed by ear judgment; muddy low voicings are to be avoided.",
+          "engine_payload": {
+            "kind": "_pending:register-ear-filter"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "register/transposition rule",
+              "quote_excerpt": "let your ears be the guide in determining how low",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "chord-scale-decoration",
+          "name": "Chord Scale Decoration (Delay / Moving Lines / Team Concept)",
+          "summary": "Chord scales may be decorated by delaying notes, by moving lines built from diatonic scale tones, or by Van Eps's team concept of alternating two interesting intervals.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Decoration \u2014 delay technique",
+              "quote_excerpt": "decorate them... such as: 1) delaying notes",
+              "page": 20
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Team concept (George Van Eps)",
+              "quote_excerpt": "finding two interesting intervals in a chord and alternating them",
+              "page": 21
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Decoration \u2014 moving lines from diatonic tones",
+              "quote_excerpt": "Using moving lines built from other diatonic scale tones",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "id": "voicing-density-omission-for-playability",
+          "name": "Voicing Note Omission for Physical Playability",
+          "summary": "Notes may be omitted or changed when guitar-specific physical constraints make the full voicing impractical.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Omitting/changing notes for physical limits",
+              "quote_excerpt": "leave a note out of a chord due to the physical problem",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "combine-cycle-patterns",
+          "name": "Cycle Combination to Avoid Overuse",
+          "summary": "The cycle of 4ths should be combined with other cycle patterns rather than used in isolation.",
+          "engine_payload": {
+            "kind": "_pending:pattern-combination-policy"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Avoiding monotony; combining cycles",
+              "quote_excerpt": "cycle of 4ths is a beautiful harmonic tool, but it can be monotonous if overused",
+              "page": 51
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ted-greene:greene-modern-chord-progressions:dominant-substitution-lattice",
+      "name": "Dominant Substitution Lattice System",
+      "summary": "The book's secondary system governs how minor-seventh chords are replaced with dominant-seventh chords and how those dominants are then altered. The foundational rule \u2014 stated in capitals \u2014 is that any m7-type chord may be replaced with a dominant 7th according to personal taste. Greene teaches a specific derivation mechanism: raise the 3rd of a ii7 shape by one fret to produce II7; when two 3rds are present, raise the lower-pitched one, typically yielding II7#9. The same mechanism applies to converting vi7 to VI7. The system permits iii7 in place of III7 and vi7 in place of VI7 throughout the altered-dominant formula. Altered dominants \u2014 voicings incorporating #9, b9, #5, or b5 \u2014 are introduced only after diatonic preparation. A boundary condition limits the 3rd-raising mechanism: it does not apply when a iim7/11 chord has its 11th in the soprano.",
+      "members": [
+        {
+          "id": "m7-class",
+          "name": "Minor Seventh Type Chord (m7)",
+          "summary": "Diatonic minor seventh chords (iii7, vi7, ii7); the source class for dominant substitution."
+        },
+        {
+          "id": "dom7-diatonic-class",
+          "name": "Dominant Seventh Type Chord \u2014 Diatonic Preparation",
+          "summary": "Unaltered dominant seventh chords used before introducing altered dominants; labeled uppercase (II7, III7, VI7, V7)."
+        },
+        {
+          "id": "dom7-altered-class",
+          "name": "Altered Dominant Seventh Type Chord",
+          "summary": "Dominant seventh chords with #9, b9, #5, or b5 extensions; the chromatic end of the substitution lattice."
+        },
+        {
+          "id": "ii7-sub-iv",
+          "name": "ii as Substitute for IV (Homonym Equivalence)",
+          "summary": "ii can substitute for IV because they share the same tones (e.g., F#m7 = A6)."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "diatonic-before-altered",
+          "name": "Diatonic Preparation Before Altered Dominant Introduction",
+          "summary": "Altered dominant chords should be introduced only after preparing the ear with diatonic 'major scaley' sounds.",
+          "engine_payload": {
+            "kind": "_pending:ear-preparation-sequencing"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Pacing altered-chord listening",
+              "quote_excerpt": "ear will accept altered chords more easily if prepared with sounds of a more normal, diatonic",
+              "page": 78
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Combining consonant and dissonant progressions",
+              "quote_excerpt": "combining the consonant and dissonant types of progressions",
+              "page": 79
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "dominant-for-minor-substitution",
+          "name": "Dominant-for-Minor Substitution (Universal Rule)",
+          "summary": "Any m7-type chord may be replaced with a dominant 7th-type chord according to personal taste.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "dominant-for-minor substitution rule",
+              "quote_excerpt": "ANY m7 TYPE CHORD MAY BE REPLACED WITH A DOMINANT 7th TYPE CHORD",
+              "page": 59
+            },
+            {
+              "chapter_n": 9,
+              "topic": "dominant-for-minor example in C",
+              "quote_excerpt": "E7 is replacing the normal Em7",
+              "page": 59
+            }
+          ]
+        },
+        {
+          "id": "third-raising-ii7-to-ii7",
+          "name": "3rd-Raising Conversion: ii7 to II7 (and II7#9)",
+          "summary": "Raise the 3rd of a ii7 voicing by one fret to convert it to II7; when two 3rds are present, raise the lower one, typically producing II7#9.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "iii7 vi7 II7 V7 derivation method",
+              "quote_excerpt": "raise the 3rd (one fret higher) in the ii7 types, thereby making them II7's",
+              "page": 74
+            },
+            {
+              "chapter_n": 10,
+              "topic": "II7 with two 3rds \u2014 fingering rule",
+              "quote_excerpt": "raising the 3rd that is the lower in pitch... II7#9 chord",
+              "page": 74
+            }
+          ]
+        },
+        {
+          "id": "soprano-exception-iim7-11",
+          "name": "Soprano Exception: iim7/11 with 11th in Soprano",
+          "summary": "The standard 3rd-raising conversion does not apply when a iim7/11 chord has its 11th as the highest voice.",
+          "engine_payload": {
+            "kind": "_pending:conversion-boundary-condition"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "iim7/11 soprano exception",
+              "quote_excerpt": "iim7/11 with its 11th in the soprano then none of these ideas will work",
+              "page": 74
+            }
+          ]
+        },
+        {
+          "id": "iii7-vi7-for-iii7-vi7-altd",
+          "name": "Diatonic-for-Chromatic Substitution: iii7 for III7, vi7 for VI7",
+          "summary": "In III7 VI7 II7 V7, iii7 may be used in place of III7 types and vi7 in place of VI7 types.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Substituting iii7/vi7 for III7/VI7",
+              "quote_excerpt": "try using iii7 types in place of III7 types, or vi7 types in place of VI7 types",
+              "page": 78
+            }
+          ]
+        },
+        {
+          "id": "altered-dominant-color-tones",
+          "name": "Altered Dominant Color Tone Introduction (#9, b9, #5, b5)",
+          "summary": "Altered dominant voicings incorporate at least one of the four characteristic color tones (#9, b9, #5, b5).",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Altered dominant definition",
+              "quote_excerpt": "altered dominants are those with #9's, b9's, #5's, and b5's",
+              "page": 78
+            },
+            {
+              "chapter_n": 9,
+              "topic": "self-teaching altered tone rules",
+              "quote_excerpt": "VI7 sounds good with any altered tone when used in smooth connection",
+              "page": 59
+            }
+          ]
+        },
+        {
+          "id": "ii-substitutes-for-iv",
+          "name": "ii Substitutes for IV (Homonym/Overtone Basis)",
+          "summary": "ii7 may substitute for IV because they share the same tones; acoustically grounded in the overtone series.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "ii substitutes for IV",
+              "quote_excerpt": "ii can substitute for IV because they are virtually the same chord",
+              "page": 17
+            },
+            {
+              "chapter_n": 9,
+              "topic": "overtone-series basis for diatonic sound",
+              "quote_excerpt": "based on the tones of the major chord which is part of Nature's overtone series",
+              "page": 59
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ted-greene:greene-modern-chord-progressions:fingerboard-geography-homonym",
+      "name": "Fingerboard Geography and Homonym Naming System",
+      "summary": "The book's organizational meta-system. Greene partitions the fingerboard into five position areas used as reference anchors for all major and minor chord forms. Within each position, chord voicings are memorized by three methods \u2014 shape-based, interval-based, and root-anchored \u2014 with experienced players combining all three eclectically. The concept of chord homonyms is central: any given physical voicing may function as multiple chords depending on harmonic context. The governing rule is that context and common sense determine naming. Mastery requires knowing all useful homonym names for every chord form. This system is the prerequisite infrastructure that enables the other two systems.",
+      "members": [
+        {
+          "id": "neck-position-1",
+          "name": "Neck Area 1",
+          "summary": "One of the five fingerboard zones used as a positional anchor."
+        },
+        {
+          "id": "neck-position-2",
+          "name": "Neck Area 2",
+          "summary": "Second of five fingerboard reference zones."
+        },
+        {
+          "id": "neck-position-3",
+          "name": "Neck Area 3",
+          "summary": "Third of five fingerboard reference zones."
+        },
+        {
+          "id": "neck-position-4",
+          "name": "Neck Area 4",
+          "summary": "Fourth of five fingerboard reference zones."
+        },
+        {
+          "id": "neck-position-5",
+          "name": "Neck Area 5",
+          "summary": "Fifth of five fingerboard reference zones."
+        },
+        {
+          "id": "homonym-chord-form",
+          "name": "Homonym Chord Form",
+          "summary": "A chord voicing whose name depends on harmonic context (e.g., Em6 / C#m7b5 / A9)."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "five-position-area-navigation",
+          "name": "Five-Position Area Navigation",
+          "summary": "The five neck areas serve as spatial reference anchors; locate any chord form by identifying which area its root falls in.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Five neck areas for chord memorization",
+              "quote_excerpt": "Divide the neck up into five main areas for any major or minor chord",
+              "page": 10
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "homonym-naming-context-rule",
+          "name": "Homonym Naming by Harmonic Context",
+          "summary": "When a chord form can carry multiple names, harmonic context of the surrounding progression determines the correct name.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Homonym naming rule: context decides",
+              "quote_excerpt": "naming of homonyms will be determined by what is easiest or just plain common sense",
+              "page": 13
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Homonym naming: Em6 example",
+              "quote_excerpt": "working with the progression Em Am... going to be called Em6",
+              "page": 13
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Homonym naming: A9 example",
+              "quote_excerpt": "if you are working with Em7 A7 D... it will be called A9",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "id": "all-homonym-names-required",
+          "name": "All Useful Homonym Names Must Be Known",
+          "summary": "A player must learn every useful name for each chord form to avoid long-term practical difficulty.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Knowing all chord-form names",
+              "quote_excerpt": "know all the useful names for a chord form or you will just be making it hard",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "id": "eclectic-memorization-methods",
+          "name": "Eclectic Combination of Three Memorization Methods",
+          "summary": "Experienced players combine shape-based, interval-based, and root-anchored memorization; no single method suffices.",
+          "engine_payload": {
+            "kind": "_pending:memorization-method-policy"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Combining memorization methods",
+              "quote_excerpt": "Most players use a combination of all three methods outlined here",
+              "page": 12
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Visual chord memorization method",
+              "quote_excerpt": "Many guitar players learn new chords quickly by relating them visually",
+              "page": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

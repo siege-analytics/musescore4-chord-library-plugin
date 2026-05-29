@@ -1,0 +1,78 @@
+{
+  "run_id": "2026-05-28T15-05-20-greene-modern-chord-progressions",
+  "config": "pipelines/master-distillation/configs/greene-modern-chord-progressions.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-modern-chord-progressions/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-modern-chord-progressions/pages.json",
+        "re-ingested: 106 pages, 103,093 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:09:49+00:00",
+      "ended_at": "2026-05-29T05:09:49+00:00",
+      "outputs": [
+        "detected 12 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-modern-chord-progressions/chapter-bounds.json",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch01.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch02.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch03.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch04.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch05.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch06.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch07.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch08.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch09.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch10.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch11.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/chapters/ch12.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:14:55+00:00",
+      "ended_at": "2026-05-29T05:14:55+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/modern-chord-progressions-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:23:05+00:00",
+      "ended_at": "2026-05-29T05:23:05+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/derived/systems-draft.json",
+        "plugin/data/masters-corpus/ted-greene/modern-chord-progressions/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

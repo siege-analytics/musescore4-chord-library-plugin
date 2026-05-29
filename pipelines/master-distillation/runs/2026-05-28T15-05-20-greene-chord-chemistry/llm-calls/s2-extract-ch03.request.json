@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: Right Hand Technique\nPages 8-8 of the book.\n\n<<<CHAPTER TEXT\n\nSection 3\n\nRight Hand Technique\n\nThere are at least 5 different right hand techniques being used by guitarists:\n1) The flat pick (commonly referred to as just the \u2018\u2018pick\u2019\u2019).\n2) The thumb pick and fingers \u2014 using the fingers of the right hand with a pick on the thumb only\n(a la Chet Atkins).\n3) The flat pick and fingers \u2014 using the middle, ring, and little fingers with the pick.\n4) The fingers and thumb with no pick.\n5) The thumb only.\nYou should experiment with all of them and find the ones you like best. You do not have to use\nonly one technique, as many fine players use different ones for different sounds.\nHowever, many of the chords in this book require the use of either one of the techniques using the\nfingers (2, 3, or 4 above), because they would not be playable any other way. Examples:\n\nA word of explanation of technique 3 may be necessary. On 4 note chords, there is no big problem,\nonce you get used to the technique; you just use the pick on the bass (lowest in pitch) note and one\nfinger for each of the remaining 3 strings, the little finger getting the highest note. However, when a\nchord has 5 or 6 notes, one or two of the fingers must get 2 strings by brushing across the strings. On 3\nnote chords use only 2 fingers and the pick, or 3 fingers.\n\n(Some guitarists also use picks on each one of their fingers. You may wish to investigate this\ntechnique too).\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}

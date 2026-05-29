@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch18",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 18: Blues Progressions\nPages 93-97 of the book.\n\n<<<CHAPTER TEXT\n\nSome chords in these scales may be hard to finger, and some may not sound good, but there may be\npart of a scale that is worthwhile, rather than the whole scale, Example:\n\n[Cas\n3 oH meer aie eles eisai 380 3s\n3\n| 1\nL _/\nYO\nThis part could be\nused pretty effectively.\n\n\n\nSection 18\n\nBlues Progressions\n\nBlues progressions form the basis for so much music now in existence that a knowledge of them if\nvery important to the well-rounded musician. The term blues means many different things to many\ndifferent people; so a definition is hard to come by, but in this book, it refers to any 12 bar (measure)\nProgression. (A bar in this case refers to a unit of time of 4 beats or counts),\n\nThe blues can range from an. extremely simple progression to a pretty complex series of chords.\nBoth extremes and the shades in between will be covered in the progressions to follow. All these\nProgressions are given in the key of C. Naturally they can be moved or \u201ctransposed\u201d to other keys.\nWith each progression, the basic chords are given, and then below are given some examples of\nsubstitute chords that could be used. These inversions are just SUGGESTIONS, and are by no means\nthe only ones that will work; so you should EXPERIMENT. There are so many inversions given in the\nfront of the book that you should be able to make literally HUNDREDS of progressions out of just\nONE basic one.\n\nWhen choosing the inversions, pay particular attention to the melody note (the highest pitch \u2014 the\ntop note) in each chord. Make sure that these notes make nice melodies together. Actually, you should\nbe watching for smooth voice leading (as was discussed in section 13) wherever possible.\n\nTo make these progressions fun to play, it is suggested that you play them with as much feeling as\npossible. There are many nice rhythms you could use, such as \u201cfunky rock type\u201d, shuffles or swing\nfeels, latin, bossanova, slow blues, etc. If these rhythms are foreign to you, it is suggested that you\nmake the acquaintance of a musician who knows these things, and is willing to teach them to you. If\nyou do not put any feeling into the Progressions, they will be boring, and you will probably lose\ninterest; put feeling into them, and they will be enjoyable.\n\nSome progressions cannot be played with a pick only; you must use your fingers as discussed on\npage 7.\n\nSome of the chords will not be easy, but with PRACTICE, they can all be achieved. Do not give up\non a hard chord, but continue to practice it, and results will come.\n\nMost of these progressions are among the accepted ones used by musicians who play blues. The Ist\n2 progressions are not really \u201cbluesy\u201d sounding, because they are based on simple major chords and\nthe blues sound is usually associated with the dominant 7th family.\n\nIdeas from the different progressions may be mixed up; in other words, you might like a chord\nchange from one progression with part of another progression, or you might like to try a ait ete\nextension of alteration than the one given. (examples: C 13 instead of C 9 or C7+ instead of cr 9 or\nwhatever ...) Do anything that sounds good to you, but try to understand why you are doing it.\n\nAnother point to notice is that in 99.9999% of all cases, some form of [ chord will be in bar lto\nstart the progression, and some form of a IV chord will be in bar 5. The other measures will vary\n\nenormously.\n\n\n\nProgression 1:\nMeasure Numbers 11a 3|+ | 7 g | 4 to { ul | (2.\nBasic Chords ote Cc + Hee CiG71F7 |}e le\n\n. c c FE. C GT &7 c\nInversion Steet] Stttet) Stfete Sieet] Site 3 J5sea!\nSuggestions 4 ra \u00a2 i\n\nPi i@ ite ||\nj tiff P T\n\nthe 10th measure\noften stays on\n\nG7 in a prog-\nression such as\nthis. Also the\n\n12th measure could\nbe G7 instead of\n\nCc.\n\nThis progression is extremely basic sounding, but is used for the basis of many simple tunes; so it\nmight be useful to know it. One thing that makes it sound so basic is that no extensions, alterations, or\nsubstitutions are used, just the plain chords.\n\nEE ee a a\nProgression 2:\nNe ipa ta t4+)s te tz fal [uw\nChords G1 F TC TCTTE Ve7to tcl tert c {qT\nPlay these chords for\n4 beats each\nc F/4 & C7 F/4 FY\n5 Stell Sfleee| 3(9iete 5 [[feq\nete rand $r \u00b0 Ht\n: I ] I i | l\nInversion\nsug-\ni & CG r7 F7 a GT\ngestions\nsee] eye lee eal oe 9\n7 7\nele C]\n{ I jaan\n\nAnother very basic progression that still doesn\u2019t sound very bluesy, but it has some pleasing features of\na different nature. The F add 9 is pretty much a universally pleasing sound when used in the above\nmanner, Also, notice in measures 9 and 10, the upward movement of the melody against the\ndownward movement of the chords (this is contrary motion \u2014 see section 15 ). Getting back to the F\nadd 9, one reason it sounds good here is the COMMON TONE on top of the C chord and the F add 9\nchord (G). It serves to unify the 2 chords.\n\n94\n\n\n\nProgression 3:\nMeasure No.\u2019s___ | 2 [314] [617] 8 |4 [tol nia\nBasic Chords C7 | F7 | C7 C7 TET TFV 17] C7 Iq7|F71e7 1@7\nAll chords- 4 beats each\na F7 c cz FT. F7\nif tof Paria ioe fo[|\u00a2 =\nat it\nI i\nInversion\nSuggestions & 7 G7 F? 7 G7\n71@t Sen ay lol 7 i 7\ne ar aa r)\nim [ler Lert\n1 U1 jaan HH\n\nThis type of progression is commonly used by rock players and can be the basis for some very pleasing\nchord substitutions like those of the next few progressions.\n\nProgression 4:\n\nM No.\u2019s | % | 3 71S 19 flo fo pia\nBasie Chords Cc CTL C7 PET 71 C7 1c7 [67 167 1077 G7\nAll chords 4 beats\nC4 ait cy\na 7 } 7 1 4 ] i)\nar} z\na\nInversion\nSuggestions 09 CH 9 C4 GC\n7@ret] S54 g Tle] glele\n\u00a9 ary\nHah\np|\n\nThis progression has a much bluesier sound to most ears due to the abundance of 9th chords; also\nnotice the Ist measure basic chord is the major chord instead of the dominant 7th; so a major 6th\nchord is substituted. If any of the substitutions puzzle you, go back and reread section 11 on chord\n\nsubstitutions.\n\nEL 02778\n\n95\n\n\n\nPro, ion 5:\nMessure No\u2019s_t | 2/3 {415 [617 |8|9 lofnfi2\nBasic Chords. C1 F7| \u20ac7/ 67] F7|F7 fer |ca|e7|F7| c] G7\n\ncra FF r/o LL F7*4Y\nI TH@T a0 28E } r Cic \u00bb 40\n\ni = 1c) unc\nInversion \u2014_\u2014\n\nSuggestions\n\nIf these 3 chords give you trouble, see section 3 on right hand technique. You will find that if you bar\nthese chords with the Ist finger, you may use some of the plucking techniques described there.\n\nProgression 6: ( 2 3\nMeasure No.\u2019s ST? Cy | FT ar\nBasic Chords\u201d ang ott F \u00a32 FT GT o)\n\n0 mn ' ri\n\n\u2018Hh rier) tH\nInversion $1. Lier (|\nSuggestions t } Hath\nMeasure No.\u2019s 4 {| Ss { 6\nBasic Chords C7 { F7 i] FT7\ncme cree) Fie OFT F7 F7\n\nseleTn] 5 I 7a \u00absta\nInversion a [ole \u201clelle|\nSuggestions SaGEn\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 18 extraction"
+}

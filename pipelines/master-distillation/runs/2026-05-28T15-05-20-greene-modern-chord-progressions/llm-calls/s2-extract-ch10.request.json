@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: iii7 vi7 II7 V7 (and I vi7 II7) V7\nPages 74-77 of the book.\n\n<<<CHAPTER TEXT\n\nfel tt ett l 2\nE b sf |\n\ni G74 TH tm? CT FID\ni$ o[\u00a2] Plleae) &\n\n\"tite q Te] @2 aie | 7 rT\n. th to beth?\nGY Cm? CT  Fidsue Frans \u201cag\u201d 4\na ete Ee\n. b ve \u00e9\nb b\nAol Mid 2m De ie, Bho Eh\nwe +o Ht a | e\nvy \u00ae : \u00a2\na : me 2 |\ntt ME | Feith #9 Fant Bh\n\u00e9Oee) Flee ofels 6Lil\u00a2l) 7lleile 7\nrl rr} pal\n} ai t it \u2019\n\nEbo4\n\naC:\n\naa EWS car oth Fanyit Yad? im ate EF? ad Ab FY\nHt\n\n9 7 q 7 4 \u00a2 se \u00a9) 41 (bea) 46) 7) 7\n7 u te oF f He att #\not | aantny ) tH we\nme Nb ob b b b- x\nuate Tage Pe peal ard aia  achte i ee ai\n$ & #\nCT coo Fp oo t r\nEby Foner Aken B bt Gantt G#7Dg CH? 1 Ph Igs FH 7bls Be\n\u201cite io cK 8 7 1dT] [154] 9 eG0e tt 9 ? aey 7 G\nffx rik wi ie x c Latte al\n1 le\n\nel? # (6 i\nret el THE & giicoeyijaran tte +\nr Ja . ann\nH a [ ari - 4ba3}\niD MRCR EL Ar ADtere bth vem Tonga\n\n73\n\n\niti? vi? 17 V7 (and I7 vi7 II7 V7)\n\nThe next harmonic formula to concern us is going to be iii? vi7 17 V7 (sometimes 17 will be used in place of ili7).\nThe quickest way for you to come up with some good cxamples of this progression is to go back to your iii? vi7 ii7 V7\nprogressions and raise the 3rd (one fret higher) in the ii? types, thereby making them I]7\u2019s. If there are two 3rds in a\nii7 type, try raising the 3rd that is the lower in pitch of the two, and just leave the other one alone; this will create a\n\n117#9 chord in many cases. If you are dealing with a iim7/11 with its 11th in the soprano (highest pitch) then none\nof these ideas will work very well.\n\nYou may be wondering why we didn\u2019t derive the iii? VI7 ii7 V7 progressions from the iii7 vi7 i7 V7\u2019s in a similar\nfashion. Actually some of them were (that is, the 3rd was raised in the vi7, thereby creating the V17), but most of them\nwere derived in other ways, specifically to produce more desirable sounds. However, if you are curious, you may wish\nto go back to the iii7 vi7 ii7 V7\u2019s and raise the 3rd on the vi7, as explained above, just to see what you come up with.\n\nAnyway, here are some other variations on iii7 vi7 I17 V7. Remember to try resolving the V7\u2019s to I, occasionally.\n\n74\n\n\n\n75\n\nrAd y G7+ {| 1\" Fam? 3% \u00a3\n1 3 A tt l +H she N scot If a8 9\u00a2 raul Teele 7\n0 te re saute else aie | \u00b0 |\nkanes ra itt | crt an\n4 & |\n7 ghee A a gee 7 ? 667 | flee a q , : elt\nHe ly 1\nHW Domi * a anes) 4 t+ = =sCl &il\nsl 9 A oie vf reel ST \u00ab sel, Am fate offi 5\niar\u2019 ir ait t seme\n| | ttt {oor cot? pane\nane? aici wth\n94 ae, car gE alo 1 oki rahe oe ee t \u00bb 6c\nP\u2019 | ar nai waar e ae |\nGe feo\na? 7 ae al CH? ti a : iu \u201ceee 2 \"te\n-? i\nHH ? HoH f | te rae\n\u00e9 19 Ab | b\nfel 1a Abz sts \u2019 fe? Eb? ant ead iF ry 8 gee\n+ ey\n- fl | hl sare Ht rf\nb be b\ntie \u00abfet ae wont of geet oc Httett , Pbiacar, Bee Ee Abate pb\noot ey bee im\n5 |\nyh sae 4g 4 Rog) \u2018et te afr ped ' Pax b7+ ed\nooh ob \u00a2 t eles.\nf ; not a an ;\nby bn. b b \u00e9 b\nB yada A ate ate Ait 7 on sf ff 3 al\n1 elole ?\ni co a i ' 4\nOasis\n\n\n\nHay f GO Cand dai. FY)\n\nKut Di 8 bbs Dey Benth am \u00e9 :\ncll ott Ate strnleptat aft ol oc inl th apt a\nel 30 x > | \u00e9e cs me\n@ r x\noS SO wr fbs3 i aan ay |\ns 6 \u00a3 by Dip |\n\u2018 fe Eten? % y pal 7 4 \u2018a tele Eri +e fet , ot 28\n- H ee | tt t # ? i \u201c4. ;\n| # 4 I . ak im |\n$d f b b b. t ? fb 6 i\nace fal 4 i mire Pa ee * it Pain 4 4 oF +o\ni fy Cd a Ld J H +f ster 4-t T 2 |\nits | : 571 H ee Mi\nb \u00e9 aitees \u2014 Ebon \u00a3\n2 m rar ais ots cie et sete +t fave cena a +a :\n8 ? init at \u00e9 c |\n| : if rf + < tH et\n& b b b\noe ee 2 ABEL abet ota ce 4018 D 6 7 ririd ri abpel\n1 a a : ile | Tr Cote\nHEH PR oe] Go He SOR\nchee Ab thy Eh, b\n6 ae so a es - 4 oe nae a tage Ani 2 - , ari om Abs i :\n| tre 6 fh | tothe Eee \u00abtS a ry iz\nI iH eee |p\nAR gba? \u2014 Abit SVS a Bon? EY Ates Fo? = Bm? = ET Attes\n65) 7a] + a1elol 7 7 7 Selec 47 76 [oe 7[elee Sele\n; K |\n? xf ri \u2018 ve \u00a2 if e aK\nai i Ath | oc tor) Cott Tx\nYi Bm? \u00a37 All_ 1 Fin? Bm? Ei Atos FR? Bm? \u00a37 All\n7elle 7eleet) 7 ispenbee Titel) relearn 6 ert Sopelia | Tiatele 7 7ielen S\nB ane \u2018If. . : , i\na . ' ia s=1 5 t\nFH? Bm? EE oy Patt @ \u00a37 Uo) Pea? te =o?\nneg] Telfer rey : GF Beg etc [nant ele rae ste\ntt oe To) Oo fr) : ane: be\nf rit ia HI\noPriawaa\n\n76\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}
