@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Scale Examples of Convergence\nPages 50-56 of the book.\n\n<<<CHAPTER TEXT\n\nScale #19 JAZZ MELODIC MINOR\n\nEbo+ii, Bho7, C7 69,plag\n= \u00ab(CO a a ee\ntone\n\nScale # 19. This scale, a melodic minor scale has a B b tonality.\nIt produces chords such as the G4, C7 bo, > 9411,\npb -47 which have been used to move into a major\nor minor key center. The last note isthe 7th of\nthe V chord (C7) which resolves to the note A the\n3rd & important note of F major. This entire scale\nhas been used many times for convergence into tonal\ncenters. The last tetrachord of this scale is an\nF major scale. The entire scale in chords will\nharmonically lead into F major. Their is a (c-p by\ntritone with voice leadsto the root & 5th of F\n\nmajor.\n\nScale Sound = E bo+11\n\n36\n\n\n\nScale #20 DORIAN of F MAJOR Ge\n\u201c _= 613\n= \u00a2 oa\n> r 1 +e. <_ =\ntene\nScale # 20. This scale is simply a dorian mode of the F major\n\nscale. It contains C7, G-7, EX. This scale\ncontains the E-B be itone which belong to the C7\n& F#7 chords which lead to F major.\n\nThis scale is an example of being within the same\nscale of (F major) the key you are converging\n\nhowever starting on a different mode of it.\n\nScale Sound = G-7\n=o\n\n37\n\n\nSeale #22\n\nMAJOR(#4th & #5th degrees) ch 7 b5\nC1355\n\nSpf Oo\n=e\n\n\u2014 ae\n\nScale # 22.\n\nThis scale, a 4th of its kind in my system produces\nthe c7 Ds, G-A7, EM and it has the z-BP tritone of\nthe C7 or V chord of F major, our desired tonality.\n\nIt also produces the C13 bs, the chord, that represents\nthe scale sound being produced on the second mode of\nthe scale. The scale has convergent notes in it such\nas 3b, ob. (aban, cbsry.\n\nAlso the G Jazz melodic minor scale has the same\n\nnotes as this scale so it may be used as a II\n\nconvergence scale.\n\nScale Sound = ci3 bs\n\n39\n\n\n\u2014\n\nSeahe 29 BES cb7s c7 bs. bo\noe = ete\nFitone\n\nScale # 23. This is yet another Blues Scale on the G Promaiitny,\nThe starting note is a half step away from F the\ndesired tonality. It produces the orbs, cb, bs &\nother cadence chords leading to F major tonality,\nit contains an E-BPtritone & pba boen of the C7th\nchord. This scale gives a blues convergent feeling\n(color) into a key center, many Funky ideas may be\n\npermutated from this scale.\n\nScale Sound = cb, b.\n\n\n\nSeale #24\ntyitone pha7, 0745, cb13_\n2 a\nSt. \u2014_\nT pe hs \u2014S\u2014 =\nY [\u2014 - \u2014.\ntritone\nScale # 24.\n\nThis scale is a diminish scale.\n\nEQ \u00a27 by ce \u00a313\n\nIt contains C7+5,\nby chords for cadential\nconvergence into major or minor tonality. This\nscale has an E-B Destenne &a c-p btritone. The\nlast note of the scale > the Doth of 7th chord)\n\nvoice leads smoothly to the note C (the fifth of\nF major).\n\nThis theoretical justification of each scale of this system has to\n\nbe applied to all other tonalities in the chromatic scale. This\n\nsystem does not dictate to the student what to do other than in-\n\ncrease his or her consciousness. You shape the raw material or\n\nresources to your desired needs. I do not believe in perfection\n\nof the moment. I do believe in a readiness or nowness to fill a\nmoment in time with something spontaneously prepared at the moment\nneeded. A mistake is a new field, a new octave.\n\nperfect there would be no motion (the law of life).\n\n41\n\nIf everything was\n\naa\nsain ta AS ia ESS a ile ea iets f\n\nscala\npie ana\n\nsey,\n\nSerene\n\nSil aa at a Ss cB a OPA wt\n\nini at ced\n\n\nScales of the System and some Constituent Chords\n\n42\n\n\n\nScale #1\nF MAJOR CONVERGENT SCALES AND THEIR CHORDS\nCHORD RESOLUTION\nBb6, Gb, Eb13,\nC7#9\ntritone\nBb6 FA9\nAdditional Scale Sounds\n\nScale #2\nGb13 F\u03947\nDb6, Gb13, Bb6\n\nScale #3\nG-6, C13, E6\ntritone\nC13 F\u03947\n\nScale #4\ntritone\ntritone\nC7 9, C7+9\nF#7+9, F#7b5\ntritones\nC7+9 FA69\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

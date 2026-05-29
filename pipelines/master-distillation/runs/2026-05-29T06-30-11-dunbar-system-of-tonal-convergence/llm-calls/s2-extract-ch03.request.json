@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: Scale of the System and some Constituent Chords and their Resolutions\nPages 42-49 of the book.\n\n<<<CHAPTER TEXT\n\nSeale #11 descendi\n\nc7bo, pazbs, Bo, cd\n\n\u2014\u2014-\u2014- <\n\n==>\n\ntritone\n\nScale # 11.\n\nMy own personal scale containing an E-Bb tritone\n& the note pbait of which gives the scale a c7b\n9 sound. This scale descends there by giving the\n\nstudent variety of plane (or coming from high to\n\nlow) into tonality. This adds another dimension\n\nto this system. The linking chords are the c7b\n\n9, vba7, bs, \u00a3b13, Bb_ bo & ce mst of which\nhave been already produced on other prior scales.\nThis scale ends on C the 5th of F major tonality.\nThe scale has an overall diminish quality. This\nscale begins on the both of the V (C7th) chord the\nnote D b. The second note is the tonic of the V\nchord (of F major). The third note is BP the 7th\nof the V chord. The next note (G) is the 5th of the\nV chord, then follows the 3rd the b 9th again &\nlastly the 5th.\n\nScale Sound = c7b9\n\n28\n\n\n\nSeale #12\n\nDIMINISH\n\nScale # 12.\n\nThis scale is the lst of its type introduced. It\nends on the note B which resolves to the note (A),\nthe 3rd of F major. The linking chords produced\n\nare the C1359, Bb-A7, a7 +9, \u00a313, c7>9, cu.\nThis scale has a different symmetry than the previous\n2 types of diminish scales (it has a minor 3rd &\n\na raised 4th). It is an additional diminish quality\nscale for convergence into tonality. This permits\n\nadditional scale color usage with this system.\n\nScale Sound = B b_ A?7\n\n29\n\n\nscendi\nSeale #13\u2122 \u2018Sui tone tritone\n\nxa Corie __ cz7brobs, p\u00a57 bs, F\u00a57bQ bs\n\u2014_\n\nfF = a7 pe\n| Pm\n@ 7\ntritone\n\nScale # 13. This is another personal scale of mine which ends\non C which is the Vth of F major and contains the\nC7 bs bs chord.\nre7b gb 5 & E are also chords of this scale. This\nscale ends on the Vth of the F major tonality.\nIt is possible to use this scale from any note\nwithin it. All scales in this system may be con-\nnected together in different orders for convergence\n\ninto a tonal center.\n\nScale Sound = C7 by b.\n\n30\n\n\n\nScale #14\n\nGd, EP13, ca7b5, Dla7bs\n\nbea\u2014_a\u2014\n\nao\n\n=e fe\n\nScale # 14. This scale is a pentatonic scale. It begins on the\n\n5th of the V chord of F major. The second note D b\nis the both of the V chord. The 3rd note is the\ntonic (F) of F major tonality. The next note (G)\nis the 5th of the V chord, followed by BD the 7th\nof the V chord. The scale ends on C the 5th of\n\nthe F major tonality. At this point you may or\n\nmay not realize we have been speaking of melodic\nfunction, of notes in reference to a fixed tonal\ncenter (F major). There are no wrong notes when\nfactors such as fixation on a key center, Vantage\n\nPoint, Interval Tonics, Resolution are considered\n\nalong with a certain Confidence within the artist\nhimself. The entire chromatic scale is at our\ndisposal thanks to Great Nature. I feel we have\nto use it with a certain perceptional, directional\n\nbelief, it is Raw Material.\n\nScale Sound = D by, bs\n\n31\n\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\n\n\nScale # 15. This scale is another type scale which has the E\n\nnatural starting & ending notes which at the end\n\nof the scale functions as the leading tone into F\n\n(the desired tonal destination). The scale has\n\none half of its length yielding diminish color\n\nq & the other one half yields a whole tone scale\n\na symmetry. This gives yet another type of scale\ncolor for convergent usage.\n\nEvery living thing in life is in motion headed (converging) to\n\na particular long range aim. Along the way certain short aims\n\nare achieved through consciousness. (Law of octaves and inner\n\noctaves (overtones) this scale # 15 produces chords such as\n\nG bo411, cC7+5, C9+11. All have been discussed in prior sheets\n\nto their convergent capabilities into F major.\n\nScale Sound = cg bor\n\n32\n\n\n\nSeale #16 MAJOR(#4th degree)\n\n= aolhe\ntic 2s sos e =\n\nScale # 16. This scale, is a major scale with a raised 4th\nin it. The 4th is the major 3rd of the V chord,\nalso the scale begins on the 7th of the V chord\nof F major making a complete E-B b ceneans. The\nEM chord is produced by another mode of this\nscale (major) on its 7th degree so it naturally\nleads into F major. The last note of this scale\nis \"rocked\" back from its last note pb to A the\nimportant major 3rd of F major.\n\nYou might call this system the astrological charting of a key\n\ncenter because the 360\u00b0 circle is used & the key center lies\n\nat the middle which represents the person or key acted upon.\n\nYou are bombarding this person, or in this case key center\n\nwith 24 scales & their constituent chords.\n\nScale Sound = G-9\n\u201cCc\n\n33\n\n\nScale #17 SPANISH\n\nF#47b5, ab7, F#7b5\nves\n\n\u2014\u2014S=\u2014S= ES =\ni\nd \u2014\n\n- -tritone\n\nScale # 17. This scale of mine has a different quality in that\nit is a spanish sounding scale embodying vital\nmotes of the F & ebtonality causing a tension\nrelaxation feeling all under one roof, It begins\non the note F & ends on F, our desired tonal\ndestination. The sound of the entire scale is an\nFHA7 bs. The scale also produces a cba 7 bs\ncb7 bs (no 3rd) C&, & others.\n\nYou have to use your creative hearing to knit together & use any\n\nof these scales for convergence. The musician gives meaning to\n\nthis material in his own way, in his search for identity.\n\nScale Sound = F#A7 bs\n\n34\n\n\n\nSeale #18\n\nMELODIC MINOR E+7, Bbi3p5, E7+9, E+?\n\ncs \u2014_e&- a\n\n\u2014_\u2014_\n=\u2014\u2014*\n\ntritone\n\nScale # 18. This is the third scale of this type however\n\non a different tonality. It is an F minor\n(melodic jazz) which at the end propels toward\nthe note G of F major (G functioning as A 9th\nof FA 9th chord). The lst tetrachord is F\nminor & the last tetrachord (C D E F) is F major.\nThis denotes minor & major color under one roof\nof the same tonality. Also the scale at the\nnote ADwhich is the minor 3rd of F minor\ntonality function in an all important way as\nthe +5 of the V chord (C7th +5) making it more\ntonally palatable. The same note ab \u00a3inds its\nparticipation as the 3rd of the E7 +5 chord pro-\nduced on this same scale, & the abs 47 as:\n). All of these chords voice lead smoothly\n\nto F major.\n\nScale Sound = B boat\n\n35\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}
