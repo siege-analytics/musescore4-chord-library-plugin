@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-martino-linear-expressions
+stage: s3
+source_pdf: Martino, Pat - Linear Expressions.pdf
+source_pages: 51-63
+model: claude-haiku
+extracted_at: 2026-05-29T05:34:02+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — Phase IV: Application Through Substitution and Reduction
+
+_Distillation; backed by `chapters/ch04.md`._
+
+Chapter 4 teaches a system of harmonic substitution based on interval transposition and chord inversions, enabling the improviser to reharmonize passages by replacing complex chords with simpler minor or dominant forms. The core rules—m7b5 to minor via minor third, dominant ninth to minor via perfect fifth, and altered dominants via step-up minor—reveal that these seemingly disparate chord types are inversionally equivalent or incomplete versions of one another, making them interchangeable in application. The chapter introduces load-bearing concepts including m7b5 as an incomplete dominant ninth, the augmented triad's three enharmonic root names and role as an incomplete minor-major-7th, the relative and secondary relative minor substitution methods for handling slash chords, and the distinction between melodic and harmonic minor scales when voicing altered dominants (preferring melodic minor for its b7). Throughout, the master's characteristic move is reframing unfamiliar chords not as isolated entities but as inversions or partial structures of diatonic chords, converting harmonic complexity into simple interval formulas the player can execute in real time.
