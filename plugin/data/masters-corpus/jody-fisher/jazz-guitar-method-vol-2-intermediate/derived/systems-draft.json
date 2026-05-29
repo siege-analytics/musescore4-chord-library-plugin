@@ -1,0 +1,563 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2",
+    "stage": "s4",
+    "source_pdf": "Fisher, Jody - Jazz Guitar Method, Vol 2 (Intermediate).pdf",
+    "extracted_at": "2026-05-29T06:08:47+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jody-fisher",
+  "work_id": "jazz-guitar-method-vol-2-intermediate",
+  "systems": [
+    {
+      "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework",
+      "name": "ii-V7-I Harmonic Framework",
+      "summary": "The book's central load-bearing system organizes all harmonic and improvisational activity around the ii-V7-I progression. Members are the three chord-function roles (ii, V7, I) plus the altered/extended variants available at each slot. Traversal rules govern how voicings of each chord function are connected across the fingerboard. Modification rules govern what may be altered or omitted within each chord (3rds and 7ths are essential; roots and 5ths are expendable), how extensions are added to the V7, and how the rootless 7b9 symmetry at minor-third intervals can be exploited. The whole system is the substrate onto which all lick vocabulary, blues, rhythm changes, and turnaround material is subsequently grafted.",
+      "members": [
+        {
+          "id": "ii-chord",
+          "name": "ii chord (minor function)",
+          "summary": "Minor seventh chord a perfect fourth below the V7. Typically Dmin7 or Dmin9 in examples."
+        },
+        {
+          "id": "v7-chord",
+          "name": "V7 chord (dominant function)",
+          "summary": "Dominant seventh chord; primary site of alteration and extension (7b5, 7#5, 7b9, 9th, 11th, 13th)."
+        },
+        {
+          "id": "i-chord",
+          "name": "I chord (tonic function)",
+          "summary": "Major tonic chord that the progression resolves into and whose major scale governs diatonic improvisation."
+        },
+        {
+          "id": "altered-extended-variant",
+          "name": "Altered/Extended Chord Variant",
+          "summary": "Any ii, V7, or I chord with raised or lowered 5th, 9th, or 11th. Still counts as ii-V7-I if roots are perfect-fourth apart and qualities remain minor/dominant/major."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "string-set-shift",
+          "name": "String-Set Shift for ii-V7-I",
+          "summary": "Voice the ii-V7-I progression on each of the three string sets (6-5-4-3, 5-4-3-2, 4-3-2-1) and shift across sets to cover the fingerboard.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "String-set chord organization system",
+              "quote_excerpt": "divide the six strings of the guitar into three string sets",
+              "page": 56
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Moving across string sets",
+              "quote_excerpt": "following ii-V7-I progressions move across the string sets",
+              "page": 67
+            }
+          ]
+        },
+        {
+          "id": "position-naming-continuity",
+          "name": "Position-Naming Continuity (lowest-root naming)",
+          "summary": "Identify fingerings by the string and finger holding the lowest root (e.g., 6/2).",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Scale fingering naming system",
+              "quote_excerpt": "6/2 means that the lowest root in the fingering is on the sixth string",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "id": "target-note-melodic-motion",
+          "name": "Target-Note Melodic Motion (spelling out the changes)",
+          "summary": "Begin each improvised phrase on a chord tone, preferring 3rds and 7ths, to articulate voice motion through the progression.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Spelling out chord changes (target notes)",
+              "quote_excerpt": "begin each phrase you play with a note of the chord",
+              "page": 26
+            },
+            {
+              "chapter_n": 2,
+              "topic": "3rds and 7ths in lines",
+              "quote_excerpt": "Improvisors tend to use 3rds and 7ths the most",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "maj7-from-b7-arpeggio-over-v7",
+          "name": "Maj7-from-b7 Arpeggio Over V7",
+          "summary": "Over V7, play a Major 7th arpeggio rooted on its flat-7 degree to voice upper extensions (9th, 11th, 13th).",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Major 7th extensions over V7",
+              "quote_excerpt": "play the notes of a major 7th arpeggio rooted on the b7 degree of the V7 chord",
+              "page": 49
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Starting Maj7 arpeggio off root",
+              "quote_excerpt": "you don't have to start the major 7th arpeggio on the root",
+              "page": 49
+            }
+          ]
+        },
+        {
+          "id": "ascending-lines-from-chord-tones",
+          "name": "Ascending Lines from Chord Tones",
+          "summary": "Play ascending scalar lines beginning on a chord tone, optionally alternating with descending lines for contour variety.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Ascending lines from chord tones",
+              "quote_excerpt": "play ascending scale-wise patterns starting from chord tones",
+              "page": 53
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Alternating contour rule",
+              "quote_excerpt": "Alternating ascending and descending patterns will give your line a more interesting contour",
+              "page": 55
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "essential-tones-floor",
+          "name": "3rd and 7th Density Floor (Essential Tones)",
+          "summary": "Any voiced chord must retain the 3rd and 7th; these tones define chord quality and are non-expendable.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "3rd and 7th as essential chord tones",
+              "quote_excerpt": "two most essential notes in any chord are the 3rd and the 7th",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "root-fifth-omission",
+          "name": "Root and 5th Omission Allow",
+          "summary": "Roots, 5ths, 9ths, and 11ths may be omitted; rootless voicings preferred when more extensions are needed or when a bass player covers the root.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "3rd and 7th as essential chord tones",
+              "quote_excerpt": "It is common to omit roots, 5ths, 9ths and 11ths in certain situations",
+              "page": 17
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Rootless voicings rationale",
+              "quote_excerpt": "roots have been omitted from both the Dmin9 and G9 voicings",
+              "page": 56
+            }
+          ]
+        },
+        {
+          "id": "alteration-scope-rule",
+          "name": "Alterable Tones Ceiling (5th/9th/11th Only)",
+          "summary": "Only the 5th, 9th, and 11th may be raised or lowered; no other chord degrees can be altered.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Altered notes rule",
+              "quote_excerpt": "only notes that can be altered in any chord are the 5th, 9th and the 11th",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "diminished-substitution-v7",
+          "name": "Diminished Triad Substitution Over V7",
+          "summary": "Over V7, substitute a diminished triad from the 3rd, 5th, or 7th of that chord to produce altered extensions that resolve into I.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Diminished extensions over V7",
+              "quote_excerpt": "Play a diminished triad starting at the 3rd, 5th or 7th degree of the V7 chord",
+              "page": 51
+            }
+          ]
+        },
+        {
+          "id": "7b9-minor-third-symmetry",
+          "name": "7b9 Rootless Minor-Third Symmetry",
+          "summary": "A rootless dominant 7b9 voicing moves at minor-third intervals around the fingerboard without changing chord quality.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "7b9 rootless fingering symmetry",
+              "quote_excerpt": "move the same fingering around the fingerboard at intervals of a minor 3rd without changing the chord's quality",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "color-tone-upper-extensions",
+          "name": "Upper Extensions as Color Tones (9th, 11th, 13th)",
+          "summary": "On V7 chords, 9th/11th/13th extensions are required for jazz color; the Maj7-from-b7 technique is the primary delivery mechanism.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Major 7th extensions over V7",
+              "quote_excerpt": "A is the 9th, C is the 11th and E is the 13th",
+              "page": 49
+            },
+            {
+              "chapter_n": 2,
+              "topic": "ii-V7-I importance rule",
+              "quote_excerpt": "Knowing lots of fingerings will allow you to play with greater taste and variety",
+              "page": 43
+            }
+          ]
+        },
+        {
+          "id": "context-ear-substitution",
+          "name": "Context-and-Ear Substitution Constraint",
+          "summary": "Chord substitutions are valid only when they sound good in context; theoretical correctness alone does not justify a substitution.",
+          "engine_payload": {
+            "kind": "_pending:ear-context-gate"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Chord substitution context rule",
+              "quote_excerpt": "context is everything. Just because a substitution is 'theoretically correct' doesn't mean it sounds good",
+              "page": 34
+            }
+          ]
+        },
+        {
+          "id": "diatonic-scale-rule-with-altered-exception",
+          "name": "Major-Scale Rule with Altered-Chord Exception",
+          "summary": "Use the I-chord major scale over diatonic ii-V7-I; suspend this rule if any chord contains altered tones outside that scale.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Improvising over diatonic ii-V7-I",
+              "quote_excerpt": "use the major scale of the I chord",
+              "page": 8
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Altered chord exception",
+              "quote_excerpt": "all chords with a raised or lowered 5th, 9th or 11th would make this rule inapplicable",
+              "page": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system",
+      "name": "Lick-Based Improvisation Vocabulary System",
+      "summary": "Organizes the book's approach to improvisational vocabulary through chord-type-specific lick categories. Members are the four chord-type lick families plus blues and turnaround lick categories. Traversal rules govern how a soloist moves through a progression by deploying licks (neighbor-tone approach into target notes, melodic contour alternation, whole-neck combination). The central modification rule is the learn-transpose-apply cycle: every lick must be transposed to all twelve keys and immediately inserted into real solos. The system is explicitly framed as 'creative reorganization of learned vocabulary,' with licks as words and scales as alphabet.",
+      "members": [
+        {
+          "id": "major-lick-family",
+          "name": "Major-Type Chord Lick Family",
+          "summary": "Licks applicable over major 7th, 6th, 9th, and 13th chords."
+        },
+        {
+          "id": "minor-lick-family",
+          "name": "Minor-Type Chord Lick Family",
+          "summary": "Licks applicable over minor seventh and related minor voicings."
+        },
+        {
+          "id": "dominant-lick-family",
+          "name": "Dominant-Type Chord Lick Family",
+          "summary": "Licks applicable over unaltered dominant 7th, 9th, 11th, and 13th chords."
+        },
+        {
+          "id": "half-diminished-lick-family",
+          "name": "Half-Diminished (min7b5) Lick Family",
+          "summary": "Licks for the min7b5 chord; introduced as ear-training for an unfamiliar sound."
+        },
+        {
+          "id": "blues-scalar-tools",
+          "name": "Blues Scalar Tool Set",
+          "summary": "Minor pentatonic, blues scale, and Mixolydian mode as the three primary soloing tools over I-IV-V7 blues progressions."
+        },
+        {
+          "id": "turnaround-lick-family",
+          "name": "Turnaround Lick Family",
+          "summary": "Melodic phrases designed to create smooth harmonic transitions at first endings and tune conclusions."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "neighbor-tone-approach",
+          "name": "Neighbor-Tone Approach into Target Notes",
+          "summary": "Approach each target chord tone with a half-step or whole-step neighbor tone above or below.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Neighbor tones technique",
+              "quote_excerpt": "notes one half step below and above the chord tone",
+              "page": 31
+            }
+          ]
+        },
+        {
+          "id": "melodic-contour-alternation",
+          "name": "Ascending/Descending Melodic Contour Alternation",
+          "summary": "Alternate ascending and descending lick patterns to create varied melodic contour.",
+          "engine_payload": {
+            "kind": "_pending:melodic-contour-alternation"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Alternating contour rule",
+              "quote_excerpt": "Alternating ascending and descending patterns will give your line a more interesting contour",
+              "page": 55
+            }
+          ]
+        },
+        {
+          "id": "whole-neck-combination",
+          "name": "Whole-Neck Scale Combination (Anti-Positional)",
+          "summary": "Combine scalar tools fluidly across the entire fingerboard rather than staying in a single position; supported by single-string practice discipline.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Scales vs. fingerboard application",
+              "quote_excerpt": "we usually combine the various tools and utilize the entire fingerboard",
+              "page": 79
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Single-string practice method",
+              "quote_excerpt": "start learning all of your scales, modes and arpeggios up and down single strings",
+              "page": 93
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "learn-transpose-apply",
+          "name": "Learn-Transpose-Apply Cycle",
+          "summary": "Every lick must be transposed to all twelve keys and immediately inserted into real solos.",
+          "engine_payload": {
+            "kind": "_pending:transpose-apply-cycle"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Major chord licks applicability",
+              "quote_excerpt": "Transpose them and start using them immediately in songs you are learning",
+              "page": 60
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Minor chord licks instruction",
+              "quote_excerpt": "learn, transpose and insert these into your solos as soon as possible",
+              "page": 64
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Practice instruction",
+              "quote_excerpt": "Memorize and transpose these and keep your ears open",
+              "page": 86
+            }
+          ]
+        },
+        {
+          "id": "lick-extension-transfer",
+          "name": "Lick Extension Transfer (Related Voicings)",
+          "summary": "Licks written for a base chord type transfer to related extensions (major 6th, 9th, 13th; dominant 9th, 11th, 13th) through ear verification.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Major chord licks applicability",
+              "quote_excerpt": "work equally well with major 6th, major 9th and major 13th chords",
+              "page": 60
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Dominant chord licks scope",
+              "quote_excerpt": "Try using them over dominant 9th, 11th and 13th chords as well",
+              "page": 68
+            }
+          ]
+        },
+        {
+          "id": "blues-scale-tool-selection",
+          "name": "Blues Scale Tool Selection (Pentatonic / Blues / Mixolydian)",
+          "summary": "Over I-IV-V7 blues, choose among minor pentatonic, blues scale, and Mixolydian mode as interchangeable scalar color tools.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Soloing tools: scale choices",
+              "quote_excerpt": "minor pentatonic scale, blues scale and Mixolydian mode fingerings",
+              "page": 78
+            }
+          ]
+        },
+        {
+          "id": "hear-first-initiation",
+          "name": "Hear-First Initiation Principle",
+          "summary": "Every improvised idea must be heard mentally before executed; singing along with playing is the training mechanism.",
+          "engine_payload": {
+            "kind": "_pending:hear-first-initiation"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Hearing before playing",
+              "quote_excerpt": "the ideal is to first hear an idea in your head, and then execute it",
+              "page": 94
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Singing to train inner ear",
+              "quote_excerpt": "Singing along with what you are playing is a good way to begin training yourself to hear first",
+              "page": 94
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:swing-comping-texture",
+      "name": "Swing Comping Texture System",
+      "summary": "A smaller but distinct system governing the guitarist's accompanying role. Members are the rhythmic-texture states available to the comping guitarist (down/up stroke, damped, sustained). The core aesthetic is that swing rhythm is implied rather than mechanically predictable\u2014accents cycle unpredictably across the measure. A social-context modification rule forbids simultaneous free comping when a keyboard player is also comping.",
+      "members": [
+        {
+          "id": "downbeat-downstroke",
+          "name": "Downbeat Downstroke",
+          "summary": "Strum direction on downbeats: down stroke."
+        },
+        {
+          "id": "upbeat-upstroke",
+          "name": "Upbeat Upstroke",
+          "summary": "Strum direction on upbeats: up stroke."
+        },
+        {
+          "id": "damped-chord",
+          "name": "Damped Chord",
+          "summary": "Chord cut short via left-hand pressure release or right-hand palm/wrist damping."
+        },
+        {
+          "id": "sustained-chord",
+          "name": "Sustained Chord",
+          "summary": "Chord allowed to ring through its natural decay."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "swing-rhythm-implied-accent",
+          "name": "Swing Rhythm Implied Accent Cycle",
+          "summary": "Cycle accents unpredictably across parts of each measure rather than mechanically; maintain implied-not-stated rhythm.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Swing comping rhythm approach",
+              "quote_excerpt": "the rhythm in a swing feel is implied. The beat is often suggested by the guitarist",
+              "page": 47
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Swing strumming direction / damping",
+              "quote_excerpt": "strum down on the downbeats and to strum up on the upbeats",
+              "page": 47
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "no-double-comp-with-keyboard",
+          "name": "No Simultaneous Free Comping with Keyboard",
+          "summary": "When a keyboard player is present, the guitarist and keyboardist must alternate comping roles rather than both comping freely.",
+          "engine_payload": {
+            "kind": "_pending:social-role-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Comping definition",
+              "quote_excerpt": "If both the guitarist and the keyboard player comp freely at the same time the tune will become like a harmonic can of worms",
+              "page": 47
+            }
+          ]
+        },
+        {
+          "id": "damp-sustain-control",
+          "name": "Damp/Sustain Control During Rests",
+          "summary": "Damp strings during notated rests using left-hand pressure release or right-hand palm damping to prevent unwanted sustain.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Swing strumming direction / damping",
+              "quote_excerpt": "try to damp the strings so that the chords don't sustain during the rests",
+              "page": 47
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

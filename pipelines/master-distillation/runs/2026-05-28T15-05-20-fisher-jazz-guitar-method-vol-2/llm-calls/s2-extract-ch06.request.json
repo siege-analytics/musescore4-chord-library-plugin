@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Chapter 6\nPages 83-85 of the book.\n\n<<<CHAPTER TEXT\n\nB\nTrack\n45\nBLUES SOLO #3\nF7/6\nB\u266d7\nF7/6\nCmin7\nF9\nF Mixolydian\nB\u266d Mixolydian\nF Mixolydian\nT 6 8 6 8 7 8 7 5\nA 7 6 8 7 5 8 6 8\nB 5 7 8 6 8 8 7 5\n8 8 6 10 8 6 5 8\nB\u266d7\nBdim7\nF7/6\nD7\u266d9\nB\u266d Mixolydian\nBdim chord tones\nF Mixolydian\nT 6 6 (6) 6 7 6 8\nA 6 10 (10) 8 6 8 5 6 5 7\nB 8 6 7 (7)\nGmin7\nC9\nAmin7\u266d5\nD7\u266d5\nGmin7 C7\u266d9\nG Dorian\nC Mixolydian\nChord tones with neighbor tones\nT 3 3 6 5 4 3 7\nA 5 3 6 5 3 5 4 3 5 7 8 7 5 6 7 8\nB 5 5\nNeighbor tones\nTarget chord tones\n\nCHAPTER 6\nLesson 1A: Rhythm Changes\n\nJust as the blues form is part of our \"stock and trade,\" rhythm changes are a very important part of our vocabulary. This chord progression was originally found in the song I've Got Rhythm by George Gershwin. It has been the basis for literally dozens of songs, and has been a favorite progression of improvisers for decades. Oleo, by Sonny Rollins, Anthropology by Charlie Parker and The Flintstones would be examples of songs based on these changes. There are actually many variations on this progression, but the example below represents its most basic form.\n\nRHYTHM\n\nB\u266dMaj7 G7 Cmin7 F9 B\u266dMaj7 G7 Cmin7 F9\nFmin7 B\u266d7 E\u266dMaj7 E\u266dmin7 B\u266dMaj7 G7 Cmin7 F9\nB\u266dMaj7 F9 B\u266dMaj7 Fine D9 G9\nG9 C9 F9 D.C. al Fine\nD.C. al Fio the beginnin il the Fine.\nter 6\u2014Lesson\nChap 1A : Rhythm Changes\n83\n\nB\nLesson 1B: Soloing Over Rhythm Changes\nThis solo utilizes scales that you learned in both this book and Beginning Jazz Guitar. As you progress, you'll find that rhythm changes are usually highly altered and extended, so that more interesting scales and improvisational devices can be used. For now, just become familiar with the sound of this progression. Use the CD that is available with this book, or record yourself playing the changes, so that you can practice playing along and improvising your own solo.\nRHYTHM SOLO\nTrack 46\nB\u266dMaj7 G7 Cmin7 F9 B\u266dMaj7 G7 Cmin7 F9\nFmin7 B\u266d7 E\u266dMaj7 E\u266dmin7 B\u266dMaj7 G7 Cmin7 F9\nB\u266dMaj7 G7 Cmin7 F9 B\u266dMaj7 G7 Cmin7 F9\nFmin7 B\u266d7 E\u266dMaj7 E\u266dmin7 B\u266dMaj7 F9 B\u266dMaj7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

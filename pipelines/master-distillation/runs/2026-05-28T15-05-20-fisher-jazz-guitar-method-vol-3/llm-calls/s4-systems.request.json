@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: jody-fisher\nWork id: jazz-guitar-method-vol-3-mastering-chord-melody\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:59:49+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 jazz-guitar-method-vol-3-mastering-chord-melody\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\n## Book Distillation: A Systems-Based Approach to Fingerstyle Guitar Arrangement\n\nThis is a guitar pedagogy book that systematically teaches the art of fingerstyle arrangement and voicing on classical and jazz guitar. The core progression moves from foundational technique (Chapter 1) through increasingly sophisticated harmonic arrangement (Chapters 2\u20136), with each chapter building on prior knowledge to develop a flexible, adaptable musical voice.\n\nThe book establishes three master systems: (1) **right-hand technique options**\u2014pure fingerstyle, hybrid pick-with-fingers, and single-note alternating patterns\u2014each suited to different musical situations; (2) **harmonic arrangement methodology**\u2014a layered approach beginning with melody analysis and key selection, proceeding through chord voicing, passing-chord enrichment, and bass-line composition; and (3) **voice-leading principles**\u2014emphasizing stepwise motion, smooth transitions, and the selective use of non-chord tones and alterations to enhance but not obscure harmonic function.\n\nThe book's organizing philosophy prizes **flexibility over specialization**. Chapter 1 establishes this foundational principle: mastering all right-hand techniques rather than relying on one or two prepares the player for any musical situation. This principle recurs throughout: Chapter 2 advocates learning voicings in multiple keys and treating arrangements as skeletal frameworks rather than fixed compositions; Chapter 5 systematizes voicing and bass-line approaches across all twelve keys to enable real-time improvisation; Chapter 6 emphasizes discovering new possibilities within known shapes through octave transposition and symmetrical movement.\n\nThe book teaches a distinctive **grammar of harmonic enrichment**. Chapter 2 introduces chord families and distinguishes enhancement (extending a chord's quality) from substitution (changing the root). Chapter 3 layers in techniques for harmonizing both chord tones and non-chord tones through diads, passing chords, and the use of diminished chords positioned a half step below target chords. Chapter 4 systematizes these moves into passing-chord approaches, secondary dominants, and tritone substitution, each presented as generalizations of foundational principles (the ii-V7-I progression, V7-I function) rather than isolated tricks. Throughout, the load-bearing principle is that **the 3rd and 7th are the most important chord tones for defining quality**, making them the anchors of effective voicing.\n\nThe book's core methodology is **systematic learning in all keys, then artistic application**. Chapters 2 and 5 emphasize that voicings must be learned systematically across all twelve keys\u2014first in minimal-finger forms to preserve freedom for melody and improvisation, then applied as bass-line and harmonic frameworks. Chapter 4 stresses learning songs in skeletal form to enable improvised harmonization in real time. This scaffolding enables the practical outcome the book seeks: the ability to arrange melodies with harmonic backing that sounds like separate instruments (bass and guitar) playing together, not a single player executing a fixed score.\n\nThe book's final characteristic move, stated explicitly in Chapter 6, redirects attention from accumulation to artistry: **\"artistic voice and expressive musicianship matter far more than accumulating theoretical knowledge.\"** While mastery of many voicings and techniques brings flexibility, it is how you use what you know\u2014not how much you know\u2014that ultimately counts as a musician. This frames all preceding chapters not as a catalog of tricks to master but as tools to develop a personal, responsive approach to arrangement and harmonic expression.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 7-8\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Right-Hand Options\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 introduces the three primary right-hand techniques for classical and jazz guitar: pure fingerstyle, hybrid pick-with-fingers, and single-note alternating patterns. In fingerstyle, the thumb (p) controls the sixth and fifth strings while the fingers (i, m, a, c) each govern one string respectively, enabling selective chord voicing and simultaneous multi-voice harmony impossible with a pick alone. The hybrid technique holds a pick between the thumb and index finger while the remaining fingers manage higher strings, offering easy switching between techniques but limiting chord voicing to four notes. For melodic playing, jazz guitarists typically alternate either the first two fingers (i, m) or the thumb and second finger (p, m). The chapter establishes flexibility as the governing principle: mastering all techniques rather than relying on one or two prepares the player for any musical situation.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 9-17\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Combining Melody and Harmony\n\n_Distillation; backed by `chapters/ch02.md`._\n\nChapter 2 teaches the systematic process of arranging melodies with harmonic backing on guitar, starting from understanding melody in single notes across all octaves and proceeding through deliberate key selection to find optimal fingerboard positions. The core techniques include finding chord voicings that place melody notes on top, using octave adjustments to accommodate larger voicing shapes, and building arrangements in layers\u2014basic chords first, then enhanced with passing chords, substitutions, and extensions. The chapter introduces the concept of chord families (major, minor, dominant, etc.) where chords within the same quality are functionally interchangeable, distinguishing chord enhancement (adding extensions to the same chord quality) from chord substitution (changing the root). A characteristic move throughout is the emphasis on flexibility and playability: exploring multiple keys, learning voicings in various fingerboard positions, and treating arrangements as skeletal frameworks rather than fixed compositions. The load-bearing terminology includes lead-sheet adaptation, chord enhancement, chord substitution, and the foundational principle that melody drives voicing selection while taste and context determine how much harmonic enrichment serves the music.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 18-37\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Techniques for Harmonizing Non-Chord Tones\n\n_Distillation; backed by `chapters/ch03.md`._\n\nChapter 3 teaches the core techniques for harmonizing both chord tones and non-chord tones through diads (two-note harmonizations using 3rds and 6ths), voice leading principles that emphasize stepwise motion between chord changes, and strategic chord extensions derived from the melody itself. The chapter introduces load-bearing concepts including passing chords\u2014intermediate harmonies that smooth transitions between chords\u2014and demonstrates how dominant seventh chords can be replaced with diminished chords positioned a half step below the target chord, a substitution that works because the two chords share three notes and resolve similarly. Advanced techniques presented include quartal harmony (stacking 4ths rather than 3rds), octave doubling for melodic emphasis (exemplified by Wes Montgomery and George Benson), and the practical insight that diminished chords repeat every three frets on the fingerboard. The chapter emphasizes that the 3rd and 7th degrees are the most important chord tones for defining chord quality, and offers a minimalist alternative for players who prefer single-note melodies with chords added only at chord changes. Throughout, the master's characteristic moves center on achieving smooth, idiomatic voice leading by understanding how non-diatonic and altered chords can enhance harmonic progressions when applied thoughtfully.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 38-47\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Passing-Chord Approaches\n\n_Distillation; backed by `chapters/ch04.md`._\n\nChapter 4 introduces passing-chord approaches, a set of harmonic techniques for enriching skeletal chord progressions through embellishment and voice-leading. The core concepts include using same-quality chords a half-step away as passing chords, employing the IV chord to approach major I, and understanding secondary dominants as a generalization of the V7-I principle to any chord in a progression. The ii-V7-I progression emerges as a load-bearing harmonic formula that defines or establishes a key through the movement of roots, thirds, and sevenths, with backcycling serving as a systematic extension of this approach through repeated fourth-movements. Tritone substitution is presented as a reharmonization technique applicable to both dominant chords and secondary dominants, allowing a dominant chord to be replaced by another whose root is a diminished fifth (tritone) away while maintaining harmonic function. Throughout, the chapter emphasizes learning songs in skeletal form to enable improvised harmonization, making these techniques practical tools for real-time arrangement and soloing.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 48-57\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Creating Arrangements and Bass Lines\n\n_Distillation; backed by `chapters/ch05.md`._\n\nChapter 5 teaches the foundational techniques for creating convincing two-part arrangements where a bass line and chord voicings sound like separate instruments. The core pedagogical approach is learning voicings systematically in all twelve keys, using minimal fingers to preserve freedom for melody and improvisation, then applying bass-line approaches across all keys. Key technical moves include tritone substitution by root distance rather than dominant function, right-hand finger assignment where the thumb handles bass notes while index and middle fingers voice the triad, and using scale tones to connect chord voicings. The master's characteristic voice-leading techniques include half-step approaches to chords (fundamental to walking bass lines), sustaining overlapping triad notes for harmonic continuity, and creating rhythmic separation by delaying the chord slightly after the bass note hits the downbeat. The load-bearing principle throughout is maintaining realistic volume balance and dynamic separation\u2014bass notes on every beat as the anchor, with chords appearing as accents\u2014to achieve the illusion of a bass player and guitarist playing together.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s3\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 58-63\nmodel: claude-haiku\nextracted_at: 2026-05-29T05:58:46+00:00\nschema_version: 0.1\n---\n\n# Chapter 6 \u2014 Moving Voices\n\n_Distillation; backed by `chapters/ch06.md`._\n\nChapter 6 explores how to discover new voicings and harmonic possibilities within chord shapes you already know by moving them to different octaves and using symmetrical transposition\u2014a technique where certain chords retain their harmonic function (dominant chords stay dominant, etc.) when moved by consistent intervals, particularly whole steps for voicings with 9ths and altered 5ths. The chapter introduces practical ensemble techniques like trading fours and the method of reharmonization through bassline composition, where composing a new bass line guides and drives harmonic choices across a section. Throughout, the author emphasizes that artistic voice and expressive musicianship matter far more than accumulating theoretical knowledge; while mastery of many voicings and techniques brings flexibility, it is how you use what you know\u2014not how much you know\u2014that ultimately counts as a musician.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 7-8\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:49:39+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Right-Hand Options\n\n_Pages 7-8._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Fingerstyle finger assignment\n\n> Generally, p controls the sixth and fifth strings, while ij is on the fourth, m is on the third,\n> ais on the second and \u00a2 is on the first.\n\n**Significance (p. 7).** This establishes the foundational fingerstyle finger-to-string mapping that governs right-hand technique throughout the method.\n\n## Fingerstyle advantages over pick\n\n> One real advantage of playing chords in this manner is that you don't have to worry about\n> muting strings or barring over a note that is unwanted in the chord. You pluck only the\n> tones you want to hear.\n\n**Significance (p. 7).** This explains the core benefit of fingerstyle\u2014selective control\u2014which justifies why the technique deserves dedicated practice.\n\n## Fingerstyle simultaneous voice sounding\n\n> With fingerstyle techniques you sound harmonies like a key-\n> board instrument\u2014all the notes of a chord at the same moment.\n\n**Significance (p. 7).** This distinguishes fingerstyle from pick playing by describing its unique sonic capability to voice chords truly simultaneously.\n\n## Single-note fingerstyle technique options\n\n> To play single-note lines fingerstyle, most jazz players either alternate their first two fin-\n>\n> gers (i,m) or alternate their thumb and second fingers (p,m).\n\n**Significance (p. 7).** This provides the two primary alternating-finger patterns for melodic fingerstyle playing, grounding students in jazz technique.\n\n## Pick with fingers hybrid technique\n\n> Usually the pick is held between the Pp and i fingers and takes care of the sixth, fifth and\n> fourth strings while m covers the third, a covers the second and c handles the first.\n\n**Significance (p. 7).** This describes the hybrid approach that allows transitioning between fingerstyle and pick without repositioning the hand.\n\n## Hybrid technique limitation\n\n> The major disadvantage is that you are\n> limited to playing four-note chords, since two of your fingers are occupied with holding\n> the pick.\n\n**Significance (p. 7).** This establishes a concrete trade-off in the hybrid method\u2014voicing range is sacrificed for ease of switching between techniques.\n\n## Learning multiple right-hand techniques\n\n> Like almost everything else with guitar it is best to learn every technique instead of relying\n> on just one or two. This way you will be prepared for any musical situation that comes\n> your way\n\n**Significance (p. 8).** This rule establishes flexibility and preparation as the guiding principle for mastering right-hand options.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 9-17\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:51:16+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Combining Melody and Harmony\n\n_Pages 9-17._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Finding chord voicings with melody on top\n\n> The next step is to find chord voicings that have the melody notes\n> on top.\n\n**Significance (p. 9).** This states the fundamental goal of the harmonization process\u2014melody-driven voicing selection is the core principle for combining melody and harmony on guitar.\n\n## Octave adjustment for harmony\n\n> It is often necessary to raise the melody one octave in order to use larger chord voicings.\n\n**Significance (p. 9).** This teaches a practical technique for expanding harmonic possibilities when a melody note would otherwise be too low for effective chord voicing.\n\n## Lead-sheet arrangement guideline\n\n> When using a lead-sheet (a sketch of a song that shows words, melody and chord\n> symbols only) as a source for your basic melody and chord changes, it is generally\n> helpful to raise the melody an octave. Check the highest and lowest notes in the\n> song to see if an octave change would make the tune easier to harmonize.\n\n**Significance (p. 11).** This rule establishes a standard practice for adapting lead-sheet melodies to guitar, providing a decision framework for octave placement.\n\n## Key selection strategy\n\n> Consider the possibility that the song might lie on the fingerboard better in a\n>\n> different key. Changing the key can often change the basic character of the tune\n> itself. For instance, you may want to try keys that allow the use of open strings.\n> The extra investigation is usually well worth the effort.\n\n**Significance (p. 11).** This rule teaches that key choice impacts both playability and musical character, directing arrangers to explore multiple keys beyond the original.\n\n## Melody study in single notes\n\n> Learn to play the melody in single notes first. Explore it in every octave to make\n>\n> sure you understand what the melody is about.\n\n**Significance (p. 11).** This foundational step establishes that deep melody understanding must precede harmonic arrangement and shapes the entire approach to chord melody.\n\n## Memorizing chord voicings\n\n> Memorize chord changes and be able to play them in various areas of the finger-\n>\n> board.\n\n**Significance (p. 11).** This rule emphasizes the importance of fingerboard knowledge and flexibility in executing harmony options across multiple positions.\n\n## Basic arrangement before enhancement\n\n> Arrange your song with the basic chords first. When you have a handle on the basic\n>\n> arrangement, then dress up the harmonies with passing chords, substitutions\n> and harmonizations.\n\n**Significance (p. 11).** This procedural rule establishes the correct sequencing: build structural foundation before adding decorative harmonic techniques.\n\n## Arrangements as skeletal frameworks\n\n> Don't carve your arrangements or chord changes in stone. Basically, you want\n>\n> skeletal arrangements from which you can improvise melodically, harmonically\n> and rhythmically. Once you gain confidence with this approach, it is a lot more\n> fun, which, never forget, is the whole idea.\n\n**Significance (p. 11).** This rule reframes arrangement as a flexible, improvisational tool rather than a fixed composition, emphasizing musical creativity and enjoyment.\n\n## Chord enhancement definition\n\n> To\n> enhance means to simply add extensions or alterations to the basic chord. To most jazz\n> musicians, all the chords within a given quality, or family, (major, minor, dominant, etc.) are\n> interchangeable. In other words, a Major 6th chord can be thought of in the same light as a\n> Major 9th chord or a Major 7th chord. Functionally, they are all the same.\n\n**Significance (p. 12).** This defines the conceptual framework for understanding chord enhancement\u2014chords within the same family are functionally equivalent, enabling flexible substitution.\n\n## Interchangeable chords within families\n\n> In the chart below, all the chords are interchangeable with any other chord in the same\n> column.\n\n**Significance (p. 12).** This establishes a practical decision rule: within a chord family column, any voicing is acceptable, streamlining the arrangement process.\n\n## Enhancement vs. substitution\n\n> It should be noted that chord enhancement is not the same as chord substitution. Chord\n> substitution implies replacing a chord with another chord that has a different root.\n\n**Significance (p. 12).** This distinction clarifies two different harmonic techniques and prevents confusion between adding extensions and changing harmonic function.\n\n## Context and taste in enhancement\n\n> Context is everything. Taste should be\n> your primary concern. Not everything needs to be enriched.\n\n**Significance (p. 12).** This rule provides a quality standard that tempers the previous explanation of enhancement: musical judgment should guide when and how much to enhance.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 18-37\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:52:59+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Techniques for Harmonizing Non-Chord Tones\n\n_Pages 18-37._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Diads definition and use\n\n> Diads, also known as double-stops, are two-note harmonizations. They work very well for chord tones and non-chord tones. Any interval is possible, but 3rds and 6ths are the most common.\n\n**Significance (p. 18).** Establishes the foundational technique of two-note harmonization and specifies the preferred intervals for practical application.\n\n## Adding non-chord tones to chords\n\n> Very often we add a non-chord tone that is in the melody to the chord. This will change the name of the chord, as you will be adding higher extensions and altered tones. This is a common way to come up with enhancements.\n\n**Significance (p. 19).** Teaches the core technique of chord extension through melody integration and explains how this creates chord alterations.\n\n## Voice leading definition\n\n> Voice leading is the term we use to describe the movement of individual voices from one\n> chord to another. This is very important when choosing voicings for a chord melody\n> arrangement.\n\n**Significance (p. 21).** Defines the essential concept of voice leading and establishes its critical role in chord-melody arranging.\n\n## Scalewise voice movement\n\n> Good voice-leading often means\n> arranging your chords so that the voices actually travel in whole and half steps.\n\n**Significance (p. 21).** Provides the key principle for creating smooth, idiomatic voice leading through stepwise motion.\n\n## 3rds and 7ths in chord definition\n\n> Usually, it\n> is the 3rd and the 7th degrees of the chords. This is because chords are defined by their\n> 3rds and 7ths which differentiate major, minor and dominant chords.\n\n**Significance (p. 22).** Explains why the 3rd and 7th are the most important chord tones for voice leading, as they define chord quality.\n\n## Passing chords definition\n\n> A passing chord is a chord added between two others to create a smoother transition.\n> Very often you can harmonize both chord and non-chord tones as passing chords.\n\n**Significance (p. 23).** Introduces the technique of using intermediate harmonies to smooth chord progressions.\n\n## Half-step dominant passing chords\n\n> One common application of passing chords is the use of a dominant chord (altered or\n> unaltered) with a root that is a half step higher, or lower, than the chord being approached.\n> These chords can end up being non-diatonic, or from outside the key.\n\n**Significance (p. 23).** Explains a primary technique for applying dominant passing chords and permits non-diatonic harmony for smoothness.\n\n## Diminished chord repetition property\n\n> diminished chords repeat themselves every three frets, so you can choose from\n> among many possible locations on the fingerboard.\n\n**Significance (p. 28).** Provides a practical technical insight for locating diminished chord voicings on the guitar.\n\n## Diminished as V7 substitute\n\n> Approaching the | chord with a diminished chord from one half step below the root is a\n> common substitute for the V7. The reason this works is that the two chords have three\n> notes in common and both resolve nicely to I.\n\n**Significance (p. 30).** Establishes the harmonic equivalence between diminished and dominant seventh chords, enabling practical substitution.\n\n## Quartal harmony definition\n\n> In conventional harmony, we use chords that are constructed primarily from stacking 3rds.\n> In quartal harmony, chords are constructed by stacking 4ths.\n\n**Significance (p. 33).** Defines the alternative harmony system based on fourths rather than thirds.\n\n## Single-note melody approach\n\n> Some players prefer a chord/melody style with fewer chords. They will play mostly single\n> notes and add chords only when the chord changes. Sometimes this is the best way to deal\n> with chord tones and non-chord tones alike.\n\n**Significance (p. 36).** Presents an alternative minimalist approach to harmonizing non-chord tones.\n\n## Octave doubling for emphasis\n\n> Doubling melody notes in octaves will create a stronger effect than single notes, and some-\n> times you might find this kind of emphasis desirable. Listen to Wes Montgomery and\n> George Benson to hear great examples of this kind of playing.\n\n**Significance (p. 36).** Teaches the technique of octave doubling and provides authoritative models for the style.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 38-47\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:54:42+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Passing-Chord Approaches\n\n_Pages 38-47._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Learning songs in skeletal form\n\n> skeletal form so that you can actually start co improvise harmonies as you\n>\n> play.\n\n**Significance (p. 38).** Establishes the pedagogical principle that learning skeletal arrangements enables improvised harmonization.\n\n## Like qualities as passing chords\n\n> like qualities\u201d is similar to the material in Lesson 4 of Chapter 2,\n> but instead of using only dominant chords as passing chords, use the same quality as the\n> chord you are approaching from either a half step above or below.\n\n**Significance (p. 38).** Defines a core harmonic technique: substituting chords of the same quality a half-step away is a basic method for chord embellishment.\n\n## IV chord approach to major I\n\n> When approaching a major I chord you may precede it with a IV chord (a major chord\n> whose root is a perfect 4th higher). You can use this technique to handle non-chord tones\n> or as harmonization of a chord tone.\n\n**Significance (p. 39).** Teaches a specific harmonic function: using the subdominant as a passing chord creates smooth voice-leading and handles both melodic and harmonic material.\n\n## Secondary dominants concept\n\n> Many jazz chord progressions utilize root movements (from one chord to another) of\n> 4ths. As you already know, V7-I is the most common chord progression. In this tech-\n> nique, you may consider any chord a I chord and precede it by its own V7 chord, which\n> can be enhanced or altered.\n\n**Significance (p. 39).** Defines secondary dominants as a generalization of the V-I principle that can be applied to any chord, expanding the harmonic vocabulary.\n\n## ii-V7-I defines a key\n\n> ii-V7-I progression defines or establishes a key because of the way the roots, 3rds and\n> 7ths of these chords move\n\n**Significance (p. 40).** Explains the harmonic power of the ii-V7-I progression: its voice-leading structure creates a strong tonal statement.\n\n## Backcycling definition and method\n\n> Backcycling is a way to extend the ii-V7-I approach covered in Lesson 4.\n\n**Significance (p. 44).** Defines backcycling as a systematic extension of ii-V7-I by repeating the 4th-movement pattern.\n\n## Tritone substitution principle\n\n> When a progression travels from V7 to I, we often replace the V7 chord with a dominant\n> chord whose root is a diminished Sth (or augmented 4th) away. We call this interval a\n> tritone because it is equal to the distance of three whole steps. The technique of substitut-\n> ing a chord a tritone away also works with secondary dominant chords.\n\n**Significance (p. 45).** Teaches tritone substitution as a rule applicable to any dominant chord, enabling reharmonization while maintaining harmonic function.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 48-57\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:56:00+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Creating Arrangements and Bass Lines\n\n_Pages 48-57._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Tritone substitution approach\n\n> We can approach any chord from another chord whose root is a tritone away. This is\n> different from the tritone substitution approach where the new chord is deduced from the\n> root of the V7 chord. In this approach, we deduce the new chord from the root of the\n> destination chord.\n\n**Significance (p. 48).** Establishes the foundational principle that distinguishes this method's approach to chord substitution by root position rather than dominant function.\n\n## Right-hand finger assignment\n\n> Your right thumb p should handle the bass notes while\n>\n> i and m should take care of the other two notes in the triad.\n\n**Significance (p. 51).** Specifies the precise right-hand technique for creating the two-instrument illusion.\n\n## Bass line connection method\n\n> In this approach you use the tones of the scale that the chord is built from to connect the\n> various triad voicings of the chord.\n\n**Significance (p. 51).** Introduces the key technique of using scale tones as connective tissue between chord voicings.\n\n## Half-step chord approaches\n\n> Chords can usually be approached from the note a half step above or below the lowest\n> voice in the triad. This is a common feature of walking bass-lines.\n\n**Significance (p. 53).** Defines a fundamental voice-leading technique that adds movement and realism to bass line construction.\n\n## Rhythmic feel with bass-chord delay\n\n> Try delaying the chord by playing the bass note on the downbeat and the chord slightly\n> after (but within the same beat)\n\n**Significance (p. 54).** Teaches a specific rhythmic variation that breaks up quarter-note monotony.\n\n## Sustaining triad notes\n\n> Whenever possible, let two notes of the triad ring as you hit the next bass note. Practice\n> slowly to learn the mechanics of this idea well.\n\n**Significance (p. 55).** Instructs on harmonic continuity by sustaining overlapping voices.\n\n## Learning voicings systematically\n\n> Learn the voicings in all twelve keys first. Then put them through all the bass line\n>\n> i} approaches you will learn in this book in all twelve keys.\n\n**Significance (p. 50).** Establishes the pedagogical sequence through systematic transposition and application across keys.\n\n## Minimizing left-hand fingers\n\n> Finger these chords with as few fingers as possible. Two fingers should be adequate for\n> many of them. This is important because you will eventually want to keep as many\n> fingers free as possible for playing melodies and improvising.\n\n**Significance (p. 50).** Establishes an efficiency principle that enables simultaneous melody playing.\n\n## Two-part listening concept\n\n> Remember that the idea is to sound like two instruments. The chords and the bassline\n>\n> are two distinct parts.\n\n**Significance (p. 51).** States the fundamental aesthetic principle.\n\n## Balancing bass and chord dynamics\n\n> Put a bass note on every beat and have the chords appear as \u201cpunches\u201d (accents). Keep\n> the volume balance between the bass notes and chords realistic like a guitar (or\n> keyboard) player and a bass player together.\n\n**Significance (p. 51).** Defines the rhythmic and dynamic relationship required to achieve convincing two-instrument separation.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3\nstage: s2\nsource_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf\nsource_pages: 58-63\nmodel: claude-sonnet\nextracted_at: 2026-05-29T05:57:03+00:00\nschema_version: 0.1\n---\n\n# Chapter 6 \u2014 Moving Voices\n\n_Pages 58-63._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Expanding voicing choices\n\n> different voices around to higher and lower octaves. Some of these changes will be dra-\n> matic, others not so, but there are many sounds waiting to be discovered within the\n> shapes you already know.\n\n**Significance (p. 60).** Foundational technique for discovering new voicings within familiar shapes.\n\n## Symmetrical chord movement principle\n\n> Many chords shapes retain their function (dominant chords stay dominant, etc.) when moved around in certain symmetrical intervals\n\n**Significance (p. 60).** Chords preserve harmonic function under symmetrical transposition.\n\n## Dominant chords with 9ths and altered 5ths\n\n> Chords with 9ths and altered 5ths may be moved around in whole steps and still retain their function.\n\n**Significance (p. 60).** Defines intervals and limits for transposing altered dominant voicings.\n\n## Trading fours arrangement technique\n\n> trading fours\n\n**Significance (p. 62).** Defines an ensemble-style arrangement method.\n\n## Reharmonization through bassline composition\n\n> Reharmonize sections of the tune by composing a new bassline and letting that guide\n> your harmonizations.\n\n**Significance (p. 62).** Establishes bassline as a compositional tool that drives harmonic choices.\n\n## Artistic voice over theoretical knowledge\n\n> Knowing hundreds of chord voicings and techniques\n> is not as important as finding your artistic voice and then expressing it. Great knowledge\n> brings great flexibility, but it is how you use what you know, rather than how much you\n> know that counts.\n\n**Significance (p. 63).** Principle contextualizes all technical material\u2014goal is expressive musicianship.\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for jody-fisher/jazz-guitar-method-vol-3-mastering-chord-melody; use _pending: when unsure about kind."
+}
