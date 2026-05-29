@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Right-Hand Options\nPages 7-8 of the book.\n\n<<<CHAPTER TEXT\n\n|\n\nae\n\nAnawWH a\n\nGenerally, p controls the sixth and fifth strings, while ij is on the fourth, m is on the third,\nais on the second and \u00a2 is on the first. If p is playing on the fifth or fourth strings, i plays\nthe third, m plays the second and a plays the first. Different songs and exercises will\nrequire some shifting of hand placement. It pays to be flexible.\n\nee re \u2018 - 7p +a\n\n1\n2\n\u201c1 3 : - i ee eee\n-i 4 z : : =e Sees\neast SS peer be \u2014\u2014 |\n>P 2 megs Bele I : \u00bb\n\nOne real advantage of playing chords in this manner is that you don't have to worry about\nmuting strings or barring over a note that is unwanted in the chord. You pluck only the\ntones you want to hear. Playing fingerstyle also allows you to lower or raise the volume of\nindividual notes in a chord. One other consideration is that it is the only way to sound the\nvoices simultaneously. When strumming with a pick or your thumb the notes will always\nappear one after the other. With fingerstyle techniques you sound harmonies like a key-\nboard instrument\u2014all the notes of a chord at the same moment. There are many great\nchords that are impossible to play with a pick. Spend time working on right hand tech-\nniques. It will pay off in terms of greater flexibility and versatility and allow you to play\nmany more styles of music.\n\nTo play single-note lines fingerstyle, most jazz players either alternate their first two fin-\n\ngers (i,m) or alternate their thumb and second fingers (p,m). There are many good classical\nguitar books available that should be investigated by anyone wishing to pursue this style\nof picking.\n\nIn addition to using a pick and developing fingerstyle technique, it is also a good idea to\npractice using a pick along with your three remaining fingers. Most players occasionally do\nthis and, for many, it is their primary way of playing.\n\nUsually the pick is held between the Pp and i fingers and takes care of the sixth, fifth and\nfourth strings while m covers the third, a covers the second and c handles the first. The\nadvantage to this technique is that it allows you to switch from fingerstyle to using a pick\nwith very little effort. When playing strictly fingerstyle, you either have to palm the pick,\nwhich can interfere with your right hand technique, or put it somewhere else (like in your\nmouth). The constant switching can be a hindrance. The major disadvantage is that you are\nlimited to playing four-note chords, since two of your fingers are occupied with holding\nthe pick.\n\n=~ antid a eee\n\nalee.\n2 a oe So\n\n|\n1\ni\n\nOnNAWN a\n\nLike almost everything else with guitar it is best to learn every technique instead of relying\non just one or two. This way you will be prepared for any musical situation that comes\nyour way,\n\nChapter One \u2014 Right Hand Options\n\n\nCHAPTER 2\n\nCombining sa and ois!\n\nA chord/melody arrangement allows you to play the melody with chords.\n\n. Usually the\n\nmelody will be the highest note in the chord, and the tones underneath produce the\nharmony. Not every note in an arrangement needs to be harmonized. Some players lean\n\ntoward heavy harmonization, and others prefer a more sparse approach. Ultimately, it is a\nmatter of personal taste.\n\nOne of the first skills that needs to be developed is the ability to recognize chord tones in\na melody. In Examples |, 2 and 3, the melody notes that are also part of the accompanying =\n\nchord are highlighted.\n\nd = chord tone\n\nCMaj7 A7 Dmin7 G7 c\nfh ial\nid eset ee ert e\n| AS 1 z\u2014l-o\n< RNS vac =\nTrack D ard sth root sth root ard ard root root\n2 ma)\n\u201cF =e 2S Se eee 3-\u2014\u2014 =\nA 5\u20144\u20145 5\nD\nGMaj7 Amin7 ' Bmin7 Amin7 D7 GMaj7\n\u00bb aes \u2014te\u2014p\u2014\u2014te ee\n\u00a3 Utes e t\n\u201cASS\nSth aed Sth 7th Sth Sth Sth od Sth\n= 3\u2014\u2014 ~ 5\u2014\u20147\u2014\u2014 8 \u20145 7\u2014\u20148\u2014 5 \u20147 3\nA 5\u2014\u20144\u2014\u20145\nsy\nGmin7 CT Fmin7 B'7 EbMaj7\u2014\u2014AbMaj7 E>Maj7\nh\nars n ak rn\n40 e ; be\u2014?\nAASV a: a \u00a2 * oO\n\u00bb\naed 3rd Sth ad ard\n+\n3\u20145 2 1\u2014# =\nA 5 3-4 5 5\u2014 5\n\n8 Chapter 2\u2014Combining Melody and Harmony\n\nOe ge ee ne ee ee ma aA Re TRTA\n\noa es\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

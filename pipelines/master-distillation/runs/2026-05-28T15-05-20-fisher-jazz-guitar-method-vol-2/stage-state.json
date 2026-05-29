@@ -1,0 +1,72 @@
+{
+  "run_id": "2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2",
+  "config": "pipelines/master-distillation/configs/fisher-jazz-guitar-method-vol-2.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2/pages.json",
+        "re-ingested: 98 pages, 97,946 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:54:10+00:00",
+      "ended_at": "2026-05-29T05:54:10+00:00",
+      "outputs": [
+        "detected 9 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2/chapter-bounds.json",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch01.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch02.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch03.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch04.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch05.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch06.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch07.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch08.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/chapters/ch09.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:57:49+00:00",
+      "ended_at": "2026-05-29T05:57:49+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/jazz-guitar-method-vol-2-intermediate-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-29T06:08:47+00:00",
+      "ended_at": "2026-05-29T06:08:47+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/derived/systems-draft.json",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chapter 5\nPages 74-82 of the book.\n\n<<<CHAPTER TEXT\n\nFmin7\u20195\nA\u2014|\u2014)_, ete bet, =\n135 | (an a = | Se i =\nAe DP a = \u00b0\nDe) \u2014_\u2014\nTrack\n421\n4\nrE 4\u2014_\u2014\u2014\u2014_5\u2014_4\u20143. 242\na\nA +4 434+ \u2014 4\nDB\nAmin7\u20195\n==\na= <r \u2014\nTack| \u00a9 \u2014\n42.2\nor\ni Ee 7 g z 5 2 5\nA SS Ss Sees\nA 57 7 {7}\nD\n= Cmin7\u20195 3 g\n31 \u2014\u2014\u2014\u2014\u2014 a\nAG \u2014? 4 t @\nTrack Sy) 3 *\n423\n+\u2014+\u2014+ ; + 7\nA = A 2 4 4 a 4 4\n& 4 4\u20143\u20144 i\n\nDmin?\u2019s\n\n\n\n|\n\n| (HAPTER 5\nLesson 1A: The Blues Progression\n\nThe blues is a style of music unto itself. It is also a very important part of the jazz vocabu-\nlary. You may have heard about the various styles of blues, like Delta Blues, Chicago Blues,\nCountry Blues, Urban Blues, English Blues and Rock Blues among others. Each blues style\ncan be thought of as a different dialect of the same basic language. If you are interested in\nlearning about the many different kinds of blues styles check out Beginning, Intermediate and\nMastering Blues Guitar, available at any music store.\n\nFor our purposes, the blues will be thought of as a form; it is a twelve measure chord\nprogression that is based around a I-IV-V7 progression. As you will see, the blues progres-\nsion can be very simple or very complex. In fact, if you compare the first few progressions\nin this lesson with the later ones, you might be hard pressed to find any similarity at all. Jazz\nblues progressions tend to use quite a few substitutions and passing chords. There are\nmany examples of this with detailed explanations in Mastering Jazz Guitar Chord/Melody. You\nshould try to learn as many blues progressions as possible.\n\nExamle 139 is a basic blues, and the examples that follow show how jazz players might\nelaborate on the form.\n\n13421) x21333 134211 131241\noTlleem o eeen \u00ab in er Tom\nI\n| | | | ]\n| ; aiaae HH\nfn G cg G7\ny\n139 7. 7 7 Zz Z. Z 7. Z Z Z Z Z Z Z 7.\n\u00a9 Zz Zz Zz Z Zz Z Zz Zz LF FE SR fs\n*21333\n\u2018 eee\nn_\u00a99 G\na Fa a Z. Zz Z Z. F\u00e9 7. Z Z 7 Z 7\n@-4 Zz Z Zz Zz yd Zz Zz Z Z Z Zz Z Z Z\n%21333 %21333 134211 %21333\nCod t Wt eT feem CCl} im\n\u00b0 of)\nix? . xX)\nrT T\nn_09 cg G DQ\n[f\u2014> Z Z. 7. Z Zz Z. rd Jj \u2014 FZ\n(a_Zz Zz z Zz Z Zz Z Zz | a LT i\neo\n74 Chapter 5\u2014Lesson IA: The Blues Progression\n\n\n\n21333\n\nx 2x34\n\n1x23 4x\n\nHote\n\nG75\n\nG Dmin7/11\nf. I ot -. Fs f. f.\nZz Z Z Z Zz Z\nxx1324 13421)\nele\nm\nCtdim7 G\nZ a Z Z 7 7 Z\nyA Zz Z Z Z Zz Z\n*x21333\nHE e elit\ncg\nf -. f. \u00a5 V4 a. f. f Cc\nZ Z Z Z TF SS A SET\n\nGeorge Benson\n\nChapter 5\u2014Lesson | A: The Blues Progression\n\n75\n\nPHOTO * GREGORY JACKSON\\COURTESY OF WARNER BROS. RECORDS\n\n\nA\n141\nA\nD9\nA\nEmin7/11\nA7#5#9\nD9\nDdim7\nA\nBmin7\nC#min7\nF#7b9\nE9\nD9\nA\nA7\nD\nDmin\nA\nE7#9\n142\nBb7/6\nEb9\nBb7/6\nEb9\nBb7/6\nG7\n2x3333\nVIII\nG7\nF7\nCmin7\nF9\nD7\nC7\nLesson IA: The\nBlues Progression\n\n143\nF7/6\nB\u266d7\nF7/6\nCmin7\nF9\nB\u266d7\nB\u266dmin7\nE\u266d9\nAmin7\nD9\nA\u266dmin7\nD\u266d9\nGmin7\nC9\nF7/6\nD7\u266d9\nG7\nC9\nFMaj7\nB13\nB\u266d13\nE\u266d9\nF7/6\nCmin7/11\nF7\u266d5\nB\u266d13\nE\u266d9\nAmin7\nD7\u266d9\nGmin7\nC9\nAmin7\nGmin7\n\n\u2014\n\n=\n\nSS |\n\nB\n\nPHOTO + COURTESY OF MCA\n\nLesson 1B: Soloing Over Blues Progressions\n\nYou have probably had some experience improvising over basic blues progressions. This\nlesson begins with a review of the minor pentatonic scale, blues scale and Mixolydian\nmode fingerings. They appear here in the key of C, but you should practice transposing\nthem. Just move to any other root of your choice and work through the same fingerings.\n\nC MINOR PENTATONIC FINGERINGS\n\n\u2018e \u00b0@\nlg_ | \u2014_|4m 1 | | |\nTT =i\nie 2@ \u2018o-\u2014\n1@ | 3@) ___|\nLig 3@\nTil Vv\n2@ Age \u2014@) \u2018@ =\n-@ 4@- es ee ee \u2014lig 4@\nBS \u201ce t i\u2014\u2014 \u2014 T i) T\n+ @ 5 4 4 3 R)\n20 Pd = i@ 2 4@\ne R : ! a\nVv Vil Vil x\n4 1\nae {@ ;@\n1 \u2018e 3 2 | | | =\ni @ e =\n1m) | \u2018e { { | 1.\n1 + \u2014 =\nete \u201c8 \u2018@ =\nXx XI x XI XV\n\nB.B. King\n\n78\n\nChapter 5\u2014Lesson |B:Soloing Over Blues Progressions\n\n\n\nC BLUES SCALE FINGERINGS\nV\nVII\nVII\nX\nXII\nXV\nC MIXOLYDIAN FINGERINGS\nVII\nX\nXII\nXII\nXV\nIII\nV\nVII\n79\n\nSAMPLE BLUES SOLOS\n\nThere is a big difference between learning improvisational tools, such as scales, and actu-\nally putting them to use. At first, we tend to organize them into patterns in different areas\nof the fingerboard. In actual practice, we usually combine the various tools and utilize the\nentire fingerboard. This is because the ideas we hear in our heads don\u2019t always conform to\norganized fingering patterns. In the sample blues solos that follow, you will find that the\nscales being used jump around to various parts of the fingerboard. Study these solos and\n\nmemorize the parts that you enjoy so you can use them in your own solos.\n\nG\n\n\u00a9.) BLUES SOLO #1\n\nTrack\n43\n\nDmin7/11\n\nG75\n\nc9\nas\n\n| <=\nei\n\n| 4\n1\n\nvan\neZ\n\n4\n\nry)\n\n3\n3\n\n\u2014\n\nG Minor pentatonic throughout.\n\ncy\nQo\n\neo\no\n@\n\n3\n\nn\n\no@\nDp\n\neo\no\n\nQo 5\n35\n\no\nan\n\no\nQ\n\np\nQ\n\npy\n\n\u00a9\n\n4\n\"\n\n\u00a5)\n\nn\n\ncg\n\nE7#9\n\nTr\n\n|\n\n4\nX\n\n@\n\no\n\noe\n\no\n\no\n\no\n\no\n\no\no\n\nCy\n\noe\na\n\nco\na\n@\noe\na\n@\n@\n\np\n\no\non\n\nCu\n\nan\n\na\na\n\n+4\n\nie\n\n1\n\nQo\n\n@\n\no\neo\n\nlap\n\na\neo\n\non\n\noe\n\no\non\nQo\n\na\n\no\na\no\non\nan\nQo\na\no\n\no\n\n>\n\"\n\nOD,\n\nan\neo\n\na\n\n@ = Target chord tones\n\n80 Chapter 5\u2014Lesson |B: Soloing Over Blues Progressions\n\n\n\nBLUES SOLO #2\nTrack\n44\nA Blues scale\nT 8 5 8 7 5 7 5 7 5\nA 8 5 8 7 5 7 5 7 8 9\nB 5 5 8 5 5\nD9\nDdim7\nA\nBmin7\nCmin7\nF7b9\nT 5 8 5 5 7 7 (7) 5 8\nA 8 7 5 7 5 (5) 6 7 8 5 7 9 7\nB 9 9 11 10 8\nE9\nD9\nA\nE7\nE Major\narpeggio\nA Blues scale\nT 7 7 4 5 7 8 5 (5) 5 5\nA 8 7 5 7 5 7 5 7 (7) 7 8 5 (5)\nB\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

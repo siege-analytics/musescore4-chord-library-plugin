@@ -6864,7 +6864,1781 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "works": [
+        {
+          "id": "jazz-guitar-method-vol-1-beginning",
+          "title": "Complete Jazz Guitar Method, Vol. 1: Beginning",
+          "year": 1995,
+          "instrument_scope": "6-string (any)",
+          "summary": "The beginner-track entry in Fisher's Alfred Music method series. Seven progressive chapters install the operating system the rest of the series depends on: a major-scale-derived harmony engine (chord tones from scale degrees), fretboard navigation in a single position, the A-Lesson / B-Lesson dual-track pedagogical structure (technique vs. theory streams alternating), and a solo-architecture introduction anchored to motif-and-variation. Two systems were derived: the Major Scale Harmony and Fretboard Navigation System (the central generative engine) and the Solo Architecture and Motif Development System (the smaller compositional companion).",
+          "references": [
+            {
+              "source": "Fisher, Jody. Complete Jazz Guitar Method, Vol. 1: Beginning. Alfred Music, 1995.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-1; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-1-beginning/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-1-beginning:major-scale-harmony-system",
+              "name": "Major Scale Harmony and Fretboard Navigation System",
+              "summary": "The central generative system of Fisher's method. Everything—chords, voicings, modes, and improvisation—derives from the major scale treated as a universal key. Members form a taxonomy running from the chromatic raw material through scale fingerings, triads, diatonic 7th chords, extended chords, and modal derivatives. Traversal rules govern how a player moves between fretboard positions and string sets; modification rules govern how chord voicings are built, extended, and legally thinned. The system is designed to be key-agnostic: all patterns are learned in Roman-numeral 'universal key' and transposed to any of the twelve keys via the cycle of 4ths/5ths.",
+              "members": [
+                {
+                  "id": "chromatic-scale",
+                  "name": "Chromatic Scale (12 tones)",
+                  "summary": "The raw pitch universe from which all scales and intervals are measured."
+                },
+                {
+                  "id": "major-scale-formula",
+                  "name": "Major Scale (W-W-H-W-W-W-H)",
+                  "summary": "The generative formula from which every chord, key, and mode in the method derives."
+                },
+                {
+                  "id": "major-scale-fingering-6string",
+                  "name": "Major Scale Fingerings: Sixth-String Root (6/1, 6/2, 6/4)",
+                  "summary": "Three locked-position scale fingerings with roots on string 6, labeled by finger number."
+                },
+                {
+                  "id": "major-scale-fingering-5string",
+                  "name": "Major Scale Fingerings: Fifth-String Root (5/1, 5/2, 5/4)",
+                  "summary": "Three locked-position scale fingerings with roots on string 5."
+                },
+                {
+                  "id": "triad-root-position",
+                  "name": "Triad — Root Position (R-3-5)",
+                  "summary": "Three-note chord voiced root, 3rd, 5th bottom-to-top across a three-string set."
+                },
+                {
+                  "id": "triad-first-inversion",
+                  "name": "Triad — First Inversion (3-5-R)",
+                  "summary": "Triad voiced 3rd, 5th, root bottom-to-top."
+                },
+                {
+                  "id": "triad-second-inversion",
+                  "name": "Triad — Second Inversion (5-R-3)",
+                  "summary": "Triad voiced 5th, root, 3rd bottom-to-top."
+                },
+                {
+                  "id": "diatonic-7th-chord",
+                  "name": "Diatonic 7th Chord (IMaj7, ii min7, iii min7, IVMaj7, V7, vi min7, vii min7b5)",
+                  "summary": "Seven chord qualities produced by stacking 3rds on each degree of the harmonized major scale."
+                },
+                {
+                  "id": "extended-chord",
+                  "name": "Extended Chord (add 9, 11, 13)",
+                  "summary": "Chords using tones from the second octave of the major scale; named for their highest extension."
+                },
+                {
+                  "id": "mode",
+                  "name": "Modal Scale (Ionian through Locrian)",
+                  "summary": "Each of the seven rotations of the major scale, each corresponding to its diatonic chord degree."
+                },
+                {
+                  "id": "string-set",
+                  "name": "String Set (four three-string groupings: 6-5-4, 5-4-3, 4-3-2, 3-2-1)",
+                  "summary": "The four overlapping three-string zones that organize all triad and chord-scale fingerings."
+                },
+                {
+                  "id": "fingerboard-position",
+                  "name": "Fingerboard Position (six-fret span)",
+                  "summary": "A six-fret window covering fingers 1–4 plus two additional frets; one locked position covers eleven keys."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "cycle-of-fourths-progression",
+                  "name": "Cycle of 4ths Chord Movement",
+                  "summary": "Prefer moving chord roots a 4th upward (or 5th downward) as the primary harmonic motion pattern, following the cycle of 4ths/5ths.",
+                  "engine_payload": {
+                    "kind": "_pending:cycle-root-motion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "cycle of 4ths explanation",
+                      "quote_excerpt": "One of the most common patterns in these styles is the movement of a 4th",
+                      "page": 16
+                    }
+                  ]
+                },
+                {
+                  "id": "diatonic-scale-wise-voice-leading",
+                  "name": "Scale-Wise Voice Motion Through Chord Scale",
+                  "summary": "When moving from chord to chord within a diatonic progression, each voice moves by step (root→root, 3rd→3rd, etc.).",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Voice leading in chord scales",
+                      "quote_excerpt": "each voice moves in a scale-wise motion (from root to root, 3rd to 3rd, etc)",
+                      "page": 54
+                    }
+                  ]
+                },
+                {
+                  "id": "locked-position-transposition",
+                  "name": "Locked-Position Fingerboard Traversal",
+                  "summary": "Navigate the fingerboard using closed (no open string) scale and chord fingerings so that any pattern can be shifted to a new key without re-fingering.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Locked position definition",
+                      "quote_excerpt": "Scales, arpeggios and licks are in locked position when they contain no open strings",
+                      "page": 90
+                    }
+                  ]
+                },
+                {
+                  "id": "string-set-chord-scale-traversal",
+                  "name": "String-Set Horizontal Chord-Scale Traversal",
+                  "summary": "Move through diatonic chord scales by crossing string sets in a horizontal direction to learn all diatonic chords in closer proximity.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Vertical chord scales: concept",
+                      "quote_excerpt": "learn chord scales in a vertical direction, across the string sets",
+                      "page": 76
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Definition of chord scale",
+                      "quote_excerpt": "chord scales that follow are shown on various string sets",
+                      "page": 58
+                    }
+                  ]
+                },
+                {
+                  "id": "roman-numeral-transposition",
+                  "name": "Roman-Numeral Universal-Key Transposition",
+                  "summary": "Learn all progressions as Roman-numeral patterns (e.g., ii-V-I) so they can be instantly transposed to any of twelve keys by plugging into a new root.",
+                  "engine_payload": {
+                    "kind": "_pending:universal-key-transposition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Roman numerals: transposition",
+                      "quote_excerpt": "Learn all of your songs in Roman numerals. Then you will have learned the material in a 'universal key'",
+                      "page": 67
+                    }
+                  ]
+                },
+                {
+                  "id": "mode-to-chord-correspondence",
+                  "name": "Mode-to-Diatonic-Chord Correspondence",
+                  "summary": "Select the improvisation scale by matching each chord to its corresponding mode of the parent major scale (e.g., Dorian over ii min7).",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Mode-to-chord correspondence",
+                      "quote_excerpt": "Each mode of the major scale corresponds to the diatonic chord that shares the same root",
+                      "page": 69
+                    }
+                  ]
+                },
+                {
+                  "id": "diatonic-vs-modal-switch",
+                  "name": "Diatonic / Modal Thinking Switch at Non-Diatonic Chord",
+                  "summary": "Use the parent major scale over diatonic chords; switch to the specific mode when the progression reaches a non-diatonic chord.",
+                  "engine_payload": {
+                    "kind": "_pending:diatonic-modal-switch"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Mixed modal/diatonic improvisation rule",
+                      "quote_excerpt": "when you get to a chord that is not natural to the key, switch to the modal approach",
+                      "page": 83
+                    }
+                  ]
+                },
+                {
+                  "id": "horizontal-vertical-combination",
+                  "name": "Combine Locked-Position (Vertical) and Open-Position (Horizontal) Thinking",
+                  "summary": "Avoid restricting improvisation to a single spatial mode; alternate between locked-position cross-string patterns and horizontal single-string movement.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Locked position definition",
+                      "quote_excerpt": "when you use it to the exclusion of horizontal thinking it can severely limit your improvisational ideas",
+                      "page": 90
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "omit-root-fifth-ninth",
+                  "name": "Omit Root, 5th, and/or 9th from Extended Voicings",
+                  "summary": "Roots, 5ths, and 9ths may be dropped in any combination to reduce voicing density without losing harmonic identity.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "which chord tones not to drop",
+                      "quote_excerpt": "Roots, 5ths and 9ths can be dropped in various combinations",
+                      "page": 46
+                    }
+                  ]
+                },
+                {
+                  "id": "retain-third-seventh",
+                  "name": "Retain 3rd and 7th as Non-Omissible Color Tones",
+                  "summary": "The 3rd and 7th must be kept in any voicing because they are the tones that define chord quality (major, minor, dominant).",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "which chord tones not to drop",
+                      "quote_excerpt": "it is generally not a good idea to drop 3rds and 7ths because these are the tones that define major, minor and dominant chords",
+                      "page": 46
+                    }
+                  ]
+                },
+                {
+                  "id": "triad-extension-additive",
+                  "name": "Extend Chord by Adding Scale Tones Above Triad",
+                  "summary": "Construct any larger chord by beginning with the R-3-5 triad and adding successive scale degrees (6, 7, then 9, 11, 13 via second octave).",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "constructing larger chords from triads",
+                      "quote_excerpt": "constructing larger chords is simply a matter of adding additional scale tones to the original triad",
+                      "page": 30
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "extensions beyond the octave",
+                      "quote_excerpt": "We get the extended notes (beyond the octave) by continuing the major scale up through a second octave",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "name-by-highest-extension",
+                  "name": "Name Chord by Highest Extension Present",
+                  "summary": "Label any extended chord by its highest present extension even when lower extensions are implied but unstated.",
+                  "engine_payload": {
+                    "kind": "_pending:chord-naming-convention"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "chord naming by highest extension",
+                      "quote_excerpt": "Chords are usually named for the highest extension present",
+                      "page": 31
+                    }
+                  ]
+                },
+                {
+                  "id": "triad-inversion-voicing-order",
+                  "name": "Triad Inversion: Cycle Through Root / First / Second Inversion on String Sets",
+                  "summary": "Apply root (R-3-5), first (3-5-R), and second (5-R-3) inversion voicings across all four string sets to cover the full fingerboard.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "triad inversion definitions",
+                      "quote_excerpt": "When the notes are sounded from bottom to top in root, 3rd, 5th order, it is referred to as being in root position",
+                      "page": 18
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "four string sets defined",
+                      "quote_excerpt": "divide the guitar into four string sets",
+                      "page": 20
+                    }
+                  ]
+                },
+                {
+                  "id": "harmonize-scale-in-thirds",
+                  "name": "Harmonize Each Scale Degree by Stacking 3rds",
+                  "summary": "Generate the full chord scale by stacking diatonic 3rds on each of the seven scale degrees, producing triads (three-high) or 7th chords (four-high).",
+                  "engine_payload": {
+                    "kind": "_pending:harmonization-in-thirds"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Harmonizing major scale in 3rds",
+                      "quote_excerpt": "we stack 3rds on top of each scale degree. If we stack them three notes high, we get triads. If we stack them four notes high, we get 7th chords",
+                      "page": 54
+                    }
+                  ]
+                },
+                {
+                  "id": "scale-choice-per-chord-quality",
+                  "name": "Scale-Choice Cardinality per Chord Quality",
+                  "summary": "Apply the fixed rule: Maj7 has two parent-scale choices, min7 has three, dom7 has one, min7b5 has one — constraining which scales are legal over each chord type.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Scale choices per chord type",
+                      "quote_excerpt": "Every Maj7 chord has two major scale choices… Every min7 chord has three… Every dominant 7th chord has one",
+                      "page": 77
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-1-beginning:solo-architecture-system",
+              "name": "Solo Architecture and Motif Development System",
+              "summary": "A smaller compositional system governing how an improvised jazz solo is shaped over time. Members are the three formal sections of a solo (opening, body, conclusion) plus the motif as the atomic phrase unit. Traversal rules describe how to move through the solo's arc — from sparse opening through developing body to resolved conclusion. Modification rules describe how a stated motif is varied rhythmically or melodically, and how repetition is deployed to build and release tension. This system is explicitly taught in Chapters 6 and 7 and is distinct from the harmonic/fretboard navigation concerns of the central system.",
+              "members": [
+                {
+                  "id": "solo-opening",
+                  "name": "Solo Opening",
+                  "summary": "Sparse beginning: easy-to-follow, startling, or silent; sets tone and listens to accompaniment."
+                },
+                {
+                  "id": "solo-body",
+                  "name": "Solo Body",
+                  "summary": "Develops themes initiated in the opening; longer lines, melodic patterns, register/dynamic changes."
+                },
+                {
+                  "id": "solo-conclusion",
+                  "name": "Solo Conclusion",
+                  "summary": "Signals the end; may deploy 'flash' element; repetition used here for intensity before release."
+                },
+                {
+                  "id": "motif",
+                  "name": "Motif",
+                  "summary": "A short phrase (lick, spontaneous idea, or melodic pattern) that becomes the thematic unit driving the solo."
+                },
+                {
+                  "id": "tension-region",
+                  "name": "Tension Region",
+                  "summary": "A passage of repeated material that accumulates listener intensity."
+                },
+                {
+                  "id": "release-region",
+                  "name": "Release Region",
+                  "summary": "The break in repetition that resolves accumulated tension."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "solo-arc-opening-to-conclusion",
+                  "name": "Three-Part Solo Arc: Opening → Body → Conclusion",
+                  "summary": "Navigate the solo's formal structure by progressing from sparse opening through busier theme-development body to a conclusive ending that signals resolution.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Solo form: opening, body, conclusion",
+                      "quote_excerpt": "The body usually gets a little busier to develop themes you have initiated… The conclusion lets your listeners know the solo is ending",
+                      "page": 93
+                    }
+                  ]
+                },
+                {
+                  "id": "tension-release-repetition-break",
+                  "name": "Tension/Release via Repetition and Its Breaking",
+                  "summary": "Build tension by repeating a phrase across chord changes; resolve it by breaking the repetition at a strategic moment.",
+                  "engine_payload": {
+                    "kind": "_pending:tension-release-arc"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "repetition and tension/release",
+                      "quote_excerpt": "Breaking the repetition eases the tension and resolution is achieved",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "repetition-intensity-placement",
+                  "name": "Defer Peak Repetition to Solo Conclusion",
+                  "summary": "Save the most intense repetitive phrase for the conclusion of the solo to maximize the payoff of built-up tension.",
+                  "engine_payload": {
+                    "kind": "_pending:tension-release-arc"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "repetition builds intensity",
+                      "quote_excerpt": "Repetition tends to build intensity. This is why some players save this technique for the conclusion of their solo",
+                      "page": 94
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "motif-variation-rhythm",
+                  "name": "Motif Variation: Maintain Pitches, Change Rhythm",
+                  "summary": "Vary a stated motif by keeping its exact pitches while altering the rhythmic structure.",
+                  "engine_payload": {
+                    "kind": "_pending:motif-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "variation on a theme",
+                      "quote_excerpt": "maintaining the pitches of the notes and changing the rhythmic structure",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "motif-variation-pitch",
+                  "name": "Motif Variation: Maintain Rhythm, Change Pitches",
+                  "summary": "Vary a stated motif by keeping its rhythmic figure while changing the pitches of the notes.",
+                  "engine_payload": {
+                    "kind": "_pending:motif-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "variation on a theme",
+                      "quote_excerpt": "maintaining the rhythmic figure but changing the pitches of the notes",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "limiting-rhythmic-options",
+                  "name": "Limit Rhythmic Options to Isolate Melodic Hearing",
+                  "summary": "Constrain note values to a single denomination (whole, half, quarter, eighth) to break automatic finger patterns and develop melodic ear independently of rhythm.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-density-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Limiting rhythmic options",
+                      "quote_excerpt": "limiting rhythmic options… will help you to break out of finger patterns that you automatically fall into",
+                      "page": 92
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jazz-guitar-method-vol-2-intermediate",
+          "title": "Complete Jazz Guitar Method, Vol. 2: Intermediate",
+          "year": 1995,
+          "instrument_scope": "6-string (any)",
+          "summary": "The intermediate-track continuation. Nine chapters extend the single-position vocabulary of Vol. 1 to the ii-V-I harmonic framework (the operative jazz harmonic cell), introduce lick-based improvisation vocabulary as the application of theory to phrase construction, and develop swing comping texture (chord-on-the-beat vs. on-the-and rhythmic placements). Three systems were derived: the ii-V7-I Harmonic Framework System, the Lick-Based Improvisation Vocabulary System, and the Swing Comping Texture System.",
+          "references": [
+            {
+              "source": "Fisher, Jody. Complete Jazz Guitar Method, Vol. 2: Intermediate. Alfred Music, 1995.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework",
+              "name": "ii-V7-I Harmonic Framework",
+              "summary": "The book's central load-bearing system organizes all harmonic and improvisational activity around the ii-V7-I progression. Members are the three chord-function roles (ii, V7, I) plus the altered/extended variants available at each slot. Traversal rules govern how voicings of each chord function are connected across the fingerboard. Modification rules govern what may be altered or omitted within each chord (3rds and 7ths are essential; roots and 5ths are expendable), how extensions are added to the V7, and how the rootless 7b9 symmetry at minor-third intervals can be exploited. The whole system is the substrate onto which all lick vocabulary, blues, rhythm changes, and turnaround material is subsequently grafted.",
+              "members": [
+                {
+                  "id": "ii-chord",
+                  "name": "ii chord (minor function)",
+                  "summary": "Minor seventh chord a perfect fourth below the V7. Typically Dmin7 or Dmin9 in examples."
+                },
+                {
+                  "id": "v7-chord",
+                  "name": "V7 chord (dominant function)",
+                  "summary": "Dominant seventh chord; primary site of alteration and extension (7b5, 7#5, 7b9, 9th, 11th, 13th)."
+                },
+                {
+                  "id": "i-chord",
+                  "name": "I chord (tonic function)",
+                  "summary": "Major tonic chord that the progression resolves into and whose major scale governs diatonic improvisation."
+                },
+                {
+                  "id": "altered-extended-variant",
+                  "name": "Altered/Extended Chord Variant",
+                  "summary": "Any ii, V7, or I chord with raised or lowered 5th, 9th, or 11th. Still counts as ii-V7-I if roots are perfect-fourth apart and qualities remain minor/dominant/major."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "string-set-shift",
+                  "name": "String-Set Shift for ii-V7-I",
+                  "summary": "Voice the ii-V7-I progression on each of the three string sets (6-5-4-3, 5-4-3-2, 4-3-2-1) and shift across sets to cover the fingerboard.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "String-set chord organization system",
+                      "quote_excerpt": "divide the six strings of the guitar into three string sets",
+                      "page": 56
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Moving across string sets",
+                      "quote_excerpt": "following ii-V7-I progressions move across the string sets",
+                      "page": 67
+                    }
+                  ]
+                },
+                {
+                  "id": "position-naming-continuity",
+                  "name": "Position-Naming Continuity (lowest-root naming)",
+                  "summary": "Identify fingerings by the string and finger holding the lowest root (e.g., 6/2).",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Scale fingering naming system",
+                      "quote_excerpt": "6/2 means that the lowest root in the fingering is on the sixth string",
+                      "page": 12
+                    }
+                  ]
+                },
+                {
+                  "id": "target-note-melodic-motion",
+                  "name": "Target-Note Melodic Motion (spelling out the changes)",
+                  "summary": "Begin each improvised phrase on a chord tone, preferring 3rds and 7ths, to articulate voice motion through the progression.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Spelling out chord changes (target notes)",
+                      "quote_excerpt": "begin each phrase you play with a note of the chord",
+                      "page": 26
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "3rds and 7ths in lines",
+                      "quote_excerpt": "Improvisors tend to use 3rds and 7ths the most",
+                      "page": 26
+                    }
+                  ]
+                },
+                {
+                  "id": "maj7-from-b7-arpeggio-over-v7",
+                  "name": "Maj7-from-b7 Arpeggio Over V7",
+                  "summary": "Over V7, play a Major 7th arpeggio rooted on its flat-7 degree to voice upper extensions (9th, 11th, 13th).",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Major 7th extensions over V7",
+                      "quote_excerpt": "play the notes of a major 7th arpeggio rooted on the b7 degree of the V7 chord",
+                      "page": 49
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Starting Maj7 arpeggio off root",
+                      "quote_excerpt": "you don't have to start the major 7th arpeggio on the root",
+                      "page": 49
+                    }
+                  ]
+                },
+                {
+                  "id": "ascending-lines-from-chord-tones",
+                  "name": "Ascending Lines from Chord Tones",
+                  "summary": "Play ascending scalar lines beginning on a chord tone, optionally alternating with descending lines for contour variety.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Ascending lines from chord tones",
+                      "quote_excerpt": "play ascending scale-wise patterns starting from chord tones",
+                      "page": 53
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Alternating contour rule",
+                      "quote_excerpt": "Alternating ascending and descending patterns will give your line a more interesting contour",
+                      "page": 55
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "essential-tones-floor",
+                  "name": "3rd and 7th Density Floor (Essential Tones)",
+                  "summary": "Any voiced chord must retain the 3rd and 7th; these tones define chord quality and are non-expendable.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "3rd and 7th as essential chord tones",
+                      "quote_excerpt": "two most essential notes in any chord are the 3rd and the 7th",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "root-fifth-omission",
+                  "name": "Root and 5th Omission Allow",
+                  "summary": "Roots, 5ths, 9ths, and 11ths may be omitted; rootless voicings preferred when more extensions are needed or when a bass player covers the root.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "3rd and 7th as essential chord tones",
+                      "quote_excerpt": "It is common to omit roots, 5ths, 9ths and 11ths in certain situations",
+                      "page": 17
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Rootless voicings rationale",
+                      "quote_excerpt": "roots have been omitted from both the Dmin9 and G9 voicings",
+                      "page": 56
+                    }
+                  ]
+                },
+                {
+                  "id": "alteration-scope-rule",
+                  "name": "Alterable Tones Ceiling (5th/9th/11th Only)",
+                  "summary": "Only the 5th, 9th, and 11th may be raised or lowered; no other chord degrees can be altered.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Altered notes rule",
+                      "quote_excerpt": "only notes that can be altered in any chord are the 5th, 9th and the 11th",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-substitution-v7",
+                  "name": "Diminished Triad Substitution Over V7",
+                  "summary": "Over V7, substitute a diminished triad from the 3rd, 5th, or 7th of that chord to produce altered extensions that resolve into I.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Diminished extensions over V7",
+                      "quote_excerpt": "Play a diminished triad starting at the 3rd, 5th or 7th degree of the V7 chord",
+                      "page": 51
+                    }
+                  ]
+                },
+                {
+                  "id": "7b9-minor-third-symmetry",
+                  "name": "7b9 Rootless Minor-Third Symmetry",
+                  "summary": "A rootless dominant 7b9 voicing moves at minor-third intervals around the fingerboard without changing chord quality.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "7b9 rootless fingering symmetry",
+                      "quote_excerpt": "move the same fingering around the fingerboard at intervals of a minor 3rd without changing the chord's quality",
+                      "page": 24
+                    }
+                  ]
+                },
+                {
+                  "id": "color-tone-upper-extensions",
+                  "name": "Upper Extensions as Color Tones (9th, 11th, 13th)",
+                  "summary": "On V7 chords, 9th/11th/13th extensions are required for jazz color; the Maj7-from-b7 technique is the primary delivery mechanism.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Major 7th extensions over V7",
+                      "quote_excerpt": "A is the 9th, C is the 11th and E is the 13th",
+                      "page": 49
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "ii-V7-I importance rule",
+                      "quote_excerpt": "Knowing lots of fingerings will allow you to play with greater taste and variety",
+                      "page": 43
+                    }
+                  ]
+                },
+                {
+                  "id": "context-ear-substitution",
+                  "name": "Context-and-Ear Substitution Constraint",
+                  "summary": "Chord substitutions are valid only when they sound good in context; theoretical correctness alone does not justify a substitution.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-context-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chord substitution context rule",
+                      "quote_excerpt": "context is everything. Just because a substitution is 'theoretically correct' doesn't mean it sounds good",
+                      "page": 34
+                    }
+                  ]
+                },
+                {
+                  "id": "diatonic-scale-rule-with-altered-exception",
+                  "name": "Major-Scale Rule with Altered-Chord Exception",
+                  "summary": "Use the I-chord major scale over diatonic ii-V7-I; suspend this rule if any chord contains altered tones outside that scale.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Improvising over diatonic ii-V7-I",
+                      "quote_excerpt": "use the major scale of the I chord",
+                      "page": 8
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "Altered chord exception",
+                      "quote_excerpt": "all chords with a raised or lowered 5th, 9th or 11th would make this rule inapplicable",
+                      "page": 8
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system",
+              "name": "Lick-Based Improvisation Vocabulary System",
+              "summary": "Organizes the book's approach to improvisational vocabulary through chord-type-specific lick categories. Members are the four chord-type lick families plus blues and turnaround lick categories. Traversal rules govern how a soloist moves through a progression by deploying licks (neighbor-tone approach into target notes, melodic contour alternation, whole-neck combination). The central modification rule is the learn-transpose-apply cycle: every lick must be transposed to all twelve keys and immediately inserted into real solos. The system is explicitly framed as 'creative reorganization of learned vocabulary,' with licks as words and scales as alphabet.",
+              "members": [
+                {
+                  "id": "major-lick-family",
+                  "name": "Major-Type Chord Lick Family",
+                  "summary": "Licks applicable over major 7th, 6th, 9th, and 13th chords."
+                },
+                {
+                  "id": "minor-lick-family",
+                  "name": "Minor-Type Chord Lick Family",
+                  "summary": "Licks applicable over minor seventh and related minor voicings."
+                },
+                {
+                  "id": "dominant-lick-family",
+                  "name": "Dominant-Type Chord Lick Family",
+                  "summary": "Licks applicable over unaltered dominant 7th, 9th, 11th, and 13th chords."
+                },
+                {
+                  "id": "half-diminished-lick-family",
+                  "name": "Half-Diminished (min7b5) Lick Family",
+                  "summary": "Licks for the min7b5 chord; introduced as ear-training for an unfamiliar sound."
+                },
+                {
+                  "id": "blues-scalar-tools",
+                  "name": "Blues Scalar Tool Set",
+                  "summary": "Minor pentatonic, blues scale, and Mixolydian mode as the three primary soloing tools over I-IV-V7 blues progressions."
+                },
+                {
+                  "id": "turnaround-lick-family",
+                  "name": "Turnaround Lick Family",
+                  "summary": "Melodic phrases designed to create smooth harmonic transitions at first endings and tune conclusions."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "neighbor-tone-approach",
+                  "name": "Neighbor-Tone Approach into Target Notes",
+                  "summary": "Approach each target chord tone with a half-step or whole-step neighbor tone above or below.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Neighbor tones technique",
+                      "quote_excerpt": "notes one half step below and above the chord tone",
+                      "page": 31
+                    }
+                  ]
+                },
+                {
+                  "id": "melodic-contour-alternation",
+                  "name": "Ascending/Descending Melodic Contour Alternation",
+                  "summary": "Alternate ascending and descending lick patterns to create varied melodic contour.",
+                  "engine_payload": {
+                    "kind": "_pending:melodic-contour-alternation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Alternating contour rule",
+                      "quote_excerpt": "Alternating ascending and descending patterns will give your line a more interesting contour",
+                      "page": 55
+                    }
+                  ]
+                },
+                {
+                  "id": "whole-neck-combination",
+                  "name": "Whole-Neck Scale Combination (Anti-Positional)",
+                  "summary": "Combine scalar tools fluidly across the entire fingerboard rather than staying in a single position; supported by single-string practice discipline.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Scales vs. fingerboard application",
+                      "quote_excerpt": "we usually combine the various tools and utilize the entire fingerboard",
+                      "page": 79
+                    },
+                    {
+                      "chapter_n": 9,
+                      "topic": "Single-string practice method",
+                      "quote_excerpt": "start learning all of your scales, modes and arpeggios up and down single strings",
+                      "page": 93
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "learn-transpose-apply",
+                  "name": "Learn-Transpose-Apply Cycle",
+                  "summary": "Every lick must be transposed to all twelve keys and immediately inserted into real solos.",
+                  "engine_payload": {
+                    "kind": "_pending:transpose-apply-cycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Major chord licks applicability",
+                      "quote_excerpt": "Transpose them and start using them immediately in songs you are learning",
+                      "page": 60
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Minor chord licks instruction",
+                      "quote_excerpt": "learn, transpose and insert these into your solos as soon as possible",
+                      "page": 64
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Practice instruction",
+                      "quote_excerpt": "Memorize and transpose these and keep your ears open",
+                      "page": 86
+                    }
+                  ]
+                },
+                {
+                  "id": "lick-extension-transfer",
+                  "name": "Lick Extension Transfer (Related Voicings)",
+                  "summary": "Licks written for a base chord type transfer to related extensions (major 6th, 9th, 13th; dominant 9th, 11th, 13th) through ear verification.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Major chord licks applicability",
+                      "quote_excerpt": "work equally well with major 6th, major 9th and major 13th chords",
+                      "page": 60
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Dominant chord licks scope",
+                      "quote_excerpt": "Try using them over dominant 9th, 11th and 13th chords as well",
+                      "page": 68
+                    }
+                  ]
+                },
+                {
+                  "id": "blues-scale-tool-selection",
+                  "name": "Blues Scale Tool Selection (Pentatonic / Blues / Mixolydian)",
+                  "summary": "Over I-IV-V7 blues, choose among minor pentatonic, blues scale, and Mixolydian mode as interchangeable scalar color tools.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Soloing tools: scale choices",
+                      "quote_excerpt": "minor pentatonic scale, blues scale and Mixolydian mode fingerings",
+                      "page": 78
+                    }
+                  ]
+                },
+                {
+                  "id": "hear-first-initiation",
+                  "name": "Hear-First Initiation Principle",
+                  "summary": "Every improvised idea must be heard mentally before executed; singing along with playing is the training mechanism.",
+                  "engine_payload": {
+                    "kind": "_pending:hear-first-initiation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Hearing before playing",
+                      "quote_excerpt": "the ideal is to first hear an idea in your head, and then execute it",
+                      "page": 94
+                    },
+                    {
+                      "chapter_n": 9,
+                      "topic": "Singing to train inner ear",
+                      "quote_excerpt": "Singing along with what you are playing is a good way to begin training yourself to hear first",
+                      "page": 94
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-2-intermediate:swing-comping-texture",
+              "name": "Swing Comping Texture System",
+              "summary": "A smaller but distinct system governing the guitarist's accompanying role. Members are the rhythmic-texture states available to the comping guitarist (down/up stroke, damped, sustained). The core aesthetic is that swing rhythm is implied rather than mechanically predictable—accents cycle unpredictably across the measure. A social-context modification rule forbids simultaneous free comping when a keyboard player is also comping.",
+              "members": [
+                {
+                  "id": "downbeat-downstroke",
+                  "name": "Downbeat Downstroke",
+                  "summary": "Strum direction on downbeats: down stroke."
+                },
+                {
+                  "id": "upbeat-upstroke",
+                  "name": "Upbeat Upstroke",
+                  "summary": "Strum direction on upbeats: up stroke."
+                },
+                {
+                  "id": "damped-chord",
+                  "name": "Damped Chord",
+                  "summary": "Chord cut short via left-hand pressure release or right-hand palm/wrist damping."
+                },
+                {
+                  "id": "sustained-chord",
+                  "name": "Sustained Chord",
+                  "summary": "Chord allowed to ring through its natural decay."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "swing-rhythm-implied-accent",
+                  "name": "Swing Rhythm Implied Accent Cycle",
+                  "summary": "Cycle accents unpredictably across parts of each measure rather than mechanically; maintain implied-not-stated rhythm.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Swing comping rhythm approach",
+                      "quote_excerpt": "the rhythm in a swing feel is implied. The beat is often suggested by the guitarist",
+                      "page": 47
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Swing strumming direction / damping",
+                      "quote_excerpt": "strum down on the downbeats and to strum up on the upbeats",
+                      "page": 47
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "no-double-comp-with-keyboard",
+                  "name": "No Simultaneous Free Comping with Keyboard",
+                  "summary": "When a keyboard player is present, the guitarist and keyboardist must alternate comping roles rather than both comping freely.",
+                  "engine_payload": {
+                    "kind": "_pending:social-role-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Comping definition",
+                      "quote_excerpt": "If both the guitarist and the keyboard player comp freely at the same time the tune will become like a harmonic can of worms",
+                      "page": 47
+                    }
+                  ]
+                },
+                {
+                  "id": "damp-sustain-control",
+                  "name": "Damp/Sustain Control During Rests",
+                  "summary": "Damp strings during notated rests using left-hand pressure release or right-hand palm damping to prevent unwanted sustain.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Swing strumming direction / damping",
+                      "quote_excerpt": "try to damp the strings so that the chords don't sustain during the rests",
+                      "page": 47
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jazz-guitar-method-vol-3-mastering-chord-melody",
+          "title": "Complete Jazz Guitar Method, Vol. 3: Mastering Chord/Melody",
+          "year": 1996,
+          "instrument_scope": "6-string (any)",
+          "summary": "The advanced-track conclusion focusing on chord-melody style: simultaneous melody-and-harmony performance where the top voice carries the melody and the inner voices carry the harmony. Six chapters move from single-line technique reinforcement into the compositional craft of chord-melody arrangement, with explicit treatment of diad harmonization, quartal voicings, right-hand role-split (thumb / fingers for independent voices), and bassline-led reharmonization as compositional levers. Four systems were derived covering melodic-line construction, chord-melody arrangement, harmonic enrichment, and expressive priority decisions.",
+          "references": [
+            {
+              "source": "Fisher, Jody. Complete Jazz Guitar Method, Vol. 3: Mastering Chord/Melody. Alfred Music, 1996.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-3-mastering-chord-melody/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-3-mastering-chord-melody:right-hand-technique",
+              "name": "Right-Hand Technique System",
+              "summary": "This system governs the three primary right-hand techniques: pure fingerstyle, hybrid pick-with-fingers, and single-note alternating patterns. Fingerstyle enables selective chord voicing and simultaneous multi-voice harmony; hybrid allows easy switching but limits voicing to four notes; alternating patterns (i-m or p-m) suit melodic lines. The organizing principle is flexibility: mastering all techniques rather than specializing prepares the player for any musical situation.",
+              "members": [
+                {
+                  "id": "fingerstyle",
+                  "name": "Fingerstyle Technique"
+                },
+                {
+                  "id": "hybrid-pick-fingers",
+                  "name": "Hybrid Pick-with-Fingers Technique"
+                },
+                {
+                  "id": "single-note-alternating",
+                  "name": "Single-Note Alternating Patterns"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "technique-switching-readiness",
+                  "name": "Master All Techniques for Flexibility",
+                  "summary": "Develop proficiency in all techniques rather than specializing in one or two.",
+                  "engine_payload": {
+                    "kind": "_pending:technique-cycling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Learning multiple right-hand techniques",
+                      "quote_excerpt": "best to learn every technique instead of relying on just one or two",
+                      "page": 8
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "fingerstyle-selective-voicing",
+                  "name": "Fingerstyle Selective Voicing Control",
+                  "summary": "Pluck only the desired tones, avoiding muting and barring.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Fingerstyle advantages over pick",
+                      "quote_excerpt": "You pluck only the tones you want to hear",
+                      "page": 7
+                    }
+                  ]
+                },
+                {
+                  "id": "fingerstyle-simultaneous-harmony",
+                  "name": "Fingerstyle Simultaneous Voice Sounding",
+                  "summary": "Fingerstyle uniquely enables all chord notes to sound simultaneously like a keyboard.",
+                  "engine_payload": {
+                    "kind": "_pending:simultaneous-voicing"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Fingerstyle simultaneous voice sounding",
+                      "quote_excerpt": "sound harmonies like a keyboard instrument—all the notes of a chord at the same moment",
+                      "page": 7
+                    }
+                  ]
+                },
+                {
+                  "id": "hybrid-four-note-limit",
+                  "name": "Hybrid Technique Four-Note Voicing Limit",
+                  "summary": "Hybrid pick-with-fingers limits harmonic density to four-note chords.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Hybrid technique limitation",
+                      "quote_excerpt": "limited to playing four-note chords",
+                      "page": 7
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-3-mastering-chord-melody:harmonic-arrangement-and-voice-leading",
+              "name": "Harmonic Arrangement and Voice-Leading System",
+              "summary": "Core system for chord-melody arrangement: strategic voicing selection, voice-leading principles, and harmonic enrichment. Proceeds from melody understanding through key selection, chord voicing, and layered passing chords, substitutions, and alterations. The 3rd and 7th degrees define chord quality and anchor all voice-leading decisions; the system prizes stepwise motion, careful non-chord-tone handling, and judicious enrichment guided by context and taste.",
+              "members": [
+                {
+                  "id": "melody-single-notes",
+                  "name": "Melody in Single Notes"
+                },
+                {
+                  "id": "chord-families",
+                  "name": "Chord Families"
+                },
+                {
+                  "id": "voicing-positions",
+                  "name": "Voicing Positions"
+                },
+                {
+                  "id": "non-chord-tones",
+                  "name": "Non-Chord Tones"
+                },
+                {
+                  "id": "voice-leading-anchors",
+                  "name": "Voice-Leading Anchor Tones (3rds and 7ths)"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "melody-driven-voicing-selection",
+                  "name": "Melody-Driven Voicing Selection",
+                  "summary": "Find chord voicings that place melody notes on top.",
+                  "engine_payload": {
+                    "kind": "_pending:melody-on-top"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Finding chord voicings with melody on top",
+                      "quote_excerpt": "find chord voicings that have the melody notes on top",
+                      "page": 9
+                    }
+                  ]
+                },
+                {
+                  "id": "melody-study-in-all-octaves",
+                  "name": "Melody Study Across All Octaves",
+                  "summary": "Learn melody in single notes across every octave before harmonization.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Melody study in single notes",
+                      "quote_excerpt": "Learn to play the melody in single notes first. Explore it in every octave",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "key-selection-for-playability",
+                  "name": "Key Selection for Playability and Character",
+                  "summary": "Explore different keys to improve fingerboard playability and exploit open strings.",
+                  "engine_payload": {
+                    "kind": "_pending:key-selection"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Key selection strategy",
+                      "quote_excerpt": "the song might lie on the fingerboard better in a different key",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "stepwise-voice-motion",
+                  "name": "Stepwise Voice Motion",
+                  "summary": "Arrange voicings so voices travel in whole and half steps between changes.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Scalewise voice movement",
+                      "quote_excerpt": "voices actually travel in whole and half steps",
+                      "page": 21
+                    }
+                  ]
+                },
+                {
+                  "id": "passing-chord-smooth-transition",
+                  "name": "Passing Chord Smooth Transition",
+                  "summary": "Insert passing chords between two primary chords to smooth voice-leading.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Passing chords definition",
+                      "quote_excerpt": "A passing chord is a chord added between two others to create a smoother transition",
+                      "page": 23
+                    }
+                  ]
+                },
+                {
+                  "id": "secondary-dominant-generalization",
+                  "name": "Secondary Dominants as V7-I Generalization",
+                  "summary": "Treat any chord as a temporary tonic and precede with its V7.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Secondary dominants concept",
+                      "quote_excerpt": "you may consider any chord a I chord and precede it by its own V7 chord",
+                      "page": 39
+                    }
+                  ]
+                },
+                {
+                  "id": "ii-v7-i-key-definition",
+                  "name": "ii-V7-I Progression for Key Definition",
+                  "summary": "Use ii-V7-I to define a key via characteristic root, 3rd, 7th motion.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "ii-V7-I defines a key",
+                      "quote_excerpt": "ii-V7-I progression defines or establishes a key",
+                      "page": 40
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "octave-adjustment-for-voicing",
+                  "name": "Octave Adjustment for Harmonic Expansion",
+                  "summary": "Raise the melody an octave to enable larger voicings.",
+                  "engine_payload": {
+                    "kind": "_pending:octave-adjustment"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Octave adjustment for harmony",
+                      "quote_excerpt": "raise the melody one octave in order to use larger chord voicings",
+                      "page": 9
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-enhancement-extension-alteration",
+                  "name": "Chord Enhancement Through Extension and Alteration",
+                  "summary": "Add extensions or alterations while maintaining family identity.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chord enhancement definition",
+                      "quote_excerpt": "add extensions or alterations to the basic chord",
+                      "page": 12
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-family-interchangeability",
+                  "name": "Chord Family Interchangeability",
+                  "summary": "Within a chord family, members are functionally interchangeable.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Interchangeable chords within families",
+                      "quote_excerpt": "all the chords are interchangeable with any other chord in the same column",
+                      "page": 12
+                    }
+                  ]
+                },
+                {
+                  "id": "diads-harmonization",
+                  "name": "Diads for Two-Note Harmonization",
+                  "summary": "Harmonize both chord and non-chord tones with diads (3rds and 6ths).",
+                  "engine_payload": {
+                    "kind": "_pending:diad-harmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Diads definition and use",
+                      "quote_excerpt": "Diads, also known as double-stops, are two-note harmonizations",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "non-chord-tone-extension",
+                  "name": "Non-Chord Tone Integration as Chord Extension",
+                  "summary": "Add melody-derived non-chord tones to the chord as extensions/alterations.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Adding non-chord tones to chords",
+                      "quote_excerpt": "add a non-chord tone that is in the melody to the chord",
+                      "page": 19
+                    }
+                  ]
+                },
+                {
+                  "id": "third-seventh-anchors",
+                  "name": "3rd and 7th as Voice-Leading Anchors",
+                  "summary": "Prioritize 3rd and 7th preservation—they define chord quality.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "3rds and 7ths in chord definition",
+                      "quote_excerpt": "chords are defined by their 3rds and 7ths",
+                      "page": 22
+                    }
+                  ]
+                },
+                {
+                  "id": "half-step-dominant-passing",
+                  "name": "Half-Step Dominant Passing Chords",
+                  "summary": "Use dominant chord a half step above/below to smooth transitions.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Half-step dominant passing chords",
+                      "quote_excerpt": "dominant chord with a root that is a half step higher, or lower",
+                      "page": 23
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-v7-substitute",
+                  "name": "Diminished Chord as V7 Substitute",
+                  "summary": "Substitute diminished chord a half step below the target for V7.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Diminished as V7 substitute",
+                      "quote_excerpt": "diminished chord from one half step below the root is a common substitute for the V7",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-substitution-dominant",
+                  "name": "Tritone Substitution for Dominant Chords",
+                  "summary": "Replace V7 with dominant chord whose root is a tritone away.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Tritone substitution principle",
+                      "quote_excerpt": "replace the V7 chord with a dominant chord whose root is a diminished 5th",
+                      "page": 45
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-substitution-by-root-distance",
+                  "name": "Tritone Substitution by Root Distance",
+                  "summary": "Approach any chord via substitute a tritone away from destination root.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Tritone substitution approach",
+                      "quote_excerpt": "approach any chord from another chord whose root is a tritone away",
+                      "page": 48
+                    }
+                  ]
+                },
+                {
+                  "id": "backcycling-extension",
+                  "name": "Backcycling as ii-V7-I Extension",
+                  "summary": "Extend ii-V7-I by repeating fourth-movement through the cycle.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Backcycling definition and method",
+                      "quote_excerpt": "Backcycling is a way to extend the ii-V7-I approach",
+                      "page": 44
+                    }
+                  ]
+                },
+                {
+                  "id": "quartal-harmony-fourths",
+                  "name": "Quartal Harmony Construction",
+                  "summary": "Build chords by stacking 4ths to create alternative harmonic color.",
+                  "engine_payload": {
+                    "kind": "_pending:quartal-stacking"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Quartal harmony definition",
+                      "quote_excerpt": "In quartal harmony, chords are constructed by stacking 4ths",
+                      "page": 33
+                    }
+                  ]
+                },
+                {
+                  "id": "octave-doubling-emphasis",
+                  "name": "Octave Doubling for Melodic Emphasis",
+                  "summary": "Double melody in octaves for stronger emphasis (Wes Montgomery, Benson).",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Octave doubling for emphasis",
+                      "quote_excerpt": "Doubling melody notes in octaves will create a stronger effect",
+                      "page": 36
+                    }
+                  ]
+                },
+                {
+                  "id": "context-and-taste-guide",
+                  "name": "Context and Taste as Enhancement Guide",
+                  "summary": "Musical context and taste determine when and how much to enhance.",
+                  "engine_payload": {
+                    "kind": "_pending:aesthetic-judgment"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Context and taste in enhancement",
+                      "quote_excerpt": "Context is everything. Taste should be your primary concern",
+                      "page": 12
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-3-mastering-chord-melody:bass-line-and-two-instrument-arrangement",
+              "name": "Bass Line and Two-Instrument Arrangement System",
+              "summary": "Two-part arrangement system where bass line and chord voicings sound like separate instruments. Voicings learned systematically in all twelve keys using minimal fingers; bass-line approaches applied across keys. Thumb handles bass, index/middle voice the triad; scale-tone connections and half-step approaches give walking-bass realism. Bass on every beat as anchor with chords as accents achieves the two-instrument illusion.",
+              "members": [
+                {
+                  "id": "bass-note-anchor",
+                  "name": "Bass Note Anchor"
+                },
+                {
+                  "id": "triad-voicing",
+                  "name": "Triad Voicing"
+                },
+                {
+                  "id": "scale-tone-connection",
+                  "name": "Scale-Tone Connection"
+                },
+                {
+                  "id": "half-step-approach-note",
+                  "name": "Half-Step Approach Note"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "systematic-voicing-all-keys",
+                  "name": "Learn Voicings Systematically in All Twelve Keys",
+                  "summary": "Master voicings in all twelve keys before applying bass-line approaches.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Learning voicings systematically",
+                      "quote_excerpt": "Learn the voicings in all twelve keys first",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "bass-line-connection-scale-tones",
+                  "name": "Bass Line Connection via Scale Tones",
+                  "summary": "Use chord-scale tones to connect triad voicings.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Bass line connection method",
+                      "quote_excerpt": "use the tones of the scale that the chord is built from to connect the various triad voicings",
+                      "page": 51
+                    }
+                  ]
+                },
+                {
+                  "id": "half-step-chord-approaches",
+                  "name": "Half-Step Chord Approaches",
+                  "summary": "Approach chords from a half step above or below the lowest triad voice.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Half-step chord approaches",
+                      "quote_excerpt": "approached from the note a half step above or below the lowest voice in the triad",
+                      "page": 53
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "minimal-finger-voicing",
+                  "name": "Minimal-Finger Voicing for Melody Freedom",
+                  "summary": "Use as few fingers as possible (often two) to free fingers for melody.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Minimizing left-hand fingers",
+                      "quote_excerpt": "Finger these chords with as few fingers as possible",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "right-hand-thumb-index-middle-assignment",
+                  "name": "Right-Hand Thumb-Index-Middle Finger Assignment",
+                  "summary": "Thumb plays bass; index and middle voice the triad.",
+                  "engine_payload": {
+                    "kind": "_pending:right-hand-role-split"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Right-hand finger assignment",
+                      "quote_excerpt": "Your right thumb p should handle the bass notes while i and m should take care of the other two notes",
+                      "page": 51
+                    }
+                  ]
+                },
+                {
+                  "id": "sustaining-overlapping-voices",
+                  "name": "Sustaining Overlapping Triad Notes",
+                  "summary": "Let two triad notes ring while hitting the next bass note.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Sustaining triad notes",
+                      "quote_excerpt": "let two notes of the triad ring as you hit the next bass note",
+                      "page": 55
+                    }
+                  ]
+                },
+                {
+                  "id": "bass-chord-rhythmic-delay",
+                  "name": "Rhythmic Separation via Bass-Chord Delay",
+                  "summary": "Bass on downbeat, chord slightly after, within the same beat.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Rhythmic feel with bass-chord delay",
+                      "quote_excerpt": "delaying the chord by playing the bass note on the downbeat and the chord slightly after",
+                      "page": 54
+                    }
+                  ]
+                },
+                {
+                  "id": "bass-every-beat-chords-accent",
+                  "name": "Bass Every Beat with Chords as Accents",
+                  "summary": "Bass on every beat as anchor; chords as punches/accents with realistic balance.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Balancing bass and chord dynamics",
+                      "quote_excerpt": "Put a bass note on every beat and have the chords appear as punches",
+                      "page": 51
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "jody-fisher:jazz-guitar-method-vol-3-mastering-chord-melody:voicing-symmetry-and-octave-transposition",
+              "name": "Voicing Symmetry and Octave Transposition System",
+              "summary": "System for discovering new voicings by moving familiar shapes through octaves and symmetrical transposition. Certain shapes retain function under whole-step movement (notably altered dominants). Includes ensemble techniques like trading fours and bassline-driven reharmonization. Underlying principle: artistic voice matters more than accumulation of voicings.",
+              "members": [
+                {
+                  "id": "voicing-octave-position",
+                  "name": "Voicing Octave Position"
+                },
+                {
+                  "id": "symmetrical-transposition-interval",
+                  "name": "Symmetrical Transposition Interval"
+                },
+                {
+                  "id": "reharmonization-bassline-guide",
+                  "name": "Reharmonization Bass Line"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "octave-voice-exploration",
+                  "name": "Octave Exploration of Familiar Shapes",
+                  "summary": "Discover voicings by moving voices of known shapes to higher/lower octaves.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Expanding voicing choices",
+                      "quote_excerpt": "moving the different voices around to higher and lower octaves",
+                      "page": 60
+                    }
+                  ]
+                },
+                {
+                  "id": "symmetrical-transposition-function-retention",
+                  "name": "Symmetrical Transposition with Function Retention",
+                  "summary": "Move chord shapes by symmetrical intervals while retaining function.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Symmetrical chord movement principle",
+                      "quote_excerpt": "chords shapes retain their function when moved around in certain symmetrical intervals",
+                      "page": 60
+                    }
+                  ]
+                },
+                {
+                  "id": "whole-step-transposition-dominant-alterations",
+                  "name": "Whole-Step Transposition for Dominant Alterations",
+                  "summary": "Dominant voicings with 9ths and altered 5ths transpose by whole steps retaining function.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Dominant chords with 9ths and altered 5ths",
+                      "quote_excerpt": "Chords with 9ths and altered 5ths may be moved around in whole steps and still retain their function",
+                      "page": 60
+                    }
+                  ]
+                },
+                {
+                  "id": "reharmonization-via-bassline-composition",
+                  "name": "Reharmonization via Bass Line Composition",
+                  "summary": "Compose a new bass line to drive harmonic choices.",
+                  "engine_payload": {
+                    "kind": "_pending:bassline-led-reharm"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Reharmonization through bassline composition",
+                      "quote_excerpt": "Reharmonize sections of the tune by composing a new bassline",
+                      "page": 62
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "artistic-voice-over-accumulation",
+                  "name": "Artistic Voice Over Theoretical Accumulation",
+                  "summary": "Prioritize artistic voice over voicing accumulation; usage matters more than quantity.",
+                  "engine_payload": {
+                    "kind": "_pending:expressive-priority"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Artistic voice over theoretical knowledge",
+                      "quote_excerpt": "how you use what you know, rather than how much you know that counts",
+                      "page": 63
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "jens-larsen",
