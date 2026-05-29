@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Dominant to Tonic\nPages 9-9 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 6\n\nDominant to Tonic\n\nCHORD PROGRESSIONS\n\nThe chord exercises in lesson 6 will probably be much easier to form and finger\nthan those of the previous lessons. In fact, the, most difficult progressions are now be-\nhind us. The idea now is to weave these progressions into beautiful music.\n\nWe will now take chords 5, 6, 7 and 8 and form a musical cycle which resolves from V,\nthe dominant, to I, the tonic. In this case V to I is from Bb to Eb. Practice this chro-\nmatically up and down the fingerboard.\n\nExercise 12 belowis diagrammed the same as exercises 10 and 11 in lesson 5. The num-\nbers over the chords should tell you at a glance what chords you areto play fromthe chart\nin lesson 1. It would do you a lot of good to analyze each of these chords to determine\nwhat tone of the chord each note represents and which tones are omitted.\n\nEx. 12\nStandard Chords\nA... Fm ___Bb7 Eb\n#- f- F- \u00a3 #- #- fF y\ne\n\u00ab QO \u00a9 \u00a9\nChords Fm9 Bb13b9 Ebmaj7 Ebmaj6\nfot 4 Q 1 lap +\nz Tate t\neo\nev | i} q ] id .\nIn any of these Exercises (Ex. 10, 11 and 12) the standard chords could have been as follows:\nStandard\nA Fm Bb7 Abm Bb+ Eb6\nx $F ya va y A vA y 4 ZT. v4 y a\nA rv r Y rs A y ri a a f\nLJ)\ngo Bb7 Bhdim Ebmaj7\nB. Syb-b-\u2014-# F\u2014= 7 # z Z 7 Zz\no4 Fm Abm \u2014_ Bb6 Bb7 Eb Ebmaj7\nOe ee\n3 :\nGm Gbm Fm Bb+ Ebmaj7\n. EF _\u2014\u2014\u2014 \u2014\u2014 \u00a5F\n\nThere are many different ways to close a cadence but the \"New Chords\" in Exercises 10, 11 and\n12 wil suffice for all. This is only the beginning. There are still more colorful ways of closing\na cadence.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

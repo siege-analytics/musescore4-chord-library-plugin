@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: Related Chords\nPages 12-13 of the book.\n\n<<<CHAPTER TEXT\n\n10\nLESSON 9\n\nRelated Chords\n\nMany chords are closely related to one another. For instance, the C6 chord and the\nAm7 chord have the same tones. They are called relatives for this reason (Example 19.)\n\nThe G9 chord and the Dm chord are relative because the three tones that form the Dm\nchord are the upper three tones of the G9 chord (Example 20.)\n\nWhen there is achord progression that moves only from dominant to tonic, it is possible\nto use the II chord instead of the V and resolve into the V from the II (Example 21.) For\ninstance, if you are playing in the key of C Major and you have one bar of \"C\", two bars\nof \"G7\", and one bar of \"C\", (Example 22) it is possible to use the progressions in Ex-\nample 22 Parts A B C and D. Notice how in each of these examples we add more chords\nto the cycle yet, basically, the chords move from I to V and from V back to I.\n\nThere are many different ways to conceive chord progressions. One thing that you should\nalways bear in mind is, no matter how many chords you add to the cycle, they should\neventually reach the dominant and from there resolve into the tonic.\n\nEx. 19\n\nCmai6 Am7\n3 19 Pare =\n\u2014# peel\n\nrair= \u00a9 1 +\n16 16 vil vil\nEx. 20\nG9 Dm\nIg, \u2014_\u2014> 3 &\n6s s =\n\nv9\n\n\nEx. 21\nG7\nG7\nC6\n3v7\n3v7\nI6\nProgression\nDm\nG7\nC6\nII\n3v7\n1I6\n\nEx. 22\nC\nG7\nG7\nC\nI\n2v7\n2v7\nI\n\nEx. 22a\nC\nAm7\nDm7\nG7\nDm7\nG7\nC\nI\n2vI7\nII7\n2v7\nII7\n2v7\nI\n\nEx. 22b\nCmaj7\nCmaj7\nDm7\nDm6\nDm7\nG7\nCmaj7\nII7\nII6\nI\n\nEx. 22c\nCmaj7\nCm6\nEm7\nEb m7\nDm7\nG7\nI7\nI6\nIII7\nbIII7\nII7\n2v7\nI7\n\nEx. 22d\nCmaj7 Dm7 Em7 Eb m7\nDm7 Em7 Eb maj7\nCmaj7 Cmaj6\nI7\nII7\nIII7\nbIII7\nII7\nIII7\nbIII7\nII7\nV7\nI7\nI6\nC = I\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

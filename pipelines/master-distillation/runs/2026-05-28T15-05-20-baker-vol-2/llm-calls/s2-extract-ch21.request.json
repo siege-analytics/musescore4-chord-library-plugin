@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch21",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 21: Diminished and Augmented Resolutions\nPages 34-35 of the book.\n\n<<<CHAPTER TEXT\n\nGmaj7 Em9\n]\n-7th 4-9\nOt Sth Oy Tth\nrt ard Ft Sth\nroot 4 L) Or rd\nFt root omitted\nomitted\nAl3add 11\nG73b9\n13th\nith\n+ oth Teh\nomitted 1th roel - ard\n+-13th\nLT CrTTT\nfen!\nomitted = mitted\nCm6 9\nDb749 F\n\u2018Sth - oh\ntoot \u2014 =a9 a por Cae\n== Lr. oa\nomitted, Hoth \u201c cenaaieee\n{ 6th ry ord\nif q i\nLith 1 ia A\nVir | ,\n#@ omitted e omitted\n\nLESSON 21\n\nDiminished & Augmented\nResolutions\n\nDiminished 7th chords resolve beautifully into tonic chords. Actually they aren't\ndiminished chords at all when used in this respect. They are the Upper tones to a dim-\ninished or flatted 9th chord. In exercise 5la you havea G7b9 chord with the root omitted.\nIn 51b you have a B Diminished chord. Analyze the two chords.\n\nIn exercise 52 which is anextraction of exercise 24 in lesson 11, notice how the diminish-\ned chord instead of the dominant, resolves into the tonic. Analyze this thoroughly. This\nis another form of the Altered chord that can be used along with those illustrated in ex-\nercise 23 in lesson 10. Augmented chords may beusedin a similar manner. See Exer-\n\ncise 53.\n\n\n33\n\nThese are the 2nd and 3rd bars of Ex. 24 in Lesson No. 11. Here a and b are the equivalent\nto the V - I Resolution.\n\nEx. 51 G7b9 Bdim\n5\nomitted tote] sth LJ ed\n7th @ sb ich\nCOTY) 3rd T root\n\n3\nv-omitted\n\nEx. 52\nGi c etc.\ni% \u201d wy + I\nt T <>\n\u2014F\nCF Vv I\nDm6 Bdim Cm\u00e969\nL- 4 \u00a3 fete:\n+\n= p- o-\nT t i | t\nDm6 Bdim Cmaj9\n3 \u20141 ete\nJ ae \u2014_ b Qn\n? tT i = f- =\n+ t + I t\nt T y M U q {\nc= Vv L\nEx. 53.\nc\nOriginal Melody\nCmaj7 etc.\n\nChord & Melody\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 21 extraction"
+}
