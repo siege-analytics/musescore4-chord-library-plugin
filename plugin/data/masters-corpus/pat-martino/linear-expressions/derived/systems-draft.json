@@ -1,0 +1,551 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-martino-linear-expressions",
+    "stage": "s4",
+    "source_pdf": "Martino, Pat - Linear Expressions.pdf",
+    "extracted_at": "2026-05-29T05:44:33+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "pat-martino",
+  "work_id": "linear-expressions",
+  "systems": [
+    {
+      "id": "pat-martino:linear-expressions:chord-activity-mapping",
+      "name": "Chord-to-Activity Positional Mapping System",
+      "summary": "The central system of Linear Expressions. The neck is divided into five positional scale forms (activities) derived from the relative major/minor relationship (G minor / Bb major). Each chord inversion maps to exactly one numbered activity form, making the chord encountered the operative selector for the melodic line form to be played. Activities 1 and 5 share an inversion and bookend one octave, making the system cyclically repeatable. Key is determined solely by position on the neck \u2014 the same activity shape played higher or lower yields a different key \u2014 so the entire system transposes without changing its internal logic. Phase I covers one key horizontally; Phase II extends vertical coverage to all twelve keys; the same mapping rule governs both phases without modification.",
+      "members": [
+        {
+          "id": "activity-1",
+          "name": "Activity Form 1",
+          "summary": "Starts in third position (G minor), spans frets 2-6, outlines G minor scale. Shares chord inversion with Activity 5."
+        },
+        {
+          "id": "activity-2",
+          "name": "Activity Form 2",
+          "summary": "Lies in fifth position, spans frets 5-8. Outlines a Bbmaj7 arpeggio starting from the major 7th degree (A note)."
+        },
+        {
+          "id": "activity-3",
+          "name": "Activity Form 3",
+          "summary": "Primarily in seventh position with a single out-of-position extension (Bb on second string)."
+        },
+        {
+          "id": "activity-4",
+          "name": "Activity Form 4",
+          "summary": "Fourth positional form covering the upper neck region in its sector."
+        },
+        {
+          "id": "activity-5",
+          "name": "Activity Form 5",
+          "summary": "Completes full one-octave fingerboard coverage. Begins on same sixth-string note (G) as Activity 1. Shares chord inversion (Form 1) with Activity 1."
+        },
+        {
+          "id": "chord-form-1",
+          "name": "Chord Inversion Form 1",
+          "summary": "Corresponds to Activities 1 and 5."
+        },
+        {
+          "id": "chord-form-2",
+          "name": "Chord Inversion Form 2",
+          "summary": "Corresponds exclusively to Activity Form 2."
+        },
+        {
+          "id": "chord-form-3",
+          "name": "Chord Inversion Form 3",
+          "summary": "Corresponds exclusively to Activity Form 3."
+        },
+        {
+          "id": "chord-form-4",
+          "name": "Chord Inversion Form 4",
+          "summary": "Corresponds exclusively to Activity Form 4."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "chord-inversion-selects-activity",
+          "name": "Chord Inversion Selects Activity Form",
+          "summary": "The chord inversion encountered determines which numbered activity form is played \u2014 the inversion is the selector, not melodic preference or position alone.",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "mapping": {
+              "Form1": [
+                "Forms 1 & 5"
+              ],
+              "Form2": [
+                "Form 2"
+              ],
+              "Form3": [
+                "Form 3"
+              ],
+              "Form4": [
+                "Form 4"
+              ]
+            }
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Chord form dictates activity",
+              "quote_excerpt": "Each chord form will dictate the activity to be played",
+              "page": 10
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Chord-to-activity mapping table",
+              "quote_excerpt": "Form1 Forms 1&5 / Form 2 Form 2 / Form3 Form 3 / Form4 Form4",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "id": "horizontal-ascending-position-continuity",
+          "name": "Horizontal Ascending Position Continuity",
+          "summary": "Activities are traversed in ascending positional order up the fingerboard until all twelve frets (one octave) are covered before cycling back.",
+          "engine_payload": {
+            "kind": "PositionContinuity",
+            "direction": "ascending",
+            "span_frets": 12,
+            "cycle": true
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Horizontal scale coverage",
+              "quote_excerpt": "the five scale patterns move horizontally up the fingerboard, until all twelve frets (one octave) are covered",
+              "page": 8
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Activity #5 octave relationship",
+              "quote_excerpt": "The next logical form to follow, would be the first form of activity one octave higher",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "position-determines-key",
+          "name": "Position Determines Key (Transposition by Shift)",
+          "summary": "Changing position while keeping the same activity form shape changes the key; the form itself is position-independent.",
+          "engine_payload": {
+            "kind": "PositionContinuity",
+            "note": "position shift = key change, form invariant"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Activity #1 position and key",
+              "quote_excerpt": "The first activity starting in the third position is the key of G minor. The first activity starting in the fifth position is the key of A minor",
+              "page": 11
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Transposing to all 12 keys",
+              "quote_excerpt": "Locate the four chord inversions and scales. Play the appropriate activity (line form), according to the chord inversion",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "id": "cyclic-octave-wraparound",
+          "name": "Cyclic Octave Wraparound at Activity 5",
+          "summary": "When Activity 5 is reached, the system wraps to Activity 1 one octave higher.",
+          "engine_payload": {
+            "kind": "SymmetryMovement",
+            "shared_inversion": "Form 1",
+            "wrap_octave": true
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Activity #5 octave relationship",
+              "quote_excerpt": "both the fifth and first activities start with the same note on the sixth string \u2026 The first and fifth activities share the same chord inversion",
+              "page": 15
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "positional-scale-not-root-based",
+          "name": "Positional Scale Coverage (Non-Root-Based Form)",
+          "summary": "Activity forms display every accessible scale tone in position rather than starting and ending on the root.",
+          "engine_payload": {
+            "kind": "_pending:positional-coverage-form",
+            "note": "scale forms are position-complete, not root-anchored"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Scale forms not root-based",
+              "quote_excerpt": "The scale forms illustrated herein do not necessarily start and end on the root of the scale. They instead display every accessible scale tone in position",
+              "page": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pat-martino:linear-expressions:harmonic-substitution-reduction",
+      "name": "Harmonic Substitution and Reduction System",
+      "summary": "This system converts any complex or altered chord into a simple minor form the activities system can handle. Five operative rules: same-name/quality interchange; major-family to relative or secondary relative minor; m7b5 to minor via minor third above; dominant ninth to minor via perfect fifth above; altered dominants to minor via half-step above. Augmented triads yield three minor-maj7 substitutions (one per enharmonic root name). Scale choice for altered dominants prefers melodic minor over harmonic minor because only melodic minor contains the b7.",
+      "members": [
+        {
+          "id": "relative-minor-sub",
+          "name": "Relative Minor Substitution"
+        },
+        {
+          "id": "secondary-relative-minor-sub",
+          "name": "Secondary Relative Minor Substitution"
+        },
+        {
+          "id": "dominant-to-minor-sub",
+          "name": "Dominant-to-Minor Substitution"
+        },
+        {
+          "id": "m7b5-to-minor-sub",
+          "name": "m7b5-to-Minor Substitution"
+        },
+        {
+          "id": "altered-dominant-step-up-minor",
+          "name": "Altered Dominant Step-Up Minor Substitution"
+        },
+        {
+          "id": "augmented-triad-minor-maj7",
+          "name": "Augmented Triad as Incomplete Minor-Maj7"
+        },
+        {
+          "id": "melodic-minor-scale",
+          "name": "Melodic Minor Scale"
+        },
+        {
+          "id": "harmonic-minor-scale",
+          "name": "Harmonic Minor Scale"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "same-quality-interchange",
+          "name": "Same-Name/Quality Chord Interchange",
+          "summary": "Chords of the same name and quality are freely interchangeable (Cmaj=Cmaj7=Cmaj9; C7=C9=C13).",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "note": "quality-family flattening before substitution lookup"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chord substitution: same name/quality",
+              "quote_excerpt": "Substitute chords of the same name and quality \u2026 Cmaj = Cmaj7 = Cmaj9 \u2026 C7 = C9 = C13",
+              "page": 50
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "relative-minor-reduction",
+          "name": "Relative Minor Reduction Rule",
+          "summary": "Replace any major-family chord (maj6, maj7, maj9) with its relative minor.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "relative_minor",
+            "chord_types": [
+              "maj6",
+              "maj7",
+              "maj9"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chord substitution: same name/quality",
+              "quote_excerpt": "Cmaj6 = Am7 (Relative minor) \u2026 Cmaj7 = Am9 (Relative minor)",
+              "page": 50
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Chord substitution concept intro",
+              "quote_excerpt": "complex chord changes can often be reduced to or substituted by more simplistic minor chord forms",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "secondary-relative-minor-fallback",
+          "name": "Secondary Relative Minor Fallback Rule",
+          "summary": "When primary relative minor clashes with bass note, substitute III chord of major key.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "secondary_relative_minor",
+            "trigger": "bass_note_clash_with_primary_relative_minor"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chord substitution: same name/quality",
+              "quote_excerpt": "Cmaj9 = Em7 (Secondary relative minor)",
+              "page": 50
+            },
+            {
+              "chapter_n": 4,
+              "topic": "secondary relative minor substitution",
+              "quote_excerpt": "we go to the secondary relative minor of Db major \u2026 namely, F minor",
+              "page": 56
+            }
+          ]
+        },
+        {
+          "id": "m7b5-minor-third-up-rule",
+          "name": "m7b5 \u2192 Minor via Minor Third Above Root",
+          "summary": "Replace m7b5 with minor rooted a minor third above; m7b5 is incomplete dominant 9th and inversionally equivalent to m6.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "minor_third_up",
+            "source_type": "m7b5",
+            "target_type": "minor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "m7b5 to minor substitution rule",
+              "quote_excerpt": "From the root of a minor seventh flat five (m7b5) chord, go up a minor third and play minor",
+              "page": 55
+            },
+            {
+              "chapter_n": 4,
+              "topic": "m7b5 as incomplete dominant ninth",
+              "quote_excerpt": "Minor seventh flat five (m7b5) chords are incomplete dominant ninth chords",
+              "page": 55
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Bm7b5 as Dm6 third inversion",
+              "quote_excerpt": "the Bm7b5 chord is a Dm6 chord in its third inversion",
+              "page": 55
+            }
+          ]
+        },
+        {
+          "id": "dominant-ninth-perfect-fifth-up-rule",
+          "name": "Dominant Ninth \u2192 Minor via Perfect Fifth Above Root",
+          "summary": "Replace dominant 9th with minor rooted a perfect fifth above.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "perfect_fifth_up",
+            "source_type": "dominant_9th",
+            "target_type": "minor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "dominant ninth to minor conversion rule",
+              "quote_excerpt": "go up a perfect fifth from the root of the 9th chord and play minor. i.e.: G9 \u2026 up a P5 = Dm6",
+              "page": 55
+            }
+          ]
+        },
+        {
+          "id": "altered-dominant-step-up-minor-rule",
+          "name": "Altered Dominant \u2192 Minor One Half-Step Above Root",
+          "summary": "Replace altered dominant with minor rooted one half-step above the dominant root.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "half_step_up",
+            "source_type": "altered_dominant",
+            "target_type": "minor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "altered dominant: step-up minor substitution",
+              "quote_excerpt": "go up a step from the root of the dominant chord and play minor. EXAMPLE: For Gb7 altered, go up a step and play G minor",
+              "page": 57
+            }
+          ]
+        },
+        {
+          "id": "augmented-triad-major-sixth-up-rule",
+          "name": "Augmented Triad \u2192 Minor-Maj7 via Major Sixth Above Root",
+          "summary": "Over augmented triad, go up a major 6th and play melodic or harmonic minor; three enharmonic root names yield three options.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "major_sixth_up",
+            "source_type": "augmented_triad",
+            "target_type": "minor_maj7",
+            "enharmonic_roots": 3
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "augmented triad substitution summary rule",
+              "quote_excerpt": "Over an augmented triad, go up a major 6th from the root and play either melodic or harmonic minor",
+              "page": 56
+            },
+            {
+              "chapter_n": 4,
+              "topic": "augmented triad as incomplete minor maj7",
+              "quote_excerpt": "the augmented triad is an incomplete minor (Ma7) chord",
+              "page": 56
+            },
+            {
+              "chapter_n": 4,
+              "topic": "augmented triad inversion equivalence",
+              "quote_excerpt": "Each note of the triad can be called the root and can name the triad",
+              "page": 55
+            }
+          ]
+        },
+        {
+          "id": "melodic-minor-preference-over-altered-dominant",
+          "name": "Melodic Minor Preference Over Altered Dominant",
+          "summary": "Prefer melodic minor over harmonic minor over altered dominant because only melodic minor contains the b7.",
+          "engine_payload": {
+            "kind": "ColorToneRequire",
+            "required_tone": "b7",
+            "preferred_scale": "melodic_minor",
+            "over_chord_type": "altered_dominant"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "melodic vs harmonic minor over altered dominant",
+              "quote_excerpt": "only the melodic minor contains the b7, which is the 'hot' note of a dominant 7th chord",
+              "page": 57
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pat-martino:linear-expressions:line-study-composition",
+      "name": "Line Study Composition and Fingerboard Integration System",
+      "summary": "Phase III organizes practice and composition through ten line studies arranged in five ascending pairs (A and B), each pair anchored to a numbered activity form in G minor. Chord progressions are held fixed by letter (A vs B), so harmonic context is invariant while position ascends. Studies carry continuation arrows for cyclical use; the final pair 5A/5B is left incomplete for student composition. A five-step workflow governs application to jazz standards.",
+      "members": [
+        {
+          "id": "line-study-1a-1b",
+          "name": "Line Studies 1A / 1B"
+        },
+        {
+          "id": "line-study-2a-2b",
+          "name": "Line Studies 2A / 2B"
+        },
+        {
+          "id": "line-study-3a-3b",
+          "name": "Line Studies 3A / 3B"
+        },
+        {
+          "id": "line-study-4a-4b",
+          "name": "Line Studies 4A / 4B"
+        },
+        {
+          "id": "line-study-5a-5b",
+          "name": "Line Studies 5A / 5B (Student-Completed)"
+        },
+        {
+          "id": "chord-progression-a",
+          "name": "Chord Progression A"
+        },
+        {
+          "id": "chord-progression-b",
+          "name": "Chord Progression B"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "ascending-pair-progression",
+          "name": "Ascending Pair Progression Up the Fingerboard",
+          "summary": "Each successive pair of line studies moves higher on the fingerboard.",
+          "engine_payload": {
+            "kind": "PositionContinuity",
+            "direction": "ascending",
+            "unit": "study_pair"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Line studies ascending fingerboard",
+              "quote_excerpt": "Starting with line studies 2A and 2B, the line studies will ascend up the fingerboard with each successive set of line studies",
+              "page": 33
+            }
+          ]
+        },
+        {
+          "id": "fixed-progression-by-letter",
+          "name": "Fixed Chord Progression by Letter Designation",
+          "summary": "Chord progression is determined by letter A or B, not position; harmonic context is invariant across ascending studies within each letter group.",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "grouping": "letter_designation"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Shared chord progressions by letter",
+              "quote_excerpt": "Line studies 1A, 2A, 3A, 4A and 5A will share the same chord progression",
+              "page": 33
+            }
+          ]
+        },
+        {
+          "id": "cyclic-continuation",
+          "name": "Cyclic Continuation Arrow",
+          "summary": "Continuation arrow at end of each line study signals the study can cycle back to its starting chord for open-ended improvisation use.",
+          "engine_payload": {
+            "kind": "_pending:cyclic-continuation-marker"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Line study continuation arrow",
+              "quote_excerpt": "you will notice an arrow. This merely suggests that the line study can continue onward, starting again on a G minor chord",
+              "page": 31
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "student-composition-directive",
+          "name": "Student Composition Directive (Studies 5A/5B)",
+          "summary": "Studies 5A/5B are intentionally left incomplete, requiring the student to generate original line content using the same forms and progressions.",
+          "engine_payload": {
+            "kind": "_pending:student-completion-directive"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Student-completed studies 5A/5B",
+              "quote_excerpt": "studies 5A and 5B have been started and left for you to complete",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "five-step-reduction-procedure",
+          "name": "Five-Step Substitution-to-Composition Workflow",
+          "summary": "Five-step workflow: study original form, learn voicings and substitutions, memorize through analysis, play sample solos, compose original solos \u2014 applied to jazz standards.",
+          "engine_payload": {
+            "kind": "_pending:composition-workflow-sequence",
+            "steps": 5,
+            "terminal_application": "jazz_standards"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chord substitution reduction procedure",
+              "quote_excerpt": "1) Study the song in its original form \u2026 5) compose your own solo over the changes",
+              "page": 50
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Application to standard repertoire",
+              "quote_excerpt": "apply the principles learned in this work to more common forms of progressions and songs",
+              "page": 50
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
