@@ -3929,6 +3929,552 @@
               ]
             }
           ]
+        },
+        {
+          "id": "single-note-soloing-vol-1",
+          "title": "Jazz Guitar Single Note Soloing, Vol. 1",
+          "year": 1978,
+          "instrument_scope": "6-string electric and acoustic",
+          "summary": "Greene's single-note soloing primer (originally Dale F. Zdenek, 1978; reissued by Alfred Music). Seven conceptual chapters move from fingerboard fundamentals through chord-scale pairing to articulation and altered-dominant vocabulary. The book is notation-heavy — dense with scale diagrams, exercises, and line studies — with prose concentrated in the introductory and conceptual chapters (3-5 carry the densest pedagogical text). The three derived systems treat chord-scale pairing as the central improvisational architecture, fingerboard position and register as the spatial-coloristic axis, and rhythmic / articulation control as the executable-quality gate. Greene's characteristic moves — visualization-as-prerequisite, prohibition-against-shortcut, tempo-gating-by-execution-quality — appear throughout and produce 8 _pending: kinds that don't map cleanly to the existing engine 12.",
+          "references": [
+            {
+              "source": "Greene, Ted. Jazz Guitar Single Note Soloing, Vol. 1. Alfred Music (reissue of Dale F. Zdenek), 1978.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-greene-single-note-soloing-vol-1; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/ted-greene/single-note-soloing-vol-1/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+              "name": "Chord-Scale Pairing System",
+              "summary": "Central system of the book. Every chord type belongs to a named group, and each group is paired with one or more scales. The major scale is the universal reference; all other scales are defined as transformations of it. A chord 'takes' a scale when that scale sounds good over it.",
+              "members": [
+                {
+                  "id": "major-group-1",
+                  "name": "Major Group 1 Chords"
+                },
+                {
+                  "id": "major-scale",
+                  "name": "Major Scale"
+                },
+                {
+                  "id": "lydian-scale",
+                  "name": "Lydian Scale"
+                },
+                {
+                  "id": "dominant-group-1",
+                  "name": "Group 1 Dominant Chords"
+                },
+                {
+                  "id": "dominant-group-2",
+                  "name": "Group 2 Dominant Chords"
+                },
+                {
+                  "id": "dominant-7th-scale",
+                  "name": "Dominant 7th Scale"
+                },
+                {
+                  "id": "minor-7th-chord",
+                  "name": "Minor 7th Chord"
+                },
+                {
+                  "id": "minor-7th-scale",
+                  "name": "Minor 7th Scale"
+                },
+                {
+                  "id": "dominant-group-3",
+                  "name": "Group 3 Dominant Chords"
+                },
+                {
+                  "id": "overtone-dominant-scale",
+                  "name": "Overtone Dominant Scale (Lydian Dominant)"
+                },
+                {
+                  "id": "dominant-group-4",
+                  "name": "Group 4 Dominant Chords"
+                },
+                {
+                  "id": "altered-dominant-type-1",
+                  "name": "Altered Dominant Scale Type 1"
+                },
+                {
+                  "id": "altered-dominant-type-2",
+                  "name": "Altered Dominant Scale Type 2"
+                },
+                {
+                  "id": "altered-dominant-type-3",
+                  "name": "Altered Dominant Scale Type 3"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "dominant-run-group-sync",
+                  "name": "Run-to-Dominant-Group Synchronization",
+                  "summary": "Runs containing the 3rd suit Group 1 dominants; runs containing the 11th suit Group 2 dominants; both/neither work over either group.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Run/chord group sync",
+                      "quote_excerpt": "if a run contains the 3rd, use it over any of the group-1 dominants",
+                      "page": 59
+                    }
+                  ]
+                },
+                {
+                  "id": "root-based-thinking",
+                  "name": "Root-Based Scale Internalization",
+                  "summary": "Dominant 7th and Minor 7th scales must be internalized from their own root; the relative-major transposition shortcut is prohibited.",
+                  "engine_payload": {
+                    "kind": "_pending:root-anchor-prohibition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Avoid relative-major shortcut",
+                      "quote_excerpt": "Don't fall for the 'oh, dom. 7th scales, they're really just major scales up a 4th-trap'",
+                      "page": 43
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Warning: don't think m7 as relative major",
+                      "quote_excerpt": "don't think of the m7 scale in this way now",
+                      "page": 69
+                    }
+                  ]
+                },
+                {
+                  "id": "overtone-dom-not-altered",
+                  "name": "Overtone Dominant Categorical Boundary",
+                  "summary": "The Overtone Dominant scale is categorically excluded from the altered dominant family; its #11 is a natural overtone, not a chromatic alteration.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Overtone Dom not altered",
+                      "quote_excerpt": "The Overtone Dominant scale is not considered to be an altered dominant scale",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "altered-dom-package-deal",
+                  "name": "Altered Dominant Package-Deal Positional Learning",
+                  "summary": "All three altered dominant types are presented juxtaposed in the same fingerboard position so their color differences can be absorbed comparatively.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Package-deal learning rationale",
+                      "quote_excerpt": "absorb them all in a kind of 'package deal', one position at a time",
+                      "page": 96
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "scale-chord-compatibility",
+                  "name": "Scale-to-Chord Compatibility Rule",
+                  "summary": "Any chord containing some combination of (and only) the chord tones of a given scale can take that scale.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Scale-chord compatibility rule",
+                      "quote_excerpt": "Any chord containing some combination of any of (but only) these chord tones, can take the Dominant 7th scale",
+                      "page": 41
+                    }
+                  ]
+                },
+                {
+                  "id": "altered-dominant-definition",
+                  "name": "Altered Dominant Tone Requirement",
+                  "summary": "A scale qualifies as an altered dominant only if it contains at least one of: b9, #9, b5, or #5(b13).",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Altered dominant scale defined",
+                      "quote_excerpt": "any dominant 7th scale with one or more of the following tones: b9, #9, b5 or #5",
+                      "page": 94
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Group 4 dominants",
+                      "quote_excerpt": "Any Dom. 7th type chord that contains any one or more of the four altered tones",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "type3-chord-substitution",
+                  "name": "Type 3 Altered Dominant Chord Substitution",
+                  "summary": "Over Type 3 altered dominant exercises, A7+ may substitute for A7#9+ and D49 may substitute for D6/9.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Type 3 chord substitution rule",
+                      "quote_excerpt": "you may wish to try A7+ for A7#9+ and D49 for D6/9",
+                      "page": 105
+                    }
+                  ]
+                },
+                {
+                  "id": "sharp9-substitution",
+                  "name": "#9 Substitution or Addition Rule",
+                  "summary": "The altered #9 may substitute for or be played alongside the natural 9 in altered dominant contexts.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "#9 substitution rule",
+                      "quote_excerpt": "INSTEAD OF OR IN ADDITION TO THE #9",
+                      "page": 131
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-form-prerequisite",
+                  "name": "Chord Form Visualization Prerequisite",
+                  "summary": "When a player cannot visualize scalar runs, return to the chord forms for that position before proceeding.",
+                  "engine_payload": {
+                    "kind": "_pending:visualization-prerequisite"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Visualizing via chord forms",
+                      "quote_excerpt": "go back and learn the chord forms (group 4) for this position",
+                      "page": 99
+                    }
+                  ]
+                },
+                {
+                  "id": "upper-structure-triad",
+                  "name": "Lydian Dominant Upper-Structure Triad (Polytonality)",
+                  "summary": "The 9, #11, and 13 of the Lydian Dominant scale form a major triad rooted a whole step above the chord root — the upper-structure triad of polytonal Lydian Dominant color.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Upper-structure triad",
+                      "quote_excerpt": "the 9, #11 and 13 form a major triad whose root is a whole step above the root of the scale",
+                      "page": 83
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Polytonality defined",
+                      "quote_excerpt": "This type of thinking and sound is commonly known as POLYTONALITY",
+                      "page": 83
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+              "name": "Fingerboard Position and Register System",
+              "summary": "Governs physical navigation. Position continuity keeps the player in a 5-6 fret area across chord changes. Fingerboard visualization is the primary internalization practice. Register is a compositional variable.",
+              "members": [
+                {
+                  "id": "fingerboard-area",
+                  "name": "Fingerboard Area (5-6 Fret Window)"
+                },
+                {
+                  "id": "lower-register",
+                  "name": "Lower Register"
+                },
+                {
+                  "id": "upper-register",
+                  "name": "Upper / Mid Register"
+                },
+                {
+                  "id": "alternate-string-set",
+                  "name": "Alternate String Set"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "position-stay-5-6-frets",
+                  "name": "Stay-in-Position Multi-Chord Rule",
+                  "summary": "Know enough positions of each scale to remain within a 5-6 fret area across all chords in a progression.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Combining scales in one position",
+                      "quote_excerpt": "stay in one little 5 or 6 fret area and play through the whole song",
+                      "page": 60
+                    }
+                  ]
+                },
+                {
+                  "id": "alternate-position-practice",
+                  "name": "Alternate Position Practice",
+                  "summary": "Each set of runs should also be fingered in at least one alternate position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Practice in alternate position",
+                      "quote_excerpt": "Try fingering all these Em9 runs in the 5th position too",
+                      "page": 109
+                    }
+                  ]
+                },
+                {
+                  "id": "octave-higher-same-position",
+                  "name": "Octave-Higher Same-Position Practice",
+                  "summary": "Every pattern should be tried an octave higher within the same fingerboard position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Practice octave higher",
+                      "quote_excerpt": "Also try this run an octave higher in the same position",
+                      "page": 120
+                    }
+                  ]
+                },
+                {
+                  "id": "arpeggio-string-flexibility",
+                  "name": "Arpeggio String-Set Flexibility",
+                  "summary": "Arpeggio tones may be voiced on alternate strings (e.g., 5th & 4th strings).",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Arpeggio string flexibility",
+                      "quote_excerpt": "These notes may be played on other strings too (5th & 4th strings)",
+                      "page": 107
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "register-governs-color",
+                  "name": "Register Governs Extension Color",
+                  "summary": "The perceptual weight or spice of b7 and 9 is determined by register.",
+                  "engine_payload": {
+                    "kind": "_pending:register-color-assignment"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Register importance for b7 and 9",
+                      "quote_excerpt": "b7 and 9 really start to come alive in this 'higher' register",
+                      "page": 58
+                    }
+                  ]
+                },
+                {
+                  "id": "visualize-fingerboard-primary",
+                  "name": "Fingerboard Visualization as Primary Practice",
+                  "summary": "Visualizing the notes on the fingerboard is identified as the single most important technique for internalizing scales.",
+                  "engine_payload": {
+                    "kind": "_pending:visualization-prerequisite"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Visualize fingerboard",
+                      "quote_excerpt": "VISUALIZE the notes on the fingerboard... THIS IS VERY IMPORTANT",
+                      "page": 67
+                    }
+                  ]
+                },
+                {
+                  "id": "type3-area4a-absence",
+                  "name": "Type 3 Area-4A Structural Boundary",
+                  "summary": "No Type 3 altered dominant material exists for fingerboard Area 4A; an instrument-specific constraint.",
+                  "engine_payload": {
+                    "kind": "_pending:instrument-boundary"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Type 3 area-4A absence",
+                      "quote_excerpt": "There won't be any Type 3 - 4A.. it's just the way the instrument works out",
+                      "page": 118
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+              "name": "Rhythmic and Articulation System",
+              "summary": "Governs time and texture: the 8th note is the baseline jazz unit; swing feel transforms straight 8ths into triplet subdivisions; double-timing introduces 16ths; trills decorate rather than substitute; clean playing must precede tempo increases.",
+              "members": [
+                {
+                  "id": "straight-8th",
+                  "name": "Straight 8th Notes"
+                },
+                {
+                  "id": "swing-8th",
+                  "name": "Swing 8th Notes (Jazz 8ths)"
+                },
+                {
+                  "id": "double-time-16th",
+                  "name": "Double-Timing (16th Notes)"
+                },
+                {
+                  "id": "hammer-on",
+                  "name": "Hammer-On"
+                },
+                {
+                  "id": "pull-off",
+                  "name": "Pull-Off"
+                },
+                {
+                  "id": "trill",
+                  "name": "Trill"
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "8th-note-primary-unit",
+                  "name": "8th Note as Primary Jazz Unit",
+                  "summary": "The eighth note is jazz's normal rhythmic unit at medium and fast tempos.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-density-baseline"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "8th note as jazz unit",
+                      "quote_excerpt": "the normal unit of rhythm in jazz is the 8th note",
+                      "page": 39
+                    }
+                  ]
+                },
+                {
+                  "id": "swing-straight-both-required",
+                  "name": "Both-Feels Practice Rule",
+                  "summary": "Every 8th-note run in the book must be practiced in both swing feel and straight feel.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Practice both feels",
+                      "quote_excerpt": "all the 8th notes in this book should be played as jazz 8ths and straight 8ths",
+                      "page": 39
+                    }
+                  ]
+                },
+                {
+                  "id": "clean-before-tempo",
+                  "name": "Clean Playing Before Tempo Increase",
+                  "summary": "Tempo may only be increased after clean execution is achieved at the current tempo.",
+                  "engine_payload": {
+                    "kind": "_pending:tempo-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Speed comes from clean play",
+                      "quote_excerpt": "making sure you are playing cleanly at any tempo before moving on to a faster one",
+                      "page": 40
+                    }
+                  ]
+                },
+                {
+                  "id": "trill-on-strong-beat",
+                  "name": "Trill Placement on Strong Beat",
+                  "summary": "The trill is more commonly placed on the strong part of the beat than the weak.",
+                  "engine_payload": {
+                    "kind": "_pending:articulation-placement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Trill placement",
+                      "quote_excerpt": "The trill is more commonly used on the strong part of the beat than the weak one",
+                      "page": 41
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "trill-as-decoration",
+                  "name": "Trill as Decoration, Not Substitution",
+                  "summary": "A trill does not replace the decorated note; the underlying note is held and enhanced.",
+                  "engine_payload": {
+                    "kind": "_pending:articulation-reframe"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Trill as decoration",
+                      "quote_excerpt": "A is not really being replaced, but instead, is just being decorated",
+                      "page": 41
+                    }
+                  ]
+                },
+                {
+                  "id": "hammer-on-scale-tone",
+                  "name": "Hammer-On Scale-Tone Constraint",
+                  "summary": "At this stage, hammer-on targets must be drawn from the scale currently in use.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Hammer-on scope rule",
+                      "quote_excerpt": "This higher note, for now, will be found in the scale you are working with at that moment",
+                      "page": 41
+                    }
+                  ]
+                },
+                {
+                  "id": "double-timing-texture",
+                  "name": "Double-Timing as Texture Escalation",
+                  "summary": "Double-timing (16th notes) is an advanced texture layer above baseline 8th-note texture.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Double-timing defined",
+                      "quote_excerpt": "Players who possess great technique often love to break into 16th notes at medium tempos",
+                      "page": 40
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
