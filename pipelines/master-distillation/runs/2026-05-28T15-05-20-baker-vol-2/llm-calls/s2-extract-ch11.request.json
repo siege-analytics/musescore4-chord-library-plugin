@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: Chords and Melody Playing\nPages 15-19 of the book.\n\n<<<CHAPTER TEXT\n\n13\n\nIn the examples to follow we will employ a variety of chord cycles that can be forced\nagainst the original cycles, using fragments of the same songs illustrated in lesson 7,\nalong with a few others. In each example, you have the song fragments as they would\nappear in sheet music along with two variations.\n\nMaster them all, commit them to memory and use only those which you like the best.\n\nTHIS LOVE OF MINE\n\nEx. 24 FRANK SINATRA\nSlowly HENRY SANICOLA\nStandard SOL PARKER\nGdim Dm7 evd c\ns = 4 = } = eS\nNew Gdim Eb9 Gdim | Dm . ag\nBH PH ste ff Cmaje9 fete\nDm\u00e96 \u2014\u2014iBdim HH\npot eee pHa \u2014\nA. 4- ee oe ee ft} \u2014\u2014\nbt wv F Tt ttt e rT\nCJ\n- a | a\n\u201c \u20143 o\nB. F + t + tf me T t t T T\nbe -\u2014t 1 t\u2014t 1\u2014\u2014}\nStandard\nCdim Dm7 G7 oT\nee ee \u2014\u2014\ne a a == <\n:\nCmaj7 Cdim \u2018Dm? Bdim co | cmaj7\n\u20ac J $_\u00a2.\nf\u2014 } =\nTT pt t\nNew Dm7 Dm6\u00e9\nB. i eo | a 2c\net TY TT\n\n\u00a9 Copyright 1941 Embassy Music Corporation\n*See Lesson No. 12 Dim. and Aug. Resolutions.\n\n+4\n+\n\nUsed by Permission\n\n\n14\nI DREAM OF YOU\nEx. 25\nSlowly\nStandard\nDm\nDm7+7\nDm7\nG7\n3\nNew\nDm6\nDm6\nAbdim\n3\nA.\nC\nCm7\nC6\nC\nBdim\nAm\nDm\nA.\nCm9\nCm6\nCmaj9\nCmaj7 maj9 maj6\nDm6\nB.\nC\n3\nG7\nG+7\nC\nA.\ndim\nCmaj6 9\nB.\nUsed by Permission\n\u00a9 Copyright 1944 Embassy Music Corporation\n* See Lesson No. 15.\n\n15\n\nTHERE ARE SUCH THINGS\n\nSTANLEY ADAMS\nABEL BAER\n\nEx. 26 GEO. W. MEYER\nSlowly\nStandard\n~~ (Guitar Tacet) c C7 C+ Dm7\n\u2014\u2014\u2014\u2014 \u2014\u2014\nre | T 1 e_\nNew Cmaj6 Bdim Cm79 Cmaj\u00e96 * C+T Dm7 Dm6\nt A\nA. FARH eg\n+ H HH\nfa e (2. a a\nYd. -_ mn b- |\n5.\n4 v vs\nfa +5\n] I | 1 =\n\u2018q 4\nNew HH\nB. Cmaj69 Bbmaj69 Cmaj69 C+ Dm7 Dm6\n| | | g | |\n= Z \u2014- =\nI | a om > =\n+ t S g =\n\u2014\nG7 j Dm7 GT c Cc\n} x 5a t\naf - + o mt Oo\n\u2014 T ' if ae\nBdim G9 |Dm7 Dm6 Bdim Cmaj7\ng\u2014 3 es\n=\ncea \u2014 TF\nsys tt | aS\nEm Dm |Dm7 Dm\u00e9 Bdim Cmaj7\n+\u2014+\u2014_F + t f :\n\u2014 a\n_\u2014\n\n\u00a9 Copyright 1942 Dorsey Brothers' Music, Inc.\n\n* See Lesson No. 17 \"Augmented Cycles\".\n\nUsed by Permission\n\n\ner\n9 <j p+ \u2014_ GS <7 _ete\ntT <>\n~\" zz a \u2014\u2014at \u20142 == = +\nev i \u00a5 * TT\nDm9 Dm6 Bdim G+7\n\u2014 ce 377\nFF b etc.\nGf $$$. Ss\nDm9 Bdim Baim _ 3\u2014 G9 G+ 3\u2014\n[it 27 5 ==\" =\n\u2014e- uv\n=\nif\n\neo yt\n\n*See Lesson No. 17 and Lesson No. 23.\n\nEVERYTHING HAPPENS TO ME\nMATT DENNIS\n\nEx. 27 TOM ADAIR\n\nrT | t |\n\nCm9 F9 Cm7 Dm7 Bbdim\n\n\u00a9 Copyright 1941 Embassy Music Corporation Used by Permission\n\n\nEx. 28\nCm7\nF+\nFm6\nG7\nDdim\nCm\nCm7\nF+\nFm7\nG7b5\nDdim\nCm7\nF+\nFm7\nG+7\nDm7\nG7\nCm7\nF\nBb\nCm7\nB7\nBb maj7\nDm6\nCm\nEb m\nBb Bb maj7\n*See Lesson No. 17.\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}

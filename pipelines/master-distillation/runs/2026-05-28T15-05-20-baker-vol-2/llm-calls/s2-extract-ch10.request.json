@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: Altered Chords\nPages 14-14 of the book.\n\n<<<CHAPTER TEXT\n\n12\nLESSON 10\n\nAltered Chords\n\nExample 22 A B C and D have in them what is known as \"Forced Harmony\u201d (adding\nchords via progressions that move away from, then lead back into the tonic.) It keeps the\nmusic active rather than letting it die on a \"C\" or \"G\" chord as it was originally written.\nThese are the things that Jazz musicians love to do, and by doing so give a song new color.\n\nNow that you know that the II chord can be readily substitutedfor the V, let us discuss the\n\"Upper Partials\" of these chords. The dominant chord canbe the dominant 7th, 9th, 11th,\naug. lith or 13th. The Sth or the 9th can be Flatted, nevertheless, these are still the\n\u201cUpper Partials\" of the dominant chord (Example 23.) They can be used to resolve into\nthe tonic. With the II chordof the scale the same principal applies, you have the 6th, 7th,\n9th, Lith, and 13th. Any of these forms of the II chord can be used to resolve into the V\nwhich in turn resolves into the tonic (Lesson 7.)\n\nWe will not discuss this phase of Chord Cycles any further, however, most of the cycles\nin this book deal with these principals so I would suggest that you review lessons 8 through\n10 frequently.\n\nEx. 23 bs\nGoce G7bsb9  Cmaj7 Gis Cmaj7 Gig Cmaj79\n+ Kh. Len Ley\n\u2014\u2014 = te =\nBy9 488 By%bSb9 \u201cV7 on ois 79\nyi3 iv \u00a5 3 I\n\nLESSON 11\n\nChords and Melody Playing\n\nNow that you have a general knowledge of how new cycles can be substituted for the\noriginal chord cycles and how the Upper Partials of the dominant can be used to resolve\nthe dominant chord into the tonic, along with the knowledge of Il resolving into V, let us\nget back to chord and melody playing. In the next few examples I will employ as much\nof this knowledge as possible.\n\nOne thing must be made clear to you. When writing an arrangement for a song, which is\nexactly what you are doing when you make up a chord melody solo, you use the ideas and\nmusical sounds that sound best to you rather than the ideas and chord cycles that were\noriginally written for the song. The original chord progressions of the song are routine\nand much is left to your imagination. For example, when listening to a Jazz arrangement\nof a standard song, the chord progressions used in most cases are foreign to the original\nprogressions written for that song, a8 I pointed out in lesson 10.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

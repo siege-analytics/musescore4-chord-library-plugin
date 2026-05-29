@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Simple Chord Analysis\nPages 7-7 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 4\n\nSimple Chord Analysis\n\nLessons 2 and 3 involved only eight chords, Nos. 1, 2, 3, 4, 14, 15, 16 and 17.\n\nThe exercises start at thefirst position and you must stretch your fingers a full five frets.\nI know that this is not an easy project, however, eventually it will become easy for you.\nIn the meantime, if you find it difficult to start in the first position with these exercises,\nstart at a higher position, either the fourth or fifth.\n\nActually, chord 1, through use of passing tones, resolves intochord 15. Chord 2, through\nuse of passing tones, resolves intochord 14. Each chord is movingfrom a minor ninth to\na minor sixth chord, via passing tones. Chords 3 and 4 are resolving into chords 16 and\n17. Each chord is moving from a major ninth via passing tones, to a major sixth. The\nonly difference in these two forms is the mode (major and minor).\n\nBbmg9 to Bbm6 Fm9 to Fm6\ntoot 4 J@\u20145 T@-5 Go -To0t SS \u201croot\nomitted SA 5 5\nmitte m3 3 3 root 3\nroot\nri\u2014 9 6 9 6-\nBbm9 Bbm6 Fm9 Fm6\nfh 16? R* Pp 6 g 9 R Pp 6\nTry\nAMPs T = ~-\n\nFmaj9 to Fmaj6 Bbmaj9 to Bbmaj6\n- b> - E o55 7 -5\nhoe eT attea Hh\n3 3 3 3\nCrh root\n6 9 67 t}9 64\nA 9 R P 6 6\n\n63 \u2014\u2014\u2014\n: cd in inn ain a @ == |\n\n*\"R\" is for Root, \"P\" is for Passing tone.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

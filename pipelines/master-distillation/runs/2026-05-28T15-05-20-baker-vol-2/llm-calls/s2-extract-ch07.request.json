@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Chords and Song Forms\nPages 10-10 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 7\n\nChords and Song Forms\n\nNow that you have a general working knowledge of about half of these chords, let us\ntry applying them to song forms. In this lesson, Ihave taken a few bars from two well\nknown standard tunes and applied chord 1, 4, 15, and 17 to them.\n\nExercise 13 is similar to exercises 10 and 11 in lesson 5, the only difference is that in\nthis example we are applying the chords to a song form rather than an Exercise.\n\nIn exercise 14, though we are using the same four chords they progress in a slightly dif-\nferent way. In both cases you are starting with the major or minor 9th and closing with\nthe major or minor 6th. These exercises are slowly developing into what is musically\ntermed \"Counterpoint\", meaning, two lines \"Playing\" against one another. As we go along\nwe will discuss Counterpoint in more detail.\n\nTHIS LOVE OF MINE\n\nFRANK SINATRA\n\nEx. 13 HENRY SANICOLA\nStandard SOL PARKER\n7 Gdim sf Dm //et\u00a2eoasfil c / Josefa\nbx rel + \u00a3 t x { T\nst e \u2014 =A = So\n* rics iB\nat This is the a 3\nTL] 5th Fret | 5\nNew i i\nSlowly Dm69 Cmaj69\ny \u00a2 me } 1 & T bad\na \u2014\u2014\u2014 <\u2014 \u2014\u2014\u2014\noO im T t t t t t |\n\u00a9 Copyright 1941 Embassy Music Corporation Used by Permission\nEx. 14 I D OF YOU MARJORIE GOETSCHIUS\n, Standard EDNA OSSER\nA pm S44 4 at A A mat /\neS f 4 \u2014\u2014\u2014\u2014 \u2014t t\n[ae TZ + aware oe\n\n\u2014 cz ge\no t \u2014\u2014\nm |OQ \u00a9 Q\u00ae \u00a9\nSlowly | Dm9 Dm6\u00e9__\u2014 Cmaj9 Cmaj6\nag 2 19 18 iv fie 2 |) lot\n\nPet -\u2014F ee\n\na = t uf T 4\n\nse \u2014\n\n\u00a9 Copyright 1941 Embassy Music Corporation Used by Permission\n\n* Each time a chord is diagramed, the first finger falls behind the fret that represents the position\nthe chord is in. In Ex. 13 the first chord is Dm69, which is in the fifth position.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

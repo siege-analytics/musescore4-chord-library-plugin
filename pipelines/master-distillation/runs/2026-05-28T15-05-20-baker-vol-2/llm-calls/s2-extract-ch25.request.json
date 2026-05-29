@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch25",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 25: Counterpoint\nPages 41-41 of the book.\n\n<<<CHAPTER TEXT\n\ni]\n+2, 4 = \u2014= ts oN\nZz % iN Ht\n\nI'll wake each morn-ing and I'll\n\nra >, J\nLa\nPL VIt ei '\n= Feet. z e.\nEEPE a= \u2014s\n\u00a9 Copyright 1942 YankeeMusic Publ. Inc.\n\u00a9 Copyright assigned 1944 Dorsey Brothers' Music, Inc. Used by Permigsion\n\nLESSON 25\nCounterpoint\n\nCounterpoint is, in reality, the movement of two or more melodies rather than the\nuse of chord harmony. It plays a very important part in modern music even though it ts\nfrom the \"Old School\". Some small combos derive great benefit from the use of it. In the\nexercises to follow there are several examples on the application of Counterpoint.\n\nWhen two lines move against one another that is a form of Counterpoint. There are times\nwhen one melody sustains itself for as many as 4 beats, while the other line moves along\nin quarter or eighth notes. See Exercise 62.\n\nThere are many names for these melodies: Cantus Firmus, meaning the original melody;\nCounterpoint, meaning the added melody, sometimes referred to as the Counter melody.\nHowever, these are technical terms and melody and counter melody will suffice. See Ex-\nercise 63.\n\nExercise 64 demonstrates Counterpoint with only two melodies, moving in different di-\nrections,\n\nMost of the examples in this book are brief and move chordally from one direction to an-\nother. Though they never linger on one note for any length of time, there is never a sign\nor sound of bad harmonic movement.\n\nExercise 65 illustrates a melody and counter melody moving along simultaneously. This\nis the same example in exercise 49 of lesson 19. The difference is that only the first note\nin each chord of the counter melody is used. This ts a sustaining type of counter melody\nand it offers a strong straight line quality while the melody dances along on top of it.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 25 extraction"
+}

@@ -1,0 +1,126 @@
+---
+run_id: 2026-05-28T15-05-20-baker-vol-2
+stage: s4
+source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
+model: claude-sonnet
+extracted_at: 2026-05-29T00:24:14+00:00
+schema_version: 0.1
+---
+
+# Mickey Baker — *Complete Course in Jazz Guitar, Book 2* — Statement of Outputs
+
+## Overview
+
+Mickey Baker's *Complete Course in Jazz Guitar, Book 2* is a cumulative harmonic curriculum that carries the guitarist from discrete voicing shapes to integrated chord-melody performance. The book is organized in four ascending phases: Chapters 1–5 establish vocabulary (Upper Partials, chord forms, moving bass line, passing tones); Chapters 6–11 build harmonic syntax through the dominant-to-tonic cadence, chord cycle resolutions, relative-chord substitution, and Forced Harmony; Chapters 12–19 introduce Symmetric Harmony and its associated devices (Symmetric Cycles, Augmented Cycles, Pedal Point, Cadence Break) as a parallel harmonic universe free of diatonic key centers; and Chapters 20–26 complete the edifice with chord analysis, diminished and augmented substitutions, and Counterpoint. The final three chapters (27–29) contain no prose instruction; they are fully notated chord-melody solos by the author serving as comprehensive worked demonstrations of the entire method in performance context. Chapter 26 explicitly names Symmetric Harmony and Counterpoint as the two principal theoretical systems underlying everything that precedes it.
+
+Two master systems govern the method. The first is **functional diatonic harmony** organized around the II–V–I resolution chain: the dominant is the gravitational center of any tonality; the II chord prepares it; and all elaborations—however many substitute or passing chords are inserted—must eventually arrive at V and resolve to I (Chapter 9's governing rule). The second is **Symmetric Harmony**, a key-signature-free framework in which every chord functions as a tonic and harmonic motion distributes equally across the 12-tone scale via minor-third division (T1–T4, Chapter 13) or major-third division (T1–T3, Chapter 17). These two systems are not sequential alternatives; the method teaches both and expects the mature player to deploy them within the same arrangement, as the closing solos demonstrate.
+
+The method's pedagogy rests on three interlocking moves: a **dual-line contrast format** (standard progression on line one, modern progression on line two, first appearing in Chapter 5); a **cross-referenced voicing architecture** in which circled numbers above every chord link back to the foundational voicing chart from Lesson 1; and a **systematic expansion of substitution privilege** that begins with memorized cycles and ends with the player's ear as the ultimate harmonic authority (Chapter 10). Mastery is not defined as executing written changes correctly but as commanding enough harmonic vocabulary—voicings, cycles, substitutions, counterpoint—to rebuild a progression from the inside.
+
+---
+
+## Systems
+
+### Functional Diatonic Harmony System
+
+The Functional Diatonic Harmony System is the load-bearing harmonic grammar of the entire method. Its structural object is the **chord form**—an Upper Partial voicing shape (extended 9th, 11th, augmented 11th, 13th, flat-9 dominants; 6th and 9th tonic forms) that exploits the harmonic overtone series to generate modern color rather than plain triad or rhythm-chord sounds (Chapter 1 summary). All motion within this system is ultimately governed by the gravitational pull of the dominant: every progression, however elaborated by substitute chords, relative chords, or Forced Harmony, must eventually reach V and resolve to I. The system matures into chord-melody arranging, where the melodic line takes priority over harmonic completeness and chords may be omitted or invented to serve the melody.
+
+**Members:**
+- Tonic (I) Chord — harmonic destination; the ear is satisfied once I is reached
+- Subdominant (IV) Chord — intermediate chord in the I–IV–V–I cycle; demands temporary resolution toward V
+- Dominant (V) Chord — most active chord of the tonality; all cycle motion gravitates toward V before resolving to I
+- Supertonic (II) Chord — prepares the dominant; can substitute for V; carries its own upper partials
+- Upper Partial Voicings (Chord Forms) — extended shapes: 9th, 11th, aug. 11th, 13th, flat-9 dominants, 6th and 9th tonic forms
+- Diminished 7th as Dominant Substitute — root-omitted flat-9 dominant reframed as diminished; resolves to tonic in place of V
+- Augmented Chord as Dominant Substitute — augmented triad/7th functioning as altered dominant resolving to tonic
+- Passing Tone — voice-leading mechanism (R/P notation) connecting 9th to 6th chord forms
+
+**Traversal Rules:**
+
+1. **Dominant-to-Tonic Resolution** — `FamilyCoherence` — All chord cycles, however elaborated, must eventually reach V and resolve to I. (Chapter 9 summary, p. 13; Chapter 8 summary, p. 11)
+2. **Ninth-to-Sixth Voice Leading** — `VoiceMotion` — Modern progressions move from a 9th to a 6th chord via passing tones, replacing the simpler dominant-to-tonic resolution. (Chapter 5 summary, p. 8; Chapter 4 summary, p. 7)
+3. **II Chord Insertion Before V** — `SubstitutionExpand` — When a progression moves only from dominant to tonic, the II chord is inserted before V. (Chapter 9 summary, p. 12; Chapter 8 summary, p. 11)
+4. **Bottom Tone Whole-Step Descent** — `VoiceMotion` — The bass voice of each chord form moves down a whole tone across chord-form exercises. (Chapter 2 summary, p. 5)
+5. **Chromatic Fingerboard Transposition** — `PositionContinuity` — Every exercise must be transposed chromatically up and down the full neck in both major and minor modes. (Chapter 5 summary, p. 8; Chapter 6 summary, p. 9)
+
+**Modification Rules:**
+
+1. **Upper Partials Dominant Alteration** — `ColorToneRequire` — The dominant may be extended to 7th/9th/11th/aug.11th/13th; the 5th or 9th may be flatted; all remain Upper Partials and resolve to the tonic. (Chapter 10 summary, p. 14)
+2. **Diminished 7th as Dominant Substitute** — `SubstitutionExpand` — A diminished 7th chord functions as the upper structure tones of a flat-9 dominant and may replace V in V–I resolution. (Chapter 21 summary, p. 34)
+3. **Forced Harmony Expansion** — `SubstitutionExpand` — Additional chord progressions that move away from and back to the tonic are inserted to keep the music active. (Chapter 10 summary, p. 14)
+4. **Melody-Priority Chord Omission** — `OmissionAllow` — In chord-melody arranging, chords must be omitted when they conflict with the melodic line. (Chapter 26 summary, p. 42)
+5. **Player Ear as Substitution Authority** — `_pending:ear-authority-substitution` — The player's ear governs substitution choices; jazz arrangements characteristically diverge from original progressions. (Chapter 10 summary, p. 14)
+6. **Non-Standard Voicing Creation for Melody Fit** — `NCTHarmonization` — When no familiar shape harmonizes the melody, invent a voicing that fits the line and blends with the surrounding cycle. (Chapter 20 summary, p. 33)
+
+---
+
+### Symmetric Harmony System
+
+The Symmetric Harmony System is a parallel harmonic universe that operates without a diatonic tonal center. Introduced in Chapter 13, it is built on the principle that every chord functions as a tonic and that harmonic motion can be distributed equally across the 12-tone scale by dividing it into equal parts: four parts via minor thirds (Symmetric Cycle, T1–T4) or three parts via major thirds (Augmented Cycle, T1–T3). The emblematic vehicle is the diminished 7th chord, constructed from successive minor thirds, whose pitch classes are identical across all inversions and positions, making every one of its tones a potential tonic. Symmetric Harmony is applied at structurally marked moments—cadences, phrase endings (Cadence Breaks), and introductions—rather than as a continuous harmonic grammar. Chapter 26 names it as one of the two principal theoretical systems of the entire method.
+
+**Members:**
+- Diminished 7th Chord (4-tonic symmetric vehicle) — built on successive minor thirds; all four tones are enharmonically equivalent tonics
+- Augmented Triad / Augmented 7th (3-tonic symmetric vehicle) — built on major thirds
+- Symmetric Cycle Position (T1–T4) — one of four equal fingerboard positions reached by minor thirds
+- Augmented Cycle Position (T1–T3) — one of three equal positions reached by major thirds
+- Chord Fragment — partial voicing executing the minor-third glissando in place of the full chord
+- Cadence Break Slot — structural one-to-two-bar pause at phrase endings where Symmetric Harmony is deployed
+
+**Traversal Rules:**
+
+1. **Minor-Third Symmetric Cycle Traversal** — `SymmetryMovement` — Any chord shape is transposed up or down the fingerboard in minor thirds (T1–T4). (Chapter 14 summary, p. 22; Chapter 13 summary, p. 21)
+2. **Major-Third Augmented Cycle Traversal** — `SymmetryMovement` — Augmented chord shapes are transposed in major thirds, dividing the 12-tone scale into three equal parts. (Chapter 17 summary, p. 26)
+3. **Directional Glissando Rule (High-Down, Low-Up)** — `StringSetTransition` — If a phrase ends high move the cycle downward in minor thirds; if low, move it upward. (Chapter 15 summary, p. 24)
+4. **Retrograde Cycle Traversal** — `SymmetryMovement` — Symmetric Cycle exercises are practiced backwards (T4→T3→T2→T1) to build descending facility. (Chapter 14 summary, p. 23)
+5. **Parallel Motion / Endpoint-Only Rule** — `SymmetryMovement` — Only the start and end points matter; harmony moves strictly in parallel up or down with up to 12 tonics. (Chapter 17 summary, p. 26)
+
+**Modification Rules:**
+
+1. **Tonic Count Expansion (6 or 12 Tonics)** — `SubstitutionExpand` — The 3-tonic Augmented Cycle expands to 6 or 12 tonics by inserting intermediate chords. (Chapter 17 summary, p. 26)
+2. **Chord Fragment Substitution in Symmetric Cycle** — `OmissionAllow` — Partial chord voicings may execute the minor-third glissando in place of the full chord. (Chapter 15 summary, p. 24)
+3. **Non-Diatonic Color Chord Insertion** — `ColorToneRequire` — Chords absent from a song's original structure may be inserted to add color and originality. (Chapter 18 summary, p. 27)
+4. **Cadence Break Harmonization** — `TextureCycle` — The Cadence Break is filled with Symmetric Cycles, Pedal Point, or original chord progressions. (Chapter 22 summary, p. 36)
+
+---
+
+### Counterpoint and Chord-Melody System
+
+The Counterpoint and Chord-Melody System is the method's culminating system, reframing all prior harmonic study as support for independent melodic lines. Counterpoint is defined as the simultaneous movement of two or more independent melodies — Cantus Firmus (original melody) and Counter melody (added voice) — as distinct from chord harmony. Introduced formally in Chapter 25 and synthesized in Chapter 26, it is the conceptual destination the entire method builds toward. Chord-melody arranging (Chapters 20–26) is the practical vehicle: arpeggiated bass voices carry independent melodic content, non-standard voicings are invented to fit the melodic line, and Pedal Point distributes the sustained-note texture across the ensemble. The three closing solos (Chapters 27–29) embody this synthesis in performance form.
+
+**Members:**
+- Cantus Firmus (Original Melody) — primary melodic voice against which the counter melody moves
+- Counter Melody (Added Voice) — second independent melodic line; may be extracted as the first note of each arpeggiated chord
+- Arpeggiated Bass Voice — lowest note of each arpeggiated chord, treated as an independent melodic line
+- Pedal Point — sustained single pitch (canonically the fifth of the scale)
+
+**Traversal Rules:**
+
+1. **Rhythmic Contrast Between Voices** — `_pending:voice-rhythmic-contrast` — One voice sustains for up to four beats while the other moves in quarter or eighth notes. (Chapter 25 summary, p. 41)
+2. **Harmonic Integrity Constraint** — `FamilyCoherence` — Melodic independence must never compromise the harmonic foundation; the voices avoid bad harmonic movement. (Chapter 25 summary, p. 41)
+3. **Pedal Point Ensemble Distribution** — `_pending:ensemble-layer-assignment` — Bass holds the pedal tone; guitar or piano executes chord variations above; melody instrument carries the line. (Chapter 24 summary, p. 40)
+
+**Modification Rules:**
+
+1. **Arpeggiated Bass Counter-Melody Extraction** — `VoiceMotion` — Only the first (lowest) note of each arpeggiated chord is retained to form a sustaining counter-melody line. (Chapter 25 summary, p. 41; Chapter 20 summary, p. 33)
+2. **Pedal Point Fifth-of-Scale Canonical Choice** — `ColorToneRequire` — The fifth of the scale is the canonical sustained pedal tone. (Chapter 22 summary, p. 37; Chapter 23 summary, p. 38)
+3. **Chord Omission for Melody Priority** — `OmissionAllow` — In chord-melody arranging, chords that conflict with the melodic line must be dropped. (Chapter 26 summary, p. 42)
+
+---
+
+## Pending Work
+
+The following `engine_payload.kind` values are marked `_pending` in the systems-draft, indicating that no finalized engine schema has been assigned to these rules. Each signals a behavior the method describes in plain terms but for which the formal rule-type classification remains unresolved.
+
+- **`_pending:ear-authority-substitution`** — Signals a rule in which the player's own ear, not a written harmonic constraint, governs substitution decisions. The method explicitly positions the musician's judgment as the authority for choosing altered chords and diverging from original progressions (Chapter 10). No existing `engine_payload.kind` in the current taxonomy covers a self-referential, practitioner-ear-governed permission rule.
+- **`_pending:voice-rhythmic-contrast`** — Signals a traversal rule governing the rhythmic relationship *between* two independent melodic voices in counterpoint: one voice must sustain while the other moves in faster values (Chapter 25). This is a cross-voice durational constraint distinct from single-voice motion rules (`VoiceMotion`) or harmonic-family coherence rules (`FamilyCoherence`); it requires its own kind.
+- **`_pending:ensemble-layer-assignment`** — Signals a traversal rule that distributes a harmonic texture across distinct instrumental roles in an ensemble: bass holds the pedal tone, guitar or piano executes chord variations, and a melody instrument carries the song's line (Chapter 24). This is a multi-voice, multi-instrument orchestration constraint; no existing single-instrument kind in the taxonomy captures role-assignment logic across players.
+
+---
+
+## Provenance Notes
+
+All claims in this document are drawn directly from the book-level distillation (aggregated from per-chapter summaries under `summaries/`) and from the 29 individual chapter summaries identified by page range. Quote excerpts cited in the systems-draft JSON are reproduced verbatim and page-cited.
+
+**Chapters that did not yield a system:** Chapters 27 (*Lost Lament*), 28 (*Pathos*), and 29 (*Just Bobi*) contain no load-bearing prose instruction; each is entirely notated chord-melody solo material. Their chapter summaries explicitly note this. They are cited in the Overview as worked demonstrations of the method's vocabulary in performance form, but they contribute no traversal rules, modification rules, or member definitions to any system.
+
+**Chapter-to-system mapping:** Functional Diatonic Harmony is primarily sourced from Chapters 1–12 and 20–21. Symmetric Harmony is primarily sourced from Chapters 13–19 and 22. Counterpoint and Chord-Melody is primarily sourced from Chapters 20 and 22–26 (with Chapter 20 overlapping into both the diatonic and counterpoint systems via the chord-melody and arpeggiated-bass-voice techniques). Several chapters (notably 10, 15, 22, and 26) contribute rules to more than one system; cross-system citations are recorded in the rule references in the systems-draft.

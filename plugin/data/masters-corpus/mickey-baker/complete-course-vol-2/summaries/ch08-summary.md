@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-baker-vol-2
+stage: s3
+source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
+source_pages: 11-11
+model: claude-haiku
+extracted_at: 2026-05-29T00:13:22+00:00
+schema_version: 0.1
+---
+
+# Chapter 8 — Resolutions of Chord Cycles
+
+_Distillation; backed by `chapters/ch08.md`._
+
+Chapter 8 teaches the foundational concept of chord cycle resolutions, establishing that the dominant V chord demands resolution into the tonic I chord, whose arrival satisfies the ear and completes harmonic closure. The master's characteristic move is to organize all harmonic motion hierarchically around the dominant as the most active chord in a tonality, showing how any intermediate chord in a cycle eventually gravitates toward V before resolving to I. The chapter introduces and prioritizes two essential cycles: the I-IV-V-I progression as a basic model, and the I-II-V-I cycle as the primary focus, framing the latter as preparation for the substitution techniques to follow. Key terminology includes the tension-and-release dynamic of V→I resolution, the concept of "temporary resolution" for intermediate chords, and the recognition of the dominant as the harmonic center of gravitational pull. The chapter emphasizes memorization of these cycles as a prerequisite for understanding the minor II substitution that lesson 9 will introduce, making this chapter the essential theoretical foundation for advanced harmonic substitution work.

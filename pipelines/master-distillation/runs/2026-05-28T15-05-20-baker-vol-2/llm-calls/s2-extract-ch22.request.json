@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch22",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 22: The Cadence Break\nPages 36-37 of the book.\n\n<<<CHAPTER TEXT\n\n34\n\nLESSON 22\n\nThe Cadence Breaks\n\nAs mentioned in Lesson 12, the Cadence Break occurs at the end of a musical\nthought. Looking through any popular sheet music, you will see that at certain designated\npoints the music relaxes for one or two bars and then either repeats itself or progresses\ninto another musical line. These points are known as the Cadence Breaks (See Exercise\n54). Notice that at this Cadence Break the music relaxes on one note for 1 and 3/4 bars.\nIn exercise 55 it relaxes for 1 and 1/4 bars.\n\nSemetric Cycles, Peda] Point and other types of original chord progressions may be em-\nployed at these points. The musical thought has ended. Any new chord progressions that\nmay be added give new color and originality. For instance, in exercises 54 and 55 Se-\nmetric Cycles are added at the Cadence Breaks.\n\nThese are the last three bars of Ex. 25 in Lesson No. 11.\n\nCadence\nEx. 54 Break\n\u2014 \u2014_s\nMelody : \u00a3\nSt\n377\nam .\nbe | :\n\nT2 %T3 \u2018T4 Tl\n\n\n\nThese are the last three bars of Ex. 26 in Lesson No. 11.\n\nCadence\nBreak\nG9 Dm7\nr jl Fr 3\u2014n {\nt t Tt TT ie.\nMel =\nelody z\nDm6 \u20143-4 Bdim = G+\na v1 i + t + 1} \u2014>\nrept 11\n\nT3 T2 T1 T\u00e96\n\nG9 G+\nr\u20143\u2014\nb.\nT3 \u00ab=1T4 6\n\nPedal Point\n\nA Pedal Point is a sustained or pedal note held or sustained for several measures\nwhile a variety of chords are introduced. The most popular note in Pedal Point is the fifth\nof the scale. In exercise 56 there is an introduction to the key of C Major, the pedal note\nis G. While the pedal note is being sustained, a Dm9 and a G13b9 chord play. This is the\nmost popular form of Pedal Point.\n\nTo demonstrate Pedal Point on the guitar and to familiarize you with its sound we will use\na few tricks. Exercise 57 is an introduction which is to be used in the key of G Major.\nLower the 6th stringon your guitar a whole toneto D. Practice this exercise until you are\nthoroughly familiar with the idea and sound of Pedal Point.\n\nThere are many ways to play Pedal Point, such as whole notes, half notes, quarter notes\nand eighth notes. In exercise 58, you lower the 5th string a whole tone to G. This is an\nintroduction tothe key of C Major in half note Pedal Point, which fits perfectly to the mu-\nsical exercise \"I Dream of You\".\n\nIn exercise 59 you raise your 5th string up half a tone to Bb. Here you have an introduc-\ntion in the key of Eb using still another variation of Pedal Point.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 22 extraction"
+}

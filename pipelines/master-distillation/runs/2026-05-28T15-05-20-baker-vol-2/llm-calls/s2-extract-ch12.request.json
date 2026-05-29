@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: The Cadence\nPages 20-20 of the book.\n\n<<<CHAPTER TEXT\n\n18\nLESSON 12\n\nThe Cadence\n\nMost popular music is written ineither eight or sixteen bar sequences. At the close\nof these sequences there is a \"Cadence\" which ends a musical thought. This is done by\nprogressing into the dominant chord of the tonality and from there into the tonic. We call\nthis the \u201cAuthentic Cadence\".\n\nThe sequence does not have tobe eight or sixteen bars. There are introductions and end-\nings in which the \"Authentic Cadence\" appears that only consist of one or two bars. The\ndifference between an introduction and an ending is that the introduction stops on the V\n(Example 29). From this point you approach the first chord of the song. An ending\napproaches the V and moves on to the I, which is the final statement.\n\nBelow in exercise 29 there are three examples which are introductions, because the last\nchord is the dominant or V chord. In exercise 30 these same examples are used but now\nthey are endings because they make a final statement and close with the tonic (I).\n\nINTRODUCTIONS\n\u00b0 a0\n7 7\nEx. 29 selena . . selela\nSlowly\n*(Dm9) : fN\nG13b9\nGil _ ee _g 3 \u2014\u2014_\u2014\u2014\u2014\na. | 2 a + i r 4\n36 30 rit. -----\nylab9\nG13b9\nG7 Dm fN\nb. t Tt\nyi3b9\n\nit\n\nGiab9 Gdim\ngm bg bg g \u00a3 bE\noe \u2014\u2014 labo\n\n*See Lesson No. 23, Pedal Point.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

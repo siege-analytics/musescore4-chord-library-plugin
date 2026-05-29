@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-baker-vol-2
+stage: s3
+source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
+source_pages: 4-4
+model: claude-haiku
+extracted_at: 2026-05-29T00:13:22+00:00
+schema_version: 0.1
+---
+
+# Chapter 1 — Chord Forms
+
+_Distillation; backed by `chapters/ch01.md`._
+
+Chapter 1 introduces Upper Partials as the method's foundational concept for modern harmonic color in guitar voicings, establishing that students will study chord forms designed to exploit these overtones rather than traditional rhythm or comping chords. The chapter's scope is deliberately restricted: students learn harmonic vocabulary and voicing shapes while assuming a rhythmic foundation comes from other instruments, placing the focus entirely on upper-partial coloration and resonance. The master's characteristic move appears in the transposition advice—when a voicing proves difficult in its notated position, move it up the neck to a higher chord rather than forcing awkward fingering—a pragmatic principle that honors both the harmonic intent and the player's physical comfort. Load-bearing terminology here is twofold: Upper Partials names the harmonic resource the method explores, while chord forms (distinct from rhythm chords) identifies the specific object of study. Chapter 1 functions as pure vocabulary building; the movement and application of these forms—the actual harmonic narrative—begins in Lesson 2.

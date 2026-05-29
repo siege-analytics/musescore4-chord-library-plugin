@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch14",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 14: Symetric Cycles\nPages 22-23 of the book.\n\n<<<CHAPTER TEXT\n\n20\n\n| | th. b n\na\n5 \u00e9 ad I\nTl T2 T3 T4 Tl\nANALYSIS\n| i\nb. =F =\nb 3\nGb Eb AC\u2019 \u2018A Gb CED\n\u2014\u2014\u2014so\n\nLESSON 14\n\nSymetric Cycles\nIn this lesson we have 4 examples of Symetric Cycles. It isn't necessary to write\nthem in full detail. Only the first chord will be diagrammed and those to follow, as you\nshould know, are a minor third higher.\nIn exercise 32 the fourth finger moves from the 2nd to the 3rd string as diagrammed.\n\nSimply follow the same fingering as you progress up the finger board in minor thirds.\n\u2018These exercises can be extended still higher if you have a Cutaway guitar. If not, carry\nthem as high as your guitar will allow.\n\nAny chord can be played in a Symetric Cycle. Take any of your favorite chords, start\nthem in a low position on your guitar and move them up in minor thirds or start them in\na high position and move them down in minor thirds.\n\n\n21\n\nPlay the exercises below backwards, starting with T1 then 4, 3, 2 and back to the 1.\n\nT\nEx. 32\nmm F13b9 Ab13b9\n\u2014\u2014\u2014 SS ere ee\n+: a a bo \u2014\u2014\nbs s\n7T2\nB13b9 D13b9 F13b9\n\nDY\n\n|\nr\n\n= =\nT3 T4 Tl\nT o\nEx. 33 ard\nHe r] Dm9\nT Bm9 oO\nFm9 Gim9 .\nA Dm9 i # - if ~ g\nze Tt\nTt Tt\nmi U :\nTi T2 T3 T4 Tl\noo\nEx. 34 ry\n; \u00bb Gis\nT Ch1sb9 E139 >\n, Giab9 Bb1ab9 . ig bef\nI\n, |\nq q :\nTl T2 T3 74 Tl\noo\nEx. 35 T\n+ Cmaj7\nCmaj7\u2014 Ebmaj7 Spmalt (ral &\n\nT1\n\nT2\n\nT1\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 14 extraction"
+}
