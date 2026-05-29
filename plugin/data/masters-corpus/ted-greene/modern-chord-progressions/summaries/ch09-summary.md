@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-greene-modern-chord-progressions
+stage: s3
+source_pdf: Modern Chord Progressions - Jazz And Classical Voicings For Guitar - Ted Greene.pdf
+source_pages: 59-73
+model: claude-haiku
+extracted_at: 2026-05-29T05:12:56+00:00
+schema_version: 0.1
+---
+
+# Chapter 9 — iii7 VI7 ii7 V7 (and I VI7 ii7 V7)
+
+_Distillation; backed by `chapters/ch09.md`._
+
+Chapter 9 teaches the substitution of dominant 7th chords for minor seventh chords, establishing the foundational rule that any m7 type chord may be replaced with a dominant 7th according to personal taste. The primary formula introduced is iii7 VI7 ii7 V7 (and I VI7 ii7 V7), where VI7 can be any dominant 7th type chord — a distinction clarified through symbol notation (vi7 for diatonic Am7, VI7 for chromatic A7). The chapter's characteristic pedagogical move is teaching students to internalize altered-tone choices as personal rules by observing how voicings and chord qualities create color differences while preserving the underlying formula, and modelling self-teaching through examples like generalizing that "VI7 sounds good with any altered tone when used in smooth connection with surrounding chords." Load-bearing terminology includes substitute chords, dominant 7th type chords, voicings, chord qualities, and the harmonic formula itself; the acoustic foundation rests on the overtone series, explaining why diatonic substitutions within a key sound natural. The chapter emphasizes memorization by grouping favorites by starting chord and reminds students to resolve V7's to I's occasionally to maintain functional-harmonic grounding.

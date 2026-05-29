@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: Moving Chords a 4th\nPages 58-60 of the book.\n\n<<<CHAPTER TEXT\n\nNow using the same logic with the other examples you will notice\nthe following:\n\n4 A F EF Ene Faw E &7\n5 =H z 3 ate sary 2eatT\nJetad IH #] amnes| tee = HF\nL at it Lil\n\nExperiment with this principle using other chords. It will really help to give you insight into the\nnature of the guitar.\n\n57\n\n\n\nSection 11\n\nChord Substitutions\nand\nGeneral Information\n\nThese are just guidelines or suggestions (not rigid rules) for some of the most common substitutions.\n\n1. Fora basic major, minor, or dominant 7th chord, any extension may theoretically be substituted.\nThe word theoretically is used because, as said before, you must exp\u00e9riment and you will find\nthat certain extensions sound better in certain places than others. Example: a Cm6 might sound\nbetter than Cm7 in place of a Cm in a certain song.\n\nIl. Fora dominant 7th chord, you may play a m7 type chord whose root is a 5th higher than the\nroot of the dominant chord, but you do not only play this m7 type chord; you play it for part of\nthe duration of the dominant chord and then play the dominant chord (or extension). Example:\nfor one measure of C7 (4 beats normally), you could use Gm7 for 2 beats, and then C7 for 2 beats;\nor Gm7 for 3 beats and then C7 for 1 beat, etc.\n\nIll. Dominant chords with altered tones (remember this means sth, #5th, both, #9th) can be used\neffectively for dominant chords when the next chord is: 1-one whose root is a 4th higher, 2-one\nwhose root is a % step lower, and 3-a minor type chord with the same root. However, the 7#9\nchord can also be used as a direct replacement for the 7th chord in other cases too, when a\n\u201cbluesy\u201d sound is desired.\n\nOne important point is that you couldn\u2019t always replace a 17 at the beginning of a song with an al-\ntered chord (except for a 7* 9); you might first play the 17 (or extension) and then you could play the\naltered chord. Now for some examples of the 3 cases listed. Suppose the basic chords at the beginning\nof a song were:\n\n1) C7 F7 in the key of C you might play dt Pas Fi3sue\nWt Ut dm HUMBER OF BEATS \u2014 eed\nNotice that the F7 is a 4th higher than the C7.\n\n2) Suppose, in part of a song, you had the following basic chords to work with \u2014 C7 BD] AZ you\n\nmight play: ae tis\nNotice that A7 is 4 step In this progression\nlower than BD7, g ot \u00a2 B43 AT#It it is most likely\nsel 4 1 , 5 r that the next chord\nr will be D7 or Dm7, so\n\u2019 this chord may be\naltered since D is a 4th\naw 4 Hit higher than A, (this is\n\nthe same Jogic as the\nprevious example).\n\nThe most critical factor in an altered tone is often its top note (highest pitch).\n\n58\n\n\n\nExample: c7 re AT\n\n30 \u00a2\nNotice how the B\u00ae7#5 sounds out of place here. If the 8 7 a al 7\n#5 tone were replaced with a 5th, >5th or 6th tone, the\nchord would sound good.\n5\n3) Suppose in a song you encountered the following chords:\nC?D7 Dm7 G7.\nNotice that the m7 CF Dar 9 GY\nchord has the same oF o| Slles] 3\u00a2\nroot as the 1 4 oR\ndominant chord. L\nYou might play the\nfollowing chords a\u201d \u201ca 4 4\ninstead: c# pre NG 7by4\n94 5s Stet] 7\n\no4 J\n\n(The G7 may\nbe altered because it sounds as if it is going back to C which is a 4th higher). The D7#9+ chord brings\nup an important point; suppose you were playing these chords in a song backing up a singer; they\nwould not necessarily work then, because the singer\u2019s melody might conflict with the chords. In a\ncase like this, you must pay special attention to the TOP note in each chord.\n\nThe D7#9+ chord in this example has the *9 as its top note; a very common melody note is the 3rd of\na chord. If the basic chord were D7 and the melody was F*# (the 3rd of the chord), you could not use\nthe D7#9#5 chord because of the F note on top. So if you are playing substitute chords in a song, it\nwould be wise if you were thoroughly acquainted with the melody. If you are playing chords behind\nan improvising soloist, you need not worry, if he is competent, as he will be able to hear your chords\nas you hit them, and play his solo accordingly; if he is not too experienced in soloing, it may help to\nget together beforehand on what you might do.\n\nIV. Whenever a major or minor type chord is followed by a major, minor, or dominant type chord\nwhose root is a 4th higher, you may divide the duration of the Ist chord in % and play a\ndominant chord with the same root for the 2nd \u00a5% of the allotted time.\n\nExamples: 1) BASIC: CF 2) BASIC: Cm Fm\naE\nCF crt Fg Come\u2019 CThe+ Em\nSuBsTi VE 7 7 3 9 Carian\n4 4 P\u00a2 CII\n4 eerie\nL l\na 7) an 7a a\u201d 77)\n\nV. For a dominant type chord, you may play another dominant type chord whose root is a 5th\nhigher. Once again this is usually done when the chord AFTER the dominant chord is either:\nl-one whose root is a 4th higher, 2-one whose root is % step lower, 3-a minor type chord whose\nroot is the same as the dominant chord. Once again, be careful with altered tones.\n\n59\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}
