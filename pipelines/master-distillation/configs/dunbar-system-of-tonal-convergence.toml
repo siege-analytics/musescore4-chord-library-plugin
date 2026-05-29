@@ -1,0 +1,52 @@
+# Salvage from #360 mismap: original config was martino-tonal-convergence.toml
+# but the OCR transcript actually contains Ted Dunbar's 1975 book.
+# OCR was correct; only the master_id was wrong. Re-keyed under ted-dunbar.
+
+[master]
+id = "ted-dunbar"
+name = "Ted Dunbar"
+
+[work]
+id = "system-of-tonal-convergence"
+title = "A System of Tonal Convergence for Improvisors, Composers and Arrangers"
+year = 1975
+instrument_scope = "all instruments (lead-sheet / theory text)"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Pat Martino/Martino, Pat - A System of Tonal Convergence.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = false
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+# Salvage notes:
+# - PDF file is mislabeled (Pat Martino path/filename); content is Ted Dunbar's
+#   "A System of Tonal Convergence" (1975, East Brunswick, NJ; self-published).
+# - Verified independently this session via grep on the OCR raw-transcript:
+#   "Ted Dunbar" appears 5+ times in front matter; "Pat Martino" appears 0 times.
+# - Source OCR copied from the wrong-keyed run dir:
+#   pipelines/master-distillation/runs/2026-05-28T15-05-20-martino-tonal-convergence/ocr-output/
+# - The wrong-keyed run dir stays in place as audit trail per #360.
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Convergence on the Seventh Chord, Minor Chord\nPages 69-84 of the book.\n\n<<<CHAPTER TEXT\n\nScale #24\nDIMINISH\nF\u03947\n56\n\nChord Examples of Convergence\n57\n\nSeale #1 CHORD EXAMPLES OF CONVERGENCE\nes\n\n175\n\n77 I I\n\nva ~ U a\n\nScale #2\n= Z #4 rote a\n-8- \u2014B\noe S -\n\nPte\n\nEI beKb\n\nhie\n'\nqi\ndonor\n\n:\npa fe\n\n58\n\nNO 1 MUSIPACK 12 STAVE\n\n\n\nGHUKD EXAMPLES OF CONVERGENCE\n\n\u2014 #7 ES be. Q a\n\nsine\n14\n\n__ oF\n\n\u2014} _ \u00b0\n\n:\nne\n\nScale #12\net -<\nrs! we\n\nare\n\nCo\n\nLL\n\n4 @ 59\n\n\n\nCHORD EXAMPLES OF CONVERGENCE\nScale #13\n\u00a3 S\n-:\n\nP= i\n- ~e-\n\ney\nscare #14 prt bd 4 i, 8B\n\nSeale #15 bad ra ene\n: 4 z e\n: \u2014 \"a os\n\nCh\n\nab .\nSeale #16 [OT 3 aa eon a\n+ i oar = \u2014\n\nae ee a\nSeale #17 . ears\no_ 3 \u2014\u2014\nb \u2014 =! \u2018ou\nSeale #18\n3 eer\n4 : oe\nbo e\n\nNO ' MUSIPACK 12 STAVE\n\n\nCHORD EXAMPLES OF CONVERGENCE\n\nSeale #19\nN \u20142>\n\u2014fay SS = See\nto\nScale #20\n\n+\n\nee #21 \\e ba Pt b rt \u201c~~\n\n\u00a9 \u2014\n, Scale #22 a | a\n\n& ra = a\nscale #23\n\nent\n\nScale #24\n\na,\n\n3\nz\n3\nHy\n\n61\n\n\nScale-Chord mixed Convergence Examples\n62\n\naU\n\nMIXED CHORDAL SCALAR\nEXAMPLES\n==\nbe =\n\nttt\n\nid\n\ni\n4\nIt\n\niim\n\nis\n[\n\n\n\nMIXED COMBINATION SCALE EXAMPLES\n\nP25, \u2014\ni\" t N te,\nee ~\u2014% t\ncs t_};* va 2\nb =\n; i\nL 4\ncg\nCe |\n=\u2014= ; } |\noe\nfi\nr\nTo b\u00bb-\nit\n|\nBoSss=ce Se\n| a * :\n\\ << t\n64\n\n|\n| Boseortine\n\n\n\nnN \u2014 3\n\u2014 he F Minor\n[ ee | t\n\na, ig r= +. a t\n=r 5 ee\nt + = \u00a2 SS\n\n,\n\n4\n\n]\n\n}\n\nFt\n\n}\n\n1\n\n65\n\nNO 1 MUSIPACK 1? STAVE\n\n; - -\n\n\nChord on Chord Convergence Examples\n66\n\nChord On Chord Convergence\n\nThe main chords in tunes may be converged on or embellished\nwith other chords that may precede or lead up to them. Whatever\nchord you are leading up to (main chord) is or can be usually pre-\nceded by a five chord with a tritone. This interval participates\nin this five or dominant-seventh chord as well as another seventh\nchord a flatted 5th from its root.\n\nFor example if you are embellishing or converging on an E by\nchord the five chord preceding it would be Bb7, Therefore Bb 7 bs\nB bi3bs. Bb o+11, B bg, B bizsby, BP 745 bo, B bras, BD 745 could\nprecede the Eb.7 as well. Also, E7 contains the same tritone as\nB b; so several E7 type chords with tensions added such as E7D 5,\n\nE 135, E9+11, E9, E 13 May be used as chord convergers in addition\nto B b 7.\n\nAlso the diminish chord D?7 has the same tritone as the Bb7\n(p-a by.\n\nIt smoothly voice leads into the gD _7,\n\nrF\u2014 ob\nB== D b\nab.gb\nns?\nThis makes it possible to use F?97, ab o, & B? 7 also.\n\nThe D 7+5 also works beautifully as well as Bo?\nAP\n\nC#\u2014 D b\nAft} \u2014\u2014B b\nr\u00a2\u2014o\u00a2b\np\u2014xzb\n\nb\n\nThis yields 21 convergent chord possibilities into E\u201d -7.\n\n67\n\n\nEXAMPLES OF CHORD ON CHORD CONVERGENCE\n\nb\n\n= be\n\u2014 +e\n4 \u201c Bibs Bb +7 a Tonal Destiny\n\u2018\ni\na oo so se\n1 >, VF, E9411 a :\nia Gf3b9 B13b9 9 onal Destiny\n, be\n=. rs\n4 =\nal b7+5b9 Eb-7 Tonal Destiny\n\nTonal Destiny\n\nTonal Destiny\n\nALL CHORDS ABOVE THAT PRECEDE THE Eb-7 ARE EMBELLISHING CONVERGENT .\n\n68\n\nNO 1 MUSIPACK 12 STAVE\n\n\nScale #1 EXAMPLES OF SEVENTH CHORD CONVERGENCE\n\nnl a a \u2014F7th_destiny\nBs |\nCal\n\n=e \u2014\nCe\ne\nScale #4\nnN tbe - e_4 = a\"\n| t\u2014} j t f\nscale #6 4 F?\n\nScale #10 =\n\n:\ni\n\nF?\n\nerases.\n\n7: A t\n\u201cNy ts \u2014 2 \u2018acon\n\nIt is just a matter of using chomatic tones to resolve the tritone\n(7th or 3rd) to use those seales against a 7th ehord converginly.\n\n69\n\nNO 1 MUSIPACK 12 STAVE\n\n\u2014\n\n\nCIRCLE OF GRAVITIES(CHORD AND SCALE) FOR\nF MAJOR TONALITY\n\n4OHADHOD| S412\n4d FF 5\n\n@\n\nQl so\nThree tritones(C-F#),(G-D> )&(E-Bb )are involved. Eaeh chord comes\n\nfrom scale(on same line)and either can converge or bombard the F\nmajor tonality ehord.\n\n\u00a9 Ted Dunbar 1976.\n\n\nSeale #1\nEXAMPLES OF MINOR KEY CONVERGENCE\n\nARR bo or serge ,___F minor destiny\n{ i = T wee\n\nThe tritone(G-DP) has a Gg or c7b9 relationship to the F minor chord,\n\nScale #2 F minor\no\u2122~\nD oo \u2014\nKa |\n\u2018'phis seale seems to embrace the 5th of the F minor chord,\n\nScale # F minor\ncale #3 - he i 4 a.\n\nA =\nat\n\nScale #3 has a major 3rd already in it so it has to used as above\nto embellish the 5th of the F minor.\n\nScale #4\n4 = F minor\nah\n\ni 1 }\n\nPicale #4 also euddles the 5th of the F minor,\n\nScale #5\n\naN\nvA\n\nao | Peer f\nif } ; es |\n\n~~]\nIt seems easier to base your resolution on the 5th of the F minor eherd.\nThe minor 3rd is \u201clow keyed\" and doesn't stand out as much however it -\n\nLes\n\n70\n\nNO 1 MUSIPACK 12 STAVE\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chord Examples of Convergence\nPages 57-61 of the book.\n\n<<<CHAPTER TEXT\n\nCHORD RESOLUPIONS\nCHARACTER CHORDS\n\nSeale #5 tritone tritone b\ny= = Q \u2014\u2014\n| = > aa opto, c7bo bs\nis $e be tritone c7boys = ci3h9, B13\nfe}\nOo\n\u2014@- \u2014a&\nScale #6 cbh7bs, Gho+i1, E+A7\nFontes = CAS, OFFS\n\npote i Seg E+h7 = FA?\nba b-\u20ac\nPe = ye ay\n\ncg, Bea7, DuA7, E1305\n\nSeale #7 =\nbo ate \u2014\nFa c=}\n\na\n\u2014 <>\nSven E135 FO69\n\n\u2014-\ntritone j \u00a5e\n\nNO) MUSIPACK 12 STAVE\n\n\n\nScale #9\nCHORD RESOLUTION\nFA79\nC7+5\nAdditional Scale Sounds\nScale #10\ntritone\nBb7b5, C7+5, C7b5, Gb7b5\nFA7\ntritone tritone\nScale #11\ntritone\nC7b9 FA79 C7b9, D7b5, Gb, Eb13\ntritone tritone\nScale #12\ntritone\nBb7b5, C13b9, Bb6, G-9b5, Db7b5\nFA79\nC13b9\n\nSeale #13\n\n4 tritone a C7b9b5, C79. C7b5,\na fo. 2 PADS\na rai \u2014~\u2014 po\u2014-a rel\na =\ntritone tritone C7b OFS FA679\nbe = \u2014\n\"Ss =\u00a2\nye\u2014 8\n\nScale #14 pbA7b5, Eb 13, C7b9sus, BLE\nbea a2 2S\n\u2014\u2014 ==\nteLfone DbA7b5 = FAO\n\nBonile fs Le \u00a3 Gbo+i1, GhAbS, C7b9b5\nee\nthe tritone tpa sone\nz\nss ad ea\nSeale #16 \u2014_ G29 C7, C13, G-6, Ci\ntes oS? ss zs ae\nis _\u2014 a2 no\n\nLa\n\n<-\noo\n\n\n\nCHARACTER CHORDS\n\nScale #17 PHA705, AD7, FHB7\n4 \u2014\u2014 f e CHORD RESOLUTION\nEco tes f- oa =\n= a\nG ae Se\n4 e povtritone, F#4 b5 FA?\nq 2\nq Additional Scale Sounds\nq Scale #18 $e \u2014E7+5, C745, BR7bS, E7+9\ns { 22\" oe a\na q @ oO o-\n: itone E+7 FA79\n4 a ee\n4 =\n(0)\n\nSeale #19 \u2014_ Gs, c7b9, BLa7. pba ts\nerivori =\n= 7 a L C=] <Q\n= \u2018sone a =\nGg Wd\nigo,\n47\n\nNO | MUSIPACK 12 STAVE\n\n\nScale #20\nRESOLUTION\nC11, G-7 B\u22067 E\u03a6\nAdditional Scale Sounds\nScale #21 tritone\nF#7, C7b5, C+\ntritone\nC7b5\nF\u220679\nScale #22 tritone\nGb7b5, C13b5, C7b5\ntritone\nC13b5\nF\u22067\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

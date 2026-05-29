@@ -13145,6 +13145,556 @@
       "status": "promoted"
     },
     {
+      "id": "ted-dunbar",
+      "name": "Ted Dunbar",
+      "lived": "1937-1998",
+      "traditions": [
+        "jazz theory",
+        "bebop",
+        "post-bop",
+        "George Russell circle"
+      ],
+      "instrument": "6-string electric guitar; theory/composition framework applies to all instruments",
+      "biography": "Ted Dunbar (1937-1998) was an American jazz guitarist, composer, and influential educator who taught at Rutgers University. Acknowledged in his own published works, his circle of mentors and collaborators included David Baker and George Russell — and his theoretical work sits alongside Russell's Lydian Chromatic Concept as a foundational American jazz-theory tradition. *A System of Tonal Convergence* (1975, self-published) codifies his harmonic framework: the tonal gravity law as a single founding axiom from which a complete improvisational and compositional method extends. Dunbar's characteristic move is to treat the entire chromatic scale as always available, governed by five awareness factors rather than fixed prescriptive rules. Biography placeholder; refine with maintainer review on next pass.",
+      "principles": [
+        {
+          "id": "tonal-gravity-law",
+          "name": "Tonal gravity law: every chromatic pitch bears cadential pull to any active key",
+          "summary": "The founding axiom of Dunbar's method, named explicitly in Chapter 1. Every pitch in the chromatic scale exerts a cadential pull toward any active tonal center. From this single law the rest of the method extends: chromaticism is not 'outside the key' but a structured pull toward it, and convergence is the formal mechanism by which chromatic motion arrives at the target. The dominant seventh chord — with its inherent tritone — is the primary convergence vehicle; the Circle of Gravities (Chapter 8) maps tritone relationships as a navigational layer over the law.",
+          "voicingStyleTags": [
+            "ted-dunbar",
+            "tonal-gravity"
+          ],
+          "playStyleTags": [
+            "chromatic-cadential",
+            "convergence-improvisation"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Dunbar, Ted. A System of Tonal Convergence for Improvisors, Composers and Arrangers. 1975.",
+              "citation": "Chapter 1 establishes the law (p. 4); Chapter 8 introduces the Circle of Gravities as the tritone-relationship map (p. 66-70)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "twenty-four-scale-convergence-engine",
+          "name": "24-scale convergence engine: target tonality bombarded from all harmonic directions",
+          "summary": "Dunbar's technical apparatus: a fixed inventory of twenty-four scales, organized by harmonic color (major, minor, augmented, dominant, diminished), that collectively surround any target tonal center and can approach it from any harmonic direction. Practitioners do not select a single scale and apply it; they rotate multiple scales in varying orders over a single target chord — especially the dominant seventh — deploying convergent approaches in turnbacks, cadences, and cycles. The engine was conceived at the II-V cadence, which Dunbar identifies as the seed of the entire system. Every scale's last note is a whole or half step from the root, 3rd, or 5th of the target (the Universal Last-Note Resolution Rule).",
+          "voicingStyleTags": [
+            "ted-dunbar",
+            "twenty-four-scale-system",
+            "color-scales"
+          ],
+          "playStyleTags": [
+            "scale-rotation",
+            "convergence-improvisation",
+            "II-V-pivot"
+          ],
+          "applies_to_modes": [
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Dunbar, Ted. A System of Tonal Convergence. 1975.",
+              "citation": "Chapter 2 builds the technical core (Scale Justification Sheets + universal voice-leading rule, p. 22); Chapter 3 introduces individual scales (p. 30); Chapter 4 demonstrates convergence via mode + tetrachord (p. 50); Chapters 5-7 present in pure notation."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "no-wrong-notes-via-five-factors",
+          "name": "No wrong notes — five governing factors license full chromatic availability",
+          "summary": "Dunbar's 'no wrong notes' philosophy: the entire chromatic scale is available to the improvisor at all times, governed not by fixed prescriptive rules but by five awareness factors — key center, Vantage Point, Interval Tonics, Resolution, and the artist's confidence. This is not permissiveness; it is rigorous conditional availability, where each note's correctness is determined by the operative awareness factors at the moment of execution. Mistakes are reframed as 'new harmonic fields' (the Mistake-as-Generative-Event rule, Chapter 4) — an error becomes a generative event that the player navigates back to the target via the same convergence framework that governed the original line.",
+          "voicingStyleTags": [
+            "ted-dunbar",
+            "five-factors",
+            "full-chromatic"
+          ],
+          "playStyleTags": [
+            "chromatic-license",
+            "conditional-correctness",
+            "mistake-as-fuel"
+          ],
+          "applies_to_modes": [
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Dunbar, Ted. A System of Tonal Convergence. 1975.",
+              "citation": "Chapter 3 (no-wrong-notes principle + five factors, p. 31); Chapter 4 (mistake as generative event, p. 50)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "consciousness-over-prescription",
+          "name": "Consciousness over prescription: the system increases awareness, not rules",
+          "summary": "Dunbar's pedagogical meta-principle: the System of Tonal Convergence is designed to increase the player's harmonic awareness, not to dictate procedure. The 24-Scale Engine, the Circle of Gravities, the Tonal Gravity Law, the five governing factors — all are mechanisms for cultivating perception. Practitioners do not learn a sequence of mechanical rules; they internalize a perceptual framework within which any chromatic move can be justified, evaluated, and connected to the target. Ear priming via cadences and sound projection (Chapter 2) are the preparatory practices that make this cultivated awareness operational.",
+          "voicingStyleTags": [
+            "ted-dunbar",
+            "perceptual-pedagogy"
+          ],
+          "playStyleTags": [
+            "awareness-cultivation",
+            "ear-priming",
+            "sound-projection"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Dunbar, Ted. A System of Tonal Convergence. 1975.",
+              "citation": "Chapter 1 (governing metaphor); Chapter 2 (ear priming via cadences, p. 18; sound projection technique, p. 20); Chapter 4 (consciousness-over-prescription as explicit modification rule)."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
+      "works": [
+        {
+          "id": "system-of-tonal-convergence",
+          "title": "A System of Tonal Convergence for Improvisors, Composers and Arrangers",
+          "year": 1975,
+          "instrument_scope": "all instruments (lead-sheet / theory text)",
+          "summary": "Dunbar's foundational harmonic-theory text constructing a complete framework for organizing the chromatic scale into directed motion toward any tonal center. The central claim — stated in Chapter 1 and elaborated across Chapters 2-8 — is the tonal gravity law: every chromatic pitch bears a cadential relationship to any active key center. From that single axiom the book builds outward: a fixed inventory of 24 scales organized by harmonic color (major, minor, augmented, dominant, diminished) that 'bombard' a target tonality from all harmonic directions, visualized as a 360° compass with the key center at its hub. The dominant seventh chord — with its inherent tritone — is the system's primary convergence vehicle. Two systems constitute the method: the 24-Scale Convergence Engine (technical apparatus) and the Tonal Gravity Framework (perceptual / philosophical infrastructure), introduced together with the Circle of Gravities in Chapter 8 as a navigational map of tritone relationships.",
+          "references": [
+            {
+              "source": "Dunbar, Ted. A System of Tonal Convergence for Improvisors, Composers and Arrangers. Self-published, East Brunswick NJ, 1975.",
+              "citation": "Primary source. Chapter-loop run 2026-05-29T06-30-11-dunbar-system-of-tonal-convergence; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/ted-dunbar/system-of-tonal-convergence/. PDF was salvaged from a #360 mismap originally filed under Pat Martino; OCR was correct, only the master_id was wrong."
+            }
+          ],
+          "systems": [
+            {
+              "id": "ted-dunbar:system-of-tonal-convergence:convergence-engine",
+              "name": "The 24-Scale Convergence Engine",
+              "summary": "The central system of the book: a fixed set of 24 scales (organized by harmonic color — major, minor, augmented, dominant, diminished) that surround any target tonal center like a 360-degree compass and 'bombard' it with directed harmonic motion. Each scale is justified by a universal voice-leading rule ensuring its final note lands within a whole or half step of the root, third, or fifth of the target tonality, making every scale a valid convergence vehicle. The system was conceived at the II-V cadence and treats the dominant seventh chord — with its tritone — as the most load-bearing chord type. Practitioners rotate multiple scales in varying orders over a single target chord, deploying them in turnbacks, cadences, and cycles. The governing philosophy is that harmonic fluency arises from understanding tonal gravity rather than from avoiding dissonance.",
+              "members": [
+                {
+                  "id": "scale-color-major",
+                  "name": "Major Color Scales",
+                  "summary": "Scales with major harmonic character, including Scale #16 (major with raised 4th / Lydian-like construction)."
+                },
+                {
+                  "id": "scale-color-minor",
+                  "name": "Minor Color Scales",
+                  "summary": "Scales with minor harmonic character, including Dorian mode (Scale #20) and G Jazz Melodic Minor."
+                },
+                {
+                  "id": "scale-color-dominant",
+                  "name": "Dominant Color Scales",
+                  "summary": "Scales with dominant seventh harmonic character; central to convergence on the V chord."
+                },
+                {
+                  "id": "scale-color-diminished",
+                  "name": "Diminished Color Scales",
+                  "summary": "Two diminished scale types: H-W (Scale #4) and W-H (Scale #5), each offering distinct approach colors."
+                },
+                {
+                  "id": "scale-color-augmented",
+                  "name": "Augmented Color Scales",
+                  "summary": "Scales with augmented harmonic character, completing the five-color spectrum."
+                },
+                {
+                  "id": "scale-11",
+                  "name": "Scale #11 - Descending Tritone Scale",
+                  "summary": "The author's personal scale containing an E-Bb tritone; descending tritone-based construction."
+                },
+                {
+                  "id": "scale-15",
+                  "name": "Scale #15 - Half-Diminished / Half-Whole-Tone",
+                  "summary": "Bipartite scale: first half yields diminished color, second half whole-tone; E natural functions as leading tone resolving to F."
+                },
+                {
+                  "id": "scale-16",
+                  "name": "Scale #16 - Major with Raised 4th",
+                  "summary": "Lydian-like construction beginning on the 7th of the V chord of F major; raised 4th is the major 3rd of the V chord."
+                },
+                {
+                  "id": "target-tonal-center",
+                  "name": "Target Tonal Center",
+                  "summary": "The key center at the middle of the 360-degree compass; the gravitational destination all 24 scales converge upon."
+                },
+                {
+                  "id": "dominant-seventh-chord",
+                  "name": "Dominant Seventh Chord",
+                  "summary": "The most flexible chord type in the system, hosting the tritone and variants including 7b9, 7#5, 7#9; pivot of convergence at the II-V cadence."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "universal-last-note-resolution",
+                  "name": "Universal Last-Note Resolution Rule",
+                  "summary": "Every scale ends with its final note a whole or half step away from a chord tone of the target.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Last-note resolution rule (all 24 scales)",
+                      "quote_excerpt": "last note ... only a whole or half step away from the Ist, 3rd, or 5th or root",
+                      "page": 22
+                    }
+                  ]
+                },
+                {
+                  "id": "free-scale-order-rotation",
+                  "name": "Free-Order Scale Rotation",
+                  "summary": "All 24 scales may be connected in any order for convergence.",
+                  "engine_payload": {
+                    "kind": "_pending:free-order-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "All scales connectable in any order",
+                      "quote_excerpt": "All scales in this system may be connected together in different orders for convergence",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-pivot-traversal",
+                  "name": "Tritone as Pivot Interval in II-V Traversal",
+                  "summary": "The tritone is the central pivot interval of the II-V cadence.",
+                  "engine_payload": {
+                    "kind": "_pending:tritone-pivot"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "2-5 cadence and tritone",
+                      "quote_excerpt": "central interval of harmonic signficance of the 2-5 cadence has been the mysterious tritone",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "tetrachord-bridge-convergence",
+                  "name": "Final Tetrachord as Convergence Bridge",
+                  "summary": "The last tetrachord of a convergence scale matches/leads into the target key.",
+                  "engine_payload": {
+                    "kind": "_pending:tetrachord-bridge"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Last tetrachord as convergence mechanism",
+                      "quote_excerpt": "The last tetrachord of this scale is an F major scale.",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "modal-reentry-traversal",
+                  "name": "Modal Re-Entry Traversal",
+                  "summary": "Convergence scales may begin on any mode of the target key.",
+                  "engine_payload": {
+                    "kind": "_pending:modal-reentry"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Same key, different mode",
+                      "quote_excerpt": "starting on a different mode of it",
+                      "page": 50
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Dorian mode as convergence scale",
+                      "quote_excerpt": "This scale is simply a dorian mode of the F major",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-on-chord-tritone-approach",
+                  "name": "Chord-on-Chord Tritone Approach",
+                  "summary": "Target chords are approached by a preceding V7 or its tritone-sub.",
+                  "engine_payload": {
+                    "kind": "_pending:tritone-sub-approach"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Chord-on-chord convergence rule",
+                      "quote_excerpt": "Whatever chord you are leading up to ... usually preceded by a five chord with a tritone",
+                      "page": 66
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "scale-color-substitution",
+                  "name": "Scale Color Substitution (Multi-Color on One Chord)",
+                  "summary": "Multiple scale colors are rotated over a single dominant seventh chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Using many scale colors on one chord",
+                      "quote_excerpt": "many different scale color types on one chord (7th)",
+                      "page": 4
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "Combining scales in rotas",
+                      "quote_excerpt": "scales and their chords may be combined ... in several rotas varying their order",
+                      "page": 4
+                    }
+                  ]
+                },
+                {
+                  "id": "dominant-seventh-variant-expansion",
+                  "name": "Dominant Seventh Variant Expansion",
+                  "summary": "The V7 chord hosts variants (7b9, 7#5, 7#9, etc.) expanding convergence capacity.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "7th chord as most flexible chord type",
+                      "quote_excerpt": "7th chord ... most flexible of all the chord types. (7th bs, 7b 9, 7th #5, 7th #9)",
+                      "page": 4
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-extraction-from-scale",
+                  "name": "Chord Extraction from Scale for Resolution",
+                  "summary": "Every scale yields its constituent chords for resolution use.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Extracting chords from scales for resolution",
+                      "quote_excerpt": "Extract all possible chords from all scales for resolution purposes",
+                      "page": 20
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chord-scale relationship rule",
+                      "quote_excerpt": "Each chord represents a member chord sound of one of the modes of the scale",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "major-scale-on-minor-fifth",
+                  "name": "Major-3rd Scale Embellishing Minor Chord Fifth",
+                  "summary": "When a scale's major 3rd conflicts with minor key target, embellish the 5th of the minor chord instead.",
+                  "engine_payload": {
+                    "kind": "_pending:conflict-redirection"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Minor key: scale with major 3rd",
+                      "quote_excerpt": "Scale #3 has a major 3rd already in it so it has to used as above to embellish the 5th",
+                      "page": 70
+                    }
+                  ]
+                },
+                {
+                  "id": "enharmonic-scale-equivalence",
+                  "name": "Enharmonic Scale Equivalence / II-Convergence Substitution",
+                  "summary": "Scales sharing pitches with a mode may substitute as II-convergence scales.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "G Jazz Melodic Minor as II convergence",
+                      "quote_excerpt": "G Jazz melodic minor scale has the same notes ... so it may be used as a II convergence scale",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-tritone-resolution",
+                  "name": "Chromatic Tone Resolution of Tritone",
+                  "summary": "Chromatic tones resolve the tritone of the 7th chord during convergence.",
+                  "engine_payload": {
+                    "kind": "_pending:chromatic-tritone-resolution"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Scale-to-7th-chord resolution rule",
+                      "quote_excerpt": "using chomatic tones to resolve the tritone",
+                      "page": 69
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ted-dunbar:system-of-tonal-convergence:tonal-gravity-framework",
+              "name": "Tonal Gravity Framework",
+              "summary": "Theoretical sub-system establishing the philosophical and perceptual conditions under which the 24-scale engine operates. Every chromatic pitch has a cadential relationship to any key center (the 'tonal gravity law'), and fluency comes from the practitioner's conscious awareness of five governing factors: key center, Vantage Point, Interval Tonics, Resolution, and the artist's confidence. This framework licenses the 'no wrong notes' principle and positions the Circle of Gravities as the navigational tool for chord-on-chord motion. Priming the ear with cadences and projecting oneself aurally to the target tonality are the key preparatory practices. Mistakes are reframed as generative events; consciousness replaces prescriptive rules as the governing principle.",
+              "members": [
+                {
+                  "id": "key-center",
+                  "name": "Key Center",
+                  "summary": "The tonal destination at the center of the 360-degree system."
+                },
+                {
+                  "id": "vantage-point",
+                  "name": "Vantage Point",
+                  "summary": "The chromatic starting position relative to the key center."
+                },
+                {
+                  "id": "interval-tonics",
+                  "name": "Interval Tonics",
+                  "summary": "Pitch relationships defining cadential pull toward the key center."
+                },
+                {
+                  "id": "resolution",
+                  "name": "Resolution",
+                  "summary": "The directed arrival at the tonal destination."
+                },
+                {
+                  "id": "artist-confidence",
+                  "name": "Artist's Confidence",
+                  "summary": "Internalized readiness enabling spontaneous chromatic deployment."
+                },
+                {
+                  "id": "circle-of-gravities",
+                  "name": "Circle of Gravities",
+                  "summary": "Systematic map of tritone relationships used as navigational tool in Ch. 8."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "ear-priming-cadence",
+                  "name": "Ear Priming via Cadences",
+                  "summary": "Prime the ear with cadences into the target tonality before each scale.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-priming"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Ear preparation before playing scales",
+                      "quote_excerpt": "brainwash your ear with the tonality ... with several cadences into the key",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "sound-projection-technique",
+                  "name": "Sound Projection Technique",
+                  "summary": "Mentally project sound-attention to the target tonality before arrival.",
+                  "engine_payload": {
+                    "kind": "_pending:mental-projection"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Sound-projection technique",
+                      "quote_excerpt": "project yourself sound wise to it already having your attention (sound attention) on it",
+                      "page": 20
+                    }
+                  ]
+                },
+                {
+                  "id": "tonal-gravity-law",
+                  "name": "Tonal Gravity Law - Chromatic Cadential Pull",
+                  "summary": "Every chromatic pitch exerts cadential pull toward any active key center.",
+                  "engine_payload": {
+                    "kind": "_pending:tonal-gravity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Tonal gravity law",
+                      "quote_excerpt": "tonal gravity law is created once you start to play music (in a key)",
+                      "page": 4
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "Chromatic scale tonal relationships",
+                      "quote_excerpt": "converginal relationship in a cadential motion sense to this key center",
+                      "page": 4
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "no-wrong-notes-chromatic-freedom",
+                  "name": "No Wrong Notes - Full Chromatic Availability",
+                  "summary": "Given the five governing factors, the entire chromatic scale is at the player's disposal.",
+                  "engine_payload": {
+                    "kind": "_pending:chromatic-license"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "No wrong notes — chromatic freedom",
+                      "quote_excerpt": "no wrong notes when factors such as fixation on a key center, Vantage Point, Interval Tonics, Resolution are considered",
+                      "page": 31
+                    }
+                  ]
+                },
+                {
+                  "id": "mistake-as-generative-event",
+                  "name": "Mistake as Generative Event",
+                  "summary": "Errors are reframed as new harmonic fields to be spontaneously filled.",
+                  "engine_payload": {
+                    "kind": "_pending:generative-error"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Mistake as creative opportunity",
+                      "quote_excerpt": "A mistake is a new field, a new octave.",
+                      "page": 50
+                    }
+                  ]
+                },
+                {
+                  "id": "consciousness-over-prescription",
+                  "name": "Consciousness Over Prescription",
+                  "summary": "The system increases awareness rather than dictating procedure.",
+                  "engine_payload": {
+                    "kind": "_pending:awareness-governance"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "System philosophy: consciousness over prescription",
+                      "quote_excerpt": "system does not dictate to the student what to do other than increase his or her consciousness",
+                      "page": 50
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "promoted"
+    },
+    {
       "id": "benson",
       "name": "George Benson",
       "lived": "1943-",
