@@ -1,0 +1,50 @@
+# Salvage from #360 mismap: original config was greenan-jazz-standards-playbook.toml
+# but the OCR transcript actually contains Brent Vaartstra's book.
+# OCR was correct; master_id was wrong. Re-keyed under brent-vaartstra.
+
+[master]
+id = "brent-vaartstra"
+name = "Brent Vaartstra"
+
+[work]
+id = "jazz-standards-playbook"
+title = "The Jazz Standards Playbook"
+year = 2019
+instrument_scope = "all instruments (10 jazz standard studies)"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Greenan, Brent - The Jazz Standards Playbook.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = false
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+# Salvage notes:
+# - PDF filename references Brent Greenan; content is Brent Vaartstra
+#   (Learn Jazz Standards LLC). Verified: "BY BRENT VAARTSTRA" at top of
+#   transcript head; "Greenan" appears 0 times.
+# - Source OCR copied from runs/2026-05-28T15-05-20-greenan-jazz-standards-playbook/.
+# - Original wrong-keyed run dir stays as audit trail per #360.
