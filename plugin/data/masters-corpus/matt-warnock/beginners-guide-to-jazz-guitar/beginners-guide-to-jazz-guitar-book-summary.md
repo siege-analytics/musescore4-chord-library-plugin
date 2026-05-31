@@ -1,0 +1,38 @@
+---
+run_id: 2026-05-28T15-05-20-warnock-beginners-guide
+stage: s3
+source_pdf: Warnock, Matt - Beginner's Guide to Jazz Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-05-31T03:26:39+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — beginners-guide-to-jazz-guitar
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## Overall Arc and Pedagogical Structure
+
+This book is a compact, systematically sequenced beginner's method for jazz guitar organized entirely around a single harmonic vehicle: the **ii V I progression** (Dm7–G7–Cmaj7). Every element of the curriculum—chord vocabulary, comping rhythms, picking hand technique, chromatic harmony, scale shapes, ornaments, and mixed solo texture—is introduced, practiced, and applied within that same progression. Chapter 1 maps the full curriculum in advance, names all components, and establishes the method's meta-protocol: watch video alongside the PDF, review the chapter, practice each section until comfortable, then advance. This iterative-reinforcement-with-deliberate-pacing sequence is not just advice; it is the governing structure that every subsequent chapter re-instantiates in domain-specific form.
+
+The book's pedagogy follows a consistent three-stage arc within each chapter: **isolate → internalize → integrate**. A new technique is introduced in isolation (with metronome), then applied over a backing track, then combined with previously learned material. This structure is explicit in Chapter 2 (solo practice → metronome → backing track → rhythmic variation), Chapter 5 (memorize each scale shape → apply over backing track → combine both shapes), and Chapter 7 (learn solo as written → replace parts → improvise freely). The final chapter's four-stage study sequence—imitate, replace single notes with own lines, keep single notes while creating new chord rhythms, improvise both freely—represents the method's most fully articulated expression of this arc.
+
+## Characteristic Systems and Terminology
+
+The book builds its vocabulary through **named, labeled techniques** that carry precise structural definitions. The two foundational comping rhythms introduced in Chapter 2 exemplify this: the **Freddie Green rhythm** is defined as quarter-note chords on every beat with accents on beats 2 and 4 to imitate swing feel; the **Charleston rhythm** places chords on beat 1 and the & of 2. Each name anchors a specific rhythmic rule, enabling students to master, recall, and recombine them. Chapter 3 extends this logic to the picking hand with **bass-first** and **melody-first** patterns—each a named, functionally distinct approach rather than a generic strumming variation.
+
+Chapter 4 introduces **approach chords** as a chromatic comping system with its own directional terminology: *from above* (one fret above the target shape, then resolve down) and *from below* (one fret below, then resolve up). The mechanical rule is absolute: move the target chord voicing chromatically by exactly one fret, then resolve into it. Chapter 6 introduces **chromatic ornaments** via the **134 pattern**—a four-note ornament triggered by a specific fingering occurring anywhere on the fretboard in any key—governed by a non-negotiable resolution law: the pattern must always complete to the third finger or it sounds unintentional. Both systems share the book's characteristic move of encoding technique as a rule that applies mechanically across contexts, not as a feel-based suggestion.
+
+## Scale System and Fretboard Integration
+
+Chapter 5 establishes the book's soloing system on a single harmonic premise: because all three chords of the ii V I exist within the parent major key, **one major scale covers the entire progression**. The system delivers this through two positional shapes—**Shape 1**, rooted on the 6th string, and **Shape 2**, rooted on the 5th string—each learned separately before being combined to cover the full neck. The method is explicit that the goal is fretboard integration: knowing both shapes unlocks soloing across positions, not just in one fixed location. Scale shapes are positional fingerings anchored to string roots, not abstract patterns, and the chapter's practice arc—memorize shape → apply immediately over backing track → combine shapes—enforces applied improvisation before technical perfection is achieved.
+
+## Rules, Prescriptions, and the Earn-Before-Restraint Philosophy
+
+Several rules recur across the book and operate as inviolable prescriptions rather than stylistic options. **Mandatory resolution** applies in Chapter 4 (approach chords must resolve into the target chord) and Chapter 6 (the 134 pattern must complete to the third finger). **Prescribed learning sequences** govern each chapter: the order of study is not left to the student but is specified—approach from above before below, bass-first before melody-first, Freddie Green before Charleston before mixing. **Self-extension through variation** is taught as a deliberate skill: once mechanics are secure, the student is explicitly instructed to vary rhythm, picking patterns, and directions to develop musical range beyond the exercise as written.
+
+Chapter 6 articulates the book's most distinctive philosophical prescription: **deliberate overplay before restraint**. Students are instructed to consciously overuse the 134 chromatic ornament first, training the ear to hear it fully, and only then pull back for musical integration in solos. This earn-before-restraint principle—you must first saturate your playing with a technique before you can deploy it with taste—encodes an epistemology of acquisition that distinguishes this method from approaches that emphasize immediate stylistic discretion.
+
+## Culminating Method: Mixed Chords and Single Notes
+
+Chapter 7 represents the synthesis endpoint of the book's curriculum, combining harmonic accompaniment (comping) and melodic soloing into a single **mixed solo** texture. This skill is contextualized for real-world performance: in duos or pianoless trios, the guitarist must supply harmonic space without a dedicated chord instrument. The chapter's four-stage study sequence is the book's most granular articulation of its overall method—imitate the written solo, substitute your own single-note lines, retain the single notes while improvising new chord rhythms, then improvise both layers freely over chord changes. This sequence maps the progression from copying to full improvisation through discrete, verifiable intermediate stages, embodying the book's fundamental pedagogical conviction that improvisation is taught by progressively loosening constraints, not by being thrown into open-ended playing from the start.
