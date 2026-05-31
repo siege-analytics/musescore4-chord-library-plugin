@@ -1,0 +1,20 @@
+---
+run_id: 2026-05-28T15-05-20-galbraith-jazz-solo-guitar
+stage: s3
+source_pdf: barry-galbraith-jazz-solo-guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-05-31T03:05:25+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — jazz-solo-guitar
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+Barry Galbraith's *42 Chord Melody Arrangements for Solo Guitar* is, in its entirety, a performance anthology rather than an instructional text. The book contains no prose commentary, no explanatory chapters, no labeled techniques, and no stated methodology. Its single chapter is the complete book: 42 fully notated chord-melody arrangements of jazz standards for solo guitar, covering titles such as *Alone Together*, *Autumn in New York*, *As Time Goes By*, *Have You Met Miss Jones?*, *I Cover the Waterfront*, and *A Certain Smile*, among others.
+
+The pedagogical structure is entirely implicit. Galbraith teaches by demonstration: the arrangements themselves are the curriculum. Whatever systems, principles, or preferences govern his approach — his voicing choices, his treatment of inner voices, his chord substitutions, his melodic harmonization decisions — are encoded in the notation and must be inferred by the student through study, transcription analysis, and imitation of the written results. No terminology is introduced, no rules are stated, no method is named or described.
+
+What can be said with confidence is that the book presents a master guitarist's realized solutions to the core problem of solo guitar jazz arranging: carrying melody, harmony, and bass simultaneously within the physical and tonal constraints of the instrument. Each arrangement represents a complete, performable interpretation of a standard. The pedagogical value lies in the density and consistency of Galbraith's choices across 42 pieces — a body of work large enough that recurring patterns of voice-leading, chord voicing, and harmonic substitution can be observed and extracted by a sufficiently attentive analyst, even though Galbraith never makes those patterns explicit in words.
+
+Because the book contains no prose, no rules, no prescriptions, and no stated methodology, any further characterization of its "systems" or "moves" would require direct analysis of the notation itself — material that was not present in the chapter summary provided. The honest distillation of this book is that it is a collection of expert models, not a guide to constructing them.

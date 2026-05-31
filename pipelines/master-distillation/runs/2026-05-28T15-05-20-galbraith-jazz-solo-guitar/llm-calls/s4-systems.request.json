@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: barry-galbraith\nWork id: jazz-solo-guitar\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-05-28T15-05-20-galbraith-jazz-solo-guitar\nstage: s3\nsource_pdf: barry-galbraith-jazz-solo-guitar.pdf\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:05:25+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 jazz-solo-guitar\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\nBarry Galbraith's *42 Chord Melody Arrangements for Solo Guitar* is, in its entirety, a performance anthology rather than an instructional text. The book contains no prose commentary, no explanatory chapters, no labeled techniques, and no stated methodology. Its single chapter is the complete book: 42 fully notated chord-melody arrangements of jazz standards for solo guitar, covering titles such as *Alone Together*, *Autumn in New York*, *As Time Goes By*, *Have You Met Miss Jones?*, *I Cover the Waterfront*, and *A Certain Smile*, among others.\n\nThe pedagogical structure is entirely implicit. Galbraith teaches by demonstration: the arrangements themselves are the curriculum. Whatever systems, principles, or preferences govern his approach \u2014 his voicing choices, his treatment of inner voices, his chord substitutions, his melodic harmonization decisions \u2014 are encoded in the notation and must be inferred by the student through study, transcription analysis, and imitation of the written results. No terminology is introduced, no rules are stated, no method is named or described.\n\nWhat can be said with confidence is that the book presents a master guitarist's realized solutions to the core problem of solo guitar jazz arranging: carrying melody, harmony, and bass simultaneously within the physical and tonal constraints of the instrument. Each arrangement represents a complete, performable interpretation of a standard. The pedagogical value lies in the density and consistency of Galbraith's choices across 42 pieces \u2014 a body of work large enough that recurring patterns of voice-leading, chord voicing, and harmonic substitution can be observed and extracted by a sufficiently attentive analyst, even though Galbraith never makes those patterns explicit in words.\n\nBecause the book contains no prose, no rules, no prescriptions, and no stated methodology, any further characterization of its \"systems\" or \"moves\" would require direct analysis of the notation itself \u2014 material that was not present in the chapter summary provided. The honest distillation of this book is that it is a collection of expert models, not a guide to constructing them.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-05-28T15-05-20-galbraith-jazz-solo-guitar\nstage: s3\nsource_pdf: barry-galbraith-jazz-solo-guitar.pdf\nsource_pages: 5-65\nmodel: claude-haiku\nextracted_at: 2026-05-31T03:04:47+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 42 Chord Melody Arrangements for Solo Guitar\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 contains no load-bearing prose passages \u2014 it is composed entirely of notated chord-melody arrangements. The book is a collection of 42 jazz-standard arrangements for solo guitar by Barry Galbraith (e.g., A Certain Smile, Alone Together, Autumn in New York, As Time Goes By, Have You Met Miss Jones?, How About You, I Cover the Waterfront, and many others), presented as fully voiced guitar notation without instructional commentary. The pedagogical content is encoded in the voicings, voice-leading, and chord substitutions Galbraith chose for each tune, not in explanatory prose.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-05-28T15-05-20-galbraith-jazz-solo-guitar\nstage: s2\nsource_pdf: barry-galbraith-jazz-solo-guitar.pdf\nsource_pages: 5-65\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:04:29+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 42 Chord Melody Arrangements for Solo Guitar\n\n_Pages 5-65._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n_No load-bearing passages identified in this chapter._\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for barry-galbraith/jazz-solo-guitar; use _pending: when unsure about kind."
+}
