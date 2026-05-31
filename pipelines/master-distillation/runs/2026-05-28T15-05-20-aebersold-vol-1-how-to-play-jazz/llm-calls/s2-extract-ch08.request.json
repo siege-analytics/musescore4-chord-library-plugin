@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: The Bebop Scale & Ear Training\nPages 28-29 of the book.\n\n<<<CHAPTER TEXT\n\nBEATS 1 AND 3\nARE MOST IMPORTANT IN BUILDING MELODIES\n\nBeats 1 and 3 seem to want roots, 3rd's, Sth's, 7th's and 9th's (b9's on dom.7th chords that resolve\nup a perfect fourth). I'm speaking of 4/4 time. In so doing, the listener can plainly hear the intended\nharmony. They can also anticipate where your melodic line is going, the contour, the shape of it.\n\nIt eliminates a lot of the guess work in listening to jazz. It's actually the obvious thing to do\nbecause that's the way we think and sing melodies anyway. Sometimes we call these notes Target\nNotes or Guide-Tones or Goal-Notes. Since the 3rd and 7th of scales/chords are the most\nimportant tones in any scale, placing them on beats 1 and 3 is vital.\n\nKnowing where chord tones are on your instrument is like knowing where the kitchen,\nbathroom, front-door, and telephone are.\n\nLook at Charlie Parker's solo on \"Now's The Time\" for a good example of chord tone placement.\nIt's in the \"Omnibook.\u201d\n\nLook at other transcribed solos by various players to see how they utilize this important rule in\nplaying jazz. Take a pencil and mark the chord tones that fall on beats 1 and 3 (or, on all four\nbeats!). You'll be surprised. Classical music also does this. Look at anything by Bach.\n\nAgain, look at melodies to standards such as Misty, I Can't Get Started, Blue Bossa, Body & Soul,\nTune Up, Summertime, etc. These songs would not be standards if they didn't adhere to the above\nmusical principles.\n\nTry this; tape yourself singing a chorus along with the play-a-long recording. Then, transcribe\nseveral measures or the entire chorus. Be patient. If your singing is free flowing and right-brained,\nyou'll be surprised how often you place chord tones unknowingly on beats 1 and 3. It's the natural\n\nthing to do.\n\nBeginning improvisors often sound like beginners because they fail to utilize the above concepts.\n\nThis is a short chapter but is one of the more important.\n\nRECOMMENDED TRANSCRIBED SOLOS BOOKS\n\nThere are dozens of available transcribed solo books. This list represents several I feel contain\nexceptional solos which have contributed to the growth of jazz. All are available through JAZZ\nAIDS, P.O.Box 1211, New Albany, In 47151-1244 U.S.A. The Jazz Aids code letters are listed in\nbold print.\n\nBASS TRADITION, THE 36 solos of famous bassists. Code TC.\n\nCHARLIE PARKER \"OMNIBOOK \" available in treble, Bb, Eb, and bass clef. Order by name.\nHANK MOBLEY SOLOS. Plainly outlines bebop playing at its best. Order code MOB.\n\nJJ JOHNSON TROMBONE SOLOS. 15 of J.J.'s favorites. Code JJS.\n\nMODERN JAZZ TENOR SAX SOLOS contains many famous solos. Order code MJT.\n\n28 MODERN JAZZ TRUMPET SOLOS Book #1 and Book #2. Great collection. Code JT1, JT2.\n\n27\n\n\nTHE BEBOP SCALE\n\nThe bebop scale contains one added tone to each of the four most used scales.\nDominant 7th, C7=C D E F G A Bb B C (The underlined tone is the added tone.)\n\nThis scale is often played descending and would look like this:\nC7=CBBbAGFEDC\n\nDon't allow the B natural (added tone) to fall on a downbeat. The added tone must always come\non the upbeat in order to give it the jazz sound we are used to hearing. This is also called the 7th\nscale.\n\nGood notes to begin/start a phrase with are the chord tones:1,3,5,and b7. When you begin a phrase\nwith the 2nd, 4th, or 6th notes of the scale on a downbeat, you must use additional chromaticism\nsomewhere in the phrase in order to make the B natural fall on the upbeat. 3rd's and 7th's like to fall\non beats 1 and 3. This makes your phrases sound more natural.\n\nThere are also BEBOP scales to be used over major, minor and half-diminished as well as the\ndominant 7th listed above.\n\nMAJOR=C DEF G GFABC\nMINOR= C D EbDE FGA BbC\nHALF-DIMINISHED = C Db Eb F Gb G Ab Bb C\n\nUsing the simple half-step chromaticism (which we are referring to as the bebop scale) allows\nyour lines to have shape and contour which more closely resembles those of the jazz masters. Since\nthe scale has 8 tones, it helps to naturally place the chord tones ON the beat rather than have them\nscattered all around. Most people notice an immediate uplift to their melodic lines when they begin\nusing the bebop scale; especially if they are used to listening to jazz music. They can tell the\nsimilarities.\n\nThe dom.7th bebop scale can act as a substitute for the minor ii chord. Example: C7 bebop scale\n(C D EF GA Bb B C) could also be played over the G- chord and vice versa. The chords are\ninterchangable over the scale. Often, while G- to C7 is being sounded the soloist will use the single\nbebop scale: CD E F GA Bb B Cor you could think of it as a G- bebop scale: GA BbBCDEF\nG. They're the same.\n\nLearn this SOUND in different keys. You sing it without knowing what you're singing!\n\nLook at transcribed solo books and label examples of bebop scale usage. I think you'll be\nsurprised how often this scale SOUND is used in jazz.\n\nDavid Baker's books \"How To Play Bebop\" #1, 2, & 3 are an excellent resource.\n\nMake friends with scales, especially the bebop scale.\nIt's the \"glue\" of the jazz language.\nDon't leave home without it!\n\n28\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

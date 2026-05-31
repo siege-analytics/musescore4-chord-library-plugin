@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Eighth-Note Exercises And Swing\nPages 15-19 of the book.\n\n<<<CHAPTER TEXT\n\nAnother exercise using the triad (Tonic Triad because its root is the first tone of the scale) will\n\nsound like Example 9.\n\nLet's now extend the triad and include the 7th tone of the scale. We now have a seventh chord.\n(7th chord). See Example 10. Read the chapter on seventh chords - page 41.\n\nEXAMPLE 9\nF-\nf oO\nJ t | ? t t { { inl { |\nyA . i Tol [ T [7] i | a TT i fe foe |\n. i De i t\n.< es = a f Pos pei ti? o\n1 3 5 1 5 3 1 1351 5313 5 15 3 1\nEb-\nbo | im n 1 n | fs {\ni | i\nyo = Thy - | i\n\u2014 Phe _| be \u201cFP eS jbo?e | bebe tbe | be Ebene >\npo ; t b pe T 1 p t 1 Do\nD-\n{ vt | i [ if q\n| | = i { t ia t |\nse eee eee oe Soe Se ee ee |\no a oo\n\nEXAMPLE 10\n(means repeat 2 preceding measures)\nF- a 2 \u00abagain 2 \u00abagain\n[_ K i [\neee er 4 =m Z\nXV 2 { [7] I I\n1 35 7 5 301\nEb- 2 2 2\n[-- LI. =? { - IN i 7 . 9\ni bee \"be beh : 4:\n; 3 5 7 5 3 4\nD-\n2 2 2\ni { ~ _ ~ . . . *\nwepld Bp we \u2014\u2014\u2014\u2014\nYou can even extend the chord to include the 9th tone of the scale. This is called the ninth chord\n(9th chord). It uses the root, 3rd, Sth, 7th, and 9th tones of the scale. Remember, the 9th is also\nreferred to as the 2nd... the tones are the same, just an octave apart. Play Example 11.\nEXAMPLE 11\nF-\nf- - - eet ; a \u00a9\u00bb +t = ' \u2014 | re)\n4 : na = t\u2014\u00a5 + { KF\n) 135 79 75 3 135 7 9\nEb- (Repeat preceding 4 bars) 4\npo bale ba { it | @\nIT {4 Oo oe a \u20144 ft yt b, Oo De .\npa bo PP a ry bets f \u00a2 :\nD-\n; 4\n= J f= \u2014 { - o wy =|\n\u2014\u2014 ae a =f fe \u00a5 4 7\n\n\nYou have played three minor scales up and down diatonically (scalewise), in thirds and triads,\nseventh chords, and ninth chords. You should also have the three scales memorized and become\nmore and more familiar with the sound, feeling, shape, warmth, brightness, and dullness of each\nscale. You may be thinking of roots as \"home-base\", 3rd's and Sth\u2019s as \"family\" and 7th and 9th's as\nmore exciting tones you might meet on a week-end.\n\nEIGHTH-NOTE EXERCISES AND SWING\n\nIn order to make eighth-notes \u201cswing\u201d or imply swing, they must be played like an eighth-note\n\n> 3\ntriplet with the first two eighths tied together. This looks like PPP! PPP but is actually written\n\nlike Ja or J 3 Don't divide de into two equal parts; divide it into three Dr]\n\n~\n\n3\nwith the first two eighth-notes tied together \u201cJ The above rule is a must if you ever hope to\n\n3\nconvey a relaxed feeling to the listener. So, from now on, interpret all de or aa like ae P|\nwhen the rhythm section is playing with a swing feel.\n\nWhen playing a bossa nova or rock tune you will want to straighten out the eighth-notes and play\nthem more evenly. This is called even eighths. Listen to Track 3, and the very last track for the\nbossa nova sound,\n\nIf you feel secure with what we have done so far, play the three scales up and down using the first\nfive notes in eighth-notes. See Example 12. Saxes and trumpets, keep your fingers close to the\nkeys and play smoothly. Make this automatic. Now would be a good time to look at the chapter on\nArticulation found on page 47.\n\nEXAMPLE 12\n\nrepeat 4 measures \u2014 4\n\nMemorize everything! Melodies, scales, chords, rhythms, patterns, licks, cliches, lyrics.\nUse your mind and instincts. That's what they're for.\n\n15\n\nLialel |\n\n\n\nNow you are ready to play the entire scale from the root to the 9th using eighth-notes. See\nExample 13. Think of the 9th as being the same tone as the 2nd, only an octave higher.\nEXAMPLE 13\nF-\nb | o, \u2014 \\ o 4\n. To tee n n op?\noni eae bee ty ener\noe\nEb-\n| 11 oO\nn bela Lf i n ow\n{ f n it | .\nbe gpele? babe git where? \u00a5.\nD- 4\nale \u00b0 o : :\nL jeer Cee weet tl \u2014\nae\n\nwith slurring from note to note.\n\nSeveral more exercises utilizing chord tones are next. Brass players may struggle in the beginning\n\nYou may want to practice the exercises slowly, without the\n\nrecording first, then play along as it feels more comfortable. I have written the exercise using J, |\n\n3\nBe sure you play them like ase\n\nDon't clip the third note of each bar! See Example 14. Triads in eighth-notes.\n\nEXAMPLE 14\nF-\n\n7\u201d ee \u2014 74 _ = 2 2\ncs Ce A \u00a3: : :\n\nia 2 2 2\npe = : =\n\u2014 bee Pe oO pope a ial \u00b0 \u2014\u2014\n\nDe 2 2 2\na ea ; 4 ay |\n| ae . . + . 7\u00e9 \u2014# |\n\nCatience works wonders. \"Infinite boiling softens the stone.\" - Konkomba )\n\n16\n\n\nExample 15 is a variation using notes of the triad in eighth-notes. A scoop is indicated bya U\n\nEXAMPLE 15\nF- ae\n4 im Vv fe, ; 4\nCoAl be rs eae Pa \u2014\u2014\nPy) es\nEb-\n\u2014\u2014\u2014~ 4\nin n im |\nith. 5 1 Th bo? 2 .\nbeaver \"e bei ld bebe\u201d eo? i\nSO\nD-\n: = | -\nay a | a \u00a3 Zz :\n\na a\n\nL \u201c@\n\nMake up your own exercises. Play one exercise on the first scale and then switch to a different\nexercise on the second scale and yet a third exercise on the third scale.\n\nDon't hesitate to vary the rhythms. By now, you are probably familiar enough with the rhythm\nsection on the recording that you have begun to hear subconsciously the eight measure sections. This\nwill allow you to take liberties with the exercises and will give you more confidence when you start\nimprovising because you'll be better able to hear when to change to the next scale. You have\nprobably already started hearing musical phrases in 2, 4, and 8 measure phrases. This is very\nimportant because most Jazz music (Western Art Music) is built in 2, 4, and 8 measure phrases.\nKnowing this will give you an inner sense of form that you can use the rest of your life.\n\nListen to jazz recordings and notice how they play in 2, 4, and 8 bar phrases, rests included!\nExample 16 uses the seventh chord in eighth-notes. Play with a swing feel. Don't play even\n\ncighth-notes. Listen to a recording by Duke Ellington, Count Basie, Woody Herman, or Thad Jones-\nMel Lewis. The feeling should be loose without dragging. Listen to jazz combos, too. See page 58.\n\nEXAMPLE 16\nF-\nGil: ap\n\u201c TAS =\n1\nEb- > >\nc\u2014 bee. Ib a!\npee pF H f perce rane bee bb _\n\u2014 S____\nD-\non Ty \u00a2 a |\na a > r BSe \u20ac i a :\n\n\nExample 17 is a variation of Example 16.\nEXAMPLE 17\n\nfh -\nf I - _ (\nOiler \u2014 frat\n\nEb- \u2014\n=e aN ot\n\nOT ]\n\n} o> f = | y aml | \u00a3: :\no x\n>\n\nExample 18 uses notes of the ninth chord, ascending and descending.\nEXAMPLE 18\n\nF- > a a 4\n\nExample 19 utilizes the scale to the ninth and the ninth chord notes.\n\nEXAMPLE 19\nF-\n. | >. > 4\nCtl chee re \u2014\nO4E soe =F py \u00e9\n- 12 3 4 9 75 3 1\n5 6 7 8\nEb-\n\nn : = = 4\nee im ~ bebe ie bet | = - \u2014\npg abebabe f\u00b0 TT \u2014 og i\n\nDB y B\npD-\n- re > 4\n- owe? if yt = va\njoeor iz \u2014$-w \u2014 He\nee\u201d\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}
