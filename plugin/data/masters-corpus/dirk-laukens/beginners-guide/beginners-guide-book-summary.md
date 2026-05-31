@@ -1,0 +1,50 @@
+---
+run_id: 2026-05-28T15-05-20-laukens-beginners-guide
+stage: s3
+source_pdf: Laukens, Dirk - The Beginner's Guide to Jazz Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-05-31T16:18:44+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — beginners-guide
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## Overall Arc and Pedagogical Structure
+
+This book teaches jazz guitar in a deliberate sequence that moves from harmonic foundation to rhythmic application to melodic improvisation, then grounds everything in real repertoire before systematizing technique. Chapter 1 establishes the entire harmonic vocabulary as a moveable-root system—five chord qualities anchored to the ii–V–I–vi progression—while simultaneously introducing the rhythmic comping figures (Freddie Green, anticipation, Charleston) that will govern accompaniment throughout. Chapter 2 immediately applies that foundation to five canonical jazz standards, establishing the book's depth-over-breadth principle and its ear-first methodology (listen to recordings before touching the fretboard). Chapters 3 and 4 then systematize the soloing tools: arpeggios in Chapter 3 as broken-chord melodic devices independent of comping shapes, and scales in Chapter 4 as harmonically-assigned color sources deployed by the rule "when the chords change, you change." Chapter 5 extends this into a lick vocabulary that names specific bebop and blues techniques, and Chapter 6 unifies everything in the jazz blues form as a harmonic and expressive proving ground. The Roman numeral appendix (Chapter 7) supplies the notational infrastructure—capital vs. small numerals encoding chord quality—that the book's chord charts presuppose.
+
+## The Master's Characteristic Systems and Terminology
+
+The book operates on two interlocking systems: a moveable-root harmonic system and a function-assigned scale/arpeggio system. In the first, every chord shape is defined by a red dot at the root, so the chord's name follows its physical position on the neck—the transposition rule is "root = chord name." In the second, each scale or arpeggio is assigned to a specific harmonic function rather than to a key center, so harmonic minor belongs to the tonic when its V7 is altered, melodic minor belongs to the m7 chord as expressive tension, and so on. These two systems are complementary: the first governs comping and chord knowledge, the second governs improvisation choices.
+
+The book's load-bearing terminology clusters around three domains. Harmonic vocabulary: maj7, dominant 7, m7, half-diminished 7, diminished 7 as the five essential qualities; ii–V–I as the master progression; tritone substitution (a 7th chord a tritone away preserving the 3rd and 7th); Bird blues (Imaj7 tonic); quick-change blues; V7alt (altered dominant); turnaround substitutions (bVI–V–I, ii–V–I, biii–bVI/ii–V–I in minor blues). Melodic/soloing vocabulary: approach notes (one fret below, resolving to chord tone); enclosures (surrounding a target note with tones one fret above and below); the 3-to-9 arpeggio (diminished 7 from the 3rd of any 7th chord); side-stepping (alternating minor pentatonic scales a half step apart); the phrygian dominant scale (fifth mode of harmonic minor, for V7 chords); blue notes (b3 and b5); the major blues scale (major pentatonic plus b3). Rhythmic vocabulary: anticipation (placing the next bar's chord on the & of 4); the Freddie Green rhythm (quarter notes with 2-and-4 accents); the Charleston pattern; syncopation discipline requiring metronome practice.
+
+## Rules and Prescriptions the Book Establishes
+
+Several explicit rules recur across chapters and carry the weight of prescriptions rather than suggestions:
+
+- Root = chord name: every moveable shape is named by the red-dot root's position, making transposition automatic.
+- Ear first: listen to recordings before working anything on the fretboard.
+- Depth over breadth: thoroughly master each standard or technique before moving on.
+- When the chords change, you change (Joe Pass's rule): scale selection is chord-specific, not key-global.
+- Voice-lead by proximity: connect arpeggios by nearness of pitches rather than restarting from the root each time.
+- Arpeggios are free to start anywhere: any note of the arpeggio may begin the phrase; ordering is creative, not fixed.
+- Major blues scale avoids clash by lacking a 7th, making it usable over both dominant 7 and major 7 chords without collision.
+- Blue notes define blues feeling: b3 and b5 are not errors or passing tones but the essential expressive content.
+- Metronome for syncopation: any syncopated comping figure must be practiced with a metronome.
+- Phrase-by-phrase for repertoire: learn standards section by section, not in a single pass.
+- Extract concepts from licks, do not parrot them: the goal of lick study is transferable vocabulary, not imitation.
+
+## Explicit Methods and Methodology
+
+The book teaches three identifiable methods with stepwise structure.
+
+The chord-melody method (Chapter 2) specifies three simultaneous elements: bass notes on lower strings, chord voicings in the middle register, and melody confined to the upper strings. This is presented as the integration of comping and soloing into a single-instrument arrangement technique.
+
+The arpeggio improvisation method (Chapter 3) begins by detaching arpeggios from chord shapes (they are played with plectrum, muted to prevent ringing), then assigns five moveable grips corresponding to the CAGED system, then specifies three functional uses in improvisation—outlining harmonic direction, enabling smoother voice leading, and adding color through substitutions—and finally liberates the player to start on any arpeggio tone and decorate with approach notes and enclosures.
+
+The blues solo practice method (Chapter 6) is explicitly three-staged: (1) imitation—transcribe and reproduce recorded solos; (2) composition—write out solo lines before playing them; (3) ear training—internalize melodic choices so they arise spontaneously. This sequence parallels the broader book arc from imitation (learning licks and standards) through application (assigned scales and arpeggios) to internalization (blues as expressive proving ground).
+
+Two named masters provide exemplar moves that the book treats as teachable templates: Charlie Christian's enclosures, lower neighbor tones after leaps, and the b3–3–5 riff mixing blue notes with diatonic intervals; and Joe Pass's chord-melody rhythm technique of splitting bass from treble with selective accent, and his minor/major pentatonic mixing over jazz blues. Kenny Burrell's chord/single-note mixing in Chapter 6 is a third named approach. These are not biographical references but technique templates the student is expected to absorb and deploy.

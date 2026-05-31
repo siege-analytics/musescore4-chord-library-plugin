@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Appendix - The Roman Numeral System\nPages 192-197 of the book.\n\n<<<CHAPTER TEXT\n\n192\n\nAppendix\n\nThe Roman Numeral System\n\nWhen talking about chord function in jazz we use Roman Numerals to label\neach chord in a given key. We do this to differentiate chord numbers from scale\nnumbers (which are written with Arabic numerals such as 1, 2 and 3).\n\nThe symbols used are from | to VII. Here is an how all of the Roman Numerals for\nthe chords in a major scale would be written:\n\nna\n\n* Capital Roman Numerals (Imaj7, \\Vmaj7, V7): are used to indicate Major and\nDominant chords.\n\n\u00a2 Small Roman Numerals (iim7, iiim7, vimm7, viimm7b5): are used to indicate\nMinor and Diminished/Half-Diminished chords.\n\nThe good thing about the Roman numeral system is that we can talk and write\nabout chord progressions,regardless of any key. We can talk for example about\nal viii V:\n\nfens [aa | ar wr\n\noe\n\n\n\n193\n\nIf the chord appears outside of the basic key center (a tritone substitution for\nexample) b\u2019s and #'s are used to indicate these chords.\n\nHere is how a tritone sub 2 5 chord progression would look like in Roman\nNumerals:\n\nnee Lem | ow [ona\nrontoon TE\n\n\u00a9 Click here to return to Your First Jazz Progression\n\n\n194\n\nFurther Resources\n\n\u00a9 The Jazz Guitar Online Forum: the JGO forum is the place where you can get\nyour jazz guitar related questions answered and engage in friendly discussion. At\nthe time of writing there are 50,565 members, with over 622,000 replies.\n\nClick here to become a member!\n\n74 622,186\n\n\u00a9\u00a9C\u00ae\n\n\n\n195\n\n\u00a9 The Jazz Guitar Blog: the JGO blog is the place where we publish our new\nlessons (usually on a weekly basis).\n\nHere's a top 15 of the most popular posts:\n\n1. Popular Jazz Guitars\n\n2. Popular Jazz Guitar Amps\n\n3. Playing Chord Melody Jazz Guitar\n\n4. Bluesy Melody: Full Count (Chuck D\u2019Aloia)\n\n5. 5 Jazzy Pentatonic Scale Patterns\n\n6. Georgia on my Mind Guitar Chords\n\n7. Summertime Guitar Chord Study\n\n8. Misty Comping Study\n\n9. 5 Essential ii V | Jazz Guitar Licks\n\n10. Shell Jazz Guitar Chords (For Beginners)\n\n11. Take The A Train Chord Study\n\n12. Gypsy Jazz Guitar - Rhythm & Chord Progressions\n13. Gypsy Jazz Guitar - Introduction to Arpeggios & Picking\n14. Chord Melody Made Easy\n\n15. Misty Arpeggio Study\n\n\n196\n\n\u00a9 The Jazz Guitar eBook Store: the JGO eBook Store is the place where you'll\nfind all our eBooks in one place.\n\nClick here to visit the eBook Store...\n\nHere's a list with all our eBooks:\n\n1. Introduction to Jazz Blues Guitar Volume 1\n\n2. Introduction to Jazz Blues Guitar Volume 2\n\n3. The Easy Guide to Jazz Guitar Arpeggios\n\n4. The Easy Guide to Jazz Guitar Chords\n\n5. The Easy Guide to Chord Melody\n\n6. How to Play in the Style of Wes Montgomery\n7. How to Play in the Style of Charlie Christian\n\n8. Anatomy of a Lick - Essential Jazz Guitar Lines\n9. 30 Days to Better Jazz Guitar\n\n10. The Jazz Guitar Practice Guide\n\n11. Modern Time - Guide to Jazz Guitar Rhythm\n12. Jazz Guitar Premium Volume 1 (10 Lessons)\n\n13. Jazz Guitar Premium Volume 2 (10 Lessons)\n\n\n197\n\nrf) The JGO Facebook Page: Click here to visit our Facebook Page\n\nOo JGO on Twitter: Click here to visit our Twitter Page\n\nYou] JGO on Youtube: Click here to visit our Youtube Page\n\n= B vcdecient z\nj Jazz Blues Guitar y Jazz Blues Guitar\n\nClick here to buy the Complete Bundle\n(10 eBooks) and save 40%\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}
