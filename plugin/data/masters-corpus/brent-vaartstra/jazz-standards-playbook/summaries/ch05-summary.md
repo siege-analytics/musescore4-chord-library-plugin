@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-29T06-51-17-vaartstra-jazz-standards-playbook
+stage: s3
+source_pdf: Greenan, Brent - The Jazz Standards Playbook.pdf
+source_pages: 70-86
+model: claude-haiku
+extracted_at: 2026-05-29T07:21:21+00:00
+schema_version: 0.1
+---
+
+# Chapter 5 — Jazz Standard Study #4: It Could Happen to You
+
+_Distillation; backed by `chapters/ch05.md`._
+
+Chapter 5 teaches harmonic analysis and improvisation through the jazz standard "It Could Happen to You," establishing target chords as the analytical lens for understanding chord progressions—where a target chord is the arrival point that preceding chords resolve toward, and harmonic analysis must always interpret chords functionally in relation to their resolution rather than in isolation. The chapter introduces ii-V progressions as secondary dominant expansions, dual analytical readings such as interpreting the same chord pair as both a ii-V of ii and as iii(b5)-VI7, and the minor iv chord substitution. A contrafact—a new melody composed over an existing song's chord changes—is presented as a compositional practice tool for improvisation, with two approaches: a simple, singable melody that outlines chord changes and expresses thematic content, and a busier bebop-style head that maintains repeated sections, rhythmic patterns, and deliberate structure despite its complexity. The master's characteristic moves visible here include the principle that improvisation is composition accelerated, the emphasis on space and melodic breathing, and the use of thematic repetition with variation as hallmarks of strong improvisation.
