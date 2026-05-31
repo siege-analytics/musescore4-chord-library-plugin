@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch14",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 14: OTHER CONSIDERATIONS\nPages 80-83 of the book.\n\n<<<CHAPTER TEXT\n\n| (later in same solo)\n{quote from: \u201cHoneysuckle Rose\u201d\n\nJ ! \u2014 ull = \u2014\n24. f ne \u2014 &- + =\n\u2014 r -\neb\"\n= T 2\nHorace Silver, piano (\u201cNica\u2019s Dream\u201d)\n| quote from: \u201cDown By The Riverside\u201d\nev\" Ab\u201d ne (at)\n\n=\n\na ae La a \u201c2 iA\n\ncb\" qb\u201d ns\nae T , I\n\nes So re Ee = eS z\n| Horace Silver, piano (\u201cGregory Is Here\u201d)\n| quote from: Prelude in A Major, Op. 28, No. 7 (Chopin)\n| a)\n| em _f be ff \u00a3 +\n0, $=\n| Bill Evans, piano (\u201cI Love You\u201d)\n\nquote from: \u201cMarch Of The Grenadiers\u201d\n| FA\n| Sola Break. -- - - ---- -2----55 g?\n| om =e + ri wi \u2014 a? at z a\n\n69\n\n\n70\n\nCharles Parker, alto saxophone (\u201cAnthropology\u201d)\nquote from: \u201cHoney\u201d\n\nG4 A\" muy\n\nert \u00a3\u00a3 # 2\n\nape\n\n248. 6 e \u2014 =\n\nNt\n\n(later in same solo)\nquote from:\u201dTenderly\u201d!2.\n\nett; He ett E te the ue\n\nef. \\ =e\n279. bs ; \u2014E=\naa\n\nJulian \u201cCannonball\u201d Adderley, alto saxophone (\u201cThe Weaver\u201d)\nquote from: \u201cSippin\u2019 At Bells\u201d\n\nuy) 4\na \u00bb ett te abe g\n\n000, at : 1\n\nJulian \u201cCannonball\u201d Adderley, alto saxophone (\u201cMilestones\u201d)\nquote from: \u201cFascinatin\u2019 Rhythm\u201d\n\ngo\"\n\n++ 7 + --\n28 =a ES. tee\n\nClifford Brown, trumpet (\u201cBlues Walk\u201d) quote from: \u201cReuben, Reuben\u201d\n\nen c\"\n\nal\n28. IE 2 =e =e\n\n - ten measures before the end of this same solo, Parker plays a six-measure quote from \u201cTemptation.\u201d\n\n\n\n1\n\n|\n|\n\n:\n\nDizzy Gillespie, trumpet (\u201cHot House\u201d)\nquote from: \u201cCarmen\u201d (opera by Bizet)\n\n. \u00b0 ae -~\nfre pe t4 be tke\n183,\n\nft lee\n\nHe\n\nFreddie Hubbard, trumpet (\u201cUp Jumped Spring\u201d)\nquote from: \u201cCarmen\u201d (Bizet)\n\nerii\n\nDizzy Gillespie, trumpet (\u201cPerdido\u201d)\nquote from: \u201cLaura\u201d\n\nDy @r\n\n\u00bb SSS\n\nLe 3 I\n\nJ.J. Johnson, trombone (\u201cI'll Remember April\u201d)\nquote from: \u201cIvy\u201d\n\nc-\" co\"\n. \" bd\n\u201c\u00a3 +! e \u00a2\nJimmy Blanton, bass (\u201cBody and Soul\u201d)\nquote from: \u201cThe Man I Love\u201d\n\neb-\" Ay pre\n\nt sitet balbtetet\noan, _\u2014\n\n71\n\n\n72\n\nPaul Chambers, bass (\u201cThis Can\u2019t Be Love\u201d)\nquote from:\u201dAir Mail Special\u201d\n\nape f\u00b0\" ay\" ie\ne a\n28, Sa eras Teatett ==\n<a \u2014 3\n\nHank Mobley, tenor saxophone (\u201cNica\u2019s Dream\u201d)\nquote from: \u201cHot House\u201d\n\n88. . tifa esses as\n\n(later in solo) quote from: \u201cDonna Lee\u201d\n\nae q\nC\n\u00a3 \u00a3 bebe { F |\n290. \u2014 i ie z\n\n~j-\n\nSonny Rollins, tenor saxophone (\u201cEternal Triangle\u201d) quote from: \u201cTaps Miller\u201d\n\nch gt Yr\u2019 \u00a2 eA\" Dg\n~- e +f - @\n\n254, t ===: =\n\nWays To Practice/Ingrain\n\nOf all the elements of the jazz language, quotes are among the most difficult to learn.\nIt's easy enough to find the harmonic settings that will allow a quote to be inserted ina\nsolo, even to transpose and play the quote in some other key than the original (in order\nto fit the key of the moment). The difficulty is in knowing tunes from which quotes may\nbe taken! Amidst the young, growing musicians of today there is a deplorable lack of\ntune repertoire, a common complaint from contractors of musical engagements who hire\nthem (once, but never again). Without launching into a lengthy tirade with respect to the\nplummeting level of musical quality in the musical venues, one has to wonder why Dizzy\nGillespie and Freddie Hubbard are familiar with the music of Bizet, why Horace Silver\ncan quote a Chopin Prelude, why Charles Parker should know a commercial standard\nlike \u201cHoney\u201d, or why an egg head like Bill Evans should know \u201cMarch of the\nGrenadiers\u201d, to say nothing of the quotes which come from a wide variety of jazz\noriginals, as well as revered jazz solos on record. Has rock and roll music truly\nelectrocuted 2-3 generations of Americans to the point that they no longer know any\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 14 extraction"
+}

@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-coker-elements-jazz-language
+stage: s3
+source_pdf: Coker, Jerry - Elements of the Jazz Language.pdf
+source_pages: 33-39
+model: claude-haiku
+extracted_at: 2026-05-31T03:33:21+00:00
+schema_version: 0.1
+---
+
+# Chapter 5 — BEBOP SCALE
+
+_Distillation; backed by `chapters/ch05.md`._
+
+Chapter 5 deepens 7-3 work and introduces the **3-b9** device — melodic motion from the 3rd to the flatted 9th of a dominant seventh chord, applied bidirectionally and either by leap or by scalar fill. Coker observes that 7-3 resolutions on minor seventh chords often pull in the 3rd because the 3rd and 7th are the chord-defining tones, then teaches the pivotal insight that elements chain via shared pivot notes — the 3 that ends a 7-3 resolution can launch a 3-b9, producing a compound gesture larger than either device alone. The chapter quantifies usage with Parker (15 on "Confirmation"), Rollins (31 on "Eternal Triangle"), and Stitt (16 on the same), establishing 7-3 resolution as a high-frequency structural device rather than ornament. Coker prescribes a graduated self-testing regimen (all keys, then reduced accompaniment, then unaccompanied) so that 7-3 resolutions become the player's tool for hearing a progression solo. The chapter closes with the author's broader pedagogical principle — anchor new vocabulary to already-known melodies — and a directive ranking composed heads above transcribed solos as the most efficient illustrative source for 3-b9 study.

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch28",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 28: Augmented Scale\nPages 135-138 of the book.\n\n<<<CHAPTER TEXT\n\n/=/44- (G2 A ~ i\n4 _ ot Ge pipet t + Am Se ()\n209 \u2014. TT t Tho it = + \u2014}\u2014 \" =~\n48\nRepeat on D-flat and D. ww\nJ=bhee~ ee D-flat diminished scale (also E, G, and B-flat)\nme . a\nfaz: i H ji rma 9 \u2014oe q\n210 { ppt ots 52 te =\n\nae mie ;\n\nRepeat with the starting pitches of D-flat and D (not D-flat and D diminished scale).\n\nAy\n\n|\no G0- Mad D-flat diminished scale Zz A\nA Fo pe nm | , tray es = ==)\n\nihe ae eae Sg\nS 3 |\n\no\n\nSs\nRepeat with the starting pitches of D-flat and D.\n\n| 4\n= L-IFL C-sharp diminished scale. i\n\u2014\n\na\n3\nty a a ae Ve 98\n212 \u2014 = a ee\nRP ote, \u2014s ad\n\nalse >\nRepeat with the starting pitch of D-flat and D.\n\n\u201c8Booker Ervin, \u201cNo Private Income Blues,\u201d on Mingus In Wonderland (United Artists 15005), Charles Mingus\n\nGroup.\nJohn Coltrane, \u201cStraight No Chaser\u201d, on Milestones (olumbia CS 9428), Miles Davis Sextet.\n\n13]\n\n\n\n>\n\na\n\nRepeat with the starting pitch. of D-flat and D.\n\njl!\n\nby\n\nC-sharp diminished scale.\n\na\n\n| \u00a3\n- z\n\nif\n\n214\n\nt-\n\nL i\n\n\u2014\n\n+\n\ni\nRepeat with the starting pitch of D-flat and D.\n\n/ iA (hg C-sharp diminished scale. A\n! wii 1 ae : i h if t + # T\n215 SS f .\nae a Cy i\nars\nIT) oe \u2018\nRepeat with the starting pitch of D-flat and D.\n| D-flat diminished scale.\n4\u00b0(00-/dd (non-harmonic tones)\n3 x SS\n| =\nLT Ph na bz = Pacn \u201css ae,\n216 cco i i r 7 at\n\u2014\" i Lam\n( es\nRepeat on D-flat and D.\nC-sharp diminished scale.\n+86-120\n; LS an OAR eB | i\n4\nim u H sia 4 4\n217 t t i tt : ; } et +\npere \u00a2 a i i\n\nRepeat starting on B and C.\n\n132\n\n\nJ=100-144 C-sharp diminished scale.\n218\nRepeat on D-flat and D.\n\nJ=88-120 C-sharp diminished scale.\n219\nRepeat on B and C.\n\nJ=88-120 C-sharp diminished scale.\n220\nRepeat on B-flat and B.\n\nJ=92-132 C-sharp diminished scale.\n221\nRepeat on D-flat and D.\n\nJ=108-144 C-sharp diminished scale.\n222\nRepeat on B and C.\n133\n\n223\n\n224\n\nj= k0-\\S2 C-sharp diminished scale.\nOE\n\nft | { x4 \u2014\nigtt 9 x\n4 o4 \u2018 a t y TTT H t ke a\u2014 t Lf\naot in al fe . ase ae rr\nL t i\n<7 > t mutt _+ ist aot\nae \u2014\u2014 7\n7 or ew ae: es ff\n\nRepeat on B and C.\n\nj2 162-206 D-flat diminished scale.\n\u00a3 AIL 4)\n\n: . i\nva aioe ,\u2014i\n\nTh\nf\n\nf\nvu\nvl\nL\n\nA\nJ\n\nRepeat on D-flat and D.\n\nTHE AUGMENTED SCALE\n\nThe augmented scale, like the diminished scale, is a symmetrical scale. This time the intervals al-\nternate between half-sieps and one and one-half steps (minor thirds or augmented seconds). On C\nthe scale would be spelled C, D-sharp, E, G, A-flat, B, C. Note that there are, because of the wide\naugmented second intervals, only six tones in the scale. Although the foregoing scale on C begin\non C, the scale is often handled melodically in improvisation so that it starts on the B (B, C, D-\nsharp, E, G, A-flat, etc.)\n\nThe augmented scale is not nearly so common as the diminished scale, nor can it aply to as many\ngiven situations. However, its use seems to be on the upswing, since it is a relatively new scale,\nand perhaps, like the diminished scale, it will enjoy more popularity in the future.\n\nAs its name implies. the augmented scale is derived from the use of augmented triads. If we examine\nthe above spelling of the C augmented scale, we see that it contains cwo augmented triads, chromati-\ncally adjacent: B, D-sharp, G (or F double sharp) and C, E, A-flat (or G-sharp). Only four (chro-\nmatically adjacent) augmented scales exist.\n\nIn addition to fitting augmented triads, the augmented scale fits a rarely-used chord, the major\nseventh chord with an augmented fifth (M7+5)\u00b0\", Again, since this chord is relatively new, like the\nscale, it could enjoy wider use in the future, because both the chord and the scale present interesting\nsounds that might prove attractive to the jazz improviser. With slightly less effect, the scale can be\napplied to the major seventh chord (M7). It also carries much potential for becoming a \u201cfree form\u201d\ndevice, because of its mystical, keyless sound and its symmetry in construction.\n\nPatterns No, 225-233 explore some of the possibilities for sounding the augmented scale.\n\n\u201cClare Fischer, \u201cQuiet Dawn,\u201d on Extensions (Pacific Jazz 77), Clare Fischer Orchestra. Listen for an extensive\nuse of the augmented scale with M7 +5 chords. Also listen to the clarinets in the first movement of Bela Bar-\ntok\u2019s \u201cConcerto For Orchestra.\u201d\n\n134\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 28 extraction"
+}

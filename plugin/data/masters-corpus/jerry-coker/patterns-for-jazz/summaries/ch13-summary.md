@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-coker-patterns-for-jazz
+stage: s3
+source_pdf: Coker, Jerry - Patterns for Jazz (1970).pdf
+source_pages: 68-74
+model: claude-haiku
+extracted_at: 2026-05-31T03:38:21+00:00
+schema_version: 0.1
+---
+
+# Chapter 13 — Minor Seventh and Ninth Chords
+
+_Distillation; backed by `chapters/ch13.md`._
+
+Chapter 13 teaches the construction of minor seventh and ninth chords by deriving chord tones from the Dorian Mode, establishing the foundational relationship between minor chord extensions (ninth, eleventh, thirteenth) and lower scale degrees (second, fourth, sixth). The chapter introduces the chord-tone chart as the organizing principle for understanding these sonorities, and defines the enharmonic equivalences that make upper extensions meaningful in harmonic construction. The characteristic practice approach prescribes learning all four minor chord types—Minor Triads, Minor Sixth Chords, Minor Seventh Chords, and Minor Ninth Chords—across every Dorian mode root using a rhythm-free drill format. This systematic extraction of chord tones from modal scales represents the method's core pedagogical strategy for internalizing harmonic vocabulary.

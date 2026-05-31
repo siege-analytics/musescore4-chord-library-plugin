@@ -1,0 +1,78 @@
+---
+run_id: 2026-05-28T15-05-20-coker-elements-jazz-language
+stage: s4
+source_pdf: Coker, Jerry - Elements of the Jazz Language.pdf
+model: claude-sonnet
+extracted_at: 2026-05-31T03:40:14+00:00
+schema_version: 0.1
+---
+
+# Elements of the Jazz Language for the Developing Improvisor — Statement of Outputs
+
+## Overview
+
+Jerry Coker's *Elements of the Jazz Language for the Developing Improvisor* (1991) presents jazz improvisation as a finite, learnable language constructed from a small set of named devices. The thesis, established in Chapter 1, is that the players studied share roughly 18 common devices that account for nearly all the language they speak, and that fluency follows from mastering each named element and learning to combine them. The named elements — change-running, digital and scalar patterns, the 7-3 resolution, the 3-b9, the bebop scale and bebop lick, harmonic generalization, enclosure, sequence, CESH, quotes, the Cry Me A River and Gone But Not Forgotten licks, linear chromaticism, tri-tone substitution and altered dominant, the back-door progression, #II°7, bar-line shifts, and side-slipping — form the vocabulary catalogue that organizes Chapters 2 through 16.
+
+The book is uncompromising about methodology: improvisation is a performer's art, and intellectual understanding of an element is necessary but insufficient. Coker's four-stage assimilation method, made explicit in Chapter 17 (Appendix B), demands that every device pass through mental understanding, aural observation of masters, hands-on practice in all 12 keys, tempos and registers, ear-to-harmony association via play-along exercise tracks, and finally application to real tune progressions. A local three-stage progression (alone → exercise track → play-along tune) is repeated for every device, with all exercises practiced in 12 keys across cycle-of-fifths, chromatic, minor-third, and whole-step transpositions and across triad through 13th extension levels.
+
+A second methodological pillar is **digital analysis** (Chapter 2): every exercise and pattern is named by scale degree (1-3-5-1) rather than note letter (C-E-G-C) so it becomes instantly transposable to all 12 keys. This single conceptual move makes the entire catalogue key-universal and converts notation-bound practice into mental, aural, and physical fluency.
+
+## Systems
+
+### Jazz Language Elements (`jerry-coker:elements-of-the-jazz-language:jazz-language-elements`)
+
+The book's central system. Members are the 20 named devices catalogued across the book; traversal rules govern how devices chain into compound gestures and how the player moves between syntactic layers; modification rules govern how devices transpose, alter for chord quality, and accept embellishment or truncation in real solos. The system operates at three syntactic levels: change-running, digital patterns, 7-3 resolution, 3-b9, enclosure, and the bebop lick function as "letters and words"; sequences function as "complete thoughts and chains of thought" (Chapter 10 summary); harmonic generalization, CESH, quotes, chromatic substitutions, and the named stock licks layer over the basic vocabulary.
+
+**Members:** Change-Running, Digital Patterns, Scalar Patterns, 7-3 Resolution, 3-b9, Bebop Scale, Bebop Lick, Harmonic Generalization, Enclosure, Sequence, CESH, Quotes, Cry Me A River Lick, Gone But Not Forgotten Lick, Linear Chromaticism, Tri-Tone Substitution / Altered Dominant, Back Door Substitution, #II°7 Substitution, Bar-Line Shift, Side-Slipping / Outside Playing.
+
+**Traversal rules:**
+- *Element Overlap via Shared Pivot Note* — `VoiceMotion` — elements chain when one element's terminal note serves as the next element's starting note; the 3 ending a 7-3 resolution begins a 3-b9 (Chapter 5 summary; ch05.md quote "Device combination: 7-3 into 3-b9 overlap"; Chapter 10 summary; ch10.md quote "Elements: overlapping and interlocking").
+- *Sequence as Syntactic Organizer* — `_pending:motivic-syntax-layer` — sequences organize lower-level elements into communicative thoughts that the listener perceives and predicts (Chapter 10 summary; ch10.md quote "Sequence as jazz language syntax").
+- *V7 Substitution Lattice* — `SubstitutionExpand` — a V7 may be replaced by its tri-tone substitute, the back-door progression (IV-7 to bVII7), or #II°7, all sounding consonant because the listener's ear hears each substitute's familiar precedent (Chapter 15 summary; ch15.md quotes).
+- *Harmonic-Generalization Ladder* — `FamilyCoherence` — a single scale covers multiple chords, ordered from collision-free (tonic major over II-V-I; pentatonic over ten named chords) through justified collision-tone cases (harmonic minor over minor II-V-I; diminished over minor II-V) (Chapter 9 summary; ch09.md quotes).
+
+**Modification rules:**
+- *Digital (Scale-Degree) Universalization* — `_pending:scale-degree-universalization` — name everything by scale degree so it transposes to all 12 keys (Chapter 2 summary; ch02.md quotes "Thinking in Scale Degrees" and "Digital Analysis of Exercises").
+- *Chord-Quality Alteration of Patterns* — `ColorToneRequire` — adjust scale degrees (1-3-5-3 → 1-b3-5-b3) to fit minor or altered chord-types (Chapter 3 summary; ch03.md quote "Altering patterns for chord quality").
+- *Tertian Recontextualization* — `FamilyCoherence` — the same tertian pattern serves multiple chord types depending on which scale degree is treated as the starting point (Chapter 2 summary; ch02.md quote "Tertian Construction of Exercises").
+- *Retrograde and Fifth-Rooting* — `SymmetryMovement` — generative transformations that multiply vocabulary by reversing the cell or placing it on the chord's fifth (Chapter 3 summary; ch03.md quote "Retrograde and transposition of patterns").
+- *Bebop-Scale Chromatic Insertion* — `NCTHarmonization` — add one specific chromatic passing note per scale type so the 8-note cell fits 4/4 and lands chord tones on downbeats (Chapter 6 summary; ch06.md quotes).
+- *Embellishment and Truncation of Elements* — `_pending:disguise-recognition` — elements appear in disguised, decorated, or incomplete forms in real solos and must be recognized despite the disguise (Chapter 10 summary; Chapter 11 summary; ch10.md and ch11.md quotes).
+- *Outside-Playing Wrong-Note Arithmetic* — `NCTHarmonization` — twelve chromatic minus seven scale tones leaves five "wrong" notes per chord, used in convincing groups or smoothly placed (Chapter 16 summary; ch16.md quote "Outside Playing: wrong-notes arithmetic").
+
+### Four-Stage Element Assimilation Method (`jerry-coker:elements-of-the-jazz-language:assimilation-method`)
+
+Coker's master practice methodology, applied identically to every named element. Members are the five sequential stages (mental, aural-observation, hands-on, harmony-association, real-tunes); traversal rules govern the sequential dependence and the local three-stage practice progression; modification rules govern the discipline of twelve-key practice, the weaning from notation, and the four-transposition / five-extension regimen.
+
+**Members:** Mental Understanding, Aural Observation of Masters, Hands-On Execution, Ear-Harmony Association, Application to Real Tune Progressions.
+
+**Traversal rules:**
+- *Sequential Stage Progression* — `_pending:sequential-pedagogy-stages` — the stages are sequential, and intellectual understanding alone never produces performance (Chapter 17 summary; ch17.md quotes "Four-stage element assimilation" and "Practice imperative — beyond reading").
+- *Local Three-Stage Practice Progression* — `_pending:isolate-track-tune` — within Stages 3-4, every device is practiced alone, then with a chord-type-matched exercise track, then with a play-along tune offering many deployment opportunities (Chapter 2 summary; ch02.md quote "Change-Running Practice Sequence").
+
+**Modification rules:**
+- *All-Twelve-Keys Discipline* — `_pending:twelve-key-transposition` — every exercise practiced in 12 keys with accompaniment tracks sequenced to mirror real-tune harmonic motion (Chapter 2 summary; ch02.md quotes).
+- *Wean from Notation* — `_pending:internalization-over-reading` — move from notated/cycle-illustration practice to mental and aural figuring as quickly as possible (Chapter 2 summary; ch02.md quote "Weaning Off Notation").
+- *Four-Transposition / Five-Extension Regimen* — `_pending:transposition-extension-matrix` — arpeggiate each chord-type through chromatic, cycle-of-fifths, minor-third, and whole-step transpositions across triad through 13th extensions (Chapter 2 summary; ch02.md quote "Arpeggiation Practice Modulations").
+
+## Pending Work
+
+The following `_pending:<kebab>` engine_payload kinds were used where no name in the 12-kind canonical list cleanly fits; each signals a region where the systems vocabulary needs extension:
+
+- `_pending:motivic-syntax-layer` — signals the need for an engine concept that models sequences (motive plus variations) as a higher-level syntactic organizer above the per-element rule layer; existing kinds describe rules on members but not on the rhythmic/intervallic motive itself.
+- `_pending:scale-degree-universalization` — signals the need for an engine concept that captures interval-by-function naming as the prerequisite that makes 12-key transposition tractable; this is a representation rule, not a member-level rule.
+- `_pending:disguise-recognition` — signals the need for a kind that models how an element can appear truncated, embellished, or pitch-stretched while still functioning as the same element; existing kinds assume canonical form.
+- `_pending:sequential-pedagogy-stages` — signals the need for an engine concept that captures sequence dependencies between practice stages; the existing kinds operate on musical members, not on pedagogical stages.
+- `_pending:isolate-track-tune` — signals the same pedagogical-stage need at the device-local granularity (practice alone → with exercise track → with tune).
+- `_pending:twelve-key-transposition` — signals the need for a kind that models the discipline of comprehensive key coverage with track-sequenced harmonic motion.
+- `_pending:internalization-over-reading` — signals the need for a kind that captures the explicit target-skill rule "wean from notation"; the existing kinds describe what to play, not how to learn.
+- `_pending:transposition-extension-matrix` — signals the need for a kind that models the matrix of practice axes (four transposition sequences × five chord extensions) as a single regimen.
+
+## Provenance Notes
+
+- All systems are drawn from the book-level distillation (`s3-book`) and the 18 chapter summaries (`summaries/ch01.md` through `ch18.md`).
+- Chapter quotes (s2-extract) supply every `references[]` entry; every traversal and modification rule cites at least one chapter quote excerpt verified in s2.
+- **Chapter 18 (Bibliography)** yielded no systems and no load-bearing quotes — the chapter is composed of the third tune-progression chart tables, the bibliography, and the author bio. Its s2 response is the empty-quote case (`{"quotes": []}`), explicitly authorized by the worker guide for notation-only/reference-only material.
+- **Chapter 12** is largely notation (CESH pattern reference) with a single load-bearing prose passage on CESH harmonic contexts; the CESH system membership in the central system draws on quotes from Chapters 10, 11, 12, and 13.
+- **Chapter 17 (Appendix B)** prose was the primary source for the assimilation-method system; its annotated chord-progression charts were treated as reference and not used to derive system rules.
+- The two stock licks (Cry Me A River and Gone But Not Forgotten) are listed as system members rather than as their own system because the book treats them as named entries in the same vocabulary catalogue as the other devices; their five-chord-type versatility is captured in the central system's summary.

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch26",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 26: Polychords for Diminished Scale\nPages 128-130 of the book.\n\n<<<CHAPTER TEXT\n\n186\n=80-120 Dm(9) or C dorian\n187\n=80-120 Ebm(#9) or C dorian\n188\n=80-120 Gb(#9)\n189\n=80-120 Gbm(#9)\n190\n=80-120 Bb(#9) or C dorian\n\n\"Oliver Nelson, \"Stolen Moments,\" on The Blues And The Abstract Truth (Impulse S-5), Oliver Nelson Group. An example of the use of Pattern No. 186 may be heard in the second chorus of Nelson's Tenor solo.\n124\n\n191\n=80-120 Bb7\nCm7\n192\n=80-120 Bm7 (4)\nCm7\n193\n=80-120 Bm7 (4)\nCm7\n194\n=80-120 Dbm7 (6)\nC7\n195\n=80-120 Eb7 (4)\nC7\n196\n=80-120 Ab7 (4)\nC7\n125\n\n197\n\u2669=80-120 A (69)\n198\n\u2669=40-60 D\u266dm (69)\n199\n\u2669=40-60 Cm (69)\n200\n\u2669=40-60 B\u266dm (69)\n\"Clare Fischer, \"Last Night When We Were Young,\" on Cal Tjader Plays Harold Arlen (Fantasy 3330), Cal Tjader Group, arrangements by Clare Fischer. Listen to the introduction on this selection.\n126\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 26 extraction"
+}

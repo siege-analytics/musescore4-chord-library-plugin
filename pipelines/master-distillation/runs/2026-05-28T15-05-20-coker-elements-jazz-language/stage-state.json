@@ -1,0 +1,90 @@
+{
+  "run_id": "2026-05-28T15-05-20-coker-elements-jazz-language",
+  "config": "pipelines/master-distillation/configs/coker-elements-jazz-language.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-coker-elements-jazz-language/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-coker-elements-jazz-language/pages.json",
+        "re-ingested: 154 pages, 156,382 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:31:19+00:00",
+      "ended_at": "2026-05-31T03:31:19+00:00",
+      "outputs": [
+        "detected 18 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-coker-elements-jazz-language/chapter-bounds.json",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch01.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch02.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch03.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch04.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch05.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch06.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch07.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch08.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch09.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch10.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch11.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch12.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch13.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch14.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch15.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch16.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch17.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/chapters/ch18.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:37:09+00:00",
+      "ended_at": "2026-05-31T03:37:09+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch15-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch16-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch17-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/summaries/ch18-summary.md",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/elements-of-the-jazz-language-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:40:14+00:00",
+      "ended_at": "2026-05-31T03:40:14+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/derived/systems-draft.json",
+        "plugin/data/masters-corpus/jerry-coker/elements-of-the-jazz-language/derived/STATEMENT.md",
+        "derived 2 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

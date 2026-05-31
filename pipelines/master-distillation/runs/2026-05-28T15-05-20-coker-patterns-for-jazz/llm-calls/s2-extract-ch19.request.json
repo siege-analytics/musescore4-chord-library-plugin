@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch19",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 19: Whole-tone Scale\nPages 106-107 of the book.\n\n<<<CHAPTER TEXT\n\nThe numbers under each tone indicate the position of that tone in this scale (note that tone No. 7\nhas been changed from a C-sharp to a D-flat in order that the student might be able to manipulate\nthe tones easier). The D-flat scale whole tone will also produce five other whole tone scales with the\nstarting pitches E-flat, F,G, A and B. These whole tone scales will contain the same tones as in the\nillustrated D-flat whole tone scale with the exception of the starting note.\n\nFigure 28 illustrates the tones of all whole tone scales. This chart will be helpful to the student when\napplying the numerical formulas dealing with the formation of the Augmented Triad and the Aug-\nmented Seventh Chord. .\n\nFig. 28 (chart containing tones of all whole tone scales):\n\nTone No. 1 No. 2 No. 3 No. 4 No. 5 No. 6 No, 7\nCc D E FF G? Ag Cc\nD E Fe G? As Cc D\nE F3 G3 Ag Cc D E\nFe G# A? Cc D E Fs\nGi A? Cc D E Fe G3\nA: Cc D E Fe G? As\nDb E> F G A B Db\nEb F G A B Db Eo\nF G A B D> Ep. F\nG A B D> Eb F G\nA B Dp Eb F G A\nB Db Ep F G A B\n\nThe use of enharmonic tones is justifiable whenever the student desires. The enharmonic tone does\nnot change the sovwnd of the tone but rather the spelling, which may allow the student to use the\nmaterial related to whole tone scales. For reference, the enharmonic tones are: C-sharp and D-flat:\nD-sharp and E-flat; E-sharp and F; F-sharp and G-flat; G-sharp and A-flat; A-sharp and B-flat; B-\nsharp and C; F-flat and E: C-flat and B.\n\nBy extracting the tones No. 1-3-5 from any whole tone scale, we arrive at the Augmented Triad on\nthat particular root. Figure 29 illustrates the tones of the EAUGMENTED TRIAD.\n\nFig. 29\n\n102\n\n\n\nEarlier in the book we mentioned that a triad was a three note chord which measured five tones\nfrom bottom to top counting the first tone as No. 1.\n\nThe previous example, whici illustrates the tones of the E Augmented Triad, would seem to con-\ntradict our earlier definition of a triad, If the student were to count the tones in the illustrated Aug-\nmented Triad, he would be correct in counting six tones. The reason for this is simple. The tones of\nall of the whole tone scales shown in figure 28 have been re-arranged to create the least possible\ndifficulty for the student when playing these scales on his instrument. Enharmonic spellings were\nautomatically included in this chart. Consequently, when applying the given formula for the extrac.\ntion of Augmented Triads from their respective whole tone scales, we can arrive at a triad which\nactually measures six tones from the bottom to the top note, as in the case of the illustrated example.\nThe correct spelling for the E Augmented Triad should be E-G-sharp-B-sharp. The B-sharp, how-\never, was replaced with the enharmonic note C in the E whole tone scale. This is why the illu-\nstrated E Augmented Triad appears to have six tones from the root to the top tone, instead of fire.\nThis will happen several times as the student proceeds to extract other augmented triads from their\nrespective whole tone scales. The student is cautioned vof to be misled into thinking the augmented\ntriad has six tones.\n\nIn the same manner, we have previously defined a seventh chord as a four note chord which mea-\nsures seven tones from bottom to top, counting the bottom note as No. 1. When applying the for-\nmula for the extraction of Augmented Seventh chord tones from their respective whole tone scales,\nthe student will probably come up with the notes C-E-G-sharp-A-Sharp, which represent the C Aug-\nmented Seventh Chord, If the student were to count the tones from C to A-sharp there would be\nsix. The correct spelling for this chord is C-E-G-sharp-B-flat. The tone A-sharp is used in the scale\ntone chart (fig. 28) to show that there is a relationship to be observed in other whole tone scales\nthat were derived from the C whole tone scale. Once again the student is cautioned not to be misled\ninto thinking that any given Augmented Seventh chord contains six tones from bottom to top in-\nstead of seren.\n\nBy extracting tones No. 1-3-5-6 from a whole ione scale, we arrive at the Augmented Seventh chord\non that particular root. Figure 30 illustrates the tones of the E Augmented Seventh Chord:\n\nFig. 30\n\n; \u20146- |\nraal i ry = :\n7 $ i\n\nSymbo!: E+7\nAlternate Symbol: E? (25)\nAlternate Symbol: E7 (+5)\n\n+\n\nAlternate Symbol: E-5\n\nNote that both chords contain the same triad, E-G-sharp-C, and both chords use the same scale, the\nE whole tone scale, to establish their sound.\n\nIn preparation for the following patterns, be able to recite, write and play the following chords\nas they are extracted from their respective whole tone scales, Augmented Triads and Augmented\nSeventh Chords. Use the illustrated routine form for playing the chord tones, since it does not\nrequire any specific rhythm or tempo.\n\n103\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 19 extraction"
+}

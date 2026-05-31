@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Digital Patterns in Major\nPages 23-28 of the book.\n\n<<<CHAPTER TEXT\n\na\n\n.\n\nLf. ia | ae | Zz, a a A |\nee a a a 2 a a Coot Tt\n\nfile> (62\n\nUL\n30 = 4 \u2014 eeerene\nY ay Ab\n\nMt\n\na \u00e9\n\nL\nL . CL\n\n(continue in same manner)\n\ns\n\n&>\n=\n~;P\nNy pore\n\nae\nA\n\n17\n\n\naN\n\nry\n\n_\n\na\nrs]\n.\n\neee\n\n\u2018a\nae\nho\nN\n\nje [4182\n\n46 Yet\n\nTt\n\nbb A\n\nLiL TL 1 i\n\nae a ae y LivTl\n\n(continue in same manner)\n\n\n\nJ=96-138\nNote: Each chord scale lasts one measure.\n33\nC\n(ascending)\nDb\n(descending)\nD\n(ascending)\nEb\n(descending)\nE\nF\nGb\nG\nAb\nA\nBb\nB\nC\n(continue in same manner)\nJ=96-138\n34\nC\n(ascending)\nF\n(descending)\nBb\n(ascending)\nEb\n(descending)\nAb\nDb\nGb\nB\nE\nA\nD\nC\n(continue in same manner)\nJ=96-138\n35\nC\n(ascending)\nD\n(descending)\nE\n(ascending)\nGb\n(descending)\nAb\nBb\nC\n(continue in same manner)\nDb\n(ascending)\nEb\n(descending)\nF\nG\nA\nB\nDb\n(continue in same manner)\n\n36\nd=96-138\n(ascending)\n(descending)\n(continue in same manner)\n\nF  Ab  B  D  Bb  Db  E  G\n\n37\nd=96-138\n(descending)\n(ascending)\n(descending)\n(ascending)\n\nE  F  Gb  G  Ab  A  Bb  B  C\n\nApply the principle of alternating the descending and ascending forms of the chord scales to the chords in patterns No. 34, 35 and 36.\n\n38\nd=108-132\nNote: To be used for C, CM6, CM7 or CM9.\n\nTranspose Pattern No. 38 in remaining eleven keys.\n\nThe remaining eleven keys referred to are: F, Bb, Eb, Ab, Db, Gb, B, E, A, D and G.\n20\n\n, p= (OB-13Z\n\naan\n391 a i 1 I +t f+\na ae\nNote: 4. be used for C, CM6, CM7 or CM9.\n\u00a3 f- t a\nol i f } 4 i =\ny = a el\nPractice in all keys.\n{\no= 7h- 100 Say\n=e\n0. ae oto ett\nNote: To be used for C, CM6, CM7 or CM9.\n\u201ca fe _ a\nfeet \u2014 ff ; : : Le\n{\na HS SS ts 7\n\nPractice in all keys.\n\n21\n\n\n\np 2 eons amt! ia a\" amt\n4] \u2014 i 5 ; ee\na SS se\n\nt s =\"\n3 1 on ie el Sees a a\n\nt it a a 3\neB SB Ze > 5s 3,\n\nTranspose Pattern No. 41 in remaining eleven keys.\n\n470100\naot ee\nasi ry i\n++ eF CF EF eZ Ss, SU\n\nNote: To be used for: C, CM6, CM7 or CM9.\n\nia in {\n\n: tt # : T aaa +\u2014 f\u2014 +\nva SSS a, 13% F\n\nTranspose Pattern No. 42 in remaining eleven keys.\n\n1]\n\ncht\n1]\n\n=\n\npa. \u201c \u00a5\na\nr SS Sy OS SST FS\n\nTranspose pattern No. 43 in remaining eleven keys.\n\n22\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}
