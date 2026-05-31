@@ -15495,6 +15495,100 @@
       "status": "promoted"
     },
     {
+      "id": "barry-galbraith",
+      "name": "Barry Galbraith",
+      "lived": "1919-1983",
+      "traditions": [
+        "jazz",
+        "chord-melody",
+        "studio-jazz",
+        "bebop"
+      ],
+      "instrument": "6-string electric (Gibson archtop)",
+      "biography": "Barry Galbraith (1919-1983) was an American jazz guitarist whose long studio career in New York from the 1940s through the 1970s made him one of the most-recorded jazz guitarists of his generation. His published work includes the *Jazz Solo Guitar* anthology — 42 fully notated chord-melody arrangements that teach by demonstration rather than by prose. Galbraith's approach is widely cited as foundational to the New York chord-melody tradition. Biography placeholder; refine with maintainer review.",
+      "principles": [
+        {
+          "id": "arrangement-as-curriculum",
+          "name": "Arrangement-as-curriculum: the notated arrangement is itself the pedagogical content",
+          "summary": "Galbraith's *Jazz Solo Guitar* anthology teaches by demonstration rather than by prose. There is no narrative chapter structure, no labeled methodology, no glossary, and no explicit rules — yet the 42 arrangements constitute a complete pedagogical statement. Voicing choices, voice leading, chord substitutions, melodic harmonization, and bass-melody-harmony coordination are all encoded in the written notation. The implicit method must be inferred by attentive analysis of the music itself; the book offers no shortcuts. This is itself a principle: the arrangement IS the lesson, and the student is expected to absorb the principles through repeated playing, study, and comparison rather than through explanation.",
+          "voicingStyleTags": [
+            "barry-galbraith",
+            "chord-melody-anthology",
+            "demonstration-based"
+          ],
+          "playStyleTags": [
+            "chord-melody",
+            "solo-guitar",
+            "study-by-playing"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Galbraith, Barry. Jazz Solo Guitar.",
+              "citation": "Book-level structure: 42 notated arrangements without prose commentary, glossary, or stated methodology. The arrangements ARE the curriculum (STATEMENT.md What this book is + What it teaches)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "notation-only-corpus-not-method-text",
+          "name": "Notation-only corpus: the book is analytic source material, not a rule-bearing method",
+          "summary": "Galbraith's *Jazz Solo Guitar* is an analytic corpus — input to other masters' rule sets — rather than a rule-bearing master text in its own right. Its place in the catalog is honest: a notation-only anthology whose pedagogical system is implicit in the music. The chapter-loop registers a single `_pending:notation-only-implicit-system` placeholder rather than inventing rule references, acknowledging that the system is present in the music but cannot be structured from text alone. Resolving the placeholder would require notation-level analysis (voicing extraction, voice-leading graph construction, substitution lattice inference) across the 42 arrangements, or a curatorial decision to treat this work specifically as analytic corpus.",
+          "voicingStyleTags": [
+            "barry-galbraith",
+            "notation-corpus",
+            "implicit-system"
+          ],
+          "playStyleTags": [
+            "chord-melody",
+            "analytic-corpus"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Galbraith, Barry. Jazz Solo Guitar.",
+              "citation": "STATEMENT.md Pending Work + Provenance Notes: notation-only book, _pending:notation-only-implicit-system shell registered honestly, no rules invented."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
+      "works": [
+        {
+          "id": "jazz-solo-guitar",
+          "title": "Jazz Solo Guitar — 42 Chord Melody Arrangements",
+          "year": 1985,
+          "instrument_scope": "6-string solo guitar (chord-melody)",
+          "summary": "Galbraith's performance anthology of 42 fully notated chord-melody arrangements of jazz standards for solo guitar — among them A Certain Smile, Alone Together, Autumn in New York, As Time Goes By, Have You Met Miss Jones?, I Cover the Waterfront, Embraceable You, The Christmas Song, Dancing on the Ceiling, Darn That Dream, and Dolphin Dance. There is no prose commentary, no labeled chapter structure, no glossary of techniques, and no stated methodology. Galbraith teaches by demonstration: the arrangements themselves are the curriculum. The pedagogical content — voicing choices, voice leading, chord substitutions, melodic harmonization, bass-melody-harmony coordination — is encoded entirely in the written notation. Whatever principles govern Galbraith's approach can only be inferred by sufficiently attentive analysis of the notated music itself. The chapter-loop produced a single placeholder system (`_pending:notation-only-implicit-system`) registering this honestly with empty members and rules — no rules were invented to fill the schema. Resolving the pending system would require notation-level analysis or a curatorial decision to treat this work as analytic corpus rather than rule-bearing master text.",
+          "references": [
+            {
+              "source": "Galbraith, Barry. Jazz Solo Guitar — 42 Chord Melody Arrangements. (date placeholder)",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-galbraith-jazz-solo-guitar; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/. Notation-only anthology; no rules extracted, _pending: placeholder system registered honestly."
+            }
+          ],
+          "systems": [
+            {
+              "id": "barry-galbraith:jazz-solo-guitar:_pending:notation-only-implicit-system",
+              "name": "Implicit Chord-Melody Arranging System (notation-only)",
+              "summary": "Galbraith's 42 Chord Melody Arrangements for Solo Guitar is a notation-only anthology — no prose, no labeled rules, no stated taxonomy. The pedagogical system it teaches is entirely implicit in the written arrangements: voice-leading choices, voicing densities, chord substitutions, inner-voice motion, and bass-melody-harmony coordination across 42 standards. Members, traversal rules, and modification rules cannot be extracted from text alone; they require direct musical analysis of the notation, which is out of scope for the prose-driven distillation pipeline. This system is recorded as a placeholder so downstream review can decide whether to commission notation-level analysis or treat this work as an analytic corpus rather than a rule-bearing master text.",
+              "members": [],
+              "traversal_rules": [],
+              "modification_rules": []
+            }
+          ]
+        }
+      ],
+      "status": "promoted"
+    },
+    {
       "id": "benson",
       "name": "George Benson",
       "lived": "1943-",
