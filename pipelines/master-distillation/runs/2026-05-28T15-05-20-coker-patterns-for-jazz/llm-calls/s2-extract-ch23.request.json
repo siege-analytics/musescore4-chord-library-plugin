@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch23",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 23: Turnarounds (Turnbacks)\nPages 118-119 of the book.\n\n<<<CHAPTER TEXT\n\nNb _ aA\n=.\n\n=\n164 t a :\n\nC Diminished Scale ascending and descending.\n\nPractice Pattern No. 164 using EVERY starting tone illustrated on the chart in figure 32.\n\nJaia-/ad\nVa\nYu\n\na |\n\n+\nT\n\n16. Gas\na TA A tf SS tS\n4 > 5 7 v\n\nThis pattern is based on the C chromatic scale. The arabic numbers indicate the tones of the C\u00b07\nchord. Note that the chord tones fall on the first tone of each eighth note triplet. In this manner the\nsonority produced is that of a diminished seventh chord (or even a diminished triad) having the\nroot of the starting tone of the chromatic scale (in this case the C\u2019 or C\u20197).\n\nPractice Pattern No. 165 using EVERY starting tone illustrated on the chart in figure 32.\n\nj= Ahm |Gbo\n166 SS ee\nYj i \u2014\u2014 \u2014\u2014\u2014\u2014\n\n4 3 5 7\n\nThis pattern is based on the C Diminished Scale. The arabic numbers show that a chord tonc is pro-\nduced as the first tone of each group of four notes occurs. Note that the pattern starts on tone No.\n1 and gradually ascends three more tones in the C Diminished Scale before turning back to the\nthird tone, and so on.\n\nPractice Pattern No. 166 using EVERY starting tone illustrated on the chart in figure 32.\n\n28David Baker, \u201cHonesty,\u201d on Ezz-Thetics (Riverside 375), George Russell Sextet.\n?\u00b0Charlie Mariano, \u201cDeep River,\u201d on Toshiko Mariano Quartet, (Candid 8012), Toshiko Mariano Quartet.\n\nDavid Young, \u201cKentucky Oysters,\u201d on Strutusphunk (Riverside 341), George Russell Sextet.\n\n114\n\n\n167\n\n31\n\n168-44 =\n\nd=leo-L08\n\n(ad 4 \u2014\n\n| ans one St\n\ni tot toh\n; 1 ram Hot i\u201d pete he tte\nFE\n\nNote: This pattern starts on the third of the chord.\n\nThis pattern is based on the C Diminished Scale. It can be used for all Diminished chords having\nscales derived from the C Diminished Scale.\n\nPractice Pattern No. 167 using EVERY starting note illustrated on the chart in figure 32.\n(2 (38- (G4\n\nCo 4 * 3B x z7x*  (,\\\n\n4\n\n5 x\n\u2014-\nz\n\ni\n\n1. +\n+i,\n320 aS ~~\nThis pattern uses the tones of C7 chord (shown by arabic numbers) in addition to other tones\nwhich are located at an interval of one whole step down from the chord tones of the C\u20197 chord.\n\nThese other tones (which are indicated by astericks) form another Diminished Seventh Chord\nwhose root is one whole step lower than that of arabic number 1 in this pattern.\n\nPractice Pattern No. 168 using EVERY starting tone illustrated on the chart in figure 32.\n\nDOWNSTEP MODULATION\n\nA chord progression is generally thought to be a succession of chords, often alternating between\n\ntwo types of chord structures, with the chord roots progressing, say, through the cycle of fifths or\n\ndownward chromatically. For example:\n\nC: Wim7 V1i7 ~~ iUWm7 v7 Wm7 p7)\u2014sWm7_\u2014s\u00e9 IIT\n(Em7) (A7)  (Dm7) (G7) OR: (Em7) (E27) (Dm7) (D?7)\n\nIt is frequently the case, however, that the root will remain stationary through two or more chords,\nwhile the chord type on that same root will change. For example:\n\nCM7 Cm? F7 BD M7B?m? Eb7 AbM7 OR: DM7 D7 GM7 G7 CM7\n\nnd\n\nSuch a permutation in chord type will usually cause a change in chord function as well, so that the\npreceding examples might be given as follows:\n\nIM7 im? V7? IM? m7 V7 IM? AND: IM7 WV? IM7 V7 IM7\n\nC: BP: Ap: D:  G: Cc:\n\nThe following patterns will focus on permutations of this sort, where the root remains the same\nfor rwo or more successive chords.\n\n3)Booker Ervin, \u201cNo Private Income Blues,\u201d on Mingus In Wonderland (United Artists 15005), Charles Mingus\nGroup.\n32David Baker, \u201cHonesty,\u201d on Ezz-Thetics (Riverside 375), George Russell Sextet.\n\n33Charlie Mariano, \u201cDeep River,\u201d on Toshiko Mariano Quartet (Candid 8012), Toshiko Mariano Quartet.\n\n115\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 23 extraction"
+}

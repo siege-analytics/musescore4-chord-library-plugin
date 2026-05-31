@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch14",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 14: Dorian Mode (Minor Seventh Scale)\nPages 75-76 of the book.\n\n<<<CHAPTER TEXT\n\nJ=100-160\n108\nCm7 Dm7 Em7 F#m7 Abm7 Bbm7\n(ascending) (descending) (ascending) (descending)\n\nCm7 Bb7 Bbm7 Abm7 F#m7 Em7 Dm7 Cm7\n(ascending) (descending) (ascending) (descending)\n\nC#m7 Em7 Fm7 Gm7 Am7 Bm7\n#4 E7 F7 G7 A7 B7 C7\n(ascending) (descending) (ascending) (descending)\n\nPractice Pattern No. 108 by reversing the direction of the chord tones: descending, ascending, etc.\n71\n\n= bo-. JO Note: Each chord lasts rwo beats.\n\nLm 7 bn 7\n\nVn 9 oe Erm 7 Ei 1h? bm Hin An Bn? Bt\n\n109\n\n+\n\nt va\n\nFATT -\nCort tt a\n\nj.\nt+ tt f\n\n(descending )\n\nca 3\n\nie i+\n\n(ascending )\n\n(continue in same manner)\n\n7 Bla dts de ee Ete be En\n\nimi Lf. Ef 7f- ia\nT if\n\nva t\n\nLt ram Ht t LL\n\ni\n{\nt i\n\n(descending) (ascending)\n\nPractice Pattern No. 10% reversing the direction of the chord tones: ascending, descending, etc.\n\nj=60-/20\n\nbm\n\n110\n\n?\n\n%\n\nCw, , By\nEom 7 Ebon 7 Nn 7 Bw 1 \"th on\n\naf\nul\nif T\u00a5\n\n(ascending) (descending)\n\na\n\n(continue in same manner)\n\n\u2014_ Hig TI TT\n\nLt tt\n\nNw 2 Eben 7 Ew 7 oe 7 m7 din 2 Ein? Fm? bom\n\ntt Lar ami iL\n\nGow? om 7\n\ni vit\n\nbow 7 Aan cm byw 7 hn 7\n\ni=\n_t\n\na A\nLL\n\nZL. Yaw A\nZ if\n\nL_/\nLL\n\nwe\n\nPractice Pattern No. 110 reversing the direction of the chord tones: descending, ascending, etc.\n\n72\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 14 extraction"
+}

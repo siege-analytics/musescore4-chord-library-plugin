@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch24",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 24: Altered Ninth Chords\nPages 120-121 of the book.\n\n<<<CHAPTER TEXT\n\njs (Fl-176\n\ni km EP Elm YW Dm\n+ ro et + bt be by + p\n16977 : st\n5 34205\n6 bm A dm 6 .bm Fl\nett +9 te et 3 tr ;\n\nRepeat Pattern No. 169 starting on an E chord (E, Em, D, Dm, etc.).\n\nj 2/3Z-/7e\n\n2 Dm 0\n\nCom w Blom\n\n| ,\n\n770 Git tie ett sceaaesaemaet Fe\nYe any 1tbe Sosy 12086 om\nVY Mm =P ln \u00a9 Emi DD\n\ni ott Z =<\nan 1 SS i ale\n\nRepeat Pattern of No. 170, Starting on an F chord.\n\n116\n\n\n\ni 3, \u2014 \u2014.\nrv -\u2014 4 on by. au a +\n71htS i = ===\n34 9 551 e SS =\nMf, \u2014\u2014\u2014 \u2014_\u2014 Bn To . h ll\n; anes: s+\nSea 4 a\nB (\u00a2#)\ndn2 A. Chuo bon?\nTa t#- ft WA A wa f# 7 = ; # ra ra Lt wy; tf t t \u2014\n\nEMG C7 Ms Oma\n\nCMe\n\nTILL zy, | a a a a a TTT Zz\nTi LE ZirT 7s a y z\n\na ae ae oe\n\npit\n\nRepeat Pattern of No. 171, starting on the GM6 chord.\n\nCM7 LmF ame\n\u2014\n\\\n72 = =e i ==\n35 7 $2 4707 23 63 \u00a7. 67 2 4 &@ \u2018\n\n)\n\\\n\nFt\n\nLf fe fff\n\ntng ned) EMF Erne\n\nv1 pf. 7 AF\nae A i_\u00a2_f 7 ii fs Y 2 OT A\n\nL\n\n: 9\nRepeat No .172, starting on the GM7 chord.\n\n34See the Charlie Parker composition \u201cKo-Ko.\u201d\n35See the J. J. Johnson composition \u201cAfternoon In Paris.\u201d\n\n117\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 24 extraction"
+}

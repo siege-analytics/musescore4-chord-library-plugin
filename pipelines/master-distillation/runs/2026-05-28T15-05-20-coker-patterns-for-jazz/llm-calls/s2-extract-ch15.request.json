@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch15",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 15: Digital Patterns on Minor Seventh Chords\nPages 77-79 of the book.\n\n<<<CHAPTER TEXT\n\n=108-152 Note: Each chord lasts two measures, ending on 3rd of the chord.\n111\nCm9\nEbm9\nF#m9\nAbm9\nBbm9\nC#m9\nF#m9\nGm9\nAm9\nBbm9\nC#m7\nA#m9\nGm9\nF#m9\nE#m9\nC#m9\n\nNote: Three beats per measure.\n112\nCm 9\nEbm 9\nF#m 9\nAm 9\nFm 9\nAlm 9\nBm 9\nDm 9\nBbm 9\nC#m 9\nEm 9\nGm 9\n\nNote: Each chord lasts two measures.\n113\nCm 9\nDm 9\nEbm 9\nEm 9\nFm 9\nF#m 9\nGm 9\nAlm 9\nAm 9\nBbm 9\nBm 9\nCm 9\nF#m 9\nFm 9\nEm 9\nEbm 9\nDm 9\nC#m 9\nCm 9\n\n\nWe have been practicing patterns on the four related types of minor chords, formed by extracting\ntheir respective tones from the dorian mode of the chord root. Now we will concern ourselves with\nvarious patterns on the scale (dorian mode) itself. You will notice that the chord symbols for the\nfollowing patterns will be that of the minor seventh. However, the student must bear in mind that\nthe minor triad, m6, m7 and m9 chords all use the same basic scale: a dorian mode on the chord\nroot. For example, a Cm, Cm6, Cm7 and Cm9 will all share the C dorian mode. The use of the\nminor seventh chord symbol is merely for convenience, since it would be impossible to determine\nexactly which chord is being used when the scale is common to all chords mentioned.\n\nJ-(e-62\nCm pet De ==\n\ny\n\nri H 1 it\n\n114% H ; im \u2014 + | \u2014\n\nC Dorian Mode D Dorian Mode\nBm\n\nIf\nom 7 Chan 7 Mn 7 By, Come 9\ni T A J\nLf ff. wy me t i; Lf Y JA a maw 34\nH L FT #H- a tf ft Ws : SH \u00a2- \u00a2 ttt Wi am mh int\n\nil i\n\ni\nNon 7 Fhe 7 Emm 7 Don 7 x:\n\nLtt an y\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 15 extraction"
+}

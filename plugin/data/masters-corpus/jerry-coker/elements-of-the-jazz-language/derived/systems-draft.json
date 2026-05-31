@@ -1,0 +1,489 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-coker-elements-jazz-language",
+    "stage": "s4",
+    "source_pdf": "Coker, Jerry - Elements of the Jazz Language.pdf",
+    "extracted_at": "2026-05-31T03:40:14+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jerry-coker",
+  "work_id": "elements-of-the-jazz-language",
+  "systems": [
+    {
+      "id": "jerry-coker:elements-of-the-jazz-language:jazz-language-elements",
+      "name": "Jazz Language Elements",
+      "summary": "Coker's central system: jazz improvisation is a finite catalogue of ~18 named devices that account for nearly all the language of every player studied. Members are the named elements; traversal rules govern how elements chain into compound gestures and how the player moves between them in performance; modification rules govern how each element is altered to fit different chord-types, transposed across all 12 keys, and embellished or truncated in real solos. The system operates at three syntactic levels: digital patterns / 7-3 / 3-b9 / enclosures / bebop lick are 'letters and words'; sequences are 'complete thoughts' that organize the rest; harmonic generalization, CESH, quotes, chromatic substitutions, and stock licks layer over the basic vocabulary.",
+      "members": [
+        {
+          "id": "change-running",
+          "name": "Change-Running (Chord Arpeggiation)",
+          "summary": "Foundational chord-arpeggiation device with five functions including ear-placement, progression-learning, and pickup-note use."
+        },
+        {
+          "id": "digital-patterns",
+          "name": "Digital Patterns",
+          "summary": "Baker's term: 4-8 note cells named by scale-degree numbers (1-2-3-5, 1-3-5-3, etc.)."
+        },
+        {
+          "id": "scalar-patterns",
+          "name": "Scalar Patterns",
+          "summary": "Longer single-scale patterns including non-terminal / perpetual-motion forms; treat all scale tones equally."
+        },
+        {
+          "id": "7-3-resolution",
+          "name": "7-3 Resolution",
+          "summary": "b7-to-3 half-step voice-leading between successive chords, most often II-7 to V7."
+        },
+        {
+          "id": "3-b9",
+          "name": "3-b9",
+          "summary": "Bidirectional melodic motion between the 3rd and flatted 9th of a dominant 7 chord, by leap or scalar fill."
+        },
+        {
+          "id": "bebop-scale",
+          "name": "Bebop Scale",
+          "summary": "8-note scale (major, dorian, or mixolydian) with one designated chromatic note added to fit 4/4 phrasing."
+        },
+        {
+          "id": "bebop-lick",
+          "name": "Bebop Lick",
+          "summary": "Short scale-derived phrase on dominant 7 or minor 7 chords, woven into longer linear material."
+        },
+        {
+          "id": "harmonic-generalization",
+          "name": "Harmonic Generalization",
+          "summary": "One scale covers two or more chords of a progression; ordered from safest (tonic major over II-V-I) to advanced (diminished over minor II-V)."
+        },
+        {
+          "id": "enclosure",
+          "name": "Enclosure",
+          "summary": "Upper-leading-tone + lower-leading-tone + object-tone formula, often embellished beyond three notes."
+        },
+        {
+          "id": "sequence",
+          "name": "Sequence",
+          "summary": "A motive followed by variations; the syntactic 'sentence' level of the language."
+        },
+        {
+          "id": "cesh",
+          "name": "CESH (Contrapuntal Elaboration of Static Harmony)",
+          "summary": "Single chord held; one chord member in motion; four varieties (minor/major \u00d7 root/fifth in motion)."
+        },
+        {
+          "id": "quotes",
+          "name": "Quotes",
+          "summary": "Phrases from known tunes deployed when the harmonic setting matches; three sub-varieties (external tunes, current melody, recorded solos)."
+        },
+        {
+          "id": "cry-me-a-river-lick",
+          "name": "Cry Me A River Lick",
+          "summary": "Named stock lick fitting five chord-types unaltered by starting on different scale degrees."
+        },
+        {
+          "id": "gone-but-not-forgotten-lick",
+          "name": "Gone But Not Forgotten Lick",
+          "summary": "Companion named stock lick with the same five-chord-type versatility."
+        },
+        {
+          "id": "linear-chromaticism",
+          "name": "Linear Chromaticism",
+          "summary": "Non-harmonic chromatic notes added for metric fit, parallel to the bebop-scale rationale."
+        },
+        {
+          "id": "tritone-substitution",
+          "name": "Tri-Tone Substitution / Altered Dominant",
+          "summary": "Replacing a dominant 7 with another a tritone away; structurally near-identical to the altered dominant chord."
+        },
+        {
+          "id": "back-door-substitution",
+          "name": "Back Door Substitution",
+          "summary": "IV-7 to bVII7 used in place of V7; sounds correct because the ear hears the familiar precedent."
+        },
+        {
+          "id": "sharp-two-diminished",
+          "name": "#II\u00b07 Substitution",
+          "summary": "#II\u00b07 used in place of V7 by analogy with the back-door progression."
+        },
+        {
+          "id": "bar-line-shift",
+          "name": "Bar-Line Shift",
+          "summary": "Improviser arrives at a chord early or late, either accidentally (generalization, breath-pause) or deliberately (tension device)."
+        },
+        {
+          "id": "side-slipping",
+          "name": "Side-Slipping / Outside Playing",
+          "summary": "Deliberate out-of-key playing using the five 'wrong' notes of a chord (12 chromatic minus 7 scale tones)."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "element-overlap-pivot",
+          "name": "Element Overlap via Shared Pivot Note",
+          "summary": "Elements chain when one element's terminal note serves as the next element's starting note \u2014 e.g., the 3 ending a 7-3 resolution begins a 3-b9.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Device combination: 7-3 into 3-b9 overlap",
+              "quote_excerpt": "the two devices to overlap, with the 3rd serving as both the resolution tone",
+              "page": 26
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Elements: overlapping and interlocking",
+              "quote_excerpt": "elements of the jazz language carry the potential for being quickly successive, overlapping",
+              "page": 50
+            }
+          ]
+        },
+        {
+          "id": "sequence-as-syntax",
+          "name": "Sequence as Syntactic Organizer",
+          "summary": "Sequences organize lower-level elements into 'complete thoughts and chains of thought'; the listener perceives and predicts them, providing the communicative axis of the language.",
+          "engine_payload": {
+            "kind": "_pending:motivic-syntax-layer"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Sequence as jazz language syntax",
+              "quote_excerpt": "sequences are more like complete thoughts, sentences, and chains of thought",
+              "page": 55
+            }
+          ]
+        },
+        {
+          "id": "v7-substitution-lattice",
+          "name": "V7 Substitution Lattice",
+          "summary": "A V7 chord may be replaced by its tri-tone substitute, the back-door progression (IV-7 to bVII7), or #II\u00b07; each is heard as consonant because the listener's ear hears the familiar precedent of each substitute.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Tri-tone substitution definition",
+              "quote_excerpt": "substituting an F#7 for a C7",
+              "page": 82
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Back door progression as V7 substitute",
+              "quote_excerpt": "I chord, in a given progression, is often preceded by IV-7 to bVII7",
+              "page": 82
+            },
+            {
+              "chapter_n": 15,
+              "topic": "#II\u00b07 as V7 substitute",
+              "quote_excerpt": "#II\u00b07 is often used to precede the I chord",
+              "page": 82
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Why substitutions sound consonant against V7",
+              "quote_excerpt": "listener's ear hears the given precedents for the event",
+              "page": 82
+            }
+          ]
+        },
+        {
+          "id": "scale-generalization-ladder",
+          "name": "Harmonic-Generalization Ladder",
+          "summary": "A single scale covers multiple chords, ordered from collision-free (tonic major over II-V-I, pentatonic over ten chords) through progression-justified collision-tone cases (harmonic minor over minor II-V-I, diminished over minor II-V).",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Harmonic Generalization Definition",
+              "quote_excerpt": "one scale to accommodate two or more chords of a progression",
+              "page": 45
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Pentatonic Scale Generalization",
+              "quote_excerpt": "C pentatonic scale (C, D, E, G, A) will fit",
+              "page": 45
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Three Justifications for Collision-Tone Generalization",
+              "quote_excerpt": "three considerations that make it a modified success",
+              "page": 46
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "scale-degree-thinking",
+          "name": "Digital (Scale-Degree) Universalization",
+          "summary": "All exercises and devices are practiced and thought of as scale-degree numbers rather than note names so they transpose instantly to all 12 keys.",
+          "engine_payload": {
+            "kind": "_pending:scale-degree-universalization"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Thinking in Scale Degrees",
+              "quote_excerpt": "think of it as 1-3-5-1, not C-E-G-C",
+              "page": 7
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Digital Analysis of Exercises",
+              "quote_excerpt": "Always analyze each given exercise in terms of its digital relationship",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "pattern-quality-alteration",
+          "name": "Chord-Quality Alteration of Patterns",
+          "summary": "Any digital pattern is altered to fit a different chord-type by adjusting the affected scale degrees (1-3-5-3 to 1-b3-5-b3 for minor, etc.).",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Altering patterns for chord quality",
+              "quote_excerpt": "1-3-5-3 pattern can be adjusted to 1-b3-5-b3 to accommodate a minor chord",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "pattern-recontextualization",
+          "name": "Tertian Recontextualization",
+          "summary": "The same tertian pattern serves multiple chord types depending on which scale degree it is heard from \u2014 e.g., a 1-3-5-1 in C major is 3-5-7-3 of A-7 or 5-7-9-5 of an F chord.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Tertian Construction of Exercises",
+              "quote_excerpt": "first four notes of #12 (C-E-G-C) are taken to be 1-3-5-1 in C major",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "pattern-retrograde-fifth-rooting",
+          "name": "Retrograde and Fifth-Rooting",
+          "summary": "Generative transformations that multiply vocabulary: a pattern is reversed (1-3-2-1 from 1-2-3-1) or placed on the fifth of the chord (5-6-7-9 from 1-2-3-5).",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Retrograde and transposition of patterns",
+              "quote_excerpt": "used in their retrograde (backward) form",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "bebop-chromatic-insertion",
+          "name": "Bebop-Scale Chromatic Insertion",
+          "summary": "Add one specific chromatic passing note to the major (between 5-6), dorian (between 3-4), or mixolydian (between 7-8) scale so an 8-note cell fits four beats of eighth notes and places chord tones on downbeats.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Bebop Scale Definition",
+              "quote_excerpt": "common scale (major, dorian, or mixolydian, usually) that has one specific chromatic tone",
+              "page": 33
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Added Chromatic Note by Scale Type",
+              "quote_excerpt": "added chromatic note in the major scale is the half-step between the fifth and sixth",
+              "page": 33
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Why Eight Notes: Rhythmic Rationale",
+              "quote_excerpt": "eight-note scale, instead of a seven-note scale, in order to fit a 4/4 time signature",
+              "page": 33
+            }
+          ]
+        },
+        {
+          "id": "embellish-or-truncate",
+          "name": "Embellishment and Truncation of Elements",
+          "summary": "Elements appear in disguised, decorated, or incomplete forms in real solos \u2014 enclosures often extend past three notes, CESH may be truncated or heavily embellished \u2014 and the analyst must recognize them despite the disguise.",
+          "engine_payload": {
+            "kind": "_pending:disguise-recognition"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Enclosure: decorated/embellished variant",
+              "quote_excerpt": "Enclosures, however, are often decorated/embellished",
+              "page": 50
+            },
+            {
+              "chapter_n": 11,
+              "topic": "CESH: incomplete and embellished forms",
+              "quote_excerpt": "incomplete CESH; that is, play a CESH, but not to the full extension",
+              "page": 62
+            }
+          ]
+        },
+        {
+          "id": "outside-playing-wrong-note-arithmetic",
+          "name": "Outside-Playing Wrong-Note Arithmetic",
+          "summary": "Twelve chromatic notes minus the seven scale tones leaves five 'wrong' notes per chord; outside playing uses these in convincing groups or sparingly with smooth voice-leading.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Outside Playing: wrong-notes arithmetic",
+              "quote_excerpt": "twelve notes in the chromatic scale, simple subtraction reveals that there are five 'wrong' notes",
+              "page": 85
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jerry-coker:elements-of-the-jazz-language:assimilation-method",
+      "name": "Four-Stage Element Assimilation Method",
+      "summary": "Coker's master practice methodology, made explicit in Appendix B: every element must pass through (1) mental understanding via definitions and illustrations, (2) hearing the element in master solos, (3) hands-on practice in all 12 keys, tempos and registers, (4) ear-to-harmony association through play-along exercise tracks, and (5) application to real tune progressions. A local three-stage progression (alone \u2192 exercise track \u2192 play-along tune) is applied to every device.",
+      "members": [
+        {
+          "id": "stage-1-mental",
+          "name": "Mental Understanding",
+          "summary": "Definitions and illustrations."
+        },
+        {
+          "id": "stage-2-aural-observation",
+          "name": "Aural Observation of Masters",
+          "summary": "Hear the element in solos by masters of the craft."
+        },
+        {
+          "id": "stage-3-hands-on",
+          "name": "Hands-On Execution",
+          "summary": "Practice the element and its variations at different tempos, all keys, all registers."
+        },
+        {
+          "id": "stage-4-harmony-association",
+          "name": "Ear-Harmony Association",
+          "summary": "Play element against play-along exercise tracks until sound-of-element binds to sound-of-harmony."
+        },
+        {
+          "id": "stage-5-real-tunes",
+          "name": "Application to Real Tune Progressions",
+          "summary": "Discern locations within real tune progressions where each element can be deployed."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "stage-sequence",
+          "name": "Sequential Stage Progression",
+          "summary": "Stages are sequential; intellectual understanding is necessary but insufficient, and physical/aural habit must be built before an element appears in performance.",
+          "engine_payload": {
+            "kind": "_pending:sequential-pedagogy-stages"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Four-stage element assimilation",
+              "quote_excerpt": "The absorption of an element happens in stages",
+              "page": 116
+            },
+            {
+              "chapter_n": 17,
+              "topic": "Practice imperative \u2014 beyond reading",
+              "quote_excerpt": "Merely reading the book, even with the deepest understanding, will not reap",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "id": "local-three-stage",
+          "name": "Local Three-Stage Practice Progression",
+          "summary": "Within Stage 3-4, every device is practiced alone, then with an exercise track that accommodates its chord-type, then with a play-along tune whose progression offers many opportunities for it.",
+          "engine_payload": {
+            "kind": "_pending:isolate-track-tune"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Change-Running Practice Sequence",
+              "quote_excerpt": "first be practiced alone, then with an exercise track",
+              "page": 13
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "all-twelve-keys",
+          "name": "All-Twelve-Keys Discipline",
+          "summary": "Every exercise is practiced in 12 keys with the appropriate accompaniment track; key motion follows cycle-of-fifths and chromatic sequences that mirror real-tune harmonic motion.",
+          "engine_payload": {
+            "kind": "_pending:twelve-key-transposition"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Practicing in 12 Keys",
+              "quote_excerpt": "All exercises should be practiced in 12 keys and with the appropriate accompaniment",
+              "page": 6
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Accompaniment Track Key Sequences",
+              "quote_excerpt": "Chord roots most often move around the circle of keys",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "wean-from-notation",
+          "name": "Wean from Notation",
+          "summary": "Move quickly from notated/cycle-illustration practice to mental and aural figuring; the target skill is improvisation, not reading.",
+          "engine_payload": {
+            "kind": "_pending:internalization-over-reading"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Weaning Off Notation",
+              "quote_excerpt": "wean yourself away from both the notated form and the cycle",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "modulation-regimen",
+          "name": "Four-Transposition / Five-Extension Regimen",
+          "summary": "Each chord-type is arpeggiated through four transposition sequences (chromatic up/down, cycle of fifths, minor thirds, whole steps) and five extension levels (triad through 13th).",
+          "engine_payload": {
+            "kind": "_pending:transposition-extension-matrix"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Arpeggiation Practice Modulations",
+              "quote_excerpt": "modulating up and down in half-steps (chromatic sequence), around the cycle of fifths",
+              "page": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

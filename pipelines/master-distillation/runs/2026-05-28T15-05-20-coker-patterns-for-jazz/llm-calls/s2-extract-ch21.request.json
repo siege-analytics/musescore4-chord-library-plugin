@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch21",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 21: Diminished Scale\nPages 113-115 of the book.\n\n<<<CHAPTER TEXT\n\nA diminished scale on the note D-flat would look like this:\n\nD> Eb E Fe G A Bb Cc Db\n\nwhole half whole half whole half\n\nwhole half\nstep step step step\n\nstep step step step\n\nA diminished scale on the note D would look like this:\n\nD E F G Ab Bb B or D\nwhole half whole half whole half whole half\nstep step step step step step \u2014 step step\n\nA closer look at the tones of the C diminished scale will show that when using the tones E-flat, G-\nflat and A as starting points, the student is actually playing the same tones as he did when starting\non C. The only difference is the starting pitch. Thus the C diminished scale will yield three other\ndiminished scales: the E-flat diminished scale, the G-flat diminished scale and the A diminished\nscale.\n\nLikewise, the D-flat and D diminished scales will also produce three other scales. The D-flat dimi-\nnished scale will yield the E diminished scale, the G diminished scale, and the B-flat diminished\nscale. The D diminished scale will yield the F diminished scale, the A-flat diminished scale, and the\nB diminished scale.\n\nFigure 32 illustrates the tones of all diminished scales. This chart will be helpful to the student when\napplying numerical formulas dealing with the formation of the Diminished Triad and Diminished\nSeventh Chord.\n\nFig. 32 (chart showing tones of all diminished scales)\n\nTone No. 1 | No, 2 No. 3 No. 4 No. 5 No. 6 No. 7 No. 8 No. 9\nCc D Ep F Gb{| Abl/ A B C\nE> F Go Ab A B Cc D E>\nGo Ap A B C D E> F G?\nA B Cc D Eb F Gp AbD A\nD> Eb E Fe G A Bo Cc D>\nE F3 G A Bp Cc Dp Ep E\nG A Bp Cc De Eb E Fe\nB? C Do Eb E Fe G A Bo\nD E F G Ag Bo B CF D\nF G AD Bb B C3 D E F\nAp Bp B C# | D E F G Ap\nB Cz D E F G Ap Bb B\n\nThe student is cautioned that when extracting tones belonging to Diminished Triads and Diminished\nSeventh Chords from the chart illustrated in figure 32, he will not always find a distance of fit'e tones\nfrom the bottom to the top in Diminished Triads. Also, there will not always be a distance of seven\ntones, from bottom to top, in Diminished Sevenths. The presence of enharmonic spellings accounts\nfor the seemingly inconsistent definitions of triads and seventh chords that were established in the\nearlier pages of this book.\n\n109\n\n\n\nBy extracting cones No. 1-3-5 from any diminished scale, we arrive at the Diminished Triad on that\nparticular root. Figure 33 illustrates the tones of the E-flat Diminished Triad:\n\nFig. 33\nSymbol: EP\u201d\n(\n\u201c\n\ny\u2014\n\nBy extracting tones No. 1-3-5-7 from any diminished scale, we arrive at the Diminished Seventh\nChord on that particular root. Figure 34 illustrates the tones of the E-flat Diminished Seventh Chord:\n\nFig. 34\nSymbol: ED \u20187\nut\n\nNote that both chords contain the same triad, E-flat-G-flat-A, and both chords use the same scale, the\nE-flat diminished scale, to establish their sound.\n\nIn preparation for the following patterns, be able to recite, write and play the following chords as\nthey are extracted from their respective scales, Diminished Triads and Diminished Seventh Chords.\n\nUse the illustrated routine form for playing the chord tones, since it does not require any specific\nrhythm or tempo.\n\nROUTINE FORM\n\n{ Eso | ber\n\nwit\niN r Zz A\n\u2014 S\u2014 Sr 2 ss\ny \u00a2 a nS ee fe\n\nThe following patterns begin with Diminished Triads. Note the alphabetical symbols and metro-\nnome markings,\n\n110\n\n\n\u2669=138-206\n158\n\u2669=138-206\nNote: Three beats per measure.\n159\n\u2669=138-206\n111\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 21 extraction"
+}

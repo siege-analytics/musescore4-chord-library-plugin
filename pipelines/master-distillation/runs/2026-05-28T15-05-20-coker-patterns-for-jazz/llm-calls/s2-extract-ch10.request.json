@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: Mixolydian Mode (Dominant Scale)\nPages 59-60 of the book.\n\n<<<CHAPTER TEXT\n\n\u2669=60-120\n89\nC7\n+3\nD\u266d7\nD7\nE\u266d7\nE7\nF7\nG\u266d7\nG7\nA\u266d7\nA7\nB\u266d7\nB7\nC7\n3\nB7\n3\nB\u266d7\nA7\nA\u266d7\nG7\nG\u266d7\nF7\nE7\nE\u266d7\nD7\nD\u266d7\nC7\n\u2669=80-120\nNote: Three beats per measure.\n90\nC7\n+3\nG\u266d7\nF7\nB7\nB\u266d7\nE7\nE\u266d7\nA7\nA\u266d7\nD7\nD\u266d7\nG7\nG\u266d7\nC7\nB7\nF7\nE7\nB\u266d7\nA7\nE\u266d7\nD7\nA\u266d7\nG7\nD\u266d7\nC7\n54\n\n\u2669= 100-160\n91\nC7 D\u266d7 D7 E\u266d7 E7 F7\n(ascending) (descending) (ascending) (descending) continue in\nsame manner\nC\u266d7 G7 A\u266d7 A7 B\u266d7 B7 C7 D\u266d7 B7 #F7 B\u266d7 A7\nA\u266d7 G7 C\u266d7 F7 E\u266d7 D7 D\u266d7 C7\nPractice Pattern No. 91 by reversing the chord tone direction: descending, ascending.\n\u2669= 100-136 Note: Each chord lasts two beats.\n92\nC7 D\u266d7 D7 E\u266d7 E7 F7 F\u266f7 G7 A\u266d7 A7 B\u266d7 B7\n(ascending) (descending) (ascending) (descending) (continue in same manner)\nC7 D\u266d7 E7 F7 F\u266f7 G7 A\u266d7 A7 B\u266d7 B7 C7\n(ascending) (descending)\nPractice Pattern No. 92 reversing direction of the chord tones: descending, ascending.\n55\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

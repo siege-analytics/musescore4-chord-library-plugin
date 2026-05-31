@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Diatonic Chords\nPages 37-41 of the book.\n\n<<<CHAPTER TEXT\n\n68\n\u2669=92-144\nC\n\u2669\n1 2 3 4 5 7 8\n1 2 3 4 5 7 8\nDb Gb B E A D G C\n\u2669\n\u2669=92-144\n69\n\u2669\n\u2669\n\u2669=92-144\n70\n\u2669\n\u2669\n\u2669=92-144\n71\n\u2669\n32\n\n\u2669=84-132\n72\n\u2669=80-126\n73\n\u2669=80-132\n74\n\nty\n\n>=\nTI\n\n{iT\n\n___\\\nYT ne aa |\n\na a a a\n\nar a A A\n\nt\u2014-\ni\n\n\u20183\n\u2014\u2014\n=\n\ni\n4\n\nar a ae\na a A\n\nTT /TL\n\nz\n\nT\n\nfog\n\nGh\n\nof\n\nif]\n\nZiv?\n\nae ae a\n\npre? ?\n\nLITT\n\n[a a A A\n\nae a a\na a\n\nae ae a |\n\nri?\n\nLi fT\n\nZi fT\n\nZ\ntA\n\nv7\n\nZ\n\nTT\n\nUl\n\n12(0b-/32\n\nt\nim\n\na+\n\n16\n\niii\nUl\n\nTILL\nLitt\n\nn\nris\nff\n\nPTTL\n\nby\n\nfl\nLE\n\nATLL\nCit\n\nfi\nii\nvi\n\nae ae\n\nPir?\n\nri\n\nZ,\n\nLt\nt\n\nEpp f\n\nLi?\n\n4\n\nmma\n\n(aa ms\n\nTP fT\n7m om oe i\n\nEy\n\nLf fT\n\nyo A a\n\n4\n\nAf ff\n\nYa A a\n\nli\nLE\n\na a ae |\n[a a A\n\nts\n\nPPT T\n\nJILL\n\n34\n\n\nd=108-132\n77\nC\n1 7 2 1 3 2 4 3 6 4 6 5 6 7 4 6\n1 7 2 1 3 2 4 3 5 4 6 5 6 7 4 6\nBb\nEb\nAb\nDb\nGb\nBb\nB\nE\nA\nD\nG\nC\nd=100-144\n78\nC\n2 1 7 1 4 3 2 3 6 5 4 5 9 8 7 6\n2 1 7 1 4 3 2 3 6 5 4 5 9 8 7 6\nBb\nEb\nAb\nDb\nGb\nBb\nB\nE\nA\nD\nG\nC\n11Oliver Nelson, \"Cascades,\" on The Blues And The Abstract Truth (Impulse S-5), Oliver Nelson Group. The melody to \"Cascades\" is a descending version of Pattern No. 77 in a minor key.\n12John Coltrane, Cadenza at the conclusion of \"Giant Steps,\" on Giant Steps (Atlantic S-1311), John Coltrane Quartet. John Coltrane makes use of this arrangement of diatonic upper and lower neighbor tones but descending and in triplets.\n13J. J. Johnson, \"Misterioso,\" on J. J. In Person (Columbia CL 1161), J. J. Johnson Quintet.\n35\n\nMAJOR SCALE-TONE TRIADS\n\nFigure 1 illustrates the tones of the E Major scale.\n\nFig. 1\n\nWe have previously used arabic numbers to indicate a specific scale tone. In figure 2, however, the\nroman numerals have been used to designate a chord (in this case, triads) that are constructed on\nthe respective scale tones indicated by the roman numerals. Figure 3 spells out the specific tones\nof each triad belonging to the E Major scale:\n\nFigure 2 illustrates the triads formed on each tone of the E Major scale. Note that when the first\nnote of the triad is on a line, the remaining notes to that triad are also on consecutive lines; when\nthe first note of the triad is on a space, the remaining notes are also on consecutive spaces.\n\nd 4 | +\nyt $ == == i . = :\n7 feng r 4 z 6G\n\nHi OD)\ni oo\n\nFig. 2\n\nFig. 3\n\nThe I chord in the key of E Major contains the notes\u2014E, G-Sharp, B.\n\nThe II chord in the key of E Major contains the notes\u2014F-Sharp, A, C-Sharp.\n\nThe II chord in the key of E Major contains the notes\u2014G-Sharp, B, D-Sharp.\n\nThe IV chord in the key of E Major contains the notes\u2014A, C-Sharp, E.\n\nThe V chord in the key of E Major contains the notes\u2014B, D-Sharp, F-Sharp.\n\nThe VI chord in the key of E Major contains the notes\u2014C-Sharp, E, G-Sharp.\n\nThe VII chord in the key of E Major contains the notes\u2014D-Sharp, F-Sharp, A\n\nWe have shown that it is possible to construct a triad on each tone of the E Major scale. This same\nprinciple applys for ALL major scales. The student is advised to write out, in the manner illustrated\n\nin figure 2, the scale-tone triads for the remaining eleven major scales before attempting to deal\nwith Patterns No. 79 to No. 82.\n\n36\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

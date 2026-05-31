@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch29",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 29: Major Scale in Fourths\nPages 139-141 of the book.\n\n<<<CHAPTER TEXT\n\n(C-sharp augmented scale)\nj= 0-100 ascending\n1 One CAS EHS, FAS.\n\n225t =a te t ia 7 Gs\n+ cf : ( T { t +\n- t t _t r= \u2018 ChAug. Seale\ndescending\nCHE 4 Ey ES ie HC por\nf wa ~$ . | a { bk _ i? { 1\nft Tt [ t ao\n: | 4 Bohs\nAlso start on C-sharp, D, and D-sharp.\n(D-flat augmented scale)\n)=66 -/O8 ascending\n- n a 4\n226 i t = 4 $+\u2014\u00a5 i \u2014\u2014\u2014\u2014\u2014}\ndescending\n{\n\n\u2014\n\n~~\nAlso start on A, A-sharp and B-natural.\n\n135\n\n\n\niD-flat augmented scale)\n\nale fi\nproeriZ Ascending\n\n<\n\ni\n\\\n[\n\nDescending\n|\n: |\n-==\u2014 = et a\n. 1 ri\na\nAlso start on C-sharp, D and D-sharp.\n(D-flat augmented scale) D di\nescending\nAscending\nd=66-1/2 + | by\n\u2014 a7 =\n\n! _-\n\nNe mY\ntal\nres\n\nmsie \u2014\u2014\u2014 i\n\nAlso start on C-sharp, D and D-sharp.\n\n(D-flat augmented scale)\n= Go-! 2 Ascending\n\n229 A = z bet\n\nDescending\n\nb\n\nthe\niy\n\nAlso start on C-sharp, D and D-sharp.\n136\n\n\n(D-flat augmented scale)\n\n= bb-/lwa Ascending\n\n\u2014\u2014 p, LT , r TH T\n230 Z i Y am \u2014# \u2014; toa + st\na\nDescending\n( = fof be he \u2019 p |\nt : f ft # S25\nx = =\nAlso start on F-sharp, G, and G-sharp.\n(D-flat augmented scale)\n]=66 \u201cNZ Ascending\n~ SS p |\n931 t\u2014+ \u2014 - P Bet\n\u2014 \u2014 rd i [a\nDescending\n( \u00a3 +t bt |\nA = \u2014 if \u2019\n\u00a5 =<\n(D-flat augmented scale)\nDescending\n\nprob Ascending\nLt Pe, Pal |\n\u2014Ft = Tt\n932 \\\u2014\u2014 \u2014 SS san27\nY \u2014\nAlso start pattern on C-sharp, D and D-sharp.\n\n137\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 29 extraction"
+}

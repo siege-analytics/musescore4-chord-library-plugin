@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: HARMONIC GENERALIZATION\nPages 45-49 of the book.\n\n<<<CHAPTER TEXT\n\n34\n\nTo cite another example, Louis Armstrong played the following phrase in 1927 on\n\u201cHotter Than That\u201d:\n\nc\"\ngrt \u2014 +\n= sie\n\nNonetheless, Baker is perfectly accurate in saying that the intensified use of the bebop\nscale begins in the Bebop Era (1940-1950) of jazz. It is important to understand that a\nplayer\u2019s use of the bebop scale need not include only those phrases in which the entire\nscale is played. A very brief phrase, say 3-4 notes, which includes the designated\nchromatic note is already implying bebop scale use.\n\nBecause of the nature of the scale and the examples used to define the scale here, we\nwill dispense with the customary illustrations and move on to recorded examples.\n\nExamples From Recorded Solos\n\nJohn Coltrane, tenor saxophone (\u201cGiant Steps\u201d)\n\nG7\"\nphe, \u00a9\n\ne4\n: o\n139, 5 \u2014 = =\n\nMcCoy Tyner, piano (\u201cBirdlike\u201d)\n\naR parkasec Mg TEM MR CY Dee ET otek ee\n\na\n\nESE DSI IL STATON OLIN ETP\n\n\nJohn Coltrane, tenor saxophone (\u201cCountdown\u201d)\n(in all this bebop scale pattern occurs 21 times during Coltrane\u2019s 8-chorus solo on this\n16-bar tune)\n\nee ey\n\n142.\n\nJohn Coltrane, tenor saxophone (\u201cCountdown\u201d)\n\ney + c4\n\nfa\nie === ==:\n\nMichael Brecker, tenor saxophone (\u201cFreight Trane\u201d)\n\nHy\u2019 4\n| tee ait\n4AM,\n\nPe\n\nSonny Rollins, tenor saxophone (\u201cI Know That You Know\u201d)\n\nFe ttt tes +\n148. is = a a a a o\u2014t\n\nteeeiomeed\n\nSonny Stitt, tenor saxophone (\u201cEternal Triangle\u201d)\n\nWi+ @\n\n+\n146. & \u2014 = z\n\n\n\n36\n\nRandy Brecker, trumpet (\u201cGregory Is Here\u201d)\n\n144.\n\nDizzy Gillespie, trumpet (\u201cHot House\u201d)\n\nb +\n\n148, i\n\nFreddie Hubbard, trumpet (\u201cIt\u2019s You Or No One\u201d)\n\nfe,\n149, (SS5e\n\nBlue Mitchell, trumpet (\u201cSilver\u2019s Serenade\u201d)\n\n150.\n\ny\"\n\n+\n\nit\n\nBy\"\n\noe\n\n\u201ca\n\nFf\u201d\n\nbee\n\n+\n\n\u2014\u2014\n\n2. i\n\ng-!\n\n+\n\n|\n\nff\n\nvars\n\nJ.J. Johnson, trombone (\u201cTune Up\u201d)\n\n151.\n\n6\"\n\nf+\n\nte\n\nMe bet\n\nTENET ION\n\nOSE ey tneatpepe teen yet emt rey mt se a\n\n\nRay Brown, bass (\u201cBlues For Basie\u201d)\ne\" +\n\nte tit be\n\ntl\n\n152.\n\nPaul Chambers, bass (\u201cThis Can\u2019t Be Love\u201d)\n( mp4) e\" be\n\nbe + o\u2014be\n143, <= 7 \u2014 F re\n\n\n\n38\n\nExercises\n\nA A) }\nC y Atack M(chrtwn.) coertinue.\n\n154, & oP ett\nthen move around the cycle of fifths (Track N)\n\nA bA |\n; is Afack M (chrom) continue\n155, ganas i\nAlso practice im cycle of fifths (Track N)\n\n\u00a3 = y Atak M(chvam) continue\n156. | |\n\n\u2014o pet re\nTt \u2014$ : 4b\n\nAlso play around cycle (Track N)\n\nA A\n\u2014 2 \u00bb bb Atak M(chrom) continue\n541, j\n\ni\n4then play around cycle (Track N)\n\nI.\n\np(feotn ote)\n\nO\" (or o\") Wor Ar) Atacks WS - Continue |\n\n158,\n\ni\nee -o- yO-\nthen play as cycle (racks V and R\u201d)\n\n| {\n\n0Remember, when practicing 158-163 with Tracks QandR, that those tracks will begin on C-7, not G-7\n\n(as shown here), so the\nfirst note of 158, for example, will be F, rather than C.\n\nSpite premece ote ashtoetoeny\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

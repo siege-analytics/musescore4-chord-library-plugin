@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-coker-elements-jazz-language
+stage: s3
+source_pdf: Coker, Jerry - Elements of the Jazz Language.pdf
+source_pages: 84-93
+model: claude-haiku
+extracted_at: 2026-05-31T03:35:26+00:00
+schema_version: 0.1
+---
+
+# Chapter 15 — SAMPLE ANALYSES OF TWO TRANSCRIBED SOLOS
+
+_Distillation; backed by `chapters/ch15.md`._
+
+Chapter 15 covers the **named-lick** chapters ("Cry Me A River" and "Gone But Not Forgotten") and a cluster of chromatic-substitution devices. Quote competence is framed as a three-trait skill: farcical-yet-poetic humor, quick-witted real-time recognition, and harmonic-setting awareness; spontaneous quotes arise because every possible opening interval is shared with many tunes, and harmonic context governs which quotes fit. The **Cry Me A River** lick — opening melody of the tune — is uniquely valuable because it accommodates five different chord-types without alteration (starting on the 9 of -7, 13 of 7, 4 of major, +9 of altered dominant, and major 7 of #5 major); the **Gone But Not Forgotten** lick works in the same five contexts. Both are practiced in all 12 keys against specified tracks (G, H, I, J, K, L, W, X, BB). The chapter then defines load-bearing harmonic devices: **linear chromaticism** as metric-fill (echoing the bebop-scale rationale), **tri-tone substitution** (replacing a dominant 7 with another dominant 7 a tritone away), the **altered dominant** (+5, b9, +9, +11) as structurally near-identical to the tri-tone substitute, the **back door progression** (IV-7 to bVII7 substituting for V7), and **#II°7** as a V7 substitute. Coker explains why these substitutions sound consonant against the original V7: the listener's ear hears the substitute's familiar precedent rather than the conflict with the V7 chord.
