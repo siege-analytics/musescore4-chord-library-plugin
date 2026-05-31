@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary
+stage: s3
+source_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf
+source_pages: 19-34
+model: claude-haiku
+extracted_at: 2026-05-31T16:10:40+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — Chords With Extensions
+
+_Distillation; backed by `chapters/ch04.md`._
+
+This chapter introduces extended chords, which incorporate intervals beyond the root, third, fifth, and seventh—a foundational concept that expands harmonic vocabulary beyond basic triads and seventh chords. A critical practical constraint in guitar voicing is that guitarists must omit certain notes when constructing these chords, unlike pianists with ten fingers, requiring deliberate choices about which intervals to replace. The chapter establishes a structural distinction within extended chords: major 6 and major 6(9) chords omit the seventh (with the 6 replacing the 7), whereas all other extended chords like maj9 retain the 7th in their construction. A precise interval logic differentiates major 6 chords, where only the 6 is present alongside the root, third, and fifth, from major 13 chords, which contain both the 7 and the 6 (enharmonically the 13). The load-bearing terminology introduced includes extended chords, voicing omissions, major 6, major 13, and the rule that the presence or absence of the 7th fundamentally determines an extended chord's harmonic function and identity.

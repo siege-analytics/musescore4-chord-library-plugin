@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Study 1 - Blues For Alice\nPages 8-9 of the book.\n\n<<<CHAPTER TEXT\n\nStudy 1 - Blues For Alice\n\n(~~\n\nJazz\n\nONLINE\n\nPlay backing track\n\n\u00a9 Play audio example\n\nBLvEes Foe ALICE\n\nFAST \u20ac47b5 \u2014AThO Ou7 3867 (M7 \u20187\n) pe oa oot 4 ePee tte 2 oe @3 7\nb LC eto? FH rs it Pt ephere ate eas)\n, \u201cg- 6 -_ N\nPattern | Pattern 3 Pattern 2 Pattern 4\n7\u2122\n8 68-65 6-5 \u00a7\nF 10 8->_8-40 Bg 6-2-5 -\u00a7-6 \"| 8-6\nA 6 7 67 8-7 6. \u2014\nB \u2014_\n\n\n\n87\n\nBhM7 = 6b7 AM7 O7 AbM7 0b7\n\"3 <3.\n4 fm \u00a7 Il 6 -\u2014 \u2014 1 = \u2014\nra os de i Vobe\nPattern 5 Pattern 2 Pattern 6 Pattern 6\n5 4\n6\u00b0 86 a a e354 6 43\nt-x5\u20148\n6M7 CT 7 07 GM7 CT\nson, 9 \u2014 40 \u20181 , fe\nJitter (fee) 5 el rte eogerre?\n~ \u2014_ = oe yer? ' = \u2014_\nPattern 2 Pattern 4 Flarpeggio Pattern? Pattern 8\nP 8-6\u2014\nae 7181545 % 8\nog 7 68\u20149\n8\u20146\u2014\"\u20145-8\nMATT\n120 \u00bb\nLr ffl\n\u201c\nPattern 9\nt\u20145\n5\n5\u2014T\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

@@ -1,0 +1,53 @@
+{
+  "stage": "s2",
+  "scope": "toc",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting the structural outline of a guitar method book from its front matter.\n\nThe user will give you the verbatim text of the first ~20 pages of a book.\nIdentify the chapters or major sections of the book (whichever the book uses\n\u2014 some method books use \"Lesson\", \"Chapter\", \"Part\", \"Section\", \"Unit\").\n\nOutput a JSON object with this shape:\n\n  { \"chapters\": [\n      { \"n\": 1, \"title\": \"...\", \"start_page\": <int>, \"end_page\": <int> },\n      ...\n  ] }\n\nRules:\n- `n` is the 1-indexed chapter number you assign (independent of the book's\n  own numbering \u2014 book may start at 0 or use Roman numerals).\n- `title` is the chapter's title as it appears in the book.\n- `start_page` is the first page of the chapter; `end_page` is the last.\n- If the front matter doesn't list page numbers, infer from the chapter\n  headings you see \u2014 start_page is where the chapter HEADING appears, and\n  end_page is one less than the next chapter's start_page (or the book's\n  last page for the final chapter).\n- Skip the table of contents itself, the title page, the copyright page,\n  the author bio \u2014 they are not \"chapters\" in this sense.\n- If the book is short and not subdivided, output a single chapter covering\n  the entire content.",
+  "user_prompt": "Total pages in the book: 63.\nFirst 20 pages follow. Identify chapters.\n\n<<<TEXT\nJAZZ GUITAR\nCHORD DICTIONARY\n\nTHE JAZZ GUITAR CHORD DICTIONARY\n\nThis jazz guitar chord dictionary is a reference to help you find great-sounding 7th-\nchord voicings to play and improvise over jazz standards. The 244 chord shapes on\nthis page are essential knowledge for any jazz guitarist and will help you to comp\nchords with creativity, confidence, and variety.\n\nNow, you don't have to learn all of these chords at once. Instead, use this page as a\nresource that you come back to each time when you need to add a new chord to your\nvocabulary.\n\nHave fun with these chords, get them under your fingers, and most importantly, apply\nthem to jazz standards and chord progressions as soon as you can.\n\nHappy Playing,\nDirk Laukens\n\nPS: If you are new to jazz guitar, check out these basic jazz guitar chords first.\n\nTHEEASY oe The Easy Guide To\n\nJAZZ GUITAR CHORDS\n\nLJ\na]\nH\nc)\n\u00a3\niv)\nre\n4q\n2\n3\n0\nN\nn\ns\n3\n\nClick here to learn how to play jazz guitar\n\nchords. This eBook will take you from day\n1 of jazz guitar to comping over standards\nin no time...\n\n\n\nCHORD TYPE LIST\n\n4) How To Read Chord Diagrams\n\n2 ] Basic Chords\n\ne Major 7 Chords\n\nDominant 7 Chords\n\nMinor 7 Chords\nHalf-Diminished Chords\n\nDiminished 7 Chords\n\n3 | Shell Chords (aka Guide Tone Chords)\n\n137 Shell Chords (E-String Root)\n173 Shell Chords (E-String Root)\n\n137 Shell Chords (A-String Root)\n173 Shell Chords (A-String Root)\n\n4) Chords With Extensions\n\ne Major 6\n\ne Major 6(9)\ne Major 9\n\ne Major 13\n\ne Major 7#11\ne Major 7#5\ne Dominant 9\n\ne Dominant 13\n\n\n7 Sus 4 Chords\n9 Sus 4 Chords\n\ne 13 Sus 4 Chords\ne Minor 6\n\ne Minor 9\n\ne Minor 11\n\ne Minor/Major 7\ne Minor/Major 9\n\n6 Dominant Chords Altered Extensions\n\ne Dominant 7b9\n7b9 Sus4\n\n\u00a2 Dominant 13b9 / Dominant 13#9\ne Dominant 7#9\n\ne Dominant 7#11\n\n\u00a2 Dominant 7b13\n\ne Dominant 7 Altered - 7b5(b9)\n\ne Dominant 7 Altered - 7b5(#9)\n\ne Dominant 7 Altered - 7#5(b9)\n\ne Dominant 7 Altered - 7#5(#9)\n\n6 | Inversions\n\ne Major 7 Inversions (Drop 2) - A-String Bass Note\ne Major 7 Inversions (Drop 2) - D-String Bass Note\ne Major 7 Inversions (Drop 3) - E-String Bass Note\n\ne Major 7 Inversions (Drop 3) - A-String Bass Note\n\n\ne Dominant 7 Inversions (Drop 2) - A-String Bass Note\ne Dominant 7 Inversions (Drop 2) - D-String Bass Note\ne Dominant 7 Inversions (Drop 3) - E-String Bass Note\ne Dominant 7 Inversions (Drop 3) - A-String Bass Note\ne Minor 7 Inversions (Drop 2) - A-String Bass Note\n\ne Minor 7 Inversions (Drop 2) - D-String Bass Note\n\ne Minor 7 Inversions (Drop 3) - E-String Bass Note\n\ne Minor 7 Inversions (Drop 3) - A-String Bass Note\n\ne Minor 7b5 Inversions (Drop 2) - A-String Bass Note\ne Minor 7b5 Inversions (Drop 2) - D-String Bass Note\ne Minor 7b5 Inversions (Drop 3) - E-String Bass Note\ne Minor 7b5 Inversions (Drop 3) - A-String Bass Note\n\n7) Open Voicings\n\u00a2 Open Chords With E Root\n\u00a2 Open Chords With A Root\n\u00a2 Open Chords With D Root\n\u00a2 Open Chords With B Root\ne\u00a2 Open Chords With Bb Root\n\u00a2 Open Chords With C Root\n\n\u00a9 Quartal Chords\n\n\u00a2 Quartal Chords Based on the C Dorian Scale (String Set 2-3-4-5)\n\u00a2 Quartal Chords Based on the C Dorian Scale (String Set 1-2-3-4)\n\n9) More Guitar Chord Lessons\n\n\nHow to Read Chord Diagrams\n\nA red circle represents the root (aka 1) of the chord. Most chords in this dictionary\nhave a C root.\n\nThe black circles are the other notes of the chord. The numbers inside the black\ncircles indicate the chord tone.\n\nThe numbers (1, 2, 3, and 4) at the right side of each chord diagram indicate which\nfingers to use to fret the chord.\n\nThe X symbol at the left side of the chord diagram indicates that those strings are not\nto be played. This means that most of the chords on this page cannot be strummed,\nbut should be played fingerstyle, with your thumb and first 3 fingers of the right hand.\n\nThe O symbol at the left side of the chord diagram indicates that those strings are\nplayed open.\n\n\nMovable Chords\n\nMost of the chords on this page are of the movable type (not the open chords though).\nBy moving the chord shapes up or down the guitar neck, you get other chords of the\nsame chord type.\n\nFor example: move the chord shape of a Cmaj7 voicing 2 frets higher and it becomes a\nDmaj7 voicing.\n\n\n\n1. Basic Jazz Guitar Chords\n\nThe first group of jazz chords is called \"basic\", but they should really be described as\n\"essential\".\n\nThese shapes contain both drop 2 and drop 3 chords in root position, which is the best\nplace to get started playing jazz guitar chords.\n\nYou will learn smaller shapes in the next section, which are easier to play, but these\nfour-note shapes drill the sound of jazz into your ears better than the smaller shapes.\n\nStart by learning one shape for each chord type then take those changes to a jazz tune\nyou know or are working on.\n\nHere are 10 great songs to practice and apply these chords to:\n\ne Autumn Leaves\n\ne Summertime\n\ne All The Things You Are\n\ne Fly Me To The Moon\n\ne Blue Bossa\n\ne There Will Never Be Another You\n\u00ae Georgia On My Mind\n\ne Take5\n\ne The Girl From Ipanema\n\ne My Funny Valentine\n\n\nMajor 7 Chords\n\nDominant 7 Chords\n\nMinor 7 Chords\n\nMinor 7b5 (Half-Diminished) Chords\n\nCm7b5 Cm7b5 Cm7b5\n\n12\n\n\nDiminished 7 Chords\n\n2. Shell Chords\n\nShell chords (aka guide tone chords) are often referred to as Freddie Green chords, as\nhe used them to create his iconic rhythm sound with the Count Basie band.\n\nThese three-note chords contain the root, 3rd, 7th (or the 6th) of each chord.\n\nBecause of this, you hit the essential chord tones for each shape, and mostly on the\nlower String sets.\n\nSince these shapes are lower on the neck than other chord shapes, you need to keep\nyour tone in mind so you don't clash with the bass player in your playing.\n\nWith a soft tone, these chords are highly effective when comping in a duo, trio, or\nlarger ensembles.\n\n\n\n137 Shell Chords (E-String Root)\n\n\n\n1 7 3 Shell Chords (E-String Root)\nCmaj7\nC7\nCm7\nCm7b5 (=Cm7)\nC6\nCm6\nC\u00b07 (=Cm6)\n\n1 3 7 Shell Chords (A-String Root)\nCmaj7\nC7\nCm7\nCm7b5 (=Cm7)\nC6\nCm6\nC\u00b07 (=Cm6)\n\n1 7 3 Shell Chords (A-String Root)\nCmaj7\nC7\nCm7\nCm7b5 (=Cm7)\nC6\nCm6\nC\u00b07 (=Cm6)\n\n3. Chords with Extensions\n\nExtended chords use intervals outside of the root, 3rd, 5th, and 7th in their\nconstruction.\n\nBecause of this, we often describe these chords as more \"colorful\" compared to more\nbasic jazz guitar chords.\n\nBecause we don't have 10 fingers to play chords as a pianist would do, guitarists have\nto leave some notes out when adding extended notes to their chord shapes.\n\nKeep that in mind, and notice which notes are replaced as you add these fun chord\nshapes to your harmonic vocabulary.\n\nMajor 6 chords and major 6(9) chords, the first two types of extended chords in this\nset, are different from the extended chords that follow because they don't contain a 7.\n\nAll the other extended chords (such as maj9), contain the 7th in their construction.\n\nIn a major 6 chord, the 6 replaces the 7:\n\nCmaj7 C6\n\nWhen a 6 and a 7 are both present in a major chord, it becomes a major 13 chord.\nMajor 13 chords contain both the 7 and the 6 (=13), as opposed to major 6 chords,\nwhere the 7 is omitted.\n\n\nMajor 6 Chords\n\nTEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "chapters"
+    ],
+    "properties": {
+      "chapters": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "n",
+            "title",
+            "start_page",
+            "end_page"
+          ],
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "end_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "book has 63 pages; using first 20 as front matter."
+}

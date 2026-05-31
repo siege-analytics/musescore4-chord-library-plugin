@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: dirk-laukens\nWork id: jazz-guitar-chord-dictionary\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nmodel: claude-sonnet\nextracted_at: 2026-05-31T16:11:58+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 jazz-guitar-chord-dictionary\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\n## Overview and Pedagogical Arc\n\nThis book is a systematic chord dictionary for jazz guitar, organized as a progressive hierarchy of voicing types. It begins with the mechanics of reading chord diagrams (Chapter 1), advances through foundational four-note drop 2 and drop 3 voicings (Chapter 2), and then expands outward through increasing harmonic complexity: shell chords (Chapter 3), extended chords (Chapter 4), altered dominant chords (Chapter 5), inversions (Chapter 6), open-string voicings (Chapter 7), and quartal harmony (Chapter 8). The structure is neither purely theoretical nor purely practical \u2014 each chapter pairs a voicing category with the contextual rules governing its deployment, consistently linking what to play with where it comes from (scale origin) and where it goes (harmonic function).\n\n## The Movable Shape System\n\nThe book's master architecture rests on the movable chord shape: every non-open voicing is a transposable template that slides up or down the neck to any root, with a two-fret shift equaling a whole-step transposition. This principle, established in Chapter 1, multiplies the dictionary's utility across all twelve keys without requiring separate fingerings for each root. Chapter 2 extends this into a structured learning sequence \u2014 master one shape per chord type in isolation, then immediately apply it to a real jazz tune \u2014 a characteristic balance between systematic vocabulary building and ear-driven musicality.\n\n## Voicing Economy and Ensemble Sensitivity\n\nA recurring master move throughout the book is voicing economy: deliberate reduction of note count while preserving harmonic identity. Chapter 3's shell chords (guide tone chords) exemplify this most directly \u2014 three-note voicings built from root, 3rd, and 7th capture a chord's essential harmonic character while keeping the shape on the lower string sets. The chapter couples this economy with an explicit ensemble principle: shell chords occupy the bass register and therefore require soft tone control to avoid frequency clashing with the bass player. This reveals a characteristic rule \u2014 the choice of voicing is inseparable from the player's role within the rhythm section.\n\n## Extended and Altered Harmony: Rules and Distinctions\n\nChapters 4 and 5 establish the book's most load-bearing terminological distinctions. Chapter 4 introduces a structural rule governing extended chords: major 6 and major 6(9) chords omit the seventh (the 6 replaces the 7), whereas all other extended chords such as maj9 retain the 7th. The presence or absence of the 7th fundamentally determines harmonic function and identity. A further distinction separates major 6 chords (root, 3rd, 5th, 6) from major 13 chords (which contain both the 7 and the 6/13). Because guitarists cannot voice all available intervals simultaneously, deliberate omission choices are required \u2014 an explicit constraint the book frames as a practical skill rather than a limitation.\n\nChapter 5 extends this logic into dominant alteration. The #11 and b5 are identified as enharmonically identical but contextually named. The C9#11 derives from the Lydian dominant scale and functions as bVII7 resolving to Imaj7; the C7b5 derives from the altered scale and functions as V7alt resolving to Im7 or Imaj7. The characteristic move here is the systematic triple pairing: voicing (what notes) + scale origin (where it comes from) + harmonic function (where it resolves), giving theoretical justification and practical deployment guidance together.\n\n## Inversions, Open Chords, and Quartal Harmony\n\nChapter 6 establishes a comping freedom principle: any inversion of a chord symbol \u2014 root position, 3rd in bass, 5th in bass, 7th in bass \u2014 can legitimately substitute for that symbol in performance. Inversion selection is presented as an ear-based timbral decision rather than a fixed rule, with bass voice position creating different harmonic flavors from identical pitch content. Chapter 7 introduces open-string voicings as a distinct sonority available in guitar-friendly key centers, and establishes enharmonic notation as a necessary reading skill \u2014 for example, Bm11(b6) = Gmaj7(add 6)/B \u2014 enabling students to parse complex open voicings from multiple harmonic perspectives. Chapter 8 completes the harmonic vocabulary with quartal chords (4th chords), built by stacking 4th intervals above the lowest note rather than the thirds of tertian harmony. The book characterizes these as universally applicable over jazz standards \u2014 not limited to specific harmonic situations \u2014 and presents them in two fretboard positions: string sets 2-3-4-5 and 1-2-3-4 derived from the C Dorian scale.\n\n## Methodology\n\nThe book's method is dictionary-plus-context: each voicing category is taught as a movable template, then immediately situated within harmonic function, scale origin, ensemble role, and performance guidelines. The pedagogical prescription is consistent \u2014 learn the shape, apply it to a real tune, train the ear alongside the hands. Ear-based selection is repeatedly invoked as the ultimate arbiter of which voicing, inversion, or color works in context, positioning the entire chord vocabulary as raw material for musical judgment rather than a set of fixed prescriptions.\n\nChapter 9 (More Jazz Guitar Chord Lessons, pp. 61-63) contains no load-bearing prose passages \u2014 it is composed entirely of notated chord-lesson references without extractable instructional text.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 6-7\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 How to Read Chord Diagrams\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 teaches how to decode chord diagrams through visual symbols: a red circle marks the root (tonic), black circles with numbers inside indicate chord tones by scale degree, and finger numbers 1\u20134 on the right side show left-hand fingering. String-status indicators (X for muted, O for open) determine right-hand technique\u2014most chords are played fingerstyle with thumb and three fingers rather than strummed. The chapter's load-bearing principle is the movable chord shape: non-open voicings are transposable templates that slide up or down the neck to any root, with a two-fret shift equaling a whole-step transposition (e.g., Cmaj7 becomes Dmaj7 two frets higher). This architecture multiplies the dictionary's utility across all twelve keys without requiring separate fingerings for each root.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 8-13\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Basic Chords\n\n_Distillation; backed by `chapters/ch02.md`._\n\nChapter 2 introduces the foundational voicing system for jazz guitar through drop 2 and drop 3 chord types in root position, establishing the core shapes that underpin all subsequent chord work. The method prioritizes learning four-note voicings first despite their technical difficulty, as they develop the ear's jazz sound more effectively than smaller alternatives. Students follow a structured practice sequence: master one shape per chord type in isolation, then immediately apply it to a real jazz tune to integrate theory with musicality. Key terminology introduced includes the dual naming convention for Minor 7b5 (Half-Diminished) chords, essential for reading lead sheets and chord charts. The chapter's pedagogical emphasis reflects a characteristic balance between sound-driven ear training and systematic chord vocabulary building.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 14-18\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Shell Chords (aka Guide Tone Chords)\n\n_Distillation; backed by `chapters/ch03.md`._\n\nChapter 3 introduces shell chords (guide tone chords), three-note voicings built from the root, 3rd, and 7th (or 6th) of a chord, which capture the essential harmonic identity of any chord while keeping the shapes positioned on the lower string sets. The chapter emphasizes the practical advantages of this voicing strategy: shell chords are harmonically sufficient despite their minimal note count, and their low-register placement makes them highly effective in ensemble comping contexts like duos, trios, and larger ensembles. A key load-bearing rule emerges around tone awareness and ensemble sensitivity\u2014because shell chords occupy the bass register, the player must consciously manage tone control (using a soft tone) to avoid frequency clashing with the bass player. This reveals the master's characteristic move: economizing the voicing (three notes instead of four or more) while maintaining harmonic clarity, and coupling that economy with explicit awareness of the player's role within a rhythm section.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 19-34\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Chords With Extensions\n\n_Distillation; backed by `chapters/ch04.md`._\n\nThis chapter introduces extended chords, which incorporate intervals beyond the root, third, fifth, and seventh\u2014a foundational concept that expands harmonic vocabulary beyond basic triads and seventh chords. A critical practical constraint in guitar voicing is that guitarists must omit certain notes when constructing these chords, unlike pianists with ten fingers, requiring deliberate choices about which intervals to replace. The chapter establishes a structural distinction within extended chords: major 6 and major 6(9) chords omit the seventh (with the 6 replacing the 7), whereas all other extended chords like maj9 retain the 7th in their construction. A precise interval logic differentiates major 6 chords, where only the 6 is present alongside the root, third, and fifth, from major 13 chords, which contain both the 7 and the 6 (enharmonically the 13). The load-bearing terminology introduced includes extended chords, voicing omissions, major 6, major 13, and the rule that the presence or absence of the 7th fundamentally determines an extended chord's harmonic function and identity.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 35-44\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Dominant Chords with Altered Extensions\n\n_Distillation; backed by `chapters/ch05.md`._\n\nChapter 5 teaches dominant chord alteration using extended and altered intervals\u2014specifically the #11 and b5 extensions\u2014to create harmonic tension over dominant 7th chords, with particular emphasis on their use in minor key progressions like the minor ii-V-I. The chapter clarifies the enharmonic distinction between #11 and b5 (both the same pitch but named contextually), then grounds each voicing in its parent scale: the C9#11 derives from the Lydian dominant scale and functions as a bVII7 resolving to Imaj7, while the C7b5 derives from the altered scale and functions as a V7alt resolving to Im7 or Imaj7. The load-bearing terminology introduced includes altered extensions, Lydian dominant, altered scale, bVII7, and V7alt\u2014concepts that expand a player's harmonic vocabulary beyond basic dominant function. The chapter's characteristic move is the systematic pairing of voicing (what notes to use) with scale origin (where it comes from) and harmonic function (where it goes), giving readers both theoretical justification and practical deployment guidance.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 45-53\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 6 \u2014 Chord Inversions\n\n_Distillation; backed by `chapters/ch06.md`._\n\nChapter 6 teaches chord inversions\u2014the technique of placing chord tones other than the root in the bass voice\u2014and presents them in systematic order (root, 3rd, 5th, 7th) for each chord type. The foundational comping principle is that any inversion of a chord symbol can legitimately substitute for that symbol in performance, giving the student flexibility in voicing choices. The chapter emphasizes that while inversions use identical pitch content, the bass note's position creates a different harmonic flavor and sound quality, so ear-based selection determines which inversion works best in context. Key terminology includes inversion order, bass voice hierarchy, and the concept of voicing as a timbral decision rather than a fixed rule.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 54-58\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 7 \u2014 Open Chords\n\n_Distillation; backed by `chapters/ch07.md`._\n\nChapter 7 teaches open chords, which are constructed by incorporating open strings into their voicings, fundamentally distinguishing them from closed barre chord shapes. While limited to a few keys, open chords provide essential comping vocabulary in guitar-friendly key centers and deliver a signature sound unique to the instrument through their open-string resonance. The chapter introduces load-bearing enharmonic notation, such as the equivalence Bm11(b6) = Gmaj7(add 6)/B, enabling students to read and name complex open voicings from multiple harmonic perspectives.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 59-60\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 8 \u2014 Quartal Chords\n\n_Distillation; backed by `chapters/ch08.md`._\n\nChapter 8 introduces quartal chords (also called 4th chords), which are built by stacking 4th intervals above the lowest note, distinguishing them structurally from the tertian harmony of traditional chord types. The chapter establishes that quartal chords sound open and modern, making them universally applicable over jazz standards in both comping and soloing contexts rather than being limited to specific harmonic situations. The practical focus centers on two fretboard implementations: voicings based on the C Dorian scale using string set 2-3-4-5, and the same harmonic material transposed to string set 1-2-3-4, allowing players to access these sonorities across different regions of the guitar. This chapter is primarily instructional, teaching a specific chord-building technique and its application rather than biographical or introductory material.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s3\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 61-63\nmodel: claude-haiku\nextracted_at: 2026-05-31T16:10:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 9 \u2014 More Jazz Guitar Chord Lessons\n\n_Distillation; backed by `chapters/ch09.md`._\n\nChapter 9 contains no load-bearing prose passages \u2014 composed entirely of notated chord-lesson references (titled \"More Jazz Guitar Chord Lessons\", pp. 61-63) without extractable instructional text. No techniques, terminology, or characteristic moves can be distilled from the provided chapter file.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 6-7\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:44:32+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 How to Read Chord Diagrams\n\n_Pages 6-7._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## root circle symbol\n\n> A red circle represents the root (aka 1) of the chord. Most chords in this dictionary\n> have a C root.\n\n**Significance (p. 6).** This defines the visual encoding of the tonic/root in every diagram in the book, establishing the reference pitch all chord tones are measured against.\n\n## chord tone numbers\n\n> The black circles are the other notes of the chord. The numbers inside the black\n> circles indicate the chord tone.\n\n**Significance (p. 6).** This explains that fingering diagrams display harmonic function (scale-degree intervals) rather than finger numbers, which is essential for reading every chord entry correctly.\n\n## fretting finger numbers\n\n> The numbers (1, 2, 3, and 4) at the right side of each chord diagram indicate which\n> fingers to use to fret the chord.\n\n**Significance (p. 6).** This locates the left-hand fingering indicators and distinguishes them from the chord-tone numbers inside the circles, preventing the most common diagram-reading confusion.\n\n## X symbol / muted strings\n\n> The X symbol at the left side of the chord diagram indicates that those strings are not\n> to be played. This means that most of the chords on this page cannot be strummed,\n> but should be played fingerstyle, with your thumb and first 3 fingers of the right hand.\n\n**Significance (p. 6).** This is a technique rule that governs right-hand approach for the majority of chords in the book \u2014 fingerstyle with thumb + 3 fingers rather than strumming.\n\n## O symbol / open strings\n\n> The O symbol at the left side of the chord diagram indicates that those strings are\n> played open.\n\n**Significance (p. 6).** This defines the open-string symbol, completing the set of string-status indicators needed to interpret any diagram in the dictionary.\n\n## movable chord shapes\n\n> Most of the chords on this page are of the movable type (not the open chords though).\n> By moving the chord shapes up or down the guitar neck, you get other chords of the\n> same chord type.\n\n**Significance (p. 7).** This establishes the book's core transposition principle: every non-open shape is a template that can be slid to any root, multiplying the dictionary's reach across all twelve keys.\n\n## movable shape transposition example\n\n> For example: move the chord shape of a Cmaj7 voicing 2 frets higher and it becomes a\n> Dmaj7 voicing.\n\n**Significance (p. 7).** This concrete example demonstrates the two-fret = whole-step relationship that underpins all transposition of movable shapes in the book.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 8-13\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:45:20+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Basic Chords\n\n_Pages 8-13._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Drop 2 and drop 3 chord types\n\n> These shapes contain both drop 2 and drop 3 chords in root position, which is the best\n> place to get started playing jazz guitar chords.\n\n**Significance (p. 8).** Defines the voicing system (drop 2 / drop 3 in root position) that underpins all the chord shapes introduced in this chapter.\n\n## Four-note shapes vs. smaller shapes\n\n> You will learn smaller shapes in the next section, which are easier to play, but these\n> four-note shapes drill the sound of jazz into your ears better than the smaller shapes.\n\n**Significance (p. 8).** Gives a pedagogical rule about why full four-note voicings are prioritized first \u2014 ear training rationale over ease of execution.\n\n## Learning sequence rule\n\n> Start by learning one shape for each chord type then take those changes to a jazz tune\n> you know or are working on.\n\n**Significance (p. 8).** States the method's prescribed practice sequence: isolate one shape per chord quality, then immediately apply it in a musical context.\n\n## Minor 7b5 terminology\n\n> Minor 7b5 (Half-Diminished) Chords\n\n**Significance (p. 12).** Defines the dual naming convention \u2014 'Minor 7b5' and 'Half-Diminished' \u2014 that students need to recognise in lead sheets and chord charts.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 14-18\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:46:05+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Shell Chords (aka Guide Tone Chords)\n\n_Pages 14-18._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Shell chord definition\n\n> These three-note chords contain the root, 3rd, 7th (or the 6th) of each chord.\n\n**Significance (p. 14).** This is the foundational definition of a shell chord's intervallic content, establishing which chord tones are included and why they are harmonically sufficient.\n\n## Shell chord tonal register\n\n> Because of this, you hit the essential chord tones for each shape, and mostly on the\n> lower String sets.\n\n**Significance (p. 14).** This explains the practical voicing characteristic of shell chords \u2014 their placement on lower strings \u2014 which directly informs how the player positions and selects these shapes.\n\n## Tone awareness / bass register\n\n> Since these shapes are lower on the neck than other chord shapes, you need to keep\n> your tone in mind so you don't clash with the bass player in your playing.\n\n**Significance (p. 14).** This is an explicit rule about ensemble awareness: the low-register voicing requires conscious tone management to avoid muddying the bass player's frequency space.\n\n## Shell chords in ensemble comping\n\n> With a soft tone, these chords are highly effective when comping in a duo, trio, or\n> larger ensembles.\n\n**Significance (p. 14).** This gives the player a concrete prescription \u2014 soft tone \u2014 and the specific contexts (duo, trio, larger ensemble) where shell chords are the preferred comping tool.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 19-34\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:46:53+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Chords With Extensions\n\n_Pages 19-34._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## extended chords definition\n\n> Extended chords use intervals outside of the root, 3rd, 5th, and 7th in their\n> construction.\n\n**Significance (p. 19).** This is the foundational definition that distinguishes extended chords from basic triads and seventh chords.\n\n## guitarists omit notes\n\n> Because we don't have 10 fingers to play chords as a pianist would do, guitarists have\n> to leave some notes out when adding extended notes to their chord shapes.\n>\n> Keep that in mind, and notice which notes are replaced as you add these fun chord\n> shapes to your harmonic vocabulary.\n\n**Significance (p. 19).** This establishes the core practical rule of guitar voicing \u2014 that guitarists must make deliberate omissions \u2014 and directs the student to observe those substitutions analytically.\n\n## major 6 vs. major 7 distinction\n\n> Major 6 chords and major 6(9) chords, the first two types of extended chords in this\n> set, are different from the extended chords that follow because they don't contain a 7.\n>\n> All the other extended chords (such as maj9), contain the 7th in their construction.\n\n**Significance (p. 19).** This rule draws a structural dividing line within the extended-chord family that governs how each chord type functions harmonically.\n\n## major 6 chord: 6 replaces 7\n\n> In a major 6 chord, the 6 replaces the 7:\n\n**Significance (p. 19).** This concise rule specifies the exact interval substitution that defines a major 6 chord and distinguishes it from a major 7 chord.\n\n## major 13 vs. major 6: 7 present\n\n> When a 6 and a 7 are both present in a major chord, it becomes a major 13 chord.\n> Major 13 chords contain both the 7 and the 6 (=13), as opposed to major 6 chords,\n> where the 7 is omitted.\n\n**Significance (p. 19).** This passage defines the precise interval logic that separates major 6 from major 13, a distinction critical to correct chord identification and usage.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 35-44\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:47:44+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Dominant Chords with Altered Extensions\n\n_Pages 35-44._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## altered extensions usage rule\n\n> These chords can be used over any dominant 7th chord in your comping to create\n> extra tension, but if you\u2019re new to these sounds start with using them in minor keys.\n\n**Significance (p. 35).** This is the primary usage rule for altered dominant extensions, giving players a concrete starting point and a broader principle for deployment.\n\n## altered extensions in minor ii-V-I\n\n> For example, if you have a minor ii V | chord progression (DM7b5-G7-Cm7), you can\n> use altered extensions over the G7 chord.\n\n**Significance (p. 35).** This is the canonical load-bearing example showing where altered extensions are most idiomatically applied in a harmonic context.\n\n## #11 vs b5 distinction\n\n> A lot of people are confused about the difference between extensions #11 and b5.\n> Both are the same note, an f# (=gb) in C7.\n\n**Significance (p. 36).** This defines a commonly misunderstood enharmonic equivalence that underpins the chapter's chord taxonomy.\n\n## C9#11 \u2014 Lydian dominant derivation\n\n> A C7 with a #11 usually contains a natural 9 (d) because this chord is derived from the\n> Lydian dominant scale (4th mode of the melodic minor scale). A C9#11 often functions\n> as a bVII7 going to Imaj7 (C7#11 to Dmaj7, for example):\n\n**Significance (p. 36).** This ties the #11 voicing to its parent scale and its characteristic harmonic function, giving the reader both theoretical grounding and a practical use-case.\n\n## C7b5 \u2014 altered scale derivation\n\n> A C7 with a b5 contains a b9 or #9 because this chord is derived from the altered scale\n> (7th mode of the melodic minor scale). A C7(b5,b9) often func\n>\n> tions as a V7alt going to Im7 or Imaj7 (C7b5b9 going to Fm7 or Fm9, for example):\n\n**Significance (p. 36).** This defines the altered-scale chord family and its canonical V7alt\u2192Im7 resolution function, the core harmonic role of the b5/b9 voicing cluster.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 45-53\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:48:31+00:00\nschema_version: 0.1\n---\n\n# Chapter 6 \u2014 Chord Inversions\n\n_Pages 45-53._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Inversion definition: non-root bass\n\n> use other notes in the bass than the root note.\n\n**Significance (p. 45).** This is the core definition of a chord inversion as used throughout the chapter \u2014 placing a chord tone other than the root in the bass voice.\n\n## Inversion order: root, 3rd, 5th, 7th\n\n> Notice that for each group of chords, the root is in the bass for the first chord shape,\n> then the 3rd, 5th, and the 7th after that.\n\n**Significance (p. 45).** This establishes the systematic ordering of the four inversions presented in every chord-type group, giving the student the navigational logic for all the diagrams that follow.\n\n## Applying inversions in comping\n\n> Each of these chord inversions can be applied to that chord in your comping. For\n> example, if you see a Cmaj7 chord symbol you can play any inversion of Cmaj7.\n\n**Significance (p. 45).** This is the practical performance rule: any inversion is a legitimate substitute for a chord symbol, which is the foundational comping technique the chapter teaches.\n\n## Voicing choice and sound quality\n\n> Just know that each inversion will have a slightly different sound and some voicings will\n> work better than others.\n\n**Significance (p. 45).** This gives the student the evaluative rule \u2014 inversions are not interchangeable in all contexts, and ear-based selection is required.\n\n## Bass note affects chord flavor\n\n> Though they use the same notes, putting the root or the 3rd in the bass causes the\n> chord to have a slightly different flavor.\n\n**Significance (p. 45).** This explains the acoustic principle behind why inversions matter \u2014 same pitch content, different hierarchical emphasis produces a perceptible timbral/harmonic difference.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 54-58\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:49:09+00:00\nschema_version: 0.1\n---\n\n# Chapter 7 \u2014 Open Chords\n\n_Pages 54-58._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Open chords definition\n\n> Open chords use open strings in their construction.\n\n**Significance (p. 54).** This is the chapter's core definition \u2014 it establishes what distinguishes open chords structurally from closed/barre chord voicings.\n\n## Open chords \u2014 key limitations and comping use\n\n> Though they are limited to a few keys, these shapes add new flavor to your comping in\n> particular key centers. Open chords have a specific sounds that is unique to the guitar.\n\n**Significance (p. 54).** This passage gives the practical rule for when to deploy open chords (comping in specific guitar-friendly key centers) and names their defining sonic property \u2014 unique open-string resonance \u2014 which governs their musical use.\n\n## Polychord equivalence notation\n\n> Bm11(b6) = Gmaj7(add 6)/B\n\n**Significance (p. 57).** This equation defines a load-bearing enharmonic/functional equivalence between two chord symbols for the same voicing, teaching the student how to read and name complex open-string chords from multiple harmonic perspectives.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 59-60\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:49:50+00:00\nschema_version: 0.1\n---\n\n# Chapter 8 \u2014 Quartal Chords\n\n_Pages 59-60._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Quartal chord definition\n\n> (aka 4th chords) are built by stacking 4th intervals above the lowest\n> note of the chord.\n\n**Significance (p. 59).** This is the foundational definition of quartal chords \u2014 the structural rule that distinguishes them from tertian harmony.\n\n## Quartal chords: musical context\n\n> Quartal chords sound more open and modern compared to other chord types and can\n> be used over any jazz standard in your comping and solos.\n\n**Significance (p. 59).** This gives the player a concrete application rule \u2014 quartal chords are not context-specific but universally applicable over jazz standards in both comping and soloing.\n\n## String set fingering: set 2-3-4-5\n\n> Quartal Chords Based on the C Dorian Scale (String Set 2-3-4-5)\n\n**Significance (p. 59).** Identifies the specific string set for the first chord-shape exercise, anchoring the voicings to a particular region of the fretboard.\n\n## String set fingering: set 1-2-3-4\n\n> Quartal Chords Based on the C Dorian Scale (String Set 1-2-3-4)\n\n**Significance (p. 60).** Identifies the second string set for quartal voicings, showing the player how to transpose the same harmonic idea to higher strings.\n\n\n---\n\n---\nrun_id: 2026-05-28T15-05-20-laukens-jazz-guitar-chord-dictionary\nstage: s2\nsource_pdf: Laukens, Dirk - The Jazz Guitar Chord Dictionary.pdf\nsource_pages: 61-63\nmodel: claude-sonnet\nextracted_at: 2026-05-31T03:50:01+00:00\nschema_version: 0.1\n---\n\n# Chapter 9 \u2014 More Jazz Guitar Chord Lessons\n\n_Pages 61-63._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n_No load-bearing passages identified in this chapter._\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for dirk-laukens/jazz-guitar-chord-dictionary; use _pending: when unsure about kind."
+}

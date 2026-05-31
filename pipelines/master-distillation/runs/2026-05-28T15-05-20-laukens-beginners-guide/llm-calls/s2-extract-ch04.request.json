@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Jazz Guitar Scales\nPages 83-95 of the book.\n\n<<<CHAPTER TEXT\n\n83\n\nChapter 4 - Jazz Guitar Scales\n\nMoving on to another essential soloing technique: scales. The scales\nwe'll be looking at are going to be applied to Autumn leaves, and\ntherefore are the scales needed to solo over the changes to this tune.\nThese aren't all the scales you need to be a great jazz guitarist, but\nthey are part of a foundation needed to move to the next level in your\nsolos.\n\nStart by working each scale on it\u2019s own, then learn the sample solo at the end of\nthis section to take these scales to a musical situation over Autumn Leaves.\n\nThe Major Blues Scale\n\nThe first scale is used to solo over the first four bars of Autumn Leaves, Am7-D7-\nGmaj7-Cmaj7, as all chords are in the key of G major.\n\nThis scale has six notes, and is built with the following interval pattern:\n\nec} sje] | oo)\n\nThe b3 is the \u201cblue\u201d note in this scale, as it gives the scale its bluesy sound.\n\nYou can use this scale to solo over any progression in a major key, such as Autumn\nLeaves, or over individual 7th and maj7 chords. Because there is not 7th in this\nscale, it can be applied to both G7 and Gmaj7 chords. Pretty cool right?\n\n\nHere are two fingerings to get you started:\n\nAudio Example 35\n\nClick here to play audio example 35\n\nG Major Blues\n\nG Major Blues\n\n84\n\n\n85\n\nAfter you have one or both of these fingerings down, put on this backing track\nand solo over this Gmaj7 chord with the G major blues scale.\n\nThis gets the sound of this scale into your solos in a musical situation.\n\nBacking Track 4\n\nClick here to play backing track 4\n\nThe Natural Minor Scale\n\nThe next scale is used to solo over the F#m7b5 chord in Autumn Leaves.\n\nBecause minor ii V I's (like F#m7b5-B7alt-Em7 in Autumn Leaves), use\ndifferent scales over each of the 3 chords, it's best to keep them to one root\nnote. To do this, you play three scales with the same E root over those three\nchords, beginning with E natural minor over F#m7b5.\n\nThis scale is the 6th mode of the major scale, and is also called the Aeolian mode:\n\n| eNswaiminoreacoien | oe Jire | co | a | a | ic | o |\n\n\u00a9 Click here to learn more about Guitar Modes\n\n\nTo begin, here are two fingerings to learn for this scale:\n\nAudio Example 36\n\nClick here to play audio example 36\n\nE Natural Minor\n\n86\n\n\n87\n\nAfter you have one or both of these fingerings down, put on this backing track\nand solo over this F#m7b5 chord with the E natural minor scale.\n\nThis gets the sound of this scale into your solos in a musical situation.\n\nBacking Track 5\n\nClick here to play backing track 5\n\nThe Harmonic Minor Scale\n\nWhen soloing over the V7alt chord (the B7alt chord in Autumn Leaves) in a minor\nii V I, you use the tonic harmonic minor scale.\n\nHere are the notes of the harmonic minor scale. Note that the only difference\nwith the natural minor scale is the natural 7 instead of a flat 7:\n\n| Evemonieminorsesle |e | ore | o | a] a | c | oe |\n\nWhen playing the E harmonic minor scal over B7alt, you create a V7(b9,b13)\nsound:\n\n[sonore Tepe le la le Le Lo\nroca vn IT\n\n\nHere are two fingerings to get you started:\n\nAudio Example 37\n\nClick here to play audio example 37\n\nE Harmonic Minor\n\nE Harmonic Minor\n\n88\n\n\n89\n\nAfter you have one or both of these fingerings down, put on this backing track\nand solo over this B7alt chord with the E harmonic minor scale.\n\nThis gets the sound of this scale into your solos in a musical situation.\n\nBacking Track 6\n\nClick here to play backing track 6\n\nThe Melodic Minor Scale\n\nThe final scale is used to solo over the Im7 chord in a minor ii V |, melodic minor.\n\nThis scale has a raised 7th interval, which creates tension over m7 chords in your\nsolos:\n\nJ Evelosicwinorsste |e | re] co | a | | ce | oe |\n\n\n90\n\nBecause of this tension, experiment with this scale in your solos to determine\nwhere you want to use that raised 7th in your lines.\n\nA good place to start, is listening to Grant Green's solo over So What, where he\nuses melodic minor in many lines over m7 chords:\n\n> pl 1:40/9:50\n\n\n\n91\n\nHere are two fingerings to get you started with the melodic minor scale:\n\nAudio Example 38\n\nE Melodic Minor\n\nFS\n| |\n\n| | I i\n| It |\n\nE Melodic Minor\n\n\n\n92\n\nAfter you have one or both of these fingerings down, put on this backing track\nand solo over this Em7 chord with the E melodic minor scale.\n\nThis gets the sound of this scale into your solos in a musical situation.\n\nBacking Track 7\n\nClick here to play backing track 7\n\nAutumn Leaves Scale Solo\n\nTo get you started with applying scales to a soloing situation, here is a solo over\nAutumn Leaves that uses scales from this section.\n\nWork the solo one phrase at a time until you can put everything together to\nform the solo as a whole.\n\nFrom there, you can play it along with the audio example, as well as solo over the\nbacking track as you create your own scale solos over this tune.\n\nBacking Track 8\n\nClick here to play backing track 8\n\n\nAudio Example 39\nClick here to play audio example 39\nAm7\nD7\nGmaj7\nCmaj7\nF#m7(b5)\nB7ALT.\nEm7\nAm7\nD7\nGmaj7\nCmaj7\n\nF#m7(b5) B7ALT. Em7\nA 10-7-9 7-10-7 9 8-7 8 9-7 9 10 9 6-9\nB\n\nF#m7(b5) B7ALT. Em7\nA 2-4 2-5 4-5 4 2-3 5 4 5 1-2 5 4 2-4\nB\n\nAm7 D7 Gmaj7 Cmaj7\nA 1-2-4 3-5 2 4-3-4-3 4-4 4-3-4 2-5-4\nB\n\n95\n\nFam 70 B7 ar. Em\u2019? A\u2019 Ow\u2019 67\n\nDis\n\naa\n\n:\n:\n)\n\n1\n\n7 10 6-710\n\nAs Joe Pass once said:\n\n\u201cWhen the chords change, you change\u201d\n\n\u00a9 Tom Marcello (Creative Commons License)\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Basic Chords\nPages 8-13 of the book.\n\n<<<CHAPTER TEXT\n\n1. Basic Jazz Guitar Chords\n\nThe first group of jazz chords is called \"basic\", but they should really be described as\n\"essential\".\n\nThese shapes contain both drop 2 and drop 3 chords in root position, which is the best\nplace to get started playing jazz guitar chords.\n\nYou will learn smaller shapes in the next section, which are easier to play, but these\nfour-note shapes drill the sound of jazz into your ears better than the smaller shapes.\n\nStart by learning one shape for each chord type then take those changes to a jazz tune\nyou know or are working on.\n\nHere are 10 great songs to practice and apply these chords to:\n\ne Autumn Leaves\n\ne Summertime\n\ne All The Things You Are\n\ne Fly Me To The Moon\n\ne Blue Bossa\n\ne There Will Never Be Another You\n\u00ae Georgia On My Mind\n\ne Take5\n\ne The Girl From Ipanema\n\ne My Funny Valentine\n\n\nMajor 7 Chords\n\nDominant 7 Chords\n\nMinor 7 Chords\n\nMinor 7b5 (Half-Diminished) Chords\n\nCm7b5 Cm7b5 Cm7b5\n\n12\n\n\nDiminished 7 Chords\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}
