@@ -1,0 +1,51 @@
+# Salvage from #360 mismap: original config was carter-fingerstyle-jazz.toml
+# but the OCR transcript actually contains Alan de Mause's Mel Bay book.
+# OCR was correct; master_id was wrong. Re-keyed under alan-de-mause.
+
+[master]
+id = "alan-de-mause"
+name = "Alan de Mause"
+
+[work]
+id = "complete-fingerstyle-jazz-guitar-book"
+title = "Mel Bay's Complete Fingerstyle Jazz Guitar Book"
+year = 2001
+instrument_scope = "6-string fingerstyle"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Carter - Fingerstyle Jazz.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = false
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+# Salvage notes:
+# - PDF filename references Bill Carter; content is Alan de Mause
+#   (Mel Bay's Complete Fingerstyle Jazz Guitar Book). Verified:
+#   "Mel Bay's Complete Fingerstyle Jazz Guitar Book / by Alan de Mause" at
+#   transcript head; "Carter" appears in body but not as author.
+# - Source OCR copied from runs/2026-05-28T15-05-20-carter-fingerstyle-jazz/.
+# - Original wrong-keyed run dir stays as audit trail per #360.
