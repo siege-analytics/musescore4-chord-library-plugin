@@ -1,0 +1,151 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar",
+    "stage": "s4",
+    "source_pdf": "_m Bertoncini Arrangements for Solo Guitar.pdf",
+    "extracted_at": "2026-05-31T03:11:34+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "gene-bertoncini",
+  "work_id": "arrangements-for-solo-guitar",
+  "systems": [
+    {
+      "id": "gene-bertoncini:arrangements-for-solo-guitar:open-string-voicing-glossary",
+      "name": "Open-String Voicing Glossary",
+      "summary": "The book's most explicit organizing system, located in Chapter 25 (the Glossary of Open-String Voicings, pages 77-81). Bertoncini's distinctive practice is to incorporate ringing open strings as harmonic color inside chord voicings rather than stopping every note. The editors extracted these voicings from across the 24 arrangements and indexed them by chord label and source measure (e.g., The Shadow of Your Smile m.9 Em9; Body and Soul m.7 Dbmaj7(#11); 'Round Midnight m.3 Abm9; Edelweiss m.35 Ebmaj9; But Beautiful m.13 G13). Members below enumerate the cataloged voicings as documented by the Glossary index entries visible in the chapter-25 transcript. No prose passages backing traversal or modification rules exist in this folio, so the system is presented as a taxonomy only; rule extraction is deferred until either (a) a future pass works directly from notation or (b) external prose sources document the underlying voice-leading and substitution logic.",
+      "members": [
+        {
+          "id": "shadow-em9-m9",
+          "name": "The Shadow of Your Smile \u2014 Em9 (m. 9)"
+        },
+        {
+          "id": "shadow-a13-mm19-20",
+          "name": "The Shadow of Your Smile \u2014 A13 (mm. 19-20)"
+        },
+        {
+          "id": "shadow-bm9-m39",
+          "name": "The Shadow of Your Smile \u2014 Bm9 (m. 39)"
+        },
+        {
+          "id": "valentine-abm13",
+          "name": "My Funny Valentine \u2014 Abm13"
+        },
+        {
+          "id": "valentine-fadd9-a-m28",
+          "name": "My Funny Valentine \u2014 F(add9)/A (m. 28)"
+        },
+        {
+          "id": "glocca-em11-mm31-32",
+          "name": "How Are Things in Glocca Morra \u2014 Em11 (mm. 31-32)"
+        },
+        {
+          "id": "glocca-a13-mm31-32",
+          "name": "How Are Things in Glocca Morra \u2014 A13 (mm. 31-32)"
+        },
+        {
+          "id": "body-dbmaj7sharp11-m7",
+          "name": "Body and Soul \u2014 Dbmaj7(#11) (m. 7)"
+        },
+        {
+          "id": "body-amaj9-m13",
+          "name": "Body and Soul \u2014 Amaj9 (m. 13)"
+        },
+        {
+          "id": "body-db13-m13",
+          "name": "Body and Soul \u2014 Db13 (m. 13)"
+        },
+        {
+          "id": "body-em9-mm22-23",
+          "name": "Body and Soul \u2014 Em9 (mm. 22-23)"
+        },
+        {
+          "id": "body-dm11-mm22-23",
+          "name": "Body and Soul \u2014 Dm11 (mm. 22-23)"
+        },
+        {
+          "id": "body-e9sharp11-mm22-23",
+          "name": "Body and Soul \u2014 E9(#11) (mm. 22-23)"
+        },
+        {
+          "id": "body-a13b9-mm22-23",
+          "name": "Body and Soul \u2014 A13(b9) (mm. 22-23)"
+        },
+        {
+          "id": "edelweiss-ebmaj9-m35",
+          "name": "Edelweiss \u2014 Ebmaj9 (m. 35)"
+        },
+        {
+          "id": "round-midnight-abm9-m3",
+          "name": "'Round Midnight \u2014 Abm9 (m. 3)"
+        },
+        {
+          "id": "but-beautiful-bb13b9-m26",
+          "name": "But Beautiful \u2014 Bb13(b9) (m. 26)"
+        },
+        {
+          "id": "but-beautiful-g13-m13",
+          "name": "But Beautiful \u2014 G13 (m. 13)"
+        },
+        {
+          "id": "i-remember-cm11-m11",
+          "name": "I Remember You \u2014 C#m11 (m. 11)"
+        },
+        {
+          "id": "i-remember-fsus4-m26",
+          "name": "I Remember You \u2014 F#(sus4) (m. 26)"
+        },
+        {
+          "id": "i-remember-f9-m26",
+          "name": "I Remember You \u2014 F9 (m. 26)"
+        },
+        {
+          "id": "i-remember-e7sharp9-m48",
+          "name": "I Remember You \u2014 E7(#9) (m. 48)"
+        }
+      ],
+      "traversal_rules": [],
+      "modification_rules": []
+    },
+    {
+      "id": "gene-bertoncini:arrangements-for-solo-guitar:little-orchestra-textures",
+      "name": "Little-Orchestra Textural Roles",
+      "summary": "Bertoncini's framing premise (stated in the book's Preface, attributed to Berlioz's description of the guitar as a 'little orchestra') treats the solo guitar as a polyphonic ensemble distributing musical material across distinct textural roles. The Preface names the roles and techniques explicitly: melody can be stated in the soprano voice, given to the bass voice, or nestled within the voicing; surrounding material uses counterpoint, cluster voicings, open-string voicings, and the special color of each individual string. The 24 arrangements (chapters 1-24) realize this taxonomy in notation. Because the Preface prose was not extracted as a numbered chapter (the TOC begins at the first arrangement), no per-chapter quotes back this system, and no traversal or modification rules are asserted here. The members below enumerate the textural roles the Preface names.",
+      "members": [
+        {
+          "id": "melody-in-soprano",
+          "name": "Melody stated in the soprano voice",
+          "summary": "Default placement; melody on top of the voicing."
+        },
+        {
+          "id": "melody-in-bass",
+          "name": "Melody given to the bass voice",
+          "summary": "Mood/message-driven inversion of the default."
+        },
+        {
+          "id": "melody-nestled-inside-voicing",
+          "name": "Melody nestled within an inner voice of the voicing",
+          "summary": "Inner-voice melody, requiring the listener to track a middle line through the chord."
+        },
+        {
+          "id": "counterpoint",
+          "name": "Counterpoint between voices"
+        },
+        {
+          "id": "cluster-voicings",
+          "name": "Cluster voicings"
+        },
+        {
+          "id": "open-string-voicings",
+          "name": "Open-string voicings"
+        },
+        {
+          "id": "per-string-color",
+          "name": "Per-string timbral color (the special color of each string)"
+        }
+      ],
+      "traversal_rules": [],
+      "modification_rules": []
+    }
+  ]
+}
