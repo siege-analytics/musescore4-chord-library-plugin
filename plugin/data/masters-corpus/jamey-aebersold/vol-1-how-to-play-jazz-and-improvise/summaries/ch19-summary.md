@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-aebersold-vol-1-how-to-play-jazz
+stage: s3
+source_pdf: Aebersold, Jamey - Vol 001, How to Play and Improvise Jazz.pdf
+source_pages: 65-67
+model: claude-haiku
+extracted_at: 2026-05-31T03:34:52+00:00
+schema_version: 0.1
+---
+
+# Chapter 19 — Practical Exercises
+
+_Distillation; backed by `chapters/ch19.md`._
+
+Chapter 19 teaches practical frameworks for mastering jazz fundamentals across all 12 keys, anchored by the Circle of Fourths (the harmonic foundation found everywhere in jazz) and practiced through transposition, a daily necessity for jazz musicians. The chapter emphasizes ear development via the singing-to-instrument method, contextual scale choice (blues scales for color but balanced with regular scales), and targeted harmonic awareness through 3rds and 7ths emphasis in dominant chords. Key technical rules include treating the 4th scale degree as a passing tone to avoid, maintaining even eighth-note phrasing in bossa nova contexts, and building phrases progressively from 2-bar units to longer 4, 6, or 8-bar forms (counting rests as structural elements). The master's characteristic moves visible here—the systematic 12-key memorization goal, the integration of ear training with instrumental practice, and the emphasis on harmonic awareness—reflect a pedagogical approach that treats transposition and harmonic literacy as inseparable from daily musicianship.

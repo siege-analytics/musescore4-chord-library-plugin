@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch19",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 19: Practical Exercises\nPages 65-67 of the book.\n\n<<<CHAPTER TEXT\n\nHE TWELVE MAJOR 7th CHORDS\n\n7\nBb Ma 7\nF Ma? EbMa? AbMa? py yg? Gb Ma?\n\nCMa?\n\nie\nrile\nore\n\nVv\nE TWELVE DOMINANT 7th CHORDS\n\n7\nAb Db? Gb?\n\n$l\nfj\na\n\nHE TWELV NOR 7th CHORDS\n\ntt\n\n7\nBbmi 7 7 7\ncmi? Emi? | Ebmi Abmi Domi? Gomi? Bmi Emi? Ami? Dmi? Gmi?\n\nE VE HALF-DIMINISHED CHORD\nce FG Bod D#G G#G C#O F#G BO EO A@ D6 GO\nray 4 b ee 2 Ls b be\nagg Eg\nS Fe $ 3\nCIRCLE OF FOURTHS\nCIRCLE OF FOURTHS The CIRCLE of FOURTHS can also be called the Cycle of\n\nFourths. It has also been referred to as the Circle or Cycle of\nFifths, the Cycle or just the Circle. It basically refers to the root\nmovement of any chord/scale progression. If you go from the note\nC up to F we call it a Fourth (5 half-steps). If you go from the\nnote C down to F we call it a Fifth (7 half-steps).\nMany people like to practice their scales, chords, patterns and\nBb licks through the Circle of Fourths to assure themselves of\npracticing in all 12 keys.\nThe jazz standard All The Things You Are utilizes the circle\nEb root movement in the first 5 bars: /F- / Bb- / Eb7 / Ab / Db/.\nThe blues uses it in the last four bars. / C- / F7 / Bb7 / F7 //.\nThe song Tune Up looks like this: /E-/ A7/D/D/D-/G7/C/\nAb /C/C-/F7/Bb/Bb/E-/A7/D/D//.\nLook at various chord progressions and mark the circle root\nDb (c#) movement. It will help you better understand root movement and\nGb (F#) harmony in general.\n\nBcb)\n\nIdeas come from imagination, intuition, others, listening to jazz, experience, environment,\npersistence...\n\n64\n\n\nPRACTICAL EXERCISES AND SUGGESTIONS\nFOR THE PLAY-A-LONG RECORDING TRACKS\n\nThe following pages contain exercises to be practiced with the individual tracks on the recording.\nThese examples are written in Concert Key. If you play a transposing instrument such as sax,\ntrumpet, clarinet or bass clef instrument you will have to transpose them to your key. Incidentally,\ntransposing is part of the jazz musicians daily life. We learn to transpose because it makes it easier\nto play and learn new songs, scales, patterns, etc. It's not as difficult as some would have you\nbelieve. You do have to use your mind.\n\nThese exercises represent only a few of the countless possibilities and are aimed at the beginning-\nintermediate student. Experiment with making up patterns of your own. Some people like to write\nthem down or even collect them in a notebook for future use. The written exercises presented here\ncan serve as a springboard for your imagination.\n\nTRACK J Apply exercises from the 20 presented in this book. Also, apply the TEN BASIC\nPATTERNS. Make up some of your own. Try using the blues scales. Use the bebop scale, too.\n\nTRACK 2 See musical examples on page 66.\n\nTRACK 3 Apply exercises from the 20 presented in this book or the TEN BASIC PATTERNS.\nCombine the patterns so they equal 8-bar phrases. Transpose examples to the seven needed scales.\nEighth-notes should be played evenly due to the bossa nova feeling in the rhythm section.\n\nTRACK 4 Transpose examples used for Track 3 to the seven needed scales. Use TEN BASIC\nPATTERNS - lengthen to equal four bar phrases. Use your imagination, too.\n\nTRACK 5 Four-Measure Phrases. See musical examples on page 66.\n\nTRACK 6 Blues in Bb concert. Experiment with playing the corresponding blues scale. This will\ngive a \"down-home\" bluesy sound but may become tiring if you don't also use the regular scales for\nvariety. Use the practice procedure on page 26 to get the feel of the harmony. Listen to jazz\nrecords of blues! Sing along with this track. Sing simple things. Think about what you are singing.\nThen try to match the phrases on your instrument. Apply concepts discussed in MELODIC\nDEVELOPMENT chapter on page 43.\n\nTRACK 7 Blues in F concert. Transpose above ideas to this key.\n\nTRACK 8 Cycle of Dom.7ths. See musical examples on page 67. Emphasize 3rds and 7ths. They\nare the important notes in the dominant 7th scale/chord. Try to memorize the Circle (see page 64)\nfrom concert C all the way through the 12 keys and end where you began. This is an important\ntrack as the harmonic movement of a perfect fourth is found everywhere in jazz.\n\nTRACK 9 24-Measure Song. Use the TEN BASIC PATTERNS and the procedure on page 26.\nThis song is 24 bars long. . . three 8-bar phrases. The first and last phrases are similar. Think in 2-\nbar phrases initially then lengthen your phrases to 4 or 6 or 8 bar phrases. Remember, rests count as\npart of your phrase. Be careful when playing the 4th note of major or dominant scales. Treat it as a\npassing tone.\n\nTRACK10 Minor to Dom.7th. See musical examples on page 67. This is my favorite track!\n\n65\n\n\nTRACK 2\n\ncpTrack#3 F-, Eb-, D- (4 BARS EACH)\n\nUse jazz articulations. Memorize as many as possible, quickly.\n\nListen to your sound. These are in concert key. You\ntranspose them.\n\nF-7 Eb - 7 (Transpose)\n\nmay need to\n\nTRACK 5\ncpTrack#s FOUR-MEASURE CADENCES\n\nThese examples are in concert key and apply to the first 8 bars.\nYou will need to transpose them to the other 5 keys. Memorize an\neasy one and then take it through the other 5 keys.\n\n.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 19 extraction"
+}

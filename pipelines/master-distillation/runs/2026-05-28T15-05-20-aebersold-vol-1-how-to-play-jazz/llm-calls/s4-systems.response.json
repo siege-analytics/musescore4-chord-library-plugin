@@ -1,0 +1,812 @@
+{
+  "master_id": "jamey-aebersold",
+  "work_id": "vol-1-how-to-play-jazz-and-improvise",
+  "systems": [
+    {
+      "id": "jamey-aebersold:vol-1-how-to-play-jazz-and-improvise:chord-scale-equivalence",
+      "name": "Chord-Scale Equivalence System",
+      "summary": "The central system of this volume treats every chord symbol as simultaneously naming a chord (vertical) and a scale (horizontal), creating a unified taxonomy of harmonic-melodic materials organized by quality. Members are the chord/scale categories defined in the Scale Syllabus (Chapter 15): major, dominant 7th, minor (Dorian), half-diminished, and their altered variants. Within each category, scale choices are ordered by dissonance level from consonant to tense, placing the improviser's tension-and-release control directly in their scale selection. Traversal rules govern how the improviser moves between chord-scale members across a progression (guide-tone voice motion, common-tone continuity, and the ii-V bebop-scale substitution), while modification rules govern how a given chord-scale member can be altered or substituted (dissonance escalation within a category, pentatonic extraction, chromatic approach embellishment, and blues-scale overlay).",
+      "members": [
+        {
+          "id": "major",
+          "name": "Major Scale / Chord (CΔ)",
+          "summary": "Stable, consonant quality; 4th degree treated as passing tone."
+        },
+        {
+          "id": "dominant-7th",
+          "name": "Dominant 7th Scale / Chord (C7)",
+          "summary": "Unstable quality resolving up a perfect 4th; 4th degree avoided; seven scale options from DOM.7th through Spanish/Jewish."
+        },
+        {
+          "id": "dorian-minor",
+          "name": "Dorian Minor Scale / Chord (C-)",
+          "summary": "Universal minor quality; preferred over pure minor throughout the method."
+        },
+        {
+          "id": "half-diminished",
+          "name": "Half-Diminished Scale / Chord (C∅)",
+          "summary": "Used as the ii chord in minor ii-V progressions; bebop scale covers it jointly with the resolving dominant."
+        },
+        {
+          "id": "minor-major-7th",
+          "name": "Minor with Major 7th (C-Δ)",
+          "summary": "Minor chord with raised 7th; listed in reduced notation system."
+        },
+        {
+          "id": "altered-dominant-plus9",
+          "name": "Altered Dominant +9 (C7+9 / Diminished Whole Tone)",
+          "summary": "Four altered tones (b9, +9, +4, +5); maximum tension dominant variant."
+        },
+        {
+          "id": "altered-dominant-b9",
+          "name": "Altered Dominant b9 (C7b9 / Diminished)",
+          "summary": "Three altered tones (b9, +9, +4); symmetrical 8-tone scale."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "guide-tone-voice-motion",
+          "name": "Guide-Tone Voice Motion at Chord Changes",
+          "summary": "When moving from one chord-scale member to the next, prioritize the 3rd and 7th as melodic targets on beats 1 and 3, exploiting their tendency to resolve by half-step across chord boundaries.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Target notes / guide tones defined",
+              "quote_excerpt": "the 3rd and 7th of scales/chords are the most important tones",
+              "page": 28
+            },
+            {
+              "chapter_n": 11,
+              "topic": "3rd and 7th as harmonic guide tones",
+              "quote_excerpt": "Improvise on the 3rd or 7th of each chord",
+              "page": 38
+            },
+            {
+              "chapter_n": 16,
+              "topic": "3rd and 7th scale degrees",
+              "quote_excerpt": "The two most important notes in any scale are the 3rd and 7th",
+              "page": 54
+            }
+          ]
+        },
+        {
+          "id": "common-tone-continuity",
+          "name": "Common-Tone Continuity Across Scale Changes",
+          "summary": "When moving between chord-scale members, identify and lean on tones shared by both scales to create smooth, connected melodic transitions.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Common tones between scales",
+              "quote_excerpt": "These are called common tones",
+              "page": 9
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Improvisation fluency principle",
+              "quote_excerpt": "moving from one chord symbol to another and playing logical musical phrases in a connected, smooth manner",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "dominant-resolution-up-fourth",
+          "name": "Dominant 7th Resolves Up a Perfect Fourth",
+          "summary": "When traversing from a dominant 7th chord-scale member, expect and target resolution to the chord-scale member a perfect 4th above, with altered tones moving by half-step to their targets.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Dominant 7th resolution rule",
+              "quote_excerpt": "Dominants typically want to resolve to a chord up a perfect 4th",
+              "page": 54
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Altered tones and half-step resolution",
+              "quote_excerpt": "Those tones usually resolve by half-step to a scale or chord tone",
+              "page": 54
+            }
+          ]
+        },
+        {
+          "id": "ii-v-bebop-substitution",
+          "name": "ii-V Bebop Scale Substitution",
+          "summary": "The dominant 7th bebop scale covers both the minor ii chord and the dominant V chord in a ii-V progression, allowing a single scale to traverse both members.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Dom 7th bebop scale as ii-chord substitute",
+              "quote_excerpt": "The dom.7th bebop scale can act as a substitute for the minor ii chord",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "chromatic-approach-to-chord-tones",
+          "name": "Chromatic Approach to Chord Tones Across Boundaries",
+          "summary": "Approach each chord tone of the arriving chord-scale member from a half step below, from enclosure (scale tone above + chromatic tone below), or descending from a whole step above.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Approach chord tones from half step below",
+              "quote_excerpt": "approach each chord tone from a half step below",
+              "page": 33
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Scale tone above + half step below",
+              "quote_excerpt": "scale tone above each chord tone, and using the half step leading tone from below",
+              "page": 33
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Leading into guide tones by half step",
+              "quote_excerpt": "Lead into the 3rd or 7th by half step",
+              "page": 39
+            }
+          ]
+        },
+        {
+          "id": "circle-of-fourths-progression",
+          "name": "Circle of Fourths Root Movement",
+          "summary": "The harmonic foundation of jazz is root movement by perfect fourth; internalize and practice all chord-scale traversals through this cycle across all 12 keys.",
+          "engine_payload": {
+            "kind": "_pending:root-cycle-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 19,
+              "topic": "Circle memorization goal",
+              "quote_excerpt": "the harmonic movement of a perfect fourth is found everywhere in jazz",
+              "page": 65
+            },
+            {
+              "chapter_n": 19,
+              "topic": "Circle of Fourths practice rationale",
+              "quote_excerpt": "practice their scales, chords, patterns and Bb licks through the Circle of Fourths",
+              "page": 64
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "dissonance-escalation-within-category",
+          "name": "Dissonance Escalation Within Chord-Scale Category",
+          "summary": "Within any chord-scale quality category, the improviser may substitute a more dissonant scale option from the Scale Syllabus list, moving downward from consonant to tense to increase harmonic tension.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Dissonance Ordering of Scale Choices",
+              "quote_excerpt": "scales near the top of each category will sound mild or consonant and scale choices further down the list will become increasingly tense or dissonant",
+              "page": 52
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Tension and Release Principle",
+              "quote_excerpt": "Music is made of tension and release",
+              "page": 52
+            }
+          ]
+        },
+        {
+          "id": "minor-scale-preference-order",
+          "name": "Minor Scale Preference Order (Dorian First)",
+          "summary": "For any minor chord-scale member, substitute scale choices in the order: Dorian, Bebop, Melodic, Blues, Pentatonic; Pure Minor is last resort.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Minor Scale Preference Order",
+              "quote_excerpt": "Dorian, Bebop, Melodic, Blues, Pentatonic",
+              "page": 53
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Dorian mode for minor",
+              "quote_excerpt": "Every minor scale employed on the record and in the musical examples is in the Dorian mode",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "dominant-scale-palette",
+          "name": "Dominant 7th Scale Palette Expansion",
+          "summary": "Over any dominant 7th chord-scale member, the player may substitute from seven available scales: DOM.7th, Bebop, Lydian Dominant, Whole-tone, Diminished, Diminished Whole-tone, and Spanish/Jewish.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Bebop scale — B natural placement",
+              "quote_excerpt": "BEBOP = C7 = CDEFGABbBC",
+              "page": 54
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Lydian Dominant scale",
+              "quote_excerpt": "LYDIAN DOM. = C7#4",
+              "page": 54
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Scale experimentation over cycle track",
+              "quote_excerpt": "Experiment with these scales over the Cycle of Dominant 7th Chords",
+              "page": 54
+            }
+          ]
+        },
+        {
+          "id": "fourth-degree-omission",
+          "name": "Fourth Degree Omission / Passing-Tone Demotion",
+          "summary": "In major and dominant 7th chord-scale members, the 4th scale degree must not be emphasized or landed upon; it is demoted to a passing tone between 3rd and 5th.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "4th tone as passing tone",
+              "quote_excerpt": "The 4th is usually treated as a passing tone between the 3rd and 5th",
+              "page": 6
+            },
+            {
+              "chapter_n": 19,
+              "topic": "4th scale degree as passing tone",
+              "quote_excerpt": "Be careful when playing the 4th note of major or dominant scales. Treat it as a passing tone.",
+              "page": 65
+            }
+          ]
+        },
+        {
+          "id": "color-tone-addition-major-dominant",
+          "name": "Color Tone Addition — Major and Dominant",
+          "summary": "Over major and dominant 7th chord-scale members, the 6th, 7th, 9th, and #4 are available as color tones that add expressive tension within the tension-release arc.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Pretty notes: major/dominant chords",
+              "quote_excerpt": "The pretty notes for major and dominant 7th chords/scales are the 6,7,9, and #4",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "color-tone-addition-minor",
+          "name": "Color Tone Addition — Minor",
+          "summary": "Over minor chord-scale members (Dorian), the 4th, 6th, 7th, and 9th are available as color tones that create tension to be resolved.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Pretty notes: minor chords",
+              "quote_excerpt": "The pretty notes for minor chords/scales are 4,6,7, and 9th",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "pentatonic-extraction",
+          "name": "Pentatonic Subset Extraction",
+          "summary": "Any chord-scale member may be modified by extracting one of its embedded pentatonic subsets for use as a lighter, sparser texture; the 4th degree is typically omitted from major-scale pentatonic subsets.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Pentatonic inside major scale",
+              "quote_excerpt": "We usually avoid using the 4th note of the major scale as part of a pentatonic scale",
+              "page": 30
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Pentatonic scale usage rule",
+              "quote_excerpt": "sprinkle it in amongst other scale sounds",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "blues-scale-overlay",
+          "name": "Blues Scale Overlay on Minor and Dominant Members",
+          "summary": "Over static minor chords (2+ measures) or dominant 7th members, the blues scale may be overlaid as an intentionally clashing colorant; it must be deployed as extracted licks, not scalar runs.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Blues Scale Over Minor Chords",
+              "quote_excerpt": "The blues scale can also be used over minor chords when the minor chord is sounded for 2, 4, 8, or 16 measures",
+              "page": 41
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Jazz Use of Blues Scale (Licks, Not Runs)",
+              "quote_excerpt": "Jazz players usually play bits and pieces of the scale or make up licks",
+              "page": 41
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Blues scale definition and clash",
+              "quote_excerpt": "the notes of the blues scale often clash with the given harmony, but that is what makes it sound like the blues",
+              "page": 39
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Dorian vs Blues Scale Alternation",
+              "quote_excerpt": "alternate between the dorian minor and the blues scale",
+              "page": 41
+            }
+          ]
+        },
+        {
+          "id": "bebop-chromatic-insertion",
+          "name": "Bebop Chromatic Tone Insertion",
+          "summary": "Any diatonic scale member may be modified by inserting a single chromatic passing tone to create an 8-tone bebop scale; the added tone must always fall on an upbeat.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Bebop scale definition (dominant 7th)",
+              "quote_excerpt": "The bebop scale contains one added tone to each of the four most used scales",
+              "page": 28
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Added tone must land on upbeat",
+              "quote_excerpt": "The added tone must always come on the upbeat",
+              "page": 28
+            },
+            {
+              "chapter_n": 8,
+              "topic": "8-tone scale places chord tones on beat",
+              "quote_excerpt": "Since the scale has 8 tones, it helps to naturally place the chord tones ON the beat",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "twelve-key-symmetry-reduction",
+          "name": "Twelve-Key Symmetry Reduction (36 → 12 Patterns)",
+          "summary": "The 36 apparent scales in the syllabus reduce to 12 finger patterns because major, Dorian minor, and dominant 7th scales built on related roots share identical key signatures and fingerings.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "12-scale reduction rule",
+              "quote_excerpt": "The 36 scales on page 60/61 can be reduced to 12 scales or twelve finger patterns on your instrument",
+              "page": 46
+            },
+            {
+              "chapter_n": 14,
+              "topic": "Related scales and modes",
+              "quote_excerpt": "C major = D minor (dorian) = G7 (dominant 7th or mixolydian)",
+              "page": 47
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jamey-aebersold:vol-1-how-to-play-jazz-and-improvise:tension-release-architecture",
+      "name": "Tension-Release Melodic Architecture System",
+      "summary": "The book's governing aesthetic system treats an improvised solo as a single dramatic arc built from parameterized tension and release events. Members are the expressive parameters the improviser controls: melodic direction, rhythmic density, register, interval width, harmonic consonance, dynamics, articulation, rhythmic placement, and silence. Traversal rules govern how the soloist moves through a solo arc — from statement through development to climax to release — and how rhythmic placement (ahead/on/behind the beat) shapes expressive character. Modification rules govern how any given moment's tension level is raised or lowered by manipulating individual parameters from the paired reference lists codified in Chapter 13.",
+      "members": [
+        {
+          "id": "consonant-anchor",
+          "name": "Consonant Anchor Zone (Root, 3rd, 5th)",
+          "summary": "Stable harmonic resting points that begin and end phrases and produce release."
+        },
+        {
+          "id": "tension-zone",
+          "name": "Tension Zone (Non-Chord Tones, Color Tones, Passing Tones)",
+          "summary": "Scale degrees and chromatic tones that produce instability requiring resolution."
+        },
+        {
+          "id": "rhythmic-density-level",
+          "name": "Rhythmic Density Level",
+          "summary": "Note-value stratum; faster values build tension, longer values release it."
+        },
+        {
+          "id": "beat-placement",
+          "name": "Beat Placement (Ahead / On / Behind)",
+          "summary": "Temporal relationship to the pulse; each placement carries a distinct expressive character."
+        },
+        {
+          "id": "dynamic-level",
+          "name": "Dynamic Level (Soft → Loud)",
+          "summary": "Volume as a tension parameter."
+        },
+        {
+          "id": "register-zone",
+          "name": "Register Zone (Low / Middle / High / Extreme)",
+          "summary": "Pitch region; extreme registers add tension."
+        },
+        {
+          "id": "melodic-direction",
+          "name": "Melodic Direction (Ascending / Descending / Mixed)",
+          "summary": "Ascending builds tension; descending releases it."
+        },
+        {
+          "id": "silence",
+          "name": "Silence / Rest",
+          "summary": "Structural space counted as part of the phrase."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "solo-arc-statement-to-release",
+          "name": "Solo Arc: Statement → Development → Climax → Release",
+          "summary": "The improviser traverses the solo arc in four stages: state a theme/motif, develop it, build to a climax, then release; each climax in a multi-chorus solo must exceed the previous one.",
+          "engine_payload": {
+            "kind": "_pending:solo-arc-sequencing"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "thematic development sequence",
+              "quote_excerpt": "Statement of theme (motif), development of theme, climax, and release",
+              "page": 45
+            },
+            {
+              "chapter_n": 13,
+              "topic": "solo arc: climax and release",
+              "quote_excerpt": "direct the flow of your melodic line toward a natural climax and then immediately taper off",
+              "page": 44
+            },
+            {
+              "chapter_n": 13,
+              "topic": "multiple climaxes: escalation rule",
+              "quote_excerpt": "make each successive climax more dramatic than the previous one",
+              "page": 45
+            }
+          ]
+        },
+        {
+          "id": "beat-placement-expressive-character",
+          "name": "Beat Placement as Expressive Character Selector",
+          "summary": "Moving from on-the-beat to ahead-of-the-beat increases forward energy; moving behind-the-beat creates a laid-back feel; beginners must establish on-beat placement first.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-feel-placement"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "note placement relative to beat",
+              "quote_excerpt": "Ahead of the beat (on top), On the beat (right on), Behind the beat (laying back)",
+              "page": 43
+            },
+            {
+              "chapter_n": 13,
+              "topic": "feel character of each beat placement",
+              "quote_excerpt": "playing ahead of the beat usually implies excitement and forward motion",
+              "page": 43
+            },
+            {
+              "chapter_n": 13,
+              "topic": "beginners play on the beat",
+              "quote_excerpt": "Beginning improvisors should learn to play on the beat",
+              "page": 44
+            }
+          ]
+        },
+        {
+          "id": "phrase-resolution-on-strong-beats",
+          "name": "Phrase Resolution Targets Strong Beats",
+          "summary": "Tension phrases resolve on beats 1 or 3 (or the 'and' of 2 or 4); this rhythmic landing rule governs how the soloist exits a tension zone and arrives at a consonant anchor.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "phrase resolution on strong beats",
+              "quote_excerpt": "natural to end on beats one or three, in 4/4 time",
+              "page": 43
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Chord tones on downbeats",
+              "quote_excerpt": "place (play) chord tones on the downbeat, especially beats one and three",
+              "page": 22
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tension-parameter-manipulation",
+          "name": "Tension Parameter Manipulation (Raise / Lower)",
+          "summary": "At any moment in the solo, the improviser raises tension by applying elements from the tension list or lowers it by applying release elements.",
+          "engine_payload": {
+            "kind": "_pending:tension-release-parameter-control"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "tension/release element reference lists",
+              "quote_excerpt": "ELEMENTS WHICH PRODUCE TENSION ... ELEMENTS WHICH PRODUCE RELEASE",
+              "page": 45
+            },
+            {
+              "chapter_n": 13,
+              "topic": "elements that produce tension",
+              "quote_excerpt": "tension can be achieved through the manipulation of volume, direction of the melodic line, range, intervals",
+              "page": 44
+            }
+          ]
+        },
+        {
+          "id": "rhythmic-density-shift",
+          "name": "Rhythmic Density Shift for Tension/Release",
+          "summary": "The improviser modifies the current tension level by shifting note-value density: eighth and sixteenth notes build tension; whole and half notes with rests create relaxation.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-density-control"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Tension and relaxation: note durations",
+              "quote_excerpt": "8th and 16th notes build tension. Rests, whole and half-notes create relaxation",
+              "page": 25
+            }
+          ]
+        },
+        {
+          "id": "silence-as-structural-element",
+          "name": "Silence as Structural Release Element",
+          "summary": "Silence is not absence but a counted structural component of the phrase, deployable as a release tool and listener orientation device.",
+          "engine_payload": {
+            "kind": "_pending:silence-as-release"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Direction, tension, and silence",
+              "quote_excerpt": "If you can't think of what should come next in a solo, try using silence",
+              "page": 21
+            },
+            {
+              "chapter_n": 19,
+              "topic": "Phrase length progression",
+              "quote_excerpt": "rests count as part of your phrase",
+              "page": 65
+            }
+          ]
+        },
+        {
+          "id": "tension-resolution-methods",
+          "name": "Tension Resolution Method Selection",
+          "summary": "A tension zone may resolve melodically (to a consonant chord tone), or by artificial means: abrupt dynamic change, tempo change, key change, or use of rests.",
+          "engine_payload": {
+            "kind": "_pending:tension-resolution-routing"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "tension resolution methods",
+              "quote_excerpt": "resolve naturally - melodically (to one of the consonant tones), or by artificial means",
+              "page": 43
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jamey-aebersold:vol-1-how-to-play-jazz-and-improvise:twelve-key-memorization",
+      "name": "Twelve-Key Memorization Practice System",
+      "summary": "This system governs how the student internalizes any scale, pattern, or progression across all 12 keys. The members are the ordered stages of the 12-step memorization procedure, organized as rungs of a progressive ladder. Traversal rules specify how the student advances through the rungs within a single key before moving to the next key, and how transposition proceeds. Modification rules cover ear-first internalization — singing before playing — and the adjustment of entry point based on the student's experience level. The telos is auditory anticipation: the state where the mind hears the progression before the fingers move.",
+      "members": [
+        {
+          "id": "step-1-root",
+          "name": "Step 1 — Root / Tonic Note"
+        },
+        {
+          "id": "step-2-two-notes",
+          "name": "Step 2 — First Two Notes"
+        },
+        {
+          "id": "step-3-three-notes",
+          "name": "Step 3 — First Three Notes"
+        },
+        {
+          "id": "step-4-five-notes",
+          "name": "Step 4 — First Five Notes"
+        },
+        {
+          "id": "step-5-triad",
+          "name": "Step 5 — Triad (1, 3, 5)"
+        },
+        {
+          "id": "step-6-seventh-chord",
+          "name": "Step 6 — Seventh Chord (1, 3, 5, 7)"
+        },
+        {
+          "id": "step-7-ninth-chord",
+          "name": "Step 7 — Ninth Chord (1, 3, 5, 7, 9)"
+        },
+        {
+          "id": "step-8-full-scale",
+          "name": "Step 8 — Full Scale Up and Down"
+        },
+        {
+          "id": "step-9-sixth-chord",
+          "name": "Step 9 — Sixth Chord (1, 3, 5, 6)"
+        },
+        {
+          "id": "step-10-scale-up-chord-down",
+          "name": "Step 10 — Scale Up to 9th, Back Down Chord Tones"
+        },
+        {
+          "id": "step-11-chord-up-scale-down",
+          "name": "Step 11 — 9th Chord Up, Scale Down"
+        },
+        {
+          "id": "step-12-broken-thirds",
+          "name": "Step 12 — Broken Thirds"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "twelve-step-progression",
+          "name": "Sequential 12-Step Rung Progression",
+          "summary": "The student traverses the memorization ladder one rung at a time within each key, completing all 12 steps before declaring mastery; by step 12 the mind should be hearing the progression in advance.",
+          "engine_payload": {
+            "kind": "_pending:sequential-rung-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Scale/chord memorization procedure",
+              "quote_excerpt": "12. Play scale in broken thirds up and down. (1,3,2,4,3,5,4,6,5,7,6,8,7,9,8 then backwards)",
+              "page": 26
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Internalization goal of procedure",
+              "quote_excerpt": "By the twelfth chorus your mind will be HEARING the chord/scale progression in advance",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "transposition-sequence",
+          "name": "Transposition Through All 12 Keys via Root Sequences",
+          "summary": "After mastering a pattern in one key, transpose it through all 12 keys using one of the six prescribed root sequences (chromatic, Circle of Fourths, and others) to guarantee complete coverage.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 18,
+              "topic": "Root sequence practice in all keys",
+              "quote_excerpt": "practice the above exercises, using as a guide any of the following root sequences",
+              "page": 62
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Pattern practice method",
+              "quote_excerpt": "make sure you have mastered the pattern or lick in one key before moving on to the next key",
+              "page": 9
+            },
+            {
+              "chapter_n": 20,
+              "topic": "Transposing through 12 keys",
+              "quote_excerpt": "memorize one example and then play it through all 12 keys",
+              "page": 68
+            }
+          ]
+        },
+        {
+          "id": "chromatic-transposition-drill",
+          "name": "Chromatic (Half-Step) Transposition Drill",
+          "summary": "Patterns may also be traversed chromatically — key by key in half-steps — as combined ear training and finger coordination exercise.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chromatic transposition drill",
+              "quote_excerpt": "move (practice) patterns up and down my instrument chromatically (in half-steps)",
+              "page": 9
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "ear-first-sing-before-play",
+          "name": "Ear-First Internalization (Sing Before Play)",
+          "summary": "At any rung of the memorization ladder, the student must first internalize the material aurally — singing the scale or pattern — before executing it on the instrument.",
+          "engine_payload": {
+            "kind": "_pending:ear-first-internalization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Memorization strategies",
+              "quote_excerpt": "memorize the SOUND of the scales and chords",
+              "page": 12
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Ear-Voice-Instrument Learning Method",
+              "quote_excerpt": "try singing the scale with your voice. Improvise with your voice over the scale you are learning and then play on your instrument what your voice sang",
+              "page": 52
+            },
+            {
+              "chapter_n": 18,
+              "topic": "Using voice to internalize music",
+              "quote_excerpt": "Use it to sing with then transfer the music to your instrument",
+              "page": 60
+            }
+          ]
+        },
+        {
+          "id": "note-value-entry-adjustment",
+          "name": "Note-Value Entry Point Adjustment by Experience Level",
+          "summary": "The student modifies the rhythmic density of practice at each rung based on their experience: beginners start with whole notes, advancing players with quarter or eighth notes.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Note value progression for beginners",
+              "quote_excerpt": "A beginner may want to start with whole notes",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "id": "seven-step-scale-practice",
+          "name": "Seven-Step Scale Practice Algorithm",
+          "summary": "Within a single key, the student applies the seven-step practice sequence as a compression of the full 12-step procedure for initial scale introduction.",
+          "engine_payload": {
+            "kind": "_pending:sequential-rung-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Seven-step scale practice method",
+              "quote_excerpt": "Play the scale from root to the 9th and back down slowly, slurred, several times",
+              "page": 7
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: Pentatonic Scale And Its Use\nPages 30-31 of the book.\n\n<<<CHAPTER TEXT\n\nEAR TRAINING\n\nIn music, your ears are your best friend. The sound comes into your ears and your mind processes\nthe music, Well-trained ears can be had by everyone if they take the time to develop them.\n\nPlaying logical, flowing melodies seems fairly easy when singing mentally or even aurally\n(vocally). This isn't always the case when we begin to improvise with our instrument.\n\nMake it a habit to play what you hear in your head. You will quickly sharpen your facility\nand your ears. A keen ear, coupled with equal facility, usually gives players an advantage\nthey can gain no other way.\n\nI suggest singing into a tape recorder and then, while playing it back, try to match the notes and\nphrases on your instrument. Sing simple phrases at first...short phrases. As you get better at\ntranscribing yourself, make the phrases longer and possibly more complex. I call this transcribing\nthe real you! You may want to begin by singing back to yourself instead of playing just to make\nsure you heard yourself correctly.\n\nIt can be fun to practice ear training with a friend. Begin with one person playing one note and\nthe other immediately matching it. Then the other person plays a note and you match it. Move on\nto two notes, then three, then four, etc. Keep the distance between notes narrow in the beginning\nand gradually widen the intervals as you progress.\n\nI also suggest playing along with a regular jazz recording. You don't have to know the key or the\nscales or anything. Just try to match notes as you hear them being played. I usually try to retain a\nfew notes and frantically look for them on my horn while the recording plays away. After I find\nthem, or as I sometimes do, forget them, I listen and pick out several more notes to try to match.\nThis is excellent ear training. Most jazz musicians throughout the past several decades learned to\nplay by doing this.\n\nI recommend improvising with any of the recorded tracks with the book closed, This helps\ndevelop your ear. I don't suggest starting out this way, but after you understand the principles of\nhow scales relate to the chord symbols and how each scale is sounded for so many measures,\nplaying by ear without the chord symbols in front of you can be extremely beneficial!\n\nSeveral good ear training methods are: David Baker's Ear TrainingTapes (5 book/cassette\nvolumes), Jamey Aebersold's Jazz Ear Training Course (book/2 cassettes or book/2CD's) and\nHarry Picken's Ear Training for the Jazz Musician.\n\nC It doesn't hurt to use your mind. +)\n\nA cassette recorder that many musicians have been using has a pitch control on it that allows you to play back in eight keys. It is the\nMarantz PMD201 or the more deluxe Marantz PMD221. Both have a built-in mike and are mono record and play back. A great machine\nif you enjoy practicing and are truly interested in improving yourself musically. These recorders allow you to use our play-a-long\ncassettes by practicing and improvising in different keys. For instance, you can play the Bb Blues then play it back as a blues in B, C, or\nDb or A, Ab, G or Gb. The tempo gets faster as you ascend and slower as you descend. The model numbers often change so check with\nyour audio dealer.\n\nSome CD players have a function called A B Repeat. This feature allows you to play any section, or song, over and over. For\ninstance, you could program it to repeat the bridge to a song over and over while you worked on various scales, patterns, chords, etc.\n\nDenon manufactures a CD player with pitch control. It will go up or down a half-step. Technology is changing so quickly you should\nkeep abreast of the new features as they become available.\n\n29\n\n\nPENTATONIC SCALE AND ITS USE\n\nThe pentatonic scale has been used in music for a long time. Pentatonic generally means a scale\nbuilt of five tones. In jazz, the two scales which have become popular are the major pentatonic and\nthe minor pentatonic. If we build them in the key of C and in the key of F, they look like this:\n\n, CA Major Pent. C- Minor Pent. FO Major Pent. la F- Minor Pent. a\nvo] vw rome = i\" hae\u201d\nbi kd. 1 FAA kel 44-4\na _\u00a2 \u20180. oa om 1A\ne7g 5s eT OG F577 72 3 Ss 6 7 (bo 4 FFT\nyi /\n\nPeople use the pentatonic scale more during a blues progression than in any other harmonic\nsequence in jazz - especially young players. There are books on the market which advocate using\nthe pentatonic scale as a means to solo on the blues progression. The pentatonic scale sound should\nbe thought of as a small part of the overall musical spectrum.\n\nThe pentatonic scale is a sound which can add variety to the overall musical framework. Rather\nthan \u201crunning it in the ground,\" sprinkle it in amongst other scale sounds. The blues scale and the\nminor pentatonic scale are very similar. The blues scale has six tones and the pentatonic scale has\nfive. If we write both scales in the key of F they look like this:\n\nF Minor Pentatonic F Blues Scale\nnN es o Tt n a ey o-\na mae ee\nQD A\nNew Note (#4)\nBlue Note. . . Tension Note\n\nThe pentatonic scale can be used over major, minor, dom.7th, half-diminished, dim., whole tone\nand almost any other scale. There are usually several pentatonic scales inside every regular scale.\nBelow, I list the pentatonic possibilities found inside the C major scale and the F dorian minor scale.\nWe usually avoid using the 4th note of the major scale as part of a pentatonic scale. All of the notes\nof the minor (dorian) scale are useable.\n\ncA cA ch cA can\n. i . (C Lydian Scale)\nA(C Major Pent.) (G Major Pent,) (A Minor Pony) (E Minor Pent.) (p Major Pent.)\n\u201c fol oe oo \u2014_ ma 3\nro! a ane rol 7. a + \u2014\u2014z9--\ngente x ate\noor \u00a2 oe?\nF F- . F- . (tension)\nFe on (Ab Major Pent.) (Bb Major Pent. F-\n(F Minor ent, )(C Minor Pent.) L_- PP) (Eb Major Peng.)\n4. a hae? t hat hae bat? he\n\u00a5 } aol y=\" yo i Ae\nA ke 4 fe\nyer ve\n\nDon't be afraid to personalize the melody to a song. Play the melody like you would sing it.\nLet it breath. Let it flow. Let it sing. Let it tell a story. Make the melody YOURS.\n\n30\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}
