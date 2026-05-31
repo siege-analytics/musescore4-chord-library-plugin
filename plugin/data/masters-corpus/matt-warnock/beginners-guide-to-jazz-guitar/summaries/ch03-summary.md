@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-warnock-beginners-guide
+stage: s3
+source_pdf: Warnock, Matt - Beginner's Guide to Jazz Guitar.pdf
+source_pages: 9-10
+model: claude-haiku
+extracted_at: 2026-05-31T03:23:46+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — Chapter 2 — Picking Hand Patterns
+
+_Distillation; backed by `chapters/ch03.md`._
+
+This chapter teaches two foundational picking hand patterns—bass-first and melody-first—that expand a guitarist’s comping vocabulary beyond basic strumming by varying what the picking hand emphasizes rather than changing chord shapes. The bass-first pattern separates bass notes from melody and is essential when playing solo or without a bassist, while the melody-first pattern highlights the top voice and serves chord soloing and chord melody contexts. The master’s characteristic pedagogical move is prescriptive sequencing: learn bass-first, then melody-first, then blend them together as a progressive skill integration. Key load-bearing terms include comping pattern, picking hand approach, and pattern variation and transposition, with the chapter’s core principle that the picking hand—not just chord shapes—is the variable that unlocks advanced accompaniment technique. Practice discipline mirrors this progression: work each pattern as written first, then explore rhythmic variation and transposition once internalized.

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Chapter 1 \u2014 II V I Chords\nPages 4-8 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 1 \u2014ii V | Chords\n\nTo begin your jazz guitar journey, you learn four chord shapes that outline the ii V\n| progression.\n\nThe ii V lis the most important progression in jazz, and therefore it\u2019s the best\nplace to start when learning jazz guitar.\n\nIn this chapter you learn these four important chord shapes as well as explore two\nessential jazz comping rhythms.\n\nStart with the chords, then move on to the rhythms when ready, and as always,\nhave fun with these exercises in the practice room!\n\n\nii V | Chord Shapes\n\nTo begin, here are four chords that fit over the ii V | progression, with the Cmaj7\nand Cmaj9 being two colors of the Cmaj7 sound.\n\nStart by playing these chords on your own, memorize them, and then add in a\nmetronome when ready.\n\nFrom there, get these chords onto the backing track when you can, play it as\nwritten, then start to play with the rhythms and picking from there.\n\nAfter you can play these chords over the backing track with confidence, head\ndown to the rhythmic exercises below.\n\n\nDm7\nG7\nCmaj7\nCmaj9\n\nii V1 Chord Rhythms\n\nTo expand your comping over the major ii V |, here are two essential jazz rhythms\nto explore in the woodshed.\n\nThe first rhythm is called the Freddie Green rhythm, as it was made famous by\nCount Basie guitarist Freddie Green.\n\nThe rhythm is all quarter notes, meaning you play one chord per beat.\n\nTo give it a more authentic Freddie sound, accent the 24 and 4\" chords/beats in\neach bar.\n\nThis imitates the hi-hat and helps you bring a higher level of swing to the rhythm.\n\nCheck this out, have fun with it, and head on down to the next rhythm when\nready.\n\nOm\u2019 G7 cmaj7 cmays\n(A3 $\u2014 $$$ ==\ngare Pii Paring:\n1 2 3 4 1 \u00a32 3 4 +1 2 3 4 +1 2 3 4\n\n,-3\u20143\u2014_3\u20143\n\n1 4\u20144\u20144\u2014_4\n\n}- 2\u2014_2\u20142\u20142\n\n\u2014+3\u20143\u20143\u20143\n\n\n\nHere you use what\u2019s called the Charleston rhythm, as it\u2019s based on the dance\nfrom the 1920s.\n\nThis rhythm places the first chord on beat 1 of each bar, then the second chord is\non the & of 2, between beats 2 and 3 in each bar.\n\nCount along, work with a slow metronome, and take this rhythm to the backing\ntrack when ready.\n\nFrom there, mix the Freddie Green and Charleston rhythms together to expand\non this idea in your comping.\n\nOm? G7 cmaj7 cmaj9\n(pas: \u2014 \u2014_\nG zi = == z \u2014\u2014_\nrd o y ow ,\n\n6\u2014\u20146 66 5\u2014\u20145 3\u20143\n\u2014\n\na i 4 id 4\n\n5\u2014\u20145 3\u20143 33\n~\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

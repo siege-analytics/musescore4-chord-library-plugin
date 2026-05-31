@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Chapter 6 \u2014 Chords and Single Notes\nPages 22-24 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 6 \u2014 Chords and Single Notes\n\nTo finish your introduction to jazz guitar, you learn a solo that mixes chords and\nsingle notes over a major ii Vl in C.\n\nMixing chords and single notes is a solid technical challenge to try out in the\npractice room, and it\u2019s a musical challenge as well.\n\nBy learning how to mix chords and single notes in your solos, you\u2019re prepared to\njam in a duo or pianoless trio down the road.\n\nEven if you never jam in an ensemble with these techniques, learning how to mix\nchords and single notes builds your technique and musicality.\n\nWherever your musical future takes you, learning this solo and this technique is\nan effective use of time in the woodshed.\n\n22\n\n\nMixing Chords and Notes Example Solo\n\nHere\u2019s an example of how to mix chords and single notes together in a solo.\n\nStart by learning the solo as written with a metronome and then work it over the\nbacking track.\n\nWhen that\u2019s comfortable, replace the single notes with your own soloing lines.\n\nFrom there, keep the single notes as written and you make up the chords and\nchord rhythms.\n\nLastly, when comfortable, you replace both the chords and single notes to create\nyour own mixed solo over these chord changes.\n\nMixing chords and single notes is tricky when first starting out.\n\nBut, by learning this study, and then adding your own lines and chords over time,\nyou'll be creating your own mixed solos in real time before you know it.\n\n23\n\n\n5\u20142\u20143\u20144\n\ni\n[\n6\u20145\u20143\n\n3\u20145\u20143\n\nTO\n[A\n(Bo\n\n5\u20145\u20145\u20145\u2014}-7\u20147\u20147\u2014]\n\n\u2014 \u2014\u2014\u2014\u2014eeee\n\n5\u20145\u20145\u2014_5\n\n|\n\nG7 cmaj7\n\nOm\u2019?\n\noe\n\noe\n\n5\u20146\u20145\u20143\u2014\n\n2-5-+-2-3\n\n1\u2014T\u2014T\u2014_T1\n\n6\u20146\u20146\u2014 6\u2014_} 6 6 6\u2014 6\n\n[T\n[A\n[Bo\n\n5\u00a7\u20145\u20145\u2014 5-77-17\n\n7117 5 _5_5_5\u2014\n\n5\u20145\u20145\u20145\n\nOm?\n\nee ee\n\n5\u20145\u2014\u00a7\u20145\u2014_} 3333\n4\u20144\u20144\u2014 4} 4_4_4_4_\n\n5\u20145\u20145\u2014 5} 2_2_2_2._\n3333 3 33 3_\n\n6\u20143\u20144\u20145\n\n5\u20142\u20143\u20144\n\ncmaj7\n\nG7\n\nOm\u2019\n\n{| | | |\n\ne+e\n\nae\n\n3\u20143\u20143\u20143\n\neee Se\n\n5\u20145\u20145\n4\u20144\u20144\u20144\u2014}- 4444\n\n+S \u20145\u20145\u20145\u2014-2\u2014 22-2\n3333 3333\n\n5\n\n3\u20146\n\n2-5-4\n\nvf\n\n3-2-3\n\nmn\n\nly\u20143\u20143-3-3\nA\nB\n\n24\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

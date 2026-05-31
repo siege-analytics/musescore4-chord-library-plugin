@@ -15815,6 +15815,552 @@
       "status": "promoted"
     },
     {
+      "id": "matt-warnock",
+      "name": "Matt Warnock",
+      "lived": "active (contemporary)",
+      "traditions": [
+        "jazz",
+        "online jazz-guitar pedagogy",
+        "beginner-method"
+      ],
+      "instrument": "6-string electric guitar; pedagogical materials applicable to acoustic",
+      "biography": "Matt Warnock is a contemporary jazz guitarist and online educator whose MattWarnockGuitar.com publishes a long catalog of beginner-to-intermediate jazz-guitar method materials. His *Beginner's Guide to Jazz Guitar* (compact PDF + accompanying video) is the entry-level title in that catalog, organized around a single ii V I progression in C major as the unifying harmonic vehicle. Warnock's pedagogical signature is the named-rule-governed-technique form: every technique is given a precise structural definition, an acquisition sequence, and a self-extension protocol via variation. Biography placeholder; refine with maintainer review.",
+      "principles": [
+        {
+          "id": "single-ii-v-i-as-unifying-vehicle",
+          "name": "Single ii V I progression as the unifying vehicle for the entire curriculum",
+          "summary": "Warnock's *Beginner's Guide* organizes its complete curriculum — chord vocabulary, comping rhythms, picking technique, chromatic harmony, scale shapes, ornaments, and mixed solo texture — around ONE harmonic vehicle: the Dm7-G7-Cmaj7 ii V I in C major. Every technique introduced in the book is practiced and applied within this same progression. This minimalism is the method's load-bearing pedagogical choice: by holding the harmonic frame constant, the student's attention is freed to acquire each new technique-layer cleanly, and the cumulative cross-referencing between layers (rhythm × voicing × ornament × scale shape) happens naturally over the same chords.",
+          "voicingStyleTags": [
+            "matt-warnock",
+            "single-progression-method",
+            "ii-v-i-foundation"
+          ],
+          "playStyleTags": [
+            "beginner-method",
+            "single-harmonic-vehicle",
+            "cumulative-technique-layering"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Warnock, Matt. Beginner's Guide to Jazz Guitar.",
+              "citation": "Book-level structure (Statement Overview); every chapter applies its technique to Dm7-G7-Cmaj7."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "isolate-internalize-integrate-arc",
+          "name": "Isolate → Internalize → Integrate: every technique acquired via the same three-stage arc",
+          "summary": "Warnock's pedagogical arc within each chapter: introduce the technique in isolation (with metronome), apply it over a backing track until internalized, then integrate it with previously learned material. Chapter 2 makes this explicit (solo practice → metronome → backing track → rhythmic variation); Chapter 5 repeats it for scale shapes; Chapter 7 expands it into the four-stage imitation-to-improvisation sequence. The arc is the method's mechanism for ensuring that each new layer is genuinely acquired before being combined with others — a structural answer to the common beginner failure mode of attempting integration before isolation is solid.",
+          "voicingStyleTags": [
+            "matt-warnock",
+            "isolate-internalize-integrate"
+          ],
+          "playStyleTags": [
+            "beginner-method",
+            "deliberate-pacing",
+            "metronome-then-backing-track"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Warnock, Matt. Beginner's Guide to Jazz Guitar.",
+              "citation": "Chapter 2 (explicit articulation of the arc); Chapter 5 (scale-shape application of the arc); Chapter 7 (four-stage expansion in imitation-to-improvisation sequence)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "named-rule-governed-technique-form",
+          "name": "Named rule-governed technique form: each technique gets a precise definition + acquisition order + self-extension protocol",
+          "summary": "Warnock's organizing epistemology: each technique introduced in the book is given a NAME (Freddie Green rhythm, Charleston rhythm, approach chord from above/below, 134 chromatic ornament), a PRECISE structural definition (Freddie Green = one chord per beat accented on 2 and 4 imitating hi-hat; 134 = chromatic ornament placed at scale-degree 1 → 3 → 4 resolution), an ACQUISITION ORDER (Freddie Green before Charleston, approach-from-above before approach-from-below, then combine), and a SELF-EXTENSION PROTOCOL via prescribed variation. This is what differentiates Warnock from open-ended 'just play' beginner methods — every technique is treated as a rule-governed system whose mastery is operationally testable.",
+          "voicingStyleTags": [
+            "matt-warnock",
+            "named-techniques",
+            "rule-governed-pedagogy"
+          ],
+          "playStyleTags": [
+            "beginner-method",
+            "named-rule-systems",
+            "self-extension-via-variation"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Warnock, Matt. Beginner's Guide to Jazz Guitar.",
+              "citation": "Chapter 2 (Freddie Green / Charleston named + defined + sequenced); Chapter 4 (approach chords named + sequenced); Chapter 6 (134 ornament named + defined + applied)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "improvisation-by-progressive-constraint-release",
+          "name": "Improvisation by progressive constraint release: free playing is the END state, never the entry point",
+          "summary": "Warnock's most explicit articulation of his pedagogy of improvisation, codified in the Chapter 7 imitation-to-improvisation sequence: (1) imitate the written solo verbatim; (2) substitute your own single-note lines while keeping the chord rhythm; (3) retain your single notes while improvising new chord rhythms; (4) improvise both layers freely. Free playing is the END state of a structured constraint-release ladder, never the entry point. This is the operational mechanism by which the method delivers improvisation as a learnable skill rather than as an unteachable gift — it makes 'just play' a function of having successfully passed through three prior gating stages.",
+          "voicingStyleTags": [
+            "matt-warnock",
+            "constraint-release-improv"
+          ],
+          "playStyleTags": [
+            "imitation-to-improvisation",
+            "progressive-constraint-release",
+            "earn-before-free"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Warnock, Matt. Beginner's Guide to Jazz Guitar.",
+              "citation": "Chapter 7 (four-stage imitation-to-improvisation sequence as the book's most fully articulated improv-acquisition method)."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
+      "works": [
+        {
+          "id": "beginners-guide-to-jazz-guitar",
+          "title": "Beginner's Guide to Jazz Guitar",
+          "year": 2018,
+          "instrument_scope": "6-string electric or acoustic",
+          "summary": "Warnock's compact, systematically sequenced beginner method that builds a complete entry-level jazz guitar curriculum around a single harmonic vehicle: the ii V I progression in C major (Dm7-G7-Cmaj7). Every element — chord vocabulary, comping rhythms, picking-hand technique, chromatic harmony (approach chords), scale shapes, chromatic ornaments (the 134 pattern), and mixed solo texture — is introduced, practiced, and applied within that same progression. The pedagogical arc within each chapter is isolate → internalize → integrate. Chapter 7 most fully articulates the method's core conviction in a four-stage imitation-to-improvisation sequence: imitate the written solo → substitute single-note lines → retain single notes while improvising chord rhythms → improvise both layers freely. Techniques are encoded as named rule-governed systems (Freddie Green rhythm, Charleston rhythm, approach chords from above/below, the 134 chromatic ornament) — each with a precise structural definition, sequenced acquisition order, and prescribed self-extension through variation. Three systems were derived: the ii V I Comping System, the Two-Position Scale System with Chromatic Ornaments, and the Imitation-to-Improvisation Sequence.",
+          "references": [
+            {
+              "source": "Warnock, Matt. Beginner's Guide to Jazz Guitar. MattWarnockGuitar.com.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-warnock-beginners-guide; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/matt-warnock/beginners-guide-to-jazz-guitar/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "matt-warnock:beginners-guide-to-jazz-guitar:ii-v-i-comping-system",
+              "name": "ii V I Comping System",
+              "summary": "The central harmonic-rhythmic system of the book, organized entirely around the ii V I progression (Dm7-G7-Cmaj7). Members are the chord voicings and named comping rhythms that operate over this progression. Traversal rules govern how a player moves between rhythmic and harmonic states - from quarter-note Freddie Green strumming through syncopated Charleston placement to chromatic approach-chord resolutions. Modification rules govern how chord symbols are colored beyond their lead-sheet representation and how approach chords transform any target voicing chromatically before resolving into it. The system's defining property is that every element is labeled, rule-governed, and sequenced - students move through named techniques in a prescribed order (Freddie Green -> Charleston -> mix; above -> below -> mix) before combining them freely.",
+              "members": [
+                {
+                  "id": "dm7-voicing",
+                  "name": "Dm7 Chord Voicing",
+                  "summary": "The ii chord of the C major ii V I; the first chord shape students learn."
+                },
+                {
+                  "id": "g7-voicing",
+                  "name": "G7 Chord Voicing",
+                  "summary": "The V chord of the C major ii V I."
+                },
+                {
+                  "id": "cmaj7-voicing",
+                  "name": "Cmaj7 Chord Voicing",
+                  "summary": "The I chord of the C major ii V I."
+                },
+                {
+                  "id": "cmaj9-voicing",
+                  "name": "Cmaj9 Chord Voicing",
+                  "summary": "A color variant of Cmaj7, used to illustrate lead-sheet symbol enrichment."
+                },
+                {
+                  "id": "freddie-green-rhythm",
+                  "name": "Freddie Green Rhythm",
+                  "summary": "Quarter-note chords on every beat, with accents on beats 2 and 4 to imitate swing feel."
+                },
+                {
+                  "id": "charleston-rhythm",
+                  "name": "Charleston Rhythm",
+                  "summary": "Chord placement on beat 1 and the & of 2 in each bar."
+                },
+                {
+                  "id": "approach-chord-above",
+                  "name": "Approach Chord From Above",
+                  "summary": "The target voicing shape moved one fret higher, resolving down into the target."
+                },
+                {
+                  "id": "approach-chord-below",
+                  "name": "Approach Chord From Below",
+                  "summary": "The target voicing shape moved one fret lower, resolving up into the target."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "freddie-green-quarter-pulse",
+                  "name": "Freddie Green Quarter-Note Pulse",
+                  "summary": "Play one chord voicing per beat across all four beats, establishing a continuous harmonic pulse through the progression.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-pulse-continuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Freddie Green rhythm definition",
+                      "quote_excerpt": "The rhythm is all quarter notes, meaning you play one chord per beat.",
+                      "page": 5
+                    }
+                  ]
+                },
+                {
+                  "id": "freddie-green-accent-rule",
+                  "name": "Freddie Green Beats-2-and-4 Accent Rule",
+                  "summary": "Accent the chords on beats 2 and 4 to produce authentic swing feel, imitating the hi-hat.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-accent-placement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Freddie Green accent rule",
+                      "quote_excerpt": "accent the 24 and 4 chords/beats in each bar. This imitates the hi-hat",
+                      "page": 5
+                    }
+                  ]
+                },
+                {
+                  "id": "charleston-beat-placement",
+                  "name": "Charleston Beat-1 and &-of-2 Placement",
+                  "summary": "Place chords on beat 1 and the & of 2, producing the syncopated Charleston rhythmic feel.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-accent-placement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Charleston rhythm definition",
+                      "quote_excerpt": "places the first chord on beat 1 of each bar, then the second chord is on the & of 2",
+                      "page": 6
+                    }
+                  ]
+                },
+                {
+                  "id": "comping-rhythm-mix",
+                  "name": "Comping Rhythm Combination Rule",
+                  "summary": "Once both named rhythms are internalized, mix Freddie Green and Charleston freely to generate original comping rather than playing either verbatim.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "mixing comping rhythms",
+                      "quote_excerpt": "mix the Freddie Green and Charleston rhythms together to expand on this idea in your comping",
+                      "page": 6
+                    }
+                  ]
+                },
+                {
+                  "id": "approach-chord-resolution",
+                  "name": "Approach Chord Mandatory Resolution",
+                  "summary": "An approach chord - whether from above or below - must always resolve into the target chord voicing; the chromatic displacement is incomplete without the resolution step.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Approach chord definition",
+                      "quote_excerpt": "you play a chromatic chord one fret above or below the target chord",
+                      "page": 11
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Approach from above mechanics",
+                      "quote_excerpt": "play the same shape one fret higher, then resolve into your target chord",
+                      "page": 12
+                    }
+                  ]
+                },
+                {
+                  "id": "approach-sequence-above-below-mix",
+                  "name": "Approach Direction Sequence: Above -> Below -> Mixed",
+                  "summary": "Students must practice approach chords from above first, then from below, then combine both directions - the prescribed traversal order through the three approach-chord states.",
+                  "engine_payload": {
+                    "kind": "_pending:prescribed-practice-sequence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Approach chord sequence order",
+                      "quote_excerpt": "Start with the approach chords from above, then from below, then mix both together",
+                      "page": 11
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "lead-sheet-color-expansion",
+                  "name": "Lead-Sheet Symbol Color Expansion",
+                  "summary": "A chord symbol on a lead sheet represents the minimum harmonic content; the performer must add color (e.g., reading Cmaj7 but voicing Cmaj9), reflecting real-life jazz performance convention.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Lead sheet chord simplification rule",
+                      "quote_excerpt": "you normally see the simplest chord symbol written on a lead sheet, then you as the performer color that chord",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "approach-chromatic-displacement",
+                  "name": "Approach Chord One-Fret Chromatic Displacement",
+                  "summary": "Any target voicing can be modified into an approach chord by transposing the entire shape exactly one fret up or down before resolving back; the shape itself is preserved unchanged.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Approach chord definition",
+                      "quote_excerpt": "play a chromatic chord one fret above or below the target chord",
+                      "page": 11
+                    }
+                  ]
+                },
+                {
+                  "id": "picking-pattern-variation",
+                  "name": "Rhythm and Picking Pattern Variation After Internalization",
+                  "summary": "Once any comping exercise is secure, the player must vary rhythms and picking patterns to self-extend the exercise beyond the written version.",
+                  "engine_payload": {
+                    "kind": "_pending:self-extension-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Rhythm/pattern variation rule",
+                      "quote_excerpt": "feel free to change the rhythms and picking patterns when comfortable to expand this approach chord exercise",
+                      "page": 13
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Pattern variation and transposition",
+                      "quote_excerpt": "Work this pattern as written, then play with the rhythms and take it to other keys",
+                      "page": 9
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "matt-warnock:beginners-guide-to-jazz-guitar:major-scale-fretboard-system",
+              "name": "Two-Shape Major Scale Fretboard System",
+              "summary": "The soloing system of the book. Its foundational premise is that all three chords of a ii V I share a parent major key, so a single major scale covers the entire progression. The system delivers this through exactly two positional shapes - Shape 1 rooted on the 6th string, Shape 2 rooted on the 5th string - each memorized in isolation before being combined to cover the full neck. Traversal rules govern movement between positions and the integration of chromatic ornaments (the 134 pattern) within scale passages. The defining constraint is mandatory resolution of the 134 chromatic ornament: the four-note pattern must always complete to the third finger or the ornament sounds like an error. An earn-before-restraint philosophy governs ornament acquisition: deliberate overplay first, musical restraint only after the ear is trained.",
+              "members": [
+                {
+                  "id": "shape-1-sixth-string",
+                  "name": "Major Scale Shape 1 (6th-String Root)",
+                  "summary": "Positional major scale fingering anchored to the 6th string root; the first shape to memorize and apply over backing tracks."
+                },
+                {
+                  "id": "shape-2-fifth-string",
+                  "name": "Major Scale Shape 2 (5th-String Root)",
+                  "summary": "Positional major scale fingering anchored to the 5th string root; the second shape, completing two-position neck coverage."
+                },
+                {
+                  "id": "134-ornament-pattern",
+                  "name": "134 Chromatic Ornament Pattern",
+                  "summary": "A four-note chromatic ornament triggered whenever a 1-3-4 fingering occurs on any string, in any key, within either scale shape."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "single-scale-over-ii-v-i",
+                  "name": "Single Tonic Major Scale Over Entire ii V I",
+                  "summary": "Because all three chords of the ii V I belong to the parent major key, a single tonic major scale is the correct and sufficient soloing choice across all three chord changes.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "ii V I scale compatibility",
+                      "quote_excerpt": "all 3 chords in a ii V I are in the parent key... you can use the tonic major scale to solo over all of those chords",
+                      "page": 14
+                    }
+                  ]
+                },
+                {
+                  "id": "shape-sequence-individual-then-combined",
+                  "name": "Shape Sequence: Individual Shape -> Combined Neck Coverage",
+                  "summary": "Students learn each positional shape one at a time - memorize, then apply over backing track - before combining both shapes to solo across the full fretboard.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "scale learning sequence",
+                      "quote_excerpt": "Start by learning these scale shapes one at a time, add them to your soloing workout, then combine them",
+                      "page": 14
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "combining both shapes",
+                      "quote_excerpt": "solo over the backing track with this scale shape, then with the 6-string shape only, then mix both together",
+                      "page": 15
+                    }
+                  ]
+                },
+                {
+                  "id": "134-pattern-trigger",
+                  "name": "134 Pattern Application Trigger",
+                  "summary": "Whenever a 1-3-4 fingering appears anywhere within a scale passage - on any string, in any key - the 134 ornament pattern is available to be inserted.",
+                  "engine_payload": {
+                    "kind": "_pending:ornament-trigger-condition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "134 pattern application rule",
+                      "quote_excerpt": "This pattern is used whenever you have a 134 fingering on any string, any key, and in any scale",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "134-mandatory-resolution",
+                  "name": "134 Pattern Mandatory Resolution to Third Finger",
+                  "summary": "The 134 ornament pattern must always complete all four notes and resolve to the third finger; an incomplete pattern sounds like a mistake, not a stylistic choice.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "mandatory pattern resolution",
+                      "quote_excerpt": "The essential item is that you resolve the pattern to the 3 finger. If you leave things hanging and don't resolve the pattern by playing all 4 notes, you sound like you made a mistake.",
+                      "page": 18
+                    }
+                  ]
+                },
+                {
+                  "id": "ornament-position-practice-sequence",
+                  "name": "Ornament Integration Sequence: Isolated Position -> Combined -> Free",
+                  "summary": "The 134 pattern is first worked in one positional shape with metronome, then combined across both shapes technically, then applied freely over backing tracks.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "practice sequence for positions",
+                      "quote_excerpt": "Work this position with a metronome, then combine it in your technical studies with the 6-string shape. When ready, solo over the backing track",
+                      "page": 20
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "earn-before-restraint-overplay",
+                  "name": "Earn-Before-Restraint: Deliberate Overplay of Ornament",
+                  "summary": "Students must consciously overuse the 134 ornament first to train the ear fully; only after saturation can they pull back and deploy it with musical taste.",
+                  "engine_payload": {
+                    "kind": "_pending:earn-before-restraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "overplaying to internalize ornament",
+                      "quote_excerpt": "overplay it in the beginning. When your ears get used to this sound, you can pull back and add the 134 pattern here and there in a more musical way",
+                      "page": 19
+                    }
+                  ]
+                },
+                {
+                  "id": "134-rhythm-freedom",
+                  "name": "134 Pattern Rhythmic Freedom",
+                  "summary": "The rhythmic placement of the 134 ornament is not fixed; players have wide latitude to experiment with rhythm so long as the resolution rule is respected.",
+                  "engine_payload": {
+                    "kind": "_pending:self-extension-variation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "rhythm freedom in pattern",
+                      "quote_excerpt": "The rhythms you use aren't that important, meaning you have a lot of freedom to experiment with rhythms when using the 134 pattern",
+                      "page": 18
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "matt-warnock:beginners-guide-to-jazz-guitar:mixed-solo-texture-system",
+              "name": "Mixed Solo Texture System (Chords + Single Notes)",
+              "summary": "The synthesis system of the book, combining harmonic accompaniment and melodic soloing into a single mixed-solo texture. This system is motivated by real-world ensemble need: in a duo or pianoless trio, the guitarist must supply harmonic space without a dedicated chord instrument. Its members are the two texture layers - chord layer and single-note layer - and the system's traversal rules govern how a player progressively loosens constraints across four discrete stages (imitate -> substitute single notes -> substitute chord rhythms -> improvise both freely). The system encodes the book's core pedagogical conviction that improvisation is acquired by dismantling a fixed model one layer at a time, not by open-ended playing from the start.",
+              "members": [
+                {
+                  "id": "written-solo-model",
+                  "name": "Written Mixed Solo (Imitation Model)",
+                  "summary": "The fully notated solo combining chord hits and single-note lines; the starting reference point students learn verbatim before substituting their own material."
+                },
+                {
+                  "id": "chord-layer",
+                  "name": "Chord Layer",
+                  "summary": "The harmonic accompaniment component of the mixed solo - voicings and comping rhythms drawn from the ii V I comping system."
+                },
+                {
+                  "id": "single-note-layer",
+                  "name": "Single-Note Layer",
+                  "summary": "The melodic soloing component of the mixed solo - lines drawn from the two-shape major scale system and ornamented with the 134 pattern."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "four-stage-imitation-to-improvisation",
+                  "name": "Four-Stage Imitation-to-Improvisation Sequence",
+                  "summary": "Students traverse the mixed solo in four stages: (1) learn as written, (2) replace single notes with own lines, (3) retain single notes while improvising chord rhythms, (4) improvise both layers freely - each stage a discrete, verifiable intermediate state.",
+                  "engine_payload": {
+                    "kind": "_pending:progressive-constraint-release"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "study sequence for mixed solo",
+                      "quote_excerpt": "learn the solo as written... replace the single notes with your own soloing lines... keep the single notes as written... replace both the chords and single notes",
+                      "page": 23
+                    }
+                  ]
+                },
+                {
+                  "id": "mixed-texture-ensemble-rationale",
+                  "name": "Mixed Texture Ensemble Context Rule",
+                  "summary": "The mixed chord-and-single-note texture is the required approach when the guitarist must fill harmonic space in a duo or pianoless trio context.",
+                  "engine_payload": {
+                    "kind": "_pending:ensemble-texture-requirement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "mixing chords and single notes",
+                      "quote_excerpt": "By learning how to mix chords and single notes in your solos, you're prepared to jam in a duo or pianoless trio",
+                      "page": 22
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": []
+            }
+          ]
+        }
+      ],
+      "status": "promoted"
+    },
+    {
       "id": "benson",
       "name": "George Benson",
       "lived": "1943-",
