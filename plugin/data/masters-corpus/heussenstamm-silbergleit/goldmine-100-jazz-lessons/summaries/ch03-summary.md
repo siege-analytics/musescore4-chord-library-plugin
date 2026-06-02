@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-heussenstamm-goldmine-100-jazz-lessons
+stage: s3
+source_pdf: Heussenstamm & Silbergleit - Goldmine 100 Jazz Lessons.pdf
+source_pages: 17-24
+model: claude-haiku
+extracted_at: 2026-05-31T17:01:32+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — Tritone Substitution and Minor Blues (Lessons 7-10)
+
+_Distillation; backed by `chapters/ch03.md`._
+
+Chapter 3 teaches tritone substitution—replacing a chord with one rooted a tritone away—as a device for creating chromatic bass movement and altered dominant sounds, particularly through the theoretical pivot of the b5 chord where dominant and substitute meet. The instruction covers extending this concept from single chords to entire ii-V units in bebop harmony, and applying it to turnarounds where parallel chromatic voicing preserves harmonic function while changing sonic character. The chapter then shifts to minor blues structure, where the i and iv chords become minor while the V remains dominant, often preceded by a natural dominant bVI that leads to an altered V—establishing a stylistic rule for dominant chord selection. Load-bearing techniques include the 5-3-2-1 scalar descent for melodic lines over tritone substitutions and the "aim for the change" strategy of targeting chord-defining tones like the half-step 3rd shift (B-flat to B natural in a Gm to G7 change) to emphasize harmonic movement. The chapter emphasizes that soloists can imply substitute harmony independently of the stated changes, making tritone substitution both a compositional tool and an improvisational option.
