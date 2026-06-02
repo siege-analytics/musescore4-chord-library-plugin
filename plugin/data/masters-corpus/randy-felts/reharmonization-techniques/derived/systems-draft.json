@@ -1,0 +1,1079 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-felts-reharmonization-techniques",
+    "stage": "s4",
+    "source_pdf": "Felts, Randy - Reharmonization Techniques (2002).pdf",
+    "extracted_at": "2026-05-31T17:08:11+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "randy-felts",
+  "work_id": "reharmonization-techniques",
+  "systems": [
+    {
+      "id": "randy-felts:reharmonization-techniques:functional-substitution-graph",
+      "name": "Functional Substitution Graph",
+      "summary": "The central system of the book. Chords are members organized into three functional families (tonic, subdominant, dominant). Traversal rules govern which substitutions are valid based on family membership, melody compatibility, and root motion. Modification rules govern how harmonic rhythm, displacement, tritone substitution, and modal interchange alter the graph during reharmonization. The two load-bearing voice-leading constraints \u2014 no unwanted b9, no tritone on minor sevenths \u2014 act as hard gate conditions that override family-based traversal permission.",
+      "members": [
+        {
+          "id": "m-1",
+          "name": "IMaj7 [tonic]"
+        },
+        {
+          "id": "m-2",
+          "name": "III-7 [tonic]"
+        },
+        {
+          "id": "m-3",
+          "name": "VI-7 [tonic]"
+        },
+        {
+          "id": "m-4",
+          "name": "II-7 [subdominant]"
+        },
+        {
+          "id": "m-5",
+          "name": "IVMaj7 [subdominant]"
+        },
+        {
+          "id": "m-6",
+          "name": "V7sus4 [subdominant/dominant-contextual]"
+        },
+        {
+          "id": "m-7",
+          "name": "V7 [dominant]"
+        },
+        {
+          "id": "m-8",
+          "name": "VII-7(b5) [dominant]"
+        },
+        {
+          "id": "m-9",
+          "name": "bVIIMaj7 [nondiatonic-subdominant-color]"
+        },
+        {
+          "id": "m-10",
+          "name": "modal-interchange chords [parallel-scale borrowings: I-7, bIIMaj7, IV-, IV-7, bVII7, etc.]"
+        },
+        {
+          "id": "m-11",
+          "name": "tritone-substitute dominants [subV7]"
+        },
+        {
+          "id": "m-12",
+          "name": "diminished seventh chords [pre-substitution targets]"
+        },
+        {
+          "id": "m-13",
+          "name": "hybrid voicings [altered-dominant texture, upper-triad/seventh over fixed bass]"
+        },
+        {
+          "id": "m-14",
+          "name": "constant-structure chord sets [texture-organized, non-functional]"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "TR-FSG-01",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "families": [
+              "tonic",
+              "subdominant",
+              "dominant"
+            ],
+            "gate": "b9-and-tritone-check"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Three harmonic family system",
+              "quote_excerpt": "In order to use simple substitution as a reharmonization technique, you must understand the division of the seven diatonic chords into three groups or families. Each of these chord families has a function. A chord's function is its tendency fo move or remain stable within a musical phrase."
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Tonic family definition",
+              "quote_excerpt": "The tonic family of chords has a resting function. Chords in this group tend to sound stable. They have little sense of forward motion and are almost always found at the phrase endings of popular and standard tunes. Diatonic chords built on the first, third, and sixth degrees of a scale are the members of this group."
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Note: not all chords need changing",
+              "quote_excerpt": "Note: It is not necessary to change all of the original chords to get an interesting reharmonization."
+            }
+          ],
+          "name": "Family-membership substitution",
+          "summary": "Any chord may substitute for another chord within the same functional family (tonic\u2194tonic, subdominant\u2194subdominant, dominant\u2194dominant), subject to the b9 and tritone gate conditions."
+        },
+        {
+          "id": "TR-FSG-02",
+          "engine_payload": {
+            "kind": "_pending:b9-melody-harmony-gate",
+            "exception": "V7(b9) resolving to I in context"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Avoiding unwanted b9 intervals",
+              "quote_excerpt": "Avoid unwanted }9 (or 52) melody/harmony intervals when using simple substitution. The )2 interval is a half step. It is also known as a 59, which is an octave plus a minor second. This melody/harmony interval creates a dissonance strong enough to destroy the basic function of the chord. In general, avoid choosing a substitute chord that creates a b9 interval with any one of the melody notes."
+            },
+            {
+              "chapter_n": 1,
+              "topic": "V7(b9) exception to b9 rule",
+              "quote_excerpt": "The V7(b9] is the only common exception to this rule. The V7(b9) has become an acceptable sound in many pop and jazz songs. For example, a C7b9 moving to FMaj7 in the key of F major works because the b9 is combined with a tritone interval."
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Avoid b9 and tritone combinations",
+              "quote_excerpt": "No matter which technique you use, always avoid poor melody/harmony combinations\u2014unwanted b9s and tritones."
+            }
+          ],
+          "name": "b9 hard gate",
+          "summary": "Any substitution that creates a b9 (minor ninth) interval between the melody and any chord tone is disallowed, except in the V7(b9) resolution context where b9 combines with tritone and resolves conventionally."
+        },
+        {
+          "id": "TR-FSG-03",
+          "engine_payload": {
+            "kind": "_pending:tritone-minor-seventh-gate",
+            "exception": "II-7 in II-V cadential context"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Avoiding tritone on minor seventh chords",
+              "quote_excerpt": "Avoid unwanted tritone (#4/!11) melody/harmony intervals on minor seventh chords."
+            },
+            {
+              "chapter_n": 1,
+              "topic": "#4 on IVMaj7 vs. II-7 contrast",
+              "quote_excerpt": "It is interesting that the IVMaj7 chord (FMaj7) can be used with #4 in the melody, while its simple substitution, II-7(D~7), does not work as effectively with the same melody/harmony combination\u2014even though both chords share subdominant function."
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Avoid b13/13 in lead of II-7",
+              "quote_excerpt": "The use of 13 in the lead of minor seventh chords, which produces a tritone with the third, is even more awkward when the minor seventh is a Il-7 followed by V7. Avoid using a 13 or b13 in the lead of II-7 chords."
+            }
+          ],
+          "name": "Tritone-on-minor-seventh hard gate",
+          "summary": "Substitutions that place the tritone (#4/b11) in the melody over a minor seventh chord are disallowed. IVMaj7 tolerates #4 in the melody; its subdominant substitute II-7 does not. The II-7 exception is permitted in II-V cadential context only."
+        },
+        {
+          "id": "TR-FSG-04",
+          "engine_payload": {
+            "kind": "VoiceMotion",
+            "common_tone_ceiling": 2,
+            "forbidden_root_intervals_for_strong": [
+              "third",
+              "sixth"
+            ],
+            "lead_constraint": "chord_tones_only_1_3_5_7"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Strong cadence rule",
+              "quote_excerpt": "Strong cadences are created whenever the approach chord (the chord immediately preceding the target] and the target chord share no more than two pitches. The general rule is: strong cadences = few common tones between the cadential chord and its target."
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Common tones and root motion",
+              "quote_excerpt": "Diatonie chords whose roots are a third or a sixth apart have many common tones. Diatonic chords whose roots are not a third or a sixth apart have fewer common fones."
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Diatonic approach chord tone rule",
+              "quote_excerpt": "In order to retain a diatonic sound, the melodic lead of the approach chord must be a chord tone\u20141, 3, 5, or 7."
+            }
+          ],
+          "name": "Strong cadence root-motion rule",
+          "summary": "Approach chords produce strong cadences when they share two or fewer common tones with the target chord. Roots a third or sixth apart share many common tones (weak cadence). Roots not a third or sixth apart share fewer (strong cadence). For diatonic approach, the melody lead of the approach chord must be a chord tone (1, 3, 5, or 7), never an extension."
+        },
+        {
+          "id": "TR-FSG-05",
+          "engine_payload": {
+            "kind": "SubstitutionExpand",
+            "interval": "tritone",
+            "direction": "backward_from_target",
+            "chain_interval": "perfect_fifth"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Tritone substitution procedure",
+              "quote_excerpt": "To use tritone substitution, start with a target chord. Then, work backward from the target chord, harmonizing each melody note with a series of dominant seventh chords a perfect fifth apart."
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Four dominant chords related to a diminished seventh",
+              "quote_excerpt": "Four dominant seventh chords are related to a given diminished seventh chord. These four dominant chords (with or without their related ILV-7s) are the most common choices for reharmonizing a diminished seventh. Each of these dominant chords contains one of the tritones found in the original diminished seventh."
+            }
+          ],
+          "name": "Tritone substitution traversal",
+          "summary": "Any dominant seventh chord may be replaced by the dominant seventh a tritone away (the subV7), because the two chords share the same tritone interval. Work backward from the target chord using dominant sevenths a perfect fifth apart to generate the substitution chain."
+        },
+        {
+          "id": "TR-FSG-06",
+          "engine_payload": {
+            "kind": "DensityCeiling",
+            "trigger": "chords_per_bar_increasing",
+            "remedies": [
+              "limit_to_short_runs",
+              "harmonize_downbeats_only",
+              "restrict_to_beats_1_and_3_at_fast_tempo",
+              "prefer_simple_chord_quality"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Avoiding hyperactive harmonic rhythm",
+              "quote_excerpt": "This example exposes a poiential weakness of this technique: an extremely active harmonic rhythm. Active harmonic rhythm can easily sound overdone or too busy. You can avoid a hyperactive harmonic rhythm by limiting yourself to short 'runs' of notes approaching a target chord."
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Reducing chord density at fast tempos",
+              "quote_excerpt": "Chords appear only on strong beats, 1 and 3, of the second measure in order fo maintain the extended dominant sound while reducing the number of chords per bar. Reducing the number of chords in each bar will help to produce a smoother sound, and is particularly desirable if the performance tempo is medium to fast."
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Harmonic rhythm: keep it simple",
+              "quote_excerpt": "Remember the rule: Keep it simple. When working with busy harmonic rhythms in which there are two, three, or four chords per measure, relatively simple tonal progressions work best."
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Harmonizing downbeats only",
+              "quote_excerpt": "To reharmonize, diatonic chords (and a bVIIMaj7) with 3 in the lead support melody notes that fall on rhythmic downbeats. | do not harmonize melodic notes that fall on weaker rhythmic beats."
+            }
+          ],
+          "name": "Harmonic rhythm density constraint",
+          "summary": "As harmonic rhythm increases (more chords per bar), chord complexity must decrease and the technique must be applied only to melodic notes on rhythmic downbeats. Diatonic approach runs must be kept short to avoid hyperactive harmonic rhythm. At medium-to-fast tempos, chords appear only on strong beats (1 and 3)."
+        },
+        {
+          "id": "TR-FSG-07",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "mode": "cross-family-permitted",
+            "source_scales": [
+              "natural_minor",
+              "harmonic_minor",
+              "melodic_minor",
+              "dorian"
+            ],
+            "melody_gate": "no_b9_with_minor_quality_MI_chord",
+            "max_consecutive": 3
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Modal interchange overview",
+              "quote_excerpt": "Modal interchange chords function as links between diatonic chords via strong root motion into a target, where new chord tones produce listener interest. A three-chord limit is recommended before returning to diatonic harmony to avoid an ambiguous tonal center. The MI substitution does not need to preserve functional category (tonic/subdominant/dominant), distinguishing it from simple substitution which keeps function but yields less color."
+            },
+            {
+              "chapter_n": 2,
+              "topic": "bVIIMaj7 as nondiatonic substitute",
+              "quote_excerpt": "There is one nondiatonic chord that may be used with. diatonic approach technique, the LVIIMaj7. In the key of C, the bVIIMaj7 is BbMaj7. It produces a rich sound without over-powering other diatonic chords. Though the BbMaj7 chord is not diatonic to C major, it blends smoothly with the other diatonic choices. That is because the BbMaj7 is diatonic to the C Dorian scale, a key that is parallel to C major."
+            }
+          ],
+          "name": "Modal interchange traversal \u2014 color over function",
+          "summary": "Chords drawn from parallel scales (natural minor, harmonic minor, melodic minor, Dorian) may substitute for diatonic chords without preserving functional category. Governing constraint is melody compatibility. Minor-quality MI chords clash with melodies containing the major third (b9 interval). Limit to three consecutive MI chords before returning to diatonic harmony."
+        },
+        {
+          "id": "TR-FSG-08",
+          "engine_payload": {
+            "kind": "_pending:diminished-substitution-hierarchy",
+            "tier_1": "shared_tritone",
+            "tier_2": "dominant_cadence_to_target",
+            "tier_3": "max_shared_chord_tones_melody_compatible"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Three-rule summary for diminished seventh reharmonization",
+              "quote_excerpt": "1. When reharmonizing diminished seventh chords, choose a dominant chord that shares one of the tritone intervals found in the original diminished seventh. 2. When possible, also choose a chord that forms a dominant cadence into the target chord. 3. When a dominant cadence to the target chord is not available, choose a dominant chord that shares a considerable number of chord tones with the original diminished seventh. Be sure it is compatible with the melody."
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Ascending half-step motion: preferred choices",
+              "quote_excerpt": "Diminished seventh chords that move up by half step to a chord in root position are most often reharmonized with dominant sevenths that are a perfect fifth abdve or a minor second above the target."
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Practical determinant of substitute choice",
+              "quote_excerpt": "In practice, the substitute chord is determined by the melody/harmony relationship and by the root motion into the target chord."
+            }
+          ],
+          "name": "Diminished seventh three-tier substitution hierarchy",
+          "summary": "When reharmonizing a diminished seventh: (1) choose a dominant that shares one of the original diminished seventh's tritones; (2) if possible, also choose one that forms a dominant cadence into the target (ascending half-step motion favors dominants a P5 or m2 above the target); (3) when no dominant cadence is available, choose the dominant sharing the most chord tones with the original diminished seventh, compatible with the melody."
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "MR-FSG-01",
+          "engine_payload": {
+            "kind": "_pending:displacement-open-space",
+            "transform_b3": "T9_on_II-7_of_inserted_half_step_pattern",
+            "transform_b5": "T11_on_II-7_of_inserted_half_step_pattern",
+            "clash_repair": "tritone_substitution_or_sus4_quality"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Definition and effect of displacement",
+              "quote_excerpt": "Displacement changes the shape of a harmonic progression by moving a target chord to a point later in the progression. This chord movement maintains emphasis on the target chord, but stretches the overall shape of the progression by shifting the locations of harmonic cadences. Displacing a target chord creates an open space within the phrase. That open space can then be filled with new chord changes."
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Special case: minor seventh with b3 in lead displaced by half-step II-V7",
+              "quote_excerpt": "1. A minor seventh chord with 3 in the lead may be displaced by a ILV7 patiern a half step higher. The melody note that was originally >3 becomes tension 9 on the II-7 of the newly inserted pattern."
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Special case: minor seventh with b5 in lead displaced by half-step II-V7",
+              "quote_excerpt": "2. A minor seventh chord with b5 in the lead may be displaced by a II-V7 pattern a half step higher. The melody note that was originally b5 becomes tension 11 on the Il-7 of the newly inserted pattern."
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Tritone substitution to fix melody/harmony clashes",
+              "quote_excerpt": "To fix the melody/harmony problem found in measure 1, beat 2, | do two things. | use tritone substitution fo change F#7 to C7, and adjust the chord quality to sus4 to account for the fourth in the melody."
+            }
+          ],
+          "name": "Displacement \u2014 open space creation",
+          "summary": "A target chord is moved later in the phrase, creating open harmonic space that may be filled with new changes. Displacement of one beat or two produces mild harmonic variation; displacement of more than a measure produces dramatic change. b3 in melody displaced by half-step II-V7 becomes tension 9 on the II-7; b5 in lead of minor 7(b5) displaced by half-step II-V7 becomes tension 11 on the II-7. Tritone substitution is the primary repair tool for melody/harmony clashes that displacement creates."
+        },
+        {
+          "id": "MR-FSG-02",
+          "engine_payload": {
+            "kind": "VoiceMotion",
+            "default_direction": "downward",
+            "exception": "upward_if_contextually_justified",
+            "rhythmic_prerequisite": "quarter_dotted_quarter_or_half_note_melody"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Altered tension resolution tendency",
+              "quote_excerpt": "Chord tensions are called altered when they are a half step above or below a 5, major 9, or a major 13. In the performance practice of pop and jazz standard tunes, altered tensions such as the 69, #9, b5, b13 melody notes have most often been resolved in a downward direction."
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Exception rule for upward movement of altered tensions",
+              "quote_excerpt": "Almost any motion up or down from b9, #9, b5, or b13 is possible."
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Rhythmic suitability for extended dominant / II-V7 technique",
+              "quote_excerpt": "Notice that these melodies consist mainly of quarter notes, dotted quarter notes, or half notes. The extended dominant or extended IL-V7 technique works best with melodic rhythms of this sort. With only one or two melody notes per chord, you can quickly solve melody/harmony clashes with tritone substitutions."
+            }
+          ],
+          "name": "Altered tension resolution",
+          "summary": "Altered tensions (b9, #9, b5/b13) most often resolve downward in pop/jazz performance practice. Upward motion is possible in context but not reflexive. These tones are typically resolved within one or two melody notes per chord \u2014 technique is most effective with sparse melodic rhythms (quarter notes, dotted quarters, half notes)."
+        },
+        {
+          "id": "MR-FSG-03",
+          "engine_payload": {
+            "kind": "_pending:dominant-to-minor-seventh-conversion",
+            "position_constraint": "strong_beats",
+            "effect": "smoother_texture"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Converting dominant chords to minor sevenths for smoother texture",
+              "quote_excerpt": "More variations of these patterns may be found by converting dominant chords that fall on strong beats to minor seventh chords. This yields a slightly smoother texture."
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Definition of interpolated chord",
+              "quote_excerpt": "Any chord placed between two dominant chords may be described as interpolated. This new chord briefly delays resolution. Commonly, the interpolated chord is a minor seventh chord placed between two dominants in a pattern."
+            }
+          ],
+          "name": "Dominant-to-minor-seventh texture softening",
+          "summary": "Dominant seventh chords on strong beats may be converted to minor seventh chords within extended dominant chains to yield a slightly smoother texture while maintaining forward motion toward the target."
+        },
+        {
+          "id": "MR-FSG-04",
+          "engine_payload": {
+            "kind": "_pending:melody-shortening-harmonic-freedom",
+            "minimum_duration_before_shortening": "two_beats",
+            "application": "turnarounds_and_phrase_reharmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Shortening the melody note for harmonic freedom",
+              "quote_excerpt": "As a general rule, you can drop the melody note after it has been established for at least two beats. This new open space in the melody allows you to insert other chord choices that would have clashed with the long Eb in the lead."
+            }
+          ],
+          "name": "Melody note shortening for harmonic freedom",
+          "summary": "In turnaround construction, a sustained melody note may be shortened after it has been established for at least two beats, creating open rhythmic space that permits chord substitutions that would otherwise clash with the sustained pitch."
+        }
+      ]
+    },
+    {
+      "id": "randy-felts:reharmonization-techniques:voice-leading-voicing-system",
+      "name": "Voice-Leading and Voicing System",
+      "summary": "Encodes the piano voice-leading rules, inversion constraints, tension register rules, and the special chord types (line clich\u00e9s, hybrid voicings) that determine how chord substitutions are physically realized. Rules are keyed to root-motion interval class and chord position. Hybrid voicings and line clich\u00e9s are treated as members with their own application constraints.",
+      "members": [
+        {
+          "id": "m-1",
+          "name": "root-position chords"
+        },
+        {
+          "id": "m-2",
+          "name": "first-inversion chords"
+        },
+        {
+          "id": "m-3",
+          "name": "second-inversion chords"
+        },
+        {
+          "id": "m-4",
+          "name": "third-inversion chords (7 in bass)"
+        },
+        {
+          "id": "m-5",
+          "name": "hybrid voicings (upper triad or seventh over non-chord-tone bass)"
+        },
+        {
+          "id": "m-6",
+          "name": "line clich\u00e9 embellishments (chromatic stepwise motion through fifth and root)"
+        },
+        {
+          "id": "m-7",
+          "name": "passing-seventh voicings"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "TR-VLV-01",
+          "engine_payload": {
+            "kind": "VoiceMotion",
+            "trigger_interval": [
+              "perfect_fourth",
+              "perfect_fifth"
+            ],
+            "voice_resolution": "3_to_7_and_7_to_3"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Resolution of chord tones 3 and 7",
+              "quote_excerpt": "If the root motion moves by perfect fourth or perfect fifth, resolve chord tone 3 in the first chord to chord tone 7 of the second, and chord tone 7 in the first chord to 3 in the second, as shown in the following examples. These resolutions produce a clear harmonic texture and minimize finger movement from chord to chord."
+            }
+          ],
+          "name": "Perfect fourth/fifth root motion: resolve 3\u21927 and 7\u21923",
+          "summary": "When root motion is a perfect fourth or fifth, chord tone 3 of the first chord resolves to chord tone 7 of the second, and chord tone 7 of the first resolves to chord tone 3 of the second. This produces clear harmonic texture and minimizes finger movement."
+        },
+        {
+          "id": "TR-VLV-02",
+          "engine_payload": {
+            "kind": "VoiceMotion",
+            "trigger_interval": [
+              "unison",
+              "second"
+            ],
+            "voice_motion": "parallel_all_voices"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Parallel motion rule for unison/second",
+              "quote_excerpt": "If root motion moves by unison or second, move the voices in parallel motion. Parallel motion means that all voices move up or down by a similar amount."
+            }
+          ],
+          "name": "Unison/second root motion: parallel voices",
+          "summary": "When roots move by unison or second, all voices move in parallel motion (all voices up or down by similar amounts)."
+        },
+        {
+          "id": "TR-VLV-03",
+          "engine_payload": {
+            "kind": "VoiceMotion",
+            "trigger_interval": [
+              "third",
+              "sixth"
+            ],
+            "voice_motion": "parallel_or_contrary"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Contrary and parallel motion for third/sixth",
+              "quote_excerpt": "If roots move by third or sixth, use either parallel or contrary motion between the roots and the upper voices. Contrary motion means that voices move in opposite directions: the bass note moves down, while all other voices move up."
+            }
+          ],
+          "name": "Third/sixth root motion: parallel or contrary",
+          "summary": "When roots move by third or sixth, use either parallel or contrary motion between bass and upper voices."
+        },
+        {
+          "id": "TR-VLV-04",
+          "engine_payload": {
+            "kind": "DensityFloor",
+            "register_boundary": "F_bass_clef_fourth_line",
+            "applies_to": "tension_tones_9_11_13"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Tension placement register rule",
+              "quote_excerpt": "It is generally good practice to keep all tensions above the F found on the fourth line of the bass clef in order to avoid a muddy sound."
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Non-chord tones in lowest voice create hybrid voicings",
+              "quote_excerpt": "Non-chord tones (tensions 9, 11, 13) found in the lowest voice produce a hybrid voicing. (See chapter 14.}"
+            }
+          ],
+          "name": "Tension register floor",
+          "summary": "All tension tones (9, 11, 13) must be placed above the F on the fourth line of the bass clef to avoid muddy sound. Non-chord tones in the lowest voice produce hybrid voicings and must be handled separately."
+        },
+        {
+          "id": "TR-VLV-05",
+          "engine_payload": {
+            "kind": "PositionContinuity",
+            "inversion_constraint": "approach_and_depart_by_step",
+            "third_inversion_prerequisite": "root_position_same_chord_immediately_before"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Inversions as passing chords",
+              "quote_excerpt": "It is usually best to move away from an inverted chord by step. Inversions function as passing chords; they rarely begin or conclude harmonic phrases. The use of an inversion does not change the functional analysis of a progression in any way."
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Solution for third inversion ambiguity",
+              "quote_excerpt": "For a smooth, traditional sound, precede each third inversion chord with the same chord in root position."
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Third-inversion chords: prerequisite root-position context",
+              "quote_excerpt": "Be cautious about using chord tone 7 in the bass (third inversion), unless a root position form of the same chord is used directly before the inversion."
+            }
+          ],
+          "name": "Inversion as passing chord \u2014 stepwise approach and departure",
+          "summary": "Inverted chords function as passing chords: they must be approached and left by step. Third-inversion chords require a preceding root-position form of the same chord for perceptual grounding."
+        },
+        {
+          "id": "TR-VLV-06",
+          "engine_payload": {
+            "kind": "_pending:hybrid-voicing-construction",
+            "upper_layer_allowed": [
+              "major_triad",
+              "minor_triad",
+              "major_seventh",
+              "minor_seventh",
+              "dominant_seventh"
+            ],
+            "upper_layer_forbidden": [
+              "augmented",
+              "diminished",
+              "minor_7b5"
+            ],
+            "melody_failure_condition": "major_or_minor_third_above_bass",
+            "deployment": "phrase_endpoints_preferred"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Rules for constructing hybrid voicings",
+              "quote_excerpt": "To construct hybrid voicings of traditional chord structures: 1. Keep the root of the original chord. 2. Choose an upper structure layer that forms a major or minor triad or forms a major seventh, a minor seventh, or a dominant seventh. Avoid augmented, diminished, or minor 7(5) structures in the upper layer of hybrid chords since they tend to sound like more traditional chord voicings when combined with the bass note."
+            },
+            {
+              "chapter_n": 14,
+              "topic": "When hybrids fail \u2014 third in lead",
+              "quote_excerpt": "Hybrid voicings lose their effectiveness if melody notes form intervals of either a major or minor third above the bass note. Errors of several kinds are produced if a third is in the lead."
+            },
+            {
+              "chapter_n": 14,
+              "topic": "Selective application of hybrid voicings",
+              "quote_excerpt": "A hybrid voicing often works well at the end of a phrase. The entire phrase need not be harmonized with hybrid chords."
+            }
+          ],
+          "name": "Hybrid voicing construction and failure condition",
+          "summary": "Hybrid voicings: retain root in bass; upper layer must be major or minor triad, or major, minor, or dominant seventh (never augmented, diminished, or min7b5). Fails if melody contains a major or minor third above the bass, destroying the characteristic ambiguous texture. Best deployed at phrase endpoints rather than throughout a passage."
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "MR-VLV-01",
+          "engine_payload": {
+            "kind": "_pending:line-cliche-inner-voice",
+            "motion_range": "fifth_to_root_of_chord",
+            "default_interval": "half_step",
+            "alternative_interval": "whole_step_if_clash",
+            "primary_target_chord": "tonic_I",
+            "overuse_warning": "non_tonic_application_weakens_key_center",
+            "tempo_coupling": "fast_tempo_requires_sparse_rhythm"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Definition and purpose of line clich\u00e9",
+              "quote_excerpt": "The line clich\u00e9 allows the writer to sustain a particular chord while adding momentum to the progression."
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Warning about overuse on non-tonic chords",
+              "quote_excerpt": "However, repeated use of a line clich\u00e9 on a chord other than the 'I' may cause the listener to hear the chord being embellished by the line clich\u00e9 as a new | chord. Overuse of this technique may weaken the sense of key within the progression."
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Half-step vs whole-step motion",
+              "quote_excerpt": "Although most line clich\u00e9s move in half-step increments, whole step motion between the fifth and the root is also possible."
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Harmonic rhythm matched to tempo",
+              "quote_excerpt": "The harmonic rhythm should fit with the performance tempo."
+            }
+          ],
+          "name": "Line clich\u00e9 \u2014 chromatic inner-voice motion on sustained chord",
+          "summary": "A line clich\u00e9 sustains a chord while adding forward motion via stepwise (typically half-step) chromatic motion between the fifth and root of the embellished chord. Most commonly applied to the tonic (I) chord. Overuse on non-tonic chords risks tonal center ambiguity. Harmonic rhythm of the clich\u00e9 must fit the performance tempo (very fast tempos require sparser, extended rhythms). Whole-step motion is available when needed to prevent melody/harmony clashes."
+        },
+        {
+          "id": "MR-VLV-02",
+          "engine_payload": {
+            "kind": "_pending:bass-chord-tone-assignment",
+            "valid_bass_roles": [
+              "1",
+              "3",
+              "5",
+              "7"
+            ],
+            "forbidden_bass_roles_without_hybrid_intent": [
+              "9",
+              "11",
+              "13"
+            ],
+            "direction_consistency": "required",
+            "max_consecutive_dissonant_intervals": 3
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Treating bass notes as chord tones 1 3 5 7",
+              "quote_excerpt": "Think of the bass notes as chord tones 1, 3, 5, or 7 of potential reharmonized chord changes. Thinking of these notes as 9, 11, or 13 will produce hybrid chord voicings (see chapter 14) or may produce chord symbols that are overly complex (see chapter 7)."
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Consistency of bass-line direction",
+              "quote_excerpt": "Be sure to move your bass lines consistently up or down into the target chord. Failure to maintain a consistent direction will weaken the cadential possibilities of the chord progressions derived from the bass line."
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Dissonance limit between melody and bass",
+              "quote_excerpt": "Also, consider the interval combinations between the melody and the bass line. If you desire a smooth reharmonization, avoid more than three consecutive dissonant intervals between the bass line and the melody."
+            }
+          ],
+          "name": "Bass note as chord tone (1, 3, 5, 7) rule",
+          "summary": "In bass-line reharmonization, bass notes must be treated as chord tones (1, 3, 5, 7) rather than extensions (9, 11, 13). Treating them as extensions produces hybrid chords or overly complex symbols. Bass direction (ascending or descending) must be consistent into the target chord; reversal weakens cadential flow. Limit consecutive dissonant bass-melody intervals to three or fewer."
+        }
+      ]
+    },
+    {
+      "id": "randy-felts:reharmonization-techniques:turnaround-phrase-template",
+      "name": "Turnaround and Phrase-Level Template System",
+      "summary": "Governs the construction of turnarounds (measures 31\u201332 replacements in jazz standards) and extended endings / modulatory interludes as phrase-level form devices. Members are the four positional slots of the turnaround template plus the catalog of valid chord types per slot. Traversal rules define the functional identity of each slot and the resolution direction between slots. Modification rules handle modulation targets, extended endings, and the III/VI tonic substitution principle.",
+      "members": [
+        {
+          "id": "m-1",
+          "name": "slot-1: tonic-function chord (I, III-7, VI-7, modal-interchange tonic variants)"
+        },
+        {
+          "id": "m-2",
+          "name": "slot-2: link chord (resolves by strong root motion to slot-3 target)"
+        },
+        {
+          "id": "m-3",
+          "name": "slot-3: subdominant-function chord (II, IV, IV-, bIIMaj7, bVIIMaj7, #V-7(b5))"
+        },
+        {
+          "id": "m-4",
+          "name": "slot-4: dominant-function chord (resolves into next phrase downbeat)"
+        },
+        {
+          "id": "m-5",
+          "name": "extended-ending chord (final Maj7 in new key, approached by deceptive cadence)"
+        },
+        {
+          "id": "m-6",
+          "name": "modulatory-interlude block (2\u20138 bars, deceptive-cadence approach: VI-7(b5), bIIIMaj7)"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "TR-TPT-01",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "sequence": [
+              "tonic",
+              "link_strong_motion",
+              "subdominant",
+              "dominant"
+            ],
+            "resolution_target": "first_chord_of_new_phrase"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Second chord of a turnaround \u2014 the link",
+              "quote_excerpt": "The second chord of a typical turnaround (measure 31, beat 3) is a chord that connects forward to one of the chords in measure 32. Think of the chords in measure 32 as target chords. The second chord of the turnaround resolves by strong root motion into one of the targets. It forms a link between the first and third or fourth chords in the turnaround."
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Third chord of a turnaround \u2014 subdominant",
+              "quote_excerpt": "The third chord of a typical turnaround (measure 32, beat 1} is a chord that has a subdominant function (SD) and leads by strong root motion into the last chord of the turnaround."
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Fourth chord of a turnaround \u2014 dominant",
+              "quote_excerpt": "The fourth and usually last chord of a typical turnaround (measure 32, beat 3) is a chord that has dominant function and leads by strong root motion into the first chord of the new phrase."
+            }
+          ],
+          "name": "Four-slot functional sequence",
+          "summary": "A turnaround follows a four-chord positional template: slot-1 (tonic function) \u2192 slot-2 (link, strong root motion to slot-3) \u2192 slot-3 (subdominant function) \u2192 slot-4 (dominant function \u2192 next phrase). Each slot has prescribed functional identity and connects to the next by strong root motion."
+        },
+        {
+          "id": "TR-TPT-02",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "slot": 1,
+            "valid_members": [
+              "I",
+              "III-7",
+              "VI-7",
+              "MI_chord_on_III",
+              "MI_chord_on_VI",
+              "IVMaj7",
+              "IV-",
+              "IV-7",
+              "sharp_V-7b5",
+              "bIIMaj7",
+              "bVIIMaj7",
+              "bVII7"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Catalog of viable first-chord types",
+              "quote_excerpt": "\u00ae tonic substitution (variations on the III-7 and VI-7) \u00ae modal interchange chord with a root based on Ill or VI \u00a9 IV chord or modal interchange variation of IV {IV-, IV-6, IV-7} \u00a9 #V-7(b5) chord (a chord that is considered a chromatic variation of IV} \u00a9 bIIMaj7 (a modal interchange chord that shares many common tones with IV-] e bVIIMaj7 or bVII7 (modal interchange chords that share two common tones with IV or IV-}"
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Tonic substitution between I and VI",
+              "quote_excerpt": "You may think of the 'A' root of the chord as VI in the key. In this case, it functions as a kind of substitution for IMaj7, since | and VI both have tonic function within any key and may substitute for each other."
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Tonic substitution between I and III",
+              "quote_excerpt": "Similarly, E7 (V/VI} could be used as the first chord of a turnaround. It is based on a Ill root. | and Ill both have fonic function within any key and may substitute for each other."
+            }
+          ],
+          "name": "Slot-1 catalog \u2014 tonic and tonic-substitute options",
+          "summary": "Slot-1 of a turnaround may be: I (tonic), III-7 or VI-7 (tonic substitutes), modal interchange chords rooted on III or VI, IV or its modal interchange variations, #V-7(b5) (chromatic IV variant), bIIMaj7, bVIIMaj7, or bVII7. All share tonic or near-tonic function."
+        },
+        {
+          "id": "TR-TPT-03",
+          "engine_payload": {
+            "kind": "FamilyCoherence",
+            "substitution_pair": [
+              "I",
+              "III",
+              "VI"
+            ],
+            "scope": "book-wide"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Tonic family definition",
+              "quote_excerpt": "The tonic family of chords has a resting function. Diatonic chords built on the first, third, and sixth degrees of a scale are the members of this group."
+            },
+            {
+              "chapter_n": 9,
+              "topic": "III and VI substitution for I",
+              "quote_excerpt": "Remember that chords based on Ill and VI can often substitute for |. (See chapter 1.)"
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Tonic substitution between I and VI",
+              "quote_excerpt": "In this case, it functions as a kind of substitution for IMaj7, since | and VI both have tonic function within any key and may substitute for each other."
+            }
+          ],
+          "name": "III/VI tonic-substitution principle (cross-chapter)",
+          "summary": "Chords rooted on III and VI carry tonic function and may substitute for I throughout the book \u2014 in simple substitution, turnarounds, extended endings, and modulatory interludes. This principle is established in Chapter 1 and cited explicitly in Chapters 8 and 9."
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "MR-TPT-01",
+          "engine_payload": {
+            "kind": "_pending:extended-ending-deceptive-resolution",
+            "cadence_type": "deceptive",
+            "target_quality": "major_seventh",
+            "target_key": "new_key",
+            "melodic_source": "song_motivic_material"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Extended endings and modulatory interludes overview",
+              "quote_excerpt": "Extended endings provide cadential surprise by resolving to a final major-seventh chord in a new key, often introduced by a deceptive cadence after the original V7 and using motivic melodic material from the song."
+            },
+            {
+              "chapter_n": 9,
+              "topic": "III and VI substitution for I",
+              "quote_excerpt": "Remember that chords based on Ill and VI can often substitute for |. (See chapter 1.)"
+            }
+          ],
+          "name": "Extended ending \u2014 deceptive cadence to new-key Maj7",
+          "summary": "An extended ending resolves to a final Maj7 chord in a new key via deceptive cadence following the original V7. Melodic material is drawn from the song. The III/VI tonic-substitution principle is used as a construction tool for approach chords."
+        },
+        {
+          "id": "MR-TPT-02",
+          "engine_payload": {
+            "kind": "_pending:modulatory-interlude-construction",
+            "length_bars": "2_to_8",
+            "approach_to_new_key": "strong_root_motion",
+            "deceptive_approach_chords": [
+              "VI-7(b5)",
+              "bIIIMaj7"
+            ],
+            "common_modulation_intervals": [
+              "minor_second_up",
+              "major_second_up",
+              "minor_third_up"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Modulatory interludes overview",
+              "quote_excerpt": "Modulatory interludes are transitions between choruses or songs that include a key change, typically 2-8 measures long, where the new-key downbeat is treated as a target chord approached via strong root motion and pickup-aware deceptive-cadence chords like VI-7(b5) or bIIIMaj7."
+            }
+          ],
+          "name": "Modulatory interlude construction",
+          "summary": "Modulatory interludes are 2\u20138 bars long. The new-key downbeat is treated as a target chord approached by strong root motion. Pickup-aware deceptive-cadence chords (VI-7(b5), bIIIMaj7) may be used. Common pop modulation distances: up minor second, major second, or minor third."
+        }
+      ]
+    },
+    {
+      "id": "randy-felts:reharmonization-techniques:modal-constant-structure-system",
+      "name": "Modal and Constant-Structure System",
+      "summary": "Governs the book's most abstract reharmonization resources: modal reharmonization (Chapters 13, 16), constant structure patterns (Chapter 15), and their combination with hybrid voicings (Chapter 16). Members are modal centers, mode-specific cadential two-chord patterns, and constant-structure bass interval types. Traversal rules enforce diatonic constraint within a chosen mode, minimum duration for listener registration, and valid bass motion patterns. Modification rules govern the three combination options (modal\u2192hybrid, modal root motion\u2192constant structure, pedal grounding) and the repetition requirement.",
+      "members": [
+        {
+          "id": "m-1",
+          "name": "Dorian modal center + II-7\u2192I-7 cadential pair"
+        },
+        {
+          "id": "m-2",
+          "name": "Phrygian modal center + mode-specific cadential pair"
+        },
+        {
+          "id": "m-3",
+          "name": "Lydian modal center (requires tonic pedal for #11 recognition) + mode-specific cadential pair"
+        },
+        {
+          "id": "m-4",
+          "name": "Mixolydian modal center + mode-specific cadential pair"
+        },
+        {
+          "id": "m-5",
+          "name": "Aeolian modal center + mode-specific cadential pair"
+        },
+        {
+          "id": "m-6",
+          "name": "constant-structure chord set (half-step bass motion)"
+        },
+        {
+          "id": "m-7",
+          "name": "constant-structure chord set (whole-step bass motion)"
+        },
+        {
+          "id": "m-8",
+          "name": "constant-structure chord set (third bass motion)"
+        },
+        {
+          "id": "m-9",
+          "name": "pedal tone / ostinato grounding layer"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "TR-MCS-01",
+          "engine_payload": {
+            "kind": "_pending:modal-diatonic-constraint",
+            "constraint": "melody_and_chords_diatonic_to_modal_scale",
+            "I_placement": "strong_rhythmic_positions",
+            "minimum_duration_bars": 4
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Modal reharmonization: tonic placement",
+              "quote_excerpt": "the I chord is placed in a strong rhythmic position to maintain a clear sense of tonality. The I-7 is then approached by a two-chord cadence derived from Dorian mode."
+            },
+            {
+              "chapter_n": 13,
+              "topic": "Modal reharmonization rules overview",
+              "quote_excerpt": "both melody AND chords must be diatonic to a particular modal scale; key-changes between modal centers are the normal tool for full-song modal treatment; remain in each modal key for at least four bars so listeners register the modal color."
+            }
+          ],
+          "name": "Modal diatonic constraint \u2014 melody and chords must be diatonic to chosen mode",
+          "summary": "In modal reharmonization, both the melody notes and the chord set must be diatonic to the chosen modal scale. The I chord occupies strong rhythmic positions and is approached by the mode-specific two-chord cadence. Each modal key must be sustained for at least four bars so listeners register the modal color."
+        },
+        {
+          "id": "TR-MCS-02",
+          "engine_payload": {
+            "kind": "_pending:modal-pedal-and-error-detection",
+            "lydian_requires_pedal": true,
+            "error_signals": [
+              "phrygian_b9_outside_phrygian_context",
+              "lydian_tritone_outside_lydian_context"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Modal mode-defining dissonances and errors",
+              "quote_excerpt": "the Lydian #11 requires a tonic pedal to be heard correctly; Phrygian b9 and Lydian tritone are mode-defining dissonances that signal a structural error when used outside their modal context."
+            }
+          ],
+          "name": "Lydian tonic pedal requirement and mode-defining dissonance errors",
+          "summary": "The Lydian #11 requires a tonic pedal to be heard correctly. Phrygian b9 and Lydian tritone function as mode-defining dissonances; when encountered outside their modal context they signal a structural error."
+        },
+        {
+          "id": "TR-MCS-03",
+          "engine_payload": {
+            "kind": "StringSetTransition",
+            "valid_bass_intervals": [
+              "half_step",
+              "whole_step",
+              "major_third",
+              "minor_third"
+            ],
+            "lead_preference": "tension_tones",
+            "root_motion_outlining": [
+              "diminished_triad",
+              "major_triad",
+              "seventh_chord_with_tensions"
+            ],
+            "tonality": "non_functional_or_loosely_tonal"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Constant structure bass patterns",
+              "quote_excerpt": "Use of structured patterns in the bass (consistent motion up or down by half steps, whole steps, or major or minor thirds) helps to organize the sound of constant structure progressions."
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Primary organizational elements",
+              "quote_excerpt": "The consistent textural sound of constant structures and melody/harmony relationships form the primary organizational elements of this technique."
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Melodic tensions as common",
+              "quote_excerpt": "The lead in most of the chords is a tension;"
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Patterned root motion not required",
+              "quote_excerpt": "Patterned, consistent root motion usually has a positive effect on the sound of constant structure progressions, but is not required."
+            }
+          ],
+          "name": "Constant structure bass interval patterns",
+          "summary": "Constant structure progressions are organized by consistent bass motion (half steps, whole steps, or thirds). Tension tones commonly appear in the lead voice. Patterned root motion is not required but usually positive. Roots may outline implied harmonies (diminished triads, major triads, or tensions of a larger chord) without establishing functional tonality."
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "MR-MCS-01",
+          "engine_payload": {
+            "kind": "_pending:modal-hybrid-constant-combination",
+            "option_1": "revoice_modal_chords_as_hybrids",
+            "option_2": "modal_root_motion_drives_constant_structure",
+            "option_3": "pedal_or_ostinato_grounding",
+            "hybrid_series_preferred_over_isolated": true
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Four reharmonization options",
+              "quote_excerpt": "Options: \u00a9 Revoice the chords of the modal progression as hybrids. @ Use the root motion from the modal progression as the root motion of a constant structure pattern. e Use pedal tones or ostinato patterns to support any progression produced by these means."
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Hybrid chords: isolated vs series",
+              "quote_excerpt": "Hybrid chords may occasionally be used as isolated structures within phrases, but they acquire a stronger textural personality when used in a series. A series of hybrid chords produces a stronger impressionistic effect than an isolated hybrid voicing."
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Root motion as reharmonization basis",
+              "quote_excerpt": "Use the root motion from the modal progression as the root motion of a constant structure pattern."
+            }
+          ],
+          "name": "Three combination options for modal + hybrid + constant structure",
+          "summary": "Given a modal progression, three transformations are available: (1) revoice chords as hybrid voicings for altered-dominant texture; (2) use the modal progression's root motion as the bass motion of a constant structure pattern; (3) add pedal tones or ostinato to any progression produced by these means. Hybrid chords gain stronger textural personality when deployed in series rather than in isolation."
+        },
+        {
+          "id": "MR-MCS-02",
+          "engine_payload": {
+            "kind": "_pending:repetition-comprehension-requirement",
+            "applies_to": [
+              "modal_progressions",
+              "constant_structure_patterns"
+            ],
+            "reinforcement_tools": [
+              "tonic_pedal",
+              "tonic_ostinato",
+              "repeat_cadential_pair"
+            ]
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Constant structure repetition requirement",
+              "quote_excerpt": "Modal phrases and constant structure examples normally require repetition io develop a clear meaning in the listener's ear."
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Reinforcing modal quality",
+              "quote_excerpt": "If you seek a strong modal quality, repeat the | chord and its characteristic cadential chords offen to drive the point home. Use of a tonic pedal tone or tonic ostinato will help to reinforce the sense of-modal tonality."
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Pedal tone and tonality",
+              "quote_excerpt": "The use of an A pedal in the example below makes the phrase sound as if it is in the key of A, despite the ambiguous nature of th\u00e9 constant structure progression."
+            }
+          ],
+          "name": "Repetition requirement for listener comprehension",
+          "summary": "Modal phrases and constant structure patterns require repetition to develop clear meaning in the listener's ear. Tonic pedal tones or ostinatos reinforce modal quality. To drive modal tonic identity, repeat the I chord and its characteristic cadential chords frequently."
+        },
+        {
+          "id": "MR-MCS-03",
+          "engine_payload": {
+            "kind": "_pending:modal-melody-selection",
+            "criterion_1": "melody_diatonic_to_chosen_modal_key",
+            "criterion_2": "melody_resolves_to_modal_root_preferred"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Melody selection criterion",
+              "quote_excerpt": "Choose a song fragment that contains a diatonic melody. The fragment below could be diatonic fo more than one key."
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Criteria for modal progression choice",
+              "quote_excerpt": "Two other considerations were important in this choice: 1. All melody notes within this fragment are diatonic to A minor. 2. The melody ends on A in measure 3, which reinforces the modal character of the phrase."
+            }
+          ],
+          "name": "Modal melody selection criterion",
+          "summary": "The melody fragment chosen for modal reharmonization must be diatonic to the selected modal key. Ideally the melody ends on or resolves to the modal root to reinforce tonal identity. Melody notes diatonic to more than one key offer the most flexibility for modal reharmonization."
+        }
+      ]
+    }
+  ]
+}
