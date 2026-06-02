@@ -21642,6 +21642,907 @@
       "status": "promoted"
     },
     {
+      "id": "heussenstamm-silbergleit",
+      "name": "George Heussenstamm & Roni Silbergleit",
+      "lived": "active (joint authorship)",
+      "traditions": [
+        "jazz pedagogy",
+        "guitar method",
+        "comprehensive jazz curriculum"
+      ],
+      "instrument": "6-string jazz guitar",
+      "biography": "George Heussenstamm and Roni Silbergleit are the joint authors of *Goldmine: 100 Jazz Lessons* (2005), a comprehensive jazz guitar method organized around the ii-V-I progression as the irreducible harmonic cell from which all jazz vocabulary radiates. The book's pedagogical signature is the one-way progression gate: each layer is introduced as a stepping stone toward its own transcendence. Biography placeholder; refine with maintainer review.",
+      "principles": [
+        {
+          "id": "ii-v-i-as-irreducible-cell",
+          "name": "ii-V-I as the irreducible harmonic cell from which all jazz vocabulary radiates",
+          "summary": "The book's foundational organizing claim: the ii-V-I progression is not just one progression among many but the IRREDUCIBLE harmonic cell from which all jazz vocabulary — harmonic, melodic, rhythmic, textural — radiates. Every subsequent technique (tritone substitution, chord-scale assignments, voicing density, swing-feel techniques, even the ballad-feel and blues-bend rules) is presented as an extension of, substitution for, or texture-layer over the same cell. This single-cell foundation is what allows the 100 lessons to cohere as a single integrated curriculum rather than a catalog of disconnected techniques.",
+          "voicingStyleTags": [
+            "heussenstamm-silbergleit",
+            "ii-v-i-foundation"
+          ],
+          "playStyleTags": [
+            "irreducible-cell",
+            "single-vehicle-curriculum"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Heussenstamm & Silbergleit. Goldmine: 100 Jazz Lessons.",
+              "citation": "Book-level Overview; Chapter 2 fixes the cell + 7th-to-3rd guide-tone rule; Chapters 3-11 extend the cell via substitutions and equivalences."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "one-way-pedagogical-gate-toward-obsolescence",
+          "name": "One-way pedagogical gate: each layer is introduced as a stepping stone toward its own obsolescence",
+          "summary": "The book's signature pedagogical move: each technique is introduced WITH a built-in expiration date. Chord-tone-only improvisation is taught first, but explicitly as a stepping stone, not a destination — it is meant to be transcended by scale-based improvisation. Scales are then introduced as liberation tools, but explicitly with the warning that they become boxes if mistaken for complete systems. The one-way gate (chord tones BEFORE scales; the cell BEFORE its substitutes; scale awareness BEFORE recognition of its limits) is what prevents the student from getting stuck at any single layer. This gate-with-obsolescence pattern is distinctive — most methods present each layer as complete in itself.",
+          "voicingStyleTags": [
+            "heussenstamm-silbergleit",
+            "one-way-gate",
+            "obsolescence-built-in"
+          ],
+          "playStyleTags": [
+            "staged-transcendence",
+            "stepping-stone-pedagogy"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Heussenstamm & Silbergleit. Goldmine: 100 Jazz Lessons.",
+              "citation": "Book-level Overview (one-way gate); Chapter 2 (chord-tones-before-scales); Chapter 10 (scales as liberation tools that become boxes)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "guide-tone-voice-leading-as-harmonic-gravity",
+          "name": "Guide-tone voice leading (7th-to-3rd) as the engine of jazz harmonic gravity",
+          "summary": "Chapter 2 fixes the foundational voice-leading rule: the 7th of each chord resolves to the 3rd of the next chord. This 7th-to-3rd guide-tone motion is named explicitly as 'the engine of jazz harmonic gravity' — it is what makes the ii-V-I cell COHERE harmonically, what makes tritone substitution sound smooth (the shared b5 pivot preserves the 7th-3rd line), and what allows all subsequent chord-extension and substitution layers to integrate without producing the harmonic-jerks that arise when guide tones are ignored. Voice-leading-first integration is a parallel to (and in some ways stricter than) Vaartstra's #371 articulation of the same principle.",
+          "voicingStyleTags": [
+            "heussenstamm-silbergleit",
+            "guide-tone-engine"
+          ],
+          "playStyleTags": [
+            "7th-to-3rd-resolution",
+            "voice-leading-engine"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Heussenstamm & Silbergleit. Goldmine: 100 Jazz Lessons.",
+              "citation": "Chapter 2, p. 9 ('tendency for the 7th of a chord to lead to the 3rd of the next one'); Chapter 3, p. 22 (extended through Am7b5 → D7b9 motion); reapplied throughout."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "rhythm-and-density-as-parallel-technical-languages",
+          "name": "Rhythm and texture-density treated as parallel technical languages, not byproducts",
+          "summary": "Heussenstamm & Silbergleit's distinctive move: rhythm and comping density are taught with the SAME rigor as harmony and melody, not as soft byproducts of note choice. The book's first technical prescription — chord anticipation (placing voicings one eighth-note early) — establishes that jazz rhythm is a parallel technical language. Comping density (sparse guide tones → full voicings → complete silence as DYNAMIC LEVER) is named as the primary tool in musical conversation. Three named swing-feel techniques, a precise ballad-feel definition (even 8ths and triplets, arpeggiated attacks), and the explicit blues-bend stylistic-boundary rule together establish feel as a learnable, rigor-deserving subject rather than an unteachable gift.",
+          "voicingStyleTags": [
+            "heussenstamm-silbergleit",
+            "density-as-lever",
+            "rhythm-as-technical-language"
+          ],
+          "playStyleTags": [
+            "chord-anticipation",
+            "comping-density-dynamic",
+            "named-swing-feel",
+            "ballad-feel-defined"
+          ],
+          "applies_to_modes": [
+            "comping"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Heussenstamm & Silbergleit. Goldmine: 100 Jazz Lessons.",
+              "citation": "Chord anticipation (first technical prescription); comping density taxonomy; three named swing-feel techniques; ballad-feel definition; blues-bend boundary rule."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
+      "works": [
+        {
+          "id": "goldmine-100-jazz-lessons",
+          "title": "Goldmine: 100 Jazz Lessons",
+          "year": 2005,
+          "instrument_scope": "6-string jazz guitar",
+          "summary": "Heussenstamm & Silbergleit's comprehensive jazz guitar method organized around a single governing premise: all jazz vocabulary — harmonic, melodic, rhythmic, textural — radiates outward from one irreducible harmonic cell, the ii-V-I progression. The book progresses through a deliberate one-way pedagogical gate: chord tones before scales, the cell before its substitutes, scale awareness before recognition of its limits. Even its earliest lessons point toward their own obsolescence — chord-tone-only improvisation is a stepping stone, not a destination; scales are liberation tools that become boxes if mistaken for complete systems. Three systems were derived: ii-V-I Harmonic Cell and Substitution System (central; tritone substitution, V7sus4 equivalences, the four altered-tension taxonomy), Scale-over-Chord Selection and Reduction System (chord-tones-as-scale-skeleton, pentatonic-hidden-in-diatonic, super Locrian / melodic minor / Mixolydian / Lydian dominant assignments), and Voicing Density and Comping Texture System (chord anticipation, density as dynamic lever, three named swing-feel techniques, ballad-feel definition, blues-bend stylistic boundary). Notably, the worker report flagged ZERO _pending: kinds — every rule fit a named engine kind cleanly, the cleanest engine-fit of any book in the batch.",
+          "references": [
+            {
+              "source": "Heussenstamm, George & Silbergleit, Roni. Goldmine: 100 Jazz Lessons. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-heussenstamm-goldmine-100-jazz-lessons; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/heussenstamm-silbergleit/goldmine-100-jazz-lessons/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "heussenstamm-silbergleit:goldmine-100-jazz-lessons:ii-v-i-harmonic-cell",
+              "name": "ii-V-I Harmonic Cell and Substitution System",
+              "summary": "The central system of this book is the ii-V-I progression treated as an irreducible harmonic cell from which all jazz vocabulary radiates. Members are the three chord-quality roles (minor-seventh ii, dominant-seventh V, major-seventh I) plus their minor variants, and the cell is extended through tritone substitution (replacing V7 with a chord a tritone away, sharing shell tones), whole ii-V tritone pairs, and the altered-dominant spectrum. Movement between members is governed by guide-tone voice leading (each chord's 7th resolves to the next chord's 3rd), chromatic root motion produced by tritone substitution, and the natural-to-altered dominant shift device (Mixolydian to super Locrian immediately before resolution). Modification rules govern how any member chord is altered: the four tension tones (#5, b5, b9, #9) mark the boundary between natural and altered dominants; the 7sus4 equivalence (equals a minor seventh on the 5th) enables voicing substitution; and Jazz 101 family substitution permits exchanging any chord for another within the same family (major, minor, dominant). The pedagogical one-way gate — master chord tones before scales, master the cell before its substitutes — is embedded in the system's ordering.",
+              "members": [
+                {
+                  "id": "ii-min7",
+                  "name": "ii — Minor Seventh",
+                  "summary": "The ii chord in a major key; Dorian scale; half-diminished (minor 7 flat-5) in minor contexts."
+                },
+                {
+                  "id": "v-dom7-natural",
+                  "name": "V — Natural Dominant Seventh",
+                  "summary": "Dominant seventh with no alterations; Mixolydian or Lydian dominant scale."
+                },
+                {
+                  "id": "v-dom7-altered",
+                  "name": "V — Altered Dominant Seventh",
+                  "summary": "Dominant seventh with one or more of #5, b5, b9, #9; super Locrian (melodic minor built a half step above root)."
+                },
+                {
+                  "id": "i-maj7",
+                  "name": "I — Major Seventh",
+                  "summary": "Tonic resolution chord; major scale or Lydian."
+                },
+                {
+                  "id": "i-min7",
+                  "name": "i — Minor Seventh (minor tonic)",
+                  "summary": "Minor tonic in minor ii-V-i; Dorian scale."
+                },
+                {
+                  "id": "tritone-sub-dom7",
+                  "name": "Tritone Substitute Dominant Seventh",
+                  "summary": "Dominant seventh rooted a tritone (three whole steps) from the original V7; shares 3rd and 7th with the original in inverted form."
+                },
+                {
+                  "id": "v7sus4",
+                  "name": "V7sus4 — Suspended Dominant",
+                  "summary": "Dominant seventh with natural 4th replacing the 3rd; equivalent to a minor seventh built on the dominant's 5th; unresolved in jazz usage."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "seventh-to-third-voice-leading",
+                  "name": "7th-to-3rd Guide-Tone Voice Leading",
+                  "summary": "The 7th of each chord leads directly (or via passing tone) to the 3rd of the next chord across the ii-V-I motion.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion",
+                    "direction": "7th_resolves_to_3rd",
+                    "applies_to": [
+                      "ii-min7",
+                      "v-dom7-natural",
+                      "v-dom7-altered",
+                      "i-maj7"
+                    ]
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "7th-to-3rd voice leading rule",
+                      "quote_excerpt": "tendency for the 7th of a chord to lead to the 3rd of the next one",
+                      "page": 9
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Guide Tone Voice Leading — 7th to 3rd",
+                      "quote_excerpt": "fundamental move between Am7b5 and D7b9—the 7th of the first chord leading to the 3rd of the next",
+                      "page": 22
+                    }
+                  ]
+                },
+                {
+                  "id": "natural-to-altered-shift",
+                  "name": "Natural-to-Altered Dominant Shift (Mixolydian to Super Locrian)",
+                  "summary": "A dominant seventh moves from natural (Mixolydian) to altered (super Locrian) immediately before V-I resolution to create urgency.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion",
+                    "from": "v-dom7-natural",
+                    "to": "v-dom7-altered",
+                    "trigger": "pre-resolution"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Natural-to-altered dominant shift device",
+                      "quote_excerpt": "dominant seven chord to change from natural to altered before it resolves in a V-I direction",
+                      "page": 32
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Mixolydian to super Locrian scale switch",
+                      "quote_excerpt": "first played from a corresponding Mixolydian scale and then switched to the super Locrian",
+                      "page": 33
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-chromatic-root-motion",
+                  "name": "Tritone Substitution — Chromatic Root Motion",
+                  "summary": "Replacing the V7 with its tritone substitute converts circle-of-fifths root motion into chromatic (half-step) root motion to the I chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand",
+                    "from": "v-dom7-natural",
+                    "to": "tritone-sub-dom7",
+                    "shared_tones": [
+                      "3rd",
+                      "7th"
+                    ],
+                    "bass_motion": "chromatic"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Tritone Substitution Definition",
+                      "quote_excerpt": "replacement of a chord with another one of the same kind rooted a tritone away",
+                      "page": 17
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Tritone Sub — Chromatic Root Motion",
+                      "quote_excerpt": "chromatic root movement to get where we're going",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "tonicization-cell-replication",
+                  "name": "ii-V-I Cell Replication via Tonicization",
+                  "summary": "Any chord in a progression may act as a temporary I, generating a local ii-V-I cell that redirects scale and chord-tone choices to the tonicized key.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence",
+                    "mechanism": "tonicization",
+                    "applies_to": "any_non-tonic_chord"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Tonicization within progressions",
+                      "quote_excerpt": "ii-V-I in F within the tune",
+                      "page": 9
+                    }
+                  ]
+                },
+                {
+                  "id": "minor-ii-v-altered-preference",
+                  "name": "Minor ii-V-i: Strong Preference for Altered Dominant",
+                  "summary": "In minor ii-V-i contexts the V chord is strongly expected to be altered rather than natural.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion",
+                    "preference": "altered_dominant",
+                    "context": "minor_ii-V-i"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Minor ii-V altered dominant rule",
+                      "quote_excerpt": "for a minor ii-V-i, the tendency is strong for that V chord to be an altered dominant",
+                      "page": 31
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "tritone-sub-shell-inversion",
+                  "name": "Tritone Substitute Shares Inverted Shell Voicing",
+                  "summary": "A dominant seventh and its tritone substitute share the same two-note shell (root + 3rd + 7th minus root), with 3rd and 7th swapped in register.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand",
+                    "shell_inversion": true,
+                    "interval": "tritone"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Tritone substitutes share shell shape",
+                      "quote_excerpt": "tritone substitutes of one another, and this is one place where they 'meet'",
+                      "page": 49
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "b5 Chord — V7 Meeting Point",
+                      "quote_excerpt": "simple 7b5 chord is the place where a dominant chord and its tritone substitute meet",
+                      "page": 17
+                    }
+                  ]
+                },
+                {
+                  "id": "sus4-minor-seventh-equivalence",
+                  "name": "7sus4 = Minor Seventh on the 5th",
+                  "summary": "The 7sus4 chord is equivalent to a minor seventh chord built on the dominant's 5th; allows Dm7 voicing and melodic ideas to substitute over G7sus4.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand",
+                    "equivalence": "sus4_equals_min7_on_5th"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Minor 7th on 5th equals 7sus4",
+                      "quote_excerpt": "7sus4 chord is very much like a minor seven chord built on its 5th",
+                      "page": 66
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Dm7 arpeggio substitution on G7sus4",
+                      "quote_excerpt": "D minor seven ideas can typically fit hand-in-glove with G7sus4",
+                      "page": 69
+                    }
+                  ]
+                },
+                {
+                  "id": "four-tension-tones-alteration",
+                  "name": "Four Tension Tones Define Altered Dominant Boundary",
+                  "summary": "Alterations to a dominant seventh are bounded to exactly four tension tones (#5, b5, b9, #9); adding any of these converts natural to altered status.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire",
+                    "tension_tones": [
+                      "#5",
+                      "b5",
+                      "b9",
+                      "#9"
+                    ],
+                    "applies_to": "v-dom7-altered"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Four tension tones rule",
+                      "quote_excerpt": "four tension tones—b5, #5, b9, #9—and that's it",
+                      "page": 145
+                    }
+                  ]
+                },
+                {
+                  "id": "jazz-101-family-substitution",
+                  "name": "Jazz 101 — Same-Family Chord Substitution",
+                  "summary": "Any chord may be exchanged for another chord from the same family (major, minor, or dominant) to create embellishment without changing harmonic function.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand",
+                    "constraint": "same_family",
+                    "families": [
+                      "major",
+                      "minor",
+                      "dominant"
+                    ]
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Chord embellishment / Jazz 101",
+                      "quote_excerpt": "exchange, replace, or substitute any chord with another chord from the same family",
+                      "page": 201
+                    },
+                    {
+                      "chapter_n": 13,
+                      "topic": "Three chord families",
+                      "quote_excerpt": "three types of chords, or three chord families: major, minor, and dominant",
+                      "page": 186
+                    }
+                  ]
+                },
+                {
+                  "id": "bvi-natural-v-altered-rule",
+                  "name": "bVI Natural Dominant → V Altered Dominant in Minor Blues",
+                  "summary": "In minor blues, the bVI chord is a natural dominant and the V chord that follows is altered; the pair creates directed tension toward the minor tonic.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion",
+                    "from": "bVI-natural-dom7",
+                    "to": "v-dom7-altered",
+                    "context": "minor_blues"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Natural vs. Altered Dominant Rule",
+                      "quote_excerpt": "normal pattern of a natural dominant for the bVI chord leading to an altered dominant for the V",
+                      "page": 21
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "heussenstamm-silbergleit:goldmine-100-jazz-lessons:scale-over-chord-selection",
+              "name": "Scale-over-Chord Selection and Reduction System",
+              "summary": "This system governs which scale a player deploys over any given chord type. Members are the principal scale/mode options arranged around the dominant seventh as the central battleground: Mixolydian (natural), Lydian dominant (raised 4th), super Locrian / altered (seventh mode of melodic minor), diminished (half-step/whole-step octatonic), bebop dominant, harmonic minor (over diminished-function chords), and pentatonic options. Traversal rules include the strategic reduction principle (group chords by key; apply one scale across a region, ignoring brief non-diatonic chords or emphasizing their chord tones), the three-fret equivalence rule for the diminished scale (one fingering covers four keys), and the pentatonic-within-diatonic revelation (four pentatonics hidden in a single major scale). Modification rules include the Lydian-dominant avoidance of the natural 4th, the super Locrian / Ab melodic minor enharmonic identity, and the explicit ceiling on scale-as-method thinking (scales are starting points that liberate initially but trap the player in boxes if mistaken for complete note-choice systems).",
+              "members": [
+                {
+                  "id": "dorian",
+                  "name": "Dorian — Minor Seventh / ii Chord Scale",
+                  "summary": "Natural minor with raised 6th; used over ii min7 and minor tonic in minor ii-V-i."
+                },
+                {
+                  "id": "mixolydian",
+                  "name": "Mixolydian — Natural Dominant Scale",
+                  "summary": "Major scale with flat 7th; default choice for natural dominant seventh."
+                },
+                {
+                  "id": "lydian-dominant",
+                  "name": "Lydian Dominant — Unaltered Dominant with #11",
+                  "summary": "Mixolydian with raised 4th; avoids clash between natural 4th and chordal 3rd; accommodates #11."
+                },
+                {
+                  "id": "super-locrian-altered",
+                  "name": "Super Locrian / Altered Scale",
+                  "summary": "Seventh mode of melodic minor; captures all four tension tones; enharmonically identical to melodic minor built a half step above the altered dominant root."
+                },
+                {
+                  "id": "diminished-hw",
+                  "name": "Diminished Scale (Half-Step / Whole-Step)",
+                  "summary": "Octatonic scale with H-W alternation; covers four keys per fingering (three-fret equivalence)."
+                },
+                {
+                  "id": "bebop-dominant",
+                  "name": "Bebop Dominant Scale",
+                  "summary": "Mixolydian plus natural major 7th passing tone; eight-note scale favored by Charlie Parker."
+                },
+                {
+                  "id": "harmonic-minor",
+                  "name": "Harmonic Minor",
+                  "summary": "Natural minor with raised 7th; applicable over diminished chords found within it."
+                },
+                {
+                  "id": "melodic-minor",
+                  "name": "Melodic Minor (Jazz)",
+                  "summary": "Major scale with flat 3rd; parent of super Locrian, Lydian dominant, and multiple chord types via harmonization."
+                },
+                {
+                  "id": "pentatonic-minor",
+                  "name": "Minor Pentatonic / Pentatonic Mixing",
+                  "summary": "Five-note subset; up to four pentatonic scales hidden within one major scale; overlapping positions usable simultaneously."
+                },
+                {
+                  "id": "whole-tone",
+                  "name": "Whole Tone Scale",
+                  "summary": "Only two mutually exclusive scales cover the entire chromatic system; generates augmented and #5 dominant chord sounds."
+                },
+                {
+                  "id": "locrian",
+                  "name": "Locrian — Half-Diminished / iim7b5 Scale",
+                  "summary": "Used over the half-diminished ii chord in minor ii-V-i contexts."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "chord-grouping-key-reduction",
+                  "name": "Group Chords by Key — Single-Scale Region Reduction",
+                  "summary": "Analyze a tune to group chords into key regions; apply one scale across the entire region rather than switching scale per chord.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity",
+                    "mechanism": "key_region_grouping"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Grouping chords by key for soloing",
+                      "quote_excerpt": "we only need to apply one scale to groups of chords that are related to one key",
+                      "page": 124
+                    }
+                  ]
+                },
+                {
+                  "id": "non-diatonic-chord-handling",
+                  "name": "Non-Diatonic Chord Two-Part Rule",
+                  "summary": "For briefly appearing non-diatonic chords, either ignore them and continue the key-region scale, or emphasize their chord tones as added color.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization",
+                    "options": [
+                      "ignore_brief",
+                      "emphasize_chord_tones"
+                    ]
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Non-diatonic chord handling",
+                      "quote_excerpt": "outside-the-key chords come and go quickly, you can choose to not pay attention to them",
+                      "page": 125
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-three-fret-equivalence",
+                  "name": "Diminished Scale Three-Fret Equivalence",
+                  "summary": "One diminished scale fingering pattern repeats every three frets and covers four keys simultaneously.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement",
+                    "interval_frets": 3,
+                    "keys_covered": 4
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Diminished scale three-fret equivalence",
+                      "quote_excerpt": "same exact patterns and fingerings occur three frets above and below",
+                      "page": 152
+                    }
+                  ]
+                },
+                {
+                  "id": "pentatonics-within-diatonic",
+                  "name": "Four Pentatonics Hidden Within One Major Scale",
+                  "summary": "A single diatonic major scale contains three (or four, with #4/b5) minor pentatonic scales usable simultaneously over related chords.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence",
+                    "derived_members": [
+                      "pentatonic-minor"
+                    ],
+                    "count": 4
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Pentatonics within diatonic major",
+                      "quote_excerpt": "C diatonic major scale contains three minor pentatonic scales within it",
+                      "page": 126
+                    }
+                  ]
+                },
+                {
+                  "id": "super-locrian-melodic-minor-identity",
+                  "name": "Super Locrian / Ab Melodic Minor Enharmonic Identity",
+                  "summary": "G super Locrian and Ab melodic minor contain the same notes; practitioners use 'melodic minor built a half step above the altered dominant root' as the practical mnemonic.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement",
+                    "equivalence": "super_locrian_equals_melodic_minor_up_half_step"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 11,
+                      "topic": "Super Locrian formula and Ab melodic minor identity",
+                      "quote_excerpt": "Ab melodic minor scale contains the same notes as the G super Locrian scale",
+                      "page": 160
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Bb melodic minor common scalar ground",
+                      "quote_excerpt": "scalar common ground between these chords, as they are, is basically the Bb melodic minor scale",
+                      "page": 62
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "lydian-dominant-4th-avoidance",
+                  "name": "Lydian Dominant: Avoid Natural 4th Against Dominant 3rd",
+                  "summary": "Over natural dominant seventh chords, the natural 4th of Mixolydian risks clashing with the chordal 3rd; Lydian dominant (raised 4th) eliminates this clash and adds #11.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow",
+                    "omit_tone": "natural_4th",
+                    "replacement": "raised_4th",
+                    "applies_to": "v-dom7-natural"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Lydian dominant for dominant extensions",
+                      "quote_excerpt": "avoiding the natural 4th or chordal 11th, which could clash with the 3rd",
+                      "page": 55
+                    },
+                    {
+                      "chapter_n": 8,
+                      "topic": "Lydian dominant vs. Mixolydian",
+                      "quote_excerpt": "avoids the potential clash of the natural 4th sustained against the chord",
+                      "page": 93
+                    }
+                  ]
+                },
+                {
+                  "id": "scales-as-starting-point-ceiling",
+                  "name": "Scale-as-Method Ceiling: Scales Liberate Then Trap",
+                  "summary": "Scales are a starting point for note choice, not a complete method; treating any single scale as the total how-to for a chord creates a box of limitations.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling",
+                    "ceiling_description": "no single scale exhausts note choice over any chord or progression"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Scales as starting point, not ceiling",
+                      "quote_excerpt": "scales do not tell the whole story when it comes to improvising—not even about note choice",
+                      "page": 92
+                    }
+                  ]
+                },
+                {
+                  "id": "bebop-diminished-restraint",
+                  "name": "Bebop Dominant and Diminished Scales: Mastery + Restraint",
+                  "summary": "Both the bebop dominant and diminished scales must be mastered but resist overuse; they are high-demand specialty tools, not default choices.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling",
+                    "ceiling_description": "resist_overuse; specialty application only"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "Diminished scale mastery imperative",
+                      "quote_excerpt": "Don't overuse this scale, but you should definitely master it",
+                      "page": 143
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Bebop dominant scale",
+                      "quote_excerpt": "natural or major 7th as well as the b7th and was a favorite of Charlie Parker",
+                      "page": 142
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-tone-improv-floor",
+                  "name": "Chord-Tone-Only Improvisation as Developmental Floor",
+                  "summary": "Chord-tone-only lines (arpeggios through the 9th) form the minimum required competence before scale-based improvisation; they are a stepping stone, not an end goal.",
+                  "engine_payload": {
+                    "kind": "DensityFloor",
+                    "floor_description": "chord_tones_only; root_3rd_5th_7th_9th",
+                    "pedagogical_stage": "prerequisite"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chord-tone exercise scope and limits",
+                      "quote_excerpt": "It is not an improvisational end-goal in itself",
+                      "page": 15
+                    },
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chord-tone-only improv exercise rationale",
+                      "quote_excerpt": "map out these chordal members on the fretboard and start to hear the chord changes",
+                      "page": 14
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "heussenstamm-silbergleit:goldmine-100-jazz-lessons:voicing-and-comping-texture",
+              "name": "Voicing Density and Comping Texture System",
+              "summary": "This system governs how chord voicings are constructed, selected, and texturally deployed in comping contexts. Members are voicing types ranging from full closed-position shapes through shell voicings (root + 3rd + 7th, then rootless two-string), quartal voicings, rootless extended voicings, and down to sparse guide-tone pairs or full silence (laying out). Traversal rules govern movement between voicing density levels: comping density is the primary dynamic lever, and the player moves from sparse guide tones upward through quartal and rootless to full textures based on musical context. Modification rules cover the dual root-string organizing principle (sixth-string or fifth-string root for minimal position shifts), the formula-based chord-family modification system (raise/lower 5th or 9th to alter; change 3rd quality to switch major/minor), the chord-melody rules (melody always on top; melody within a held shape), and the Freddie Green straight-4 constraints (precise release timing, minimal voicing size, felt-more-than-heard volume). The system explicitly warns against treating the default chord shape as a patch for slash chord notation.",
+              "members": [
+                {
+                  "id": "full-closed-voicing",
+                  "name": "Full Closed Voicing",
+                  "summary": "Complete chord with root on sixth or fifth string; all chord tones present; basis for movable-shape transposition."
+                },
+                {
+                  "id": "shell-voicing-rootless",
+                  "name": "Shell Voicing — Rootless (3rd + 7th)",
+                  "summary": "Two-string voicing on middle strings containing only the 3rd and 7th; root omitted; designed for use alongside a bassist."
+                },
+                {
+                  "id": "quartal-voicing",
+                  "name": "Quartal Voicing",
+                  "summary": "Stacked perfect 4ths, exploiting guitar's native string tuning; enables outside patterns and requires finger-rolling."
+                },
+                {
+                  "id": "rootless-extended-voicing",
+                  "name": "Rootless Extended Voicing",
+                  "summary": "Familiar chord shape with root on low string omitted; increases mobility; bass covers root in ensemble."
+                },
+                {
+                  "id": "guide-tone-sparse",
+                  "name": "Sparse Guide-Tone Comping",
+                  "summary": "Only 3rds and 7ths voiced; minimal density; maximum space for the soloist."
+                },
+                {
+                  "id": "laying-out",
+                  "name": "Laying Out",
+                  "summary": "Complete silence from the comper; an intentional texture choice in musical conversation."
+                },
+                {
+                  "id": "straight-4-voicing",
+                  "name": "Straight-4 / Freddie Green Voicing",
+                  "summary": "Quarter-note pulse with small root-3rd-7th shapes, precise release timing, minimal voicing size, low dynamic placement."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "dual-root-string-proximity",
+                  "name": "Dual Root-String Organizing Rule",
+                  "summary": "Every chord is learned in two voicings — root on sixth string and root on fifth string — so the next chord in a progression is always nearby without large position shifts.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity",
+                    "root_strings": [
+                      6,
+                      5
+                    ],
+                    "goal": "minimize_fretboard_shift"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Two chord forms per root",
+                      "quote_excerpt": "you can always have the next chord coming up in a progression close by",
+                      "page": 183
+                    }
+                  ]
+                },
+                {
+                  "id": "comping-density-as-dynamic-lever",
+                  "name": "Comping Density as Primary Dynamic Lever",
+                  "summary": "Move through voicing density levels (sparse guide tones → pentatonic ideas → full voicings → laying out) as the primary means of shaping intensity through a tune.",
+                  "engine_payload": {
+                    "kind": "TextureCycle",
+                    "levels": [
+                      "laying-out",
+                      "guide-tone-sparse",
+                      "shell-voicing-rootless",
+                      "quartal-voicing",
+                      "rootless-extended-voicing",
+                      "full-closed-voicing"
+                    ]
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Comping density as dynamic tool",
+                      "quote_excerpt": "vary the density, and with it the intensity, of our comping to fit different musical situations",
+                      "page": 94
+                    },
+                    {
+                      "chapter_n": 8,
+                      "topic": "Sparse comping: 3rds and 7ths only",
+                      "quote_excerpt": "if we want to allow the texture to be on the thin side, we could go as far as to lay out entirely",
+                      "page": 94
+                    }
+                  ]
+                },
+                {
+                  "id": "movable-shape-transposition",
+                  "name": "Movable Shape Transposition Across 12 Keys",
+                  "summary": "Any non-open-string voicing is moved fret by fret to transpose to other keys, exactly as barre chords are shifted.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity",
+                    "mechanism": "fret_shift_transposition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Movable chord shapes",
+                      "quote_excerpt": "all chord shapes are movable when you're not using open-string voicings",
+                      "page": 183
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "formula-modification-chord-family",
+                  "name": "Formula-Based Chord Modification Within and Across Families",
+                  "summary": "Starting from a dominant seventh formula (1-3-5-b7), raise or lower the 5th or 9th to alter; flatten the 3rd to shift to minor family; raise the 7th to shift to major family.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand",
+                    "base_formula": "1-3-5-b7",
+                    "operations": [
+                      "raise_5th",
+                      "lower_5th",
+                      "raise_9th",
+                      "lower_9th",
+                      "flatten_3rd",
+                      "raise_7th"
+                    ]
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Chord system via formula modification",
+                      "quote_excerpt": "If we study the A7 chord and its formula, we can change it and create other chords",
+                      "page": 184
+                    },
+                    {
+                      "chapter_n": 13,
+                      "topic": "Altered chord construction",
+                      "quote_excerpt": "raise or lower the 5th or the 9th note by a half step",
+                      "page": 188
+                    }
+                  ]
+                },
+                {
+                  "id": "shell-rootless-density-reduction",
+                  "name": "Shell Voicing: Root Omission for Compactness",
+                  "summary": "Full chord voicings are reduced to 3rd + 7th by removing the root, producing compact two-string middle-string shapes suitable for use over a walking bass.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow",
+                    "omit_tone": "root",
+                    "result": "shell-voicing-rootless",
+                    "condition": "bassist_present"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Two-note shell definition",
+                      "quote_excerpt": "leaving off the root, to boot ... very compact, easy-to-play, and flexible little two-string voicings",
+                      "page": 48
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-melody-top-voice-rule",
+                  "name": "Chord Melody: Melody Always on Top",
+                  "summary": "In chord-melody playing the melody note must always be the highest-pitched note in the voicing.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire",
+                    "required_position": "highest_voice",
+                    "applies_to": "chord-melody"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Chord melody rule: melody on top",
+                      "quote_excerpt": "always have the melody of the tune or song on top of the chords as the highest sounding pitch",
+                      "page": 196
+                    }
+                  ]
+                },
+                {
+                  "id": "straight-4-voicing-constraints",
+                  "name": "Straight-4 (Freddie Green) Voicing Density Constraints",
+                  "summary": "Straight-4 comping requires minimal voicing size (root-3rd-7th or smaller), precise short release between quarter notes (not sustained, not chopped), and volume kept low ('felt more than heard').",
+                  "engine_payload": {
+                    "kind": "DensityCeiling",
+                    "max_notes": 3,
+                    "release_timing": "swung_quarter_gap",
+                    "dynamic": "felt_more_than_heard"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Straight-4 voicing size",
+                      "quote_excerpt": "moderate or minimal in size, and some small root-3rd-and-7th kind of chord shapes",
+                      "page": 46
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Straight-4 volume and context",
+                      "quote_excerpt": "'Felt more than heard' is the classic description of its role in the swing-era big band",
+                      "page": 47
+                    }
+                  ]
+                },
+                {
+                  "id": "partial-rootless-extension",
+                  "name": "Partial Voicings and Rootless Extended Chords",
+                  "summary": "Not all chord tones need be present; moving the root up a step generates ninth chords; rootless voicings are encouraged in ensemble contexts where the bass covers the root.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow",
+                    "omit_tone": "root",
+                    "also_allows": "omit_any_non_guide_tone"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Partial voicings and rootless chords",
+                      "quote_excerpt": "You don't always have to have the root or all the notes of the chord present",
+                      "page": 184
+                    },
+                    {
+                      "chapter_n": 8,
+                      "topic": "Inner-voice motion: rootless voicings",
+                      "quote_excerpt": "leaving them off is often a good way to vary the texture",
+                      "page": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "promoted"
+    },
+    {
       "id": "benson",
       "name": "George Benson",
       "lived": "1943-",
