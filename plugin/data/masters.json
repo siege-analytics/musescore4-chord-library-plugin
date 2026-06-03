@@ -23222,28 +23222,2915 @@
           ]
         },
         {
-          "id": "_placeholder:method-vol-2-advanced-harmony",
-          "title": "The George Benson Method, Vol. 2 — Advanced Harmony"
+          "id": "method-vol-2-advanced-harmony",
+          "title": "George Benson Guitar Method, Vol. 2: Advanced Harmony",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 2 of the George Benson Guitar Method develops advanced harmonic vocabulary across seven chapters. Three systems derived: Three-Region Harmonic Substitution (the central system), Quartal Harmony Voicing, and Open String Chord Voicing — six _pending: kinds documented.",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 2: Advanced Harmony. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-2-advanced-harmony; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-2-advanced-harmony/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-2-advanced-harmony:harmonic-region-substitution",
+              "name": "Three-Region Harmonic Substitution System",
+              "summary": "The central system of the book organizes all chords into three functional regions — Root/Tonic (rest), Subdominant (distancing), and Dominant (tension) — and treats the II/V/I cadence as the master unit of harmonic motion. Within this framework, any chord may be replaced by another chord from the same harmonic region, and the dominant and subdominant regions are further declared interchangeable for the purpose of delay and color. The system is extended through tritone substitution (swap a dominant's root for its tritone), modal interchange (borrow chords from parallel modes sharing the same tonic), diminished symmetry (diminished chords repeat every minor third, yielding four equivalent options), and melodic minor dual membership (a minor II/V/I's half-diminished and altered dominant each belong to a different melodic minor key, unlocking additional substitutes). Turnaround progressions (II/V/I/VI and I/VI/II/V) and the all-dominant turnaround are structural extensions of the same cadential skeleton. The guitar-specific invariant throughout is that every concept must be internalized from both the 5th-string root position and the 6th-string root position.",
+              "members": [
+                {
+                  "id": "root-region",
+                  "name": "Root Region (Tonic)",
+                  "summary": "Chords of rest: Cmaj7 (I), Em7 (IIIm), Am7 (VIm) in major; Cm7 (I), Ebmaj7 (bIII) in minor."
+                },
+                {
+                  "id": "subdominant-region",
+                  "name": "Subdominant Region",
+                  "summary": "Major subdominant: Fmaj7 (IV), Dm7 (IIm), Bbmaj7 (bVII). Minor subdominant: Fm7(6) (IVm), Bb7 (bVII), Abmaj7 (bVI), Dbmaj7 (bII)."
+                },
+                {
+                  "id": "dominant-region",
+                  "name": "Dominant Region",
+                  "summary": "Chords of tension: G7 (V) and Bø (VII); resolved by motion to tonic."
+                },
+                {
+                  "id": "iivi-cadence",
+                  "name": "II/V/I Cadence",
+                  "summary": "The master organizational unit for chord progressions in both major and minor keys."
+                },
+                {
+                  "id": "turnaround",
+                  "name": "Turnaround Progression (II/V/I/VI or I/VI/II/V)",
+                  "summary": "II/V/I with an added VI degree; two structural forms, major and minor variants including VI7 and bVI7 options."
+                },
+                {
+                  "id": "all-dominant-turnaround",
+                  "name": "All-Dominant Turnaround",
+                  "summary": "Every chord in a turnaround progression made dominant with different voicings, each leading to the next until resolving to the tonic."
+                },
+                {
+                  "id": "tritone-sub",
+                  "name": "Tritone Substitution",
+                  "summary": "Replace a dominant 7th with another dominant 7th whose root is a tritone away; both share the same tritone interval."
+                },
+                {
+                  "id": "modal-interchange",
+                  "name": "Modal Interchange",
+                  "summary": "Borrowing chords from parallel modes (all modes sharing the same tonic) for re-harmonization color without abandoning the established key."
+                },
+                {
+                  "id": "diminished-symmetry",
+                  "name": "Diminished Chord Symmetry",
+                  "summary": "Diminished chords repeat every minor third, producing four equivalent chord options for any diminished symbol."
+                },
+                {
+                  "id": "fake-diminished",
+                  "name": "Fake Diminished",
+                  "summary": "An inverted dom7(b9) chord functioning as a dominant substitute."
+                },
+                {
+                  "id": "hybrid-diminished",
+                  "name": "Hybrid Diminished",
+                  "summary": "A diminished chord serving either as a connecting chord or as a V7 substitute in a cadence."
+                },
+                {
+                  "id": "melodic-minor-dual",
+                  "name": "Melodic Minor Dual Membership",
+                  "summary": "In a minor II/V/I, the half-diminished chord is the VI of one melodic minor key and the altered dominant is the VII of another, unlocking two melodic minor substitution families."
+                },
+                {
+                  "id": "secondary-dominant",
+                  "name": "Secondary Dominant",
+                  "summary": "A non-diatonic dominant chord assigned to resolve to a specific scale degree other than the tonic."
+                },
+                {
+                  "id": "lydian-dominant",
+                  "name": "Lydian Dominant",
+                  "summary": "A dominant 7th chord that is neither the V degree nor a tritone substitution; tensioned with 9, 13, or #11."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "same-region-interchangeability",
+                  "name": "Same-Region Chord Interchangeability",
+                  "summary": "Any chord may be replaced by another chord belonging to the same harmonic region; this is the theoretical basis for the IIm substituting for IV.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Harmonic Region substitution rule",
+                      "quote_excerpt": "any chord of a given Harmonic Region may be replaced by another of the same region",
+                      "page": 3
+                    }
+                  ]
+                },
+                {
+                  "id": "subdominant-delays-dominant",
+                  "name": "Subdominant-Dominant Interchangeability for Delay",
+                  "summary": "Subdominant and dominant region chords are interchangeable; subdominant chords function to delay the dominant chord and add harmonic color.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Subdominant delays dominant",
+                      "quote_excerpt": "subdominant chords are a way to delay the dominant chord, that is why subdominant chords and dominant chords are interchangeable",
+                      "page": 8
+                    }
+                  ]
+                },
+                {
+                  "id": "modal-interchange-column-traversal",
+                  "name": "Modal Interchange Column Traversal by Scale Degree",
+                  "summary": "Each scale degree permits substitution only from specific columns of the modal interchange table, defining the allowed traversal paths between parallel-mode chords.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Modal interchange substitution rules by degree",
+                      "quote_excerpt": "in every I degree we can use chords belonging from the 1st, 3rd or 6th columns",
+                      "page": 29
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-sub-traversal",
+                  "name": "Tritone Root Swap Traversal",
+                  "summary": "Move from any dominant 7th to the dominant 7th whose root is a tritone away; both chords share the same tritone and are therefore functionally interchangeable.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Tritone substitution defined",
+                      "quote_excerpt": "replace a dominant 7th chord by another dominant 7th chord just by changing the bass of the chord with its tritone",
+                      "page": 13
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-minor-third-traversal",
+                  "name": "Diminished Chord Minor-Third Symmetry Traversal",
+                  "summary": "Any diminished chord may be replaced by the diminished chord a minor third higher (or lower), cycling through four equivalent options.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Diminished chord symmetry",
+                      "quote_excerpt": "Diminished Chords have an interesting characteristic, they repeat themselves every minor 3rd",
+                      "page": 19
+                    }
+                  ]
+                },
+                {
+                  "id": "vii7-leading-tone-substitution",
+                  "name": "VII7 Leading-Tone Substitution for V7",
+                  "summary": "The VII7 chord may substitute for V7 because all its notes are half-steps away from the notes of the tonic chord, creating strong voice-leading tension and resolution.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Leading-tone VII7 substitution for V7",
+                      "quote_excerpt": "all the notes of B7 can work as leading tones to the notes of C6, because they are half step from each other",
+                      "page": 20
+                    }
+                  ]
+                },
+                {
+                  "id": "all-dominant-turnaround-traversal",
+                  "name": "All-Dominant Turnaround Chain Traversal",
+                  "summary": "In a turnaround sequence, every chord is made dominant with varying voicings, each resolving to the next dominant until the final resolution to tonic.",
+                  "engine_payload": {
+                    "kind": "_pending:dominant-chain-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "All-dominant turnaround in Brazilian/blues music",
+                      "quote_excerpt": "all the chords of the turnaround become dominant with different voicings",
+                      "page": 69
+                    }
+                  ]
+                },
+                {
+                  "id": "dual-root-position-learning",
+                  "name": "Dual Root-Position Learning (5th and 6th String)",
+                  "summary": "Every voicing concept and cadence pattern must be internalized in both 5th-string and 6th-string root positions for complete fretboard coverage.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "6th-string vs. 5th-string root learning",
+                      "quote_excerpt": "on the guitar we must learn things considering the 5th string as the root and also the 6th string as the root",
+                      "page": 11
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "melody-governs-voicing",
+                  "name": "Melody Governs Voicing Choice (Comping Constraint)",
+                  "summary": "When comping, the melody determines which voicing tensions and chord substitutions are available; improvising permits freer substitution choices.",
+                  "engine_payload": {
+                    "kind": "_pending:melody-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Comping vs. improvising freedom",
+                      "quote_excerpt": "the most important thing when comping is to follow the melody",
+                      "page": 4
+                    }
+                  ]
+                },
+                {
+                  "id": "altered-tensions-minor-v7",
+                  "name": "Altered Tension Requirement on Minor-Key V7",
+                  "summary": "Dominant seventh chords functioning as V in a minor key almost always require altered tensions (b9, #9, #11, b13), distinguishing them from major-key dominant chords.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Altered tensions in minor cadences",
+                      "quote_excerpt": "the dominant seventh chords almost always use altered tensions such as: b9, # 9, # 11, b13",
+                      "page": 4
+                    }
+                  ]
+                },
+                {
+                  "id": "lydian-dominant-tension-rule",
+                  "name": "Lydian Dominant Tension Rule (Non-Functional Dominants)",
+                  "summary": "Any dominant 7th that is not the V degree or a tritone substitution is treated as lydian dominant and tensioned with 9, 13, or #11.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Lydian dominant rule",
+                      "quote_excerpt": "Dominant 7th chords that are not the Vth degree or a tritone substitution, are always considered lydian dominant",
+                      "page": 2
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-sub-voicing-adjustment",
+                  "name": "Tritone Substitution Voicing Adjustment",
+                  "summary": "When a tritone substitute does not sound well with its original tension, both the tritone chord's extension and the preceding II chord's voicing must be adjusted together.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Tritone sub voicing adjustment rule",
+                      "quote_excerpt": "depending on the dominant chord we apply the tritone substitution to, it may not sound correct or great",
+                      "page": 14
+                    }
+                  ]
+                },
+                {
+                  "id": "melodic-minor-v-degree-prohibition",
+                  "name": "Melodic Minor V-Degree Substitution Prohibition",
+                  "summary": "The V degree of a melodic minor scale may not substitute for the dominant chord in a cadence when it shares the same root as the tonic, as this obliterates the cadential function.",
+                  "engine_payload": {
+                    "kind": "_pending:substitution-guard"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Melodic Minor as dominant substitute",
+                      "quote_excerpt": "the melodic minor V degree chord might not work sometimes",
+                      "page": 40
+                    }
+                  ]
+                },
+                {
+                  "id": "cadence-tensions-do-not-alter-function",
+                  "name": "Tensions Do Not Alter Cadential Function",
+                  "summary": "The tension notes (7, 9, 11, 13) added to any chord in a cadence do not change the cadence type or functional region of that chord.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Five cadence types defined",
+                      "quote_excerpt": "the tension notes (7, 9, 11, 13) used over the chords below do not affect their function in any way",
+                      "page": 22
+                    }
+                  ]
+                },
+                {
+                  "id": "parallel-mode-exercise-major-anchor",
+                  "name": "Parallel Mode Exercise Major-Key Anchor Rule",
+                  "summary": "In parallel-mode exercises, the first chord of any sequence must always be drawn from the major key; subsequent chords may be borrowed from the parallel minor.",
+                  "engine_payload": {
+                    "kind": "_pending:modal-anchor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Parallel modes exercise method",
+                      "quote_excerpt": "the first chord of the sequence will always be from the major key",
+                      "page": 33
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-2-advanced-harmony:quartal-voicing",
+              "name": "Quartal Harmony Voicing System",
+              "summary": "A specialized voicing system built on stacked perfect fourths (and augmented/diminished fourths) that produces harmonically ambiguous 'hybrid' chords distinct from tertian harmony. The system's defining property is modal ambiguity: a single quartal voicing can represent multiple modes depending on which bass note is placed beneath it, making bass-note selection the primary traversal mechanism. Two architectural sub-techniques are named: Melodic Pedal Point (top voice held fixed while lower voices move) and Modal Quartal Chord Voicings (a quartal sequence adaptable across modes by changing the bass note). Voicing density and register are governed by explicit rules: 3rd-5th string roots are preferred over 6th-string roots to avoid muddiness, and tetrad voicings in low positions must be reduced to triads. The prescribed learning protocol is single-key immersion before transposing and selective memorization over exhaustive cataloguing.",
+              "members": [
+                {
+                  "id": "quartal-triad",
+                  "name": "Quartal Triad Voicing",
+                  "summary": "Three-note chord built from stacked fourths; preferred for lower register comping contexts."
+                },
+                {
+                  "id": "quartal-tetrad",
+                  "name": "Quartal Tetrad Voicing",
+                  "summary": "Four-note chord built from stacked fourths; must be reduced to triad when voiced too low or too densely."
+                },
+                {
+                  "id": "pentatonic-quartal",
+                  "name": "Pentatonic Quartal Voicings",
+                  "summary": "Quartal voicings derived from major and relative minor pentatonic scales, excluding the avoid-note pentatonic."
+                },
+                {
+                  "id": "modal-quartal",
+                  "name": "Modal Quartal Chord Voicings",
+                  "summary": "Quartal chord sequences whose modal identity is determined by the sustained bass note beneath them."
+                },
+                {
+                  "id": "melodic-pedal-point",
+                  "name": "Melodic Pedal Point (Quartal)",
+                  "summary": "A quartal voice-leading device where the top voice is held fixed while lower voices shift."
+                },
+                {
+                  "id": "polymodal-quartal",
+                  "name": "Polymodal Quartal Voicings",
+                  "summary": "Single quartal harmonic structures adaptable across multiple modes depending on bass note and context."
+                },
+                {
+                  "id": "minor-blues-quartal",
+                  "name": "Minor Blues Scale Quartal Voicings",
+                  "summary": "Quartal shape (1, 4, b7) applied to harmonize the minor blues scale with scale notes always in the top voice."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "bass-note-selects-mode",
+                  "name": "Bass Note Determines Modal Identity",
+                  "summary": "Moving the sustained bass note beneath a fixed quartal chord sequence shifts the perceived mode of the entire sequence.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Modal quartal voicing - bass note determines mode",
+                      "quote_excerpt": "if we play the bass note E continuously over the sequence of chords above, we would have a E Phrygian chord sequence",
+                      "page": 216
+                    }
+                  ]
+                },
+                {
+                  "id": "melodic-pedal-top-voice-fixed",
+                  "name": "Melodic Pedal Point: Fixed Top Voice with Moving Lower Voices",
+                  "summary": "In melodic pedal point, the top voice remains stationary while lower quartal voices move, creating a distinct voice-leading texture.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Melodic pedal point definition",
+                      "quote_excerpt": "Melodic pedal point is a concept where the lowest voicings of the chords move, but the top voice remains the same",
+                      "page": 227
+                    }
+                  ]
+                },
+                {
+                  "id": "locrian-as-altered-scale-unlock",
+                  "name": "Locrian-as-Altered Substitution for Dominant Voicing",
+                  "summary": "A dominant 7th altered chord's arpeggio is half-diminished, allowing it to be treated as Locrian and unlocking the entire major scale a half-step up as a quartal voicing source.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Locrian vs. altered scale modal interchange",
+                      "quote_excerpt": "we can consider it for a while as being locrian, which allows us to use all the chords built from the major scale that generates it",
+                      "page": 254
+                    }
+                  ]
+                },
+                {
+                  "id": "pentatonic-quartal-scale-choice",
+                  "name": "Pentatonic Scale Selection for Quartal Voicings over Major 7th",
+                  "summary": "Over a major 7th chord, use G major pentatonic quartal voicings, C major pentatonic quartal voicings, or a mixture of both.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Cmaj7 quartal voicing scale choices",
+                      "quote_excerpt": "Over a Cmaj7 chord or any other chord belonging to the major scale",
+                      "page": 210
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "register-floor-3rd-string",
+                  "name": "Comping Register Floor: 3rd-5th String Preference",
+                  "summary": "Quartal voicings for comping should start from the 3rd, 4th, or 5th strings; 6th-string-rooted voicings and low-position 5th-string voicings often produce undesirable muddiness.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Comping register rule for quartal chords",
+                      "quote_excerpt": "we most often use the chords starting from the 3rd, 4th and 5th strings",
+                      "page": 204
+                    }
+                  ]
+                },
+                {
+                  "id": "tetrad-to-triad-reduction",
+                  "name": "Tetrad-to-Triad Density Reduction for Low Register",
+                  "summary": "When a quartal tetrad voicing sounds muddy due to low register or excessive density, drop the lowest note to produce a three-note quartal voicing.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "3-note voicing to fix low-register problems",
+                      "quote_excerpt": "some chords on the lower strings might not sound desirable, in these cases we can take out the lower note and play a 3 note quartal voicing",
+                      "page": 276
+                    }
+                  ]
+                },
+                {
+                  "id": "lydian-dominant-restriction-quartal",
+                  "name": "Lydian Dominant Voicing Restriction (Unresolved Dominant Only)",
+                  "summary": "Lydian dominant (mixolydian #4) quartal voicings may only be used over dominant 7th chords that are not resolving to another chord, except within a chain of successive dominant chords.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "lydian dominant (mixolydian #4) usage rule",
+                      "quote_excerpt": "It can only be used over dominant 7th chords that are not leading to any other chord",
+                      "page": 279
+                    }
+                  ]
+                },
+                {
+                  "id": "mixolydian-quartal-major-cadence-only",
+                  "name": "Mixolydian Quartal Voicings Restricted to Major-Resolving V Chords",
+                  "summary": "Mixolydian quartal voicings on the V degree are only permissible when that V chord resolves to a major chord; they are excluded from minor cadence contexts.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "mixolydian voicings: major vs. minor cadence rule",
+                      "quote_excerpt": "mixolydian chord voicings, which can only be used when they are leading to major chords",
+                      "page": 279
+                    }
+                  ]
+                },
+                {
+                  "id": "non-family-chord-voice-leading-override",
+                  "name": "Non-Family Chord Substitution When Voice-Leading Demands It",
+                  "summary": "A chord from outside the established voicing family may replace an expected chord when voice-leading logic produces a better result, as an explicit exception to family coherence.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "non-family chord substitution for Fm(maj7)",
+                      "quote_excerpt": "sometimes can be replaced by a chord not belonging to that family",
+                      "page": 277
+                    }
+                  ]
+                },
+                {
+                  "id": "minor-blues-scale-top-voice-rule",
+                  "name": "Minor Blues Scale Quartal: Scale Tones in Top Voice",
+                  "summary": "When harmonizing the minor blues scale with quartal shape (1, 4, b7), scale notes must always appear in the top voice of each chord; non-scale notes are permitted in inner voices.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Minor blues scale quartal harmonization method",
+                      "quote_excerpt": "the scale notes will always be on the top voice of each chord",
+                      "page": 244
+                    }
+                  ]
+                },
+                {
+                  "id": "locrian-pentatonic-blues-scale-exception",
+                  "name": "Locrian Voicing: Minor Blues Scale Replaces Minor Pentatonic",
+                  "summary": "Over Locrian quartal voicings, the minor pentatonic scale fails because its perfect 5th is not in the Locrian mode; the minor blues scale with #4 emphasis must substitute.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Polymodal quartal voicings - improvisation rule",
+                      "quote_excerpt": "we must be careful when using the pentatonic scale over Locrian chord voicings, because the perfect 5th of the scale does not belong to this mode",
+                      "page": 226
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-2-advanced-harmony:open-string-voicing",
+              "name": "Open String Chord Voicing System",
+              "summary": "A guitar-specific voicing system that treats open strings as fixed pitches that constrain or color chord shapes. Chords are classified into two types: those locked to a specific key (non-transposable) and those that retain their shape but may shift quality when moved to different frets. The core discovery method is a two-step process: choose a chord shape retaining at least one open string, then systematically apply it across frets to identify viable voicings. Pedal point - a sustained bass or upper note while other voices move - is introduced as a baroque tension device organized into three practical string-based groups (6th string, 5th string, Drop D). The system prescribes short harmonic sequences (I/IVm, I/VI/IIm/V, etc.) as the primary deployment context, and mandates memorization of the foundational open-string chord vocabulary before advancing.",
+              "members": [
+                {
+                  "id": "open-string-locked",
+                  "name": "Key-Locked Open String Chords",
+                  "summary": "Chord shapes that can only be played in one key and cannot be transposed while retaining open strings."
+                },
+                {
+                  "id": "open-string-transposable",
+                  "name": "Transposable Open String Chords",
+                  "summary": "Chord shapes that can be moved to other frets while retaining the same shape, though chord quality may shift."
+                },
+                {
+                  "id": "pedal-point-bass-6th",
+                  "name": "Bass Pedal Point - 6th String (E)",
+                  "summary": "Chord sequences with the open 6th string sustained as a bass pedal tone."
+                },
+                {
+                  "id": "pedal-point-bass-5th",
+                  "name": "Bass Pedal Point - 5th String (A)",
+                  "summary": "Chord sequences with the open 5th string sustained as a bass pedal tone."
+                },
+                {
+                  "id": "pedal-point-drop-d",
+                  "name": "Bass Pedal Point - Drop D",
+                  "summary": "Chord sequences using the 6th string retuned to D as the bass pedal; interchangeable with the 4th string D."
+                },
+                {
+                  "id": "inverted-pedal",
+                  "name": "Inverted Pedal Point",
+                  "summary": "A sustained upper voice while lower voices move, creating top-voice pedal tension."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "fret-shifting-shape-test",
+                  "name": "Systematic Fret-Shifting Shape Discovery",
+                  "summary": "After selecting an open-string chord shape, apply it to every fret in sequence to discover all viable voicings, most commonly using the 1st and 2nd open strings.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Applying chord shapes across frets",
+                      "quote_excerpt": "we can do some experimentation with all these chords by applying them on different frets of the guitar fretboard, leaving at least one open string",
+                      "page": 110
+                    }
+                  ]
+                },
+                {
+                  "id": "pedal-point-short-sequence-deployment",
+                  "name": "Pedal Point Chord Short-Sequence Deployment",
+                  "summary": "Pedal point and open string chords should be applied in simple, short harmonic sequences such as I/IVm, I/VI/IIm/V, IV/IVm/I, and I/V.",
+                  "engine_payload": {
+                    "kind": "_pending:sequence-template"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "How to use pedal point chords",
+                      "quote_excerpt": "The best way to use the pedal point chords or any open string chord, is to apply them as much as you can in every situation that is possible",
+                      "page": 169
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "open-string-quality-shift-awareness",
+                  "name": "Chord Quality Shift Warning When Moving Shapes",
+                  "summary": "Sliding a transposable open-string shape to a new fret can fundamentally change chord quality (e.g., major to minor); the player must verify the resulting quality at each fret.",
+                  "engine_payload": {
+                    "kind": "_pending:quality-shift-check"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Chords that change identity by fret",
+                      "quote_excerpt": "some chords do not change their characteristics, but others can change completely, going from a major chord to a minor chord at times",
+                      "page": 112
+                    }
+                  ]
+                },
+                {
+                  "id": "note-omission-for-playability",
+                  "name": "Note Omission for Hand-Size Accommodation",
+                  "summary": "When an open-string chord shape is too difficult to fret, one or more notes may be omitted to make it playable without destroying the harmonic function.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Omitting notes for playability",
+                      "quote_excerpt": "depending on the size of our hand, some chords might be very difficult to play in determined keys",
+                      "page": 112
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "id": "_placeholder:method-vol-3-technique-arpeggios-secret-of-two-chords",
-          "title": "The George Benson Method, Vol. 3 — George Benson Technique, Arpeggios, The Secret of the Two Chords"
+          "id": "method-vol-3-technique-arpeggios",
+          "title": "George Benson Guitar Method, Vol. 3: Technique & Arpeggios — The Secret of the Two Chords",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 3 covers technique and arpeggios across seven chapters. Four systems derived: Five-Zone Fretboard Navigation, Chord Arpeggio Construction, Blues Scale Combination, and Superimposition / Improvisational Vocabulary — nine _pending: kinds documented.",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 3: Technique & Arpeggios — The Secret of the Two Chords. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-3-technique-arpeggios; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-3-technique-arpeggios/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-3-technique-arpeggios:five-zone-fretboard-navigation",
+              "name": "Five-Zone Fretboard Navigation System",
+              "summary": "The book's central spatial system organizes the guitar fretboard into five vertical zones, each anchored by a guide chord shape (Cmaj7 or Am7), enabling the player to 'visualize vertically but play horizontally.' Zones are not visited in sequence; instead, the player skips adjacent zones to preserve left-right hand synchronization. Zone transitions require a non-standard 4-1-4-1 finger alternation and must be executed at the 1st or 6th string to avoid picking-direction conflicts. Guide chords function as navigational landmarks rather than harmonic instructions. The system applies uniformly across pentatonic scales (Chapter 3), blues scales (Chapter 4), and the natural major/minor scales (Chapter 6), making it the book's universal fretboard-organization framework.",
+              "members": [
+                {
+                  "id": "zone-1",
+                  "name": "Zone 1",
+                  "summary": "First vertical zone of the fretboard, anchored by a guide chord shape (Cmaj7 or Am7 voicing in that position)."
+                },
+                {
+                  "id": "zone-2",
+                  "name": "Zone 2",
+                  "summary": "Second vertical zone; typically skipped when traversing from Zone 1 to preserve hand synchronization."
+                },
+                {
+                  "id": "zone-3",
+                  "name": "Zone 3",
+                  "summary": "Third vertical zone; the default destination when skipping from Zone 1."
+                },
+                {
+                  "id": "zone-4",
+                  "name": "Zone 4",
+                  "summary": "Fourth vertical zone."
+                },
+                {
+                  "id": "zone-5",
+                  "name": "Zone 5",
+                  "summary": "Fifth vertical zone, completing coverage of the full fretboard range."
+                },
+                {
+                  "id": "guide-chord-cmaj7",
+                  "name": "Cmaj7 Guide Chord Shape",
+                  "summary": "Chord shape used as navigational anchor for Ionian-side zones."
+                },
+                {
+                  "id": "guide-chord-am7",
+                  "name": "Am7 Guide Chord Shape",
+                  "summary": "Chord shape used as navigational anchor for Aeolian-side zones."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "zone-skip-rule",
+                  "name": "Zone-Skip Rule",
+                  "summary": "When moving from one zone to another, skip the immediately adjacent zone (e.g., from Zone 1 go to Zone 3) to preserve the connection between both hands.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Skipping zones to preserve hand connection",
+                      "quote_excerpt": "we must skip the 2nd zone thus going to the 3rd zone...otherwise the connection between both hands would be lost",
+                      "page": 114
+                    }
+                  ]
+                },
+                {
+                  "id": "string-boundary-zone-change",
+                  "name": "1st/6th String Zone-Change Rule",
+                  "summary": "Zone transitions using alternate picking are cleanest when executed at the 1st or 6th string; other string boundaries introduce picking-direction hazards.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Zone connection picking problem",
+                      "quote_excerpt": "pentatonic connections with alternate picking work perfectly when we use the 1st or 6th string to change from one zone to another",
+                      "page": 114
+                    }
+                  ]
+                },
+                {
+                  "id": "zone-transition-fingering-4-1",
+                  "name": "4-1-4-1 Zone-Transition Fingering",
+                  "summary": "When crossing zone boundaries, use the non-standard 4-1 finger alternation rather than conventional sequential fingering.",
+                  "engine_payload": {
+                    "kind": "_pending:zone-transition-fingering"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Non-standard fingering when changing zones",
+                      "quote_excerpt": "when we change from one zone to another we have a non common type of fingering (4, 1, 4, 1, 4, 1 and 4, 1)",
+                      "page": 118
+                    }
+                  ]
+                },
+                {
+                  "id": "string-change-upstroke",
+                  "name": "String-Change Upstroke Rule",
+                  "summary": "Every time a string change occurs, the preceding stroke must be an upstroke to maintain picking-hand/fretting-hand synchronization.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "string change requires up stroke rule",
+                      "quote_excerpt": "everytime we want to change from one string to another, we should play an up stroke",
+                      "page": 3
+                    }
+                  ]
+                },
+                {
+                  "id": "guide-chord-zone-anchor",
+                  "name": "Guide-Chord Zone Anchoring",
+                  "summary": "Each zone is associated with a fixed chord shape (Cmaj7 or Am7) that anchors memory for that zone's root position; the chord root guides navigation, not harmony.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Guide chords for zone navigation",
+                      "quote_excerpt": "Each zone will be related with a chord shape (Cmaj7 or Am7). The chords will guide us",
+                      "page": 246
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "5-zone system introduction",
+                      "quote_excerpt": "they are only to guide us into the 5 zones, nothing else",
+                      "page": 110
+                    }
+                  ]
+                },
+                {
+                  "id": "horizontal-over-vertical-preference",
+                  "name": "Horizontal-Over-Vertical Play Preference",
+                  "summary": "After using vertical zone visualization to orient position, melodic lines should connect zones horizontally rather than remaining locked within a single vertical zone.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Five vertical zones — rationale",
+                      "quote_excerpt": "we visualize vertically but play horizontally most of the time",
+                      "page": 246
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Vertical vs. horizontal ideas",
+                      "quote_excerpt": "Usually, the vertical ideas do not work as well as the horizontal ideas",
+                      "page": 246
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "two-notes-per-string-vertical",
+                  "name": "Two-Notes-Per-String Vertical Fingering",
+                  "summary": "Pentatonic scale zones are fingered with exactly two notes per string to enable clean vertical playing within each zone.",
+                  "engine_payload": {
+                    "kind": "_pending:notes-per-string-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Two-notes-per-string vertical playing",
+                      "quote_excerpt": "pentatonic scales work perfectly when played vertically because they can be played using two notes per string",
+                      "page": 110
+                    }
+                  ]
+                },
+                {
+                  "id": "notes-per-string-picking-direction",
+                  "name": "Note-Count-Per-String Picking Direction Modifier",
+                  "summary": "The number of notes played on each string determines the picking direction for that string, and any change to fingering that alters this count must be accompanied by a corresponding picking adjustment.",
+                  "engine_payload": {
+                    "kind": "_pending:notes-per-string-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "notes per string affects picking direction",
+                      "quote_excerpt": "the number of notes we play per string...can completely change the right hand picking, destroying the connection between both hands",
+                      "page": 3
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-3-technique-arpeggios:chord-arpeggio-construction",
+              "name": "Chord Arpeggio Construction System",
+              "summary": "This system organizes all triad and tetrad arpeggios by root-string group (5th string vs. 6th string) with three shapes per group, and extends to inverted arpeggios visualized relative to a guide root. The system's traversal logic covers how to move between arpeggio shapes using guide-root selection, and its modification rules govern transposition (replacing open strings with the first finger) and the distinction between ascending arpeggios (which define fretboard zones) and descending arpeggios (which typically span two zones). In Chapter 7, the system is extended to 'Major 7th and Minor 7th Scale Arpeggios' — descending Cmaj7 and Am7 arpeggios with added color tones — as the principal device for navigating the avoid note over the I and VIm chords.",
+              "members": [
+                {
+                  "id": "5th-string-root-group",
+                  "name": "5th-String Root Group",
+                  "summary": "Arpeggios whose root note falls on the 5th string; contains three distinct shapes for triads and tetrads."
+                },
+                {
+                  "id": "6th-string-root-group",
+                  "name": "6th-String Root Group",
+                  "summary": "Arpeggios whose root note falls on the 6th string; contains three distinct shapes for triads and tetrads."
+                },
+                {
+                  "id": "triad-arpeggio",
+                  "name": "Triad Arpeggio",
+                  "summary": "Three-note chord arpeggio (root, 3rd, 5th) played melodically from root position."
+                },
+                {
+                  "id": "tetrad-arpeggio",
+                  "name": "Tetrad Arpeggio (7th Chord Arpeggio)",
+                  "summary": "Four-note chord arpeggio including the 7th, played melodically from root position."
+                },
+                {
+                  "id": "inverted-arpeggio",
+                  "name": "Inverted Arpeggio",
+                  "summary": "Arpeggio whose bass note is not the root; visualized relative to a guide root on either the 5th or 6th string."
+                },
+                {
+                  "id": "maj7-scale-arpeggio",
+                  "name": "Major 7th Scale Arpeggio (with Added Notes)",
+                  "summary": "Descending Cmaj7 arpeggio with added color tones, derived from Benson solos, used to avoid the perfect 4th over Imaj7."
+                },
+                {
+                  "id": "min7-scale-arpeggio",
+                  "name": "Minor 7th Scale Arpeggio (with Added Notes)",
+                  "summary": "Descending Am7 arpeggio with added color tones, used to avoid the flat 6th over VIm7."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "guide-root-selection",
+                  "name": "Guide-Root Selection Rule",
+                  "summary": "Select the 5th-string or 6th-string guide root to determine which arpeggio visualization applies for a given fretboard position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Inverted arpeggio visualization system",
+                      "quote_excerpt": "The inverted arpeggios can be visualized many ways, depending on the guide root we",
+                      "page": 80
+                    }
+                  ]
+                },
+                {
+                  "id": "ascending-defines-zone",
+                  "name": "Ascending Arpeggio Zone Definition Rule",
+                  "summary": "Ascending arpeggios establish and define the current fretboard zone; descending arpeggios characteristically span two zones.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Ascending arpeggios define zones",
+                      "quote_excerpt": "ascending arpeggios will define the fretboard zones, because the descending arpeggios will almost always use two zones",
+                      "page": 275
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "open-string-first-finger-substitution",
+                  "name": "Open-String First-Finger Transposition Rule",
+                  "summary": "When transposing an arpeggio shape out of open position, replace each open string with the first finger to preserve the shape's interval relationships.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Open strings replaceable by first finger",
+                      "quote_excerpt": "all the open strings...finger number [1 can replace them when transposing]",
+                      "page": 47
+                    }
+                  ]
+                },
+                {
+                  "id": "color-tone-addition-scale-arpeggio",
+                  "name": "Added-Note Color Tone Rule (Scale Arpeggios)",
+                  "summary": "Descending Cmaj7 and Am7 scale arpeggios are augmented with color tones derived from transcribed Benson solos, yielding lines that fit Ionian/Lydian and Dorian/Aeolian contexts while avoiding the perfect 4th.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Major 7th and Minor 7th scale arpeggios",
+                      "quote_excerpt": "Cmaj7 and Am7 descending chord arpeggios with added notes",
+                      "page": 269
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Two chords focus — solving avoid note",
+                      "quote_excerpt": "we will create melodies for Cmaj7 that can fit over Ionian or Lydian chords, and melodies for Am7 that can fit over Dorian or Aeolian chords",
+                      "page": 269
+                    }
+                  ]
+                },
+                {
+                  "id": "guitar-arpeggiation-superimposition",
+                  "name": "Guitar Arpeggiation Constraint for Superimposition",
+                  "summary": "Because stacked chords cannot be voiced simultaneously on guitar (as they can on piano), superimposed harmonies must be realized by arpeggiation of each chord in sequence.",
+                  "engine_payload": {
+                    "kind": "_pending:arpeggiation-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Chord stacking on guitar vs piano",
+                      "quote_excerpt": "it is difficult to play these superimposed chords correctly on the guitar...we must arpeggiate two chords",
+                      "page": 275
+                    }
+                  ]
+                },
+                {
+                  "id": "three-finger-avoidance-of-fourth",
+                  "name": "Three-Finger Playing Preference (No Fourth Finger)",
+                  "summary": "Arpeggio and scale fingerings preferentially use three fingers, avoiding the fourth finger, following Benson's characteristic left-hand approach.",
+                  "engine_payload": {
+                    "kind": "_pending:finger-avoidance"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "three-finger playing preference",
+                      "quote_excerpt": "he does not use the pinky or 4th finger very often, playing mostly with three fingers",
+                      "page": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-3-technique-arpeggios:blues-scale-combination",
+              "name": "Blues Scale Combination System",
+              "summary": "This system governs how the minor blues scale and major blues scale are combined within a key to produce authentic blues improvisation. The two scales are not interchangeable: the minor blues scale can summarize all chords in a major or minor blues form, but when the two scales are mixed, the player must follow harmony chord-by-chord rather than collapsing all changes into one scale. The major blues scale (derived from the 3rd degree of the minor blues scale) applies over major chords including dominant 7ths, but sounds most bluesy only in combination with the minor blues scale. Overreliance on either scale alone is explicitly named a failure mode ('lazy' improvising). The system also inherits the five-zone navigation structure, requiring at least two zones for horizontal melodic ideas.",
+              "members": [
+                {
+                  "id": "minor-blues-scale",
+                  "name": "Minor Blues Scale",
+                  "summary": "Minor pentatonic plus the blue note (b5); can be used across all chords of a major or minor blues form as a single summarizing scale."
+                },
+                {
+                  "id": "major-blues-scale",
+                  "name": "Major Blues Scale",
+                  "summary": "Same pitches as the minor blues scale but starting from the 3rd degree; applies over individual major chords including dominant 7ths."
+                },
+                {
+                  "id": "minor-blues-scale-eb-major-context",
+                  "name": "Eb Major Blues Scale (Minor Tonality Pairing)",
+                  "summary": "In minor tonality, the minor blues scale in C pairs with the Eb major blues scale rather than the C major blues scale."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "chord-by-chord-scale-following",
+                  "name": "Chord-by-Chord Scale Following Rule",
+                  "summary": "When mixing minor and major blues scales, do not summarize all chord changes into one scale; instead, assign each scale to its appropriate chord or chord type individually.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Major blues scale mixing rule",
+                      "quote_excerpt": "we cannot summarize all the chords into one scale anymore, we must follow the harmony",
+                      "page": 151
+                    }
+                  ]
+                },
+                {
+                  "id": "two-zone-minimum-horizontal",
+                  "name": "Two-Zone Minimum for Horizontal Lines",
+                  "summary": "Horizontal blues-scale melodic ideas must connect at least two zones to function properly.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Horizontal playing rationale",
+                      "quote_excerpt": "we must use at least two zones to make it work",
+                      "page": 146
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "minor-blues-dom7-major-third-caveat",
+                  "name": "Minor Blues over Dominant 7th — Major 3rd Caveat",
+                  "summary": "When using the minor blues scale over a dominant 7th chord, the major 3rd must be played quickly in the phrase to avoid harmonic clash.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Minor blues scale usage rule",
+                      "quote_excerpt": "Make sure to play the major 3rd quickly in the phrase, otherwise the melody can sound wrong",
+                      "page": 141
+                    }
+                  ]
+                },
+                {
+                  "id": "blues-scale-combination-major-tonality-only",
+                  "name": "Blues Scale Combination Restricted to Major Tonality",
+                  "summary": "The same-key minor+major blues combination rule applies only to major tonalities; in minor tonality, the minor blues in C pairs with the Eb major blues scale instead.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Combining blues scales for bluesy sound",
+                      "quote_excerpt": "Blues scales played in the same key work only for major tonalities and not for minor",
+                      "page": 140
+                    }
+                  ]
+                },
+                {
+                  "id": "single-scale-overreliance-prohibition",
+                  "name": "Single-Scale Overreliance Prohibition",
+                  "summary": "Relying on any single blues scale for the entirety of an improvisation produces lazy, stagnant lines; the system requires combination of multiple melodic ideas.",
+                  "engine_payload": {
+                    "kind": "_pending:multi-idea-combination"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Blues scale definition",
+                      "quote_excerpt": "Be careful not to rely on this technique. It will make you sound like a lazy improviser.",
+                      "page": 140
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Melodic patterns and improvisation",
+                      "quote_excerpt": "the secret of a great improviser is to combine all the melodic ideas at once",
+                      "page": 131
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-3-technique-arpeggios:superimposition-vocabulary",
+              "name": "Superimposition and Improvisational Vocabulary System",
+              "summary": "This system governs how the player builds, stores, and deploys improvisational vocabulary through a language-learning loop: listen to great soloists, sing their lines, transcribe them, then extract the underlying harmonic concept to generate new lines rather than simply reproducing copied licks. The vocabulary units (licks) are treated as fixed melodic-plus-physical units — pitch sequence, fingering, and picking are inseparable. Superimposition is defined as the melodic or harmonic joining of two or more chords; on guitar this requires arpeggiation because simultaneous chord-stacking is unavailable. Rhythmic displacement — offsetting intervallic patterns with rhythmic motifs — prevents mechanical predictability when applying arpeggio-based patterns. The system explicitly requires parallel study of volumes 1 and 2 for the rhythmic vocabulary needed to vary lines with taste.",
+              "members": [
+                {
+                  "id": "lick-vocabulary-unit",
+                  "name": "Lick (Pre-Set Melodic-Physical Unit)",
+                  "summary": "A fixed small melodic idea with inseparable fingering and picking; the basic vocabulary unit of improvisation, learned by singing before playing."
+                },
+                {
+                  "id": "minor-blues-substitution-trick",
+                  "name": "Minor Blues Substitution Trick",
+                  "summary": "Context-specific substitution vocabulary required because minor blues mixes minor and dominant chord types that a single pentatonic does not cleanly summarize."
+                },
+                {
+                  "id": "descending-scale-arpeggio-with-added-notes",
+                  "name": "Descending Scale Arpeggio with Added Notes",
+                  "summary": "Zone-by-zone descending Cmaj7/Am7 arpeggios with color tones, the primary superimposition device for I and VIm chords."
+                },
+                {
+                  "id": "intervallic-pattern-with-rhythmic-displacement",
+                  "name": "Intervallic Pattern with Rhythmic Displacement",
+                  "summary": "An intervallic arpeggio-based melodic pattern made musical by applying rhythmic motifs and motif-overlap (starting each motif by repeating the last note of the previous)."
+                },
+                {
+                  "id": "superimposed-chord-pair",
+                  "name": "Superimposed Chord Pair",
+                  "summary": "Two chords joined melodically or harmonically; realized on guitar through sequential arpeggiation rather than simultaneous voicing."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "language-learning-loop",
+                  "name": "Language-Learning Transcription Loop",
+                  "summary": "Move from listening to singing to transcribing to concept-extraction to new-line generation, cycling through solos of great artists to build vocabulary that transcends imitation.",
+                  "engine_payload": {
+                    "kind": "_pending:language-learning-loop"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Purpose of the book — transcend transcription",
+                      "quote_excerpt": "understand, organize and transcend what we transcribe finding out the musical concepts behind them",
+                      "page": 300
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Music as language — listen and copy",
+                      "quote_excerpt": "Music is exactly like a language...listen and copy from the greatest artists we love",
+                      "page": 300
+                    }
+                  ]
+                },
+                {
+                  "id": "context-driven-lick-selection",
+                  "name": "Context-Driven Lick/Fingering Selection",
+                  "summary": "When applying a lick, choose fingering and picking options based on the surrounding fretboard position (where you are coming from or going to).",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Choosing fingering/picking based on context",
+                      "quote_excerpt": "You can choose one of the examples depending on where you are coming from or going to on the guitar fretboard",
+                      "page": 184
+                    }
+                  ]
+                },
+                {
+                  "id": "minor-pentatonic-family-preference",
+                  "name": "Minor Pentatonic Family Preference Rule",
+                  "summary": "Lick lines built purely from minor pentatonic (without major pentatonic mixture) are preferentially deployed over chords belonging to the minor chord family, though the rule is not absolute.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Pure minor pentatonic over minor family",
+                      "quote_excerpt": "our preference is to use the lines over minor chords or chord sequences belonging to the minor chord family",
+                      "page": 210
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Minor pentatonic over major chords",
+                      "quote_excerpt": "This is not a rule. Melodic lines using only the minor pentatonic scale will often work perfectly over major chords",
+                      "page": 210
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "singing-first-internalization",
+                  "name": "Singing-First Internalization Rule",
+                  "summary": "Every lick or melodic line must be sung and aurally internalized before physical application; ear and body memory precede theoretical understanding.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-body-before-theory"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Singing licks to internalize them",
+                      "quote_excerpt": "learn to sing every melodic line (lick) that you know. Internalize the sound.",
+                      "page": 210
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Sing the solos",
+                      "quote_excerpt": "we must learn to sing melodies of songs and solos of our favorite artists",
+                      "page": 300
+                    }
+                  ]
+                },
+                {
+                  "id": "memorize-substitutions-before-theory",
+                  "name": "Memorize-Before-Theory Substitution Rule",
+                  "summary": "Minor blues substitution tricks must be memorized as vocabulary before their underlying theory is understood; pragmatic fluency precedes theoretical comprehension.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Memorize substitutions without theory",
+                      "quote_excerpt": "it is not necessary to understand the theory behind it, just memorize them",
+                      "page": 195
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Minor blues substitution tricks",
+                      "quote_excerpt": "the minor blues form has two different types of chords (minor and dominant), so we must learn some substitution tricks",
+                      "page": 195
+                    }
+                  ]
+                },
+                {
+                  "id": "rhythmic-displacement-anti-predictability",
+                  "name": "Rhythmic Displacement Anti-Predictability Rule",
+                  "summary": "Every intervallic arpeggio pattern must be offset with rhythmic motifs (rhythmic displacement) and motif-overlap to prevent mechanical, predictable sounding lines.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Rhythmic displacement motif rule",
+                      "quote_excerpt": "Every intervallic pattern should be applied using them...what we call rhythmic displacement",
+                      "page": 270
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Pattern caveat — predictability",
+                      "quote_excerpt": "DO NOT rely on these. They are exercises and can begin to sound very predictable and extremely boring.",
+                      "page": 270
+                    }
+                  ]
+                },
+                {
+                  "id": "fixed-fingering-picking-lick-unit",
+                  "name": "Fixed Fingering-and-Picking Lick Unit Rule",
+                  "summary": "A lick's notated fingering and picking are inseparable from the lick itself and must be followed exactly; they are not arbitrary but are chosen for hand coordination.",
+                  "engine_payload": {
+                    "kind": "_pending:fingering-picking-lock"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Fingering & picking must be followed exactly",
+                      "quote_excerpt": "follow the given fingering and picking possibilities exactly as notated for each one of the examples",
+                      "page": 210
+                    },
+                    {
+                      "chapter_n": 1,
+                      "topic": "correct fingering / digital memory",
+                      "quote_excerpt": "Play the exact suggested fingering...They were chosen specifically to better help you master this technique",
+                      "page": 2
+                    }
+                  ]
+                },
+                {
+                  "id": "pattern-note-order-invariant",
+                  "name": "Pattern Note-Order Invariant",
+                  "summary": "Within any melodic pattern, the sequence of pitches is fixed; only the rhythm applied to that sequence may vary.",
+                  "engine_payload": {
+                    "kind": "_pending:melodic-pattern-invariant"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Pattern note order rule",
+                      "quote_excerpt": "the order of the notes is always the same, the only thing that changes is the rhythm, otherwise we would be changing the melodic pattern",
+                      "page": 120
+                    }
+                  ]
+                },
+                {
+                  "id": "avoid-note-omission-imaj7-vim7",
+                  "name": "Avoid-Note Omission over Imaj7 and VIm7",
+                  "summary": "The perfect 4th (over Ionian/Imaj7) and flat 6th (over Aeolian/VIm7) are omitted as default choices; they may be retained in exceptional musical contexts.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Avoid notes — Ionian & Aeolian",
+                      "quote_excerpt": "Be careful with the avoid notes of both scales (perfect 4th in the Ionian mode, and flat 6th in the Aeolian mode)",
+                      "page": 244
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "Avoid note exception",
+                      "quote_excerpt": "there are always exceptions and at times the avoid note works fine depending on the situation",
+                      "page": 244
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "The Secret of the Two Chords — premise",
+                      "quote_excerpt": "the avoid note (perfect 4th) can create some melodic problems, especially over the root chord and the relative minor chord (Cmaj7 and Am7)",
+                      "page": 269
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "id": "_placeholder:method-vol-4-approach-tones-modal-world",
-          "title": "The George Benson Method, Vol. 4 — Approach Tones, Dorian/Mixolydian/Harmonic Minor World"
+          "id": "method-vol-4-approach-tones",
+          "title": "George Benson Guitar Method, Vol. 4: Approach Tones, Dorian, Mixolydian & Harmonic Minor World",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 4 covers approach tones and modal superimposition across three chapters. Three systems derived: Approach Tone Taxonomy, II-V Superimposition (Dorian / Mixolydian), and Harmonic Minor Superimposition — ten _pending: kinds documented; this volume is the heaviest _pending contributor in the benson siblings.",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 4: Approach Tones, Dorian, Mixolydian & Harmonic Minor World. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-4-approach-tones; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-4-approach-tones/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-4-approach-tones:approach-tone-taxonomy",
+              "name": "Approach Tone Taxonomy System",
+              "summary": "Chapter 1 establishes the foundational grammar for all melodic decoration in the method. Target tones — defined as either chord tones or scale tension notes — anchor every line, and avoid notes are structurally excluded from that role. The three categories of approach tones (Scale Tone, Chromatic, Enclosure) form a closed taxonomy: each category is fully enumerated into sub-types, directionally specified (ascending vs. descending), and rule-bounded (chromatic availability varies by chord type and interval distance). This system operates over the members of that taxonomy — the approach-tone sub-types — and governs how they may be selected and combined to ornament any target tone.",
+              "members": [
+                {
+                  "id": "target-tone-chord",
+                  "name": "Chord Target Tone",
+                  "summary": "A chord tone used as the structural anchor of a melodic phrase."
+                },
+                {
+                  "id": "target-tone-scale",
+                  "name": "Scale Target Tone (tension note)",
+                  "summary": "A scale tension note used as a structural anchor; avoid notes are explicitly excluded."
+                },
+                {
+                  "id": "scale-tone-approach-simple",
+                  "name": "Simple Scale Tone Approach",
+                  "summary": "One diatonic step immediately before (ascending) or after (descending) the target tone."
+                },
+                {
+                  "id": "scale-tone-approach-double",
+                  "name": "Double Scale Tone Approach",
+                  "summary": "Two diatonic steps leading into or away from the target tone."
+                },
+                {
+                  "id": "scale-tone-approach-triple",
+                  "name": "Triple Scale Tone Approach",
+                  "summary": "Three diatonic steps leading into or away from the target tone."
+                },
+                {
+                  "id": "scale-tone-approach-quadruple",
+                  "name": "Quadruple Scale Tone Approach",
+                  "summary": "Four diatonic steps leading into or away from the target tone."
+                },
+                {
+                  "id": "chromatic-approach-simple",
+                  "name": "Simple Chromatic Approach",
+                  "summary": "One half-step ascending or descending into the target tone; uniquely available across all chord types."
+                },
+                {
+                  "id": "chromatic-approach-double",
+                  "name": "Double Chromatic Approach",
+                  "summary": "Two consecutive half-steps approaching the target tone."
+                },
+                {
+                  "id": "chromatic-approach-triple",
+                  "name": "Triple Chromatic Approach",
+                  "summary": "Three consecutive half-steps approaching the target tone."
+                },
+                {
+                  "id": "chromatic-approach-mixed",
+                  "name": "Mixed Chromatic Approach",
+                  "summary": "A combination of chromatic and diatonic half-steps approaching the target tone."
+                },
+                {
+                  "id": "enclosure-approach",
+                  "name": "Enclosure Approach",
+                  "summary": "Surrounding the target tone with notes from above and below before landing on it."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "avoid-note-exclusion",
+                  "name": "Avoid Note Exclusion Rule",
+                  "summary": "Avoid notes are prohibited as target tones in all contexts except when the avoid note has been absorbed into the chord itself.",
+                  "engine_payload": {
+                    "kind": "_pending:avoid-note-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Target Tone rule: avoid notes excluded",
+                      "quote_excerpt": "we can only use chord tones or chord tension notes as target tones, but not avoid notes",
+                      "page": 1
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-chord-dependent-selection",
+                  "name": "Chord-Dependent Chromatic Approach Selection",
+                  "summary": "The available sub-types of chromatic approach vary by chord type because interval distances differ across chord families.",
+                  "engine_payload": {
+                    "kind": "_pending:chord-conditioned-approach-filter"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Chromatic approach: chord-dependent possibilities",
+                      "quote_excerpt": "depending on the chord, the possibilities of chromatic approaches can be different",
+                      "page": 5
+                    }
+                  ]
+                },
+                {
+                  "id": "scale-tone-direction-rule",
+                  "name": "Ascending vs. Descending Scale Tone Direction",
+                  "summary": "Notes immediately before the target tone are Ascending Scale Tone Approach; notes immediately after are Descending Scale Tone Approach.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Ascending vs. Descending ST direction",
+                      "quote_excerpt": "Notes used immediately before the target tone are called Ascending Scale Tone Approach",
+                      "page": 3
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "chromatic-restraint-rule",
+                  "name": "Chromatic Approach Restraint Rule",
+                  "summary": "Chromatic approaches must be applied with taste because the boundary between musical and non-musical melody is very thin.",
+                  "engine_payload": {
+                    "kind": "_pending:quality-gate-chromatic"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Chromatic approach caution rule",
+                      "quote_excerpt": "the 'borderline' between building a beautiful melody or a non-musical melody is very thin",
+                      "page": 5
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-4-approach-tones:ii-v-superimposition",
+              "name": "II-V Superimposition System (Dorian / Mixolydian)",
+              "summary": "Chapter 2 translates the approach-tone grammar into a generative system for constructing bebop single lines over the II-V cadence. The core move is superimposition: tetrads and triads drawn from the parent major scale are chained over IIm7 and V7 chords using an eight-option arpeggio-connection taxonomy (Options A-H). The fretboard is divided into five key-relative zones and horizontal zone-to-zone thinking is enforced over vertical scale-shape thinking. A signature modification is adding the major 7th as a leading tone to the Dorian scale, which unlocks the recycling of I-chord and IV-chord major-7th arpeggio lines as Dorian vocabulary. An explicit avoid-note rule governs the dominant side: the 4th (C over G7) is forbidden and must be replaced by emphasis on the 3rd (B). Scales are treated as fretboard maps rather than melodies; authentic lines emerge from mixing scales, arpeggios, and chromatic tones.",
+              "members": [
+                {
+                  "id": "dorian-scale",
+                  "name": "D Dorian Scale (IIm7 context)",
+                  "summary": "A static scale with no avoid notes, valid over any minor chord; all parent-key tetrads and triads may be superimposed over it."
+                },
+                {
+                  "id": "mixolydian-scale",
+                  "name": "G Mixolydian Scale (V7 context)",
+                  "summary": "The dominant side of the unified II-V vocabulary; the 4th (C) is an avoid note over a standalone G7."
+                },
+                {
+                  "id": "parent-key-tetrads",
+                  "name": "Parent-Key Tetrads",
+                  "summary": "The seven diatonic seventh chords (Cmaj7, Dm7, Em7, Fmaj7, G7, Am7, Bø) used as superimposed arpeggios over the IIm7."
+                },
+                {
+                  "id": "parent-key-triads",
+                  "name": "Parent-Key Triads",
+                  "summary": "The seven diatonic triads (C, Dm, Em, F, G, Am, B°) used as superimposed arpeggios over the IIm7."
+                },
+                {
+                  "id": "dorian-with-major7",
+                  "name": "Dorian Scale + Major 7th (Leading-Tone Extension)",
+                  "summary": "Dorian with an added major 7th functioning as a leading tone to the root, creating the illusion of dominant resolution over a minor chord."
+                },
+                {
+                  "id": "fretboard-zone-1",
+                  "name": "Fretboard Zone 1",
+                  "summary": "The zone anchored to the chord shape closest to the first fret in the given key."
+                },
+                {
+                  "id": "fretboard-zone-2",
+                  "name": "Fretboard Zone 2",
+                  "summary": "Second fretboard zone in key-relative ordering."
+                },
+                {
+                  "id": "fretboard-zone-3",
+                  "name": "Fretboard Zone 3",
+                  "summary": "Third fretboard zone in key-relative ordering."
+                },
+                {
+                  "id": "fretboard-zone-4",
+                  "name": "Fretboard Zone 4",
+                  "summary": "Fourth fretboard zone in key-relative ordering."
+                },
+                {
+                  "id": "fretboard-zone-5",
+                  "name": "Fretboard Zone 5",
+                  "summary": "Fifth fretboard zone in key-relative ordering."
+                },
+                {
+                  "id": "option-a",
+                  "name": "Connection Option A",
+                  "summary": "Ascending arpeggio -> down to next scale tone -> ascending arpeggio."
+                },
+                {
+                  "id": "option-b",
+                  "name": "Connection Option B",
+                  "summary": "Ascending arpeggio -> down to next scale tone -> descending arpeggio."
+                },
+                {
+                  "id": "option-c",
+                  "name": "Connection Option C",
+                  "summary": "Ascending arpeggio -> up to next scale tone -> ascending arpeggio."
+                },
+                {
+                  "id": "option-d",
+                  "name": "Connection Option D",
+                  "summary": "Ascending arpeggio -> up to next scale tone -> descending arpeggio."
+                },
+                {
+                  "id": "option-e",
+                  "name": "Connection Option E",
+                  "summary": "Descending arpeggio -> down to next scale tone -> ascending arpeggio."
+                },
+                {
+                  "id": "option-f",
+                  "name": "Connection Option F",
+                  "summary": "Descending arpeggio -> down to next scale tone -> descending arpeggio."
+                },
+                {
+                  "id": "option-g",
+                  "name": "Connection Option G",
+                  "summary": "Descending arpeggio -> up to next scale tone -> ascending arpeggio."
+                },
+                {
+                  "id": "option-h",
+                  "name": "Connection Option H",
+                  "summary": "Descending arpeggio -> up to next scale tone -> descending arpeggio."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "horizontal-zone-connection",
+                  "name": "Horizontal Zone Connection Rule",
+                  "summary": "Lines are built by connecting neighboring fretboard zones using scale-tone links rather than staying within a single vertical position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Horizontal zone connections",
+                      "quote_excerpt": "connect scale/arpeggios in different keys will help us start playing and thinking horizontally",
+                      "page": 151
+                    }
+                  ]
+                },
+                {
+                  "id": "arpeggio-connection-options-a-d",
+                  "name": "Arpeggio Connection Options A-D (Ascending Entry)",
+                  "summary": "Four directional combinations for linking two arpeggios via a scale-tone step, all beginning with an ascending arpeggio.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Arpeggio Connection Options A-D (taxonomy)",
+                      "quote_excerpt": "ascending arpeggio / go down to the next scale tone / ascending arpeggio",
+                      "page": 180
+                    }
+                  ]
+                },
+                {
+                  "id": "arpeggio-connection-options-e-h",
+                  "name": "Arpeggio Connection Options E-H (Descending Entry)",
+                  "summary": "Four directional combinations for linking two arpeggios via a scale-tone step, all beginning with a descending arpeggio.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Arpeggio Connection Options E-H (taxonomy)",
+                      "quote_excerpt": "descending arpeggio / go down to the next scale tone / ascending arpeggio",
+                      "page": 180
+                    }
+                  ]
+                },
+                {
+                  "id": "zone-key-dependent-ordering",
+                  "name": "Key-Dependent Zone Ordering",
+                  "summary": "The five zone shapes appear in a different order depending on the key; the first zone always begins at the chord shape closest to the first fret.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Five zones: key-dependent ordering",
+                      "quote_excerpt": "the five chord shapes related with the five zones will appear in a different order depending on the key",
+                      "page": 150
+                    }
+                  ]
+                },
+                {
+                  "id": "dorian-universalizes-to-all-parent-modes",
+                  "name": "Dorian Lines Universalize Across All Parent-Key Modes",
+                  "summary": "Every dorian exercise simultaneously provides valid vocabulary for every chord mode derived from the parent major key.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Dorian lines over all C major scale chords",
+                      "quote_excerpt": "all the melodic lines in this chapter can be used over any chord derived from 'C' major scale",
+                      "page": 180
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "avoid-note-c-over-g7",
+                  "name": "Avoid Note C Over Standalone G7",
+                  "summary": "The 4th (C) is an avoid note over a standalone G7 and must be replaced by emphasis on the 3rd (B); C is freely usable over G7sus.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Avoid note C over G7",
+                      "quote_excerpt": "we must be careful with the avoid note 'C'... emphasize the 'B' note instead the 'C' note",
+                      "page": 144
+                    }
+                  ]
+                },
+                {
+                  "id": "major7-leading-tone-addition",
+                  "name": "Major 7th Leading-Tone Addition to Dorian",
+                  "summary": "Adding the major 7th to the Dorian scale creates a leading-tone illusion of dominant resolution and unlocks recycling of major-7th arpeggio lines from the I and IV chords.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Major 7th as leading tone in dorian",
+                      "quote_excerpt": "we can add the major 7th to the dorian scale... works as a leading tone to the root",
+                      "page": 144
+                    }
+                  ]
+                },
+                {
+                  "id": "cmaj7-fmaj7-line-recycling",
+                  "name": "Cmaj7 + Fmaj7 Line Recycling for D Dorian",
+                  "summary": "Combining existing Cmaj7 and Fmaj7 arpeggio lines generates Dorian vocabulary without learning new material.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Combining Cmaj7 & Fmaj7 lines for D dorian",
+                      "quote_excerpt": "combining Cmaj7 lines with Fmaj7 lines, we can build a beautiful D dorian line",
+                      "page": 145
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-pre-arpeggio-color",
+                  "name": "Pre-Arpeggio Chromatic Approach",
+                  "summary": "Inserting a chromatic approach note before each arpeggiated chord adds color and disguises the mechanical regularity of the pattern.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Chromatic approach tone before each arpeggio",
+                      "quote_excerpt": "there is a chromatic note before each chord arpeggio, making them sound more 'colorful'",
+                      "page": 198
+                    }
+                  ]
+                },
+                {
+                  "id": "odd-even-rhythmic-displacement",
+                  "name": "Odd/Even Rhythmic Displacement",
+                  "summary": "Applying odd rhythmic cells to even-note patterns (and vice versa) removes the exercise feel and makes arpeggio sequences sound like improvisation.",
+                  "engine_payload": {
+                    "kind": "_pending:rhythmic-displacement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Odd/even rhythmic displacement rule",
+                      "quote_excerpt": "use odd rhythmic cells when we have even notes... take out the 'exercise feel'",
+                      "page": 198
+                    }
+                  ]
+                },
+                {
+                  "id": "scales-as-fretboard-maps",
+                  "name": "Scales-as-Maps Anti-Scalar Rule",
+                  "summary": "Scales serve only as fretboard guides; authentic improvisation requires mixing scales, superimposed arpeggios, and chromatic tones.",
+                  "engine_payload": {
+                    "kind": "_pending:anti-scalar-mix-mandate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 2,
+                      "topic": "Scales as fretboard guides, not melodies",
+                      "quote_excerpt": "we use scales only to guide us through the guitar fretboard... mix scales, superimposed arpeggios and chromatic tones",
+                      "page": 147
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-4-approach-tones:harmonic-minor-superimposition",
+              "name": "Harmonic Minor Superimposition System",
+              "summary": "Chapter 3 extends the superimposition method into the harmonic minor sound, treating it as an active, cadential scale reserved for V7-I resolutions to either minor or major tonic chords. The fretboard is organized into five vertical zones anchored to two guide chord shapes — Cm(maj7) and Eb+(maj7) — paralleling the zone architecture of Chapter 2. Scale arpeggios are derived by degree substitution: the perfect 5th is replaced by sharp-5 in major arpeggios, and the minor 7th is replaced by the major 7th in minor arpeggios. Two symmetric structures — the diminished chord (functioning as rootless V7b9) and the augmented chord — each provide four enharmonic spellings that can be embedded as melodic cells within the dominant. Chromatic approach notes inserted between arpeggiated notes produce the characteristic 'chromatic illusion' of multiple overlapping scales. Strict boundary rules govern application: the resolution note must match the destination chord; the natural 6th is forbidden over V7-Im cadences; descending augmented arpeggios require horizontal alternate picking; and superimposed chord families must avoid landing on the tonic root during the dominant.",
+              "members": [
+                {
+                  "id": "harmonic-minor-scale",
+                  "name": "C Harmonic Minor Scale",
+                  "summary": "An active, cadential scale generating its own dominant chord; used over V7-I resolutions to minor or major."
+                },
+                {
+                  "id": "ionian-sharp5-scale",
+                  "name": "Ionian (#5) Scale",
+                  "summary": "The relative major of harmonic minor; used as the parallel major-key resource and anchor for the zone system."
+                },
+                {
+                  "id": "harmonic-minor-zone-1",
+                  "name": "Harmonic Minor Fretboard Zone 1 — Cm(maj7)",
+                  "summary": "First of five vertical zones, anchored to the Cm(maj7) guide chord shape."
+                },
+                {
+                  "id": "harmonic-minor-zone-2",
+                  "name": "Harmonic Minor Fretboard Zone 2 — Eb+(maj7)",
+                  "summary": "Second zone, anchored to the Eb+(maj7) guide chord shape."
+                },
+                {
+                  "id": "harmonic-minor-zone-3",
+                  "name": "Harmonic Minor Fretboard Zone 3",
+                  "summary": "Third zone; returns to the Cm(maj7) shape at a higher register."
+                },
+                {
+                  "id": "harmonic-minor-zone-4",
+                  "name": "Harmonic Minor Fretboard Zone 4",
+                  "summary": "Fourth vertical zone in the harmonic minor zone system."
+                },
+                {
+                  "id": "harmonic-minor-zone-5",
+                  "name": "Harmonic Minor Fretboard Zone 5",
+                  "summary": "Fifth and highest vertical zone in the harmonic minor zone system."
+                },
+                {
+                  "id": "diminished-chord-rootless-v7",
+                  "name": "Diminished Chord (Rootless V7b9)",
+                  "summary": "The VII° of harmonic minor functioning as G7b9 without the root; four enharmonic spellings (B°, D°, F°, Ab°) are interchangeable."
+                },
+                {
+                  "id": "augmented-chord-melodic-cell",
+                  "name": "Augmented Chord (Melodic Cell)",
+                  "summary": "Derived from harmonic minor; three symmetric rotations (G+, B+, D#+) all function within G7 and are used as embedded melodic fragments."
+                },
+                {
+                  "id": "minor7-color-tone",
+                  "name": "Minor 7th (Aeolian Color Tone)",
+                  "summary": "A non-scale tone borrowed from Aeolian, available as a color addition to harmonic minor lines."
+                },
+                {
+                  "id": "harmonic-minor-major-arpeggio-sharp5",
+                  "name": "Harmonic Minor Major Arpeggio (#5 substitution)",
+                  "summary": "A major arpeggio with perfect 5th replaced by #5, characteristic of harmonic minor."
+                },
+                {
+                  "id": "harmonic-minor-minor-arpeggio-maj7",
+                  "name": "Harmonic Minor Minor Arpeggio (maj7 substitution)",
+                  "summary": "A minor arpeggio with minor 7th replaced by major 7th, characteristic of harmonic minor."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "five-zone-guide-chord-navigation",
+                  "name": "Five-Zone Guide Chord Navigation",
+                  "summary": "All harmonic minor lines are organized across five vertical fretboard zones anchored to Cm(maj7) and Eb+(maj7) guide chord shapes.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Five vertical zone guide chords",
+                      "quote_excerpt": "Guide Chords: Harmonic Minor & Ionian (#5) = Cm(maj7) & Ebmaj7(#5)",
+                      "page": 238
+                    }
+                  ]
+                },
+                {
+                  "id": "diminished-symmetry-interchangeability",
+                  "name": "Diminished Symmetry Interchangeability",
+                  "summary": "The four enharmonic diminished spellings (B°, D°, F°, Ab°) are interchangeable over G7b9 because each contains the same four pitch classes.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Diminished chord as rootless V7",
+                      "quote_excerpt": "B° will provide us three more equal chords: D°, F° and Ab°... all fake diminished chords",
+                      "page": 246
+                    }
+                  ]
+                },
+                {
+                  "id": "augmented-symmetry-interchangeability",
+                  "name": "Augmented Symmetry Interchangeability",
+                  "summary": "The three augmented rotations (G+, B+, D#+) derived from C harmonic minor are interchangeable as melodic cells over G7.",
+                  "engine_payload": {
+                    "kind": "SymmetryMovement"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Augmented chord harmonic origin",
+                      "quote_excerpt": "augmented chord which is also symmetric, giving us three equal augmented chords",
+                      "page": 281
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-illusion-ascending-only",
+                  "name": "Chromatic Illusion (Ascending Only Over Diminished)",
+                  "summary": "Chromatic approach notes are inserted ascending between arpeggiated notes to create the illusion of multiple scales; descending chromatics over diminished arpeggios follow a separate set of rules.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Chromatic illusion technique",
+                      "quote_excerpt": "we will only use simple ascending chromatic approaches over the diminished arpeggios",
+                      "page": 260
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "degree-substitution-sharp5-maj7",
+                  "name": "Degree Substitution: #5 and Maj7 Replacements",
+                  "summary": "Harmonic minor arpeggios are derived by replacing the perfect 5th with #5 in major shapes and the minor 7th with major 7th in minor shapes.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Scale arpeggios construction rule",
+                      "quote_excerpt": "replace the perfect 5th with the #5th, and in the minor scale arpeggio replace the minor 7th with the major 7th",
+                      "page": 243
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-family-degree-substitution-options",
+                  "name": "Chord-Family Degree Substitution Options",
+                  "summary": "Specific scale degrees may be replaced by diminished or half-diminished variants to avoid landing on the tonic C note during the dominant.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Degree substitution options",
+                      "quote_excerpt": "Second degree = Dø: can be replaced by D° / Fourth degree = Fm7: can be replaced by F°",
+                      "page": 335
+                    }
+                  ]
+                },
+                {
+                  "id": "minor7-color-tone-addition",
+                  "name": "Minor 7th Color Tone Addition",
+                  "summary": "The b7 (minor 7th) from Aeolian may be added to harmonic minor lines as a non-scale color tone because both scales share the same harmonic function.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Minor 7th as added color tone",
+                      "quote_excerpt": "we can also use the minor 7th, which is a note that is not derived from this scale but sounds great",
+                      "page": 235
+                    }
+                  ]
+                },
+                {
+                  "id": "natural6-forbidden-over-v7-im",
+                  "name": "Natural 6th Forbidden Over V7-Im Cadences",
+                  "summary": "The natural 6th (A natural in C minor) is derived from Dorian — a static scale — and cannot be used over any V7-Im cadence.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Dorian vs. aeolian: static vs. active",
+                      "quote_excerpt": "cannot use the 'A' note (major 6th)... derived from the dorian scale and cannot be played over any cadence",
+                      "page": 261
+                    }
+                  ]
+                },
+                {
+                  "id": "resolution-note-must-match-destination",
+                  "name": "Resolution Note Must Match Destination Chord",
+                  "summary": "The ending note of any harmonic minor line must fit the tonic chord even when the line is drawn from harmonic minor, which does not contain the destination chord tone.",
+                  "engine_payload": {
+                    "kind": "_pending:cadential-resolution-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Resolution note rule",
+                      "quote_excerpt": "always pay attention to the resolution note because we must always respect the ending chord",
+                      "page": 235
+                    }
+                  ]
+                },
+                {
+                  "id": "tonic-root-omission-over-dominant",
+                  "name": "Tonic Root Omission Over Dominant",
+                  "summary": "When superimposing the harmonic minor chord family over G7, the tonic root (C) must be avoided as a landing note to preserve melodic tension.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Chord-family superimposition rule",
+                      "quote_excerpt": "be careful when using the root of the Cm(maj7), because it can sound weird... forget the root for now",
+                      "page": 308
+                    }
+                  ]
+                },
+                {
+                  "id": "passing-chord-tonic-note-rule",
+                  "name": "Tonic-Note Chords as Passing Only",
+                  "summary": "Chords containing the tonic C (Dø, Fm7, Abmaj7) may only be used as passing material in a line moving from G7 to Cm7, not as melodic targets.",
+                  "engine_payload": {
+                    "kind": "_pending:passing-chord-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Passing chord tonic-note rule",
+                      "quote_excerpt": "We can use the triads and tetrads that contain the 'C' note only as passing chords",
+                      "page": 308
+                    }
+                  ]
+                },
+                {
+                  "id": "augmented-as-melodic-cell-not-harmonic",
+                  "name": "Augmented Chords as Embedded Melodic Cells",
+                  "summary": "Augmented chord shapes are never played consecutively as independent harmonic material; they function only as small melodic cells embedded within harmonic minor single lines.",
+                  "engine_payload": {
+                    "kind": "_pending:cell-embedding-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Augmented chords as melodic cells",
+                      "quote_excerpt": "these augmented chords are not to be played consecutively, they are just small melodic cells",
+                      "page": 284
+                    }
+                  ]
+                },
+                {
+                  "id": "descending-augmented-horizontal-picking",
+                  "name": "Descending Augmented Arpeggios: Horizontal Alternate Picking",
+                  "summary": "Descending augmented arpeggio shapes must be played horizontally (one shape per string) to maintain the George Benson alternate-picking technique.",
+                  "engine_payload": {
+                    "kind": "_pending:technique-constraint-picking"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Descending augmented: horizontal picking",
+                      "quote_excerpt": "descending augmented chord shapes will be played horizontally... George Benson picking technique works much better",
+                      "page": 284
+                    }
+                  ]
+                },
+                {
+                  "id": "harmonic-minor-forbidden-over-iim7",
+                  "name": "Harmonic Minor Forbidden Over IIm7 in Major Cadence",
+                  "summary": "When the full major cadence IIm7-V7-Imaj7 is present, harmonic minor lines cannot be applied over the IIm7 chord — only over the V7 and resolution.",
+                  "engine_payload": {
+                    "kind": "_pending:cadential-scope-gate"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "Harmonic minor over major resolution",
+                      "quote_excerpt": "when we have a complete 'C' major cadence such as Dm7 / G7 / Cmaj7, we cannot use 'C' harmonic minor ideas over the Dm7",
+                      "page": 236
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "id": "_placeholder:method-vol-5-melodic-minor-bebop-symmetric",
-          "title": "The George Benson Method, Vol. 5 — Melodic Minor World, Bebop Scales, Symmetric Ideas and Concepts"
+          "id": "method-vol-5-melodic-minor",
+          "title": "George Benson Guitar Method, Vol. 5: Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 5 covers melodic minor improvisation, bebop scales, and symmetric ideas. Single system derived (Melodic Minor Improvisation System). Worker flagged real method content (GB Chord Transitions in ch6, augmented-arpeggio rules in ch9) absent from systems-draft due to OCR fidelity loss — not curatorial choice. Stage B reviewer note: chapters 6, 9, 11 may benefit from re-OCR or character-normalized re-extraction once #298 lands.",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 5: Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-5-melodic-minor; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-5-melodic-minor/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-5-melodic-minor:melodic-minor-improvisation",
+              "name": "Melodic Minor Improvisation System",
+              "summary": "The central system of the volume organizes the melodic minor scale as the master's preferred improvisation resource, justified by its defining property of containing no avoid notes. The system operates over seven diatonic chord members derived from the melodic minor scale, provides a degree-mapping procedure to identify which parent melodic minor scale to deploy over any target chord, and spatializes the scale across the guitar neck via five vertical zones anchored by two alternating guide chords (Cmaj7(#5) and Am(maj7)). Modification rules govern harmonic constraints on dual-identity chords and the relationship between theoretical knowledge of tensions and their selective voicing in practice.",
+              "members": [
+                {
+                  "id": "am-maj7",
+                  "name": "Am(maj7) — Melodic Minor I",
+                  "summary": "Tonic minor-major seventh chord, first degree of A melodic minor; one of the two master guide chord shapes."
+                },
+                {
+                  "id": "bsus-b9",
+                  "name": "Bsus(b9) — Melodic Minor II",
+                  "summary": "Suspended chord with flat nine, second degree of A melodic minor."
+                },
+                {
+                  "id": "cmaj7-sharp5",
+                  "name": "Cmaj7(#5) — Lydian(#5) / Melodic Minor III",
+                  "summary": "Major seventh sharp-five chord, third degree of A melodic minor; the other master guide chord shape and the Lydian(#5) relative."
+                },
+                {
+                  "id": "d7-9-sharp11-13",
+                  "name": "D7(9, #11, 13) — Melodic Minor IV (dual-identity)",
+                  "summary": "Dominant seventh chord with tensions 9, #11, and 13; fourth degree of A melodic minor. Carries dual identity as both a melodic minor IV chord and a dominant diminished voicing, constraining usable scales."
+                },
+                {
+                  "id": "e7-9-b13",
+                  "name": "E7(9, b13) — Melodic Minor V",
+                  "summary": "Dominant seventh chord with tensions 9 and flat 13, fifth degree of A melodic minor."
+                },
+                {
+                  "id": "f-sharp-half-dim",
+                  "name": "F#ø — Melodic Minor VI",
+                  "summary": "Half-diminished chord, sixth degree of A melodic minor."
+                },
+                {
+                  "id": "g-sharp-7-alt",
+                  "name": "G#7alt — Melodic Minor VII",
+                  "summary": "Altered dominant chord, seventh degree of A melodic minor."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "degree-mapping-procedure",
+                  "name": "Chord-Degree Mapping: Identify Parent Melodic Minor Scale",
+                  "summary": "To select the correct melodic minor scale over any chord, locate that chord as a specific degree within the melodic minor scale family and use the parent scale associated with that degree position.",
+                  "engine_payload": {
+                    "kind": "_pending:chord-degree-parent-selection"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Scale application examples by chord",
+                      "quote_excerpt": "Over a Gsus(b9) we would visualize the single lines as being derived from \"F\" melodic minor because the Gsus(b9) chord is the IInd degree",
+                      "page": 15
+                    }
+                  ]
+                },
+                {
+                  "id": "two-guide-chord-minimum",
+                  "name": "Extended Scale Options Require Two Guide Chords",
+                  "summary": "When using extended scale options, at least two guide chords must be used for proper fretboard visualization; a single anchor is insufficient.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Extended scale options: guide chords required",
+                      "quote_excerpt": "we must use at least 2 guide chords in order to properly visualize what we are doing",
+                      "page": 27
+                    }
+                  ]
+                },
+                {
+                  "id": "melodic-idea-chord-shape-relation",
+                  "name": "Relate Melodic Idea to Associated Chord Shape",
+                  "summary": "Every melodic idea must be visualized in direct relation to its associated chord shape, using a reference key (e.g. Cm) to anchor the melodic pattern spatially on the fretboard.",
+                  "engine_payload": {
+                    "kind": "_pending:melodic-chord-shape-anchoring"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Cm key: visualizing Eb substitution",
+                      "quote_excerpt": "the secret is to relate the melodic idea with the chord shape given",
+                      "page": 30
+                    }
+                  ]
+                },
+                {
+                  "id": "five-zone-guide-chord-alternation",
+                  "name": "Five Vertical Zones with Alternating Guide Chords",
+                  "summary": "The melodic minor scale is traversed across the fretboard through five vertical zones, each anchored by one of two alternating guide chords (Cmaj7(#5) and Am(maj7)), reusing the same zonal framework as Ionian and Aeolian.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Melodic minor construction rule",
+                      "quote_excerpt": "use the same 5 vertical zones exactly as we did before with Ionian and Aeolian but this time having Cmaj7(#5) and Am(maj7) as guiding chords",
+                      "page": 15
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Visualizing melodic minor tetrads per zone",
+                      "quote_excerpt": "All the tetrads from the melodic minor family should be related to these two chords",
+                      "page": 33
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "no-avoid-notes-unlimited-color",
+                  "name": "No Avoid Notes: Unlimited Harmonic Possibilities",
+                  "summary": "Because the melodic minor scale contains no avoid notes, any of its tones may be sounded over its associated chord without clash, yielding a larger palette of scale arpeggios and guide chords than scales with avoid notes.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Melodic Minor: no avoid notes",
+                      "quote_excerpt": "this scale has no avoid notes, the possibilities are infinitely larger than other scales",
+                      "page": 15
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Melodic minor: no avoid notes",
+                      "quote_excerpt": "the melodic minor scale has no avoid notes, and for that reason we can have a bigger variety of scale arpeggios and guide chords",
+                      "page": 28
+                    }
+                  ]
+                },
+                {
+                  "id": "d7-sharp11-dual-identity-constraint",
+                  "name": "D7(#11) Dual Identity: Scale-Use Constraint",
+                  "summary": "D7(#11) functions simultaneously as the melodic minor IV chord and as a dominant diminished voicing; this dual identity prohibits the use of certain scales and chords over it that would be permitted for a standard degree-IV chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "D7(#11) dual function warning",
+                      "quote_excerpt": "this chord also can be considered as a dominant diminished chord voicing possibility... we cannot use certain types of scales and chords, otherwise we might have a terrible result",
+                      "page": 28
+                    }
+                  ]
+                },
+                {
+                  "id": "tensions-known-not-all-voiced",
+                  "name": "All Tensions Must Be Known; Not All Must Be Voiced",
+                  "summary": "A player is not required to voice every available tension in practice, but must possess theoretical knowledge of all tensions to avoid harmonization and improvisation errors.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Melodic minor tensions: not all required",
+                      "quote_excerpt": "do not have to contain all the tensions presented. However, we have to know all of them in order to do not make a mistake when harmonizing or improvising",
+                      "page": 28
+                    }
+                  ]
+                },
+                {
+                  "id": "ear-over-notation-meta-rule",
+                  "name": "Apply Patterns by Ear, Not by Notated Time Signatures",
+                  "summary": "Notated patterns carry a time signature for organizational clarity only; the student should extract pitch-and-interval content and re-deploy it rhythmically according to ear and musical context, prioritizing single lines over written groupings.",
+                  "engine_payload": {
+                    "kind": "_pending:ear-over-notation"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Time signatures in patterns: usage rule",
+                      "quote_excerpt": "Don't let the time signatures confuse you. Learn the ideas that you like the most and apply them where you feel they sound the best",
+                      "page": 15
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "id": "_placeholder:method-vol-6-secret-of-giant-lines",
-          "title": "The George Benson Method, Vol. 6 — The Secret of the Giant Lines"
+          "id": "method-vol-6-giant-lines",
+          "title": "George Benson Guitar Method, Vol. 6: The Secret of the Giant Lines",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 6 covers the 'Giant Lines' technique. Single system derived (Outside Substitution and Chord Transition System) covering 12 named members + the Giant Lines / Flux & Reflux / GB Chord Transitions / Ending Note Rule / D Mixolydian / B7 / guide chord visualization vocabulary. Two _pending: kinds. Worker note: the s4-statement.request.json built by the pipeline bridge for this run contained vol-7 inputs (cross-contamination class); worker mitigated by grounding LLM call directly on the correct on-disk vol-6 sources. Final STATEMENT.md verified as vol-6 content. Worth investigating the s4-statement request-builder.",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 6: The Secret of the Giant Lines. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-6-giant-lines; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-6-giant-lines/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-6-giant-lines:outside-substitution",
+              "name": "Outside Substitution and Chord Transition System",
+              "summary": "This system governs how a single-line improviser moves between 'inside' chord-family vocabulary and 'outside' superimposed ideas over dominant chords. Its central move is borrowing arpeggios or lines from a chord a tritone, fifth, or related distance away from the target chord, then resolving back to a chord tone of the original dominant before the next harmonic change. The outside effect is time-limited — staying too long destroys it — and the resolution note is non-negotiable. Members are the melodic regions available over a dominant chord: the inside chord family, the outside superimposed chord, and the resolution landing zone. Traversal rules govern when and how to enter/exit the outside region. Modification rules govern which substitute chord is chosen and what note the line must end on.",
+              "members": [
+                {
+                  "id": "inside-chord-family",
+                  "name": "Inside Chord Family",
+                  "summary": "Scale tones and arpeggios native to the target dominant chord and its parent harmonic field."
+                },
+                {
+                  "id": "outside-superimposed-chord",
+                  "name": "Outside Superimposed Chord",
+                  "summary": "A foreign chord (e.g., A7 over D7, or D7 leading to G) borrowed to create momentary harmonic tension outside the current key center."
+                },
+                {
+                  "id": "resolution-landing-zone",
+                  "name": "Resolution Landing Zone",
+                  "summary": "The mandatory chord-tone endpoint of any outside line, ensuring return to the inside before the next chord change."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "outside-entry-superimpose",
+                  "name": "Outside Entry by Chord Superimposition",
+                  "summary": "Enter the outside region by playing small ideas from a distantly related chord (e.g., A7) over the target dominant (D7) to create an outside effect.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "George Benson Chord Transitions",
+                      "quote_excerpt": "We can create a very interesting outside effect over a D7 chord by playing small A7 ideas",
+                      "page": 26
+                    }
+                  ]
+                },
+                {
+                  "id": "outside-duration-limit",
+                  "name": "Outside Duration Ceiling",
+                  "summary": "Do not remain on the outside superimposed chord idea for too long or the outside effect collapses and becomes non-musical.",
+                  "engine_payload": {
+                    "kind": "_pending:outside-duration-ceiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "7lux/re7lux outside effect warning",
+                      "quote_excerpt": "Do not stay on the A7 too long because you will destroy the effect",
+                      "page": 26
+                    }
+                  ]
+                },
+                {
+                  "id": "v7-i-cadence-superimpose",
+                  "name": "V7-I Cadential Superimposition",
+                  "summary": "A second outside approach constructs a mini V7-I cadence (e.g., D7 leading to G) embedded within the line over the target chord as an additional outside device.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Second GB Chord Transition",
+                      "quote_excerpt": "second trick is also to create a cadence V7/ I just like we did before by using D7 leading to G major",
+                      "page": 26
+                    }
+                  ]
+                },
+                {
+                  "id": "modal-family-outside-entry",
+                  "name": "Modal Family Outside Entry",
+                  "summary": "When a chord belongs to a modal family (e.g., D Mixolydian from Em chord family), use the related secondary dominant (B7) to create an outside line leading to the modal tonic.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "D Mixolydian / B7 outside rule",
+                      "quote_excerpt": "D Mixolydian derives from Emi Chord Family, we can use also B7 ideas leading to Emi",
+                      "page": 31
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "resolution-note-chord-tone-rule",
+                  "name": "Resolution Note Must Be Chord Tone",
+                  "summary": "Any single-line idea — inside or outside — must end on a chord tone of the target dominant chord before the harmonic change.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Ending note rule",
+                      "quote_excerpt": "make sure that the ending note from your single line idea is a chord tone for D7",
+                      "page": 26
+                    }
+                  ]
+                },
+                {
+                  "id": "major7-superimpose-for-minor-resolution",
+                  "name": "Major 7th Superimposition for Minor Resolution",
+                  "summary": "When resolving to a minor tonic (e.g., Dm7), prefer major-7th superimposed arpeggio ideas over the preceding dominant (A7) to strengthen the pull toward the minor chord.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 13,
+                      "topic": "Guide chord visualization suggestion",
+                      "quote_excerpt": "major 7th superimposed ideas will work better for A7 leading to Dm7",
+                      "page": 77
+                    }
+                  ]
+                },
+                {
+                  "id": "single-line-harmony-link",
+                  "name": "Single-Line as Harmonic Gateway",
+                  "summary": "Chord study is not an end in itself — chords serve as the gateway to understanding harmony, which in turn enables single-line melodic fluency.",
+                  "engine_payload": {
+                    "kind": "_pending:line-harmony-bridge"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 1,
+                      "topic": "Chords leading to harmony",
+                      "quote_excerpt": "The chords led me to the harmony, that helped me to become a better single line player",
+                      "page": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
-          "id": "_placeholder:method-vol-7-ultimate-advanced-blues",
-          "title": "The George Benson Method, Vol. 7 — Ultimate Advanced Blues Ideas"
+          "id": "method-vol-7-blues-ideas",
+          "title": "George Benson Guitar Method, Vol. 7: Ultimate Advanced Blues Ideas",
+          "year": 2005,
+          "instrument_scope": "6-string electric jazz guitar",
+          "summary": "Vol. 7 covers advanced blues vocabulary. Two systems derived: Harmonic Regions and Substitution System (12 members, 5t + 7m rules) and Rhythmic Positioning and Practice Architecture System (7 members, 2t + 4m rules). Six _pending: kinds documented. 4 of 12 chapters returned honest empty quotes[] (chs 1-3 title/intros/dedication, ch5 notation-only).",
+          "references": [
+            {
+              "source": "Benson, George. George Benson Guitar Method, Vol. 7: Ultimate Advanced Blues Ideas. 2005.",
+              "citation": "Primary source. Chapter-loop run 2026-05-28T15-05-20-benson-vol-7-blues-ideas; derived/STATEMENT.md and derived/systems-draft.json under plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "benson:method-vol-7-blues-ideas:harmonic-regions-substitution",
+              "name": "Harmonic Regions and Substitution System",
+              "summary": "The central system of the book organizes chords into Harmonic Regions — Major Subdominant, Minor Subdominant, and their relative/tritone-linked equivalents — and derives all substitution choices from regional membership rather than chord-by-chord analysis. Members are the harmonic regions themselves plus chord types that inhabit them. Traversal rules govern movement between regions: tritone substitution, leading-tone / diminished-as-V7, minor-subdominant derivation, relative-chord linkage, and consecutive minor-7th chains. Modification rules govern how a chord within a region may be altered or replaced: the regional interchangeability principle, scale-visualization context-assignment (Dorian for non-diatonic minor, Lydian for non-diatonic major, Lydian Dominant or Dominant Diminished for altered dominant contexts), the V-degree stripping rule under superimposition, the color-note dual-function rule, the tritone-substitution exception scale expansion, the Dorian/hybrid preference for non-diatonic minors, and the major-7th-arpeggio superimposition over dominant chords.",
+              "members": [
+                {
+                  "id": "major-subdominant-region",
+                  "name": "Major Subdominant Region",
+                  "summary": "Chords built on the IV degree of the home key functioning as subdominant (e.g., Bb7 in F major)."
+                },
+                {
+                  "id": "minor-subdominant-region",
+                  "name": "Minor Subdominant Region",
+                  "summary": "Chords derived from the parallel minor of the home key's subdominant (e.g., Bbm area yielding Gbmaj7, Ebm7, Ab7 as replacements for Bb7)."
+                },
+                {
+                  "id": "dominant-region",
+                  "name": "Dominant Region",
+                  "summary": "Chords functioning on the V degree, including tritone substitutes (e.g., C7 = F#7/Gb7)."
+                },
+                {
+                  "id": "tonic-region",
+                  "name": "Tonic Region",
+                  "summary": "Resolution chords on the I degree, including relative major/minor chords (e.g., Fmaj7, Dm7, Am7 in F major)."
+                },
+                {
+                  "id": "dominant-7th",
+                  "name": "Dominant 7th Chord",
+                  "summary": "Core blues chord type (e.g., D7, F7, Bb7) that is the primary target of substitution operations."
+                },
+                {
+                  "id": "minor-7th",
+                  "name": "Minor 7th Chord",
+                  "summary": "Used both as diatonic chord (IIm7) and as non-diatonic substitution tool; treated with Dorian or hybrid scale identity."
+                },
+                {
+                  "id": "major-7th",
+                  "name": "Major 7th Chord",
+                  "summary": "Used as superimposed arpeggio over dominant chords, or as regional substitute (e.g., Gbmaj7, Emaj7, Bmaj7) treated with Lydian identity."
+                },
+                {
+                  "id": "diminished",
+                  "name": "Diminished Chord",
+                  "summary": "Functions as V7 substitute by leading-tone content (e.g., F° = E7 leading to F7)."
+                },
+                {
+                  "id": "half-diminished",
+                  "name": "Half-Diminished Chord",
+                  "summary": "Replaceable by Dorian minor-7th cadence (e.g., Cm7/F7 replacing A∅) via harmonic equivalence."
+                },
+                {
+                  "id": "consecutive-minor-7th-chain",
+                  "name": "Consecutive Minor 7th Chain",
+                  "summary": "A sequence of consecutive minor-7th chords (e.g., Gm7–Abm7–Am7) used as a structural substitution device over a single dominant target."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "tritone-substitution-traversal",
+                  "name": "Tritone Substitution Region Traversal",
+                  "summary": "Move from a dominant chord to its tritone substitute (a chord a tritone away) to cross into an adjacent dominant region.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Tritone Substitution of IV degree",
+                      "quote_excerpt": "replacing the IV degree by the V degree using Tritone Substitution (C7= F#7 or Gb7)",
+                      "page": 44
+                    }
+                  ]
+                },
+                {
+                  "id": "leading-tone-diminished-traversal",
+                  "name": "Leading-Tone Diminished-as-Dominant Traversal",
+                  "summary": "Move from a diminished chord into a dominant region by exploiting its leading-tone content (all notes a half-step from the target dominant), with a whole-step leading-note exception.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Diminished chord as V7 substitute",
+                      "quote_excerpt": "F° = E7 which contains all the notes half step above from F7 thus creating many leading tones at once to F7",
+                      "page": 49
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "B° as C7 substitute leading to Fmaj7",
+                      "quote_excerpt": "a leading note sometimes can be a whole step, not exactly a half step as usual",
+                      "page": 63
+                    }
+                  ]
+                },
+                {
+                  "id": "minor-subdominant-region-traversal",
+                  "name": "Minor Subdominant Region Traversal",
+                  "summary": "Move from a Major Subdominant chord to a chord derived from the parallel minor's subdominant region as a functional regional substitution.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 8,
+                      "topic": "Gbmaj7 replacing Bb7 — Subdominant Minor derivation",
+                      "quote_excerpt": "replacing Bb7 (Subdominant Region chord) by Gbmaj7, which is a chord derived from the Subdominant Minor (Bm) of the tonality (F)",
+                      "page": 46
+                    },
+                    {
+                      "chapter_n": 11,
+                      "topic": "Subdominant substitution via minor region",
+                      "quote_excerpt": "we can replace a Major Subdominant Region chord (Bb) by one of the chords derived from the Minor Subdominant Region (Bbm)",
+                      "page": 95
+                    }
+                  ]
+                },
+                {
+                  "id": "relative-chord-traversal",
+                  "name": "Relative Chord Regional Traversal",
+                  "summary": "Move between a chord and its relative major/minor as additional color sources within the same harmonic region.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Superimposition color options for IIm7/I cadence",
+                      "quote_excerpt": "Dm7, Fmaj7 (relative of Dm7) Cmaj7 and Am7 (relative of Cmaj7)",
+                      "page": 53
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Ebm7/Ab7 cadence replacing D7",
+                      "quote_excerpt": "we can also use ideas derived from Gbmaj7 which is the relative from Ebm7",
+                      "page": 72
+                    }
+                  ]
+                },
+                {
+                  "id": "consecutive-minor7-chain-traversal",
+                  "name": "Consecutive Minor-7th Chain Traversal",
+                  "summary": "Move through a stepwise chain of consecutive minor-7th chords (e.g., Bbm7–Am7–G#m7) as a sequential substitution pathway toward a single dominant target.",
+                  "engine_payload": {
+                    "kind": "_pending:chain-minor7-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 10,
+                      "topic": "G#m7 chain substitution over D7",
+                      "quote_excerpt": "chain of consecutive minor 7th chords (Bbm7, Am7, G#m7). We should play hybrid or Dorian ideas over each one",
+                      "page": 70
+                    },
+                    {
+                      "chapter_n": 12,
+                      "topic": "Abm7/Db7 replacing C7 — characteristic color notes",
+                      "quote_excerpt": "Abm7 is part of a minor 7th consecutive 'chord chain': Gm7, Abm7, Am7, which sounds very interesting",
+                      "page": 120
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "regional-interchangeability",
+                  "name": "Harmonic Region Interchangeability Rule",
+                  "summary": "Any chord within a given harmonic region may substitute for any other chord in that region; selection among options may be conditioned on tempo.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "Harmonic Regions: Interchangeable Chord Tricks",
+                      "quote_excerpt": "4) Harmonic Regions Interchangeable Chord Tricks",
+                      "page": 40
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "Tempo consideration for substitution",
+                      "quote_excerpt": "Note: This option might sound better with faster tempos.",
+                      "page": 38
+                    }
+                  ]
+                },
+                {
+                  "id": "scale-visualization-context-assignment",
+                  "name": "Scale Visualization Context-Assignment Rule",
+                  "summary": "Assign a distinct scale identity to each substitution chord based on its harmonic context: Dorian for non-diatonic minor replacements, Lydian for non-diatonic major substitutions, Lydian Dominant or Dominant Diminished for altered dominant and tritone contexts.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Scale visualization rule",
+                      "quote_excerpt": "depending on the situation you must visualize one of them or maybe both at the same time",
+                      "page": 17
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Bm7 Dorian substitution for F7",
+                      "quote_excerpt": "Bm7 should be considered Dorian because it is a minor chord not derived from the chord family of the tonality",
+                      "page": 62
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Bmaj7 replacing F7",
+                      "quote_excerpt": "Bmaj7 chord must be treated as a Lydian chord, however we can also use hybrid ideas over it",
+                      "page": 60
+                    }
+                  ]
+                },
+                {
+                  "id": "superimposition-v-degree-strip",
+                  "name": "Superimposed Cadence V-Degree Stripping Rule",
+                  "summary": "When superimposing a IIm7–V7–I cadence, strip the V degree so only the IIm7 and Imaj7 remain active; the V loses tension-bearing capacity and merges into the IIm7 Dorian.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Superimposed cadences losing V degree",
+                      "quote_excerpt": "superimposed IIm7, V7, I cadences lose the V degree and stay only with the IIm7 and the Imaj7",
+                      "page": 53
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Superimposed IIm7/V7/I — V degree rule",
+                      "quote_excerpt": "the V7 degree cannot have tensions anymore thus becoming part of the IIm7 degree dorian",
+                      "page": 69
+                    }
+                  ]
+                },
+                {
+                  "id": "color-note-dual-function",
+                  "name": "Color Note Dual-Function Assignment Rule",
+                  "summary": "Identify 'color notes' — pitches that simultaneously function at two different interval roles across the substituted and target chords — and treat them as primary flavor generators for hybrid sounds.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 12,
+                      "topic": "Abm7/Db7 replacing C7 — characteristic color notes",
+                      "quote_excerpt": "two specific notes: 'Cb (B)' and 'F' (minor 3rd & major 6th from 'Abm7', and major 7th of & perfect 4th from 'C')",
+                      "page": 120
+                    },
+                    {
+                      "chapter_n": 12,
+                      "topic": "C#m7/F#7 replacing C7 — altered tensions",
+                      "quote_excerpt": "note 'B'(minor 7th from 'C#m' and major 7th from 'C')",
+                      "page": 110
+                    }
+                  ]
+                },
+                {
+                  "id": "tritone-sub-exception-scale-expand",
+                  "name": "Tritone Substitution Scale-Expansion Exception",
+                  "summary": "When the V degree of a superimposed cadence is itself a tritone substitute of a real dominant, expand available scale colors to include Lydian Dominant or Dominant Diminished.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Tritone sub exception: Lydian Dominant or Dom-Dim",
+                      "quote_excerpt": "exception which is when the V degree of the superimposed cadence is the Tritone Substitution from a real dominant chord",
+                      "page": 53
+                    },
+                    {
+                      "chapter_n": 12,
+                      "topic": "F#m7/B7 replacing C7 — scale and sound description",
+                      "quote_excerpt": "F#m7 Dorian or F#m7 hybrid when played over C7, will sound a combination between C7 Dominant Diminished with C7alt",
+                      "page": 115
+                    }
+                  ]
+                },
+                {
+                  "id": "minor7-dorian-hybrid-preference",
+                  "name": "Dorian/Hybrid Preference for Non-Diatonic Minor Substitutions",
+                  "summary": "Over any non-diatonic minor-7th substitution chord, prefer Dorian or hybrid (Dorian + altered) ideas rather than strict diatonic modal application; hybrid tends to sound better.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 9,
+                      "topic": "Hybrid ideas preferred",
+                      "quote_excerpt": "Usually hybrid ideas tend to sound better.",
+                      "page": 53
+                    },
+                    {
+                      "chapter_n": 10,
+                      "topic": "Ebm7/Ab7 cadence replacing D7",
+                      "quote_excerpt": "consider this cadence as being a single Ebm7 Dorian or Ebm7 hybrid, which brings to D7 an interesting flavor",
+                      "page": 72
+                    }
+                  ]
+                },
+                {
+                  "id": "maj7-superimposition-over-dominant",
+                  "name": "Major 7th Arpeggio Superimposition Over Dominant Chord",
+                  "summary": "Layer major-7th arpeggios over a dominant-7th chord context, combining Blues Scale, Mixolydian, and Lydian Dominant scale ideas simultaneously with the superimposed maj7 structure.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "Section 3: Superimposed Major 7th Chord Tricks",
+                      "quote_excerpt": "combine dominant 7th ideas (Blues Scale, Mixolydian and Lydian Dominant Scales) with superimposition of major 7th arpeggios over dominant 7th chords",
+                      "page": 35
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "benson:method-vol-7-blues-ideas:rhythmic-positioning-practice",
+              "name": "Rhythmic Positioning and Practice Architecture System",
+              "summary": "A smaller but structurally distinct system governing how the student approaches learning and performing over the blues form. Members are tempo categories and rhythmic feel types; traversal rules govern movement between tempo categories (slow-medium 110 bpm as default start; fast as consequence not goal); modification rules govern how a practice unit is altered (section isolation before full form, pre-set chorus combination expansion, line-to-concept internalization, turnaround rest phrasing). The jazz-pulse anchor on beats 1 and 3 and the 'dance of the elephant' body movement are the physical foundations under the whole system.",
+              "members": [
+                {
+                  "id": "fast-tempo",
+                  "name": "Fast Tempo Category",
+                  "summary": "Builds right/left-hand technique fluency and scale-connection speed."
+                },
+                {
+                  "id": "medium-tempo",
+                  "name": "Medium Tempo Category",
+                  "summary": "Deploys inverted/reverse hammer technique and breathing between melodies."
+                },
+                {
+                  "id": "slow-medium-tempo",
+                  "name": "Slow-Medium Tempo (110 bpm)",
+                  "summary": "Prescribed starting tempo for any new concept; default entry point."
+                },
+                {
+                  "id": "slow-blues-vibe",
+                  "name": "Slow Blues Vibe",
+                  "summary": "Triplet-feel groove referencing Wes Montgomery's 'Bumpin'' as canonical example."
+                },
+                {
+                  "id": "free-slow-blues-vibe",
+                  "name": "Free Slow Blues Vibe",
+                  "summary": "Rhythmic liberation variant allowing departure from the common rhythmic cell."
+                },
+                {
+                  "id": "rhythmic-positioning",
+                  "name": "Rhythmic Positioning",
+                  "summary": "The method's term for combining all types of time feel and rhythmic cells; hardest tempo category to master."
+                },
+                {
+                  "id": "preset-chorus-combination",
+                  "name": "Pre-Set Chorus Combination",
+                  "summary": "Notated unit for mixing chorus sections (1,1,1 = full chorus; 1,2,3 = mixed sections) including fingering, picking, and line combinations."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "tempo-sequence-traversal",
+                  "name": "New-Concept Tempo Sequence Traversal",
+                  "summary": "Begin any new concept at slow-medium (110 bpm), then expand to faster and slower tempos only after initial mastery; fast is a consequence not a goal.",
+                  "engine_payload": {
+                    "kind": "_pending:tempo-sequence-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Tempo for new concept practice",
+                      "quote_excerpt": "slow medium tempo backing track (110 bpm works fine). After getting used to some new possibilities, we should do the same process using faster tempos and slower tempos",
+                      "page": 21
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Fast tempos as consequence, not goal",
+                      "quote_excerpt": "playing fast is a consequence, not a goal",
+                      "page": 21
+                    }
+                  ]
+                },
+                {
+                  "id": "section-isolation-before-full-form",
+                  "name": "Section-Isolation-Before-Full-Form Practice Traversal",
+                  "summary": "Study each blues section separately and master each possibility before assembling the full form.",
+                  "engine_payload": {
+                    "kind": "_pending:section-isolation-traversal"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Studying each blues section separately",
+                      "quote_excerpt": "we should not study the whole form at once. If we really want to master it, we must study each part and each possibility separately",
+                      "page": 21
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "preset-chorus-combination-expansion",
+                  "name": "Pre-Set Chorus Combination Expansion Rule",
+                  "summary": "Modify a practice unit by combining chorus sections using the pre-set notation system (1,1,1 / 2,2,2 / 1,2,3) to create varied melodic, fingering, and picking combinations.",
+                  "engine_payload": {
+                    "kind": "_pending:chorus-combination-expansion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Pre-set chorus combination method",
+                      "quote_excerpt": "1, 2, 3 (means that we are combining the first part of chorus 1 with the second part of chorus 2 and the resolution of chorus 3)",
+                      "page": 16
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Fingering and picking in pre-set choruses",
+                      "quote_excerpt": "memorize and combine some pre-set choruses, not only melodically speaking but in terms of fingering, picking and line combinations",
+                      "page": 21
+                    }
+                  ]
+                },
+                {
+                  "id": "line-to-concept-internalization",
+                  "name": "Line-to-Harmonic-Concept Internalization Rule",
+                  "summary": "Treat a memorized line as a vehicle for the harmonic concept it embodies; modify practice by improvising from the concept rather than reciting the line.",
+                  "engine_payload": {
+                    "kind": "_pending:concept-internalization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Lines vs. harmonic concept",
+                      "quote_excerpt": "the idea is not to become a 'parrot' but a wise improviser that creates new combinations derived from a single line",
+                      "page": 21
+                    }
+                  ]
+                },
+                {
+                  "id": "turnaround-rest-phrasing",
+                  "name": "Turnaround Rest Phrasing Rule",
+                  "summary": "Rest during the turnaround bars (last two bars of the blues form) to phrase-separate choruses and create breathing space between melodic 'stories'; treat silence as structural punctuation.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 12,
+                      "topic": "Turnaround — breathing between stories",
+                      "quote_excerpt": "we must remember that usually we should breathe in this part in order to give space",
+                      "page": 98
+                    }
+                  ]
+                },
+                {
+                  "id": "jazz-pulse-beats-1-and-3",
+                  "name": "Jazz Pulse Anchor: Beats 1 and 3",
+                  "summary": "Anchor the jazz pulse feel on beats 1 and 3 (not 2 and 4); stronger 1-and-3 feel enables rather than suppresses the perceived 2-and-4 pulse.",
+                  "engine_payload": {
+                    "kind": "_pending:pulse-anchor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Jazz pulse: beats 1 and 3",
+                      "quote_excerpt": "The real Jazz feeling has its pillar in 1 and 3. But what about the 2 and the 4? Guess what, the stronger we feel the 1 and 3, the easier we can feel the pulse in 2 and 4",
+                      "page": 18
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ],
       "status": "corpus_only"

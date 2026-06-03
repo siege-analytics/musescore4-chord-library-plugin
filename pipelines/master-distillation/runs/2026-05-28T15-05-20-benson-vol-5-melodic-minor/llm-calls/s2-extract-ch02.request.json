@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Static Giant Lines 1st Situation\nPages 1-2 of the book.\n\n<<<CHAPTER TEXT\n               THE\nGEORGE BENSON\n            METHOD\n  By George Benson & Peter Farrell\n\n\n\n\n                                        5\n      Melodic Minor World,\n   Bebop Scales & Symmetric Ideas\n           and Concepts              vol.\n\n\nthe George Benson Method                                                                                                 4668\n\n\n\n\nGeorge\nBe n s o n\nFrom the very beginning,\nthe sound of the guitar\nwas always in my mind.\nFrom the moment I heard\nit, I knew that my life was\ngoing to have something\nto do with the guitar. I did\nnot know I was going to be\na player yet, but I loved the\nsound.\n                                    68\n                           46\n\n\n\n\n As I grew older, I began to dabble with the guitar, to pick it up and try to pick things out. I would get so far, and\n then I would get stuck. I have found later that this is normal. Everybody goes through that on every instrument.\n To move forward, you have to take in more information, and look at things from different angles or from a dif-\n ferent point of view. So I started asking questions from the people whom I knew that had a certain mastery of the\n instrument.\n\n In my home town of Pittsburg, Pennsylvania, a lot of traveling groups would come through town and I always went up\n to the guitar player to ask if he could show me something. I was never too ashamed to ask. The George Benson you\n know today is a collection of all those people who took the time to show me what they knew, and the things I could\n hang on to did me a lot of good.\n\n From guitar books, which I was not a reader, I was more of a picture guy. But the demonstrations in the new books\n really helped a lot to show the correct fingerings for this, that, and the other. They showed how to make chords.\n The chords led me to the harmony, that helped me to become a better single line player.\n\n\n                                2019 \u00a9 Jupiter Musical Group Ltd. All Rights Reserved\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}
