@@ -1789,6 +1789,104 @@
             }
           ],
           "example_voicing_signatures": []
+        },
+        {
+          "id": "homonym-and-synonym-naming-foundation",
+          "name": "Homonym & synonym naming: chord identity is context-determined, not shape-fixed",
+          "summary": "A single physical voicing has multiple legitimate names depending on harmonic context; mastery requires knowing every useful name for each chord form. *Modern Chord Progressions* Ch3 formalizes this as 'chord homonyms' — the same shape may operate as Em6, C#m7b5, or A9 depending on which note is heard as the root. *Chord Chemistry* Ch8 formalizes the dual concept of 'chord synonyms' — different shapes that function identically and may be substituted for one another. Both books make the failure to know all valid names an explicit source of long-term difficulty. The system extends through tritone substitution (CC Ch11), 'vii° as rootless V7' (CC Ch16), and 'dominant sus as partial or full V7 replacement' (CC Ch11) — all derivatives of the same identity-is-context principle.",
+          "voicingStyleTags": [
+            "ted-greene",
+            "homonym-naming",
+            "synonym-substitution"
+          ],
+          "playStyleTags": [
+            "context-determines-name",
+            "shape-multiplicity"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {
+            "allowFamilyEquivalentNaming": true,
+            "requireContextDeterminedRoot": true
+          },
+          "references": [
+            {
+              "source": "Greene, Ted. Modern Chord Progressions: Jazz & Classical Voicings for Guitar. Alfred Music, 1985.",
+              "citation": "Chapter 3 (homonym chord form doctrine; explicit chapter on chord-name multiplicity). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/modern-chord-progressions/derived/STATEMENT.md."
+            },
+            {
+              "source": "Greene, Ted. Chord Chemistry. Alfred Music, 1971.",
+              "citation": "Chapter 8 (chord synonym substitution); Chapter 11 (tritone substitution); Chapter 16 (vii° as rootless V7). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/chord-chemistry/derived/STATEMENT.md."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "ear-veto-over-theory",
+          "name": "Ear-veto: theory provides vocabulary; the ear arbitrates every voicing decision",
+          "summary": "Theory supplies the rules of vocabulary, navigation, and substitution; the ear is the final arbiter at every decision point — which register to use, whether to omit a chord tone, when to introduce altered dominants, which voicing of an equivalent chord to choose. *Modern Chord Progressions* applies this throughout: muddy low voicings are filtered by ear quality; register decisions are governed by ear judgment; altered dominants are introduced only after the ear has been prepared with diatonic material. *Chord Chemistry* Ch9 formalizes ear training as categorical triage — any heard chord is first classified as major, minor, or dominant before finer identification. This is a meta-principle: it routes around theory when theory and sound conflict, and it explicitly forbids both pattern-driven choice and mechanical execution of the formula system without listening. Part of the 8-way ear-as-arbiter convergence (see #355).",
+          "voicingStyleTags": [
+            "ted-greene",
+            "ear-driven"
+          ],
+          "playStyleTags": [
+            "context-aware",
+            "subjective-register",
+            "categorical-triage"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Greene, Ted. Modern Chord Progressions: Jazz & Classical Voicings for Guitar. Alfred Music, 1985.",
+              "citation": "Chapters 4-11 throughout (ear-governed register filter; diatonic preparation before altered dominant introduction in Ch11). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/modern-chord-progressions/derived/STATEMENT.md."
+            },
+            {
+              "source": "Greene, Ted. Chord Chemistry. Alfred Music, 1971.",
+              "citation": "Chapter 9 (ear training as categorical major/minor/dominant triage). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/chord-chemistry/derived/STATEMENT.md."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "formula-over-pattern-reasoning",
+          "name": "Formula over pattern: every chord, voicing, and substitution is derived, not memorized",
+          "summary": "Chords are derived from formulas (scale-degree combinations relative to the same-root major scale); voicings are derived from voice-leading rules acting on those formulas; substitutions are derived from family relationships and tritone equivalence. Pattern accumulation is explicitly rejected. *Chord Chemistry*'s overview makes this the book's organizing claim: 'students are taught *why* a chord or substitution works before they are expected to play it.' The same-string inversion method (CC Ch4-5) is the formula's voicing engine — it generates exactly N forms for any N-note chord on a fixed string set, mechanically, from the chord's formula. *Modern Chord Progressions* applies the same discipline at the progression level: each harmonic formula (I vi ii V, iii VI ii V, etc.) is reasoned about with Roman-numeral generality across all keys and voicings, never memorized as a single shape.",
+          "voicingStyleTags": [
+            "ted-greene",
+            "formula-derived",
+            "family-system"
+          ],
+          "playStyleTags": [
+            "formula-reasoning",
+            "why-before-how"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "comping",
+            "improv-line"
+          ],
+          "tolerance_hints": {
+            "requireFormulaProvenance": true
+          },
+          "references": [
+            {
+              "source": "Greene, Ted. Chord Chemistry. Alfred Music, 1971.",
+              "citation": "Book-level overview (formula-based reasoning as organizing principle); Chapters 4-6 (chord formula + same-string inversion as voicing engine); Chapter 13 ('systematic thinking' as voice-by-voice formula derivation). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/chord-chemistry/derived/STATEMENT.md."
+            },
+            {
+              "source": "Greene, Ted. Modern Chord Progressions: Jazz & Classical Voicings for Guitar. Alfred Music, 1985.",
+              "citation": "Chapters 4-11 (Roman-numeral formula generality; each formula explored across all keys, fingerboard positions, and voicing densities). Chapter-loop extraction: plugin/data/masters-corpus/ted-greene/modern-chord-progressions/derived/STATEMENT.md."
+            }
+          ],
+          "example_voicing_signatures": []
         }
       ],
       "systems": [
