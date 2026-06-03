@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: joe-pass\nWork id: guitar-chords\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-06-03T05-51-57-pass-guitar-chords\nstage: s3\nsource_pdf: Pass, Joe - Guitar Chords (2005).pdf\nmodel: claude-sonnet\nextracted_at: 2026-06-03T05:57:59+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 guitar-chords\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\n## Overall Arc and Pedagogical Structure\n\n*Joe Pass Guitar Chords* is a two-chapter practical reference built on a vocabulary-then-application architecture. Chapter 1 functions as a silent catalog: six grids of fretboard diagrams (Seventh, Augmented, Minor, Diminished, Minor Seventh Flat Fifth, and implied major/dominant alteration forms) present Pass's working voicing inventory with pitch labels beneath each diagram and no accompanying prose. The student is expected to absorb this material through visual inspection and physical memorization, not through verbal instruction. Chapter 2 then immediately deploys that vocabulary in seven harmonic contexts, moving from abstract chord shapes to functional, idiomatic jazz progressions. The book's pedagogy is therefore inductive and mimetic: master the shapes first, then watch them move.\n\n## Characteristic Systems and Terminology\n\nPass organizes harmonic color into six chord-sound categories, which serve as the taxonomic spine of the entire book. Within those categories, Chapter 2's seven functional contexts reveal how Pass actually thinks about chord movement: major-sound resolution via tritone substitution (the concrete example given is Db7 resolving to Cma9), minor seventh to seventh motion approached chromatically, seventh-chord substitute turnarounds and cycle progressions, diminished chords as interchangeable approach chords with multiple resolution paths, diminished chords substituting for 7b9 sonorities, augmented sounds resolving chromatically into cycle cadences, and half-diminished to dominant and augmented resolutions. The term **approach chord** is a load-bearing concept here: diminished voicings are not treated as fixed chords but as mobile approach mechanisms that can resolve to several targets. The cycle of fifths and the standard ii-V-I skeleton function as the underlying harmonic armature against which all substitutions and approaches are measured.\n\n## Rules and Prescriptions\n\nThe book establishes one explicit notation rule with the force of a prescription: **chord-symbol order equals voice order**. The example given is D7+9+5, which means the chord is D7 with the raised ninth in the next voice above the core voicing and the raised fifth on top. This is a non-generic, proprietary convention that governs how every altered chord symbol in the book must be read and fingered. Without internalizing this rule, the student cannot correctly decode the chord-diagram catalog in Chapter 1 or the passage notation in Chapter 2. A second prescription, given as a NOTE in Chapter 2, instructs the player to sustain lead notes from one chord to the next \u2014 the example being C9 to F13, sustaining the G on top \u2014 establishing common-tone retention as an idiomatic comping principle.\n\n## Method\n\nThe method that emerges across the two chapters is pattern-and-context immersion rather than step-by-step drilling. Chapter 1 builds the inventory silently; Chapter 2 provides the harmonic contexts that give the inventory meaning. The characteristic technical moves Pass favors \u2014 chromatic bass-line motion, common-tone sustain of lead notes across changes, tritone substitution as a default major-resolution device \u2014 appear embedded in the notated passages rather than stated as rules to memorize. The student learns by reading and playing the passages and inferring the governing logic: how diminished forms substitute for dominant 7b9 sounds, how augmented chords connect chromatically into cycle cadences, how tritone substitutes operate at the bass level while the upper voices resolve by half-step. The book does not offer a graded method or sequenced exercises; it offers a compressed window into one player's functional harmonic vocabulary, organized minimally but precisely enough for a literate guitarist to reconstruct the thinking.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-06-03T05-51-57-pass-guitar-chords\nstage: s3\nsource_pdf: Pass, Joe - Guitar Chords (2005).pdf\nsource_pages: 6-14\nmodel: claude-haiku\nextracted_at: 2026-06-03T05:56:12+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 CHORD FORMS\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 contains no load-bearing prose passages \u2014 composed entirely of notated chord-diagram grids. The chapter (pages 6-14) presents Joe Pass's working voicing inventory across six taxonomic categories: Seventh Chord Forms, Augmented Chord Forms, Minor Chord Forms, Diminished Chord Forms, Minor Seventh Flat Fifth Chord Forms, and the implicit major/dominant alterations that lead each grid. Each voicing is rendered as a fretboard diagram with bottom-to-top pitch labels printed beneath; no text instruction accompanies them. The pedagogical move is presentation-by-catalog: Pass treats the chord shapes themselves as the lesson, expecting the student to absorb voicing vocabulary through silent inspection and finger-pattern memorization rather than through verbal explanation. This catalog functions as the raw vocabulary that Chapter 2 then deploys in chordal-movement passages.\n\n\n---\n\n---\nrun_id: 2026-06-03T05-51-57-pass-guitar-chords\nstage: s3\nsource_pdf: Pass, Joe - Guitar Chords (2005).pdf\nsource_pages: 15-26\nmodel: claude-haiku\nextracted_at: 2026-06-03T05:57:09+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 CHORD PASSAGES\n\n_Distillation; backed by `chapters/ch02.md`._\n\nThis chapter teaches chord passages\u2014applied harmonic movement using the six chord-sound categories from Chapter 1\u2014organized around seven distinct functional contexts: major-sound resolution via tritone substitution (Db7 to Cma9), minor seventh to seventh movement with chromatic approach chords, seventh-chord substitute turnarounds and cycle progressions, diminished chords as interchangeable approach chords with multiple resolution paths, diminished chords substituting for 7b9 sonorities, augmented sounds resolved chromatically into cycle cadences, and half-diminished to dominant and augmented resolutions. The characteristic moves visible here are chromatic bass-line motion, common-tone sustain of lead notes across changes, and the foundational jazz ii\u2013V and tritone-substitution patterns. The chapter introduces the proprietary notation rule that chord-symbol order equals voice order (e.g., D7+9+5 means D7 with the raised 9th next and the raised 5th on top), establishes \"approach chord\" as a load-bearing concept for diminished harmony, and anchors all passages to recognizable harmonic skeletons like I\u2013VI\u2013II\u2013V and the cycle of fifths.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-06-03T05-51-57-pass-guitar-chords\nstage: s2\nsource_pdf: Pass, Joe - Guitar Chords (2005).pdf\nsource_pages: 6-14\nmodel: claude-sonnet\nextracted_at: 2026-06-03T05:53:42+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 CHORD FORMS\n\n_Pages 6-14._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n_No load-bearing passages identified in this chapter._\n\n\n---\n\n---\nrun_id: 2026-06-03T05-51-57-pass-guitar-chords\nstage: s2\nsource_pdf: Pass, Joe - Guitar Chords (2005).pdf\nsource_pages: 15-26\nmodel: claude-sonnet\nextracted_at: 2026-06-03T05:55:31+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 CHORD PASSAGES\n\n_Pages 15-26._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Chord Passages overview\n\n> These are examples of chordal movements using the six categories of chord sounds found in the <irst part of this book.\n\n**Significance (p. 15).** This sentence frames the entire chapter as applied harmony, tying the chord-form vocabulary from Chapter 1 to real movement contexts.\n\n## Major Sounds resolution\n\n> MAJOR SOUNDS: The first four chords illustrate movement in \u201cC\u201d. The fifth chord is G13b5 (or Db7+9b5) which re-\n> solves into Cma9.\n\n**Significance (p. 15).** Defines the functional logic of the major-sound passage \u2014 dominant substitution (tritone sub Db7) resolving to tonic Cma9 \u2014 establishing a core jazz cadence pattern.\n\n## Minor Seventh to Seventh movement\n\n> MINOR SEVENTH TO SEVENTH SOUNDS: First four chords illustrate movement in Dm7, resolving into Abl13 to\n> G13.\n\n**Significance (p. 15).** Establishes the ii\u2013V movement with a chromatic approach chord (Ab13), a foundational jazz harmonic device the student must internalize.\n\n## Seventh chord substitution turnaround\n\n> SEVENTHS: The first three chords illustrate movement around G7. The next four chords illustrate a substitute turn-\n> around back to G13, followed by a cycle seventh movement.\n\n**Significance (p. 15).** Introduces the concept of substitute turnarounds and cycle-of-fifths seventh movement as distinct techniques within a single dominant-chord passage.\n\n## Diminished chord resolution options\n\n> DIMINISHED SOUNDS: Resolve the last chord in this sequence into any chord. For example: (1) Dm7 \u2014 G7 \u2014 Cma\u20197,\n> or (2) Em7 \u2014 Eb9 \u2014 Dm9 \u2014 Db9.\n\n**Significance (p. 15).** Gives a concrete rule \u2014 diminished chords are interchangeable approach chords \u2014 and offers two specific resolution paths that demonstrate chromatic bass-line motion.\n\n## Diminished as flat-nine substitute\n\n> DIMINISHED PASSAGE: Use of diminished chords for seventh flat ninth chord movement, utilizing the basic pattern\n> of A7 \u2014 Dm \u2014 G7 \u2014C.\n\n**Significance (p. 15).** States the defining rule that a diminished chord can stand in for a 7b9 chord, anchoring the diminished passage to a recognizable I\u2013VI\u2013II\u2013V skeleton.\n\n## Augmented chromatic approach\n\n> AUGMENTED SOUNDS: The first six chords are basically G aug. Movement is used chromatically to get to the basic\n> cycle (A7 \u2014 D7 \u2014G).\n\n**Significance (p. 15).** Defines the compositional logic of the augmented passage \u2014 sustained augmented color resolved via chromatic voice-leading into a cycle cadence.\n\n## Chord symbol spelling convention\n\n> These chord symbols are written so that the order of appearance of notes coincides with the spelling of the chord symbol. For example, D7+9+5 means D7 with the raised 9th next, and the raised 5th on top.\n\n**Significance (p. 20).** Establishes the book's proprietary notation rule \u2014 symbol order equals voice order \u2014 which is essential for correctly reading every voicing in the substitution tables.\n\n## Sustaining lead notes between chords\n\n> NOTE: Try to sustain lead notes from one chord to the next. For example, C9 to F13, sustain the G on top.\n\n**Significance (p. 24).** Gives a direct performance technique \u2014 common-tone sustain across chord changes \u2014 that shapes idiomatic jazz comping and voice-leading on the guitar.\n\n## Minor Seventh Flat Fifth to Seventh passage\n\n> MINOR SEVENTH FLAT FIFTH TO SEVENTH SOUNDS: A7b9 to Dm7}5 resolving finally to G aug.\n\n**Significance (p. 15).** Demonstrates the ii\u00f8\u2013V7b9 half-diminished motion, a characteristic minor-key cadence the student needs to recognize and execute.\n\n## Minor Seventh Flat Fifth to Augmented\n\n> MINOR SEVENTH FLAT FIFTH TO AUGMENTED SOUNDS: Dm7b5 chords to G aug. Notice the chords used to\n> obtain these sounds.\n\n**Significance (p. 15).** Directs the student's analytical attention to the specific voicings used, flagging that the chord shapes themselves (not just the symbols) carry the lesson.\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for joe-pass/guitar-chords; use _pending: when unsure about kind."
+}

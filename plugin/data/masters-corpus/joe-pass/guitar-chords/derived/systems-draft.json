@@ -1,0 +1,247 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-03T05-51-57-pass-guitar-chords",
+    "stage": "s4",
+    "source_pdf": "Pass, Joe - Guitar Chords (2005).pdf",
+    "extracted_at": "2026-06-03T06:02:36+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "joe-pass",
+  "work_id": "guitar-chords",
+  "systems": [
+    {
+      "id": "joe-pass:guitar-chords:chord-sound-categories",
+      "name": "Six Chord-Sound Category System",
+      "summary": "Pass organizes all harmonic vocabulary into six chord-sound categories \u2014 Seventh, Augmented, Minor, Diminished, Minor Seventh Flat Fifth, and Major/Dominant Alteration forms \u2014 which together form the taxonomic spine of the book. Chapter 1 presents the voicing inventory silently as a catalog; Chapter 2 deploys these categories in seven functional harmonic contexts. Traversal between categories is governed by common-tone sustain, chromatic approach motion, and cycle-of-fifths movement. Modification rules govern how members of one category may substitute for or approach members of another: diminished voicings substitute for dominant 7b9 sounds, tritone-substitute dominants resolve to major sounds, and augmented chords connect chromatically into cycle cadences. The ii-V-I and cycle-of-fifths skeletons serve as the underlying armature against which all traversal and substitution operate.",
+      "members": [
+        {
+          "id": "seventh",
+          "name": "Seventh Chord Forms",
+          "summary": "Dominant and major seventh voicings; the primary target and origin of cycle progressions and turnarounds."
+        },
+        {
+          "id": "augmented",
+          "name": "Augmented Chord Forms",
+          "summary": "Augmented voicings used as chromatic approach chords resolving into cycle cadences."
+        },
+        {
+          "id": "minor",
+          "name": "Minor Chord Forms",
+          "summary": "Minor triad and minor seventh voicings; function as ii chords and harmonic color in minor-key passages."
+        },
+        {
+          "id": "diminished",
+          "name": "Diminished Chord Forms",
+          "summary": "Fully diminished voicings treated as mobile approach chords with multiple resolution targets; interchangeable with dominant 7b9 sounds."
+        },
+        {
+          "id": "minor-seventh-flat-fifth",
+          "name": "Minor Seventh Flat Fifth (Half-Diminished) Forms",
+          "summary": "Half-diminished voicings; function as iio in minor iio-V7b9 cadences, resolving to dominant and augmented forms."
+        },
+        {
+          "id": "major-dominant-alteration",
+          "name": "Major and Dominant Alteration Forms",
+          "summary": "Altered dominant and major voicings including tritone substitutes and upper-structure alterations; primary tonic-resolution targets."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "common-tone-lead-sustain",
+          "name": "Common-Tone Lead-Note Sustain",
+          "summary": "When moving between any two chord-sound categories, sustain the top voice (lead note) if it is common to both chords, creating smooth voice-leading across the change.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Sustaining lead notes between chords",
+              "quote_excerpt": "Try to sustain lead notes from one chord to the next",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "chromatic-bass-approach",
+          "name": "Chromatic Bass-Line Approach Motion",
+          "summary": "Traverse from minor-seventh or augmented members to their resolution targets via chromatic bass-line motion.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor Seventh to Seventh movement",
+              "quote_excerpt": "movement in Dm7, resolving into Ab13 to G13",
+              "page": 15
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Augmented chromatic approach",
+              "quote_excerpt": "Movement is used chromatically to get to the basic cycle",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "cycle-of-fifths-seventh-motion",
+          "name": "Cycle-of-Fifths Seventh Movement",
+          "summary": "Traverse between seventh-category members by following the cycle of fifths, which serves as the default harmonic armature for seventh-chord passages.",
+          "engine_payload": {
+            "kind": "_pending:cycle-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Seventh chord substitution turnaround",
+              "quote_excerpt": "followed by a cycle seventh movement",
+              "page": 15
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Augmented chromatic approach",
+              "quote_excerpt": "chromatically to get to the basic cycle",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "diminished-multi-resolution",
+          "name": "Diminished Chord Multi-Target Resolution",
+          "summary": "A diminished member may resolve to any of several chord targets, allowing free traversal from diminished to multiple destination categories.",
+          "engine_payload": {
+            "kind": "_pending:multi-target-resolution"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Diminished chord resolution options",
+              "quote_excerpt": "Resolve the last chord in this sequence into any chord",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "half-dim-to-dominant-augmented",
+          "name": "Half-Diminished to Dominant and Augmented Resolution",
+          "summary": "Traverse from minor-seventh-flat-fifth members through dominant 7b9 forms to augmented resolution, as in the iio-V7b9-aug cadence.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor Seventh Flat Fifth to Seventh passage",
+              "quote_excerpt": "A7b9 to Dm7b5 resolving finally to G aug",
+              "page": 15
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Minor Seventh Flat Fifth to Augmented",
+              "quote_excerpt": "Dm7b5 chords to G aug",
+              "page": 15
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tritone-substitution",
+          "name": "Tritone Substitute for Major-Sound Resolution",
+          "summary": "A dominant seventh chord may be replaced by its tritone substitute when resolving to a major-sound tonic, with upper voices resolving by half-step.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Major Sounds resolution",
+              "quote_excerpt": "G13b5 (or Db7+9b5) which resolves into Cma9",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "diminished-as-flat-nine-substitute",
+          "name": "Diminished Chord as Dominant 7b9 Substitute",
+          "summary": "Any diminished voicing may substitute for the dominant 7b9 chord, replacing a seventh-flat-ninth member with a diminished member in the ii-V-I skeleton.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Diminished as flat-nine substitute",
+              "quote_excerpt": "Use of diminished chords for seventh flat ninth chord movement",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "substitute-turnaround",
+          "name": "Substitute Turnaround Replacement",
+          "summary": "A standard I-VI-II-V turnaround may be replaced by a substitute turnaround sequence back to the dominant, introducing alternate harmonic pathways within a single passage.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Seventh chord substitution turnaround",
+              "quote_excerpt": "substitute turn-around back to G13",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "augmented-chromatic-color",
+          "name": "Augmented Sustained Color into Chromatic Resolution",
+          "summary": "An augmented voicing may be sustained across multiple beats as a color chord and then resolved chromatically into a cycle cadence, functioning as an approach modification of the dominant.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Augmented chromatic approach",
+              "quote_excerpt": "first six chords are basically G aug. Movement is used chromatically",
+              "page": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "joe-pass:guitar-chords:chord-symbol-notation-convention",
+      "name": "Chord-Symbol Voice-Order Notation Convention",
+      "summary": "Pass establishes a proprietary notation rule: the left-to-right order of qualifiers in a chord symbol corresponds directly to the bottom-to-top order of voices in the voicing. For example, D7+9+5 means a D7 core with the raised ninth in the next voice above and the raised fifth on top. This is a small but load-bearing system: without it, the entire Chapter 1 diagram catalog and the passage notation in Chapter 2 cannot be correctly decoded.",
+      "members": [
+        {
+          "id": "chord-symbol-string",
+          "name": "Chord Symbol String",
+          "summary": "A chord symbol such as D7+9+5, where the root and quality come first, followed by extension/alteration qualifiers in ascending voice order."
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "symbol-order-equals-voice-order",
+          "name": "Symbol Qualifier Order Equals Voice Layer Order",
+          "summary": "Each qualifier appended to a chord symbol designates successive voices from the next available string upward, so that reading the symbol left-to-right maps directly onto the fretboard voicing bottom-to-top.",
+          "engine_payload": {
+            "kind": "_pending:symbol-voice-mapping"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Chord symbol spelling convention",
+              "quote_excerpt": "order of appearance of notes coincides with the spelling of the chord symbol",
+              "page": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
