@@ -1,0 +1,69 @@
+{
+  "master_id": "benson",
+  "work_id": "method-vol-6-giant-lines",
+  "systems": [
+    {
+      "id": "benson:method-vol-6-giant-lines:outside-substitution",
+      "name": "Outside Substitution and Chord Transition System",
+      "summary": "This system governs how a single-line improviser moves between 'inside' chord-family vocabulary and 'outside' superimposed ideas over dominant chords. Its central move is borrowing arpeggios or lines from a chord a tritone, fifth, or related distance away from the target chord, then resolving back to a chord tone of the original dominant before the next harmonic change. The outside effect is time-limited — staying too long destroys it — and the resolution note is non-negotiable. Members are the melodic regions available over a dominant chord: the inside chord family, the outside superimposed chord, and the resolution landing zone. Traversal rules govern when and how to enter/exit the outside region. Modification rules govern which substitute chord is chosen and what note the line must end on.",
+      "members": [
+        {"id": "inside-chord-family", "name": "Inside Chord Family", "summary": "Scale tones and arpeggios native to the target dominant chord and its parent harmonic field."},
+        {"id": "outside-superimposed-chord", "name": "Outside Superimposed Chord", "summary": "A foreign chord (e.g., A7 over D7, or D7 leading to G) borrowed to create momentary harmonic tension outside the current key center."},
+        {"id": "resolution-landing-zone", "name": "Resolution Landing Zone", "summary": "The mandatory chord-tone endpoint of any outside line, ensuring return to the inside before the next chord change."}
+      ],
+      "traversal_rules": [
+        {
+          "id": "outside-entry-superimpose",
+          "name": "Outside Entry by Chord Superimposition",
+          "summary": "Enter the outside region by playing small ideas from a distantly related chord (e.g., A7) over the target dominant (D7) to create an outside effect.",
+          "engine_payload": {"kind": "SubstitutionExpand"},
+          "references": [{"chapter_n": 9, "topic": "George Benson Chord Transitions", "quote_excerpt": "We can create a very interesting outside effect over a D7 chord by playing small A7 ideas", "page": 26}]
+        },
+        {
+          "id": "outside-duration-limit",
+          "name": "Outside Duration Ceiling",
+          "summary": "Do not remain on the outside superimposed chord idea for too long or the outside effect collapses and becomes non-musical.",
+          "engine_payload": {"kind": "_pending:outside-duration-ceiling"},
+          "references": [{"chapter_n": 9, "topic": "7lux/re7lux outside effect warning", "quote_excerpt": "Do not stay on the A7 too long because you will destroy the effect", "page": 26}]
+        },
+        {
+          "id": "v7-i-cadence-superimpose",
+          "name": "V7-I Cadential Superimposition",
+          "summary": "A second outside approach constructs a mini V7-I cadence (e.g., D7 leading to G) embedded within the line over the target chord as an additional outside device.",
+          "engine_payload": {"kind": "SubstitutionExpand"},
+          "references": [{"chapter_n": 9, "topic": "Second GB Chord Transition", "quote_excerpt": "second trick is also to create a cadence V7/ I just like we did before by using D7 leading to G major", "page": 26}]
+        },
+        {
+          "id": "modal-family-outside-entry",
+          "name": "Modal Family Outside Entry",
+          "summary": "When a chord belongs to a modal family (e.g., D Mixolydian from Em chord family), use the related secondary dominant (B7) to create an outside line leading to the modal tonic.",
+          "engine_payload": {"kind": "FamilyCoherence"},
+          "references": [{"chapter_n": 9, "topic": "D Mixolydian / B7 outside rule", "quote_excerpt": "D Mixolydian derives from Emi Chord Family, we can use also B7 ideas leading to Emi", "page": 31}]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "resolution-note-chord-tone-rule",
+          "name": "Resolution Note Must Be Chord Tone",
+          "summary": "Any single-line idea — inside or outside — must end on a chord tone of the target dominant chord before the harmonic change.",
+          "engine_payload": {"kind": "ColorToneRequire"},
+          "references": [{"chapter_n": 9, "topic": "Ending note rule", "quote_excerpt": "make sure that the ending note from your single line idea is a chord tone for D7", "page": 26}]
+        },
+        {
+          "id": "major7-superimpose-for-minor-resolution",
+          "name": "Major 7th Superimposition for Minor Resolution",
+          "summary": "When resolving to a minor tonic (e.g., Dm7), prefer major-7th superimposed arpeggio ideas over the preceding dominant (A7) to strengthen the pull toward the minor chord.",
+          "engine_payload": {"kind": "SubstitutionExpand"},
+          "references": [{"chapter_n": 13, "topic": "Guide chord visualization suggestion", "quote_excerpt": "major 7th superimposed ideas will work better for A7 leading to Dm7", "page": 77}]
+        },
+        {
+          "id": "single-line-harmony-link",
+          "name": "Single-Line as Harmonic Gateway",
+          "summary": "Chord study is not an end in itself — chords serve as the gateway to understanding harmony, which in turn enables single-line melodic fluency.",
+          "engine_payload": {"kind": "_pending:line-harmony-bridge"},
+          "references": [{"chapter_n": 1, "topic": "Chords leading to harmony", "quote_excerpt": "The chords led me to the harmony, that helped me to become a better single line player", "page": 2}]
+        }
+      ]
+    }
+  ]
+}

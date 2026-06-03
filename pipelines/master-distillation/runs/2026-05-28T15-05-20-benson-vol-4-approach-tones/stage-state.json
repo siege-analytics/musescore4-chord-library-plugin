@@ -1,0 +1,60 @@
+{
+  "run_id": "2026-05-28T15-05-20-benson-vol-4-approach-tones",
+  "config": "pipelines/master-distillation/configs/benson-vol-4-approach-tones.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-4-approach-tones/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-4-approach-tones/pages.json",
+        "re-ingested: 372 pages, 1,942,520 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-06-02T05:11:22+00:00",
+      "ended_at": "2026-06-02T05:11:22+00:00",
+      "outputs": [
+        "detected 3 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-4-approach-tones/chapter-bounds.json",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/chapters/ch01.md",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/chapters/ch02.md",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/chapters/ch03.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-06-02T05:17:35+00:00",
+      "ended_at": "2026-06-02T05:17:35+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/method-vol-4-approach-tones-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-06-03T05:40:48+00:00",
+      "ended_at": "2026-06-03T05:40:48+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/derived/systems-draft.json",
+        "plugin/data/masters-corpus/benson/method-vol-4-approach-tones/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "run_id": "2026-05-28T15-05-20-benson-vol-7-blues-ideas",
+  "config": "pipelines/master-distillation/configs/benson-vol-7-blues-ideas.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-7-blues-ideas/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-7-blues-ideas/pages.json",
+        "re-ingested: 227 pages, 1,690,648 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-06-02T05:04:03+00:00",
+      "ended_at": "2026-06-02T05:04:03+00:00",
+      "outputs": [
+        "detected 12 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-benson-vol-7-blues-ideas/chapter-bounds.json",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch01.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch02.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch03.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch04.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch05.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch06.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch07.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch08.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch09.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch10.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch11.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/chapters/ch12.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-06-02T05:12:10+00:00",
+      "ended_at": "2026-06-02T05:12:10+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/method-vol-7-blues-ideas-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-06-03T05:35:57+00:00",
+      "ended_at": "2026-06-03T05:35:57+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/derived/systems-draft.json",
+        "plugin/data/masters-corpus/benson/method-vol-7-blues-ideas/derived/STATEMENT.md",
+        "derived 2 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}
