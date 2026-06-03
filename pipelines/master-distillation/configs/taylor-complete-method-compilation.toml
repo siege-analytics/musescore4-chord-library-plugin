@@ -39,3 +39,7 @@ book_level_model = "claude-sonnet"
 [stages.s4]
 model = "claude-sonnet"
 engine_kind_policy = "pending-when-unsure"
+
+[notes]
+status = "blocked-on-source-pdf"
+note = "PDF on disk is a marketplace decoy (Amazon-style listing page captured as 1 page; not the actual book). Surfaced on #360 wave-3 audit. Cannot distill until a real Martin Taylor source PDF is sourced. martin-taylor master entry in masters.json has empty works[] as a placeholder for when this gets unblocked."
