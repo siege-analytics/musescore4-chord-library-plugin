@@ -4630,7 +4630,9 @@
           ],
           "playStyleTags": [
             "block",
-            "sequential"
+            "sequential",
+            "drop-2",
+            "drop-3"
           ],
           "applies_to_modes": [
             "chord-melody",
@@ -7100,10 +7102,12 @@
           "name": "Stacked fourths and open voicings",
           "summary": "Hall's signature 'fourths' sound: voicings built from stacked perfect fourths rather than triadic thirds — beautiful and harmonically ambiguous, doesn't commit to a single tonality. Often complemented with bass notes for grounding and counter-melodies on top. Hall avoids root-position triads; open voicings with wide intervals between adjacent voices keep the register wide.",
           "voicingStyleTags": [
-            "hall"
+            "hall",
+            "quartal"
           ],
           "playStyleTags": [
-            "block"
+            "block",
+            "quartal"
           ],
           "applies_to_modes": [
             "comping",
@@ -7637,7 +7641,9 @@
             "drop-3"
           ],
           "playStyleTags": [
-            "block"
+            "block",
+            "drop-2",
+            "drop-3"
           ],
           "applies_to_modes": [
             "chord-melody",
