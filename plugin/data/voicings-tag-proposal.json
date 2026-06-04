@@ -3,25 +3,22 @@
     "ticket": "#389",
     "purpose": "v2 heuristic voicing-tag proposal (post hostile review)",
     "voicings_processed": 820,
-    "voicings_tagged": 484,
+    "voicings_tagged": 570,
     "max_confidence_distribution": {
-      "HIGH": 34,
-      "MED": 450,
+      "HIGH": 100,
+      "MED": 470,
       "LOW": 0,
-      "NONE": 336
+      "NONE": 250
     },
     "tag_drift_count": 0,
     "playstyle_vocab_misses": {
-      "drop2\u2192drop-2": 322,
       "shell\u2192guide-tones": 270,
       "shell\u2192guide-tone": 270,
       "shell\u2192shell": 270,
       "extended\u2192extended": 84,
       "extended\u2192extensions": 84,
-      "quartal\u2192quartal": 66,
       "quartal\u2192fourth-voicings": 66,
-      "altered\u2192altered": 52,
-      "drop3\u2192drop-3": 26
+      "altered\u2192altered": 52
     },
     "v2_changes": [
       "GENERIC_DESCRIPTORS denylist requires master-signal second confirmation",
@@ -1850,9 +1847,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -1873,9 +1877,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -1896,9 +1907,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -1975,9 +1993,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -1999,9 +2024,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2023,9 +2055,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2104,9 +2143,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2127,9 +2173,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2150,9 +2203,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2173,9 +2233,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2196,9 +2263,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2275,9 +2349,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2299,9 +2380,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2323,9 +2411,16 @@
       "chord_quality": "aug7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2405,9 +2500,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2428,9 +2530,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2451,9 +2560,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2488,9 +2604,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2512,9 +2635,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2536,9 +2666,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2572,9 +2709,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2595,9 +2739,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2618,9 +2769,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2655,9 +2813,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2679,9 +2844,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2703,9 +2875,16 @@
       "chord_quality": "augMaj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2740,9 +2919,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2764,9 +2950,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2787,9 +2980,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2810,9 +3010,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2834,9 +3041,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2857,9 +3071,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2879,9 +3100,18 @@
       ],
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdim7-shell-a-shape-6-cm6",
@@ -2922,9 +3152,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2947,9 +3184,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2971,9 +3215,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -2995,9 +3246,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3020,9 +3278,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3044,9 +3309,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3067,9 +3339,18 @@
       ],
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdim7-cm7-shell-7str-7",
@@ -3140,9 +3421,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3163,9 +3451,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3187,9 +3482,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3210,9 +3512,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3233,9 +3542,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3256,9 +3572,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3280,9 +3603,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3304,9 +3634,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3326,9 +3663,18 @@
       ],
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdim7-chordsdb-f1-6",
@@ -3397,9 +3743,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3422,9 +3775,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3446,9 +3806,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3470,9 +3837,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3495,9 +3869,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3520,9 +3901,16 @@
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3543,9 +3931,18 @@
       ],
       "chord_quality": "dim7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdim7-cv7-shell-7str-7",
@@ -3618,9 +4015,16 @@
       "chord_quality": "dom13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3683,9 +4087,16 @@
       "chord_quality": "dom13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3749,9 +4160,16 @@
       "chord_quality": "dom13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3842,9 +4260,16 @@
       "chord_quality": "dom13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3909,9 +4334,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3932,9 +4364,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3955,9 +4394,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -3978,9 +4424,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4001,9 +4454,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4024,9 +4484,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4046,9 +4513,18 @@
       ],
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdom7-shell-a-shape-6-cm6",
@@ -4156,9 +4632,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4180,9 +4663,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4204,9 +4694,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4228,9 +4725,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4252,9 +4756,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4276,9 +4787,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4330,9 +4848,18 @@
       ],
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "c7-cm7-shell-7str-7",
@@ -4471,9 +4998,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4494,9 +5028,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4517,9 +5058,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4540,9 +5088,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4563,9 +5118,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4586,9 +5148,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4609,9 +5178,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4633,9 +5209,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4655,9 +5238,18 @@
       ],
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cdom7-shell-a-shape-6",
@@ -4765,9 +5357,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4789,9 +5388,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4813,9 +5419,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4837,9 +5450,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4861,9 +5481,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4886,9 +5513,16 @@
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -4940,9 +5574,18 @@
       ],
       "chord_quality": "dom7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "c7-cv7-shell-7str-7",
@@ -5085,9 +5728,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5109,9 +5759,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5132,9 +5789,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5170,9 +5834,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5195,9 +5866,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5219,9 +5897,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5287,9 +5972,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5311,9 +6003,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5335,9 +6034,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5373,9 +6079,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5398,9 +6111,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5423,9 +6143,16 @@
       "chord_quality": "dom7alt",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5491,9 +6218,16 @@
       "chord_quality": "dom7b13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5556,9 +6290,16 @@
       "chord_quality": "dom7b13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5622,9 +6363,16 @@
       "chord_quality": "dom7b13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5687,9 +6435,16 @@
       "chord_quality": "dom7b13",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5800,9 +6555,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5823,9 +6585,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5846,9 +6615,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5931,9 +6707,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5955,9 +6738,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -5979,9 +6769,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6092,9 +6889,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6115,9 +6919,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6137,9 +6948,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6250,9 +7068,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6274,9 +7099,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6297,9 +7129,16 @@
       "chord_quality": "dom7b9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6365,9 +7204,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6388,9 +7234,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6411,9 +7264,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6448,9 +7308,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6472,9 +7339,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6496,9 +7370,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6532,9 +7413,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6555,9 +7443,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6578,9 +7473,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6601,9 +7503,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6638,9 +7547,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6662,9 +7578,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6686,9 +7609,16 @@
       "chord_quality": "dom7flat5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6723,9 +7653,16 @@
       "chord_quality": "dom7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6788,9 +7725,16 @@
       "chord_quality": "dom7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6854,9 +7798,16 @@
       "chord_quality": "dom7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -6919,9 +7870,16 @@
       "chord_quality": "dom7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7032,9 +7990,16 @@
       "chord_quality": "dom7sharp5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7117,9 +8082,16 @@
       "chord_quality": "dom7sharp5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7231,9 +8203,16 @@
       "chord_quality": "dom7sharp5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7317,9 +8296,16 @@
       "chord_quality": "dom7sharp5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7541,9 +8527,16 @@
       "chord_quality": "dom7sharp9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7564,9 +8557,16 @@
       "chord_quality": "dom7sharp9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7638,9 +8638,16 @@
       "chord_quality": "dom9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7703,9 +8710,16 @@
       "chord_quality": "dom9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7801,9 +8815,16 @@
       "chord_quality": "dom9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -7894,9 +8915,16 @@
       "chord_quality": "dom9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8104,9 +9132,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8127,9 +9162,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8150,9 +9192,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8173,9 +9222,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8196,9 +9252,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8219,9 +9282,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8298,9 +9368,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8322,9 +9399,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8346,9 +9430,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8370,9 +9461,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8394,9 +9492,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8418,9 +9523,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8544,9 +9656,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8567,9 +9686,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8590,9 +9716,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8613,9 +9746,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8636,9 +9776,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8659,9 +9806,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8780,9 +9934,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8804,9 +9965,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8828,9 +9996,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8852,9 +10027,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8876,9 +10058,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -8900,9 +10089,16 @@
       "chord_quality": "maj6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9012,9 +10208,16 @@
       "chord_quality": "maj69",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9063,9 +10266,16 @@
       "chord_quality": "maj69",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9086,9 +10296,16 @@
       "chord_quality": "maj69",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9123,9 +10340,16 @@
       "chord_quality": "maj69",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9202,9 +10426,16 @@
       "chord_quality": "maj69",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9255,9 +10486,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9278,9 +10516,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9301,9 +10546,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9324,9 +10576,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9347,9 +10606,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9370,9 +10636,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9392,9 +10665,18 @@
       ],
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmaj7-cm6-shell-a-6",
@@ -9502,9 +10784,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9526,9 +10815,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9550,9 +10846,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9574,9 +10877,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9598,9 +10908,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9622,9 +10939,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9676,9 +11000,18 @@
       ],
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmaj7-cm7-shell-7str-7",
@@ -9817,9 +11150,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9840,9 +11180,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9863,9 +11210,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9886,9 +11240,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9909,9 +11270,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9932,9 +11300,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9955,9 +11330,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -9978,9 +11360,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10001,9 +11390,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10025,9 +11421,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10047,9 +11450,18 @@
       ],
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmaj7-cv6-shell-a-6",
@@ -10157,9 +11569,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10181,9 +11600,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10205,9 +11631,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10229,9 +11662,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10253,9 +11693,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10278,9 +11725,16 @@
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10332,9 +11786,18 @@
       ],
       "chord_quality": "maj7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmaj7-cv7-shell-7str-7",
@@ -10476,9 +11939,16 @@
       "chord_quality": "maj7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10527,9 +11997,16 @@
       "chord_quality": "maj7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10578,9 +12055,16 @@
       "chord_quality": "maj7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10629,9 +12113,16 @@
       "chord_quality": "maj7sharp11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10888,9 +12379,16 @@
       "chord_quality": "maj9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -10953,9 +12451,16 @@
       "chord_quality": "maj9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11051,9 +12556,16 @@
       "chord_quality": "maj9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11144,9 +12656,16 @@
       "chord_quality": "maj9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11243,9 +12762,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11266,9 +12792,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11289,9 +12822,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11368,9 +12908,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11392,9 +12939,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11416,9 +12970,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11528,9 +13089,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11551,9 +13119,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11574,9 +13149,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11653,9 +13235,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11677,9 +13266,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -11701,9 +13297,16 @@
       "chord_quality": "min-maj7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12062,9 +13665,16 @@
       "chord_quality": "min11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12085,9 +13695,16 @@
       "chord_quality": "min11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12108,9 +13725,16 @@
       "chord_quality": "min11",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12216,9 +13840,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12239,9 +13870,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12262,9 +13900,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12285,9 +13930,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12308,9 +13960,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12331,9 +13990,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12410,9 +14076,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12434,9 +14107,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12458,9 +14138,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12482,9 +14169,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12506,9 +14200,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12530,9 +14231,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12656,9 +14364,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12679,9 +14394,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12702,9 +14424,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12725,9 +14454,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12748,9 +14484,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12771,9 +14514,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12892,9 +14642,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12916,9 +14673,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12940,9 +14704,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12964,9 +14735,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -12988,9 +14766,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13012,9 +14797,16 @@
       "chord_quality": "min6",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13125,9 +14917,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13148,9 +14947,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13171,9 +14977,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13194,9 +15007,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13217,9 +15037,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13240,9 +15067,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13262,9 +15096,18 @@
       ],
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmin7-shell-a-shape-6-cm6",
@@ -13372,9 +15215,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13396,9 +15246,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13420,9 +15277,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13444,9 +15308,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13468,9 +15339,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13492,9 +15370,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13546,9 +15431,18 @@
       ],
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cm7-cm7-shell-7str-7",
@@ -13687,9 +15581,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13710,9 +15611,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13733,9 +15641,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13756,9 +15671,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13779,9 +15701,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13802,9 +15731,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13825,9 +15761,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13848,9 +15791,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13872,9 +15822,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -13894,9 +15851,18 @@
       ],
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmin7-shell-a-shape-6",
@@ -14004,9 +15970,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14028,9 +16001,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14052,9 +16032,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14076,9 +16063,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14100,9 +16094,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14125,9 +16126,16 @@
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14179,9 +16187,18 @@
       ],
       "chord_quality": "min7",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cm7-cv7-shell-7str-7",
@@ -14324,9 +16341,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14347,9 +16371,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14370,9 +16401,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14394,9 +16432,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14417,9 +16462,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14440,9 +16492,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14462,9 +16521,18 @@
       ],
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmin7b5-shell-a-shape-6-cm6",
@@ -14572,9 +16640,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14596,9 +16671,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14620,9 +16702,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14645,9 +16734,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14669,9 +16765,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14693,9 +16796,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14716,9 +16826,18 @@
       ],
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cm7b5-cm7-shell-7str-7",
@@ -14858,9 +16977,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14881,9 +17007,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14904,9 +17037,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14928,9 +17068,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14951,9 +17098,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14975,9 +17129,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -14997,9 +17158,18 @@
       ],
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cmin7b5-shell-a-shape-6",
@@ -15107,9 +17277,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15131,9 +17308,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15155,9 +17339,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15180,9 +17371,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15204,9 +17402,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15229,9 +17434,16 @@
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15252,9 +17464,18 @@
       ],
       "chord_quality": "min7b5",
       "proposed_voicingStyle": [],
-      "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "proposed_playStyle": [
+        "drop-3"
+      ],
+      "rationale": [
+        {
+          "tag": "drop-3",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop3'"
+        }
+      ],
+      "max_confidence": "MED"
     },
     {
       "voicing_id": "cm7b5-cv7-shell-7str-7",
@@ -15394,9 +17615,16 @@
       "chord_quality": "min9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15459,9 +17687,16 @@
       "chord_quality": "min9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15526,9 +17761,16 @@
       "chord_quality": "min9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15619,9 +17861,16 @@
       "chord_quality": "min9",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -15686,10 +17935,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-lower-6-cm6",
@@ -15701,10 +17959,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-upper-6-cm6",
@@ -15716,10 +17983,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-upper-6-cm6",
@@ -15731,10 +18007,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-upper-6-cm6",
@@ -15746,10 +18031,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-a-shape-6-cm6",
@@ -15762,10 +18056,19 @@
         "dorian"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-lower-6-cm6",
@@ -15777,10 +18080,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-upper-6-cm6",
@@ -15792,10 +18104,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-lower-6-cm6",
@@ -15807,10 +18128,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-upper-6-cm6",
@@ -15822,10 +18152,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-upper-6-cm6",
@@ -15837,10 +18176,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-lower-6-cm6",
@@ -15852,10 +18200,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-lower-6-cm6",
@@ -15867,10 +18224,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-d-shape-6-cm6",
@@ -15883,10 +18249,19 @@
         "dorian"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-lower-7-cm7",
@@ -15899,10 +18274,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-lower-7-cm7",
@@ -15915,10 +18299,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-c-7str-low-7-cm7",
@@ -15931,10 +18324,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-upper-7-cm7",
@@ -15947,10 +18349,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-upper-7-cm7",
@@ -15963,10 +18374,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-7str-low-7-cm7",
@@ -15979,10 +18399,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-upper-7-cm7",
@@ -15995,10 +18424,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-a-shape-7-cm7",
@@ -16012,10 +18450,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-lower-7-cm7",
@@ -16028,10 +18475,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-7str-low-7-cm7",
@@ -16044,10 +18500,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-upper-7-cm7",
@@ -16060,10 +18525,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-lower-7-cm7",
@@ -16076,10 +18550,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-7str-low-7-cm7",
@@ -16092,10 +18575,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-upper-7-cm7",
@@ -16108,10 +18600,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-upper-7-cm7",
@@ -16124,10 +18625,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-lower-7-cm7",
@@ -16140,10 +18650,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-7str-low-7-cm7",
@@ -16156,10 +18675,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-lower-7-cm7",
@@ -16172,10 +18700,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-d-shape-7-cm7",
@@ -16189,10 +18726,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-lower-6",
@@ -16204,10 +18750,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-lower-6",
@@ -16219,10 +18774,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-upper-6",
@@ -16234,10 +18798,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-upper-6",
@@ -16249,10 +18822,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-upper-6",
@@ -16264,10 +18846,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-a-shape-6",
@@ -16280,10 +18871,19 @@
         "dorian"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-lower-6",
@@ -16295,10 +18895,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-upper-6",
@@ -16310,10 +18919,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-lower-6",
@@ -16325,10 +18943,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-upper-6",
@@ -16340,10 +18967,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-upper-6",
@@ -16355,10 +18991,19 @@
         "str-1-2-3-4"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-lower-6",
@@ -16370,10 +19015,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-lower-6",
@@ -16385,10 +19039,19 @@
         "str-2-3-4-5"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-d-shape-6",
@@ -16401,10 +19064,19 @@
         "dorian"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-lower-7",
@@ -16417,10 +19089,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-lower-7",
@@ -16433,10 +19114,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-c-7str-low-7",
@@ -16449,10 +19139,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-upper-7",
@@ -16465,10 +19164,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-upper-7",
@@ -16481,10 +19189,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-7str-low-7",
@@ -16497,10 +19214,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-upper-7",
@@ -16513,10 +19239,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-a-shape-7",
@@ -16530,10 +19265,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-d-lower-7",
@@ -16546,10 +19290,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-7str-low-7",
@@ -16562,10 +19315,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-upper-7",
@@ -16578,10 +19340,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-eb-lower-7",
@@ -16594,10 +19365,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-7str-low-7",
@@ -16610,10 +19390,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-a-upper-7",
@@ -16626,10 +19415,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-bb-upper-7",
@@ -16642,10 +19440,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-f-lower-7",
@@ -16658,10 +19465,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-7str-low-7",
@@ -16674,10 +19490,19 @@
         "low-register"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-g-lower-7",
@@ -16690,10 +19515,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "cquartal-quartal-d-shape-7",
@@ -16707,10 +19541,19 @@
         "7-string"
       ],
       "chord_quality": "quartal",
-      "proposed_voicingStyle": [],
+      "proposed_voicingStyle": [
+        "quartal"
+      ],
       "proposed_playStyle": [],
-      "rationale": [],
-      "max_confidence": "NONE"
+      "rationale": [
+        {
+          "tag": "quartal",
+          "kind": "voicingStyle",
+          "confidence": "HIGH",
+          "reason": "existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])"
+        }
+      ],
+      "max_confidence": "HIGH"
     },
     {
       "voicing_id": "csus2-drop2-a-shape-6-cm6",
@@ -16723,9 +19566,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16746,9 +19596,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16769,9 +19626,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16835,9 +19699,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16859,9 +19730,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16883,9 +19761,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16951,9 +19836,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16974,9 +19866,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -16997,9 +19896,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17091,9 +19997,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17115,9 +20028,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17139,9 +20059,16 @@
       "chord_quality": "sus2",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17207,9 +20134,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17230,9 +20164,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17253,9 +20194,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17332,9 +20280,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17356,9 +20311,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17380,9 +20342,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17492,9 +20461,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17515,9 +20491,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17538,9 +20521,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17561,9 +20551,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17584,9 +20581,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17663,9 +20667,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17687,9 +20698,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
@@ -17711,9 +20729,16 @@
       "chord_quality": "sus4",
       "proposed_voicingStyle": [],
       "proposed_playStyle": [
+        "drop-2",
         "block"
       ],
       "rationale": [
+        {
+          "tag": "drop-2",
+          "kind": "playStyle",
+          "confidence": "MED",
+          "reason": "derived from category='drop2'"
+        },
         {
           "tag": "block",
           "kind": "playStyle",
