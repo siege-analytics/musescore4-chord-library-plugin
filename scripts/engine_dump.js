@@ -296,7 +296,16 @@ function main() {
     vm.runInContext([
         'if (typeof findAllVoicings !== "function") throw new Error("findAllVoicings not loaded");',
         'if (typeof _scoreCandidate !== "function") throw new Error("_scoreCandidate not loaded");',
+        'if (typeof _resetDifficultyMemo !== "function") throw new Error("_resetDifficultyMemo not loaded");',
         '_ranked = findAllVoicings(_voicings, _targetRoot, _quality, _optsWith);',
+        // Defensive reset before per-row dual-scoring. findAllVoicings already
+        // resets internally (ChordSelector.js:421) and our opts pass
+        // difficultyFn=null so the memo is never populated for this shim's
+        // workload — but resetting explicitly here documents the per-row
+        // intent and protects against a future runner that batches or
+        // reuses sandbox state across invocations. Per MuseScore plugin agent
+        // (session 260528-neat-forest) review note, 2026-06-08.
+        '_resetDifficultyMemo();',
         '_rows = [];',
         'for (var i = 0; i < _ranked.length; i++) {',
         '  var v = _ranked[i];',
