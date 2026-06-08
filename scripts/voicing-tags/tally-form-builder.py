@@ -222,17 +222,30 @@ def build_voicing_blocks(row, base_image_url, dictionary=None):
     return blocks
 
 
-def build_form_payload(rows, base_image_url, form_title, dictionary=None):
+DEFAULT_DOCS_URL = "https://siege-analytics.github.io/musescore4-chord-library-plugin/"
+
+
+def build_form_payload(rows, base_image_url, form_title, dictionary=None,
+                       docs_url=DEFAULT_DOCS_URL):
     blocks = []
     blocks.extend(form_title_block(form_title))
-    blocks.extend(text_paragraph(
+    intro_html = (
         "<p>Thanks for helping. Each page shows one guitar voicing, "
         "the tags an automated tagger guessed, and a fretboard diagram. "
         "For each, click <b>YES</b>, <b>NO</b>, or <b>REFINE</b>, and "
         "tell us why if you disagree.</p>"
         "<p>You can skip rows you're unsure about — quality of judgment "
         "beats coverage.</p>"
-    ))
+    )
+    if docs_url:
+        intro_html += (
+            f"<p>New to the project or want every term explained at your "
+            f"own pace? Read the project site at "
+            f"<b>{docs_url}</b> — covers the data flow, every tag, "
+            f"every label, and what we're trying to build. Open it in a "
+            f"new tab; this form will wait.</p>"
+        )
+    blocks.extend(text_paragraph(intro_html))
 
     for row in rows:
         blocks.extend(build_voicing_blocks(row, base_image_url, dictionary))
