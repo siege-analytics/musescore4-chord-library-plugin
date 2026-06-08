@@ -225,6 +225,33 @@ def build_voicing_blocks(row, base_image_url, dictionary=None):
 DEFAULT_DOCS_URL = "https://siege-analytics.github.io/musescore4-chord-library-plugin/"
 
 
+def glossary_intro_html(dictionary):
+    """Render an early 'How to read this form' block from the dictionary's
+    form_labels section. Tally TEXT-block only supports <p>/<b>/<i>/<br>."""
+    if not dictionary or "form_labels" not in dictionary:
+        return ""
+    fl = dictionary["form_labels"]
+    parts = ["<p><b>How to read this form</b></p>"]
+
+    parts.append("<p><b>Background concepts:</b></p>")
+    for label, desc in fl.get("concepts", {}).items():
+        parts.append(f"<p>\u2022 <b>{label}</b> \u2014 {desc}</p>")
+
+    parts.append("<p><b>What the agent shows you on each row:</b></p>")
+    for label, desc in fl.get("agent_columns", {}).items():
+        parts.append(f"<p>\u2022 <b>{label}</b> \u2014 {desc}</p>")
+
+    parts.append("<p><b>What we are asking you to fill in:</b></p>")
+    for label, desc in fl.get("your_columns", {}).items():
+        parts.append(f"<p>\u2022 <b>{label}</b> \u2014 {desc}</p>")
+
+    parts.append(
+        "<p><i>You can skip any row you are unsure about -- quality of "
+        "judgment beats coverage. Thanks for helping.</i></p>"
+    )
+    return "".join(parts)
+
+
 def build_form_payload(rows, base_image_url, form_title, dictionary=None,
                        docs_url=DEFAULT_DOCS_URL):
     blocks = []
@@ -246,6 +273,10 @@ def build_form_payload(rows, base_image_url, form_title, dictionary=None,
             f"new tab; this form will wait.</p>"
         )
     blocks.extend(text_paragraph(intro_html))
+
+    glossary = glossary_intro_html(dictionary)
+    if glossary:
+        blocks.extend(text_paragraph(glossary))
 
     for row in rows:
         blocks.extend(build_voicing_blocks(row, base_image_url, dictionary))
