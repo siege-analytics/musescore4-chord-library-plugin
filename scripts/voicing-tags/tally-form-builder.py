@@ -127,7 +127,50 @@ def input_text_question(label_html, placeholder=""):
     ]
 
 
-def build_voicing_blocks(row, base_image_url):
+def load_dictionary(path):
+    if not path:
+        return None
+    p = Path(path)
+    if not p.exists():
+        return None
+    return json.load(open(p))
+
+
+def dictionary_snippet(row, dictionary):
+    """Build an HTML snippet defining the category + each proposed tag,
+    pulled from the data dictionary. Returns '' if no dictionary or
+    nothing to define."""
+    if not dictionary:
+        return ""
+    parts = []
+    cat = (row.get("category") or "").strip()
+    cat_def = dictionary.get("categories", {}).get(cat)
+    if cat_def:
+        parts.append(
+            f"<p><b>What's a {cat_def['title']}?</b> {cat_def['definition']} "
+            f"<i>{cat_def['sound']}</i></p>"
+        )
+    tag_entries = []
+    seen = set()
+    for field in ("agent_proposed_voicingStyle", "agent_proposed_playStyle"):
+        raw = row.get(field, "") or ""
+        for t in [s.strip() for s in raw.split(",") if s.strip()]:
+            if t in seen:
+                continue
+            seen.add(t)
+            defn = dictionary.get("tags", {}).get(t)
+            if defn:
+                tag_entries.append(f"<li><code>{t}</code> — {defn['summary']}</li>")
+                continue
+            mdef = dictionary.get("masters", {}).get(t)
+            if mdef:
+                tag_entries.append(f"<li><code>{t}</code> — {mdef['summary']}</li>")
+    if tag_entries:
+        parts.append("<p><b>Tag definitions:</b></p><ul>" + "".join(tag_entries) + "</ul>")
+    return "".join(parts)
+
+
+def build_voicing_blocks(row, base_image_url, dictionary=None):
     """Build the per-voicing block group. Returns a list of blocks all
     sharing one groupUuid so Tally treats them as one page/question.
     """
@@ -143,12 +186,14 @@ def build_voicing_blocks(row, base_image_url):
 
     title_text = f"{name} — {quality} {category}".strip()
     image_url = f"{base_image_url}/{vid}.png"
+    glossary = dictionary_snippet(row, dictionary)
     reasoning_html = (
         f"<p><b>Agent proposed:</b><br>"
         f"voicingStyle: <code>{vs}</code><br>"
         f"playStyle: <code>{ps}</code><br>"
         f"confidence: <b>{conf}</b></p>"
         f"<p><b>Reasoning:</b> {reasoning}</p>"
+        + glossary
     )
 
     blocks = []
@@ -174,7 +219,7 @@ def build_voicing_blocks(row, base_image_url):
     return blocks
 
 
-def build_form_payload(rows, base_image_url, form_title):
+def build_form_payload(rows, base_image_url, form_title, dictionary=None):
     blocks = []
     blocks.extend(form_title_block(form_title))
     blocks.extend(text_paragraph(
@@ -187,7 +232,7 @@ def build_form_payload(rows, base_image_url, form_title):
     ))
 
     for row in rows:
-        blocks.extend(build_voicing_blocks(row, base_image_url))
+        blocks.extend(build_voicing_blocks(row, base_image_url, dictionary))
 
     return {
         "status": "DRAFT",
@@ -227,6 +272,9 @@ def main():
     ap.add_argument("--title", default="Voicing-tag review — pilot (#395)")
     ap.add_argument("--post", action="store_true",
                     help="POST to Tally API (requires TALLY_API_KEY env var)")
+    ap.add_argument("--dictionary",
+                    default="scripts/voicing-tags/data-dictionary.json",
+                    help="data-dictionary JSON for inline tag definitions")
     args = ap.parse_args()
 
     rows = list(csv.DictReader(open(args.csv)))
@@ -235,7 +283,18 @@ def main():
     print(f"Building Tally form for {len(rows)} voicings", file=sys.stderr)
     print(f"Image base URL: {args.base_image_url}", file=sys.stderr)
 
-    payload = build_form_payload(rows, args.base_image_url, args.title)
+    dictionary = load_dictionary(args.dictionary)
+    if dictionary:
+        print(
+            f"Loaded data dictionary from {args.dictionary} "
+            f"({len(dictionary.get('tags', {}))} tags, "
+            f"{len(dictionary.get('categories', {}))} categories)",
+            file=sys.stderr,
+        )
+    else:
+        print(f"NOTE: no dictionary at {args.dictionary} — no inline definitions",
+              file=sys.stderr)
+    payload = build_form_payload(rows, args.base_image_url, args.title, dictionary)
     n_blocks = len(payload["blocks"])
     print(f"Generated {n_blocks} blocks ({n_blocks // len(rows) if rows else 0} per voicing avg)", file=sys.stderr)
 
