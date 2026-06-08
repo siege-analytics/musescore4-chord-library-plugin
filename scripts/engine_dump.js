@@ -17,13 +17,24 @@
 //       --chord Cmaj7 \
 //       --tuning EADGBE \
 //       --master joe-pass \
-//       [--style chord-melody] \
+//       [--category drop2] \
 //       [--n-strings 6] \
 //       [--position-preference low] \
 //       [--no-master] \
 //       [--masters-path plugin/data/masters.json] \
 //       [--voicings-path plugin/data/voicings.json] \
 //       [--output -|FILE]
+//
+// FILTER FLAGS
+//
+//   --category ID   filter candidates by voicing.category enum value
+//                   (drop2 / shell / quartal / extended / altered / drop3).
+//                   The originating ticket #400 body referred to this as
+//                   --style-filter / "voicingStyleTag filter"; that was a
+//                   misnomer — see Post-error revision on #400. True
+//                   voicingStyleTag pre-filter is filed as a follow-up
+//                   (#408) and gated until voicing-tag crowdsourcing
+//                   (#389/#393/#395) yields tagged voicings to filter on.
 //
 // EXIT CODES
 //
@@ -35,7 +46,7 @@
 // OUTPUT (one JSON object per invocation)
 //
 //   {
-//     "request": { "chord_symbol", "tuning", "master_id", "style_filter", "context" },
+//     "request": { "chord_symbol", "tuning", "master_id", "category_filter", "context" },
 //     "ranked_voicings": [
 //       { "voicing_id", "rank", "score",
 //         "score_components": { "base", "master_boost", "tolerance_match" },
@@ -73,7 +84,8 @@ function printUsageAndExit(code) {
         '  --tuning STR          (e.g. EADGBE)\n' +
         '  --master ID           master id from masters.json\n' +
         '  --no-master           score without master boost\n' +
-        '  --style ID            optional voicingStyleTag filter\n' +
+        '  --category ID         optional voicing.category filter\n' +
+        '                        (drop2 / shell / quartal / extended / altered / drop3)\n' +
         '  --n-strings N         default 6\n' +
         '  --position-preference low|mid|high   informational; not used in scoring today\n' +
         '  --masters-path PATH   default plugin/data/masters.json\n' +
@@ -89,7 +101,7 @@ function parseArgs(argv) {
         tuning: null,
         master: null,
         noMaster: false,
-        style: null,
+        category: null,
         nStrings: 6,
         positionPreference: null,
         mastersPath: DEFAULT_MASTERS,
@@ -110,9 +122,9 @@ function parseArgs(argv) {
                 out.master = next; i++; break;
             case '--no-master':
                 out.noMaster = true; break;
-            case '--style':
-            case '--style-filter':
-                out.style = next; i++; break;
+            case '--category':
+            case '--category-filter':
+                out.category = next; i++; break;
             case '--n-strings':
                 out.nStrings = parseInt(next, 10); i++; break;
             case '--position-preference':
@@ -275,7 +287,7 @@ function main() {
     // callback-gated terms in _scoreCandidate contribute 0.
     const baseOpts = {
         maxStrings: args.nStrings,
-        filterCategory: args.style || null,
+        filterCategory: args.category || null,
         melodyMidi: -1,
         bassMidi: -1,
         melodyLocked: false,
@@ -329,7 +341,7 @@ function main() {
             chord_symbol: args.chord,
             tuning: args.tuning,
             master_id: args.noMaster ? null : args.master,
-            style_filter: args.style || null,
+            category_filter: args.category || null,
             context: {
                 n_strings: args.nStrings,
                 position_preference: args.positionPreference,

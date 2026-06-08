@@ -141,7 +141,7 @@ class TestResponseShape:
         assert req["chord_symbol"] == "Cmaj7"
         assert req["tuning"] == "EADGBE"
         assert req["master_id"] == "joe-pass"
-        assert req["style_filter"] is None
+        assert req["category_filter"] is None
         assert req["context"]["n_strings"] == 6
 
     def test_version_objects_have_sha_and_clean(
