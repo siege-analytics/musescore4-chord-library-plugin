@@ -1,0 +1,3967 @@
+{
+  "status": "DRAFT",
+  "blocks": [
+    {
+      "uuid": "0c40ffc6-1a00-4117-b478-9e6f1caaa343",
+      "groupUuid": "5ad255f4-137b-4801-a41f-ecad2e0aee6f",
+      "type": "FORM_TITLE",
+      "title": "Voicing-tag review \u2014 pilot (#395)"
+    },
+    {
+      "uuid": "26dab5d8-6313-4d74-85b3-772079e16755",
+      "groupUuid": "bb8443cf-8cd3-4535-9969-a0b78d3c6c70",
+      "type": "TEXT",
+      "html": "<p>Thanks for helping. Each page shows one guitar voicing, the tags an automated tagger guessed, and a fretboard diagram. For each, click <b>YES</b>, <b>NO</b>, or <b>REFINE</b>, and tell us why if you disagree.</p><p>You can skip rows you're unsure about \u2014 quality of judgment beats coverage.</p>"
+    },
+    {
+      "uuid": "9241de52-fc7f-4cdb-9211-44a352ea9473",
+      "groupUuid": "20421f4e-6248-4ccc-9690-f22fe5f6dcb4",
+      "type": "TITLE",
+      "title": "C13b9 \u2014 Fret 5 \u2014 Altered (6th on top) \u2014 13b9 altered"
+    },
+    {
+      "uuid": "dc805d9c-f12a-4cd0-bb0a-96a737192bf4",
+      "groupUuid": "20421f4e-6248-4ccc-9690-f22fe5f6dcb4",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13b9-cm6-altered-6str-26.png",
+      "altText": "Fretboard diagram for C13b9 \u2014 Fret 5 \u2014 Altered (6th on top)"
+    },
+    {
+      "uuid": "0cd2e828-7a1a-4aad-bdf0-c1342f93053c",
+      "groupUuid": "20421f4e-6248-4ccc-9690-f22fe5f6dcb4",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>altered-dominant</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "aba40be8-ef7c-4f72-a19e-c839babadc36",
+      "groupUuid": "407fae85-df18-4f11-a6e8-45291f8aabe9",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "c276313e-3365-4b6b-a86e-ffeace37aef0",
+      "groupUuid": "407fae85-df18-4f11-a6e8-45291f8aabe9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "cde62618-2e0b-4506-9218-560b1f8e1c4c",
+      "groupUuid": "407fae85-df18-4f11-a6e8-45291f8aabe9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "cce314ce-4bf2-41c3-b690-ecd4ab26c1c1",
+      "groupUuid": "407fae85-df18-4f11-a6e8-45291f8aabe9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "507599b0-4ac3-468d-a828-a812ab6e7aeb",
+      "groupUuid": "677dd3ef-f4f6-473f-a2ba-4cd0ad6d371d",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "36bb211a-6f5f-4f84-bab9-bdd6c5d97315",
+      "groupUuid": "f692a045-b69a-4b3c-8c64-c815edf9b12e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "43750726-e587-4dfc-af1d-4a7e22316c71",
+      "groupUuid": "38dc92e6-84d7-455f-b95c-454c321b8294",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "b81149e9-98d4-451b-9e6e-470d9b3298b6",
+      "groupUuid": "898a3982-84f1-4b81-bb7d-97a87535950f",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 Fret 5 \u2014 Drop 2 \u2014 aug7 drop2"
+    },
+    {
+      "uuid": "b33a0941-181c-4446-9044-dd1f37f4510c",
+      "groupUuid": "898a3982-84f1-4b81-bb7d-97a87535950f",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm6-drop2-b7top-6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 Fret 5 \u2014 Drop 2"
+    },
+    {
+      "uuid": "7ff0b510-8117-4651-b924-8855d0b76000",
+      "groupUuid": "898a3982-84f1-4b81-bb7d-97a87535950f",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-2, block</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-2 (MED): derived from category='drop2' | block (MED): derived from category='drop2'</p>"
+    },
+    {
+      "uuid": "aaf62e08-cbef-4ae2-a19a-4fc201bbd960",
+      "groupUuid": "8ab3fd4f-f514-4770-ab05-404759b99601",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "73735b80-d45b-42ab-ad2b-71db51c9d090",
+      "groupUuid": "8ab3fd4f-f514-4770-ab05-404759b99601",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e63c7c64-599a-4cb4-b5cd-aa0a21e60d24",
+      "groupUuid": "8ab3fd4f-f514-4770-ab05-404759b99601",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "044f3136-1539-4013-948c-a87a9a1865f2",
+      "groupUuid": "8ab3fd4f-f514-4770-ab05-404759b99601",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4e16c380-eef5-4dff-b023-7fc5b6835b46",
+      "groupUuid": "1946ffb0-fbc8-40be-b957-a7238a66222d",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "993eaaaf-0d00-4f46-9255-8f6e07287542",
+      "groupUuid": "a3fc5d7f-030a-4237-94a2-9f055d66287e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "19918d02-5ac8-409e-b10b-9410208bd07b",
+      "groupUuid": "4d29dada-99fe-4a57-a7dc-1956ac17dd74",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "e9a35697-b5bc-4071-a88a-df3701c66118",
+      "groupUuid": "b6bd81f0-f7da-48d2-bc4f-ccfe5306cd0e",
+      "type": "TITLE",
+      "title": "C7 \u2014 7-str bass \u2014 Drop 3 \u2014 dom7 drop3"
+    },
+    {
+      "uuid": "e14033c6-c87f-4694-9932-f352983075e8",
+      "groupUuid": "b6bd81f0-f7da-48d2-bc4f-ccfe5306cd0e",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-cm7-drop3-7str-7.png",
+      "altText": "Fretboard diagram for C7 \u2014 7-str bass \u2014 Drop 3"
+    },
+    {
+      "uuid": "3602578f-3a3c-456d-ad70-3714d2396a1a",
+      "groupUuid": "b6bd81f0-f7da-48d2-bc4f-ccfe5306cd0e",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>drop-3, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> drop-3 (MED): existing tag 'drop-3' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['jody-fisher', 'joe-pass'] | van-eps (HIGH): existing voi\u2026</p>"
+    },
+    {
+      "uuid": "da50f515-049a-43c7-92c5-efdec5b10eb6",
+      "groupUuid": "6753989a-78b6-4e91-b32a-3628a8577bc2",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "f0837946-b10e-4264-8976-ae62ebea4437",
+      "groupUuid": "6753989a-78b6-4e91-b32a-3628a8577bc2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4b40c83f-bc5b-429f-bb9f-4e77d9df707f",
+      "groupUuid": "6753989a-78b6-4e91-b32a-3628a8577bc2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "47d507fc-dfb2-437c-b169-2e8760d2d9ce",
+      "groupUuid": "6753989a-78b6-4e91-b32a-3628a8577bc2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "cfec88fc-6226-4415-937b-ec972ec850f9",
+      "groupUuid": "1d455bb0-2faf-48b6-801b-0f1c110d399d",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "44dc0684-2355-4b04-a25b-d6889e439434",
+      "groupUuid": "621f4055-e3c7-42b7-b0f4-6375d71a94fe",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "c82acce8-7a53-45b3-830e-f0f752c114bd",
+      "groupUuid": "549c1800-e651-47f9-8b2d-e92720221343",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d623267c-2e53-4ca9-8393-cd8a00494f84",
+      "groupUuid": "367dfd23-20b7-4f91-9d1c-6adc168aca5f",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top) \u2014 dim7 drop3"
+    },
+    {
+      "uuid": "674edda9-0685-416b-a744-2f139ff95ce5",
+      "groupUuid": "367dfd23-20b7-4f91-9d1c-6adc168aca5f",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-drop3-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top)"
+    },
+    {
+      "uuid": "83d0188b-794a-4f1e-bb4f-5e0198997eb1",
+      "groupUuid": "367dfd23-20b7-4f91-9d1c-6adc168aca5f",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-3</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-3 (MED): derived from category='drop3'</p>"
+    },
+    {
+      "uuid": "9f4e6e20-a201-401c-9ea3-9cd7160b7788",
+      "groupUuid": "da008810-b025-4451-8a28-fed684c750ed",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "12f6ddbb-8ec7-4464-b54d-79cfd4b120e9",
+      "groupUuid": "da008810-b025-4451-8a28-fed684c750ed",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "7692d7a8-8a36-41c8-87fc-2fcbea480154",
+      "groupUuid": "da008810-b025-4451-8a28-fed684c750ed",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "df880eac-acdb-40ff-8c80-6b249517c682",
+      "groupUuid": "da008810-b025-4451-8a28-fed684c750ed",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4fb33aa3-2f3a-4be1-8bc2-b09c208d719a",
+      "groupUuid": "1e25d394-3c6a-4327-abbf-5e66c4d1bc2c",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "6120424f-3421-40a6-ab42-617129671e72",
+      "groupUuid": "325f949c-43e0-4bab-9c5e-d37cfc3d0a68",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "02d5f65d-214d-4cc3-8928-4d8ca58e325c",
+      "groupUuid": "73eedec6-6374-4303-94bd-cb7ea0de0a05",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d9b9fa2f-d441-4170-8b24-5c2a5ceac914",
+      "groupUuid": "b0041ceb-a5c8-41e6-86b7-4d26e148aeb5",
+      "type": "TITLE",
+      "title": "C13sus4 \u2014 Fret 8 \u2014 Extended (root on top) \u2014 13sus4 extended"
+    },
+    {
+      "uuid": "0f151d90-b230-4f1c-afd7-0f986d3cb9c3",
+      "groupUuid": "b0041ceb-a5c8-41e6-86b7-4d26e148aeb5",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13sus4-cm6-extended-6str-18.png",
+      "altText": "Fretboard diagram for C13sus4 \u2014 Fret 8 \u2014 Extended (root on top)"
+    },
+    {
+      "uuid": "b92969c0-4c68-4560-aad7-2c67f030903d",
+      "groupUuid": "b0041ceb-a5c8-41e6-86b7-4d26e148aeb5",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "d7518955-34ea-4e91-848e-3549e3c45494",
+      "groupUuid": "92ef9d02-f101-40ea-ba5e-03c8c9b4bbe1",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "5d634695-898c-455e-8820-eb9781920511",
+      "groupUuid": "92ef9d02-f101-40ea-ba5e-03c8c9b4bbe1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "ec7bc0a2-7c93-4f38-a2d1-008c4f5efe9b",
+      "groupUuid": "92ef9d02-f101-40ea-ba5e-03c8c9b4bbe1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "2818e5e9-24ec-469d-b75b-5bf5116812c9",
+      "groupUuid": "92ef9d02-f101-40ea-ba5e-03c8c9b4bbe1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "dc9c0357-688f-46bd-8d3a-92460b314b86",
+      "groupUuid": "6e34fcbf-61db-4924-a1e5-f6e060cdfa24",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "ae9df3f3-569a-4d51-993c-3e0211a6cb08",
+      "groupUuid": "07c8d9ee-b308-4b59-be74-099a82233a1d",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "d670a294-2cd0-4d9f-a48c-e33c093af389",
+      "groupUuid": "5b3b5f20-bc44-44fb-af5b-a4727d560abc",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "695504ff-fe66-4ff3-860f-c18aa79aeda2",
+      "groupUuid": "0ac2ce16-dc90-4d77-8bbe-ec1fc9b049ea",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 Fret 1 \u2014 Extended \u2014 dim7 extended"
+    },
+    {
+      "uuid": "b89c4975-1397-433d-92c3-534093bec121",
+      "groupUuid": "0ac2ce16-dc90-4d77-8bbe-ec1fc9b049ea",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-chordsdb-f1-6.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 Fret 1 \u2014 Extended"
+    },
+    {
+      "uuid": "ba421523-b5ff-4ce4-84f6-2432701fcf91",
+      "groupUuid": "0ac2ce16-dc90-4d77-8bbe-ec1fc9b049ea",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "119ddde1-4405-4bb4-8e5b-f21c5ad03db1",
+      "groupUuid": "d4ac2e71-95c8-47f8-9f96-cd65d81e0bc0",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "f703cb9a-8b97-4860-bf9f-bd7d83a71ac3",
+      "groupUuid": "d4ac2e71-95c8-47f8-9f96-cd65d81e0bc0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "f4b97315-44ca-46dc-9701-2b3c6a0e81ba",
+      "groupUuid": "d4ac2e71-95c8-47f8-9f96-cd65d81e0bc0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "5ed591f4-2876-4caf-9fa2-7b56a15364e6",
+      "groupUuid": "d4ac2e71-95c8-47f8-9f96-cd65d81e0bc0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "8d261219-166f-4322-9230-3b4906771830",
+      "groupUuid": "a8554d70-bf68-4e08-b36f-981f3376163b",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "16b8bede-afa0-40ad-bb78-a478a02b9d0c",
+      "groupUuid": "540d1d0d-4f73-42bc-9d18-de52e997dd6e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "4eb07632-c246-4c22-bdd0-eed37c281c87",
+      "groupUuid": "ca48c3a2-348b-49a6-814b-0f7fd1b36a14",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "3ed6cf37-7722-419b-98b5-3f273a97d65e",
+      "groupUuid": "09880ffd-6b74-46be-a019-ca152a704657",
+      "type": "TITLE",
+      "title": "Cquartal \u2014 Str 2-3-4-5 \u2014 Quartal (root on top) \u2014 quartal quartal"
+    },
+    {
+      "uuid": "6158986a-8a6a-4701-9704-db21c063144e",
+      "groupUuid": "09880ffd-6b74-46be-a019-ca152a704657",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cquartal-a-lower-6-cm6.png",
+      "altText": "Fretboard diagram for Cquartal \u2014 Str 2-3-4-5 \u2014 Quartal (root on top)"
+    },
+    {
+      "uuid": "272b0e56-33a3-4e92-8ce3-950939119b4b",
+      "groupUuid": "09880ffd-6b74-46be-a019-ca152a704657",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>quartal</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> quartal (HIGH): existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])</p>"
+    },
+    {
+      "uuid": "4a5c9659-83b1-4930-b544-0b18b3c6b405",
+      "groupUuid": "974a4ac7-9e42-44f5-be28-5b2304cfdb29",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "c53b33b3-8c71-4eb3-817e-97fd4c96a243",
+      "groupUuid": "974a4ac7-9e42-44f5-be28-5b2304cfdb29",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "5ad782f0-69d8-4c73-9db9-6074f153c18c",
+      "groupUuid": "974a4ac7-9e42-44f5-be28-5b2304cfdb29",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "ddaeeb75-0cae-4972-956e-256dbd006b82",
+      "groupUuid": "974a4ac7-9e42-44f5-be28-5b2304cfdb29",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "42a239cf-056c-48db-b2e5-b15e5e55b0d9",
+      "groupUuid": "cf6a7974-e1d6-4354-aa60-2fd0f27db53f",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "d59aa06b-9be3-4915-9216-a8bd7255b9d1",
+      "groupUuid": "cf4f405f-055b-433c-bfb2-8f1200c69918",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "86e84ea6-dc7b-435a-a782-b7fb591cdd1f",
+      "groupUuid": "e15a78e0-dd90-409c-8176-257ad0ded7ed",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d7227947-3055-4572-8a21-1fce6fef0cb1",
+      "groupUuid": "5228785d-21cf-4465-8c16-fd492edd2c0a",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 7-str root \u2014 Shell (bb7 on top) \u2014 dim7 shell"
+    },
+    {
+      "uuid": "cb58c681-06bd-4cba-b4d7-ad7d5fea29ec",
+      "groupUuid": "5228785d-21cf-4465-8c16-fd492edd2c0a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-cm7-shell-7str-7.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 7-str root \u2014 Shell (bb7 on top)"
+    },
+    {
+      "uuid": "44b2afbe-e3c3-40c3-b8c3-c92be82e523f",
+      "groupUuid": "5228785d-21cf-4465-8c16-fd492edd2c0a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['peter-bernstein'] | van-eps (HIGH): existing voicing.tags=\u2026</p>"
+    },
+    {
+      "uuid": "535987ed-808c-431c-91b1-c54980c24466",
+      "groupUuid": "6db8b963-b836-4a6e-8565-fcff863c64c3",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "ced810e1-5775-483e-8696-2e543a2af3f7",
+      "groupUuid": "6db8b963-b836-4a6e-8565-fcff863c64c3",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d19f10f2-9760-4069-ae66-b68a63e330cf",
+      "groupUuid": "6db8b963-b836-4a6e-8565-fcff863c64c3",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "bddeb376-3d80-4d3a-a577-13abb27627f6",
+      "groupUuid": "6db8b963-b836-4a6e-8565-fcff863c64c3",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "50b3cfa7-066d-4a68-9c56-7ff929bf948b",
+      "groupUuid": "afedb3de-4462-4f86-abe5-1a60f27278b2",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "4767d72e-aeeb-4235-a434-7e2e66af7153",
+      "groupUuid": "83aac471-159c-4dc9-9ece-adde8d7a2c76",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "b24bc649-ad86-48b5-9639-5c7156e4a10c",
+      "groupUuid": "f0d91a60-1f33-46b9-80cc-947bef0bc3ef",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "f7b27ddb-c0aa-46e6-8593-280e1675474d",
+      "groupUuid": "0c1ef2d9-ee67-4899-b130-8e6208d18a65",
+      "type": "TITLE",
+      "title": "C7 \u2014 A shape \u2014 Shell (b7 on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "bd0d4fad-fba8-4166-8562-c177b5a1fc40",
+      "groupUuid": "0c1ef2d9-ee67-4899-b130-8e6208d18a65",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdom7-shell-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for C7 \u2014 A shape \u2014 Shell (b7 on top)"
+    },
+    {
+      "uuid": "6f49deaf-8cd4-4568-9f0b-82760a8b44b9",
+      "groupUuid": "0c1ef2d9-ee67-4899-b130-8e6208d18a65",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' + category=shell + quality='dom7' matches bernstein R-3-7 shell principle</p>"
+    },
+    {
+      "uuid": "dffc6c87-be39-4d41-8863-4df66aaef04b",
+      "groupUuid": "5d600836-4001-4f5d-ba8d-323e46c3bfc5",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "fbe87aa5-8334-41f3-9319-3fa07517a7d7",
+      "groupUuid": "5d600836-4001-4f5d-ba8d-323e46c3bfc5",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "3d8b6cdc-651b-420d-9e96-8cbdb31c3a94",
+      "groupUuid": "5d600836-4001-4f5d-ba8d-323e46c3bfc5",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "6a24fa95-cbd7-4a71-b91d-3f3501084ef4",
+      "groupUuid": "5d600836-4001-4f5d-ba8d-323e46c3bfc5",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "1ce6263e-7fe3-480a-a77c-4b497cc5f674",
+      "groupUuid": "5b2ccbb8-eda6-4f1a-a8de-17a97ba4f5cb",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "cf720845-3261-479f-9568-fa0004867578",
+      "groupUuid": "db87245e-a283-45e8-ba06-686ad7d360c9",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "266b9f0c-7137-4592-90eb-a4190d30f8ff",
+      "groupUuid": "ebd60563-9f12-4c68-aaa2-53c22c0c43c0",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "b8f3f244-3bb5-42c8-b03c-3bbba68d4e2e",
+      "groupUuid": "fef7b7aa-9719-4c98-ba9a-dfa3b18b1877",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 A shape \u2014 Shell (b7 on top) \u2014 aug7 shell"
+    },
+    {
+      "uuid": "238c34ae-1e30-45e5-833d-a99749787b0b",
+      "groupUuid": "fef7b7aa-9719-4c98-ba9a-dfa3b18b1877",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm6-shell-a-6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 A shape \u2014 Shell (b7 on top)"
+    },
+    {
+      "uuid": "dec52203-ca80-4a6d-bbb0-13941d649cb1",
+      "groupUuid": "fef7b7aa-9719-4c98-ba9a-dfa3b18b1877",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "41af78e2-3154-41de-8207-83d1d6308230",
+      "groupUuid": "5d2d1828-3817-4309-af7b-bfbc598c5427",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "bf6471a7-29d6-4500-96be-605cf9bf9d8a",
+      "groupUuid": "5d2d1828-3817-4309-af7b-bfbc598c5427",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9939690b-7ffd-4a5f-99b0-4e17cca54efa",
+      "groupUuid": "5d2d1828-3817-4309-af7b-bfbc598c5427",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d59178b6-88a9-468c-9bb0-20ce9fef35a8",
+      "groupUuid": "5d2d1828-3817-4309-af7b-bfbc598c5427",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "672a1490-97f5-43c3-96ee-db7b8f2fe6ed",
+      "groupUuid": "f3855be6-6472-46fd-a5cb-9d5a90372c7e",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "a2cbf463-8f4d-4542-a45b-d33860f384fb",
+      "groupUuid": "7a52c501-ba1a-4e56-89cd-e273c769d906",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "cb48ed2d-098f-4e1a-8d78-c656b04b7198",
+      "groupUuid": "a1766295-c960-4ca9-accb-47d8e6adc940",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "2653e49a-4c56-4a8e-ac09-2159f8f4312b",
+      "groupUuid": "455b0c72-e7ad-4cc5-8a67-2c1a9eb5714e",
+      "type": "TITLE",
+      "title": "C13b9 \u2014 Fret 2 \u2014 Altered (3rd on top) \u2014 13b9 altered"
+    },
+    {
+      "uuid": "e75225a4-902b-48e0-9d12-d7a5ede1c5e4",
+      "groupUuid": "455b0c72-e7ad-4cc5-8a67-2c1a9eb5714e",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13b9-cm7-altered-7str-28.png",
+      "altText": "Fretboard diagram for C13b9 \u2014 Fret 2 \u2014 Altered (3rd on top)"
+    },
+    {
+      "uuid": "7f94485b-3d7b-46a9-b67a-1c76b1be1525",
+      "groupUuid": "455b0c72-e7ad-4cc5-8a67-2c1a9eb5714e",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>altered-dominant</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "468aff08-f935-4120-beff-af4eb0c91780",
+      "groupUuid": "43629114-faec-45d2-a439-64ec19b2ea0b",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "a088afa7-3e2f-4614-a956-32406ccc3818",
+      "groupUuid": "43629114-faec-45d2-a439-64ec19b2ea0b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "5a2ef048-5882-4f6e-90e6-6455df3aece8",
+      "groupUuid": "43629114-faec-45d2-a439-64ec19b2ea0b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "a6da2fa9-d5e0-499f-894b-786cc9ff3552",
+      "groupUuid": "43629114-faec-45d2-a439-64ec19b2ea0b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b3845bf1-b9f9-42a4-b780-3b09506a8293",
+      "groupUuid": "3e144962-4441-4929-a8e8-12a858d7c437",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "3fb309b3-1766-4b24-8bde-7c13c7a9c8fd",
+      "groupUuid": "de0c1dcb-fdb9-4c56-9ce1-860298823093",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "b5a4d9cd-3da4-46cb-a3ff-08592b6aa664",
+      "groupUuid": "44480b32-565c-49e6-8c9d-cfc0ef4c8e0f",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "9dfd6b20-f093-49b8-aa1f-c4d679f2c4c9",
+      "groupUuid": "eae060b0-26dc-4363-9ba7-466aadad3237",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 Fret 8 \u2014 Drop 2 \u2014 aug7 drop2"
+    },
+    {
+      "uuid": "306f6597-a7a0-4aad-ab21-4009faec9d7d",
+      "groupUuid": "eae060b0-26dc-4363-9ba7-466aadad3237",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm6-drop2-1top-6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 Fret 8 \u2014 Drop 2"
+    },
+    {
+      "uuid": "5fd86c89-a22b-40f6-a55c-4b6ee6761ff5",
+      "groupUuid": "eae060b0-26dc-4363-9ba7-466aadad3237",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-2, block</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-2 (MED): derived from category='drop2' | block (MED): derived from category='drop2'</p>"
+    },
+    {
+      "uuid": "9f6c92b4-4290-41b9-89b2-8288f74a0e06",
+      "groupUuid": "d5b343e4-73d6-4143-b1a0-651590a23bae",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "6ce1f6a8-11ea-4bb0-b67c-59dade51ef09",
+      "groupUuid": "d5b343e4-73d6-4143-b1a0-651590a23bae",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "db59a909-6b0f-45b6-89a0-38cdd9d01596",
+      "groupUuid": "d5b343e4-73d6-4143-b1a0-651590a23bae",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "ffe8cfd4-201d-4616-830f-4803aa355885",
+      "groupUuid": "d5b343e4-73d6-4143-b1a0-651590a23bae",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "78649e80-b8de-4ffe-82ef-5ba1131a420e",
+      "groupUuid": "19c40bf5-de9a-4e46-850b-07e12e7b1f23",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "9b8d3c02-fd04-4214-b71c-9157fc2c9df5",
+      "groupUuid": "e34cd2fe-a1b9-40cb-a3a8-fe404cd75129",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "5ad343cf-d67d-45e1-8d69-3c4042a6309f",
+      "groupUuid": "ba698029-c5a7-4732-ac17-c047c6c85ded",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "ce603121-719e-4b9b-ae71-cc4bd0b7ef4d",
+      "groupUuid": "24d8266f-c973-48bb-b24b-57b0f5da55fe",
+      "type": "TITLE",
+      "title": "C7 \u2014 7-str bass \u2014 Drop 3 \u2014 dom7 drop3"
+    },
+    {
+      "uuid": "22ba7a9c-10ed-4dd8-b794-d7019b5ede40",
+      "groupUuid": "24d8266f-c973-48bb-b24b-57b0f5da55fe",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-cv7-drop3-7str-7.png",
+      "altText": "Fretboard diagram for C7 \u2014 7-str bass \u2014 Drop 3"
+    },
+    {
+      "uuid": "9fadad97-39ad-46fa-95e9-f802c4dc5446",
+      "groupUuid": "24d8266f-c973-48bb-b24b-57b0f5da55fe",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>drop-3, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> drop-3 (MED): existing tag 'drop-3' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['jody-fisher', 'joe-pass'] | van-eps (HIGH): existing voi\u2026</p>"
+    },
+    {
+      "uuid": "758a0092-68ca-4689-b8ef-1ccc1a7ef461",
+      "groupUuid": "163db6b8-e620-457d-ab7e-cae553a68e46",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "96bf288f-baed-4024-8a37-17d75412a4e1",
+      "groupUuid": "163db6b8-e620-457d-ab7e-cae553a68e46",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c6bed596-04d4-4854-973c-c4a20aaaa1d6",
+      "groupUuid": "163db6b8-e620-457d-ab7e-cae553a68e46",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "a73b5af3-32d9-46a5-8199-40ea2f70eef8",
+      "groupUuid": "163db6b8-e620-457d-ab7e-cae553a68e46",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "46d17dc0-54c2-47e8-9b98-e42503641b21",
+      "groupUuid": "256613fd-cc0d-42a6-805e-b7705fc8ca9d",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "6d8b58c6-5d03-40bb-9e83-94eec8753e3c",
+      "groupUuid": "d1b90612-d158-4c31-8fd9-f3851376310f",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "4084b415-d7fd-4a18-b715-5ac409594cec",
+      "groupUuid": "57c01c7c-867c-41b9-8417-eec93b149293",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "1a26360b-1423-4f4e-b959-f39bb07a8777",
+      "groupUuid": "9a3a845d-cb3e-4d33-bc57-ece1931749fc",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top) \u2014 dim7 drop3"
+    },
+    {
+      "uuid": "f61607ed-71e5-42a2-b82c-34bd5725ed12",
+      "groupUuid": "9a3a845d-cb3e-4d33-bc57-ece1931749fc",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-drop3-a-shape-7-cm7.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top)"
+    },
+    {
+      "uuid": "514ca0e1-aa11-4447-a183-2de4f481b8de",
+      "groupUuid": "9a3a845d-cb3e-4d33-bc57-ece1931749fc",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-3</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-3 (MED): derived from category='drop3'</p>"
+    },
+    {
+      "uuid": "e83b024a-d3cf-4a23-9215-51cba6a9de41",
+      "groupUuid": "36ac0607-3388-4db2-8fad-e6e5e85be5e2",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "92034c6d-4bf5-431f-9a65-687008a124e0",
+      "groupUuid": "36ac0607-3388-4db2-8fad-e6e5e85be5e2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "19e7b88c-6b13-4749-9fc1-a50652aa07f7",
+      "groupUuid": "36ac0607-3388-4db2-8fad-e6e5e85be5e2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c7f752fb-ae98-4ccd-bf62-08d5138e6d6b",
+      "groupUuid": "36ac0607-3388-4db2-8fad-e6e5e85be5e2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "eee36fce-70e4-47b0-aa03-1fbfca9d63c2",
+      "groupUuid": "ba98e64e-6811-43c0-804a-0bafa794d717",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "85e0c33b-738c-4490-927d-95a14ec67118",
+      "groupUuid": "0f572aed-dda4-4fdd-958a-8cddc3708405",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "5836d893-eceb-4781-af39-d2d9c2343d8c",
+      "groupUuid": "73e6b5a8-ea0c-427e-b71a-80288d3e4d47",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "9dee9dd0-73d6-452a-89d2-eb22b76ad557",
+      "groupUuid": "f94cf719-e12f-4c07-803f-9e9417882187",
+      "type": "TITLE",
+      "title": "C13sus4 \u2014 Fret 1 \u2014 Extended (4th on top) \u2014 13sus4 extended"
+    },
+    {
+      "uuid": "7fb6ff38-679c-49d1-9479-91674f373188",
+      "groupUuid": "f94cf719-e12f-4c07-803f-9e9417882187",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13sus4-cm7-extended-7str-20.png",
+      "altText": "Fretboard diagram for C13sus4 \u2014 Fret 1 \u2014 Extended (4th on top)"
+    },
+    {
+      "uuid": "b3b8ed71-44e7-489b-a859-65415ca3ba57",
+      "groupUuid": "f94cf719-e12f-4c07-803f-9e9417882187",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "7f20d579-c15d-42e4-9e10-bc7c698a9336",
+      "groupUuid": "a2284384-4ee4-4133-8b15-7f1e2cbd30dc",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "d1be8de4-64ef-4c4a-935b-52fc58d95258",
+      "groupUuid": "a2284384-4ee4-4133-8b15-7f1e2cbd30dc",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "75adba5a-7b10-4099-a4f4-1fb5d7a863e2",
+      "groupUuid": "a2284384-4ee4-4133-8b15-7f1e2cbd30dc",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "7db93cfa-0dad-42ae-b55c-1bc7f4250751",
+      "groupUuid": "a2284384-4ee4-4133-8b15-7f1e2cbd30dc",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "3737a7b7-73e0-4522-95d2-0a4f0bfedb52",
+      "groupUuid": "06430510-b8a8-4e9e-8aad-ae340fa05fa5",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "62b4e713-1f3c-4920-9207-9cab68aeb6b8",
+      "groupUuid": "90ed6530-e271-433e-b0c3-57310244a028",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "08194532-6766-4082-932f-dbe4c7c66ce7",
+      "groupUuid": "346fa57d-0169-4616-aedc-72eeb4a467a9",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d1affda3-23e9-4c34-bca8-8f7e5ea48bb4",
+      "groupUuid": "bce92d49-b4e4-40c4-9397-718cddae8fc1",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 Fret 2 \u2014 Extended \u2014 dim7 extended"
+    },
+    {
+      "uuid": "f6d544d7-68ed-4a9b-91ea-9d1aab1853a1",
+      "groupUuid": "bce92d49-b4e4-40c4-9397-718cddae8fc1",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-chordsdb-f2-6.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 Fret 2 \u2014 Extended"
+    },
+    {
+      "uuid": "80a5ed0c-b51a-46d0-a89f-3d29be79c17b",
+      "groupUuid": "bce92d49-b4e4-40c4-9397-718cddae8fc1",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "58d87b5e-3350-4a44-a5ac-464f2dd4b2f8",
+      "groupUuid": "5c183dda-fa04-4b7b-b165-37d6cf95e1a1",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "74053019-0275-4507-8281-85bd6990e505",
+      "groupUuid": "5c183dda-fa04-4b7b-b165-37d6cf95e1a1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c9cef4ec-befb-49d0-ada9-1aadaffe75fc",
+      "groupUuid": "5c183dda-fa04-4b7b-b165-37d6cf95e1a1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "ac6c7670-b30b-4f87-9a7a-c9445e0c57a9",
+      "groupUuid": "5c183dda-fa04-4b7b-b165-37d6cf95e1a1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "f1c78e68-b04f-4a67-8f67-ee8b359612cd",
+      "groupUuid": "f3c604fa-b10f-47fc-976c-c74ca440a6c0",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "9fddc19c-d293-4044-9d8f-22524727d472",
+      "groupUuid": "0ab467c8-ebf2-476a-9564-2d103fda0b64",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "43761be2-2fcb-4ace-bb1c-a6b16bf0dba4",
+      "groupUuid": "463e2215-01ef-4836-ae6d-7086246bc0e8",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "ac4a4660-c429-46d6-9776-120962abd35e",
+      "groupUuid": "1a0b44fb-e546-4c24-9f76-f0c65730be24",
+      "type": "TITLE",
+      "title": "Cquartal \u2014 Str 2-3-4-5 \u2014 Quartal (9th on top) \u2014 quartal quartal"
+    },
+    {
+      "uuid": "0d399ea8-14e7-401d-a8b6-2eea507a3973",
+      "groupUuid": "1a0b44fb-e546-4c24-9f76-f0c65730be24",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cquartal-bb-lower-6-cm6.png",
+      "altText": "Fretboard diagram for Cquartal \u2014 Str 2-3-4-5 \u2014 Quartal (9th on top)"
+    },
+    {
+      "uuid": "c29eda75-55e3-4849-a413-3c24b74b471a",
+      "groupUuid": "1a0b44fb-e546-4c24-9f76-f0c65730be24",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>quartal</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> quartal (HIGH): existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])</p>"
+    },
+    {
+      "uuid": "26add9fc-3ebe-4cd8-8c1e-091311e029a4",
+      "groupUuid": "522c75c1-7dbc-4932-b228-92574e4e1f75",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "a5cdbf0d-1721-48f1-b725-388b4bd725d3",
+      "groupUuid": "522c75c1-7dbc-4932-b228-92574e4e1f75",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "bfe9f8c3-42a0-4033-9c59-f876c3b1da2f",
+      "groupUuid": "522c75c1-7dbc-4932-b228-92574e4e1f75",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "290131d3-efb2-4a56-bf01-f762eddc8b8f",
+      "groupUuid": "522c75c1-7dbc-4932-b228-92574e4e1f75",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "173c54b7-62fd-4d13-981e-05ff8caade56",
+      "groupUuid": "e755dc00-f6a9-4216-8161-e4c908c80ea1",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "465be447-c7b1-418b-ba7d-3a9aec00d77e",
+      "groupUuid": "c8eed5c3-b81f-4aa1-9587-77c4379d1974",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "b65aa45c-4883-428b-8780-d8d07d7a749b",
+      "groupUuid": "77047e7d-c861-4cbc-8339-745a383e93a5",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "b0722b10-45ce-4f7c-bbd9-b51b3203354f",
+      "groupUuid": "4f088bf5-b4f9-4114-a5c1-808f0a615f38",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 7-str root \u2014 Shell (bb7 on top) \u2014 dim7 shell"
+    },
+    {
+      "uuid": "1644577f-7c71-49fc-8775-7c1e50be98db",
+      "groupUuid": "4f088bf5-b4f9-4114-a5c1-808f0a615f38",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-cv7-shell-7str-7.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 7-str root \u2014 Shell (bb7 on top)"
+    },
+    {
+      "uuid": "e05e6245-2813-497c-b0a8-73c25755d512",
+      "groupUuid": "4f088bf5-b4f9-4114-a5c1-808f0a615f38",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['peter-bernstein'] | van-eps (HIGH): existing voicing.tags=\u2026</p>"
+    },
+    {
+      "uuid": "af4c00c0-eee4-4e5a-b51c-b26982990cc6",
+      "groupUuid": "64dbdd9d-da6f-4759-8dc6-5738340d063e",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "dc3c6c77-19a2-4625-af62-ba78a9e37ebb",
+      "groupUuid": "64dbdd9d-da6f-4759-8dc6-5738340d063e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9569ee20-d8fa-4a0b-84fb-be7cda1c1068",
+      "groupUuid": "64dbdd9d-da6f-4759-8dc6-5738340d063e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "00ac7444-7879-4fcd-9a34-992ea8b74bb7",
+      "groupUuid": "64dbdd9d-da6f-4759-8dc6-5738340d063e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "37c0136b-dd1e-4e74-949f-3e291f3ec45e",
+      "groupUuid": "83cf3ca3-3e91-4d67-a6ad-027028e09503",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "580ccacd-1b6b-4874-b876-f89bf5314b5e",
+      "groupUuid": "38daf8f1-5cc5-4268-92f2-baffcc3ea956",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "c42092fc-6d05-49b6-8928-3cf4e14c875c",
+      "groupUuid": "12e80f5c-683c-48ca-a852-0b50ac12f47c",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "25b333c3-8e90-4af1-b427-dd0ef0ddf0f9",
+      "groupUuid": "45a9248b-c4da-456b-9d65-7841589c8907",
+      "type": "TITLE",
+      "title": "C7 \u2014 A shape \u2014 Shell (3rd on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "572c2907-8d76-4862-aded-2b42248cf01f",
+      "groupUuid": "45a9248b-c4da-456b-9d65-7841589c8907",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-shell-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for C7 \u2014 A shape \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "a2362c3b-2f8b-4a69-9bef-eb358b320e6f",
+      "groupUuid": "45a9248b-c4da-456b-9d65-7841589c8907",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' + category=shell + quality='dom7' matches bernstein R-3-7 shell principle</p>"
+    },
+    {
+      "uuid": "26501dc4-c8a9-474d-99a9-9d4bd4a6c9fa",
+      "groupUuid": "55e46566-179a-4130-b17f-0cdb9e3f14fa",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "8ac30034-24e8-4ca8-bacd-2eec398f9ad5",
+      "groupUuid": "55e46566-179a-4130-b17f-0cdb9e3f14fa",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "03958566-7afe-423b-ab51-71ce3c52bb72",
+      "groupUuid": "55e46566-179a-4130-b17f-0cdb9e3f14fa",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c553c45d-dba3-4cde-b40b-e03731284b74",
+      "groupUuid": "55e46566-179a-4130-b17f-0cdb9e3f14fa",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "1c26c729-91ff-4371-bb38-e54e5babdcd8",
+      "groupUuid": "87fc2670-6f51-4dd1-99b1-34ce6e17396a",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "80082bf4-3cdc-49fd-a5d4-3cb9c2f22396",
+      "groupUuid": "d118f94c-4aff-43ab-af17-88da156eb0c7",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "f0fb50ce-6209-4839-8cb5-14cb9f6978ef",
+      "groupUuid": "fd02e2bf-1d66-4af0-b01b-13cf40d7b820",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "218f2455-426d-4d7a-b5b3-abf2c694cc34",
+      "groupUuid": "d3d9d54e-a3d3-4eea-9ebd-1ffbf840093a",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 A shape \u2014 Shell (3rd on top) \u2014 aug7 shell"
+    },
+    {
+      "uuid": "d56b4f09-b1ff-4672-b6e4-368177288b15",
+      "groupUuid": "d3d9d54e-a3d3-4eea-9ebd-1ffbf840093a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-shell-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 A shape \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "e81efed4-181d-4b51-9550-2f27148986d7",
+      "groupUuid": "d3d9d54e-a3d3-4eea-9ebd-1ffbf840093a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "2f6de2b4-8ab8-471a-be27-ec6e089776ed",
+      "groupUuid": "a2b32c61-90ab-4ea5-b7a3-903ead9a3149",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "2388035c-1837-402b-ac80-0dc8e04ad28c",
+      "groupUuid": "a2b32c61-90ab-4ea5-b7a3-903ead9a3149",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e97a07a6-73cb-478b-9681-91041c818a24",
+      "groupUuid": "a2b32c61-90ab-4ea5-b7a3-903ead9a3149",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "868e817a-22a9-4b4d-b073-46d7ba6c52dc",
+      "groupUuid": "a2b32c61-90ab-4ea5-b7a3-903ead9a3149",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "953e2a01-9fe4-4d80-821a-de1ad9f56adb",
+      "groupUuid": "a0b5ad15-b8f8-4fc5-bffb-bf0d78ecb828",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "7e8e64dc-4c18-4393-bfb2-93e6978ab071",
+      "groupUuid": "121c37f2-8225-4d96-87a0-a5a60a2fdff9",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "98b547b4-1ed9-4978-b379-bb513363fa0e",
+      "groupUuid": "0c0786ca-e812-47db-837f-1ba8c7e18d48",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "5fee96fa-3c66-4aa8-a2e7-23637bcafb5f",
+      "groupUuid": "b5897bda-439c-4378-a619-f505bc38b456",
+      "type": "TITLE",
+      "title": "C13b9 \u2014 Fret 5 \u2014 Altered (6th on top) \u2014 13b9 altered"
+    },
+    {
+      "uuid": "02c5a1d5-72e3-4cb0-9cfc-1b9e2c22dc85",
+      "groupUuid": "b5897bda-439c-4378-a619-f505bc38b456",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13b9-cv6-altered-6str-25.png",
+      "altText": "Fretboard diagram for C13b9 \u2014 Fret 5 \u2014 Altered (6th on top)"
+    },
+    {
+      "uuid": "3eb31a58-b3e9-41f4-b2b8-78a033bd3635",
+      "groupUuid": "b5897bda-439c-4378-a619-f505bc38b456",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>altered-dominant</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "bfcf5fb0-ac5d-4b77-be0d-d783236a5384",
+      "groupUuid": "12a1594c-a842-481b-89f5-9ff22d18044e",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "01e00aec-3975-44e0-8df0-1a9e6c9bddc1",
+      "groupUuid": "12a1594c-a842-481b-89f5-9ff22d18044e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "3454ed97-3866-4f18-951f-0c7a6e234e9b",
+      "groupUuid": "12a1594c-a842-481b-89f5-9ff22d18044e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "51979008-ab50-4d44-ac6f-634ca67271ae",
+      "groupUuid": "12a1594c-a842-481b-89f5-9ff22d18044e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4f1ed7bf-47ba-4565-9465-9a347df68e2b",
+      "groupUuid": "3d9c15ff-49b7-4060-95a2-9b9e3a3b348e",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "ee61bd1b-6cb0-4861-920f-9543dcb25c1c",
+      "groupUuid": "88ae5c0e-351a-4832-8ab1-a32ea885b46c",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "cd04e6eb-198b-4e69-809f-d6d71aa3fd8d",
+      "groupUuid": "f3c355bf-b0c2-4d12-9de2-a48f4158a81d",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "aa4bc9b2-9edd-4ef0-8bc9-78d3829d8989",
+      "groupUuid": "6e22aa38-d327-4192-8aa1-b17cc14ba491",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 Fret 10 \u2014 Drop 2 \u2014 aug7 drop2"
+    },
+    {
+      "uuid": "fe37c064-df7e-42f6-9e85-adcc0f26b671",
+      "groupUuid": "6e22aa38-d327-4192-8aa1-b17cc14ba491",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm6-drop2-3rdtop-6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 Fret 10 \u2014 Drop 2"
+    },
+    {
+      "uuid": "55f3ca6e-5dd0-4169-8424-245d645e8c51",
+      "groupUuid": "6e22aa38-d327-4192-8aa1-b17cc14ba491",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-2, block</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-2 (MED): derived from category='drop2' | block (MED): derived from category='drop2'</p>"
+    },
+    {
+      "uuid": "053e9051-065c-4048-b39f-07bff28b2356",
+      "groupUuid": "8a5f8805-4e32-4f74-8482-dfbfa4c266bf",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "f3703285-12c0-42e1-aa78-3d189f9f021c",
+      "groupUuid": "8a5f8805-4e32-4f74-8482-dfbfa4c266bf",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "1a71ac8b-f6b7-41a5-8623-7470f6483179",
+      "groupUuid": "8a5f8805-4e32-4f74-8482-dfbfa4c266bf",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b23ac411-d4b6-48ff-a63e-9bfc1067819f",
+      "groupUuid": "8a5f8805-4e32-4f74-8482-dfbfa4c266bf",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "f3d0d16d-9df3-4a3c-b062-a847eef9adcb",
+      "groupUuid": "2a2263f1-2a9a-48e7-8895-e0b95ba43f46",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "ee8cac93-a3ed-4899-be30-249fac034e8c",
+      "groupUuid": "d554026a-d61f-463f-88ec-ec5b9808aa9e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "d49bf708-025a-443e-b4a4-2df946f8b171",
+      "groupUuid": "9f76d292-acdb-45c4-962b-402504a9992e",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "cd991eb3-4641-433d-8dab-53b2116d12c0",
+      "groupUuid": "a9343f91-67c1-4e99-9fa9-91542b58f0e4",
+      "type": "TITLE",
+      "title": "Cmaj7 \u2014 7-str bass \u2014 Drop 3 \u2014 maj7 drop3"
+    },
+    {
+      "uuid": "71ad91ae-db35-403f-beee-be1facc72f4d",
+      "groupUuid": "a9343f91-67c1-4e99-9fa9-91542b58f0e4",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cmaj7-cm7-drop3-7str-7.png",
+      "altText": "Fretboard diagram for Cmaj7 \u2014 7-str bass \u2014 Drop 3"
+    },
+    {
+      "uuid": "bbd78b2b-f732-4590-a04e-aa3e1a286c37",
+      "groupUuid": "a9343f91-67c1-4e99-9fa9-91542b58f0e4",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>drop-3, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> drop-3 (MED): existing tag 'drop-3' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['jody-fisher', 'joe-pass'] | van-eps (HIGH): existing voi\u2026</p>"
+    },
+    {
+      "uuid": "c80ee2ba-16d3-4809-b9da-23294752bd6e",
+      "groupUuid": "88578e1f-8bd6-4890-864f-27d812c6a3c9",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "18fdc133-6c06-44bc-bcd4-d6c9ead77ccd",
+      "groupUuid": "88578e1f-8bd6-4890-864f-27d812c6a3c9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c02f7dad-b635-4473-8bdd-71974a21c436",
+      "groupUuid": "88578e1f-8bd6-4890-864f-27d812c6a3c9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9d9ee1e2-0a6a-4596-a249-1123738d7891",
+      "groupUuid": "88578e1f-8bd6-4890-864f-27d812c6a3c9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b8c225ac-e10b-4ac0-8e33-61037de956cc",
+      "groupUuid": "29067ecf-ea88-4196-b2f4-65b4be7f8b0f",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "fdf79f25-c6c3-4b3e-9584-f630b08c4053",
+      "groupUuid": "f3b8ac56-d172-4510-845d-3c779dca0c67",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "32622073-0ce3-42cb-a8c2-0f2fc25536e4",
+      "groupUuid": "a722cb93-4b42-4d61-9615-14e11fc28908",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "79378017-4799-492d-8bf6-88f5a601db0d",
+      "groupUuid": "8fab9a6b-c281-4c8c-b34a-d1afa3271047",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top) \u2014 dim7 drop3"
+    },
+    {
+      "uuid": "357581d8-af4a-426d-a6f4-3dadf6017898",
+      "groupUuid": "8fab9a6b-c281-4c8c-b34a-d1afa3271047",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-drop3-a-shape-6.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top)"
+    },
+    {
+      "uuid": "7aa20b82-16b0-4f8c-971b-c89532ebd85e",
+      "groupUuid": "8fab9a6b-c281-4c8c-b34a-d1afa3271047",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-3</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-3 (MED): derived from category='drop3'</p>"
+    },
+    {
+      "uuid": "8fc6fcdc-3793-43c6-9f72-3fd3a693eec8",
+      "groupUuid": "e3c0f620-08c8-4f19-88fe-d8cffcab29c8",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "b4ab1445-d527-4e46-a8c1-5002b555a863",
+      "groupUuid": "e3c0f620-08c8-4f19-88fe-d8cffcab29c8",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "313a9187-a1af-4418-b554-d5a568f368ed",
+      "groupUuid": "e3c0f620-08c8-4f19-88fe-d8cffcab29c8",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "52701873-33af-4436-9866-e7eff38fabbb",
+      "groupUuid": "e3c0f620-08c8-4f19-88fe-d8cffcab29c8",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b517b4de-3e03-4a48-a3bd-ead6a92c5199",
+      "groupUuid": "7aa19bfe-c3f8-47a4-bb48-8caf30d811c4",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "768499da-5202-4c93-b246-c6e314bf40eb",
+      "groupUuid": "ab950fc0-a516-4914-b8e8-1f1fdf5229a6",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "59065509-8749-4c5a-9931-00a5f5e866a8",
+      "groupUuid": "81c458a6-dc42-4c7d-856b-90b460ad9e76",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "37348e24-94be-4039-9020-1eeb41a1d1a7",
+      "groupUuid": "e9df45de-6f1d-49ca-8eea-5c9c0e120e1b",
+      "type": "TITLE",
+      "title": "C13sus4 \u2014 Fret 8 \u2014 Extended (root on top) \u2014 13sus4 extended"
+    },
+    {
+      "uuid": "0689e9be-85e2-40f6-8760-d0e5e16f9d91",
+      "groupUuid": "e9df45de-6f1d-49ca-8eea-5c9c0e120e1b",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13sus4-cv6-extended-6str-17.png",
+      "altText": "Fretboard diagram for C13sus4 \u2014 Fret 8 \u2014 Extended (root on top)"
+    },
+    {
+      "uuid": "c6e37d0c-6ba7-4f30-bf83-0c59c60bce24",
+      "groupUuid": "e9df45de-6f1d-49ca-8eea-5c9c0e120e1b",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "5e08bfd0-7fda-4c7e-996b-3ee0ad14ea3d",
+      "groupUuid": "f7f10ce2-f01f-4931-93b6-077f4277d2b7",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "664b46ed-4d48-4f04-aff7-480861e2084d",
+      "groupUuid": "f7f10ce2-f01f-4931-93b6-077f4277d2b7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "08c5c8ac-539d-4c73-9f7a-a56091f792a6",
+      "groupUuid": "f7f10ce2-f01f-4931-93b6-077f4277d2b7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "88e876cb-f615-4de0-80bb-879c596e37e7",
+      "groupUuid": "f7f10ce2-f01f-4931-93b6-077f4277d2b7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "80200bcc-db9c-4979-9dee-5a41cc893cb3",
+      "groupUuid": "c993170b-6c46-46f7-b599-0005632d9bb5",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "c4089129-2330-4ee7-a686-8c5f946bf465",
+      "groupUuid": "bd0ad227-8a09-4fb8-a08c-ba170daa4c60",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "ccb9ac4d-2313-4fb0-a1da-9e7aa7c7e84e",
+      "groupUuid": "8707d525-da19-4a7e-9855-767f161e2fcb",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "f814c69b-9c38-4893-93b0-ce13c9309fb7",
+      "groupUuid": "27202e9b-1499-4f6f-8d07-447ccb26308e",
+      "type": "TITLE",
+      "title": "C13 \u2014 Fret 2 \u2014 Extended \u2014 dom13 extended"
+    },
+    {
+      "uuid": "e74633fc-1384-489c-b6d3-e22fd4cb97f5",
+      "groupUuid": "27202e9b-1499-4f6f-8d07-447ccb26308e",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13-chordsdb-f2-6.png",
+      "altText": "Fretboard diagram for C13 \u2014 Fret 2 \u2014 Extended"
+    },
+    {
+      "uuid": "63879f62-37cf-40f9-bc45-32a8504c4c06",
+      "groupUuid": "27202e9b-1499-4f6f-8d07-447ccb26308e",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "1af4c108-e7f0-45e8-8b4f-74d675089089",
+      "groupUuid": "188b6f38-b940-43c2-afec-80ceeff40eb2",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "fe9cff38-c532-42fa-8ac7-1b5361bef908",
+      "groupUuid": "188b6f38-b940-43c2-afec-80ceeff40eb2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "0faa4700-c47b-4a0a-930c-8c44adbef5fb",
+      "groupUuid": "188b6f38-b940-43c2-afec-80ceeff40eb2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "7d3958d1-3200-4b90-aa02-25a8fbfb41d6",
+      "groupUuid": "188b6f38-b940-43c2-afec-80ceeff40eb2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4fc9b7af-3033-4e72-a4ee-7b07fd5cfc1a",
+      "groupUuid": "50f1ee99-df58-4b46-9cc6-9cff7655d4ff",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "525ec07b-1296-47dc-b6dc-24d732d442b0",
+      "groupUuid": "e2b59c7f-1414-4629-ba8c-0a61a2983751",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "dad24204-9ece-489d-8951-0f8cbd40e7fb",
+      "groupUuid": "2c944705-dfa0-4755-81a7-42b605c888e4",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "287d459a-d3a8-4c49-8c89-89d19eed6a16",
+      "groupUuid": "42a87dc5-65f4-4b8f-b719-5ee4eb5daf6a",
+      "type": "TITLE",
+      "title": "Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (4th on top) \u2014 quartal quartal"
+    },
+    {
+      "uuid": "852e1746-4498-4f64-a14d-9da445bb2406",
+      "groupUuid": "42a87dc5-65f4-4b8f-b719-5ee4eb5daf6a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cquartal-d-upper-6-cm6.png",
+      "altText": "Fretboard diagram for Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (4th on top)"
+    },
+    {
+      "uuid": "9f483536-442a-4ba1-8658-57f262577804",
+      "groupUuid": "42a87dc5-65f4-4b8f-b719-5ee4eb5daf6a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>quartal</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> quartal (HIGH): existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])</p>"
+    },
+    {
+      "uuid": "20702ecd-76a1-493d-a309-3a85e58cbcd4",
+      "groupUuid": "fa88a274-74ff-4ca6-a100-b3525c69a179",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "0bf4c9b8-45eb-4cab-bfdb-0ddf69022964",
+      "groupUuid": "fa88a274-74ff-4ca6-a100-b3525c69a179",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "89735065-c650-41a8-a979-b436fd0b512e",
+      "groupUuid": "fa88a274-74ff-4ca6-a100-b3525c69a179",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4c8eb53f-52a6-4681-a02c-e98a1ebf02d2",
+      "groupUuid": "fa88a274-74ff-4ca6-a100-b3525c69a179",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "a3ec6e74-e868-44cf-9dd3-90eb47725a34",
+      "groupUuid": "721d69d8-2a4b-46df-a08c-be0eec66d62f",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "8e6857c2-db16-40cf-8c74-9e8278766e95",
+      "groupUuid": "e9a81313-1ee4-454f-a086-29de029a17ef",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "7c6e5af2-6eac-41fc-86e6-afa49b9108fb",
+      "groupUuid": "2057b940-1097-4f10-a217-645885b60ece",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "2f5f7349-db4d-4d88-9eb7-bb59ceda495d",
+      "groupUuid": "ac9c33cb-838f-48fb-b44c-bb397da30791",
+      "type": "TITLE",
+      "title": "C7 \u2014 7-str root \u2014 Shell (3rd on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "19a34b88-f930-40bc-8559-d5d109b557f7",
+      "groupUuid": "ac9c33cb-838f-48fb-b44c-bb397da30791",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-cm7-shell-7str-7.png",
+      "altText": "Fretboard diagram for C7 \u2014 7-str root \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "6400ba0b-cb7e-49fd-ae7f-43e596a2a58a",
+      "groupUuid": "ac9c33cb-838f-48fb-b44c-bb397da30791",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['peter-bernstein'] | van-eps (HIGH): existing voicing.tags=\u2026</p>"
+    },
+    {
+      "uuid": "429df7d8-99a7-4c18-8bb0-b6a3fdcda833",
+      "groupUuid": "a106d3f1-b85d-4422-b80b-adad2a91aaeb",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "d7c14493-3ca8-42be-ad1d-8d8618d4df2e",
+      "groupUuid": "a106d3f1-b85d-4422-b80b-adad2a91aaeb",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "138caade-148b-457a-a1d5-6ad6684c2324",
+      "groupUuid": "a106d3f1-b85d-4422-b80b-adad2a91aaeb",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9daaa065-108a-490c-9877-0a595cdab2b9",
+      "groupUuid": "a106d3f1-b85d-4422-b80b-adad2a91aaeb",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "65720faf-f8ea-496b-802f-2e2603c4e74f",
+      "groupUuid": "6aaca151-acf1-485f-8f7a-51697bde034e",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "1f07089b-70cb-4b23-9c8e-36e3c266cba8",
+      "groupUuid": "f58819aa-eb9c-48c8-b6c6-02bd155dd4e1",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "25a5e488-2665-401c-9f0a-e6a9d93991c9",
+      "groupUuid": "79129a45-055f-44a5-9713-55cd722de8e4",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "a8c7de1d-8055-4cd4-b0b7-c8fc59c80a66",
+      "groupUuid": "ad27ef36-e52c-4198-9638-0ee470669c2a",
+      "type": "TITLE",
+      "title": "C7 \u2014 E shape \u2014 Shell (3rd on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "df4381ee-c670-4098-abc7-e751571d2130",
+      "groupUuid": "ad27ef36-e52c-4198-9638-0ee470669c2a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-shell-e-shape-6-cm6.png",
+      "altText": "Fretboard diagram for C7 \u2014 E shape \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "09a79f85-14c2-42c2-bb9e-44f22555ffb6",
+      "groupUuid": "ad27ef36-e52c-4198-9638-0ee470669c2a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' + category=shell + quality='dom7' matches bernstein R-3-7 shell principle</p>"
+    },
+    {
+      "uuid": "07935a10-843c-4516-b0d3-5d28a83c4c96",
+      "groupUuid": "21ef7ace-23fe-49af-83f6-86722c673dd6",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "62a30ede-db71-44c0-a422-91778213ec47",
+      "groupUuid": "21ef7ace-23fe-49af-83f6-86722c673dd6",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e5060334-2040-4740-989b-31a9d83d859c",
+      "groupUuid": "21ef7ace-23fe-49af-83f6-86722c673dd6",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "45307e52-b53f-482a-8242-2f3d85b2cf8d",
+      "groupUuid": "21ef7ace-23fe-49af-83f6-86722c673dd6",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "5ed8f79e-8e5f-48aa-bcbb-80bbd8d8fd67",
+      "groupUuid": "44e45643-ba2b-460e-a5af-0b5f481b230c",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "9043978a-52e8-46d6-8dfc-929791ac9e9f",
+      "groupUuid": "4b635864-7a12-44d8-8188-c7e667fa0716",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "683b5203-49bd-43e9-ae72-a5b86314cce3",
+      "groupUuid": "6c0817b9-b229-47b7-aac1-358f97f9a95c",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "ddf17afa-3e2e-438f-89c2-52bd41948660",
+      "groupUuid": "3a36afbd-b837-4e91-b75f-0ef55087d414",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 E shape \u2014 Shell (3rd on top) \u2014 aug7 shell"
+    },
+    {
+      "uuid": "6bece04b-552b-4ca3-bc0f-23d0886035fa",
+      "groupUuid": "3a36afbd-b837-4e91-b75f-0ef55087d414",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-shell-e-shape-6-cm6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 E shape \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "a1bcc03b-f712-42ba-8bd4-e60db29c8355",
+      "groupUuid": "3a36afbd-b837-4e91-b75f-0ef55087d414",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "612dd531-2dab-4519-b2a5-c8c13a2c3be6",
+      "groupUuid": "a4ccdc11-7932-4cee-95aa-bf7c91fa3ab0",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "2cbd48b3-5ef4-4d35-826c-4aa318b59e49",
+      "groupUuid": "a4ccdc11-7932-4cee-95aa-bf7c91fa3ab0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9de0323d-51cf-45fe-a0c6-d4910198ba86",
+      "groupUuid": "a4ccdc11-7932-4cee-95aa-bf7c91fa3ab0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "db4dee78-9973-4363-8166-d160815357b5",
+      "groupUuid": "a4ccdc11-7932-4cee-95aa-bf7c91fa3ab0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "28370580-8839-44d5-b7c0-a70539b4a479",
+      "groupUuid": "17526745-6ef0-4c7a-940d-d8c2d3702f1b",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "5202a849-1275-493d-98e1-f732f185ee9c",
+      "groupUuid": "3e97a0d4-2d45-4ced-8880-21977a4d1e2a",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "b18a1c2e-35ae-436f-aa91-a686b9b98cfe",
+      "groupUuid": "406320bc-47fb-4c27-976f-3019e5770114",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "55fc101c-8701-4c16-9df8-90bbbb612888",
+      "groupUuid": "055109f9-15a6-44b4-9b2e-2db9b027c07f",
+      "type": "TITLE",
+      "title": "C13b9 \u2014 Fret 2 \u2014 Altered (3rd on top) \u2014 13b9 altered"
+    },
+    {
+      "uuid": "225c4ec2-a3de-4a21-97bd-5fe2ce0b07a3",
+      "groupUuid": "055109f9-15a6-44b4-9b2e-2db9b027c07f",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13b9-cv7-altered-7str-27.png",
+      "altText": "Fretboard diagram for C13b9 \u2014 Fret 2 \u2014 Altered (3rd on top)"
+    },
+    {
+      "uuid": "5307c100-0703-4206-9c6b-4cd7997e4e65",
+      "groupUuid": "055109f9-15a6-44b4-9b2e-2db9b027c07f",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>altered-dominant</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "69af7813-df13-4b7c-8c45-45332945bb4d",
+      "groupUuid": "2bfce729-518d-4344-8868-f37fa446e09d",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "cfa7ad9d-b53c-42d0-9846-7122c9d91f12",
+      "groupUuid": "2bfce729-518d-4344-8868-f37fa446e09d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "bf0afe32-e5d1-40e8-84f8-ccdd83c8432f",
+      "groupUuid": "2bfce729-518d-4344-8868-f37fa446e09d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "69b9187c-e97b-4b01-ba06-ed9e4e0f36b5",
+      "groupUuid": "2bfce729-518d-4344-8868-f37fa446e09d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4b9bb1da-301a-42e3-b37d-521a99213e6c",
+      "groupUuid": "65ae06b6-32ee-492d-9bf6-e961f654163e",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "0878dafe-5a3d-4fc1-8918-677e110a89df",
+      "groupUuid": "e22d9f40-7c24-4066-9aa2-272e41965ba7",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "9b8f8b51-7fae-4ef5-a71a-82c204d37dd1",
+      "groupUuid": "f80e2dbb-ee70-4244-bbf0-be8cc011df5c",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "756a579e-c7a3-4fe7-8dd2-c07c4fd7a357",
+      "groupUuid": "5e8250d2-572e-4322-955a-934fd3f32153",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 Fret 5 \u2014 Drop 2 \u2014 aug7 drop2"
+    },
+    {
+      "uuid": "0f0d0d19-dcaf-4dda-a872-6f7429a5bdea",
+      "groupUuid": "5e8250d2-572e-4322-955a-934fd3f32153",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm7-drop2-b7top-7.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 Fret 5 \u2014 Drop 2"
+    },
+    {
+      "uuid": "9b0b55cb-6266-47c3-b185-b5efd93f6885",
+      "groupUuid": "5e8250d2-572e-4322-955a-934fd3f32153",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-2, block</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-2 (MED): derived from category='drop2' | block (MED): derived from category='drop2'</p>"
+    },
+    {
+      "uuid": "257c0f14-3f96-4ea1-8ec5-688f517936fb",
+      "groupUuid": "36bd02d4-7d86-4cf8-9ca7-27d6c559323e",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "9ecc7cb9-37a8-497a-a08c-83fec03ab998",
+      "groupUuid": "36bd02d4-7d86-4cf8-9ca7-27d6c559323e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "3b69cc3f-5485-482d-b73f-b8c9902e1868",
+      "groupUuid": "36bd02d4-7d86-4cf8-9ca7-27d6c559323e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "be3cb1e3-e149-4ae3-9423-16b55847f728",
+      "groupUuid": "36bd02d4-7d86-4cf8-9ca7-27d6c559323e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "47d2be8c-aaf9-4db0-838e-a26858e19022",
+      "groupUuid": "8588b4a7-9f07-4b39-a36b-139000a4b5c9",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "d07f02ff-032d-4429-8d2a-ffaf64f9df1a",
+      "groupUuid": "e44a6fae-9501-4173-8870-8edb9db83cdf",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "00ba9499-8152-4c07-96e5-3aa18536e552",
+      "groupUuid": "61f00353-0140-4f0a-a81d-91362904983c",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "1a4becb8-2da6-4d38-a2ea-11506dc80d2d",
+      "groupUuid": "80bc8174-7a9a-4378-9877-13340f26c80a",
+      "type": "TITLE",
+      "title": "Cmaj7 \u2014 7-str bass \u2014 Drop 3 \u2014 maj7 drop3"
+    },
+    {
+      "uuid": "c81e26b7-b508-40f3-8770-9767848e1b85",
+      "groupUuid": "80bc8174-7a9a-4378-9877-13340f26c80a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cmaj7-cv7-drop3-7str-7.png",
+      "altText": "Fretboard diagram for Cmaj7 \u2014 7-str bass \u2014 Drop 3"
+    },
+    {
+      "uuid": "8e436b8f-89b3-4403-97c6-9e8dc9215101",
+      "groupUuid": "80bc8174-7a9a-4378-9877-13340f26c80a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>drop-3, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> drop-3 (MED): existing tag 'drop-3' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['jody-fisher', 'joe-pass'] | van-eps (HIGH): existing voi\u2026</p>"
+    },
+    {
+      "uuid": "f0835501-3fc1-46f3-9f39-5bb302495558",
+      "groupUuid": "96f8958f-90b8-423d-bc0e-2768f09e14ba",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "d43785b6-a408-470d-b4d1-2a0d9a0f28c6",
+      "groupUuid": "96f8958f-90b8-423d-bc0e-2768f09e14ba",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "25e3a1df-edd2-4d1d-8e84-e1ebc2603dc8",
+      "groupUuid": "96f8958f-90b8-423d-bc0e-2768f09e14ba",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "af916e45-a325-4693-9595-9c147326dc4e",
+      "groupUuid": "96f8958f-90b8-423d-bc0e-2768f09e14ba",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "40712420-89e4-42ce-adc9-3c5fb2fb5f9b",
+      "groupUuid": "0232f786-4bd7-40ad-99a6-633fed50e3b6",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "7bb92140-b87a-4038-bbe3-f07c6d108a8b",
+      "groupUuid": "d085a76f-95e7-4700-9829-3d64ab8c2833",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "1fff0dc6-bb43-4a1c-8ffd-8c9e04ea612d",
+      "groupUuid": "246cd770-7d49-475f-b513-bbdcc3428eda",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "10a01755-b9a5-44bf-9cd9-ad93ea0b778f",
+      "groupUuid": "8be8e0bf-dfe6-4048-9a96-d393723d0525",
+      "type": "TITLE",
+      "title": "Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top) \u2014 dim7 drop3"
+    },
+    {
+      "uuid": "afed22d5-5d04-4e15-af04-e8b688b1f29a",
+      "groupUuid": "8be8e0bf-dfe6-4048-9a96-d393723d0525",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdim7-drop3-a-shape-7.png",
+      "altText": "Fretboard diagram for Cdim7 \u2014 A shape \u2014 Drop 3 (b5 on top)"
+    },
+    {
+      "uuid": "a01583d0-d549-4c19-8d25-ba25d65775ed",
+      "groupUuid": "8be8e0bf-dfe6-4048-9a96-d393723d0525",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-3</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-3 (MED): derived from category='drop3'</p>"
+    },
+    {
+      "uuid": "37f72730-eed8-48a6-a797-24763cd10c67",
+      "groupUuid": "f8a7ef1c-5bc2-4ddb-935f-cb29f13e4608",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "4300f613-020c-4f77-8031-40d899230210",
+      "groupUuid": "f8a7ef1c-5bc2-4ddb-935f-cb29f13e4608",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "45b1cbfb-6bb3-4f2d-b876-1579d187c592",
+      "groupUuid": "f8a7ef1c-5bc2-4ddb-935f-cb29f13e4608",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "89786d00-9f4d-4dd3-8a2a-49cb8aeef664",
+      "groupUuid": "f8a7ef1c-5bc2-4ddb-935f-cb29f13e4608",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b3c54dfa-2b58-4e21-9c0d-4193f5ca3fc7",
+      "groupUuid": "17b19449-821f-4d31-8b2c-df636a63422f",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "475f341c-c6af-4c15-959c-9f63f5d038cf",
+      "groupUuid": "bfe4bd45-c721-45b2-9075-664747f06a79",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "71dfb8df-045d-4125-a828-38f3d2e4423f",
+      "groupUuid": "41725abb-1ae3-4920-b756-3d0f43cc040b",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "9eab1645-b716-4e7e-a702-fcb84de8dfe5",
+      "groupUuid": "4ceb2c6b-908c-411d-bab9-981b98342f42",
+      "type": "TITLE",
+      "title": "C13sus4 \u2014 Fret 1 \u2014 Extended (4th on top) \u2014 13sus4 extended"
+    },
+    {
+      "uuid": "bc99c817-cd82-40ac-b188-71e155c72b89",
+      "groupUuid": "4ceb2c6b-908c-411d-bab9-981b98342f42",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13sus4-cv7-extended-7str-19.png",
+      "altText": "Fretboard diagram for C13sus4 \u2014 Fret 1 \u2014 Extended (4th on top)"
+    },
+    {
+      "uuid": "72dca44d-e96b-4284-87e7-0dce4ed789df",
+      "groupUuid": "4ceb2c6b-908c-411d-bab9-981b98342f42",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "315fbc82-9b46-4370-a5a6-62d2ef82e2c7",
+      "groupUuid": "ae38d0d9-efff-4f04-a399-ea7ffe5f04da",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "d5287e6e-78af-465e-a8aa-661c94c65444",
+      "groupUuid": "ae38d0d9-efff-4f04-a399-ea7ffe5f04da",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d59e31ea-505c-40c8-ae88-204c2105ed5a",
+      "groupUuid": "ae38d0d9-efff-4f04-a399-ea7ffe5f04da",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "7688b107-d174-4c47-8144-3fcdfa7f2a60",
+      "groupUuid": "ae38d0d9-efff-4f04-a399-ea7ffe5f04da",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d7d82079-eb70-4801-8cbf-529563c06934",
+      "groupUuid": "89687b3c-6893-40e7-b888-5d1b3fb7d0aa",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "23f6cec6-c94a-4b71-89c5-6ee06fc9137e",
+      "groupUuid": "e88ea530-3fdd-4208-a376-0deb3df5cb4b",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "32961283-b398-4699-9793-aa6fc2614b2e",
+      "groupUuid": "d9df36d4-ce88-4d58-ae93-a79b1c41c024",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d4d45bf6-69e9-4722-abad-4ef6025810fa",
+      "groupUuid": "2c88d9e4-9b7d-48f7-9a36-082b8653e8a6",
+      "type": "TITLE",
+      "title": "C13 \u2014 Fret 3 \u2014 Extended \u2014 dom13 extended"
+    },
+    {
+      "uuid": "e5bbedc2-6f77-440f-bfbb-4223483139d0",
+      "groupUuid": "2c88d9e4-9b7d-48f7-9a36-082b8653e8a6",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13-chordsdb-f3-6.png",
+      "altText": "Fretboard diagram for C13 \u2014 Fret 3 \u2014 Extended"
+    },
+    {
+      "uuid": "435b816f-db94-490b-83ce-ace6384f6ef0",
+      "groupUuid": "2c88d9e4-9b7d-48f7-9a36-082b8653e8a6",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "3dd0a387-2b13-47ca-bcf9-75b06ee75368",
+      "groupUuid": "6784d4db-8bd4-42e4-bdd1-a6fdd05fef36",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "40363cc8-555e-4b5d-8cba-155be8b2f752",
+      "groupUuid": "6784d4db-8bd4-42e4-bdd1-a6fdd05fef36",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "b1b5343a-370d-4670-b6ec-0fe3fd327137",
+      "groupUuid": "6784d4db-8bd4-42e4-bdd1-a6fdd05fef36",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "2df8188d-7a70-4a67-afaa-a9d5bf31db4d",
+      "groupUuid": "6784d4db-8bd4-42e4-bdd1-a6fdd05fef36",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "67a9cc3f-43b2-4c0c-b177-2f96ab7d4235",
+      "groupUuid": "6dc237a9-744d-4698-bd3b-9669cfe28656",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "5c18081d-bb05-4618-8fae-5afc1bdc1908",
+      "groupUuid": "2cfefaf0-17f2-49b1-9237-9f4d06d62162",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "6d91a078-d6dc-4460-9176-6f15604d4fb0",
+      "groupUuid": "ee729eb0-04be-4a38-bec7-fbb386c2304c",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "349d4223-46cb-44ba-8a9f-59710dad5cc3",
+      "groupUuid": "6a2dbb24-a3ce-4525-88c2-dee5247856c2",
+      "type": "TITLE",
+      "title": "Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (5th on top) \u2014 quartal quartal"
+    },
+    {
+      "uuid": "7ea93e42-9c49-475a-943b-0e5466a37c1a",
+      "groupUuid": "6a2dbb24-a3ce-4525-88c2-dee5247856c2",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cquartal-eb-upper-6-cm6.png",
+      "altText": "Fretboard diagram for Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (5th on top)"
+    },
+    {
+      "uuid": "57e01598-fc07-470e-b763-b8a8bee9c78d",
+      "groupUuid": "6a2dbb24-a3ce-4525-88c2-dee5247856c2",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>quartal</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> quartal (HIGH): existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])</p>"
+    },
+    {
+      "uuid": "1badea63-dd8a-429b-bf9d-fd1a96f192ef",
+      "groupUuid": "babc169d-42a1-49a6-8709-63a6cece17c7",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "c5f012fa-7c0a-44ed-b556-6d085672ec66",
+      "groupUuid": "babc169d-42a1-49a6-8709-63a6cece17c7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "15ad7860-7a0a-4909-be67-e7aa6d44b8b1",
+      "groupUuid": "babc169d-42a1-49a6-8709-63a6cece17c7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "48b8b349-6c90-41dc-8b80-cc8abd9909d3",
+      "groupUuid": "babc169d-42a1-49a6-8709-63a6cece17c7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "36d8e845-5f1b-4ced-9eb1-436a47bca1b5",
+      "groupUuid": "6cfe9126-1606-4b5f-a422-b54bd7076f24",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "98a0ba9c-dc2e-4831-83f3-1db98b064a67",
+      "groupUuid": "4fac16d7-af2d-4e0f-88e8-5a1364088e87",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "f7fe6c29-9e1e-419d-9161-2212964f8878",
+      "groupUuid": "8d04dbd4-c630-4a76-b317-0f500114e7a2",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "a8af50d0-b2aa-4731-990f-054ebcf1e200",
+      "groupUuid": "ff56bd26-224f-48c3-abc6-5122212cd24a",
+      "type": "TITLE",
+      "title": "C7 \u2014 7-str root \u2014 Shell (3rd on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "1a30ba61-c119-42da-a74f-94534db0d8fe",
+      "groupUuid": "ff56bd26-224f-48c3-abc6-5122212cd24a",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-cv7-shell-7str-7.png",
+      "altText": "Fretboard diagram for C7 \u2014 7-str root \u2014 Shell (3rd on top)"
+    },
+    {
+      "uuid": "2df31218-1523-46d5-9ac5-31589035069b",
+      "groupUuid": "ff56bd26-224f-48c3-abc6-5122212cd24a",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['peter-bernstein'] | van-eps (HIGH): existing voicing.tags=\u2026</p>"
+    },
+    {
+      "uuid": "a31b42d3-ead4-491f-a6b4-a8f633da745e",
+      "groupUuid": "24a609ae-a6fe-4320-9924-f833dab7669c",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "2721f571-fb44-4c31-b854-211b584bfbe9",
+      "groupUuid": "24a609ae-a6fe-4320-9924-f833dab7669c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "6714b741-fef1-49fc-a892-5a2c33c9a8ed",
+      "groupUuid": "24a609ae-a6fe-4320-9924-f833dab7669c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "318312f3-0e78-4cc7-b9fd-1c34e26f78ff",
+      "groupUuid": "24a609ae-a6fe-4320-9924-f833dab7669c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "1cde45b7-d3c4-49e0-bd66-46ad507fd896",
+      "groupUuid": "93ff54b3-557e-4b31-b3c7-49d1d2c0a8b0",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "acb9a0c1-bb65-4915-88f2-7917890a5e51",
+      "groupUuid": "9cb5784d-9dcc-4497-ae75-456c6e828d17",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "50913830-61fa-4b29-a7ce-1ccb3a17d1ca",
+      "groupUuid": "c5d1a5f6-16e9-41cc-81db-654c443dfc1e",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "f1f281a8-b398-4002-9133-38c89a3e1901",
+      "groupUuid": "2ff5b49b-3632-4f00-bc7c-4f6c63ad97b5",
+      "type": "TITLE",
+      "title": "C7 \u2014 D shape \u2014 Shell (b7 on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "a791522d-bb38-4c66-b054-eec7501626b7",
+      "groupUuid": "2ff5b49b-3632-4f00-bc7c-4f6c63ad97b5",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-shell-d-shape-6-cm6.png",
+      "altText": "Fretboard diagram for C7 \u2014 D shape \u2014 Shell (b7 on top)"
+    },
+    {
+      "uuid": "5c19fd15-54cf-47e6-bbe7-6ec44a15776b",
+      "groupUuid": "2ff5b49b-3632-4f00-bc7c-4f6c63ad97b5",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' + category=shell + quality='dom7' matches bernstein R-3-7 shell principle</p>"
+    },
+    {
+      "uuid": "7fb3b944-4033-403a-b048-cb8f67669611",
+      "groupUuid": "89dbc000-11af-421a-a11c-840fa8fe54d1",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "c51b1f91-0396-43da-b85b-20ac42b53756",
+      "groupUuid": "89dbc000-11af-421a-a11c-840fa8fe54d1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "910f95a2-0645-4ea3-ad26-1b87c342e0df",
+      "groupUuid": "89dbc000-11af-421a-a11c-840fa8fe54d1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e3cba564-26fd-4702-b974-ad4119fbb697",
+      "groupUuid": "89dbc000-11af-421a-a11c-840fa8fe54d1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "2f970bdc-7421-4271-8e6b-4e5f5d99478c",
+      "groupUuid": "97abf557-f69d-4eed-8752-e6d5bc7f49dc",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "59bb51aa-3344-4128-833e-1a4f0627d826",
+      "groupUuid": "02805b15-8376-4944-8eb0-0126064d12cc",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "de0caac2-88ce-4335-ab18-a863c7cb3a43",
+      "groupUuid": "8ee6a9e9-000b-4e7f-b938-399c34327d16",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "57ddf894-e162-40fd-8932-4e7c1d99c637",
+      "groupUuid": "3e3aebf7-4f35-460c-ba65-01a751a212ef",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 D shape \u2014 Shell (7th on top) \u2014 aug7 shell"
+    },
+    {
+      "uuid": "370376e1-0abf-4824-b180-0a19926e1ba8",
+      "groupUuid": "3e3aebf7-4f35-460c-ba65-01a751a212ef",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-shell-d-shape-6-cm6.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 D shape \u2014 Shell (7th on top)"
+    },
+    {
+      "uuid": "e8a1d145-f376-4486-a9d5-4a92a0092725",
+      "groupUuid": "3e3aebf7-4f35-460c-ba65-01a751a212ef",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "a2f88aeb-ade1-459e-9c83-73b77273fd5d",
+      "groupUuid": "e4b2866f-ea3e-4b3c-8a0e-4ec67488453b",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "fb240565-9ff7-4cb9-824e-7818248d5795",
+      "groupUuid": "e4b2866f-ea3e-4b3c-8a0e-4ec67488453b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e2b83d70-ac2e-46e3-be9b-8ed24ea2f532",
+      "groupUuid": "e4b2866f-ea3e-4b3c-8a0e-4ec67488453b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "9f26087c-5275-49a0-a64a-fe1badd1c767",
+      "groupUuid": "e4b2866f-ea3e-4b3c-8a0e-4ec67488453b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "67303188-7c3a-4b95-986c-88ff11aed4d6",
+      "groupUuid": "854a2b1e-0497-4962-8b3c-13eba5364ccf",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "0a4d24fb-cfba-4678-9bff-f3c6c0982b00",
+      "groupUuid": "31773d14-1762-4025-a789-f3e8f5f45ff0",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "e76ef653-ac42-4a2e-b9af-63d47b92fc07",
+      "groupUuid": "c67b9065-d279-4c43-9ffa-bffdcacfc14f",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "55ff35da-e6cc-4590-aeb5-da21d1f41cea",
+      "groupUuid": "a5a57bab-9971-4f98-8e29-3192c1380aaa",
+      "type": "TITLE",
+      "title": "C13#9 \u2014 Fret 7 \u2014 Altered (3rd on top) \u2014 13sharp9 altered"
+    },
+    {
+      "uuid": "f31fc6e6-57e8-43df-bd32-e1bbaf8bd299",
+      "groupUuid": "a5a57bab-9971-4f98-8e29-3192c1380aaa",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c13s9-cm6-altered-6str-30.png",
+      "altText": "Fretboard diagram for C13#9 \u2014 Fret 7 \u2014 Altered (3rd on top)"
+    },
+    {
+      "uuid": "3de586ac-bb54-482f-81f5-a5c90c1dab40",
+      "groupUuid": "a5a57bab-9971-4f98-8e29-3192c1380aaa",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>altered-dominant</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "51afdcd3-f827-4b56-81ab-8aa435dd3bc6",
+      "groupUuid": "76f04830-ba93-4182-8ac8-3b947e53a7b9",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "966e9a29-d96f-438c-8985-48c3ecfb59f7",
+      "groupUuid": "76f04830-ba93-4182-8ac8-3b947e53a7b9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "318db960-f91f-42b2-ae76-5d4496a266e2",
+      "groupUuid": "76f04830-ba93-4182-8ac8-3b947e53a7b9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d5d03872-4935-4e18-a990-ae78428d7683",
+      "groupUuid": "76f04830-ba93-4182-8ac8-3b947e53a7b9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c34cd776-ecc8-4ced-a35b-71fee5efc8dd",
+      "groupUuid": "05026a47-7afb-4335-9864-eedcd0dd85fd",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "9ea0f0dd-ef10-4cd8-a138-71efb2b4a707",
+      "groupUuid": "9d66a7df-2adf-4416-b000-89bfa73539e7",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "48edbc7e-1512-4a86-83da-3da2158322c5",
+      "groupUuid": "7f94e18e-bd3c-472f-a29c-6836b2819852",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "1bb91d0a-0083-4add-8a82-75841f77e46b",
+      "groupUuid": "8519ae1b-254a-4f47-9fd3-7606a44c15bf",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 Fret 8 \u2014 Drop 2 \u2014 aug7 drop2"
+    },
+    {
+      "uuid": "ebfd9b59-b554-447b-bb5f-2e948769234c",
+      "groupUuid": "8519ae1b-254a-4f47-9fd3-7606a44c15bf",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm7-drop2-1top-7.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 Fret 8 \u2014 Drop 2"
+    },
+    {
+      "uuid": "b6d8fcb0-0cd0-4490-aa26-b120722e18c9",
+      "groupUuid": "8519ae1b-254a-4f47-9fd3-7606a44c15bf",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-2, block</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-2 (MED): derived from category='drop2' | block (MED): derived from category='drop2'</p>"
+    },
+    {
+      "uuid": "89f25c3b-39ca-401c-8244-70aaef21f609",
+      "groupUuid": "6282a41c-8d60-4a10-9850-3cc5dc908d1a",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "23dc80aa-429e-42fd-a82c-13b213cbf4a6",
+      "groupUuid": "6282a41c-8d60-4a10-9850-3cc5dc908d1a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "c6a2cac3-3b11-451c-9b97-f733ec701b37",
+      "groupUuid": "6282a41c-8d60-4a10-9850-3cc5dc908d1a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "dee6c2a6-6fd3-4b8b-b82d-268b0e349641",
+      "groupUuid": "6282a41c-8d60-4a10-9850-3cc5dc908d1a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "0ff19939-5921-4ddf-96c0-6bf44c064010",
+      "groupUuid": "bbdd8101-74d8-40fe-9300-f97c24891c81",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "0fff037d-aa78-4ff1-a2d9-d26313bac4fc",
+      "groupUuid": "7264e2a1-4d35-460c-ad2c-c76245623720",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "052e861d-a856-48a6-b4a7-fd1e5f620843",
+      "groupUuid": "66397392-ef3d-4818-b037-a58658984d04",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "bb078603-99ab-4b09-8a20-26dd2a2ae617",
+      "groupUuid": "9741a812-ec3f-4401-b75c-beeb0b1dcbc8",
+      "type": "TITLE",
+      "title": "Cm7 \u2014 7-str bass \u2014 Drop 3 \u2014 min7 drop3"
+    },
+    {
+      "uuid": "9eff256a-f236-442a-800a-a61f433fd2cc",
+      "groupUuid": "9741a812-ec3f-4401-b75c-beeb0b1dcbc8",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cm7-cm7-drop3-7str-7.png",
+      "altText": "Fretboard diagram for Cm7 \u2014 7-str bass \u2014 Drop 3"
+    },
+    {
+      "uuid": "96039c62-7fd2-414d-a7c1-263e8b017923",
+      "groupUuid": "9741a812-ec3f-4401-b75c-beeb0b1dcbc8",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>drop-3, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> drop-3 (MED): existing tag 'drop-3' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['jody-fisher', 'joe-pass'] | van-eps (HIGH): existing voi\u2026</p>"
+    },
+    {
+      "uuid": "5dd8dfca-8359-4532-b9a7-c0bc10878038",
+      "groupUuid": "d987ab91-441e-4a73-85b9-cc9d570a2497",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "af97a963-cc8f-459f-880a-fb6a32136ec0",
+      "groupUuid": "d987ab91-441e-4a73-85b9-cc9d570a2497",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "73cf399e-2093-4181-82a6-ab3dc34389ad",
+      "groupUuid": "d987ab91-441e-4a73-85b9-cc9d570a2497",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "bdf628a4-ebf9-4709-8ccb-ec73f7da31f9",
+      "groupUuid": "d987ab91-441e-4a73-85b9-cc9d570a2497",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "d22c13ac-6625-45b7-b9b5-a39631b99321",
+      "groupUuid": "97b6fa6e-23ee-4df7-93af-898ff48bff90",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "5694c323-053d-42ff-ad2a-6c0c3120fdde",
+      "groupUuid": "3833a370-ecbc-4a05-9c94-b827e0581c19",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "c2cd7c84-84db-40eb-b623-f68dafbc048b",
+      "groupUuid": "a3638690-425c-4a40-9dc4-23d08d81f8ca",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "d74d77b1-d65c-4f35-96f0-e8617990c98b",
+      "groupUuid": "03073491-e42d-4381-99fc-dbaf5217afa2",
+      "type": "TITLE",
+      "title": "C7 \u2014 A shape \u2014 Drop 3 (5th on top) \u2014 dom7 drop3"
+    },
+    {
+      "uuid": "94daab2a-285b-4688-bdb4-d8bb7a95b673",
+      "groupUuid": "03073491-e42d-4381-99fc-dbaf5217afa2",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7-drop3-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for C7 \u2014 A shape \u2014 Drop 3 (5th on top)"
+    },
+    {
+      "uuid": "9f8e435a-4da8-4fb7-ab7f-0805503281df",
+      "groupUuid": "03073491-e42d-4381-99fc-dbaf5217afa2",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>drop-3</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> drop-3 (MED): derived from category='drop3'</p>"
+    },
+    {
+      "uuid": "4c183f33-d0b5-4d56-993b-bb7375d7170f",
+      "groupUuid": "0d3049bb-ac2b-4844-b0c3-c831d45f302d",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "9f889f66-1487-43cc-b310-1b30181baabc",
+      "groupUuid": "0d3049bb-ac2b-4844-b0c3-c831d45f302d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "5a21fe6c-b3f1-45aa-8406-8abf01564119",
+      "groupUuid": "0d3049bb-ac2b-4844-b0c3-c831d45f302d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "29aba4c0-e17e-45e7-b362-a1884499db61",
+      "groupUuid": "0d3049bb-ac2b-4844-b0c3-c831d45f302d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "60638d71-0c04-4ede-a21a-736c9c464445",
+      "groupUuid": "a322ee8e-004e-4146-ab83-a2228ba2ece4",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "4294161a-59f0-479f-a619-187caa4ab548",
+      "groupUuid": "11a419b7-b92b-43d1-ac66-109b698b227c",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "fd299442-d19c-4275-932a-e927c9deb998",
+      "groupUuid": "6ae51c8a-47b8-41c7-9d9f-ceb4fb574f85",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "89c9e374-85a8-494a-a573-c89617f637e0",
+      "groupUuid": "c286d18c-8d9f-4b89-a69c-3edae6cdb1a1",
+      "type": "TITLE",
+      "title": "C9sus4 \u2014 Fret 6 \u2014 Extended (b7 on top) \u2014 9sus4 extended"
+    },
+    {
+      "uuid": "eeccf321-f1b0-4667-a99e-0bbd2deb620f",
+      "groupUuid": "c286d18c-8d9f-4b89-a69c-3edae6cdb1a1",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c9sus4-cm6-extended-6str-14.png",
+      "altText": "Fretboard diagram for C9sus4 \u2014 Fret 6 \u2014 Extended (b7 on top)"
+    },
+    {
+      "uuid": "21d02841-96e2-4919-bd3d-ba3fc9edd74c",
+      "groupUuid": "c286d18c-8d9f-4b89-a69c-3edae6cdb1a1",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>dirk-laukens, chord-function-driven, function-assigned, substitution-derivation</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag 'chord-function-driven' | function-assigned (MED): discriminating tag 'func\u2026</p>"
+    },
+    {
+      "uuid": "c2091452-d196-4764-8f77-ee6527ffa1f6",
+      "groupUuid": "0ae2bc23-0776-42bd-9ed0-015a1f48fb63",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "7ceb6c55-6bc0-4ce3-9fc3-97cce28a9974",
+      "groupUuid": "0ae2bc23-0776-42bd-9ed0-015a1f48fb63",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "4cddba25-8e5d-4095-a0b7-c4937e1ce638",
+      "groupUuid": "0ae2bc23-0776-42bd-9ed0-015a1f48fb63",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "a7581be4-8d50-4107-9367-83903e8b8e2c",
+      "groupUuid": "0ae2bc23-0776-42bd-9ed0-015a1f48fb63",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "77bc03e1-825a-4f8b-890b-a2ed51f33813",
+      "groupUuid": "2dec5983-cebe-4201-a82a-781381fe1e0b",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "dc050f9a-c1e0-43b3-9b28-c5d4f4793758",
+      "groupUuid": "5b9812c3-0950-49ef-a462-f71088084739",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "7cd14cc7-e44a-4651-9742-3b0b814c5d4f",
+      "groupUuid": "d6da7167-93dc-4896-acf5-f622ee9bc3a6",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "f0b9028b-5ad3-410f-97da-3e114c6c6119",
+      "groupUuid": "4364f881-ee40-4c01-a8f3-0d283f5e59b9",
+      "type": "TITLE",
+      "title": "Cdom7b13 \u2014 A shape \u2014 Extended (b13 on top) \u2014 dom7b13 extended"
+    },
+    {
+      "uuid": "eae8bc8d-6163-44ae-bdc7-747a1d3b2d31",
+      "groupUuid": "4364f881-ee40-4c01-a8f3-0d283f5e59b9",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7b13-ext-a-shape-6-cm6.png",
+      "altText": "Fretboard diagram for Cdom7b13 \u2014 A shape \u2014 Extended (b13 on top)"
+    },
+    {
+      "uuid": "7cca705d-bc30-4f8d-a5d8-a728f0435c49",
+      "groupUuid": "4364f881-ee40-4c01-a8f3-0d283f5e59b9",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "066e0ac9-79a8-47e4-99de-fcdd39957a54",
+      "groupUuid": "59f8ead2-8891-4c84-9512-24181aac5c78",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "8290f569-c603-4349-a66e-d83540e44dd5",
+      "groupUuid": "59f8ead2-8891-4c84-9512-24181aac5c78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "e62efc35-3621-4d70-aed5-9540406d00e3",
+      "groupUuid": "59f8ead2-8891-4c84-9512-24181aac5c78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "20210696-5cdb-4431-93d0-e98ce5871b52",
+      "groupUuid": "59f8ead2-8891-4c84-9512-24181aac5c78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "bfdb7ecd-a7b8-43b2-9a5c-56e973f64624",
+      "groupUuid": "295e9bb8-0425-476c-b893-884976c376ea",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "5d970d2e-1248-4799-8781-582989375347",
+      "groupUuid": "962bb09a-4e29-4f38-9105-01dbc3751b49",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "a0176b80-da31-4dfe-9ca1-5e9efb97b580",
+      "groupUuid": "857b0d05-c085-43f5-bc33-8ea8d607a412",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "f6e09cbe-fa2a-4300-bdb6-eaf8104ec617",
+      "groupUuid": "f614b3e3-2bd5-4d71-913e-43beea15d9a0",
+      "type": "TITLE",
+      "title": "Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (13th on top) \u2014 quartal quartal"
+    },
+    {
+      "uuid": "e424249b-2889-40d0-8280-cb6846a8bbe1",
+      "groupUuid": "f614b3e3-2bd5-4d71-913e-43beea15d9a0",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cquartal-f-upper-6-cm6.png",
+      "altText": "Fretboard diagram for Cquartal \u2014 Str 1-2-3-4 \u2014 Quartal (13th on top)"
+    },
+    {
+      "uuid": "2b1b3df5-994f-46f8-b3f9-c902d254b9ae",
+      "groupUuid": "f614b3e3-2bd5-4d71-913e-43beea15d9a0",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>quartal</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> quartal (HIGH): existing voicing.tags='quartal' matches master voicingStyleTag (attributes to ['jim-hall'])</p>"
+    },
+    {
+      "uuid": "4e0ddd14-be3c-4c1a-a36a-76834993a806",
+      "groupUuid": "5626380f-4bb1-4e28-a261-42be1e5cd321",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "7b8284c7-a120-4c17-a25f-00dd19e1a9c3",
+      "groupUuid": "5626380f-4bb1-4e28-a261-42be1e5cd321",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "dce3d3e7-feb1-4b52-80ab-58f0201facc9",
+      "groupUuid": "5626380f-4bb1-4e28-a261-42be1e5cd321",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "177066ed-0d9e-4cc9-bab1-196512fe288c",
+      "groupUuid": "5626380f-4bb1-4e28-a261-42be1e5cd321",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "6dadb013-12d1-44f1-99c1-1860e23078ea",
+      "groupUuid": "b3b89b5f-0f52-44b0-92eb-e9b06f02a05f",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "b3096b33-a3f8-45a7-9611-91a7c3aa08b7",
+      "groupUuid": "69a8ddd3-1957-435a-b8f3-36b318446f75",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "3d08e72c-1f48-4e76-b91d-7b6c17588640",
+      "groupUuid": "6d4ba774-ecb7-4745-a646-afff792d5703",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "0ac282fe-52b0-4a61-b4b3-50ba88890517",
+      "groupUuid": "89a2c64b-5619-41cf-bf28-0dd446e1646d",
+      "type": "TITLE",
+      "title": "C7alt \u2014 7-str root \u2014 Shell (b5 on top) \u2014 dom7alt shell"
+    },
+    {
+      "uuid": "4f33ff9b-383a-4f0f-ab90-3f3dce62faf3",
+      "groupUuid": "89a2c64b-5619-41cf-bf28-0dd446e1646d",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/c7alt-cm7-shell-7str-7.png",
+      "altText": "Fretboard diagram for C7alt \u2014 7-str root \u2014 Shell (b5 on top)"
+    },
+    {
+      "uuid": "96e071db-45a4-4673-bbd3-d3058410f08c",
+      "groupUuid": "89a2c64b-5619-41cf-bf28-0dd446e1646d",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell, van-eps</code><br>playStyle: <code>(none)</code><br>confidence: <b>HIGH</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' (generic descriptor) confirmed by master signal in same voicing; vocab attributes to ['peter-bernstein'] | van-eps (HIGH): existing voicing.tags=\u2026</p>"
+    },
+    {
+      "uuid": "563310c4-7939-48c6-a5ba-c46de7ddea93",
+      "groupUuid": "12d536cd-f561-4a95-a5ec-eb74b210aa78",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "5a307b16-7c57-4bfa-8bb6-8e4897f38d65",
+      "groupUuid": "12d536cd-f561-4a95-a5ec-eb74b210aa78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "2c61c1db-9bbf-4659-ac58-8783a0d0e580",
+      "groupUuid": "12d536cd-f561-4a95-a5ec-eb74b210aa78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "444c15cb-4d39-4bb4-abf6-070161509dbc",
+      "groupUuid": "12d536cd-f561-4a95-a5ec-eb74b210aa78",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "0ab5fdf8-5931-4854-8615-71fa50b626b0",
+      "groupUuid": "1d3cc254-8140-4fce-8ec0-c5f884045c71",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "26f5688f-36c9-498e-80cb-5d4f582b8704",
+      "groupUuid": "cc5f4a7f-ecf5-487b-8798-a034c989977e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "67fd6f51-1033-4aa3-8eb8-f79d3cf51ba3",
+      "groupUuid": "cf44c64b-26d2-4851-8794-0702d3a2a80d",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "351364c5-da6d-4dfa-8fc1-08aeb0d86399",
+      "groupUuid": "09d7195f-9cd5-4fc6-af2a-8d30fbd127de",
+      "type": "TITLE",
+      "title": "C7 \u2014 A shape \u2014 Shell (b7 on top) \u2014 dom7 shell"
+    },
+    {
+      "uuid": "df5d4ab1-4ee3-4da5-8dbe-fb6321768188",
+      "groupUuid": "09d7195f-9cd5-4fc6-af2a-8d30fbd127de",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/cdom7-cm7-shell-a-7.png",
+      "altText": "Fretboard diagram for C7 \u2014 A shape \u2014 Shell (b7 on top)"
+    },
+    {
+      "uuid": "b66636e0-b7ff-4bd3-95e3-8e3f6876cfeb",
+      "groupUuid": "09d7195f-9cd5-4fc6-af2a-8d30fbd127de",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>shell</code><br>playStyle: <code>(none)</code><br>confidence: <b>MED</b></p><p><b>Reasoning:</b> shell (MED): existing tag 'shell' + category=shell + quality='dom7' matches bernstein R-3-7 shell principle</p>"
+    },
+    {
+      "uuid": "fb9d3e57-222f-4862-8a29-09bf660dd362",
+      "groupUuid": "83d46097-e146-4e0b-8600-adcd56087a8c",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "71307d7d-e1fe-4c91-adbb-368b26a067ec",
+      "groupUuid": "83d46097-e146-4e0b-8600-adcd56087a8c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "3167fdb3-7106-48fa-9d15-65008e4ebad0",
+      "groupUuid": "83d46097-e146-4e0b-8600-adcd56087a8c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "eca4e1a3-3fe9-4c13-9d0a-7a149433d71a",
+      "groupUuid": "83d46097-e146-4e0b-8600-adcd56087a8c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "65eea098-1c44-4fb1-939a-6c4bfae76b4e",
+      "groupUuid": "0a2bad26-e332-492b-bc27-088b56835ca5",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "5fa0158c-6fcc-49a2-bfed-19a2d6b11064",
+      "groupUuid": "16432b0c-c374-4f2d-8961-b6dfb2c3dc1e",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "e23ef9dd-6bda-464e-8750-a9b0a81ce335",
+      "groupUuid": "bac8e138-b707-4423-b670-a0fa10a35997",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    },
+    {
+      "uuid": "4c8617b1-d6f8-471d-a7f3-9e0740063e20",
+      "groupUuid": "7a2bd725-22fd-45c9-82f5-f385f92487e6",
+      "type": "TITLE",
+      "title": "Caug7 \u2014 A shape \u2014 Shell (b7 on top) \u2014 aug7 shell"
+    },
+    {
+      "uuid": "e2cc6918-3d7f-4cc3-9371-da81ebdb2641",
+      "groupUuid": "7a2bd725-22fd-45c9-82f5-f385f92487e6",
+      "type": "IMAGE",
+      "imageUrl": "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/develop/scripts/voicing-tags/diagrams/caug7-cm7-shell-a-7.png",
+      "altText": "Fretboard diagram for Caug7 \u2014 A shape \u2014 Shell (b7 on top)"
+    },
+    {
+      "uuid": "252ffc5d-6b99-48a6-9c23-a48214d45681",
+      "groupUuid": "7a2bd725-22fd-45c9-82f5-f385f92487e6",
+      "type": "TEXT",
+      "html": "<p><b>Agent proposed:</b><br>voicingStyle: <code>(none)</code><br>playStyle: <code>(none)</code><br>confidence: <b>NONE</b></p><p><b>Reasoning:</b> </p>"
+    },
+    {
+      "uuid": "2b1cfa5e-365a-49a1-98fc-ace303c311e3",
+      "groupUuid": "e11436a0-2788-41f3-aa0b-260bec8d4fac",
+      "type": "MULTIPLE_CHOICE",
+      "title": "Do these tags fit this voicing?"
+    },
+    {
+      "uuid": "b665bf70-684f-4bb4-a1ab-c4124faf410c",
+      "groupUuid": "e11436a0-2788-41f3-aa0b-260bec8d4fac",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "YES",
+      "isFirstOption": true,
+      "isLastOption": false,
+      "optionIndex": 0,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "f9ba926f-0e0f-40dc-ad64-79c09c6cd6e3",
+      "groupUuid": "e11436a0-2788-41f3-aa0b-260bec8d4fac",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "NO",
+      "isFirstOption": false,
+      "isLastOption": false,
+      "optionIndex": 1,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "6ac32c1f-0364-4b02-98b9-478ebf10ba02",
+      "groupUuid": "e11436a0-2788-41f3-aa0b-260bec8d4fac",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "title": "REFINE",
+      "isFirstOption": false,
+      "isLastOption": true,
+      "optionIndex": 2,
+      "allowMultiple": false
+    },
+    {
+      "uuid": "6892e91e-e4f1-4db5-b954-81b75c53527d",
+      "groupUuid": "7973a3dc-7819-4bbf-9b25-dad30f829a5b",
+      "type": "TEXTAREA",
+      "title": "If NO or REFINE, why are you overriding the agent?",
+      "placeholder": "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
+      "isRequired": false
+    },
+    {
+      "uuid": "637b1619-6712-416d-9822-abee1e3cc5b0",
+      "groupUuid": "96d9c470-e42b-4cb5-801f-fe2975f81cfa",
+      "type": "INPUT_TEXT",
+      "title": "Tags to add (comma-separated, optional)",
+      "placeholder": "e.g. van-eps, walking-bass",
+      "isRequired": false
+    },
+    {
+      "uuid": "878ddfc6-4203-4d12-805b-8798f1536fc8",
+      "groupUuid": "83fd1c72-079b-407d-baee-6b7f68787902",
+      "type": "TEXTAREA",
+      "title": "Anything else? (optional)",
+      "placeholder": "Free-form notes",
+      "isRequired": false
+    }
+  ]
+}
