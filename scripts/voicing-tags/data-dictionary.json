@@ -1,0 +1,242 @@
+{
+  "categories": {
+    "drop2": {
+      "title": "Drop-2",
+      "definition": "A 4-note voicing built by taking a close-position chord and dropping the second-highest note an octave.",
+      "sound": "The bread-and-butter chord-melody and comping shape \u2014 clean, balanced, easy to voice-lead. Most jazz chord-solo arrangements live here.",
+      "example": "The Cm7 shape you'd play across strings 6\u20133 or 5\u20132 with the b7 on top \u2014 the same shapes Joe Pass plays through Autumn Leaves."
+    },
+    "drop3": {
+      "title": "Drop-3",
+      "definition": "Like drop-2, but the THIRD-highest voice is dropped an octave \u2014 producing a wider, more open spread across the strings.",
+      "sound": "Bigger sound, more piano-like. Common when you want a bass note to ring under a chord-melody phrase.",
+      "example": "The Cm7 voicing with root on the 6th string, skipping the 5th string, and the rest of the chord on strings 4\u20132."
+    },
+    "shell": {
+      "title": "Shell voicing",
+      "definition": "A skeleton voicing \u2014 usually just the root, third, and seventh (R-3-7) \u2014 with no fifth or extensions.",
+      "sound": "Minimal, dry, leaves space. Common in bebop comping and as a starting point that you 'dress' with extensions and tensions.",
+      "example": "Peter Bernstein's go-to comping shape: R-3-7 on strings 6, 4, 3 or 5, 3, 2 \u2014 under a melody on the top strings."
+    },
+    "quartal": {
+      "title": "Quartal voicing",
+      "definition": "A voicing built by stacking perfect-fourths rather than thirds.",
+      "sound": "Open, ambiguous, modern. Doesn't commit to a single tonality \u2014 perfect for modal contexts and McCoy Tyner / Jim Hall sounds.",
+      "example": "Three fourths stacked on the middle strings \u2014 works equally well as Dm7, G7sus, or Cmaj9 depending on the bass."
+    },
+    "extended": {
+      "title": "Extended voicing",
+      "definition": "A voicing that includes upper-structure extensions: 9th, 11th, 13th.",
+      "sound": "Rich, modern, harmonically saturated. Sounds 'jazzy' on a Cmaj7 vamp; sounds 'wrong' on a country progression.",
+      "example": "Cmaj9 with the 9 on top instead of the root \u2014 turns a static chord into a color."
+    },
+    "altered": {
+      "title": "Altered voicing",
+      "definition": "A dominant-7 voicing with one or more altered tensions: b5, #5, b9, #9, #11, b13.",
+      "sound": "Tense, leaning hard toward resolution. The Tristano / Coltrane language.",
+      "example": "G7#9 with the #9 on top, used as the V chord into Cm in a minor ii-V-i."
+    }
+  },
+  "masters": {
+    "alan-de-mause": {
+      "id": "alan-de-mause",
+      "summary": "The book's operative procedure throughout: convert a lead sheet (single-note melody + chord symbols) into a complete solo fingerstyle guitar arrangement.",
+      "source_principle": "lead-sheet-to-solo-conversion"
+    },
+    "barry-galbraith": {
+      "id": "barry-galbraith",
+      "summary": "Galbraith's *Jazz Solo Guitar* anthology teaches by demonstration rather than by prose.",
+      "source_principle": "arrangement-as-curriculum"
+    },
+    "benson": {
+      "id": "benson",
+      "summary": "(no summary in masters.json)",
+      "source_principle": null
+    },
+    "brent-vaartstra": {
+      "id": "brent-vaartstra",
+      "summary": "Vaartstra's procedural method for learning any standard.",
+      "source_principle": "ear-first-list-acquisition"
+    },
+    "dirk-laukens": {
+      "id": "dirk-laukens",
+      "summary": "Laukens organizes his entire pedagogy \u2014 across the beginner method, the chord dictionary, the pattern volume, and the lick anthology \u2014 around moveable physical shapes.",
+      "source_principle": "moveable-shape-as-organizing-principle"
+    },
+    "gene-bertoncini": {
+      "id": "gene-bertoncini",
+      "summary": "Bertoncini's *Arrangements for Solo Guitar* teaches by demonstration.",
+      "source_principle": "arrangement-as-curriculum"
+    },
+    "greg-orourke": {
+      "id": "greg-orourke",
+      "summary": "O'Rourke's central operating system. Step 1: pick a suitable tune (ballad-not-bebop selection rule \u2014 slower tempos with longer-held melody notes are practically easier).",
+      "source_principle": "four-step-chord-melody-recipe"
+    },
+    "heussenstamm-silbergleit": {
+      "id": "heussenstamm-silbergleit",
+      "summary": "The book's foundational organizing claim: the ii-V-I progression is not just one progression among many but the IRREDUCIBLE harmonic cell from which all jazz vocabulary \u2014 harmonic, melodic, rhythmic, textural \u2014 radiates.",
+      "source_principle": "ii-v-i-as-irreducible-cell"
+    },
+    "jamey-aebersold": {
+      "id": "jamey-aebersold",
+      "summary": "Aebersold's foundational innovation: a recorded rhythm section supplies tempo, harmony, and feel while the student practices scales, chord-tones, patterns, and improvisation over the same progressions.",
+      "source_principle": "play-along-as-curriculum-engine"
+    },
+    "jens-larsen": {
+      "id": "jens-larsen",
+      "summary": "The improviser does not arpeggiate the root chord; instead they select the substitute arpeggio whose notes maximally overlap the underlying chord's guide tones (3rd and 7th) and color tones (9, 11, 13, altered extensions).",
+      "source_principle": "shared-tone-arpeggio-substitution"
+    },
+    "jerry-bergonzi": {
+      "id": "jerry-bergonzi",
+      "summary": "A fixed group of consecutive notes (2-7 eighth notes, or their triplet/16th equivalents) is shifted systematically across all eight metrical entry points in a 4/4 bar.",
+      "source_principle": "consecutive-note-displacement"
+    },
+    "jerry-coker": {
+      "id": "jerry-coker",
+      "summary": "Coker's foundational thesis (Elements Ch1): the great jazz improvisors share roughly 18 common 'devices' that account for nearly all the language they speak.",
+      "source_principle": "improvisation-as-finite-learnable-language"
+    },
+    "jim-hall": {
+      "id": "jim-hall",
+      "summary": "Hall's comping foundation: 3rd and 7th of the chord on the middle strings, often as two-note voicings or grace-noted into fuller shapes.",
+      "source_principle": "guide-tone-voicings"
+    },
+    "jimmy-bruno": {
+      "id": "jimmy-bruno",
+      "summary": "Bruno's central system. Three rules govern every pick stroke: down-stroke when crossing to a higher string, up-stroke when crossing to a lower string, alternate strokes when staying on one string.",
+      "source_principle": "three-rule-directional-picking"
+    },
+    "jody-fisher": {
+      "id": "jody-fisher",
+      "summary": "Fisher categorizes voicings systematically for teaching: drop-2 (drop the second-from-top from a close-position stack), drop-3 (drop the third-from-top), abbreviated voicings, extended-harmony voicings (9ths/11ths/13ths), altered-chord for\u2026",
+      "source_principle": "pedagogical-voicing-taxonomy"
+    },
+    "joe-pass": {
+      "id": "joe-pass",
+      "summary": "Bass walks on every beat (chord tones, passing notes between chord tones, chord-extension notes, tritone approaches to the root); chord 'stabs' land on off-beats with 2-3 note voicings rather than full block chords.",
+      "source_principle": "walking-bass-plus-chord-stabs"
+    },
+    "johnny-smith": {
+      "id": "johnny-smith",
+      "summary": "Closely-voiced chord-melody \u2014 all four voices within an octave, often within a 4-fret span. Produces a unified vertical sound rather than a wide-spread texture.",
+      "source_principle": "tight-closed-voicings"
+    },
+    "lenny-breau": {
+      "id": "lenny-breau",
+      "summary": "Bass, chord, and melody played simultaneously via fingerstyle, with right-hand finger independence treating each voice on its own timeline.",
+      "source_principle": "three-independent-voices"
+    },
+    "martin-taylor": {
+      "id": "martin-taylor",
+      "summary": "The right-hand thumb alternates between the 6th and 5th strings (or 6th/4th depending on chord) to maintain continuous bass support without interrupting melodic flow.",
+      "source_principle": "alternating-thumb-bass"
+    },
+    "matt-warnock": {
+      "id": "matt-warnock",
+      "summary": "Warnock's *Beginner's Guide* organizes its complete curriculum \u2014 chord vocabulary, comping rhythms, picking technique, chromatic harmony, scale shapes, ornaments, and mixed solo texture \u2014 around ONE harmonic vehicle: the Dm7-G7-Cmaj7 ii V\u2026",
+      "source_principle": "single-ii-v-i-as-unifying-vehicle"
+    },
+    "mickey-baker": {
+      "id": "mickey-baker",
+      "summary": "Baker prunes the guitar's chord universe to 26 essential shapes (Chapter 1), later extended to 30 (Chapter 5), and references every voicing by number rather than by Roman-numeral function.",
+      "source_principle": "numbered-finite-vocabulary-with-transposition-mandate"
+    },
+    "nelson-faria": {
+      "id": "nelson-faria",
+      "summary": "Faria's load-bearing technical architecture across all five Brazilian styles.",
+      "source_principle": "two-layer-thumb-finger-texture"
+    },
+    "pat-martino": {
+      "id": "pat-martino",
+      "summary": "The single governing principle of Linear Expressions. Improvisation is not free melodic invention; the chord encountered selects the line form played. Every melodic decision in the system is downstream of harmonic identification.",
+      "source_principle": "harmonic-structure-dictates-melodic-choice"
+    },
+    "peter-bernstein": {
+      "id": "peter-bernstein",
+      "summary": "Bernstein's load-bearing conceptual frame: improvisation is language use, not scale deployment.",
+      "source_principle": "jazz-as-language-narrative-outranks-correctness"
+    },
+    "randy-felts": {
+      "id": "randy-felts",
+      "summary": "Felts's foundational organizing move: every chord is assigned to one of three functional families \u2014 tonic (I, III, VI), subdominant (II, IV, V7sus4), or dominant (V7, VII-7b5) \u2014 and every substitution operates within or between these famil\u2026",
+      "source_principle": "three-functional-families-as-organizing-axis"
+    },
+    "ted-dunbar": {
+      "id": "ted-dunbar",
+      "summary": "The founding axiom of Dunbar's method, named explicitly in Chapter 1. Every pitch in the chromatic scale exerts a cadential pull toward any active tonal center.",
+      "source_principle": "tonal-gravity-law"
+    },
+    "ted-greene": {
+      "id": "ted-greene",
+      "summary": "Four-note voicings are classified into 14 groups (V-1 through V-14) ordered from most compact to most spread: V-1 is the closest cluster, V-14 the widest, with V-13/V-14 less spread than V-11/V-12.",
+      "source_principle": "v-system-voicing-groups"
+    },
+    "van-eps": {
+      "id": "van-eps",
+      "summary": "Every chord-quality category in Van Eps's method begins by harmonizing the corresponding scale in triads. Major chords (Ex. 1-25) start with the harmonized major scale in triads; minor chords (Ex.",
+      "source_principle": "harmonized-scale-foundation"
+    },
+    "wes-montgomery": {
+      "id": "wes-montgomery",
+      "summary": "A solo arcs through three distinct textural tiers: single-note lines (statement), parallel octaves (intensification), block-chord harmonization (climax).",
+      "source_principle": "three-tier-chorus-development"
+    }
+  },
+  "tags": {
+    "chord-function-driven": {
+      "tag": "chord-function-driven",
+      "from_master": "dirk-laukens",
+      "from_principle": "function-assigned-vocabulary",
+      "summary": "Across Laukens's catalog every melodic-vocabulary unit (scale, arpeggio, pattern, lick) is assigned to a chord function rather than to a chord-name-in-a-key."
+    },
+    "dirk-laukens": {
+      "tag": "dirk-laukens",
+      "from_master": "dirk-laukens",
+      "from_principle": "moveable-shape-as-organizing-principle",
+      "summary": "Laukens organizes his entire pedagogy \u2014 across the beginner method, the chord dictionary, the pattern volume, and the lick anthology \u2014 around moveable physical shapes."
+    },
+    "drop-3": {
+      "tag": "drop-3",
+      "from_master": "joe-pass",
+      "from_principle": "drop-2-and-drop-3-chord-melody",
+      "summary": "Pass's typical chord-melody technique harmonizes the melody with drop-2 and drop-3 voicings. Drop-2 keeps melody on top of a 4-note voicing on adjacent strings; drop-3 spreads the voicing wider with a 'skip' in the middle."
+    },
+    "function-assigned": {
+      "tag": "function-assigned",
+      "from_master": "dirk-laukens",
+      "from_principle": "function-assigned-vocabulary",
+      "summary": "Across Laukens's catalog every melodic-vocabulary unit (scale, arpeggio, pattern, lick) is assigned to a chord function rather than to a chord-name-in-a-key."
+    },
+    "quartal": {
+      "tag": "quartal",
+      "from_master": "jim-hall",
+      "from_principle": "fourth-stacks-and-open-voicings",
+      "summary": "Hall's signature 'fourths' sound: voicings built from stacked perfect fourths rather than triadic thirds \u2014 beautiful and harmonically ambiguous, doesn't commit to a single tonality. Often complemented with bass notes for grounding and counter-melodies on top."
+    },
+    "shell": {
+      "tag": "shell",
+      "from_master": "peter-bernstein",
+      "from_principle": "dressing-the-notes-comping-aesthetic",
+      "summary": "The melody-first hierarchy applied to accompaniment: comping's job is to give each melody note the right outfit so it feels important."
+    },
+    "substitution-derivation": {
+      "tag": "substitution-derivation",
+      "from_master": "dirk-laukens",
+      "from_principle": "substitution-as-derivable-not-memorized",
+      "summary": "Laukens treats substitutions as derivable from a small set of named relations rather than as a memorized catalog."
+    },
+    "van-eps": {
+      "tag": "van-eps",
+      "from_master": "van-eps",
+      "from_principle": "harmonized-scale-foundation",
+      "summary": "Every chord-quality category in Van Eps's method begins by harmonizing the corresponding scale in triads. Major chords (Ex. 1-25) start with the harmonized major scale in triads; minor chords (Ex. 26-32) with the harmonized minor; 7th chords (Ex."
+    }
+  },
+  "confidences": {
+    "HIGH": "The voicing's existing tags directly named a master tag, so the automated tagger is reasonably sure the attribution is right.",
+    "MED": "The tag was derived: from a 'coverage' marker on the voicing, from a master-id alias in the voicing's tags, or from a category rule (e.g. category=quartal \u2192 quartal + jim-hall). The tagger thinks this fits but it's less certain.",
+    "NONE": "The tagger couldn't attribute this voicing to any master with confidence and left the voicingStyle blank. These are exactly the rows your judgment helps most."
+  }
+}
