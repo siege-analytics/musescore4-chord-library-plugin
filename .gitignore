@@ -5,6 +5,13 @@ __pycache__/
 .venv/
 venv/
 
+# Override the user-level ~/.gitignore rule `test_*.py` (line 84) which
+# silently drops pytest files from staging. The plugin's tests/ tree is
+# tracked; this negation makes that explicit for any new test file.
+# See siege-analytics/ellington-systems#1 post-error revision 2026-06-08
+# for the originating incident.
+!tests/test_*.py
+
 # OS
 .DS_Store
 Thumbs.db

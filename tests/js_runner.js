@@ -1,16 +1,21 @@
 #!/usr/bin/env node
 // js_runner.js — Test harness for QML .pragma library JavaScript modules.
-// Strips QML-specific directives and evaluates modules in a Node.js context,
-// then runs test code passed as the last argument.
+// Evaluates modules in a Node.js vm context and runs test code passed
+// as the last argument (or via stdin when `-` is the last arg).
 //
 // Usage: node js_runner.js <module_path> [<module_path2> ...] -- <test_code>
+//         node js_runner.js <module_path> [...] -- -            # read test code from stdin
 //
-// The test code runs in a context where all module vars/functions are global.
 // Output JSON: { "pass": true/false, "results": [...], "error": "..." }
+//
+// Loading + sandbox semantics live in tests/_jsLoader.js (#400 refactor)
+// so engine_dump.js and any future shim consumer share the same
+// behaviour without duplicating the loader.
 
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
+const { createSandbox, loadModules } = require('./_jsLoader');
 
 // Parse arguments: module paths before --, test code after --
 const args = process.argv.slice(2);
@@ -32,108 +37,13 @@ if (tail.length === 0 || (tail.length === 1 && tail[0] === '-')) {
     testCode = tail.join(' ');
 }
 
-// Create a sandbox context with common globals
-const sandbox = {
-    console: {
-        log: function() {},  // suppress module console.log
-        error: function() {},
-        warn: function() {}
-    },
-    JSON: JSON,
-    Math: Math,
-    parseInt: parseInt,
-    parseFloat: parseFloat,
-    isNaN: isNaN,
-    isFinite: isFinite,
-    String: String,
-    Number: Number,
-    Array: Array,
-    Object: Object,
-    Date: Date,
-    RegExp: RegExp,
-    Error: Error,
-    TypeError: TypeError,
-    RangeError: RangeError,
-    undefined: undefined,
-    // Test results collector
-    _results: [],
-    _pass: true,
-    assert: function(condition, message) {
-        if (!condition) {
-            sandbox._pass = false;
-            sandbox._results.push({ pass: false, message: message || "Assertion failed" });
-        } else {
-            sandbox._results.push({ pass: true, message: message || "OK" });
-        }
-    },
-    assertEqual: function(actual, expected, message) {
-        const actualStr = JSON.stringify(actual);
-        const expectedStr = JSON.stringify(expected);
-        if (actualStr !== expectedStr) {
-            sandbox._pass = false;
-            sandbox._results.push({
-                pass: false,
-                message: (message || "assertEqual") + ": expected " + expectedStr + ", got " + actualStr
-            });
-        } else {
-            sandbox._results.push({ pass: true, message: message || "OK" });
-        }
-    },
-    assertNotEqual: function(actual, notExpected, message) {
-        if (JSON.stringify(actual) === JSON.stringify(notExpected)) {
-            sandbox._pass = false;
-            sandbox._results.push({
-                pass: false,
-                message: (message || "assertNotEqual") + ": values should differ but both are " + JSON.stringify(actual)
-            });
-        } else {
-            sandbox._results.push({ pass: true, message: message || "OK" });
-        }
-    },
-    assertContains: function(arr, item, message) {
-        const found = Array.isArray(arr) && arr.indexOf(item) >= 0;
-        if (!found) {
-            sandbox._pass = false;
-            sandbox._results.push({
-                pass: false,
-                message: (message || "assertContains") + ": " + JSON.stringify(item) + " not in " + JSON.stringify(arr)
-            });
-        } else {
-            sandbox._results.push({ pass: true, message: message || "OK" });
-        }
-    },
-    assertThrows: function(fn, message) {
-        try {
-            fn();
-            sandbox._pass = false;
-            sandbox._results.push({ pass: false, message: (message || "assertThrows") + ": expected exception but none thrown" });
-        } catch(e) {
-            sandbox._results.push({ pass: true, message: message || "OK" });
-        }
-    },
-    // File reading for test data
-    readFileSync: function(p) {
-        return fs.readFileSync(path.resolve(p), 'utf8');
-    }
-};
-
+const sandbox = createSandbox({ collectAssertions: true, exposeFs: true });
 vm.createContext(sandbox);
 
 try {
-    // Load each module into the sandbox
-    for (const modPath of modulePaths) {
-        const absPath = path.resolve(modPath);
-        let code = fs.readFileSync(absPath, 'utf8');
-        // Strip QML-specific directives
-        code = code.replace(/^\.pragma\s+library\s*$/m, '// .pragma library (stripped)');
-        // Replace console.error/log with sandbox versions (already done via context)
-        vm.runInContext(code, sandbox, { filename: path.basename(absPath) });
-    }
-
-    // Run the test code
+    loadModules(sandbox, modulePaths);
     vm.runInContext(testCode, sandbox, { filename: 'test' });
 
-    // Output results
     console.log(JSON.stringify({
         pass: sandbox._pass,
         results: sandbox._results,
