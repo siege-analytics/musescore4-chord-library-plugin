@@ -137,9 +137,8 @@ def load_dictionary(path):
 
 
 def dictionary_snippet(row, dictionary):
-    """Build an HTML snippet defining the category + each proposed tag,
-    pulled from the data dictionary. Returns '' if no dictionary or
-    nothing to define."""
+    """Build a plain-HTML snippet (only <p>/<b>/<i>/<br> — Tally strips
+    <code>/<ul>/<li>) defining the category + each proposed tag."""
     if not dictionary:
         return ""
     parts = []
@@ -147,7 +146,7 @@ def dictionary_snippet(row, dictionary):
     cat_def = dictionary.get("categories", {}).get(cat)
     if cat_def:
         parts.append(
-            f"<p><b>What's a {cat_def['title']}?</b> {cat_def['definition']} "
+            f"<p><b>{cat_def['title']}:</b> {cat_def['definition']} "
             f"<i>{cat_def['sound']}</i></p>"
         )
     tag_entries = []
@@ -160,13 +159,17 @@ def dictionary_snippet(row, dictionary):
             seen.add(t)
             defn = dictionary.get("tags", {}).get(t)
             if defn:
-                tag_entries.append(f"<li><code>{t}</code> — {defn['summary']}</li>")
+                tag_entries.append(f"• <b>{t}</b> — {defn['summary']}")
                 continue
             mdef = dictionary.get("masters", {}).get(t)
             if mdef:
-                tag_entries.append(f"<li><code>{t}</code> — {mdef['summary']}</li>")
+                tag_entries.append(f"• <b>{t}</b> — {mdef['summary']}")
     if tag_entries:
-        parts.append("<p><b>Tag definitions:</b></p><ul>" + "".join(tag_entries) + "</ul>")
+        parts.append(
+            "<p><b>Tag definitions:</b><br>"
+            + "<br>".join(tag_entries)
+            + "</p>"
+        )
     return "".join(parts)
 
 
@@ -189,8 +192,8 @@ def build_voicing_blocks(row, base_image_url, dictionary=None):
     glossary = dictionary_snippet(row, dictionary)
     reasoning_html = (
         f"<p><b>Agent proposed:</b><br>"
-        f"voicingStyle: <code>{vs}</code><br>"
-        f"playStyle: <code>{ps}</code><br>"
+        f"voicingStyle: {vs}<br>"
+        f"playStyle: {ps}<br>"
         f"confidence: <b>{conf}</b></p>"
         f"<p><b>Reasoning:</b> {reasoning}</p>"
         + glossary
