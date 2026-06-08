@@ -37,7 +37,7 @@ import sys
 import uuid
 from pathlib import Path
 
-TALLY_API = "https://api.tally.so/v1/forms"
+TALLY_API = "https://api.tally.so/forms"
 DEFAULT_BASE_URL = (
     "https://raw.githubusercontent.com/"
     "siege-analytics/musescore4-chord-library-plugin/"
@@ -49,71 +49,82 @@ def new_uuid():
     return str(uuid.uuid4())
 
 
-def title_block(text, group_uuid=None):
-    uid = new_uuid()
-    return {
-        "uuid": uid,
-        "groupUuid": group_uuid or uid,
-        "type": "TITLE",
-        "title": text,
-    }
-
-
-def image_block(image_url, alt_text, group_uuid):
+def _block(block_type, group_uuid, group_type, payload):
     return {
         "uuid": new_uuid(),
         "groupUuid": group_uuid,
-        "type": "IMAGE",
-        "imageUrl": image_url,
-        "altText": alt_text,
+        "groupType": group_type,
+        "type": block_type,
+        "payload": payload,
     }
 
 
-def text_block(html, group_uuid):
-    return {
-        "uuid": new_uuid(),
-        "groupUuid": group_uuid,
-        "type": "TEXT",
-        "html": html,
-    }
+def form_title_block(text):
+    g = new_uuid()
+    return [
+        _block("FORM_TITLE", g, "TEXT", {"html": text, "title": text}),
+    ]
 
 
-def multiple_choice_options(labels, group_uuid):
-    blocks = []
-    for i, label in enumerate(labels):
-        blocks.append({
-            "uuid": new_uuid(),
-            "groupUuid": group_uuid,
-            "type": "MULTIPLE_CHOICE_OPTION",
-            "title": label,
-            "isFirstOption": i == 0,
-            "isLastOption": i == len(labels) - 1,
-            "optionIndex": i,
-            "allowMultiple": False,
-        })
+def text_paragraph(html):
+    g = new_uuid()
+    return [_block("TEXT", g, "TEXT", {"html": html})]
+
+
+def heading_block(text):
+    """Standalone TITLE block at top level (not a question label)."""
+    g = new_uuid()
+    return [_block("TITLE", g, "TITLE", {"html": text})]
+
+
+def image_question_group(image_url, alt_text):
+    """IMAGE block alone — guess at payload shape from earlier doc sample."""
+    g = new_uuid()
+    return [_block("IMAGE", g, "IMAGE", {
+        "images": [{"url": image_url, "name": alt_text}],
+    })]
+
+
+def _label(text):
+    """Standalone label block — its own groupUuid per Tally's validator."""
+    g = new_uuid()
+    return _block("TITLE", g, "QUESTION", {"html": text})
+
+
+def multiple_choice_question(label_html, options):
+    """Label (own groupUuid) + N MULTIPLE_CHOICE_OPTION blocks sharing
+    groupUuid with groupType=MULTIPLE_CHOICE."""
+    blocks = [_label(label_html)]
+    g = new_uuid()
+    n = len(options)
+    for i, opt in enumerate(options):
+        blocks.append(_block("MULTIPLE_CHOICE_OPTION", g, "MULTIPLE_CHOICE", {
+            "text": opt,
+            "index": i,
+            "isFirst": i == 0,
+            "isLast": i == n - 1,
+        }))
     return blocks
 
 
-def textarea_block(title_text, placeholder, group_uuid, required=False):
-    return {
-        "uuid": new_uuid(),
-        "groupUuid": group_uuid,
-        "type": "TEXTAREA",
-        "title": title_text,
-        "placeholder": placeholder,
-        "isRequired": required,
-    }
+def textarea_question(label_html, placeholder="", required=False):
+    return [
+        _label(label_html),
+        _block("TEXTAREA", new_uuid(), "TEXTAREA", {
+            "isRequired": required,
+            "placeholder": placeholder,
+        }),
+    ]
 
 
-def input_text_block(title_text, placeholder, group_uuid):
-    return {
-        "uuid": new_uuid(),
-        "groupUuid": group_uuid,
-        "type": "INPUT_TEXT",
-        "title": title_text,
-        "placeholder": placeholder,
-        "isRequired": False,
-    }
+def input_text_question(label_html, placeholder=""):
+    return [
+        _label(label_html),
+        _block("INPUT_TEXT", new_uuid(), "INPUT_TEXT", {
+            "isRequired": False,
+            "placeholder": placeholder,
+        }),
+    ]
 
 
 def build_voicing_blocks(row, base_image_url):
@@ -141,64 +152,38 @@ def build_voicing_blocks(row, base_image_url):
     )
 
     blocks = []
-    blocks.append({
-        "uuid": new_uuid(),
-        "groupUuid": group_uuid,
-        "type": "TITLE",
-        "title": title_text,
-    })
-    blocks.append(image_block(image_url, f"Fretboard diagram for {name}", group_uuid))
-    blocks.append(text_block(reasoning_html, group_uuid))
-
-    # Verdict question — own groupUuid so options are children of it
-    mc_group = new_uuid()
-    blocks.append({
-        "uuid": new_uuid(),
-        "groupUuid": mc_group,
-        "type": "MULTIPLE_CHOICE",
-        "title": "Do these tags fit this voicing?",
-    })
-    blocks.extend(multiple_choice_options(["YES", "NO", "REFINE"], mc_group))
-
-    # Override reason
-    blocks.append(textarea_block(
+    blocks.extend(heading_block(title_text))
+    blocks.extend(image_question_group(image_url, f"Fretboard diagram for {name}"))
+    blocks.extend(text_paragraph(reasoning_html))
+    blocks.extend(multiple_choice_question(
+        "Do these tags fit this voicing?",
+        ["YES", "NO", "REFINE"],
+    ))
+    blocks.extend(textarea_question(
         "If NO or REFINE, why are you overriding the agent?",
-        "e.g. 'This Caug7 doesn't fit Joe Pass's chord-melody vocabulary'",
-        new_uuid(),
+        placeholder="e.g. This Caug7 doesn't fit Joe Pass's chord-melody vocabulary",
     ))
-    # Additions
-    blocks.append(input_text_block(
+    blocks.extend(input_text_question(
         "Tags to add (comma-separated, optional)",
-        "e.g. van-eps, walking-bass",
-        new_uuid(),
+        placeholder="e.g. van-eps, walking-bass",
     ))
-    # Notes
-    blocks.append(textarea_block(
+    blocks.extend(textarea_question(
         "Anything else? (optional)",
-        "Free-form notes",
-        new_uuid(),
+        placeholder="Free-form notes",
     ))
-
     return blocks
 
 
 def build_form_payload(rows, base_image_url, form_title):
     blocks = []
-    blocks.append({
-        "uuid": new_uuid(),
-        "groupUuid": new_uuid(),
-        "type": "FORM_TITLE",
-        "title": form_title,
-    })
-    intro_group = new_uuid()
-    blocks.append(text_block(
+    blocks.extend(form_title_block(form_title))
+    blocks.extend(text_paragraph(
         "<p>Thanks for helping. Each page shows one guitar voicing, "
         "the tags an automated tagger guessed, and a fretboard diagram. "
         "For each, click <b>YES</b>, <b>NO</b>, or <b>REFINE</b>, and "
         "tell us why if you disagree.</p>"
         "<p>You can skip rows you're unsure about — quality of judgment "
-        "beats coverage.</p>",
-        intro_group,
+        "beats coverage.</p>"
     ))
 
     for row in rows:
@@ -212,17 +197,24 @@ def build_form_payload(rows, base_image_url, form_title):
 
 def post_to_tally(payload, api_key):
     import urllib.request
+    import urllib.error
     req = urllib.request.Request(
         TALLY_API,
         data=json.dumps(payload).encode("utf-8"),
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "voicing-tag-form-builder/1.0 (#395; curl-equivalent)",
         },
         method="POST",
     )
-    with urllib.request.urlopen(req) as resp:
-        return json.load(resp)
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"HTTP {e.code} from Tally: {body}") from None
 
 
 def main():
