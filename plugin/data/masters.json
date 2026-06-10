@@ -20786,6 +20786,45 @@
           ]
         }
       ],
+      "usage_notes": [
+        {
+          "chord_quality": "min7b5",
+          "function_role": "predominant-in-minor-ii-V-i",
+          "narrative": "Laukens treats half-diminished (m7b5) as the ii of minor ii-V-i — the predominant function that sets up an altered V. The substitution lattice from his Upper-Structure work explicitly derives ø7 ↔ altered V7 via shared tritone (root of m7b5 = b5 of V7alt), so the voicing's pedagogical use is interchangeable with its tritone-sub V. When tagging a m7b5 voicing as Laukens, the question to ask: does this voicing's voice-leading support a resolution to an altered dominant a half-step below it?",
+          "source_principle_ids": [
+            "function-assigned-vocabulary",
+            "substitution-as-derivable-not-memorized"
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "dominant",
+          "narrative": "In Laukens's substitution lattice the dominant 7 is the most-substituted chord in the catalog. The Patterns Vol 1 Upper-Structure Substitution Lattice derives V7 ↔ bII7 (tritone), V7alt (b9/#9/#5/b5 extensions stacked as derivable from the diminished and altered scales), V7sus, and the diminished chord a half-step above V (passing/leading-tone use). Tagging a dom7 voicing as Laukens implies the voicing supports at least one of these derivation paths via its voice-leading availability.",
+          "source_principle_ids": [
+            "substitution-as-derivable-not-memorized",
+            "function-assigned-vocabulary"
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "tonic-in-major",
+          "narrative": "maj7 functions as tonic in Laukens's function-assigned hierarchy. His method emphasizes the 3-7 guide tones as the harmonic skeleton and treats the 9 and #11 as color tones for tension-release (the Lydian-mode reading of maj7 as a tonic-with-color). Voicings that bury the root and project the 3-7-9 or 3-7-#11 are the Laukens-pedagogically-typical shapes; voicings that emphasize the root-fifth-octave are not.",
+          "source_principle_ids": [
+            "function-assigned-vocabulary",
+            "moveable-shape-as-organizing-principle"
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "predominant-or-tonic-minor",
+          "narrative": "min7 carries two functions in Laukens's lattice: predominant (ii of major ii-V-I) and tonic-minor (i of natural minor, often colored to min9 / min-maj7 / min11 to disambiguate). The moveable-shape pedagogy places min7 drop-2 voicings on adjacent string sets (6-3, 5-2, 4-1) as the workhorse forms, with the same physical shape transposed across the fretboard. Tagging a min7 voicing as Laukens implies either function reading is supportable, NOT that the voicing carries one specific function unconditionally.",
+          "source_principle_ids": [
+            "moveable-shape-as-organizing-principle",
+            "function-assigned-vocabulary",
+            "standard-anchored-practice"
+          ]
+        }
+      ],
       "status": "promoted"
     },
     {
