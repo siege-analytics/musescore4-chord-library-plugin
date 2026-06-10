@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "v1",
+  "styles": [
+    {
+      "id": "bossa-nova",
+      "name": "Bossa Nova",
+      "summary": "Brazilian-rooted style fusing samba rhythm with cool-jazz harmonic sensibility. Characterized by syncopated guitar comping (the 'bossa pattern'), gentle harmonic motion through extended chords with 9 and #11 colors, and a soft dynamic that leaves space for the singer / melody line.",
+      "voicing_style_tag_affinity": {
+        "chord-melody": 0.3,
+        "shell": 0.4,
+        "guide-tones": 0.6,
+        "drop-2": 0.5
+      },
+      "rhythmic_signature": {
+        "anticipated_beats": ["upbeat-of-2", "and-of-4"],
+        "accent_pattern": "syncopated-with-bass-anchor-on-1-3",
+        "density": "sparse",
+        "typical_tempo_range_bpm": [120, 160]
+      },
+      "harmonic_signature": {
+        "chromatic_motion_tolerance": "low",
+        "substitution_density": "moderate",
+        "color_tone_preference": ["9", "11", "13", "#11"],
+        "characteristic_progressions": ["ii-V-I with 9-color tonic", "I-VI-ii-V cycle", "descending-ii-V chains"]
+      },
+      "prescriptive_lessons": [
+        {
+          "chord_quality": "maj7",
+          "function_role": "tonic-with-color",
+          "narrative": "[placeholder] In bossa, maj7 tonic typically lifts to maj9 or maj7(#11). The bossa pattern places the chord on the upbeat of 2 with a sustaining bass on 1 and 3. Real prescriptive content backfilled via #419.",
+          "provenance": "placeholder",
+          "source": "placeholder"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "predominant-with-9",
+          "narrative": "[placeholder] m7 voicings in bossa favor the 9 on top, drop-2 shape across strings 5-2. Backfill via #419.",
+          "provenance": "placeholder",
+          "source": "placeholder"
+        }
+      ],
+      "divergence_notes": [
+        {
+          "vs_style": "bebop",
+          "shared_dimensions": ["ii-V-I as base progression", "extended-chord vocabulary"],
+          "diverging_dimensions": ["density", "onset placement", "chromatic tolerance"],
+          "characteristic_quote": "[placeholder] You're using bebop chords in bossa rhythm — try lifting the density and anticipating the upbeat. Real quote backfilled via curator pass after #419.",
+          "provenance": "placeholder"
+        }
+      ],
+      "example_masters": [
+        {
+          "master_id": "joe-pass",
+          "exemplar_principle_ids": ["three-to-four-note-voicings-with-voice-leading"]
+        }
+      ],
+      "diagnostic_examples": []
+    },
+    {
+      "id": "bebop",
+      "name": "Bebop",
+      "summary": "Post-WWII jazz style centered on dense chromatic improvisation, fast tempos, and intricate harmonic substitution. Comping is rhythmically aggressive with anticipated upbeats and ample chromatic passing chords; voicings emphasize R-3-7 shells dressed with altered tensions on dominants.",
+      "voicing_style_tag_affinity": {
+        "pass": 0.9,
+        "shell": 1.0,
+        "drop-2": 0.8,
+        "drop-3": 0.6,
+        "altered-dominant": 0.9,
+        "tritone-sub": 0.7
+      },
+      "rhythmic_signature": {
+        "anticipated_beats": ["upbeat-of-4", "and-of-2", "and-of-4"],
+        "accent_pattern": "syncopated-eighths-with-chromatic-passing",
+        "density": "dense",
+        "typical_tempo_range_bpm": [180, 280]
+      },
+      "harmonic_signature": {
+        "chromatic_motion_tolerance": "high",
+        "substitution_density": "high",
+        "color_tone_preference": ["b9", "#9", "#11", "b13"],
+        "characteristic_progressions": ["rapid ii-V-I cycles", "tritone-sub V7s", "diminished-passing on every weak beat", "Coltrane-changes (three-tonic substitution)"]
+      },
+      "prescriptive_lessons": [
+        {
+          "chord_quality": "dom7",
+          "function_role": "dominant-with-alteration-mandate",
+          "narrative": "[placeholder] In bebop, V7 is rarely played 'plain.' Standard prescriptions: voice as V7alt (b9, #9, #5, b5) on string set 6-3 with the b9 or #9 on top, or substitute the tritone bII7 voiced as a shell with the b5 implied. Real prescriptive content via #419 (mickey-baker run is queued as bebop exemplar).",
+          "provenance": "placeholder",
+          "source": "placeholder"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "predominant-in-minor-ii-V-i",
+          "narrative": "[placeholder] m7b5 in bebop is the ii of minor ii-V-i, typically voiced as drop-2 with the b5 anchored on string 3 and resolving chromatically downward into the altered V7. Backfill via #419.",
+          "provenance": "placeholder",
+          "source": "placeholder"
+        }
+      ],
+      "divergence_notes": [
+        {
+          "vs_style": "bossa-nova",
+          "shared_dimensions": ["ii-V-I as base progression", "extended-chord vocabulary"],
+          "diverging_dimensions": ["density", "onset placement", "chromatic tolerance"],
+          "characteristic_quote": "[placeholder] A bebop player would say: 'You're playing bossa rhythm with bebop chord density — relax the chromatic passing and let the bass breathe.' Backfilled via curator pass after #419.",
+          "provenance": "placeholder"
+        }
+      ],
+      "example_masters": [
+        {
+          "master_id": "joe-pass",
+          "exemplar_principle_ids": ["walking-bass-plus-chord-stabs", "dominant-alteration-substitution-lattice"]
+        },
+        {
+          "master_id": "mickey-baker",
+          "exemplar_principle_ids": ["four-named-substitution-principles-as-lattice"]
+        }
+      ],
+      "diagnostic_examples": []
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "styles.json schema",
+  "description": "Schema for plugin/data/styles.json — the second axis catalog (the first being masters.json, the third idioms.json). A 'style' is a TRADITION (bebop, bossa nova, gypsy jazz, ...) characterized by signature voicings, rhythmic conventions, and harmonic vocabulary. Per cross-agent agreement (plugin#417 + ellington-systems/ellington-web), structural fields ship first; prescriptive content (the actual lessons) backfills via the quality-axis distillation pipeline change (#419).",
+  "type": "object",
+  "required": ["schemaVersion", "styles"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "enum": ["v1"],
+      "description": "Schema version string. Consumers (Ellington StylePreset loader, plugin engine, future tools) MUST gate on this. Breaking changes bump the major (v2, v3, ...). Minor-additive changes that stay backward-compatible do not bump."
+    },
+    "styles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/style" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "style": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$",
+          "description": "Kebab-case slug. Examples: 'bebop', 'bossa-nova', 'cool-jazz', 'gypsy-jazz', 'hard-bop', 'fusion', 'modal-jazz', 'standards', 'berklee-consensus'."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": {
+          "type": "string",
+          "description": "1-3 sentences naming the tradition. What you'd tell someone who'd never heard of it."
+        },
+        "voicing_style_tag_affinity": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "description": "dict[voicingStyleTag → weight] declaring which tags this style favors. Tags should reference master.principles[].voicingStyleTags or voicing.voicingStyle values that exist in the corpus. Weights are relative (consumer normalizes). Example: {'pass': 0.9, 'bebop': 1.0, 'chromatic-cool': 0.4}."
+        },
+        "rhythmic_signature": {
+          "type": "object",
+          "description": "Structured rhythmic characteristics of the style. Free-form by design — Ellington's comparator reads specific keys; new keys can be added without bumping schemaVersion as long as they're additive.",
+          "properties": {
+            "anticipated_beats": { "type": "array", "items": { "type": "string" }, "description": "e.g. ['upbeat-of-4', 'upbeat-of-2'] for bossa." },
+            "accent_pattern": { "type": "string" },
+            "density": { "type": "string", "enum": ["sparse", "moderate", "dense", "very-dense"] },
+            "typical_tempo_range_bpm": { "type": "array", "items": { "type": "number" } }
+          },
+          "additionalProperties": true
+        },
+        "harmonic_signature": {
+          "type": "object",
+          "description": "Structured harmonic characteristics. Same additive-extension pattern as rhythmic_signature.",
+          "properties": {
+            "chromatic_motion_tolerance": { "type": "string", "enum": ["low", "moderate", "high", "extreme"] },
+            "substitution_density": { "type": "string", "enum": ["low", "moderate", "high"] },
+            "color_tone_preference": { "type": "array", "items": { "type": "string" }, "description": "e.g. ['9', '13', '#11'] for cool-jazz; ['b9', '#9', 'b13'] for bebop." },
+            "characteristic_progressions": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": true
+        },
+        "prescriptive_lessons": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/prescriptive_lesson" },
+          "description": "Per-chord-quality prescriptive lessons for THIS style. Same shape as masters.usage_notes from #415, but indexed by style instead of master. 'In bossa, m7 is voiced with the 9 on top, anticipated on the upbeat of 4, because [rationale].'"
+        },
+        "divergence_notes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/divergence_note" },
+          "description": "Structured cross-style commentary. Consumed by the Ellington cross-style coach to render 'a bebop player would say...' criticism when audio exhibits one style against another's backing."
+        },
+        "example_masters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["master_id"],
+            "properties": {
+              "master_id": { "type": "string", "description": "References masters[].id." },
+              "exemplar_work_ids": { "type": "array", "items": { "type": "string" }, "description": "Optional: which of the master's works[].id best exemplify this style." },
+              "exemplar_principle_ids": { "type": "array", "items": { "type": "string" }, "description": "Optional: which of the master's principles[].id best exemplify this style." }
+            },
+            "additionalProperties": true
+          },
+          "description": "Which corpus masters exemplify this style. The comparator uses these as canonical references."
+        },
+        "diagnostic_examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["voicing_id"],
+            "properties": {
+              "voicing_id": { "type": "string", "description": "References voicings[].id." },
+              "why_canonical": { "type": "string", "description": "1-2 sentences: what about this voicing makes it canonically THIS style." },
+              "provenance": { "type": "string", "enum": ["extracted", "hand-authored", "placeholder"] }
+            },
+            "additionalProperties": true
+          },
+          "description": "5-10 reference voicings that ARE canonically this style. Training signal for the comparator."
+        }
+      },
+      "additionalProperties": true
+    },
+    "prescriptive_lesson": {
+      "type": "object",
+      "required": ["chord_quality", "narrative"],
+      "properties": {
+        "chord_quality": { "type": "string", "minLength": 1, "description": "References voicings.json voicings[].chord_quality vocabulary." },
+        "function_role": { "type": "string" },
+        "narrative": { "type": "string", "minLength": 1, "description": "1-3 sentences explaining how THIS style uses this chord quality. Should be prescriptive enough to guide a player." },
+        "voicing_examples": { "type": "array", "items": { "type": "string" }, "description": "voicings[].id references that exemplify the lesson." },
+        "source": { "type": "string", "description": "Free text: where this lesson is grounded (book + page, principle id, or 'placeholder')." },
+        "provenance": { "type": "string", "enum": ["extracted", "inferred-from-principles", "hand-authored", "placeholder"], "description": "Same enum as masters.usage_notes.provenance — see schema/masters.schema.json $defs/usage_note." }
+      },
+      "additionalProperties": true
+    },
+    "divergence_note": {
+      "type": "object",
+      "required": ["vs_style"],
+      "description": "Structured cross-style commentary. Each entry compares THIS style against vs_style: what's shared, what diverges, and a characteristic quote the coach renders verbatim. Per ellington-systems request.",
+      "properties": {
+        "vs_style": { "type": "string", "description": "References another styles[].id." },
+        "shared_dimensions": { "type": "array", "items": { "type": "string" }, "description": "Examples: 'ii-V-I as base progression', 'guide-tone-driven voice-leading'." },
+        "diverging_dimensions": { "type": "array", "items": { "type": "string" }, "description": "Examples: 'density', 'onset placement', 'chromatic tolerance'." },
+        "characteristic_quote": { "type": "string", "description": "Rendered verbatim by the LLM coach. Format: short quote in the voice of a player from THIS style critiquing usage in vs_style. Example for bossa vs bebop: 'You're using bebop chords in bossa rhythm — try lifting the density and anticipating the upbeat.'" },
+        "provenance": { "type": "string", "enum": ["hand-authored", "extracted", "placeholder"] }
+      },
+      "additionalProperties": true
+    }
+  }
+}
