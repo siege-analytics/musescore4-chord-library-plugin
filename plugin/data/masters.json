@@ -19598,6 +19598,704 @@
           ]
         },
         {
+          "id": "complete-chord-melody",
+          "title": "Complete Chord Melody",
+          "year": 2019,
+          "instrument_scope": "6-string guitar (jazz chord-melody)",
+          "summary": "Laukens' chord-melody curriculum from JazzGuitar.be. Five modules carry the student from harmonic taxonomy (three families - Major, Minor, Dominant - with m7b5 and altered-dominant sub-families) through complete arrangement methodology to advanced substitution and fingerstyle mechanics. The book is organized around the solo-guitar vs. trio chord-melody distinction; the primary curricular weight is solo, where the guitarist supplies bass, harmony, and melody simultaneously. Joe Pass is the recurring exemplar (block chords with scalar connectors, tritone-sub, ii/V interchangeability, characteristic rubato). Three systems were derived: Chord Melody Harmonization System (the golden rule that melody intervals are measured against the current chord, not the key; shell voicings, omission priority, sparse placement), Substitution and Reharmonization System (tritone, relative, chord-iii, minor-for-V, back-cycling, common-tone, lick-swap, all grounded in guide-tone validity), and Solo Guitar Texture and Walking Bass System (shell+walking-bass placement, rhythmic alternation on the '& of 1', diad-over-octave preferences).",
+          "references": [
+            {
+              "source": "Laukens, Dirk. Complete Chord Melody. JazzGuitar.be.",
+              "citation": "Primary source. Chapter-loop run 2026-06-10T15-35-34-laukens-complete-chord-melody; derived/STATEMENT.md + derived/systems-draft.json under plugin/data/masters-corpus/dirk-laukens/complete-chord-melody/."
+            }
+          ],
+          "systems": [
+            {
+              "id": "dirk-laukens:complete-chord-melody:chord-melody-harmonization",
+              "name": "Chord Melody Harmonization System",
+              "summary": "The central system of the book, governing how any melody note is mapped to a chord voicing through a three-family taxonomy (Major, Minor, Dominant — with sub-families for m7b5 and altered dominant), a chord collection for every diatonic interval above a given root, and the golden rule that interval measurement is always against the current chord in the progression, not the overall key. The system's traversal logic moves the arranger horizontally across the neck via CAGED-anchored chord collections on the top two strings. Modification rules govern how voicings are altered: notes may be omitted (fifth, root, eleventh, ninth preferred), shell voicings (root, 3rd, 7th) serve as the density floor, and chords are placed sparsely — only on long-held melody notes — with unplayable voicings resolved by cutting notes rather than abandoning the chord.",
+              "members": [
+                {
+                  "id": "family-major",
+                  "name": "Major Family",
+                  "summary": "Chords whose quality is major: CMaj7, C6, CMaj9 and extensions."
+                },
+                {
+                  "id": "family-minor-m7",
+                  "name": "Minor m7 Sub-Family",
+                  "summary": "Minor seventh chords and extensions: Cm7, Cm9, Cm13."
+                },
+                {
+                  "id": "family-minor-m7b5",
+                  "name": "Minor m7b5 Sub-Family",
+                  "summary": "Half-diminished chords: Cm7b5, Cm11b5; used on ii of minor ii-V-i."
+                },
+                {
+                  "id": "family-dominant-natural",
+                  "name": "Natural Dominant Sub-Family",
+                  "summary": "Unaltered dominant seventh chords and extensions: C7, C9, C13."
+                },
+                {
+                  "id": "family-dominant-altered",
+                  "name": "Altered Dominant Sub-Family",
+                  "summary": "Dominant chords with altered tensions: C7(b9), C7(b13b9), C7(b5), C7alt."
+                },
+                {
+                  "id": "chord-collection-string1",
+                  "name": "Chord Collection — Melody on 1st String",
+                  "summary": "Set of voicings covering every diatonic interval as the top note on the first string, organized by CAGED position."
+                },
+                {
+                  "id": "chord-collection-string2",
+                  "name": "Chord Collection — Melody on 2nd String",
+                  "summary": "Parallel set of voicings with the melody note as the highest note on the second string."
+                },
+                {
+                  "id": "shell-voicing",
+                  "name": "Shell Voicing",
+                  "summary": "Three-note voicing containing root, 3rd, and 7th."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "horizontal-melody-placement",
+                  "name": "Horizontal Melody Placement on Top 2 Strings",
+                  "summary": "Melody is repositioned onto the top 1-2 strings, requiring horizontal movement across the neck rather than staying in a single position.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "melody placement on strings",
+                      "quote_excerpt": "play more horizontally over the fretboard, rather than staying in a single position"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Melody on top 2-3 strings",
+                      "quote_excerpt": "change the fingering of the melody to sit on the top 2 (or 3) strings"
+                    }
+                  ]
+                },
+                {
+                  "id": "caged-collection-navigation",
+                  "name": "CAGED-Anchored Collection Navigation",
+                  "summary": "Navigate between chord voicings by anchoring to the CAGED fretboard area closest to the melody note.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "CAGED system fretboard orientation",
+                      "quote_excerpt": "play a ii V I using chord shapes from the above collections closest to each fretboard area"
+                    }
+                  ]
+                },
+                {
+                  "id": "golden-rule-interval-to-chord",
+                  "name": "Golden Rule: Interval Measured Against Current Chord",
+                  "summary": "Select the voicing whose interval label matches the melody note's relationship to the current chord — never to the overall key.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Golden rule: interval relates to chord",
+                      "quote_excerpt": "Always relate the interval to the chord at that point in the chord progression"
+                    },
+                    {
+                      "chapter_n": 4,
+                      "topic": "Interval label relates to current chord",
+                      "quote_excerpt": "interval number we give a melody note must relate to the current chord in the progression"
+                    }
+                  ]
+                },
+                {
+                  "id": "string-set-two-string-melody",
+                  "name": "String-Set Transition Between 1st and 2nd String Collections",
+                  "summary": "When the melody moves from the 1st to the 2nd string, transition to the corresponding 2nd-string chord collection.",
+                  "engine_payload": {
+                    "kind": "StringSetTransition"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "2nd string chord collections",
+                      "quote_excerpt": "additional chord collections that have their highest note on the 2nd string"
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-scale-improvisation",
+                  "name": "Chord-Scale Palette Traversal",
+                  "summary": "Within a position, any chord from the collection may follow any other; blending chord voicings with single-note lines is the characteristic traversal gesture.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Improvising with chord scale",
+                      "quote_excerpt": "play through each of the shapes - any of the shapes in any order will generally sound fine"
+                    },
+                    {
+                      "chapter_n": 3,
+                      "topic": "Joe Pass chord-scale approach",
+                      "quote_excerpt": "Joe Pass would often play a block chord then link to the next chord voicing with scale notes or passing tones"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "shell-voicing-floor",
+                  "name": "Shell Voicing Density Floor",
+                  "summary": "Every chord must contain at minimum the root, 3rd, and 7th — the bare bones defining chord identity.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Shell voicing definition",
+                      "quote_excerpt": "shell voicings — i.e. the 'bare bones' of what you need to define the sound of the chord: the root, 3rd, and 7th"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Why remove the fifth",
+                      "quote_excerpt": "You can remove the 5th from the chord and still retain the essential character of the sound"
+                    }
+                  ]
+                },
+                {
+                  "id": "sparse-chord-placement",
+                  "name": "Sparse Chord Placement — Long Notes Only",
+                  "summary": "Chords are placed only on long-held melody notes; cluttering short notes destroys melodic intelligibility.",
+                  "engine_payload": {
+                    "kind": "DensityCeiling"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "chord placement rule",
+                      "quote_excerpt": "I mainly place chords on the long-held melody notes"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Chord placement frequency",
+                      "quote_excerpt": "less is more — placing chords at key places 'here and there'"
+                    }
+                  ]
+                },
+                {
+                  "id": "note-omission-policy",
+                  "name": "Note Omission Policy — 5th, Root, 11th, 9th Preferred",
+                  "summary": "When a voicing is unplayable, cut notes in order: 5th first, then root, 11th, 9th; the 3rd and 7th are kept unless the chord is especially complex.",
+                  "engine_payload": {
+                    "kind": "OmissionAllow"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Common omitted intervals",
+                      "quote_excerpt": "Intervals most commonly omitted include the 5th, the root (1st), the 11th, and the 9th"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Options for difficult voicings",
+                      "quote_excerpt": "Cut out notes from the chord - e.g. we could cut that low B to make it easier to change to the next chord"
+                    }
+                  ]
+                },
+                {
+                  "id": "long-note-chord-substitution",
+                  "name": "Long-Note Chord Substitution",
+                  "summary": "When a long melody note cannot ring on guitar, substitute a chord voicing to mark the harmonic change.",
+                  "engine_payload": {
+                    "kind": "_pending:long-note-voicing-substitute"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "adapting long melody notes",
+                      "quote_excerpt": "rather than trying to hold them for their full length, I place a chord voicing"
+                    }
+                  ]
+                },
+                {
+                  "id": "color-tone-dominant",
+                  "name": "Color Tone Requirement on Dominant Chords",
+                  "summary": "Extensions and altered tensions must be added to dominant chords to produce an authentically jazz-flavoured sound.",
+                  "engine_payload": {
+                    "kind": "ColorToneRequire"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Adding tension to dominant chords",
+                      "quote_excerpt": "The jazzy sound in arrangements usually comes from adding extensions and tensions to voicings - particularly to dominant chords"
+                    }
+                  ]
+                },
+                {
+                  "id": "voicing-generation-add-adapt",
+                  "name": "Voicing Generation by Adding or Adapting Notes",
+                  "summary": "New voicings are derived from a base shape by adding or altering individual notes.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Generating voicings by adding/adapting notes",
+                      "quote_excerpt": "how many different chord voicings I can create from this G7 shape, simply by adding or adapting notes"
+                    }
+                  ]
+                },
+                {
+                  "id": "octave-drop-for-range",
+                  "name": "Octave Drop for Fretboard Range Management",
+                  "summary": "When chord collection shapes climb too high on the neck, drop them an octave to stay in a practical range.",
+                  "engine_payload": {
+                    "kind": "PositionContinuity"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 4,
+                      "topic": "Transposing chord collection by octave drop",
+                      "quote_excerpt": "drop some shapes down the octave when they start to get a bit too high"
+                    }
+                  ]
+                },
+                {
+                  "id": "sub-family-discrimination",
+                  "name": "Sub-Family Discrimination — Altered vs Natural Dominant, m7 vs m7b5",
+                  "summary": "Sub-family selection must match the harmonic situation; the wrong sub-family produces audible harmonic errors.",
+                  "engine_payload": {
+                    "kind": "FamilyCoherence"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 3,
+                      "topic": "altered vs. natural dominant rule",
+                      "quote_excerpt": "can often sound wrong playing a natural dominant instead of an altered dominant or playing a m7 instead of a m7b5 chord"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "dirk-laukens:complete-chord-melody:substitution-reharmonization",
+              "name": "Substitution and Reharmonization System",
+              "summary": "A layered substitution lattice built on top of the base harmonization system, allowing the arranger to replace or expand chords using tritone substitution (guide tones swap), relative substitution (vi for I), chord-iii substitution, minor-for-dominant (iim7 for V7), back cycling (circle of fourths), and common tone substitution (substitute chord must share the melody note). The ii/V interchangeability rule, attributed to Joe Pass, collapses two operations into a general swap freedom. Guide tones (3rd and 7th) are the harmonic engine making most substitutions valid. Lick swaps extend the system into the melodic domain by replacing repeated written melody with improvised lines matched to the underlying harmony. Back cycling and aggressive substitution are appropriate in solo guitar but may clash with other players in an ensemble.",
+              "members": [
+                {
+                  "id": "sub-tritone",
+                  "name": "Tritone Substitution",
+                  "summary": "Replace any chord with one whose root is a tritone away; guide tones swap positions while remaining common tones."
+                },
+                {
+                  "id": "sub-relative",
+                  "name": "Relative Substitution (vi for I)",
+                  "summary": "Replace the I chord of a key with the vi chord."
+                },
+                {
+                  "id": "sub-chord-iii",
+                  "name": "Chord-iii Substitution",
+                  "summary": "Substitute a major chord for chord iii of its key."
+                },
+                {
+                  "id": "sub-minor-for-dominant",
+                  "name": "Minor-for-Dominant Substitution (iim7 for V7)",
+                  "summary": "Use the minor 7 built on the 5th of any dominant chord in place of that dominant."
+                },
+                {
+                  "id": "sub-back-cycling",
+                  "name": "Back Cycling",
+                  "summary": "Add preparatory chords by moving backwards through the circle of fourths."
+                },
+                {
+                  "id": "sub-common-tone",
+                  "name": "Common Tone Substitution",
+                  "summary": "Substitute any chord for another as long as the new chord shares the current melody note."
+                },
+                {
+                  "id": "sub-lick-swap",
+                  "name": "Lick Swap",
+                  "summary": "Replace a repeated melodic figure with an idiomatic jazz lick matched to the underlying harmony."
+                },
+                {
+                  "id": "sub-chord-addition",
+                  "name": "Chord Addition",
+                  "summary": "Insert substitute chords at additional points to expand harmonic rhythm."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "guide-tone-common-tone-validity",
+                  "name": "Guide Tone Common-Tone Validity Check",
+                  "summary": "A substitution is valid when 3rd and 7th of the substitute are common tones with the original chord.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "guide tones swap in tritone sub",
+                      "quote_excerpt": "guide tones have essentially swapped places between these two chords"
+                    }
+                  ]
+                },
+                {
+                  "id": "ii-v-interchangeability",
+                  "name": "ii-V Interchangeability",
+                  "summary": "The ii and V chords may be freely interchanged in solo guitar arranging, attributed to Joe Pass.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "ii–V interchangeability",
+                      "quote_excerpt": "Joe Pass would often mention that the ii and the V chord can be interchanged"
+                    }
+                  ]
+                },
+                {
+                  "id": "common-tone-melody-match",
+                  "name": "Common Tone Melody Match",
+                  "summary": "Substitute chord must contain the current melody note as one of its chord tones.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "common tone substitution rule",
+                      "quote_excerpt": "substitute any chord for another chord, as long as the new chord has a note in common with it that you use as the melody note on top"
+                    }
+                  ]
+                },
+                {
+                  "id": "lick-swap-trigger",
+                  "name": "Lick Swap Structural Trigger",
+                  "summary": "Lick swaps are triggered by a repeated melodic figure (e.g., a repeated A section) and matched to the harmonic type of that moment.",
+                  "engine_payload": {
+                    "kind": "NCTHarmonization"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "when to substitute licks for melody",
+                      "quote_excerpt": "jazz chart with a melodic figure that repeats (e.g. a repeat of an A section) - this can be a good place to use this technique"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "minor ii V lick substitution",
+                      "quote_excerpt": "minor ii V i progression at that point (Bm7b5 - E7(b9) - Am7), so you can use a minor ii V i jazz lick"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "tritone-sub-rule",
+                  "name": "Tritone Substitution Rule",
+                  "summary": "Any chord may be replaced by the chord whose root lies a tritone (split octave) away.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "tritone substitution rule",
+                      "quote_excerpt": "You can replace any chord with another whose root is a tritone away from the root of the original chord"
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "tritone as split octave",
+                      "quote_excerpt": "tritone interval is sometimes referred to as a split octave"
+                    }
+                  ]
+                },
+                {
+                  "id": "relative-sub-rule",
+                  "name": "Relative Substitution Rule (vi for I)",
+                  "summary": "The I chord of a key may be replaced by the vi chord of that key.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "relative substitution rule",
+                      "quote_excerpt": "you can replace the I chord of a key with the vi chord of the key"
+                    }
+                  ]
+                },
+                {
+                  "id": "chord-iii-sub-rule",
+                  "name": "Chord-iii Substitution Rule",
+                  "summary": "A major chord may be substituted by chord iii of its key.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "chord iii substitution rule",
+                      "quote_excerpt": "you can substitute a major chord for chord iii of its key"
+                    }
+                  ]
+                },
+                {
+                  "id": "minor-for-dominant-rule",
+                  "name": "Minor-for-Dominant Substitution Rule",
+                  "summary": "A dominant chord may be replaced by the minor 7 chord built on its fifth scale degree.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "minor for dominant substitution rule",
+                      "quote_excerpt": "You can use a minor 7 chord from the 5th of any dominant chord"
+                    }
+                  ]
+                },
+                {
+                  "id": "back-cycling-rule",
+                  "name": "Back Cycling Substitution Rule",
+                  "summary": "Additional chords may be prepended by traversing backwards through the circle of fourths; restricted to solo guitar to avoid ensemble clashes.",
+                  "engine_payload": {
+                    "kind": "SubstitutionExpand"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "back cycling substitution rule",
+                      "quote_excerpt": "add chords to the chord progression of a song based on the 'back cycle', i.e. the circle of fourths"
+                    },
+                    {
+                      "chapter_n": 7,
+                      "topic": "back cycling band context warning",
+                      "quote_excerpt": "won't necessarily work well if you are playing in a band as the changes may clash"
+                    }
+                  ]
+                },
+                {
+                  "id": "late-song-placement-complex-subs",
+                  "name": "Late-Song Placement of Complex Substitutions",
+                  "summary": "Extreme reharmonizations should appear later in the song form so listeners first establish the original harmony.",
+                  "engine_payload": {
+                    "kind": "_pending:form-placement-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 7,
+                      "topic": "later-song placement of complex substitutions",
+                      "quote_excerpt": "may be desirable to add these kinds of substitutions a bit later in the song form"
+                    }
+                  ]
+                },
+                {
+                  "id": "chromatic-approach-chord",
+                  "name": "Chromatic Approach Chord",
+                  "summary": "A chromatic passing chord uses the same voicing shape one fret above or below the target chord, resolving to the target.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "chromatic approach chords",
+                      "quote_excerpt": "voicing on the note being approached, then play the same voicing one fret away for the approach note"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "dirk-laukens:complete-chord-melody:solo-guitar-texture",
+              "name": "Solo Guitar Texture and Walking Bass System",
+              "summary": "Structural engine for solo guitar arranging: a single guitarist implies a full-band texture by rotating three layers — walking bass (strings 5-6), shell chords (downbeat or '& of 1'), and single-note melodic lines (strings 1-2). The walking bass layer has its own four-step construction rule: root on beat 1, approach note on beat 4, inner beats from scales/chromatics/arpeggios. The texture succeeds through implication and omission — the listener's mind fills in the band. Diads are preferred over octaves for richer jazz sound. The texture cycle is the book's answer to the fundamental solo guitar problem: providing bass, harmony, and melody simultaneously.",
+              "members": [
+                {
+                  "id": "layer-walking-bass",
+                  "name": "Walking Bass Layer",
+                  "summary": "Bass line on strings 5-6 with the four-step construction rule."
+                },
+                {
+                  "id": "layer-shell-chord",
+                  "name": "Shell Chord Layer",
+                  "summary": "Shell voicings dropped on downbeat or '& of 1' over the bass line."
+                },
+                {
+                  "id": "layer-single-line",
+                  "name": "Single-Note Melodic Line Layer",
+                  "summary": "Unaccompanied scalar lines on strings 1-2 filling space left by long melody notes."
+                },
+                {
+                  "id": "texture-diad",
+                  "name": "Diad (Parallel-Interval Harmonization)",
+                  "summary": "Harmonizing a line in parallel 3rds or 6ths."
+                },
+                {
+                  "id": "texture-octave",
+                  "name": "Octave Doubling",
+                  "summary": "Doubling the melody one octave below with muting of the intervening string."
+                },
+                {
+                  "id": "texture-arpeggiation",
+                  "name": "Arpeggiation",
+                  "summary": "Notes of a chord plucked one at a time for a lyrical effect, especially in ballads."
+                }
+              ],
+              "traversal_rules": [
+                {
+                  "id": "texture-rotation-illusion",
+                  "name": "Texture Rotation — Illusion of Full Band",
+                  "summary": "Alternate between walking bass, chord lines, and single-note lines across measures to create the illusion of a rhythm section.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Solo guitar illusion concept",
+                      "quote_excerpt": "alternating through these different devices gives the 'illusion' to the audience of a complete band"
+                    }
+                  ]
+                },
+                {
+                  "id": "walking-bass-long-note-fill",
+                  "name": "Walking Bass as Long-Note Fill",
+                  "summary": "Deploy walking bass specifically during long-held melody notes to maintain rhythmic drive.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "walking bass melodic role",
+                      "quote_excerpt": "walking bass is used to fill out sections where there is a long-held melody note"
+                    }
+                  ]
+                },
+                {
+                  "id": "shell-voicing-rhythmic-placement",
+                  "name": "Shell Voicing Rhythmic Placement — Downbeat or & of 1",
+                  "summary": "Shell voicings placed on beat 1 or '& of 1' to create rhythmic variety.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "walking bass shell voicings",
+                      "quote_excerpt": "It's good to mix up playing them on the downbeat and on the '& of 1' to create variety"
+                    }
+                  ]
+                },
+                {
+                  "id": "diad-over-octave-preference",
+                  "name": "Diad Preference Over Octaves",
+                  "summary": "Diads (parallel 3rds or 6ths) preferred over octaves for a richer, more authentic jazz sound.",
+                  "engine_payload": {
+                    "kind": "VoiceMotion"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "diads as octave alternative",
+                      "quote_excerpt": "alternative approach to using octaves and is a softer but richer sound, which sounds very authentic in the jazz guitar tradition"
+                    },
+                    {
+                      "chapter_n": 5,
+                      "topic": "Diads definition",
+                      "quote_excerpt": "Diads are when you harmonize a line in a parallel interval, usually 3rds or 6ths"
+                    }
+                  ]
+                }
+              ],
+              "modification_rules": [
+                {
+                  "id": "walking-bass-construction",
+                  "name": "Walking Bass Four-Step Construction",
+                  "summary": "Build a walking bassline: (1) root on beat 1, (2) approach note on beat 4, (3-4) inner beats from scales, chromatics, or arpeggios.",
+                  "engine_payload": {
+                    "kind": "_pending:walking-bass-construction"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 6,
+                      "topic": "walking bass construction",
+                      "quote_excerpt": "Place the root on beat 1 of each bar"
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "walking bass beat 4 approach",
+                      "quote_excerpt": "add either a diatonic or chromatic note on beat 4"
+                    },
+                    {
+                      "chapter_n": 6,
+                      "topic": "walking bass inner notes",
+                      "quote_excerpt": "add two more notes in between the root note of beat 1, and the approach note of beat 4"
+                    }
+                  ]
+                },
+                {
+                  "id": "bass-prominence-solo-vs-trio",
+                  "name": "Bass String Prominence in Solo Arrangement",
+                  "summary": "In solo guitar, strings 5-6 must carry the bass function; arrangement sounds thin without it.",
+                  "engine_payload": {
+                    "kind": "DensityFloor"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Bass notes role in solo guitar",
+                      "quote_excerpt": "no longer have a bass player to play with, so you need to fill that role ourselves"
+                    }
+                  ]
+                },
+                {
+                  "id": "key-selection-open-strings",
+                  "name": "Key Selection for Open-String Bass Notes",
+                  "summary": "Choose an arrangement key (A, E, D) that allows open strings on the bass, freeing fretting fingers.",
+                  "engine_payload": {
+                    "kind": "_pending:key-selection-constraint"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Key selection for open strings",
+                      "quote_excerpt": "Choosing a key like A, E, or D gives you essentially another set of free fingers"
+                    }
+                  ]
+                },
+                {
+                  "id": "arpeggiation-ballad-context",
+                  "name": "Arpeggiation in Ballad Context",
+                  "summary": "Substitute block chord plucking with arpeggiation in ballad arrangements for a lyrical texture.",
+                  "engine_payload": {
+                    "kind": "TextureCycle"
+                  },
+                  "references": [
+                    {
+                      "chapter_n": 5,
+                      "topic": "Arpeggiation definition and effect",
+                      "quote_excerpt": "Arpeggiation is when you pluck the notes of a chord one at a time"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "id": "jazz-guitar-chord-dictionary",
           "title": "Jazz Guitar Chord Dictionary",
           "year": 2019,
@@ -20788,45 +21486,1042 @@
       ],
       "usage_notes": [
         {
-          "chord_quality": "min7b5",
-          "function_role": "predominant-in-minor-ii-V-i",
-          "narrative": "Laukens treats half-diminished (m7b5) as the ii of minor ii-V-i — the predominant function that sets up an altered V. The substitution lattice from his Upper-Structure work explicitly derives ø7 ↔ altered V7 via shared tritone (root of m7b5 = b5 of V7alt), so the voicing's pedagogical use is interchangeable with its tritone-sub V. When tagging a m7b5 voicing as Laukens, the question to ask: does this voicing's voice-leading support a resolution to an altered dominant a half-step below it?",
+          "chord_quality": "dim7",
+          "function_role": "3-to-9-arpeggio-over-any-7th-chord",
+          "narrative": "Laukens prescribes playing a dim7 arpeggio from the 3rd of any 7th chord as an essential bebop device called the '3 to 9 arpeggio': 'When playing a dim7 arpeggio from the 3rd of any 7th chord, you will outline the 3-5-b7-b9 intervals of that chord...This is called a 3 to 9 arpeggio, an essential learning for any bebop guitarist' (Chapter 5, p. 104). This is a substitution technique: the dim7 shape is borrowed to add b9 color to a dom7 context.",
           "source_principle_ids": [
-            "function-assigned-vocabulary",
-            "substitution-as-derivable-not-memorized"
+            "3-to-9-arpeggio-substitution"
           ],
-          "provenance": "inferred-from-principles"
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.104"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "contrary-motion-voice-leading-target",
+          "narrative": "In Chapter 6 (p. 178), Laukens demonstrates contrary motion voice leading into a dim7 chord: 'The bass goes from C to C# (upward motion), while the D of C9 goes to the C# (downward motion) of C#°7. Contrary motion in voice leading sounds nice.' The dim7 is positioned after the IV9 chord as a chromatic voice-leading event, with contrary motion explicitly named as the preferred technique.",
+          "source_principle_ids": [
+            "contrary-motion-voice-leading"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.178"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "passing-diminished-blues-substitution",
+          "narrative": "Laukens identifies #IVdim7 as a Count Basie innovation used as a passing chord in jazz blues: 'One of the innovations Count Basie brought to the blues...is the use of the #IVdim7 chord in bars two and 6 of a jazz blues progression' (Chapter 6, p. 164). This positions dim7 as a chromatic passing substitute between I7 and IV7 rather than as a standalone tonic or dominant replacement.",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.164"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "symmetrical-two-grip-moveable-shape",
+          "narrative": "Laukens prescribes a reduced grip set for dim7 chords due to their symmetry. Chapter 3 (p. 70): 'You only need to learn 2 grips for diminished chords because diminished chords are symmetrical.' The same two-grip rule applies to dim7 arpeggios. This is the only chord quality in the book that receives a memorization-reduction prescription based on structural symmetry.",
+          "source_principle_ids": [
+            "diminished-symmetry-reduction"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 3 p.70"
+            }
+          ],
+          "provenance": "extracted"
         },
         {
           "chord_quality": "dom7",
-          "function_role": "dominant",
-          "narrative": "In Laukens's substitution lattice the dominant 7 is the most-substituted chord in the catalog. The Patterns Vol 1 Upper-Structure Substitution Lattice derives V7 ↔ bII7 (tritone), V7alt (b9/#9/#5/b5 extensions stacked as derivable from the diminished and altered scales), V7sus, and the diminished chord a half-step above V (passing/leading-tone use). Tagging a dom7 voicing as Laukens implies the voicing supports at least one of these derivation paths via its voice-leading availability.",
+          "function_role": "blues-b3-3-mixing-target",
+          "narrative": "Laukens prescribes the strategy of mixing the b3 (from the minor blues scale) with the natural 3 (from Mixolydian) over dominant 7 chords in a jazz blues context. Chapter 6 (p. 182) states: 'The first 8 bars use the F minor pentatonic scale, mixed with the major 3rd (bar 3). Mixing b3 and 3 is often used by jazz musicians to create a bluesy sound. One way to do this is mixing the F minor blues scale with the F Mixolydian scale.'",
           "source_principle_ids": [
-            "substitution-as-derivable-not-memorized",
-            "function-assigned-vocabulary"
+            "b3-3-mixing-blues-sound",
+            "chord-specific-scale-change"
           ],
-          "provenance": "inferred-from-principles"
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.182"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "dominant-in-ii-v-i",
+          "narrative": "Laukens treats dom7 as one of the five essential moveable chord shapes (Chapter 1, p. 10), voiced with the red-dot root determining the chord's name. In the ii–V–I context, it occupies the V position. In Chapter 6 (p. 158–159), dom7 is also the normative tonic of standard blues: 'The tonic chord of a blues is a dominant 7 chord...The 3 basic chords of a blues are all dominant 7 chords.' Lead-sheet symbols for dom7 may be embellished with 9ths, 13ths, and 6ths in comping (p. 159).",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system",
+            "color-tone-embellishment",
+            "ii-v-i-vi-progression-order"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 1 p.10"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.158-159"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "mixolydian-double-stop-target",
+          "narrative": "In Chapter 5 (p. 112), Laukens prescribes the Mixolydian mode as 'the mode most associated with the dominant 7th chord sound' and uses it as the basis for double-stop soloing over a pedal tone: 'This phrase is built from the A mixolydian mode...and uses double stops on top of an A pedal.' This establishes Mixolydian as the default scalar color for dom7 in non-altered, non-V7alt contexts.",
+          "source_principle_ids": [
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.112"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "sus-chord-dominant-delay",
+          "narrative": "Laukens prescribes replacing or preceding a dominant chord with its sus version as a comping technique. Chapter 6 (p. 178) states: 'Sus chords are a nice way to delay and bring extra motion to dominant chords.' This is offered as a bar-specific instruction (bar 10 of the blues example) and as a general rule for dom7 comping.",
+          "source_principle_ids": [
+            "sus-chord-dominant-delay"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.178"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "tritone-substitution-target",
+          "narrative": "Laukens teaches tritone substitution as a modification of any dom7 chord: 'The basic application of a tritone sub is to take any 7th chord you see and play another 7th chord that occurs a tritone (#4 aka b5) away' (Chapter 5, p. 105). The substitution is validated by the shared 3rd and 7th between tritone-related dom7 chords — e.g., C7 and F#7 share E and Bb. In Chapter 6 (p. 169), bar-specific applications are given for jazz blues (e.g., bar 10: 'Bb7 in place of E7, the V7 of Am7').",
+          "source_principle_ids": [
+            "tritone-substitution"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.105"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.169"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "v7-phrygian-dominant-scale-target",
+          "narrative": "Laukens prescribes the phrygian dominant scale (fifth mode of harmonic minor) as the first-choice soloing sound over V7 and V7alt in bebop contexts. Chapter 5 (p. 101) states: 'When soloing in the bebop style, the phrygian dominant scale is a first-choice sound when improvising over V7 and V7alt chords in your lines.' This is a rule-level prescription, not merely a suggestion.",
+          "source_principle_ids": [
+            "phrygian-dominant-v7-assignment",
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.101"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "back-cycling-reharmonization",
+          "narrative": "Extend or reharmonize any dom7 by adding preceding chords based on the back cycle (circle of fourths), inserting new dominant chords that cycle backward to the target. Apply this to build tension before any dominant resolution. (Chapter 7, p.243)",
+          "source_principle_ids": [
+            "sub-back-cycling",
+            "back-cycling-rule",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 7 p.243"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "chromatic-approach-chord",
+          "narrative": "To approach a dom7 chord chromatically, play the identical voicing one fret above or below the target position as the approach chord, then resolve to the target voicing. The same shape one fret away is sufficient for the chromatic approach effect. (Chapter 6, p.197)",
+          "source_principle_ids": [
+            "chromatic-approach-chord",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.197"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "color-tone-requirement",
+          "narrative": "Add extensions and tensions (9ths, 13ths, etc.) to dom7 voicings whenever possible, as these color tones are the primary source of the jazzy sound in chord-melody arrangements. (Chapter 5, p.127)",
+          "source_principle_ids": [
+            "color-tone-dominant"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.127"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Assign dom7 (natural dominant, including C9 and C13 extensions) to the Dominant harmonic family as the 'natural dominant' sub-family, distinct from altered dominants. Use this sub-family for V chords in major ii-V-I progressions. (Chapter 3, p.23; Chapter 4, p.48)",
+          "source_principle_ids": [
+            "sub-family-discrimination",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            },
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.48"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "ii-v-interchangeability",
+          "narrative": "Following Joe Pass, treat the V (dom7) as interchangeable with the ii (min7) in a progression; either chord can stand in for the other, giving you a flexible reharmonization option at every dominant. (Chapter 6, p.230)",
+          "source_principle_ids": [
+            "ii-v-interchangeability",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.230"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "shell-rhythmic-placement",
+          "narrative": "When placing dom7 shell voicings over a walking bass, alternate between the downbeat and the '& of 1' on each bar to introduce rhythmic variety and avoid stiff, on-the-beat chord placement. (Chapter 6, p.186)",
+          "source_principle_ids": [
+            "sparse-chord-placement",
+            "shell-voicing-floor"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.186"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "shell-voicing-floor",
+          "narrative": "Build dom7 shell voicings from the root, 3rd, and 7th; these guide tones are the irreducible core that defines the dominant sound. The 5th can always be dropped first among all omittable tones. (Chapter 5, p.145)",
+          "source_principle_ids": [
+            "shell-voicing-floor",
+            "note-omission-policy"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.145"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "sub-family-discrimination",
+          "narrative": "Do not use a natural dom7 (C7, C9, C13) where the harmonic context demands an altered dominant — substituting the wrong sub-family can sound wrong. Always determine whether the progression calls for natural or altered dominant before choosing a voicing. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "tritone-substitution",
+          "narrative": "Replace any dom7 chord with the dom7 whose root lies a tritone away (e.g., substitute F#7 for C7). This works because the 3rd and 7th (guide tones) of the original chord are enharmonically the same pitches as the 7th and 3rd of the tritone-sub chord, ensuring smooth voice-leading. (Chapter 6, p.220; p.216)",
+          "source_principle_ids": [
+            "sub-tritone",
+            "tritone-sub-rule",
+            "guide-tone-common-tone-validity",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.220"
+            },
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.216"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "voicing-generation-by-add-adapt",
+          "narrative": "Starting from a basic G7 shape, generate many distinct dom7 voicings by adding or adapting individual notes from that shape rather than learning each voicing in isolation — exploit the template systematically. (Chapter 4, p.87)",
+          "source_principle_ids": [
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.87"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "lydian-dominant-tritone-sub-scale-target",
+          "narrative": "Laukens prescribes the Lydian Dominant scale over the tritone substitute of a dominant chord, equating it to the altered scale of the original: 'Bar 16 uses the B Lydian Dominant scale (= F Altered scale). B7 is the tritone substitute of F7 and creates an altered sound over F' (Chapter 6, p. 183). This makes Lydian Dominant the scale of choice when the tritone sub is played in place of a V7alt.",
+          "source_principle_ids": [
+            "lydian-dominant-tritone-sub-scale",
+            "tritone-substitution"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.183"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "v7alt-tonic-harmonic-minor-target",
+          "narrative": "Laukens prescribes tonic harmonic minor (not the chord's own root) for soloing over V7alt in a minor ii–V–I. Chapter 4 (p. 87): 'When soloing over the V7alt chord (the B7alt chord in Autumn Leaves) in a minor ii V I, you use the tonic harmonic minor scale.' The phrygian dominant (fifth mode of harmonic minor) is also the 'first-choice sound' for V7 and V7alt in bebop (Chapter 5, p. 101). Both prescriptions derive from the same harmonic minor source, approached from different modal starting points.",
+          "source_principle_ids": [
+            "harmonic-minor-over-v7alt",
+            "phrygian-dominant-v7-assignment",
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.87"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.101"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "altered-dominant-sub-family",
+          "narrative": "Treat dom7alt (C7alt) as a member of the altered dominant sub-family alongside C7b9 and C7b5, not the natural dominant sub-family. Use it wherever the harmonic situation calls for maximum alteration on the V chord. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "color-tone-requirement",
+          "narrative": "Like all dominant chord types, dom7alt must carry its extensions and tensions into chord-melody voicings; the jazzy sound of arrangements depends on loading dominant chords — including fully altered ones — with these color tones. (Chapter 5, p.127)",
+          "source_principle_ids": [
+            "color-tone-dominant"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.127"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "minor-ii-V-i-V-chord-role",
+          "narrative": "Deploy dom7alt as a valid V-chord voicing choice in minor ii-V-i progressions, interchangeable with dom7b9 within the altered dominant sub-family. Use minor ii-V-i progressions as the primary study context for mastering dom7alt voicings. (Chapter 4, p.61)",
+          "source_principle_ids": [
+            "sub-family-discrimination",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.61"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "sub-family-discrimination",
+          "narrative": "Do not replace dom7alt with a natural dominant (dom7, dom9, dom13) — the wrong sub-family will sound wrong in context. Confirm that the progression requires alteration before selecting any altered dominant voicing. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "harmonic-minor-scale-target",
+          "narrative": "Laukens prescribes harmonic minor as the scale for soloing over dominant 7b9 chords. Chapter 6 (p. 184) demonstrates this directly: 'The classic lick in bar 20 uses the G Harmonic Minor scale over D7, creating a 7b9 sound.' This complements the Chapter 4 (p. 87) teaching that tonic harmonic minor over V7alt 'create[s] a V7(b9,b13) sound' — the harmonic minor generates the b9 alteration as a natural scale degree.",
+          "source_principle_ids": [
+            "harmonic-minor-dom7b9",
+            "harmonic-minor-over-v7alt",
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.184"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.87"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "vi7b9-blues-substitution",
+          "narrative": "Laukens identifies VI7b9 as a Count Basie innovation in jazz blues harmony. Chapter 6 (p. 164) states: 'You will also see...a VI7b9 chord in bar 8, both now commonly used ideas that were popularized by the Basie Band.' This chord functions as a secondary dominant with added b9 tension preceding the ii chord.",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.164"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "altered-dominant-sub-family",
+          "narrative": "Classify dom7b9 (C7b9, C7b13b9) within the 'altered dominant' sub-family alongside C7b5 and C7alt, distinct from the natural dominant sub-family. Always apply altered dominant voicings when the harmonic context demands alteration. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "color-tone-requirement",
+          "narrative": "As an altered dominant, dom7b9 already carries the primary tension color; further enrich it with additional extensions and alterations (b13, etc.) where the voicing allows, since the jazzy sound in arrangements comes specifically from loading dominant chords with extensions and tensions. (Chapter 5, p.127)",
+          "source_principle_ids": [
+            "color-tone-dominant"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.127"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "lick-swap-trigger",
+          "narrative": "When a dom7b9 appears as the V of a minor ii-V-i (e.g., E7b9 in Bm7b5 - E7b9 - Am7), use it as the trigger to substitute an entire pre-learned minor ii-V-i lick in place of the written melody at that point. (Chapter 7, p.250)",
+          "source_principle_ids": [
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization",
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 7 p.250"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "minor-ii-V-i-V-chord-role",
+          "narrative": "Use dom7b9 as the V chord in minor ii-V-i progressions (e.g., Bm7b5 - E7b9 - Am7). Study minor ii-V-i progressions specifically to learn dom7b9 voicings in their natural harmonic context. (Chapter 4, p.61)",
+          "source_principle_ids": [
+            "sub-family-discrimination",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.61"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "sub-family-discrimination",
+          "narrative": "Never substitute a natural dominant (dom7, dom9, dom13) for dom7b9 when the progression demands altered color — the wrong sub-family will sound wrong. Commit to the altered dominant voicing whenever the harmonic situation specifies it. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
         },
         {
           "chord_quality": "maj7",
-          "function_role": "tonic-in-major",
-          "narrative": "maj7 functions as tonic in Laukens's function-assigned hierarchy. His method emphasizes the 3-7 guide tones as the harmonic skeleton and treats the 9 and #11 as color tones for tension-release (the Lydian-mode reading of maj7 as a tonic-with-color). Voicings that bury the root and project the 3-7-9 or 3-7-#11 are the Laukens-pedagogically-typical shapes; voicings that emphasize the root-fifth-octave are not.",
+          "function_role": "bird-blues-tonic-substitute",
+          "narrative": "In Chapter 6 (p. 172), Laukens defines the Bird Blues form by its replacement of the standard I7 tonic with Imaj7: 'A Bird blues starts and ends with an Fmaj7 chord, which is odd for a blues progression.' This makes maj7 the distinguishing tonic quality of bebop blues, contrasted explicitly against the dominant-7 tonic of standard blues.",
           "source_principle_ids": [
-            "function-assigned-vocabulary",
-            "moveable-shape-as-organizing-principle"
+            "dirk-laukens:beginners-guide:moveable-root-chord-system"
           ],
-          "provenance": "inferred-from-principles"
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 6 p.172"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "major-blues-scale-target",
+          "narrative": "Laukens prescribes the major blues scale (major pentatonic + b3) for soloing over maj7 chords in major-key contexts. In Chapter 4 (p. 83), he demonstrates this over the Am7–D7–Gmaj7–Cmaj7 passage from Autumn Leaves: 'You can use this scale to solo over any progression in a major key...or over individual 7th and maj7 chords. Because there is not 7th in this scale, it can be applied to both G7 and Gmaj7 chords.' The absence of the 7th prevents clash with the chord's major-7th quality.",
+          "source_principle_ids": [
+            "major-blues-no-clash",
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.83"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "tonic-major-in-ii-v-i",
+          "narrative": "Laukens treats maj7 as the resolution target of the ii–V–I progression, one of the five essential chord qualities every beginning jazz guitarist must master. In Chapter 1 (p. 10), maj7 is introduced as a moveable shape anchored by the red-dot root ('the red note tells you what the name of the chord is'), fingered with thumb on bass and fingers 1–3 on upper voices for string-6-root voicings. All five shapes correspond to CAGED positions (Chapter 3, p. 66).",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system",
+            "root-equals-chord-name",
+            "ii-v-i-vi-progression-order"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 1 p.10"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 1 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "chord-iii-sub-target",
+          "narrative": "Replace a Maj7 chord with chord iii of its key (e.g., replace CMaj7 with Em7) as an alternative reharmonization. This works because chord iii shares strong common tones with the I chord and maintains the major harmonic family sound. (Chapter 6, p.225)",
+          "source_principle_ids": [
+            "sub-chord-iii",
+            "chord-iii-sub-rule",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.225"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "common-tone-sub-validity",
+          "narrative": "Any chord can substitute for Maj7 provided the substituting chord contains the current melody note on top as a common tone. Always verify this condition before deploying any substitution over a Maj7. (Chapter 7, p.247)",
+          "source_principle_ids": [
+            "sub-common-tone",
+            "guide-tone-common-tone-validity"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 7 p.247"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Treat Maj7 (along with C6 and CMaj9) as members of the Major harmonic family when harmonizing melody notes over tonic major chords. Build your chord collection from this family to ensure any melody note above a major root can be harmonized. (Chapter 3, p.22)",
+          "source_principle_ids": [
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization",
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.22"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "note-omission-policy",
+          "narrative": "When voicing Maj7 chords, prioritize omitting the 5th, root, 11th, and 9th (in that order of commonness) to keep voicings lean and playable without losing harmonic identity. (Chapter 4, p.79)",
+          "source_principle_ids": [
+            "note-omission-policy"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.79"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "relative-sub-target",
+          "narrative": "Substitute a Maj7 I chord with the vi minor chord of the same key (e.g., replace CMaj7 with Am7). Use this relative substitution when the melody note is compatible with the vi chord to add color while maintaining tonic function. (Chapter 6, p.224)",
+          "source_principle_ids": [
+            "sub-relative",
+            "relative-sub-rule",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.224"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "shell-voicing-floor",
+          "narrative": "Use shell voicings — root, 3rd, and 7th — as the minimum needed to define the Maj7 sound. Drop the 5th entirely; it does not compromise the chord's essential character and frees a voice for melody or extensions. (Chapter 5, p.145)",
+          "source_principle_ids": [
+            "shell-voicing-floor",
+            "note-omission-policy"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.145"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "sparse-chord-placement",
+          "narrative": "When adding shell voicings over a walking bass on a Maj7 chord, mix placement on the downbeat and on the '& of 1' rather than locking every chord to the beat, in order to create rhythmic variety and a more authentic jazz feel. (Chapter 6, p.186)",
+          "source_principle_ids": [
+            "sparse-chord-placement",
+            "shell-voicing-floor"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.186"
+            }
+          ],
+          "provenance": "extracted"
         },
         {
           "chord_quality": "min7",
-          "function_role": "predominant-or-tonic-minor",
-          "narrative": "min7 carries two functions in Laukens's lattice: predominant (ii of major ii-V-I) and tonic-minor (i of natural minor, often colored to min9 / min-maj7 / min11 to disambiguate). The moveable-shape pedagogy places min7 drop-2 voicings on adjacent string sets (6-3, 5-2, 4-1) as the workhorse forms, with the same physical shape transposed across the fretboard. Tagging a min7 voicing as Laukens implies either function reading is supportable, NOT that the voicing carries one specific function unconditionally.",
+          "function_role": "dorian-modal-tonic",
+          "narrative": "In Chapter 2 (p. 34), Laukens teaches Maiden Voyage as 'a fun study in modal jazz, Dorian modes, rhythmic control, and key changes.' Minor 7 chords in modal contexts are treated as Dorian tonic centers, each chord requiring its own Dorian scale — a direct application of the chord-specific scale-change rule. The four key-center changes in the 32-bar form mean each m7 chord demands a fresh Dorian assignment.",
           "source_principle_ids": [
-            "moveable-shape-as-organizing-principle",
-            "function-assigned-vocabulary",
-            "standard-anchored-practice"
+            "chord-specific-scale-change"
           ],
-          "provenance": "inferred-from-principles"
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 2 p.34"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "ii-chord-in-ii-v-i",
+          "narrative": "Laukens introduces min7 as one of the five essential chord qualities (Chapter 1, p. 10), occupying the ii position in the ii–V–I–vi progression. In the arpeggio chapter (Chapter 3, p. 54–55), Am7 is the anchor example for two arpeggio patterns: Pattern #1 using 5th/4th skips and Pattern #2 using groups of three notes. All min7 arpeggio shapes are moveable (p. 59).",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system",
+            "ii-v-i-vi-progression-order",
+            "arpeggio-proximity-voice-leading"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 1 p.10"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 3 p.54-55"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 3 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "im7-melodic-minor-target",
+          "narrative": "Laukens prescribes melodic minor for soloing over Im7 in a minor ii–V–I: 'The final scale is used to solo over the Im7 chord in a minor ii V I, melodic minor. This scale has a raised 7th interval, which creates tension over m7 chords in your solos' (Chapter 4, p. 89). The raised 7th is treated as a deliberate expressive choice: 'experiment with this scale in your solos to determine where you want to use that raised 7th in your lines' (p. 90).",
+          "source_principle_ids": [
+            "melodic-minor-expressive-tension",
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.89"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.90"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "three-note-per-string-legato-target",
+          "narrative": "In Chapter 5 (p. 139), Laukens prescribes three-note-per-string legato lines as a soloing technique over min7 chords, citing Pat Metheny's approach: 'Pat translates these scale shapes to the jazz idiom as he uses hammer-ons per string to build a highly fluid line over a Dm7 chord.' The prescription is to 'add as many slurs per string as you can' to develop fluid phrasing.",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:function-assigned-scale-arpeggio-system"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 5 p.139"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Treat min7 (along with Cm9 and Cm13, forming the 'm7' sub-family) as the standard minor color; never substitute min7 when the harmonic situation calls for min7b5, as doing so can sound wrong. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "ii-chord-role-in-ii-V-I",
+          "narrative": "Assign min7 voicings to the ii chord in any major-key ii-V-I progression; this is the primary harmonic context where min7 functions, and mastering it here trains the ear to every other minor 7 application. (Chapter 4, p.48)",
+          "source_principle_ids": [
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization",
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.48"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "ii-v-interchangeability",
+          "narrative": "Following Joe Pass's practice, freely interchange the ii (min7) and V (dom7) chord with one another in a progression; treat them as functionally interchangeable colors that can be swapped to vary the harmony. (Chapter 6, p.230)",
+          "source_principle_ids": [
+            "ii-v-interchangeability",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.230"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "shell-voicing-floor",
+          "narrative": "Voice min7 at minimum with root, 3rd, and 7th (shell voicing). The 5th is the first candidate for omission and can be dropped without losing the chord's essential character. (Chapter 5, p.145)",
+          "source_principle_ids": [
+            "shell-voicing-floor",
+            "note-omission-policy"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 5 p.145"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "sparse-chord-placement",
+          "narrative": "When comping min7 shell voicings over a walking bass line, alternate placement between the downbeat and the '& of 1' to create rhythmic variety rather than always landing on beat one. (Chapter 6, p.186)",
+          "source_principle_ids": [
+            "sparse-chord-placement",
+            "shell-voicing-floor"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.186"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "sub-for-dominant",
+          "narrative": "Play a min7 chord built on the 5th of any dominant chord as a substitute for that dominant (e.g., Cm7 over F7). This borrows the iim7 that belongs to the dominant's key and produces an interesting, less direct sound. (Chapter 6, p.230)",
+          "source_principle_ids": [
+            "sub-minor-for-dominant",
+            "minor-for-dominant-rule",
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 6 p.230"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "minor-ii-chord-in-ii-v-i-minor",
+          "narrative": "Laukens establishes half-diminished 7 (min7b5) as one of the five essential jazz chord qualities, specifically occupying the ii position in a minor ii–V–I. In Chapter 1 (p. 10), it is introduced as a moveable shape. In Chapter 7 (p. 192), it is notated with a small Roman numeral (vii°/ii°), encoding its minor/diminished quality. The CAGED-correspondent moveable shapes apply (Chapter 3, p. 66).",
+          "source_principle_ids": [
+            "dirk-laukens:beginners-guide:moveable-root-chord-system",
+            "ii-v-i-vi-progression-order"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 1 p.10"
+            },
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 7 p.192"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "minor-ii-chord-natural-minor-target",
+          "narrative": "Laukens prescribes natural minor (Aeolian mode) for soloing over the half-diminished ii chord in a minor ii–V–I. Chapter 4 (p. 85) uses F#m7b5 from Autumn Leaves as the example: 'The next scale is used to solo over the F#m7b5 chord in Autumn Leaves...This scale is the 6th mode of the major scale, and is also called the Aeolian mode.' The shared-root strategy reduces fingering complexity across the whole minor ii–V–I.",
+          "source_principle_ids": [
+            "chord-specific-scale-change"
+          ],
+          "source_work_id": "beginners-guide",
+          "references": [
+            {
+              "source": "beginners-guide",
+              "citation": "chapter 4 p.85"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Assign min7b5 to the minor harmonic family but treat it as its own 'm7b5' sub-family distinct from 'm7'. Include it in your chord collection for any minor tonic context where the flattened 5th is diatonic. (Chapter 3, p.22-23)",
+          "source_principle_ids": [
+            "sub-family-discrimination",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.22"
+            },
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "lick-swap-trigger",
+          "narrative": "When you identify a min7b5 chord as the ii of a minor ii-V-i (e.g., Bm7b5 - E7b9 - Am7), you may replace the written melody at that point with a pre-learned minor ii-V-i jazz lick as a melodic substitution device. (Chapter 7, p.250)",
+          "source_principle_ids": [
+            "dirk-laukens:complete-chord-melody:substitution-reharmonization",
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 7 p.250"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "minor-ii-chord-role",
+          "narrative": "Use min7b5 exclusively as the ii chord in a minor ii-V-i progression. Study minor ii-V-i progressions as the primary vehicle for learning and internalizing min7b5 voicings in context. (Chapter 4, p.61)",
+          "source_principle_ids": [
+            "sub-family-discrimination",
+            "dirk-laukens:complete-chord-melody:chord-melody-harmonization"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 4 p.61"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "sub-family-discrimination",
+          "narrative": "Never substitute plain min7 for min7b5 when the progression demands it — the harmonic situation will sound wrong. Keep min7b5 (and its extension Cm11b5) as a distinct sub-family separate from the 'm7' family. (Chapter 3, p.23)",
+          "source_principle_ids": [
+            "sub-family-discrimination"
+          ],
+          "source_work_id": "complete-chord-melody",
+          "references": [
+            {
+              "source": "complete-chord-melody",
+              "citation": "chapter 3 p.23"
+            }
+          ],
+          "provenance": "extracted"
         }
       ],
       "status": "promoted"
