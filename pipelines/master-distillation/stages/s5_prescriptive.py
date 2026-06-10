@@ -135,10 +135,19 @@ Output a JSON object with this shape:
 RULES:
   1. Only include `chord_quality` values explicitly discussed in the book. If the book never addresses sus4 chords, do not invent a lesson for sus4.
   2. Every narrative MUST cite a chapter and page (or chapter number if pagination isn't preserved). If you cannot cite, omit the lesson.
-  3. Multiple lessons per chord_quality are allowed (e.g., the master may treat dom7 differently in chapter 3 vs chapter 7). Each gets its own entry.
+  3. Multiple lessons per chord_quality are allowed AND ENCOURAGED — the more granular the rules, the better. For EACH chord_quality the book addresses, TRY to extract one entry per granularity level the book covers:
+       a. Harmonic-family classification (where does this chord live in the master's taxonomy / sub-family?)
+       b. Voicing floor / shell (the irreducible minimum voicing — e.g., root-3rd-7th shell)
+       c. Omission priority (which notes are first/second/last to drop)
+       d. Color-tone policy (which extensions/alterations are mandated, allowed, forbidden)
+       e. Substitution rules (tritone, relative, chord-iii, minor-for-V, back-cycle, common-tone, lick-swap, etc.)
+       f. Rhythmic placement (beat 1 vs upbeat vs walking-bass alternation vs sparse-on-long-notes)
+       g. Voice-leading (how this chord connects to its predecessors / successors)
+       h. Idiom-specific application (solo guitar vs trio vs comping vs chord-melody arrangement)
+     Sparsity is honest — if the book doesn't address a level for a given chord_quality, OMIT it rather than fabricate. But do not collapse multiple distinct rules into one entry just to keep the list short.
   4. `provenance: 'extracted'` is REQUIRED on every entry. Do not emit entries you'd need to mark 'inferred-from-principles' — those belong to the placeholder pass, not this extraction.
   5. If the master draws a diagram for a voicing, mention it in the narrative ("see diagram p.47").
-  6. function_role values: free text in kebab-case. Don't strain to match an existing taxonomy.
+  6. function_role values: free text in kebab-case. Don't strain to match an existing taxonomy. Use names that signal which granularity level the entry covers (e.g., `harmonic-family-membership`, `shell-voicing-floor`, `note-omission-policy`, `color-tone-requirement`, `tritone-substitution`, `sparse-chord-placement`, `voice-leading-into-next-chord`, `solo-guitar-application`).
 
 Return ONLY the JSON object. No prose wrapper, no markdown code fence.
 """
