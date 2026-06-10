@@ -315,13 +315,29 @@ def _extract_with_ocr(
     output_dir = book.run_dir / "ocr-output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    remote_inbox = f"~/jazz-ocr/inbox/{book.run_id}/"
+    # #430: resolve the remote $HOME once and use absolute paths everywhere.
+    # Earlier code passed `~`-prefixed paths through shlex.quote, which wraps
+    # the path in single quotes — bash does not expand `~` or `$HOME` inside
+    # single quotes, so `mkdir -p '$HOME/jazz-ocr/inbox/...'` silently
+    # created a literal `$HOME` directory in the remote cwd. Resolving once
+    # eliminates that whole class of bug.
+    remote_home_probe = subprocess.run(
+        ["ssh", remote, "printf %s \"$HOME\""],
+        capture_output=True, text=True, check=True,
+    )
+    remote_home = remote_home_probe.stdout.strip()
+    if not remote_home or not remote_home.startswith("/"):
+        raise RuntimeError(
+            f"could not resolve remote $HOME on {remote}: "
+            f"got {remote_home!r}"
+        )
+    remote_inbox = f"{remote_home}/jazz-ocr/inbox/{book.run_id}/"
 
     if src.is_remote:
         # 1+2 combined: ssh-run pdftoppm on cyberpower writing directly
         # into the inbox. No local image dir; no rsync-up step. Symmetric
         # with the OCR-runner being on cyberpower already.
-        remote_inbox_quoted = shlex.quote(remote_inbox.replace("~", "$HOME"))
+        remote_inbox_quoted = shlex.quote(remote_inbox)
         ppm_cmd = (
             f"mkdir -p {remote_inbox_quoted} && "
             f"pdftoppm -png -r {cfg['render_dpi']} "
@@ -388,7 +404,7 @@ def _extract_with_ocr(
     # orchestrator polls indefinitely. On timeout we raise — the remote
     # runner may still complete, in which case `reingest.py <run_id>` is
     # the recovery path.
-    remote_outbox = f"~/jazz-ocr/outbox/{book.run_id}"
+    remote_outbox = f"{remote_home}/jazz-ocr/outbox/{book.run_id}"
     poll_interval = 30
     max_wait_seconds = cfg["max_wait_minutes"] * 60
     poll_start = time.monotonic()

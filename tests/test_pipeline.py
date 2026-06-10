@@ -455,6 +455,72 @@ def test_ocr_defaults_max_wait_minutes_is_positive():
     assert s1_extract.OCR_DEFAULTS["max_wait_minutes"] > 0
 
 
+def test_ocr_orchestrator_does_not_pass_unexpanded_HOME_to_ssh(monkeypatch, tmp_path):
+    """#430 regression: pre-fix code wrapped `~/jazz-ocr/inbox/...` through
+    shlex.quote after replacing `~` with `$HOME`. Single-quoted `$HOME`
+    is not expanded by bash, so `mkdir -p '$HOME/...'` created a literal
+    `$HOME` directory in cwd. Fix resolves `$HOME` via an ssh probe and
+    uses absolute paths everywhere.
+
+    This test captures every ssh command the orchestrator emits during
+    setup and asserts none of them contain an unexpanded `$HOME` token
+    in places where the shell would not expand it.
+    """
+    import subprocess as _sp
+    import shutil as _sh
+
+    src = s1_extract.SourceLocator({
+        "pdf": "/remote/path/to/book.pdf",
+        "host": "stub-host",
+        "user": "stub-user",
+    })
+    assert src.is_remote
+
+    captured: list[list[str]] = []
+    home_probe_response = _sp.CompletedProcess(
+        args=[], returncode=0, stdout="/home/stub-user\n", stderr=""
+    )
+
+    def fake_run(argv, *a, **kw):
+        captured.append(list(argv))
+        # First ssh call is the $HOME probe; return a realistic absolute
+        # path. After that, abort to skip the rest of the orchestrator.
+        if len(argv) >= 3 and "printf" in argv[-1]:
+            return home_probe_response
+        raise RuntimeError("ABORT_AFTER_PDFTOPPM")
+
+    monkeypatch.setattr(_sp, "run", fake_run)
+    monkeypatch.setattr(s1_extract.subprocess, "run", fake_run)
+    monkeypatch.setattr(_sh, "which", lambda b: f"/usr/bin/{b}")
+    monkeypatch.setattr(s1_extract.shutil, "which", lambda b: f"/usr/bin/{b}")
+
+    book = type("Book", (), {
+        "run_id": "2026-01-02T03-04-05-stub",
+        "run_dir": tmp_path,
+    })()
+
+    try:
+        s1_extract._extract_with_ocr(src, book, {})
+    except RuntimeError as e:
+        assert "ABORT_AFTER_PDFTOPPM" in str(e)
+
+    # Skip the $HOME probe (it intentionally contains `"$HOME"` for the
+    # remote bash to expand). Every OTHER ssh argv must not contain a
+    # literal `$HOME` — pre-fix code shlex.quoted `$HOME/...`, which bash
+    # does NOT expand inside single quotes; `mkdir -p '$HOME/...'`
+    # created a literal `$HOME` directory in cwd.
+    non_probe = [a for a in captured if not (len(a) >= 3 and "printf" in a[-1])]
+    for argv in non_probe:
+        joined = " ".join(argv)
+        assert "$HOME" not in joined, (
+            f"#430 regression: ssh argv leaked '$HOME': {joined!r}"
+        )
+    # And the resolved absolute home must appear in the mkdir+pdftoppm
+    # call, anchoring the fix.
+    assert non_probe, "expected at least one non-probe ssh call"
+    assert "/home/stub-user/jazz-ocr/inbox/" in " ".join(non_probe[0])
+
+
 # ---------------------------------------------------------------------------
 # SourceLocator (#331 remote-source refactor)
 # ---------------------------------------------------------------------------
