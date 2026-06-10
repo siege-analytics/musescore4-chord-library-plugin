@@ -39,3 +39,7 @@ book_level_model = "claude-sonnet"
 [stages.s4]
 model = "claude-sonnet"
 engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Per-chord-quality prescriptive-lessons extraction (#419). Output: prescriptive-lessons-draft.json + PRESCRIPTIVE.md for human review before usage_notes injection into masters.json."
