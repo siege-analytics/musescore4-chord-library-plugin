@@ -36,7 +36,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 
-STAGE_ORDER = ["s1", "s2", "s3", "s4"]
+STAGE_ORDER = ["s1", "s2", "s3", "s4", "s5"]
 
 Status = Literal[
     "pending",

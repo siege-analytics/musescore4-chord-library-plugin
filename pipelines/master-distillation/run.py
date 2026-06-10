@@ -62,6 +62,7 @@ def _stage_module_name(stage: str) -> str:
         "s2": "s2_chapters",
         "s3": "s3_distill",
         "s4": "s4_systems",
+        "s5": "s5_prescriptive",
     }[stage]
 
 

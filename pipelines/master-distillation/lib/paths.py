@@ -80,6 +80,16 @@ class BookPaths:
     def statement(self) -> Path:
         return self.committed_derived_dir / "STATEMENT.md"
 
+    @property
+    def prescriptive_lessons_draft(self) -> Path:
+        """Per-chord-quality prescriptive lessons (s5 output, #419)."""
+        return self.committed_derived_dir / "prescriptive-lessons-draft.json"
+
+    @property
+    def prescriptive_md(self) -> Path:
+        """Human-review surface for the s5 lessons (PRESCRIPTIVE.md, #419)."""
+        return self.committed_derived_dir / "PRESCRIPTIVE.md"
+
     def chapter_file(self, chapter_n: int) -> Path:
         return self.committed_chapters_dir / f"ch{chapter_n:02d}.md"
 
