@@ -1,0 +1,45 @@
+# Queued via #429 (umbrella #428). First book of chord-melody axis through s1-s5.
+
+[master]
+id = "dirk-laukens"
+name = "Dirk Laukens"
+
+[work]
+id = "complete-chord-melody"
+title = "Complete Chord Melody"
+year = 2019
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Dirk Laukens/Chord Melody/Laukens, Dirk - Complete Chord Melody.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Chord-melody axis validation. Expect prescriptions on melody-on-top-strings, thumb-on-bass voicings, inner-voice voice-leading, drop-2/drop-3 ordering, harp-style arpeggiation. Output: prescriptive-lessons-draft.json + PRESCRIPTIVE.md for curator review."
