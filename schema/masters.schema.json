@@ -232,6 +232,11 @@
           "type": "string",
           "description": "Optional ref to works[].id when the note is drawn from a specific book/chapter."
         },
+        "provenance": {
+          "type": "string",
+          "enum": ["extracted", "inferred-from-principles", "hand-authored", "placeholder"],
+          "description": "How this usage_note was produced. 'extracted' = distilled from source text via chapter-loop (authoritative); 'inferred-from-principles' = derived by reasoning over this master's principles[] (speculative, pending re-distillation); 'hand-authored' = written by a curator from direct source reading; 'placeholder' = structural-only, content TBD. Downstream consumers (form, glossary, Ellington) may render different provenance levels differently."
+        },
         "references": { "$ref": "#/$defs/references" }
       },
       "additionalProperties": true
