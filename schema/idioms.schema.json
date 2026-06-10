@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "idioms.json schema",
+  "description": "Schema for plugin/data/idioms.json — the third axis catalog. An 'idiom' is a PERFORMANCE CONTEXT / ROLE (chord-melody, comping, single-line, walking-bass-with-chords, ...). Orthogonal to masters (who) and styles (tradition); answers 'what role is the guitarist playing in this passage.' Per cross-agent agreement (plugin#418 + ellington-web), structural fields ship first; prescriptive content backfills via the quality-axis distillation pipeline change (#419).",
+  "type": "object",
+  "required": ["schemaVersion", "idioms"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "enum": ["v1"],
+      "description": "Schema version string. Consumers MUST gate on this. Breaking changes bump the major (v2, v3, ...)."
+    },
+    "idioms": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/idiom" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "idiom": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$",
+          "description": "Kebab-case slug. Examples: 'chord-melody', 'comping', 'single-line', 'walking-bass-with-chords', 'counterpoint-arrangement', 'rubato-rhapsody'."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "description": {
+          "type": "string",
+          "description": "2-3 sentences on what playing IN this idiom means."
+        },
+        "characteristic_voicing_density": {
+          "type": "string",
+          "enum": ["sparse", "moderate", "dense", "very-dense"],
+          "description": "Typical number of simultaneous notes. Single-line is sparse (1 note); chord-melody is moderate-dense (3-4); walking-bass-with-chords is moderate (2-3 in chord + 1 bass)."
+        },
+        "characteristic_rhythmic_role": {
+          "type": "string",
+          "description": "Free text describing the rhythmic responsibility carried in this idiom. Examples: 'melody on top + supporting bass + interior chord rhythm' (chord-melody); 'rhythm-section accompaniment on off-beats or in continuous comping pattern' (comping)."
+        },
+        "compatible_styles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "References styles[].id that naturally pair with this idiom. Examples: chord-melody compatible with cool-jazz, ballad-context; comping compatible with bebop, hard-bop, bossa-nova."
+        },
+        "prescriptive_lessons": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/prescriptive_lesson" },
+          "description": "Per-chord-quality teaching specific to this idiom. Same shape as masters.usage_notes from #415 and styles.prescriptive_lessons from #417."
+        },
+        "divergence_notes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/divergence_note" },
+          "description": "Structured cross-idiom commentary. 'A comping player would say...' when audio exhibits one idiom inside a passage that called for another."
+        },
+        "example_masters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["master_id"],
+            "properties": {
+              "master_id": { "type": "string" },
+              "exemplar_work_ids": { "type": "array", "items": { "type": "string" } },
+              "exemplar_principle_ids": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": true
+          }
+        },
+        "diagnostic_examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["voicing_id"],
+            "properties": {
+              "voicing_id": { "type": "string" },
+              "why_canonical": { "type": "string" },
+              "provenance": { "type": "string", "enum": ["extracted", "hand-authored", "placeholder"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "prescriptive_lesson": {
+      "type": "object",
+      "required": ["chord_quality", "narrative"],
+      "properties": {
+        "chord_quality": { "type": "string", "minLength": 1 },
+        "function_role": { "type": "string" },
+        "narrative": { "type": "string", "minLength": 1 },
+        "voicing_examples": { "type": "array", "items": { "type": "string" } },
+        "source": { "type": "string" },
+        "provenance": { "type": "string", "enum": ["extracted", "inferred-from-principles", "hand-authored", "placeholder"] }
+      },
+      "additionalProperties": true
+    },
+    "divergence_note": {
+      "type": "object",
+      "required": ["vs_idiom"],
+      "properties": {
+        "vs_idiom": { "type": "string" },
+        "shared_dimensions": { "type": "array", "items": { "type": "string" } },
+        "diverging_dimensions": { "type": "array", "items": { "type": "string" } },
+        "characteristic_quote": { "type": "string" },
+        "provenance": { "type": "string", "enum": ["hand-authored", "extracted", "placeholder"] }
+      },
+      "additionalProperties": true
+    }
+  }
+}
