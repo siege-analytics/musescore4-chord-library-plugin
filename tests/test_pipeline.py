@@ -198,6 +198,34 @@ def test_state_save_load_roundtrip(tmp_path):
     assert reloaded.stages["s2"].outputs == ["a.txt", "b.txt"]
 
 
+def test_state_load_heals_missing_stage(tmp_path):
+    """#426: STAGE_ORDER may grow over time (s5 added in #423).
+    Loading a state file written when STAGE_ORDER was smaller should
+    backfill the missing stages with status='pending' and preserve
+    existing stage statuses."""
+    # Hand-roll a state file that's missing the LAST stage in current
+    # STAGE_ORDER — simulating a pre-extension state file.
+    legacy_stages = state.STAGE_ORDER[:-1]
+    last_stage = state.STAGE_ORDER[-1]
+    path = tmp_path / "state.json"
+    path.write_text(json.dumps({
+        "run_id": "legacy-run",
+        "config": "config.toml",
+        "stages": {
+            s: {"status": "accepted" if s == "s1" else "pending",
+                "started_at": None, "ended_at": None,
+                "outputs": [], "error_message": None}
+            for s in legacy_stages
+        },
+    }))
+    reloaded = state.RunState.load(path)
+    # Existing stage status preserved
+    assert reloaded.stages["s1"].status == "accepted"
+    # Missing stage backfilled with pending
+    assert last_stage in reloaded.stages
+    assert reloaded.stages[last_stage].status == "pending"
+
+
 # === lib/paths.py ===
 
 
