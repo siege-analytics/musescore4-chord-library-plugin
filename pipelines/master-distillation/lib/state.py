@@ -94,12 +94,20 @@ class RunState:
     @classmethod
     def load(cls, path: Path) -> RunState:
         data = json.loads(path.read_text())
+        stages = {
+            k: StageRecord.from_dict(v) for k, v in data["stages"].items()
+        }
+        # Heal: backfill any STAGE_ORDER entry missing from this run's
+        # state. Lets STAGE_ORDER grow (e.g. s5 added in #423) without
+        # requiring hand-edits to every in-flight run's state file.
+        # New stages default to pending; existing accepted/awaiting-review
+        # statuses are preserved untouched. See #426.
+        for stage in STAGE_ORDER:
+            stages.setdefault(stage, StageRecord())
         return cls(
             run_id=data["run_id"],
             config=data["config"],
-            stages={
-                k: StageRecord.from_dict(v) for k, v in data["stages"].items()
-            },
+            stages=stages,
         )
 
     def save(self, path: Path) -> None:
