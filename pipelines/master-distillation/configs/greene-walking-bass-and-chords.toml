@@ -1,0 +1,45 @@
+# Queued via #440 (umbrella #428). Walking-bass + shell-voicing axis. Existing master ted-greene; new work entry.
+
+[master]
+id = "ted-greene"
+name = "Ted Greene"
+
+[work]
+id = "walking-bass-and-chords"
+title = "Walking Bass & Chords 1982-1986"
+year = 1986
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Ted Greene/Greene, Ted - Walking Bass & Chords 1982-1986.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Walking-bass + shell axis. Compendium of lesson handouts (1982-1986). Expect prescriptions on walking-bass + chord coordination, voice-leading between shells, rhythmic placement of comping over walking. Granular-levels (#434) in effect."
