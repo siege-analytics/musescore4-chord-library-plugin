@@ -1,0 +1,45 @@
+# Queued via #441 (umbrella #428). Technique-axis (vs #439 chord-melody-axis). Existing master johnny-smith.
+
+[master]
+id = "johnny-smith"
+name = "Johnny Smith"
+
+[work]
+id = "aids-to-technique"
+title = "Aids to Technique"
+year = 1958
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Johnny Smith/Smith, Johnny - Aids to Technique.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Technique-axis. Smith covers picking-hand mechanics, left-hand articulation, and tone production. Likely produces sparse usage_notes (more about how-to-play than chord-quality rules), but may surface idiom-specific recommendations for inner-voice melody execution. Granular-levels (#434)."
