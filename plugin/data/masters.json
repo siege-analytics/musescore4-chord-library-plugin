@@ -4620,7 +4620,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "aug",
@@ -4772,7 +4773,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom11b9",
@@ -4786,7 +4788,8 @@
               "citation": "ch 12 p.64"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom13b9",
@@ -4800,7 +4803,8 @@
               "citation": "ch 8 p.17"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom7",
@@ -5098,7 +5102,11 @@
               "citation": "ch 11 p.61"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "dom7#9/tonic-placement-exception"
+          ]
         },
         {
           "chord_quality": "dom7#11",
@@ -5112,7 +5120,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom7#9",
@@ -5130,7 +5139,11 @@
               "citation": "ch 10 p.59"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7alt/tonic-placement-restriction",
+            "dom7#11/tonic-placement-restriction"
+          ]
         },
         {
           "chord_quality": "dom7#9",
@@ -5144,7 +5157,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom7alt",
@@ -5186,7 +5200,8 @@
               "citation": "ch 10 p.58"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom7alt",
@@ -5200,7 +5215,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "dom7alt",
@@ -5214,7 +5230,11 @@
               "citation": "ch 10 p.59"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "dom7#9/tonic-placement-exception"
+          ]
         },
         {
           "chord_quality": "dom7b5",
@@ -5624,7 +5644,8 @@
               "citation": "ch 11 p.61"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "min7",
@@ -5796,7 +5817,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "min9",
@@ -5824,7 +5846,8 @@
               "citation": "ch 5 p.10"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         },
         {
           "chord_quality": "sus4",
@@ -5838,7 +5861,11 @@
               "citation": "ch 11 p.62"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "sus4/unresolved-usage"
+          ]
         },
         {
           "chord_quality": "sus4",
@@ -5866,7 +5893,10 @@
               "citation": "ch 11 p.62"
             }
           ],
-          "provenance": "extracted"
+          "provenance": "extracted",
+          "cross_ref": [
+            "sus4/function-role-restriction"
+          ]
         },
         {
           "chord_quality": "sus4",
