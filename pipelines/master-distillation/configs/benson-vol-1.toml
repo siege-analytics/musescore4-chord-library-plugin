@@ -38,3 +38,7 @@ model = "qwen2.5:72b"
 # Use _pending:<kebab> for any engine_payload.kind we're not confident
 # about — until #298 payload-kind glossary lands.
 engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."

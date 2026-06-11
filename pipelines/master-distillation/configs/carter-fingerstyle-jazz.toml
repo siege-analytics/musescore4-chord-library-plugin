@@ -43,3 +43,7 @@ engine_kind_policy = "pending-when-unsure"
 [notes]
 status = "superseded"
 note = "PDF was mislabeled (filename references Bill Carter; actual content is Alan de Mause, Mel Bay's Complete Fingerstyle Jazz Guitar Book). Salvaged under de-mause-fingerstyle-jazz.toml in PR #372 / #360 audit comments. This config remains as audit trail; do not re-dispatch a worker against it."
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."
