@@ -11460,7 +11460,6 @@
         {
           "id": "complete-chord-melody",
           "title": "Complete Chord Melody",
-          "year": null,
           "instrument_scope": "6-string",
           "summary": "A recipe-first, top-down teach-yourself method for chord-melody guitar. The load-bearing thesis is a four-step procedure (pick tune, transpose for range, melody on top strings, voicings below) made mechanical by a painting-by-numbers lookup keyed on melody string × chord type × melody-note-interval-to-chord. Restraint is the consistent prescriptive voice across all chapters: don't harmonize every note, playability over ambition, subtlety beats density. Three remediation strategies (cut notes, substitute diads/octaves, remove the voicing entirely) function as explicit escape hatches.",
           "references": [
@@ -15928,7 +15927,7 @@
           ],
           "systems": [
             {
-              "id": "barry-galbraith:jazz-solo-guitar:_pending:notation-only-implicit-system",
+              "id": "_placeholder:barry-galbraith:jazz-solo-guitar",
               "name": "Implicit Chord-Melody Arranging System (notation-only)",
               "summary": "Galbraith's 42 Chord Melody Arrangements for Solo Guitar is a notation-only anthology — no prose, no labeled rules, no stated taxonomy. The pedagogical system it teaches is entirely implicit in the written arrangements: voice-leading choices, voicing densities, chord substitutions, inner-voice motion, and bass-melody-harmony coordination across 42 standards. Members, traversal rules, and modification rules cannot be extracted from text alone; they require direct musical analysis of the notation, which is out of scope for the prose-driven distillation pipeline. This system is recorded as a placeholder so downstream review can decide whether to commission notation-level analysis or treat this work as an analytic corpus rather than a rule-bearing master text.",
               "members": [],
@@ -16025,7 +16024,7 @@
           ],
           "systems": [
             {
-              "id": "gene-bertoncini:arrangements-for-solo-guitar:open-string-voicing-glossary",
+              "id": "_placeholder:gene-bertoncini:arrangements-for-solo-guitar:open-string-voicing-glossary",
               "name": "Open-String Voicing Glossary",
               "summary": "The book's most explicit organizing system, located in Chapter 25 (the Glossary of Open-String Voicings, pages 77-81). Bertoncini's distinctive practice is to incorporate ringing open strings as harmonic color inside chord voicings rather than stopping every note. The editors extracted these voicings from across the 24 arrangements and indexed them by chord label and source measure (e.g., The Shadow of Your Smile m.9 Em9; Body and Soul m.7 Dbmaj7(#11); 'Round Midnight m.3 Abm9; Edelweiss m.35 Ebmaj9; But Beautiful m.13 G13). Members below enumerate the cataloged voicings as documented by the Glossary index entries visible in the chapter-25 transcript. No prose passages backing traversal or modification rules exist in this folio, so the system is presented as a taxonomy only; rule extraction is deferred until either (a) a future pass works directly from notation or (b) external prose sources document the underlying voice-leading and substitution logic.",
               "members": [
@@ -16122,7 +16121,7 @@
               "modification_rules": []
             },
             {
-              "id": "gene-bertoncini:arrangements-for-solo-guitar:little-orchestra-textures",
+              "id": "_placeholder:gene-bertoncini:arrangements-for-solo-guitar:little-orchestra-textures",
               "name": "Little-Orchestra Textural Roles",
               "summary": "Bertoncini's framing premise (stated in the book's Preface, attributed to Berlioz's description of the guitar as a 'little orchestra') treats the solo guitar as a polyphonic ensemble distributing musical material across distinct textural roles. The Preface names the roles and techniques explicitly: melody can be stated in the soprano voice, given to the bass voice, or nestled within the voicing; surrounding material uses counterpoint, cluster voicings, open-string voicings, and the special color of each individual string. The 24 arrangements (chapters 1-24) realize this taxonomy in notation. Because the Preface prose was not extracted as a numbered chapter (the TOC begins at the first arrangement), no per-chapter quotes back this system, and no traversal or modification rules are asserted here. The members below enumerate the textural roles the Preface names.",
               "members": [
