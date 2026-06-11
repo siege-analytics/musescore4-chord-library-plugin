@@ -237,6 +237,16 @@
           "enum": ["extracted", "inferred-from-principles", "hand-authored", "placeholder"],
           "description": "How this usage_note was produced. 'extracted' = distilled from source text via chapter-loop (authoritative); 'inferred-from-principles' = derived by reasoning over this master's principles[] (speculative, pending re-distillation); 'hand-authored' = written by a curator from direct source reading; 'placeholder' = structural-only, content TBD. Downstream consumers (form, glossary, Ellington) may render different provenance levels differently."
         },
+        "polarity": {
+          "type": "string",
+          "enum": ["prescriptive", "proscriptive"],
+          "description": "Whether the lesson tells the player what to DO (prescriptive — default) or what NOT to do (proscriptive — negative prescriptions, e.g. 'never substitute m6 before a dominant a 4th higher'). Optional; absent value is treated as 'prescriptive' by consumers. Added per #471 because corpus extractions repeatedly surface real negative-prescription content that the sub-5 coach (ellington-web#57) renders with different prose templates."
+        },
+        "cross_ref": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional refs to related usage_notes (matched by chord_quality + function_role within this master). Used to link a proscriptive parent to its prescriptive exception child (e.g. Greene's 'altered dominants may not replace I7 at song opening' proscriptive note cross-refs the dom7#9 'tonic-placement-exception' prescriptive note). Empty or absent means standalone."
+        },
         "references": { "$ref": "#/$defs/references" }
       },
       "additionalProperties": true
