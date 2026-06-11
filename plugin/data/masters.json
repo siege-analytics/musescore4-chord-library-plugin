@@ -2455,7 +2455,7 @@
       "status": "promoted",
       "works": [
         {
-          "id": "greene-chord-chemistry",
+          "id": "chord-chemistry",
           "title": "Chord Chemistry",
           "year": 1971,
           "instrument_scope": "6-string electric and acoustic",
@@ -2468,7 +2468,7 @@
           ],
           "systems": [
             {
-              "id": "ted-greene:greene-chord-chemistry:chord-formula-family",
+              "id": "ted-greene:chord-chemistry:chord-formula-family",
               "name": "Chord Formula and Family System",
               "summary": "The central organizing system of Chord Chemistry. Every chord is defined by a formula — a specific combination of scale-degree numbers derived from the major scale built on the same root. Three chord families (MAJOR, MINOR, DOMINANT 7TH) serve as parent categories from which all extensions, altered chords, and suspended chords descend. The same-string inversion method generates exactly N distinct voicing forms for any N-note chord on a fixed string set.",
               "members": [
@@ -2653,7 +2653,7 @@
               ]
             },
             {
-              "id": "ted-greene:greene-chord-chemistry:voice-leading-systematic",
+              "id": "ted-greene:chord-chemistry:voice-leading-systematic",
               "name": "Voice Leading and Systematic Thinking System",
               "summary": "Greene's primary methodology for connecting chords: each chord tone is treated as an independent voice, and the motion of each voice from one chord to the next is analyzed and optimized. V7–I is the foundational laboratory.",
               "members": [
@@ -2922,7 +2922,7 @@
               ]
             },
             {
-              "id": "ted-greene:greene-chord-chemistry:substitution-cycle",
+              "id": "ted-greene:chord-chemistry:substitution-cycle",
               "name": "Substitution and Cycle-of-Fourths System",
               "summary": "How chords are substituted for one another and how harmonic motion through the cycle of 4ths/5ths creates momentum and modulation. Dominant 7 is the engine; tritone substitution is the master rule.",
               "members": [
@@ -3253,7 +3253,7 @@
               ]
             },
             {
-              "id": "ted-greene:greene-chord-chemistry:fingerboard-geography",
+              "id": "ted-greene:chord-chemistry:fingerboard-geography",
               "name": "Fingerboard Geography and Navigation System",
               "summary": "The foundational spatial system mapping theoretical knowledge onto the physical guitar neck via two sets of reference points and 1st/6th string symmetry.",
               "members": [
@@ -3404,7 +3404,7 @@
           ]
         },
         {
-          "id": "greene-modern-chord-progressions",
+          "id": "modern-chord-progressions",
           "title": "Modern Chord Progressions: Jazz & Classical Voicings for Guitar",
           "year": 1985,
           "instrument_scope": "6-string electric and acoustic",
@@ -3417,7 +3417,7 @@
           ],
           "systems": [
             {
-              "id": "ted-greene:greene-modern-chord-progressions:harmonic-formula-traversal",
+              "id": "ted-greene:modern-chord-progressions:harmonic-formula-traversal",
               "name": "Harmonic Formula Traversal System",
               "summary": "The central system of the book. Greene organizes the fingerboard as a set of named harmonic formulas — I vi ii V, iii vi ii V, iii7 VI7 ii7 V7, the diatonic cycle of 4ths, III7 VI7 II7 V7, and their variants — each treated as a reusable compositional and improvisational template. The system's traversal logic is built on two complementary movement principles: (1) stepwise diatonic voice leading, where each voice ascends or descends to the next scale-degree of the same name, and (2) cycle-of-4ths root motion, where each root sits a fourth above the previous. String transference is the guitar-specific mechanism that extends these movements beyond the physical range of a single string group. The modification rules govern voicing density — omitting 5ths or roots is explicitly permitted — and prescribe that every formula must be explored across the full fingerboard in multiple keys. The ear is the final authority on register and transposition decisions.",
               "members": [
@@ -3731,7 +3731,7 @@
               ]
             },
             {
-              "id": "ted-greene:greene-modern-chord-progressions:dominant-substitution-lattice",
+              "id": "ted-greene:modern-chord-progressions:dominant-substitution-lattice",
               "name": "Dominant Substitution Lattice System",
               "summary": "The book's secondary system governs how minor-seventh chords are replaced with dominant-seventh chords and how those dominants are then altered. The foundational rule — stated in capitals — is that any m7-type chord may be replaced with a dominant 7th according to personal taste. Greene teaches a specific derivation mechanism: raise the 3rd of a ii7 shape by one fret to produce II7; when two 3rds are present, raise the lower-pitched one, typically yielding II7#9. The same mechanism applies to converting vi7 to VI7. The system permits iii7 in place of III7 and vi7 in place of VI7 throughout the altered-dominant formula. Altered dominants — voicings incorporating #9, b9, #5, or b5 — are introduced only after diatonic preparation. A boundary condition limits the 3rd-raising mechanism: it does not apply when a iim7/11 chord has its 11th in the soprano.",
               "members": [
@@ -3904,7 +3904,7 @@
               ]
             },
             {
-              "id": "ted-greene:greene-modern-chord-progressions:fingerboard-geography-homonym",
+              "id": "ted-greene:modern-chord-progressions:fingerboard-geography-homonym",
               "name": "Fingerboard Geography and Homonym Naming System",
               "summary": "The book's organizational meta-system. Greene partitions the fingerboard into five position areas used as reference anchors for all major and minor chord forms. Within each position, chord voicings are memorized by three methods — shape-based, interval-based, and root-anchored — with experienced players combining all three eclectically. The concept of chord homonyms is central: any given physical voicing may function as multiple chords depending on harmonic context. The governing rule is that context and common sense determine naming. Mastery requires knowing all useful homonym names for every chord form. This system is the prerequisite infrastructure that enables the other two systems.",
               "members": [
