@@ -1,0 +1,45 @@
+# Queued via #438 (umbrella #428). Chord-melody-axis book; new master howard-roberts.
+
+[master]
+id = "howard-roberts"
+name = "Howard Roberts"
+
+[work]
+id = "chord-melody"
+title = "Chord Melody"
+year = 1971
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Howard Roberts/Roberts, Howard - Chord Melody.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Chord-melody axis. Expect chord-melody-specific prescriptions complementing Laukens' complete-chord-melody. Roberts was a Wrecking Crew studio veteran; teaching tends to be terse and pragmatic. Granular-levels prompt (#434) in effect."
