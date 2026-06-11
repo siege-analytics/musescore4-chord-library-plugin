@@ -94,13 +94,17 @@ def run(cfg: dict, book: BookPaths) -> list[str]:
 
 # ---------------------------------------------------------------------------
 
-_USAGE_NOTES_SYSTEM = """You are extracting per-chord-quality PRESCRIPTIVE LESSONS from a guitar method book.
+_USAGE_NOTES_SYSTEM = """You are extracting per-chord-quality PRESCRIPTIVE OR PROSCRIPTIVE LESSONS from a guitar method book.
 
-A PRESCRIPTIVE LESSON is what the master tells the student to DO with a specific chord quality — the voicing recommendation, the substitution rule, the voice-leading move, the rationale. It is NOT the master's general organizing principles (those are upstream in the systems[] taxonomy). It is the concrete, actionable, per-chord application of those principles.
+A PRESCRIPTIVE LESSON is what the master tells the student to DO with a specific chord quality — the voicing recommendation, the substitution rule, the voice-leading move, the rationale. A PROSCRIPTIVE LESSON is what the master tells the student NOT to do (e.g. 'never substitute m6 before a dominant a 4th higher', 'altered dominants may not replace I7 at song opening'). Both polarities are real and load-bearing. They are NOT the master's general organizing principles (those are upstream in the systems[] taxonomy) — they are the concrete, actionable, per-chord application of those principles.
 
-Examples of GOOD prescriptive lessons:
+Examples of GOOD prescriptive lessons (polarity="prescriptive"):
   - "For m7b5, Laukens prescribes substituting altered V on the tritone — the m7b5 root becomes the b5 of the altered V — voiced on string set 6-3 with the b5 on top. Page 47, chapter 3."
   - "For dom7 in bebop comping, Pass teaches the R-3-7 shell dressed with #9 or b9 on top, anticipated on the upbeat of 4 of the prior bar. Page 23, chapter 2."
+
+Examples of GOOD proscriptive lessons (polarity="proscriptive"):
+  - "Do not use m6 when the following chord is a dominant a 4th higher — shared tones make the m6 sound like an early arrival of the next chord, destroying harmonic syntax. Chapter 11, p.61."
+  - "Altered dominants may not replace a I7 at the opening of a song; first establish the plain I7 or extension, then introduce the alteration. Chapter 10, p.59." (often paired with a sibling prescriptive note carrying cross_ref — e.g. a 7#9 'tonic-placement-exception' that explicitly allows the move.)
 
 Examples of BAD (too abstract — these belong in the s4 principles/systems):
   - "Laukens organizes his vocabulary by function." (principle, not lesson)
@@ -127,7 +131,9 @@ Output a JSON object with this shape:
         "references": [
           { "source": "<book id>", "citation": "<chapter X p.Y>" }
         ],
-        "provenance": "extracted"
+        "provenance": "extracted",
+        "polarity": "<\"prescriptive\" if the lesson tells the student what to DO, \"proscriptive\" if it tells them what NOT to do. OMIT the field when prescriptive (it is the default); set explicitly to \"proscriptive\" for negative-prescription content.>",
+        "cross_ref": ["<OPTIONAL — list of related-note identifiers ('<chord_quality>/<function_role>' strings) within this same usage_notes[] array. Use when a proscriptive parent has a prescriptive-exception child or vice versa. Omit when standalone.>"]
       }
     ]
   }
@@ -148,6 +154,8 @@ RULES:
   4. `provenance: 'extracted'` is REQUIRED on every entry. Do not emit entries you'd need to mark 'inferred-from-principles' — those belong to the placeholder pass, not this extraction.
   5. If the master draws a diagram for a voicing, mention it in the narrative ("see diagram p.47").
   6. function_role values: free text in kebab-case. Don't strain to match an existing taxonomy. Use names that signal which granularity level the entry covers (e.g., `harmonic-family-membership`, `shell-voicing-floor`, `note-omission-policy`, `color-tone-requirement`, `tritone-substitution`, `sparse-chord-placement`, `voice-leading-into-next-chord`, `solo-guitar-application`).
+  7. polarity field: set `polarity: "proscriptive"` ONLY when the lesson is a negative prescription — wording like "never", "do not", "may not", "must not", "avoid", "ban", "wrong", "off limits". Omit polarity (default prescriptive) for normal "do this" lessons. Be honest: many masters give explicit DON'Ts that consumers need to render differently from DOs.
+  8. cross_ref field: when a proscriptive note has a sibling prescriptive-exception (or vice versa), add cross_ref containing the related entry's `"<chord_quality>/<function_role>"` string. Common cases: a master bans a substitution generally but explicitly allows one specific case (Greene "altered dominants may not replace I7" — exception "dom7#9 may replace I7 at tonic"). Omit when standalone.
 
 Return ONLY the JSON object. No prose wrapper, no markdown code fence.
 """
