@@ -4578,7 +4578,7 @@
       "usage_notes": [
         {
           "chord_quality": "aug",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "Greene places augmented chords outside the three main families: 'The diminished and augmented chords do not really fit in any of the families but they are most like the dominant chords in the way that they are used.' (Ch6 p.12). Functionally treated as altered dominants.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -4653,7 +4653,7 @@
         },
         {
           "chord_quality": "dim7",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "Greene notes that 'The diminished and augmented chords do not really fit in any of the families but they are most like the dominant chords in the way that they are used.' (Ch6 p.12). Functionally, dim7 behaves as an altered dominant despite its structural independence.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -4778,7 +4778,7 @@
         },
         {
           "chord_quality": "dom11b9",
-          "function_role": "function-role-restriction",
+          "function_role": "restricted-to-v7-function",
           "narrative": "Greene explicitly restricts the 11b9 chord to authentic V7 function: 'The 11b9 chords are usually used for the V7 chord of a key, but not often for others.' (Ch12 p.64). This chord's strong tension profile limits it to the primary dominant in a key.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -4890,7 +4890,7 @@
         },
         {
           "chord_quality": "dom7",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The dominant 7th is one of the three foundational chord 'fathers': 'The MAJOR, MINOR, and DOMINANT 7TH chords are the 'fathers' of the 3 families.' Greene also notes 'There are more dominant chords, by far, than major or minor types.' (Ch5 p.10, Ch8 p.17)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5060,7 +5060,7 @@
         },
         {
           "chord_quality": "dom7#11",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The augmented 11th dominant belongs to the dominant family. Greene states: 'Augmented 11th type chords can be used in place of dominant chords that are followed by a chord a 4th higher (just like other altered dominants).' (Ch11 p.61). It is classified as an altered dominant.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5092,7 +5092,7 @@
         },
         {
           "chord_quality": "dom7#11",
-          "function_role": "tonic-placement-restriction",
+          "function_role": "restricted-from-tonic-placement",
           "narrative": "Greene explicitly restricts +11 from tonic function: 'the +11 does not assume a tonic function; that is, you wouldn't REPLACE a I7 at the beginning of a song with it.' (Ch11 p.61). This chord is V7 function only.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5141,8 +5141,8 @@
           ],
           "provenance": "extracted",
           "cross_ref": [
-            "dom7alt/tonic-placement-restriction",
-            "dom7#11/tonic-placement-restriction"
+            "dom7alt/restricted-from-tonic-placement",
+            "dom7#11/restricted-from-tonic-placement"
           ]
         },
         {
@@ -5190,7 +5190,7 @@
         },
         {
           "chord_quality": "dom7alt",
-          "function_role": "function-role-restriction",
+          "function_role": "restricted-to-altered-context",
           "narrative": "Greene prescribes that altered dominants are contextually restricted: 'Dominant chords with altered tones (b5th, #5th, both, #9th) can be used effectively for dominant chords when the next chord is: 1-one whose root is a 4th higher, 2-one whose root is a 1/2 step lower, and 3-a minor type chord with the same root.' (Ch10 p.58)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5220,7 +5220,7 @@
         },
         {
           "chord_quality": "dom7alt",
-          "function_role": "tonic-placement-restriction",
+          "function_role": "restricted-from-tonic-placement",
           "narrative": "Greene restricts altered dominants from opening a song: 'One important point is that you couldn't always replace a I7 at the beginning of a song with an altered chord (except for a 7#9); you might first play the I7 (or extension) and then you could play the altered chord.' (Ch10 p.59)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5406,7 +5406,7 @@
         },
         {
           "chord_quality": "maj7",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The major 7th chord belongs to the Major family, derived from the foundational major chord. Greene states 'The MAJOR, MINOR, and DOMINANT 7TH chords are the 'fathers' of the 3 families, and all the other chords, with a few exceptions, are derived from them.' (Ch5 p.10)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5522,7 +5522,7 @@
         },
         {
           "chord_quality": "maj7#11",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The maj7#11 belongs to the major family as an extension. Greene states '#11 is usually put above the 5th in a chord (assuming there is a 5th being played) as in chords like the +11, 13+11, etc.' (Ch5 p.10)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5564,7 +5564,7 @@
         },
         {
           "chord_quality": "min-maj7",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The m(maj7) chord belongs to the minor family as a chromatic color variant. Greene notes it as one of the chord types that 'almost necessitate the use of voice leading principles,' signaling its inherently transitional character. (Ch13 p.73)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5634,7 +5634,7 @@
         },
         {
           "chord_quality": "min6",
-          "function_role": "function-role-restriction",
+          "function_role": "restricted-pre-dominant-prep",
           "narrative": "Greene imposes a hard restriction: 'Minor 6th type chords usually should not be used for a minor chord that is followed by a dominant chord a 4th higher, because the m6 type chord will sound too much like the next dominant chord.' (Ch11 p.61). The m6 contains tones of the approaching dom7, creating premature resolution.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5691,7 +5691,7 @@
         },
         {
           "chord_quality": "min7",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The minor 7th chord belongs to the Minor family. Greene identifies the minor chord as one of the three 'fathers' and notes that 'the major and major 7th chords are closely related, and also the minor and minor 7th chords.' (Ch9 p.55)",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5793,7 +5793,7 @@
         },
         {
           "chord_quality": "min7b5",
-          "function_role": "family-membership",
+          "function_role": "harmonic-family-membership",
           "narrative": "The m7b5 (half-diminished) belongs to the minor family as the only widely used altered minor type. Greene states: 'The only altered minor chord that is widely used is the m7b5 type.' (Ch11 p.61). It appears naturally as the VII chord of the harmonic minor scale.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5851,7 +5851,7 @@
         },
         {
           "chord_quality": "sus4",
-          "function_role": "function-role-restriction",
+          "function_role": "restricted-pre-dominant-prep",
           "narrative": "Greene restricts sus4 primarily to dominant preparation: 'Dominant suspended chords are usually used as partial replacements for dominant 7th chords.' (Ch11 p.62). They precede the resolved dom7 but do not typically replace it outright.",
           "source_principle_ids": [],
           "source_work_id": "chord-chemistry",
@@ -5895,7 +5895,7 @@
           ],
           "provenance": "extracted",
           "cross_ref": [
-            "sus4/function-role-restriction"
+            "sus4/restricted-pre-dominant-prep"
           ]
         },
         {
