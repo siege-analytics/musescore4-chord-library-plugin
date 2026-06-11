@@ -49,3 +49,7 @@ engine_kind_policy = "pending-when-unsure"
 #   transcript head; "Carter" appears in body but not as author.
 # - Source OCR copied from runs/2026-05-28T15-05-20-carter-fingerstyle-jazz/.
 # - Original wrong-keyed run dir stays as audit trail per #360.
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."
