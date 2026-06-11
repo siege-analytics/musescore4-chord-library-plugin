@@ -1,0 +1,45 @@
+# Queued via #453 (umbrella #428). Voice-leading axis Vol 4 — completes the Almanac series.
+
+[master]
+id = "mick-goodrick"
+name = "Mick Goodrick"
+
+[work]
+id = "almanac-vol-4"
+title = "Almanac of Guitar Voice Leading, Volume 4"
+year = 2004
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Mick Goodrick/Goodrick, Mick - Almanac of Guitar Voice Leading, Vol 4.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Final Goodrick volume. Cross-volume system-id alignment expected with #436/#442/#444. Granular-levels (#434)."
