@@ -5881,6 +5881,684 @@
             }
           ],
           "provenance": "extracted"
+        },
+        {
+          "chord_quality": "add9",
+          "function_role": "i-chord-extension-family",
+          "narrative": "Ch.4 (p.15) lists C/9 (add9) as a standard I-chord extension in the core group alongside C△, C6, C6/9, C2, C4/5. The slash-9 notation signals an added 9th without the 7th — a direct color choice for I.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "add9",
+          "function_role": "iv-chord-extension-family",
+          "narrative": "Ch.4 (p.15) lists F/9 as a standard IV-chord extension alongside F, F△, F6, F6/9, F9, F4/3. The add9 form is available on both I and IV chords as a broadly applicable non-7th color option.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "altered-tone-voice-leading-rule",
+          "narrative": "Ch.9 (p.59) states the governing principle for altered tones on dominants: 'VI7 sounds good with any altered tone when used in smooth connection with the chords that precede or follow it.' Any alteration (b9, #9, b5, #5) is acceptable as long as smooth voice-leading is maintained.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "diatonic-cycle-v-function",
+          "narrative": "In the full cycle of 4ths (Ch.8, p.49) 'I IV vii° iii vi ii V I,' G7 is the only diatonic dominant 7th. This is the vehicle for practicing all seven diatonic 7th qualities, with G7 as the sole dom7 and structural tension chord before resolution to C△.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 8 p.49"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "i-vi-ii-v-formula-function",
+          "narrative": "Greene presents the I-vi-ii-V formula in Ch.7 (p.26) as the foundational 4-chord loop: 'Another important diatonic harmonic formula is I vi ii V...especially common to find this progression used as an opener.' V is always dom7; play 'in order by melody/shape,' treating the V chord as the tension-generating chord demanding resolution.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 7 p.26"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "ii7-to-dom7-upgrade",
+          "narrative": "Ch.9 (p.59) is categorical: 'ANY m7 TYPE CHORD MAY BE REPLACED WITH A DOMINANT 7th TYPE CHORD, ACCORDING TO PERSONAL TASTE.' Procedural implementation: 'raise the 3rd (one fret higher) in the ii7 types, thereby making them II7's' (Ch.10, p.74).",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.59"
+            },
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "v7-resolution-prescription",
+          "narrative": "Greene frames V7-I resolution as a standing cadential rule across Chs.7-11. Ch.7 (p.26): 'You should always try resolving the V to I.' Chs.9, 10, 11 repeat: 'Remember to resolve the V7's to I's occasionally.' Resolution is the baseline functional-harmonic obligation.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 7 p.26"
+            },
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.61"
+            },
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.79"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "vi7-to-VI7-derivation",
+          "narrative": "Greene explains VI7 (chromatic A7 in C major) can be derived from vi7 (diatonic Am7) by raising the third, with an important exception: 'most of them were derived in other ways, specifically to produce more desirable sounds' (Ch.10, p.74). VI7 voicings should be treated as independent chord choices rather than automatic raise-the-third results.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#9",
+          "function_role": "raise-third-lower-voice-operation",
+          "narrative": "Ch.10 (p.74) prescribes: 'try raising the 3rd that is the lower in pitch of the two...this will create a II7#9 chord in many cases.' When a min7 voicing contains two thirds (open voicing), raising the lower yields dom7#9 without disturbing the higher third.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#9",
+          "function_role": "soprano-exception",
+          "narrative": "Greene limits the raise-the-third operation: 'If you are dealing with a iim7/11 with its 11th in the soprano (highest pitch) then none of these ideas will work very well' (Ch.10, p.74). When the 11th sits in the soprano, the dom7#9 derivation procedure is inapplicable.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "altered-dominant-definition",
+          "narrative": "Ch.11 (p.78) defines altered dominants as 'those with #9's, b9's, #5's, and b5's,' calling them 'very spicy chords.' Any combination qualifies as dom7alt in his taxonomy. Use them freely in the III7-VI7-II7-V7 formula.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.78"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "combining-consonant-dissonant-progressions",
+          "narrative": "Ch.11 (p.79) prescribes combining dom7alt progressions with normal diatonic progressions for contrast: 'combining the consonant and dissonant types of progressions is also fun for your ear because of the contrast; and it is good for you because it will get you into the spirit of combining shorter progressions in order to make longer progressions.' Altered dominants are a compositional ingredient, not wall-to-wall texture.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.79"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "substitution-with-diatonic-types",
+          "narrative": "Ch.11 (p.78) substitution rule runs both directions: where a III7 or VI7 altered dominant appears, one may substitute the diatonic version — 'try using iii7 types in place of III7 types, or vi7 types in place of VI7 types.' Dom7alt is not mandatory; diatonic min7 substitution always available as softening option.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.78"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "voice-leading-smooth-connection",
+          "narrative": "Greene's key constraint on dom7alt: 'VI7 sounds good with any altered tone when used in smooth connection with the chords that precede or follow it' (Ch.9, p.59). Altered tones are free choices conditioned on smooth melodic movement — spice without voice-leading disruption.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "altered-dominant-spice",
+          "narrative": "Greene classifies dom7b9 as an 'altered dominant' — 'those with #9's, b9's, #5's, and b5's,' calling them 'very spicy chords' (Ch.11, p.78). For III7-VI7-II7-V7 progressions, use altered dominants including dom7b9 on any position to create chromatic intensity.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.78"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "diatonic-preparation-rule",
+          "narrative": "Ch.11 (p.78) prescribes that altered chords like dom7b9 be prepared with diatonic material: 'the ear will accept altered chords more easily in most cases if they are prepared with sounds of a more normal, diatonic major scaley nature first.' Sequencing rule: diatonic first, then dom7b9.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.78"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "specific-substitution-target",
+          "narrative": "Highly specific substitution directive in Ch.11 (p.82): 'TRY THIS CHORD IN PLACE OF A7b5 WHENEVER A7b5 PROGRESSES TO D7b9b5.' Chord-specific substitution rule involving dom7b9b5 as replacement for a preceding dom7b5 in the III7-VI7-II7-V7 context.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.82"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj",
+          "function_role": "baroque-vs-modern-register",
+          "narrative": "Greene distinguishes triads as the harmonic currency of Baroque practice versus 7ths and extensions in modern playing (Ch.4, p.15). When triads do appear in modern contexts, he prescribes that register determines viability: 'let your ears be the guide in determining how low to take any progression,' making register judgment the key execution rule for major and minor triads.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj",
+          "function_role": "chord-scale-decoration",
+          "narrative": "Greene introduces the Van Eps 'team concept' as a method for decorating triads in chord-scale passages: 'finding two interesting intervals in a chord and alternating them' (Ch.5, p.21). This positions the major triad not as a static block but as a launching pad for melodic inner-voice motion via note delays and diatonic moving lines.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.21"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj",
+          "function_role": "first-inversion-chord-scale",
+          "narrative": "Greene specifies that 1st-inversion chord scales carry a special value unavailable to root-position or 2nd-inversion forms: 'there is a certain magic in 1st inversion chord scales...more frequently than root position or 2nd inversion brothers, but this is only true as far as 4-note triads go' (Ch.5, p.17). The prescription is to favor 1st inversion over other inversions when running diatonic chord scales.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.17"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "homonym-substitution",
+          "narrative": "Ch.3 (p.13) homonym principle: Em6 = C#m7b5 = A9 from a single voicing. A maj6 chord shares an identical voicing with a min7b5 and an unresolved dominant 9th. Exploit this three-way equivalence when selecting substitute chords.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 3 p.13"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "i-chord-extension-family",
+          "narrative": "Greene lists C6 as a standard I-chord extension alongside C, C△, C/9, C6/9, C2, C4/5 (Ch.4, p.15). C6 is interchangeable with these other I-chord forms, constrained only by the missing-tones rule: 'missing tones are either the 5th or the root.'",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "ii-for-iv-homonym",
+          "narrative": "Ch.5 (p.17) ii-for-IV substitution relies on F#m7 = A6: 'ii can substitute for IV because they are virtually the same chord.' An A6 voicing is identical to F#m7; any maj6 chord is simultaneously a min7 a minor third below.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.17"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "iv-chord-extension-family",
+          "narrative": "F6 appears as a standard IV-chord extension in Ch.4 (p.15) alongside F, F△, F/9, F6/9, F9, F4/3, F/9+11, F6/9+11, F7+11, F9+11. Maj6 is equally available on IV as on I, same missing-tones rule.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj69",
+          "function_role": "i-chord-extension-family",
+          "narrative": "Ch.4 (p.15) lists C6/9 as a primary I-chord extension, in the core list alongside C△, C6, C/9, C2, C4/5. Maj6/9 is prescribed as a richer-color option for I, still governed by missing-tones rule.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj69",
+          "function_role": "iv-chord-extension-family",
+          "narrative": "F6/9 and F6/9+11 appear in IV-chord extension list (Ch.4, p.15). F6/9+11 extends maj6/9 with a #11, producing a Lydian-flavored IV chord. The +11 combinations are advanced options signaled by their absence from the I-chord list.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "diatonic-cycle-function",
+          "narrative": "In the diatonic 7th-chord cycle in C (Ch.8, p.49), C△ and F△ anchor the I and IV positions in the sequence 'C△ F△ Bm7b5 Em7 Am7 Dm7 G7 C△ F△.' Practice cycle-of-4ths diatonic movement with maj7 as the resolution target after the full cycle.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 8 p.49"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "i-chord-harmonic-family",
+          "narrative": "Greene establishes maj7 as the I chord in modern major-key harmony, listing the full extension family in Chapter 4 (p.15): C, C△, C6, C/9, C6/9, C2, C4/5, with parenthetical extensions C△/6 and Csus. Use any of these on the I chord according to context, treating the bare triad as the minimal option.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "omission-policy",
+          "narrative": "Greene states the missing-tones rule explicitly: 'missing tones are either the 5th or the root' (Ch.4, p.15). For maj7 voicings, the 5th is the preferred omission, and the root may be dropped in extended or upper-structure voicings.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "register-rule",
+          "narrative": "Greene's register prescription applies to all I-chord voicings including maj7: 'some chords, especially some very modern voicings coming up later, sound pretty terrible in low registers (that is, on the lower frets) so let your ears be the guide in determining how low to take any progression' (Ch.4, p.15). There is no prescribed lowest fret; register is an editorial decision.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "resolution-target",
+          "narrative": "Greene frames the maj7 I chord as the recurring resolution target throughout. Ch.9 (p.61): 'Remember to resolve the V7's to I's occasionally'; Ch.11 (p.79): 'Don't forget to occasionally try resolving the V7's to I's.' Periodic resolution to the I maj7 is a standing functional-harmonic rule.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.61"
+            },
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.79"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7#11",
+          "function_role": "iv-chord-lydian-extensions",
+          "narrative": "Ch.4 (p.15) lists F/9+11, F6/9+11, F7+11, F9+11 as IV-chord extension options. The #11 (raised 11th / Lydian color) appears specifically on IV, not I — IV accepts this Lydian alteration as a distinct color unavailable as a default I-chord option.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7#11",
+          "function_role": "omission-policy",
+          "narrative": "Greene's missing-tones rule for IV-chord extensions — 'missing tones are either the 5th or the root' (Ch.4, p.15) — applies to maj7#11 voicings. With root, 3rd, 5th, 7th, #11, the 5th is the preferred omission since the #11 and 5th create a tritone conflict.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min",
+          "function_role": "baroque-vs-modern-register",
+          "narrative": "Like major triads, minor triads belong to Baroque practice rather than modern harmony per Greene's taxonomy (Ch.4, p.15). When used, the register rule applies: 'let your ears be the guide in determining how low to take any progression,' with the prescription to avoid muddy low voicings.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min",
+          "function_role": "first-inversion-chord-scale",
+          "narrative": "Greene's 1st-inversion preference applies equally to minor 4-note triads in diatonic chord-scale passages: 'there is a certain magic in 1st inversion chord scales...more frequently than root position or 2nd inversion brothers, but this is only true as far as 4-note triads go' (Ch.5, p.17).",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.17"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "diatonic-chord-scale-voice-motion",
+          "narrative": "Greene prescribes that diatonic chord scales be built by stepwise voice motion: each voice moves 'up to the next note in the major scale which has the same name as the chord' (Ch.5, p.17). Each min7 chord in the scale should be run in 1st inversion in chord-scale passages.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.17"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "diatonic-for-chromatic-substitution",
+          "narrative": "Greene's Ch.11 (p.78) substitution rule runs both directions: 'try using iii7 types in place of III7 types, or vi7 types in place of VI7 types.' Min7 is always available as a diatonic softening substitute for its chromatic dominant counterpart in III7-VI7-II7-V7.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 11 p.78"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "diatonic-function-ii-iii-vi",
+          "narrative": "Greene identifies min7 as the quality of the ii, iii, and vi chords in the diatonic 7th-chord cycle in C: Em7 (iii), Am7 (vi), Dm7 (ii). Lowercase (vi7) for diatonic minor 7th vs uppercase (VI7) for chromatic dominant (Ch.9, p.59).",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 8 p.49"
+            },
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "memorization-strategy",
+          "narrative": "Greene recommends grouping progressions by starting chord (Ch.9, p.61): 'first make a list of all the different starting chords given in these iii (I) VI ii V's, and then group your favorites accordingly.' Collect all favorite iii7-vi7-ii7-V7 voicing sequences beginning on iii7 or ii7 into distinct practice groups.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.61"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "min7-11-soprano-exception",
+          "narrative": "Ch.10 (p.74) specific voicing-operation exception: 'If you are dealing with a iim7/11 with its 11th in the soprano (highest pitch) then none of these ideas will work very well.' The raise-the-third procedure for converting min7 to dom7 or dom7#9 is blocked when the 11th is the top voice.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "raise-third-to-dom7-rule",
+          "narrative": "Greene prescribes in Ch.10 (p.74): 'raise the 3rd (one fret higher) in the ii7 types, thereby making them II7's.' Refinement: 'try raising the 3rd that is the lower in pitch of the two...this will create a II7#9 chord in many cases.' This is the procedural bridge from min7 to dom7 in the iii7-vi7-II7-V7 formula.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 10 p.74"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "substitution-for-dom7",
+          "narrative": "Greene's substitution rule in Ch.9 (p.59) is categorical: 'ANY m7 TYPE CHORD MAY BE REPLACED WITH A DOMINANT 7th TYPE CHORD, ACCORDING TO PERSONAL TASTE.' Every diatonic min7 (ii7, iii7, vi7) has the option to be recast as a dominant 7th chord.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 9 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "substitution-for-maj7-iv",
+          "narrative": "Greene states in Ch.5 (p.17): 'ii can substitute for IV because they are virtually the same chord — like F#m7 = A6 (the homonym concept).' The diatonic ii min7 is interchangeable with the IV chord when shared tones allow.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 5 p.17"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "homonym-substitution",
+          "narrative": "Greene demonstrates in Ch.3 (p.13) that a single voicing reads as Em6 = C#m7b5 = A9 depending on harmonic context. A min7b5 voicing is simultaneously a major 6th chord and an unresolved dominant 9th chord. Exploit these three-way enharmonic readings when selecting substitute chords.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 3 p.13"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "vii-degree-diatonic-cycle",
+          "narrative": "Greene places min7b5 (half-diminished) on the vii° degree of the diatonic cycle in C, showing it as Bm7b5 in 'C△ F△ Bm7b5 Em7 Am7 Dm7 G7 C△ F△' (Ch.8, p.49). The label 'vii°' in 'I IV vii° iii vi ii V I' maps to this chord quality.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 8 p.49"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "sus4",
+          "function_role": "chord-symbol-definition",
+          "narrative": "Ch.2 (p.10) foundational definition: 'sus. is an abbreviation for the word suspended which means that the 3rd has been replaced with the 4th.' The 4th replaces (does not add to) the 3rd — governs all sus4 chord readings throughout the book.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 2 p.10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "sus4",
+          "function_role": "i-chord-parenthetical-extension",
+          "narrative": "Csus appears in the parenthetical (advanced) section of I-chord extensions at Ch.4 (p.15): '(C△/6, Csus, C/9sus).' The parenthetical signals sus4 on I is less common, more specialized — available but not a default extension choice.",
+          "source_principle_ids": [],
+          "source_work_id": "modern-chord-progressions",
+          "references": [
+            {
+              "source": "modern-chord-progressions",
+              "citation": "ch 4 p.15"
+            }
+          ],
+          "provenance": "extracted"
         }
       ]
     },
