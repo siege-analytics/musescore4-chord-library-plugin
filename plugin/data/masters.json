@@ -1641,7 +1641,2137 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "usage_notes": [
+        {
+          "chord_quality": "maj7",
+          "function_role": "pick-attack-synchronization",
+          "narrative": "For major chord voicings, the pick strike and fretting pressure must be perfectly simultaneous: 'In the correct attack the pressure is applied the instant the pick strikes the string. Always apply the pressure quickly with a deliberate snap, like a trigger releasing a strong spring' (p. 6). Any lag between the two actions produces a blurred or muted onset that undermines the chord's clarity.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/pick-attack-synchronization",
+            "dim7/pick-attack-synchronization",
+            "dom7/pick-attack-synchronization"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "pick-attack-synchronization",
+          "narrative": "Minor chord voicings require the same simultaneous pick-strike and fretting-pressure coordination: 'In the correct attack the pressure is applied the instant the pick strikes the string' (p. 6). This synchronization is especially critical when shifting between the six harmonized minor scale forms.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/pick-attack-synchronization",
+            "dim7/pick-attack-synchronization"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "pick-attack-synchronization",
+          "narrative": "Diminished chord voicings share the universal rule of simultaneous pick strike and fretting pressure: 'In the correct attack the pressure is applied the instant the pick strikes the string' (p. 6). The rocker-arm alternation technique used for diminished legato depends on this synchronization being exact at each contact point.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/pick-attack-synchronization",
+            "min7/pick-attack-synchronization"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "legato-full-note-values",
+          "narrative": "Legato execution for major chord forms requires holding each chord for its full written value while pre-forming the next position during motion: 'the notes must be given their full value and must be connected with no pause between them. The changes from formation to formation must be executed in the least amount of time' (p. 6). Releasing notes early is the primary cause of unintended staccato in harmonized scale passages.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/legato-full-note-values",
+            "dim7/legato-full-note-values"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "legato-full-note-values",
+          "narrative": "The constant goal across all six harmonized minor forms is legato: 'Always bear in mind the legato practice and the use of the six different fingerings. Practice in all keys' (p. 19). Van Eps treats legato as the defining standard of correct minor-form execution, not merely an expressive option.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/legato-full-note-values",
+            "dim7/legato-full-note-values"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 19"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "legato-full-note-values",
+          "narrative": "Legato for diminished chord passages is achieved through the rocker-arm technique: 'The first and fourth fingers should alternate like the ends of a rocker arm... With this fingering the exercise can be played very legato' (p. 28). Full note values must be sustained across successive diminished chord tones without any gap or slide.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/legato-full-note-values",
+            "min7/legato-full-note-values"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "dynamic-axis-wrist-position",
+          "narrative": "The wrist must be positioned over the highest sounding note in any major chord voicing: 'The axis of your wrist should be directly over the highest note as the top note should predominate' (p. 4). This placement ensures that the melodic top voice of the harmonized major scale rings above inner voices.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/dynamic-axis-wrist-position",
+            "dim7/dynamic-axis-wrist-position",
+            "dom7/dynamic-axis-wrist-position"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 4"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "dynamic-axis-wrist-position",
+          "narrative": "The dynamic axis rule — wrist over the highest note — applies equally to minor chord voicings: 'The axis of your wrist should be directly over the highest note as the top note should predominate' (p. 4). Failure to adjust wrist position as the melody moves through harmonized minor forms produces uneven string response.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/dynamic-axis-wrist-position",
+            "dim7/dynamic-axis-wrist-position"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 4"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "dynamic-axis-wrist-position",
+          "narrative": "The wrist-over-highest-note axis rule governs diminished voicings as it does all chord types: 'The axis of your wrist should be directly over the highest note as the top note should predominate' (p. 4). Because diminished forms shift the highest voice frequently across the fingerboard, continuous wrist realignment is especially important.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/dynamic-axis-wrist-position",
+            "min7/dynamic-axis-wrist-position"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 4"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "slow-practice-no-stopping",
+          "narrative": "Major chord form studies must be practiced slowly until perfect, and the player must never stop mid-exercise: 'never practicing an exercise faster than you can play it correctly' (p. 7). Stopping and restarting reinforces hesitation rather than the fluid continuity the method demands.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "min7/slow-practice-no-stopping",
+            "dim7/slow-practice-no-stopping"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 7"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "slow-practice-no-stopping",
+          "narrative": "The rule against stopping mid-exercise applies directly to harmonized minor scale studies: 'Benefit is derived from an exercise only when you can go through it without stopping, no matter how slowly you have to go in order to do so' (p. 38). Uninterrupted slow repetition is the only path to internalizing the six minor forms across all keys.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/slow-practice-no-stopping",
+            "dim7/slow-practice-no-stopping"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 38"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "slow-practice-no-stopping",
+          "narrative": "The prohibition on stopping mid-exercise extends to diminished chord studies: 'Benefit is derived from an exercise only when you can go through it without stopping, no matter how slowly you have to go in order to do so' (p. 38). Because diminished forms are technically demanding, the temptation to stop and restart is greatest here, making the rule especially important in this context.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/slow-practice-no-stopping",
+            "min7/slow-practice-no-stopping"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 38"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "solfeggio-all-keys",
+          "narrative": "All major scale harmonization exercises must be practiced in all 12 keys: 'Think of the tonic of every key as \"do\"... Through this system all keys are equal and therefore you will not favor any particular key or keys' (p. 2). Transposition is not optional — it is the structural foundation of the method.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/solfeggio-all-keys",
+            "dim7/solfeggio-all-keys",
+            "dom7/solfeggio-all-keys"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 2"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "solfeggio-all-keys",
+          "narrative": "Harmonized minor scale studies must be executed in all 12 keys: 'Give this exercise the same treatment as Ex. 1, such as arpeggio picking, etc. Practice in all keys' (p. 18). The solfeggio principle is universal to the method and is explicitly stated for both major and minor chapters.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/solfeggio-all-keys",
+            "dim7/solfeggio-all-keys"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 18"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "equal-note-values-no-rushing",
+          "narrative": "Major triad arpeggio and scale studies require equal note values throughout: 'make sure that the notes are of equal value, as the tendency is to skip over the last note in each measure in order to get to the next position in time' (p. 9). Rushing the final note destroys the metric regularity that underpins clean chord-form transitions.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "min7/equal-note-values-no-rushing"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 9"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "arpeggio-picking-pulsation",
+          "narrative": "Major triad arpeggio passages require a controlled pulsation pick technique: 'The pick passes over each string and accents it with a slight kick, which is more of a pulsation... using the pulsation principle you will be able to maintain a steady tempo and you will not strike two strings at once' (p. 9). This pulsation gives each string of the voicing its own attack impulse while maintaining the chord's harmonic identity.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/arpeggio-picking-pulsation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 9"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "arpeggio-picking-pulsation",
+          "narrative": "Harmonized minor scale arpeggio picking must use the same pulsation technique prescribed for major: 'Give this exercise the same treatment as Ex. 1, such as arpeggio picking, etc. Practice in all keys' (p. 18). The pulsation technique applies uniformly across all chord qualities in the method.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/arpeggio-picking-pulsation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 18"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "even-tempo-mixed-note-values",
+          "narrative": "When major chord exercises contain mixed note values, tempo must remain absolutely even: 'Care must be taken in maintaining an even tempo, as every other measure is in arpeggio picking and the natural tendency is to hurry the whole notes' (p. 11). Unevenness typically appears at the transition from longer to shorter values and must be corrected before increasing speed.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/even-tempo-mixed-note-values"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 11"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "octave-jump-distance-judgment",
+          "narrative": "Left-hand distance judgment for octave jumps between major chord positions must be internalized: 'Note that the gap between the first and the second triad is an octave which when played in the long form is a long jump. Care should be taken in making sure that the fingers light surely and firmly' (p. 11). Accurate jumping without looking is a prerequisite for legato across register changes.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/octave-jump-distance-judgment"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 11"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "barre-technique-rotation",
+          "narrative": "Barre chord positions in major forms must be practiced with every finger in turn: 'the second triad should be played not only with a Barre of the fourth finger as marked, but also with Barres of the third, second and first fingers alternately' (p. 12). Rotating which finger executes the barre builds uniform strength needed to sustain inner voices under a moving melody.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/barre-technique-rotation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 12"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "two-octave-form-linkage",
+          "narrative": "The six major chord forms are designed to link across two octaves: 'After all the forms have been perfected join them up with the harmonized scale an octave higher and practice without a break. You will then be able to run two octaves in the harmonized scale' (p. 13). Mastery of linkage is what transforms isolated position knowledge into continuous harmonized scale playing.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/two-octave-form-linkage"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 13"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "inner-voice-sustain",
+          "narrative": "When the melody moves above a sustained chord, inner voices must be held through their full value: 'The upper (melodic) line is in half notes while the two lower voices are in whole notes. Make sure they sustain their full value' (p. 14). Allowing inner voices to release prematurely collapses the harmonic texture that gives major chord voicings their richness.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/inner-voice-sustain",
+            "maj9/inner-voice-sustain"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 14"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "inner-voice-sustain",
+          "narrative": "Inner voice sustain under a moving melody is equally critical in minor chord voicings, requiring each lower voice to ring through its full written value: 'Make sure they sustain their full value. Practice all three forms equally as the purpose throughout this method is balanced technique' (p. 14). This technique is the foundation of Van Eps's polyphonic approach to harmonized minor scale playing.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/inner-voice-sustain",
+            "min9/inner-voice-sustain"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 14"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "inner-voice-sustain",
+          "narrative": "Adding a fifth voice to expand major triads toward denser voicings requires that existing inner voices are already held securely: 'you flatten the first joint of the second finger to produce the added note, which brings this principle into the classification of a fifth finger. It is a very difficult maneuver because the finger that is doing the flattening must sustain another note during the process' (p. 15). Inner-voice sustain is a prerequisite for any added-note major quality.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/inner-voice-sustain",
+            "maj7/voicing-density-expansion"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 15"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "voicing-density-expansion",
+          "narrative": "A fifth voice can be added to major chord voicings by flattening a fretting finger to cover an additional string: 'you flatten the first joint of the second finger to produce the added note, which brings this principle into the classification of a fifth finger' (p. 15). This technique expands the chord from a three- or four-note voicing into a denser texture without requiring a position change.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj9/voicing-density-expansion"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 15"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "voicing-density-expansion",
+          "narrative": "Finger flattening to add a fifth voice is the primary physical mechanism for expanding a major triad voicing toward a denser maj9 texture: 'This flattening principle must be practiced methodically as it must be reliable rhythmically and should be done with a snap. Do not skip over this principle as it is very important' (p. 15). The flattened finger must not accidentally mute the added string.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/voicing-density-expansion"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 15"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "legato-shift-no-slide",
+          "narrative": "Position changes between major chord forms must be executed without sliding: 'Do not slide the left hand in the modulation. It should be a fast, accurate change. The pressure should be released for just a fraction of a second during the change' (p. 15). This no-slide rule is the method's standard for clean shifting across all harmonized scale forms.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "min7/legato-shift-no-slide",
+            "dim7/legato-shift-no-slide"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 15"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "legato-shift-no-slide",
+          "narrative": "The prohibition on sliding during position changes applies equally to harmonized minor scale forms: 'Do not slide the left hand in the modulation. It should be a fast, accurate change' (p. 15). Left-hand pressure must be momentarily released and then instantly reapplied at the new position to avoid audible glissando between minor chord voicings.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/legato-shift-no-slide",
+            "dim7/legato-shift-no-slide"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 15"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "legato-shift-no-slide",
+          "narrative": "Diminished chord shifts must also be executed without sliding: 'look out for slides. The first finger should rest just above the fourth string, not riding it, but suspended a little above the string' (p. 28). The symmetrical four-fret repetition of diminished forms makes clean, slide-free shifts achievable with the prescribed suspension technique.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/legato-shift-no-slide",
+            "min7/legato-shift-no-slide"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "balanced-form-practice",
+          "narrative": "All six fingering forms for the harmonized major scale must be practiced equally: 'Practice all three forms equally as the purpose throughout this method is balanced technique' (p. 14). Overemphasizing familiar forms while neglecting awkward ones creates technical asymmetry that limits range and speed.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/balanced-form-practice"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 8"
+            },
+            {
+              "source": "1939-method",
+              "citation": "p. 14"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "balanced-form-practice",
+          "narrative": "The six harmonized minor scale forms must be drilled with equal attention in all keys, mirroring the balanced-practice requirement established for major forms: 'Practice very carefully as some of the fingerings, though correct, are confusing. Practice this also with the arpeggio picking and in all keys' (p. 20). Uneven form mastery in minor contexts is directly addressed in the minor chapter's opening instructions.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/balanced-form-practice"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 20"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "sequence-form-three-step",
+          "narrative": "Major chord sequence exercises are structured as three steps up and back: 'the major scale (harmonized in common triads) is shown in sequence form, three steps up and return on the first triad, then, on the second triad, etc., ascending; the reverse, descending' (p. 10). This ascending-then-descending pattern ensures that both directional variants of each form are equally reinforced.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/sequence-form-three-step"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 10"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "sequence-form-three-step",
+          "narrative": "The three-steps-up-and-back sequence form established for major chord studies is the governing structural model for harmonized minor scale exercises as well: 'Give this exercise the same treatment as Ex. 1' (p. 18). Applying the same sequential discipline to minor forms ensures symmetric mastery across both scale types.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/sequence-form-three-step"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 18"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "unconventional-fingering-acceptance",
+          "narrative": "Some harmonized minor scale fingerings are unconventional but technically correct, and students must not substitute familiar patterns: 'Practice very carefully as some of the fingerings, though correct, are confusing' (p. 20). Van Eps normalizes physical discomfort as a sign that the correct minor-form fingering is being applied.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dim7/unconventional-fingering-acceptance"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 20"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "unconventional-fingering-acceptance",
+          "narrative": "Diminished chord fingerings involving the second finger produce physical discomfort that must be accepted as normal: 'Don't be alarmed if the first joint of the second finger aches slightly while it is learning to bear the strain' (p. 30). Students are instructed not to avoid these positions but to develop them through methodical practice.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/unconventional-fingering-acceptance"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 30"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "tonic-only-harmonization",
+          "narrative": "A tonic-only harmonized minor exercise isolates root-chord sustain while navigating melodic motion above it: 'The harmonized minor scale built on the tonic chord. To explain this more clearly in case of doubt, it is written in the key of D minor (using accidentals), using the tonic triad only, as harmony' (p. 22). This focused exercise isolates inner-voice sustain and position stability without the complexity of diatonic harmonic motion.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min-maj7/tonic-only-harmonization"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 22"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min-maj7",
+          "function_role": "tonic-only-harmonization",
+          "narrative": "The tonic-only harmonized minor exercise implies a min-maj7 texture when the leading tone is included in melodic motion above a sustained minor tonic chord: 'using the tonic triad only, as harmony... Practice each form carefully as each fingering presents different hazards' (p. 22). This passage is the method's closest approach to the min-maj7 quality.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/tonic-only-harmonization"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 22"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "seventh-arpeggio-full-fingerboard",
+          "narrative": "Seventh arpeggio exercises span the entire fingerboard and must not be artificially confined to a single position: 'Built on the seventh arpeggio which takes in the entire fingerboard' (p. 24). Van Eps requires the player to follow the arpeggio through its full range as written before any transposition.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7b5/seventh-arpeggio-full-fingerboard"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 24"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "seventh-arpeggio-full-fingerboard",
+          "narrative": "The seventh arpeggio exercise in the harmonized minor scale context — which yields min7b5 quality on the second degree — must cover the entire fingerboard range: 'Built on the seventh arpeggio which takes in the entire fingerboard' (p. 24). This requirement ensures the half-diminished voicing is understood as a mobile, register-spanning sonority.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dom7/seventh-arpeggio-full-fingerboard"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 24"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "range-truncation-register-limit",
+          "narrative": "When the seventh arpeggio descends below playable range or ascends above it, specific measures may be omitted: 'can be moved up and down the fingerboard by leaving out the first measure when descending (if too low) and leaving out the fifth measure when ascending (if too high)' (p. 24). This pragmatic rule prevents forcing the arpeggio into unplayable registers.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7b5/range-truncation-register-limit"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 24"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7b5",
+          "function_role": "range-truncation-register-limit",
+          "narrative": "The register truncation rule for seventh arpeggios applies to the min7b5 arpeggio on the second degree of the harmonized minor scale: 'leaving out the first measure when descending (if too low) and leaving out the fifth measure when ascending (if too high)' (p. 24). Players should omit the limiting measure rather than transposing the arpeggio out of its harmonic context.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dom7/range-truncation-register-limit"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 24"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "alternate-picking-upstroke-rule",
+          "narrative": "In harmonized minor scale arpeggio passages, upstrokes must be used on the 2nd and 4th triads: 'this exercise uses alternate picking, which means that the second and fourth triads in the measure are played with up-strokes' (p. 25). This alternation distributes pick motion evenly and prevents fatigue on the downstroke-heavy passages typical of the method.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dom7/alternate-picking-upstroke-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 25"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "alternate-picking-upstroke-rule",
+          "narrative": "The alternate picking rule requiring upstrokes on the 2nd and 4th triads (p. 25) applies to dominant seventh arpeggio passages. Van Eps further mandates a method-wide revision drill: 'Go back through the book now, taking all exercises in which down-strokes only were used and practice them using up-strokes' (p. 39), requiring up-strokes to match down-stroke speed and tone.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/alternate-picking-upstroke-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 25"
+            },
+            {
+              "source": "1939-method",
+              "citation": "p. 39"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "broken-string-set-pick-jump",
+          "narrative": "When a voicing requires picking across non-adjacent strings, the pick must execute a smooth jump over the skipped string without catching it: 'Be careful in the latter as you have to jump over a string with the pick. This must be done smoothly' (p. 26). Catching the intervening string produces an unwanted note that disrupts the voiced chord.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/broken-string-set-pick-jump",
+            "dom7/broken-string-set-pick-jump"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 26"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "broken-string-set-pick-jump",
+          "narrative": "Broken string set voicings require a smooth pick jump over skipped strings: 'you have to jump over a string with the pick. This must be done smoothly' (p. 26). This technique applies wherever major chord voicings are spread across non-adjacent string groups in open-voiced contexts.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/broken-string-set-pick-jump"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 26"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "contrary-motion-hand-gymnastics",
+          "narrative": "Contrary motion exercises serve as gymnastic conditioning for minor chord voicing technique: 'Contrary motion is introduced in this stretching exercise. This comes more under the heading of hand gymnastics. Constant practice of these two forms will definitely increase the spread of the fingers' (p. 27). Van Eps uses contrary motion to develop independent finger strength and coordination across the six minor forms.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/contrary-motion-hand-gymnastics"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 27"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "diminished-symmetry-traversal",
+          "narrative": "Diminished chord forms repeat identically every four frets, enabling full-fingerboard traversal using one physical shape: 'As you know the diminished chord repeats itself every four frets. Therefore it is necessary to have a good foundation in order to judge the distance between triads. You will notice the fingering remains the same throughout this exercise' (p. 28). Van Eps uses this property to unify the learning of diminished voicings across all positions.",
+          "source_work_id": "1939-method",
+          "cross_ref": [],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "rocker-arm-legato-alternation",
+          "narrative": "Legato in diminished chord passages is achieved through a rocker-arm alternation of the fretting fingers: 'The first and fourth fingers should alternate like the ends of a rocker arm. In other words the first finger should remain down until the fourth comes down, but make sure there are never four notes sounding not even for a fraction of a second' (p. 28). This rocking motion transfers pressure from one finger to the next while maintaining continuous sustain.",
+          "source_work_id": "1939-method",
+          "cross_ref": [],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "finger-suspension-slide-free-jump",
+          "narrative": "Diminished chord position shifts must be executed with the fingers suspended above the strings during the jump: 'The first finger should rest just above the fourth string, not riding it, but suspended a little above the string. Practice slowly' (p. 28). This suspension technique is the specific mechanism that enforces the no-slide rule for diminished voicings.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/finger-suspension-readiness"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "idle-finger-readiness",
+          "narrative": "Idle fingers not currently fretting a diminished chord tone must be held in readiness above their target strings: 'you may have to spend a lot of time on these first two diminished exercises to get the two idle fingers to lie in readiness. This is important and must be practiced until perfect' (p. 28). Idle finger readiness is treated as a non-negotiable technique requiring dedicated practice.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/finger-suspension-readiness"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 28"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "finger-suspension-readiness",
+          "narrative": "Idle fingers must be held in a state of suspension above the strings, ready to descend instantly for the next minor chord voicing: 'It is necessary to keep the fingers suspended over the fingerboard at all times... approximately one-half inch above the strings for in this position they are always ready to operate' (p. 5). This preparatory hover position eliminates the delay between voice changes that produces unwanted gaps in minor chord passages.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dim7/finger-suspension-slide-free-jump",
+            "maj7/finger-suspension-readiness"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 5"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "finger-suspension-readiness",
+          "narrative": "Idle finger suspension — keeping unused fingers hovering close above the strings — applies to major chord voicing technique throughout the method: 'Do not let them stand up straight, curl under the fingerboard, or wander in any fashion. The correct place is approximately one-half inch above the strings' (p. 5). Pre-positioning fingers above their target strings is essential for clean, fast multi-voice major chord forms.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/finger-suspension-readiness",
+            "dim7/idle-finger-readiness"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 5"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "fourth-finger-arch-rule",
+          "narrative": "The fourth finger must maintain a firm arch when fretting diminished chord tones: 'This exercise increases the reach of the fourth finger. This finger will have a tendency to lay flat when it should be arched. This may be a strain at first but it can be developed through work' (p. 30). Collapse of the fourth finger is a common error in diminished voicings due to the unusual hand angles these forms require.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/fourth-finger-arch-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 30"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "fourth-finger-arch-rule",
+          "narrative": "Maintaining a firm fourth-finger arch is required in minor chord forms as well as diminished ones: 'The fingers must be arched until just the tips rest on the strings so that they work up and down hammer-fashion' (p. 5). The arch prevents inadvertent muting of adjacent strings, especially problematic in close-voiced minor chord shapes on the middle string groups.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "dim7/fourth-finger-arch-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 5"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "single-finger-two-note-speed-technique",
+          "narrative": "When a single fretting finger must cover two successive diminished chord tones, speed of movement prevents the audible slide: 'you have to play two notes in succession with the first finger. The difficulty here is in making these two notes sound as though they were fingered with two fingers instead of one. This can be done by making the movement very fast without sliding or slurring' (p. 31). This technique is unique to diminished contexts where symmetry forces repeated string contact by the same finger.",
+          "source_work_id": "1939-method",
+          "cross_ref": [],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 31"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "open-voicing-string-muting",
+          "narrative": "Open voicings that skip a string require the fretting finger to deaden the unused string: 'It is necessary to \"deaden\" a string. This is taken care of by the fingering. For instance, in the first form the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string' (p. 31). Failure to mute the skipped string produces an unwanted pitch that corrupts the intended open-voiced chord quality.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/open-voicing-string-muting",
+            "dom7/open-voicing-string-muting"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 31"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "open-voicing-string-muting",
+          "narrative": "Open-voiced minor chord forms that span non-adjacent strings require the fretting finger to contact and deaden the skipped string: 'It is necessary to \"deaden\" a string. This is taken care of by the fingering' (p. 31). This muting technique is the foundation of clean open-voicing execution for all chord qualities in the method.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/open-voicing-string-muting",
+            "dom7/open-voicing-string-muting"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 31"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "open-voicing-string-muting",
+          "narrative": "Open voicings involving seventh chord qualities require string deadening via the fretting finger on any skipped string: 'It is necessary to \"deaden\" a string. This is taken care of by the fingering' (p. 31). The wider string intervals characteristic of open-voiced dominant seventh shapes make this muting technique especially critical to avoid extraneous pitches.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/open-voicing-string-muting",
+            "min7/open-voicing-string-muting"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 31"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "upstroke-arc-sustain-preservation",
+          "narrative": "When picking an open-voiced major chord with an upstroke, the pick must arc around the upper sustaining string: 'After the down-stroke the pick should travel in a small returning arc around the upper string so you will not touch it and stop its vibration. Then with the descending backward motion the pick will strike the middle note safely' (p. 32). Hitting the sustaining string with the pick body would kill a held inner voice, destroying the polyphonic texture.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "min7/upstroke-arc-sustain-preservation",
+            "dom7/upstroke-arc-sustain-preservation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 32"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "upstroke-arc-sustain-preservation",
+          "narrative": "Upstrokes in open-voiced minor chord passages must arc around any sustaining upper string: 'Make sure you do not deaden either of the sustaining voices with the up-stroke... the pick should travel in a small returning arc around the upper string so you will not touch it and stop its vibration' (p. 32). This technique is especially relevant in the harmonized minor scale forms where inner voice sustain is a primary goal.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/upstroke-arc-sustain-preservation",
+            "dom7/upstroke-arc-sustain-preservation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 32"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "upstroke-arc-sustain-preservation",
+          "narrative": "Open-voiced dominant seventh chord upstrokes must arc around any sustaining upper string to avoid inadvertently killing a held chord tone: 'Make sure you do not deaden either of the sustaining voices with the up-stroke... After the down-stroke the pick should travel in a small returning arc around the upper string' (p. 32). The string-skipping characteristic of open-voiced dominant seventh shapes makes this upstroke arc technique particularly relevant.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/upstroke-arc-sustain-preservation",
+            "min7/upstroke-arc-sustain-preservation"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 32"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "hammer-down-simultaneous-snap",
+          "narrative": "When adding a note to a held minor chord voicing, all fretting fingers required for the new note must descend simultaneously in a single hammer-down snap: 'have the fingers formed before the two fingers drop and make sure they come down together firmly. Do not merely lay them down but snap them down hammer-fashion simultaneously with the pick stroke' (p. 34). Sequential finger placement produces a broken chord effect where only a clean simultaneous attack is intended.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/hammer-down-simultaneous-snap"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 34"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "hammer-down-simultaneous-snap",
+          "narrative": "The simultaneous hammer-down snap technique for adding voices to a sustained chord applies to major chord voicings as well as minor: 'snap them down hammer-fashion simultaneously with the pick stroke. Give the notes their full value and practice slowly' (p. 34). It is the physical mechanism that makes inner-voice additions sound clean rather than rolled.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/hammer-down-simultaneous-snap"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 34"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "bass-sustain-under-moving-fingers",
+          "narrative": "While upper fingers move to articulate melody notes within a minor voicing, the bass note must be sustained without interruption: 'You may have difficulty in sustaining the bass note while the other fingers are performing. This is overcome by concentration and a little more pressure on that one note' (p. 35). Bass release during melodic movement undermines the harmonic foundation of minor chord passages.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/bass-sustain-under-moving-fingers",
+            "min-maj7/bass-sustain-under-moving-fingers"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 35"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "bass-sustain-under-moving-fingers",
+          "narrative": "The technique of sustaining the bass while upper fingers move is equally applicable to major chord voicings: 'You may have difficulty in sustaining the bass note while the other fingers are performing. This is overcome by concentration and a little more pressure on that one note' (p. 35). A held bass note under a moving melody is the hallmark of Van Eps's polyphonic style.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/bass-sustain-under-moving-fingers"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 35"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min-maj7",
+          "function_role": "bass-sustain-under-moving-fingers",
+          "narrative": "The bass-sustain technique is especially characteristic of min-maj7 sonorities, where the sustained minor tonic bass supports melodic motion that includes the major seventh: 'You may have difficulty in sustaining the bass note while the other fingers are performing. This is overcome by concentration and a little more pressure on that one note' (p. 35). Van Eps's tonic-only minor exercises directly cultivate this sustain technique.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/bass-sustain-under-moving-fingers"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 35"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "lower-string-pressure-increase",
+          "narrative": "Lower strings require greater left-hand fretting pressure than upper strings to produce equivalent tone in minor chord voicings: 'More pressure has to be applied when playing on the lower strings in order to obtain a clear tone' (p. 37). Students must consciously increase pressure on bass-register minor chord tones to avoid the dull, partially fretted sound that results from applying uniform pressure across all strings.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/lower-string-pressure-increase",
+            "dom7/lower-string-pressure-increase"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 37"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "lower-string-pressure-increase",
+          "narrative": "The requirement for greater fretting pressure on lower strings applies to major chord voicings whenever bass-register strings are included: 'More pressure has to be applied when playing on the lower strings in order to obtain a clear tone' (p. 37). Uniform pressure across a major chord voicing will underperform on the lower strings, producing uneven chord tone balance.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/lower-string-pressure-increase"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 37"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "lower-string-pressure-increase",
+          "narrative": "Lower-string fretting pressure requirements are relevant to dominant seventh chord voicings, which frequently place the seventh on the lower strings: 'More pressure has to be applied when playing on the lower strings in order to obtain a clear tone' (p. 37). Insufficient pressure on these strings causes the defining tone of the dominant seventh quality to be weak or muted.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/lower-string-pressure-increase",
+            "maj7/lower-string-pressure-increase"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 37"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "inner-voice-sustain",
+          "narrative": "The inner-voice sustain technique described for minor chord forms extends to denser minor voicings: when an added ninth is present, all lower voices must be sustained with equal care under the moving melody, consistent with the method's instruction that 'Make sure they sustain their full value' (p. 14). The bass-sustain rule at p. 35 reinforces that this layered sustain is required for any minor chord density.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/inner-voice-sustain",
+            "min7/bass-sustain-under-moving-fingers"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 14"
+            },
+            {
+              "source": "1939-method",
+              "citation": "p. 35"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "contrary-motion-hand-gymnastics",
+          "narrative": "Contrary motion exercises serve as gymnastic conditioning benefiting all chord voicing contexts: 'Contrary motion is introduced in this stretching exercise. This comes more under the heading of hand gymnastics. Constant practice of these two forms will definitely increase the spread of the fingers' (p. 27). The independence of hand coordination developed through contrary motion directly benefits the separation of melody and inner voices in major chord polyphony.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/contrary-motion-hand-gymnastics"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 27"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "broken-string-set-pick-jump",
+          "narrative": "Dominant seventh voicings in open-string-set configurations require the same smooth pick jump over skipped strings described for minor and major contexts: 'you have to jump over a string with the pick. This must be done smoothly' (p. 26). The wider voicing spread characteristic of dominant seventh open voicings makes this pick-jump technique especially relevant.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/broken-string-set-pick-jump",
+            "maj7/broken-string-set-pick-jump"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 26"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "exit-pressure-release-timing",
+          "narrative": "The release of fretting pressure at chord exit must be as fast as the attack: 'In the exit of a note or chord, the pressure must be released as quickly as it was applied because a slow release produces a bad buzzing sound, especially when working on the lower strings' (p. 6). The release must go straight up off the fingerboard, not slant toward the next position.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "min7/exit-pressure-release-timing",
+            "dom7/exit-pressure-release-timing"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "exit-pressure-release-timing",
+          "narrative": "For minor chord voicings, fretting pressure at the exit of a chord must be released instantaneously and perpendicularly: 'the pressure must be released as quickly as it was applied because a slow release produces a bad buzzing sound... The pressure release must be straight up off the fingerboard and not slanting in the direction of the next position, otherwise a slurring effect will be the result' (p. 6).",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/exit-pressure-release-timing"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "exit-pressure-release-timing",
+          "narrative": "Dominant seventh chord exits require the same instantaneous, straight-up pressure release prescribed for all chord qualities: 'the pressure must be released as quickly as it was applied because a slow release produces a bad buzzing sound, especially when working on the lower strings' (p. 6). Since dominant seventh voicings often involve lower strings, the buzzing hazard is especially acute.",
+          "source_work_id": "1939-method",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "maj7/exit-pressure-release-timing",
+            "min7/exit-pressure-release-timing"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 6"
+            }
+          ]
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "downstroke-pick-stop-rule",
+          "narrative": "On downstrokes through major chord voicings, the pick must stop against the next highest string rather than pushing forcibly through: 'In the down strokes, use the next highest string as a pick stop... you will not strike two strings at once, as you might do if you were just forcibly pushing the pick across the strings' (p. 9). This stop-against technique is the physical basis of the pulsation approach.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "min7/downstroke-pick-stop-rule",
+            "dom7/downstroke-pick-stop-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 9"
+            }
+          ]
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "downstroke-pick-stop-rule",
+          "narrative": "The downstroke pick-stop rule — using the next highest string as a stop rather than forcing through — applies to all minor chord arpeggio passages: 'In the down strokes, use the next highest string as a pick stop' (p. 9). Forcing the pick produces double-string strikes that corrupt the voiced chord texture.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/downstroke-pick-stop-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 9"
+            }
+          ]
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "downstroke-pick-stop-rule",
+          "narrative": "The downstroke pick-stop technique — stopping the pick against the next highest string — governs dominant seventh arpeggio passages as it does all chord types: 'In the down strokes, use the next highest string as a pick stop' (p. 9). This technique prevents the double-string strikes that would smear the defining tones of a dominant seventh voicing.",
+          "source_work_id": "1939-method",
+          "cross_ref": [
+            "maj7/downstroke-pick-stop-rule",
+            "min7/downstroke-pick-stop-rule"
+          ],
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "1939-method",
+              "citation": "p. 9"
+            }
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "outer-voice-anchor",
+          "narrative": "The sustained whole and half notes must be held under full left-hand pressure while other fingers articulate the inner line independently: 'The whole and half notes must be sustained full value; keep the pressure applied firmly while the quarter notes are in motion' (p. 134). The outer soprano and bass define the major-seventh color while inner voices walk chromatically beneath them.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/inner-voice-chromatic-motion",
+            "maj9/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Van Eps frames the chromatic scale as the universal generator of all chord colors: 'The chromatic scale contains every known scale, arpeggio, chord, harmonic situation, theme, etc. in all twelve keys' (p. 257). Within a maj7 context, inner voices (alto and tenor) must move by half-step beneath the sustained outer voices, never sitting static on chord tones.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/outer-voice-anchor",
+            "dom7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "triad-to-tetrad-conversion",
+          "narrative": "'Major makes minor, and minor makes major' (p. 276): a maj7 chord contains a pure minor triad in its upper voices. Van Eps prescribes using inversion arpeggios to surface this hidden triad identity — 'The inversion arpeggios help in finding the recognizable overall chords' (p. 275) — so the student hears the maj7 as a minor triad over a major bass.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/chameleon-chord-recognition",
+            "min7/triad-to-tetrad-conversion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "open-voicing-fingering",
+          "narrative": "In open-voicing contexts carrying a maj7 color, individual-finger fingerings are mandatory over barres: 'Many times individual fingers are used where double stops and small barres could be employed; when voice motion continues, double stops won't work' (p. 245). The barre locks inner voices that must remain free to move.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/inner-voice-chromatic-motion",
+            "maj9/open-voicing-fingering"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj9",
+          "function_role": "extension-substitution",
+          "narrative": "Extended chords are produced by substituting the 9th for an inner chord tone: the maj9 arises when the 9th replaces the root or fifth within the maj7 tetrad frame. Van Eps insists the student 'identify the opening sixth with the basic triad, then the upper line arpeggio with the root position' (p. 115) so every extension is heard as a transformation of its parent triad, not as an independent voicing.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/triad-to-tetrad-conversion",
+            "maj9/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj9",
+          "function_role": "outer-voice-anchor",
+          "narrative": "The 1-5-3-1-5-1-3-5 upper-voice pulsation pattern that powers the sixths-into-tenths studies places the 9th on structurally accented beats when the pattern is inverted: 'When pattern is inverted 10ths are formed on the 1st and 4th beat' (p. 120). The outer soprano must sustain or re-articulate that 9th while inner voices provide the maj7 color beneath.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj9/extension-substitution",
+            "maj7/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj6",
+          "function_role": "deletion-rule-application",
+          "narrative": "'The upper and lower notes of first inversion triads are major and minor sixth intervals apart. The sixth makes a very powerful two note chord and because of this power, the middle notes can be deleted without spoiling the chordal result' (p. 19). The maj6 interval between outer voices of a 1st-inversion triad is Van Eps's primary compression device, reducing six-note doubled triads to four-note hand-grips.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj6/inferred-middle-voice",
+            "min6/deletion-rule-application"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj6",
+          "function_role": "inferred-middle-voice",
+          "narrative": "Van Eps prescribes the 'hint/suggestion of a tone': 'A note can be inferred but not actually sounded, yet its presence is felt to the point where it's almost heard' (p. 20). When the maj6 outer frame is present the middle note is deleted from the physical grip but implied by the ear — the deliberate inferred-note device that powers all four-note compounded-triad voicings.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj6/deletion-rule-application",
+            "min6/inferred-middle-voice"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "triad-to-tetrad-conversion",
+          "narrative": "'The major seventh chord has to contain the notes of one of the pure minor triads — in other words, major makes minor, and minor makes major' (p. 276). A min7 therefore contains a major triad in its upper voices; the student is directed to use inversion arpeggios to surface this identity: 'The inversion arpeggios help in finding the recognizable overall chords' (p. 275).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/chameleon-chord-recognition",
+            "maj7/triad-to-tetrad-conversion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Minor modes require dedicated chromatic treatment because 'The Minor Modes Can't Parallel the Major because of the Minor third interval — it is shortened by one semitone' (p. 159). Inner voices within a min7 must be drilled through harmonized harmonic-minor, melodic-minor, and mixed-minor scales rather than transposed from major-key forms.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/outer-voice-anchor",
+            "min9/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "outer-voice-anchor",
+          "narrative": "Van Eps prescribes sustaining the outer-voice pedal for the full measure: 'Always Treat each measure as a separate exercise — sustain the whole note for the full measure' (p. 152). Within a min7 pedal context the bass defines the minor-seventh tonal center while upper chromatic lines create passing tensions above it.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/inner-voice-chromatic-motion",
+            "dom7/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "'All small chords have second, third, fourth (etc.) callings under varied harmonic conditions, positions and situations' (p. 276). The student must resist labeling a min7 shape with a single name; Van Eps mandates reading every voicing through the bass-suffix system — 'the symbol for a chord depends on its use — its place in a progression' (p. 141) — to internalize its multiple identities.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/triad-to-tetrad-conversion",
+            "dom7/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min9",
+          "function_role": "extension-substitution",
+          "narrative": "Van Eps builds min9 colors by substituting the 9th for an inner chord tone within the min7 frame. The governing rule is to 'identify the opening sixth with the basic triad, then the upper line arpeggio with the root position' (p. 115) so the 9th is heard as a melodic product of the moving inner voice, not as an additional note stacked on top.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/triad-to-tetrad-conversion",
+            "min9/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min9",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Because minor modes cannot parallel major ('The Minor Modes Can't Parallel the Major because of the Minor third interval', p. 159), the 9th within a min9 context must be approached via the specific minor-scale chromatic approach tones of harmonic or melodic minor, not by transposing a major-key pattern. Van Eps requires the student to 'Apply these team principles to the melodic Minor — mixed Minor — Major etc.' (p. 255).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min9/extension-substitution",
+            "min7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min-maj7",
+          "function_role": "mixed-minor-voice-motion",
+          "narrative": "The min-maj7 color emerges from the 'mixed minors' device: 'Melodic minor up, middle voice — harmonic minor down, lower voice — run each one separately in both directions — reverse them also' (p. 66). Van Eps prescribes combining melodic-minor ascent against harmonic-minor descent in opposite voices, and directs the student to 'Extend all of these studies full range' (p. 67) across the entire fingerboard.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min-maj7/outer-voice-anchor",
+            "min7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min-maj7",
+          "function_role": "outer-voice-anchor",
+          "narrative": "When the min-maj7 sonority arises from mixed-minor voice motion, the outer-voice sixth must remain sustained at full value while inner voices alternate between the harmonic and melodic minor forms. Van Eps is explicit: 'Always sustain the half and whole notes for their full value' (p. 116), and release is 'permissible to treat the half note as though it were a quarter note' only 'as a last resort' (p. 249).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min-maj7/mixed-minor-voice-motion",
+            "min7/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "'The symbol for a chord depends on its use — its place in a progression' (p. 141). Van Eps illustrates this with a dominant-seventh example: 'The G47°35 above is also an E diminished 9th' (p. 141), making it explicit that every dom7 shape has at least two valid readings and the student must determine the label from context, not from the voicing alone.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/triad-over-bass-reading",
+            "dim7/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "triad-over-bass-reading",
+          "narrative": "Van Eps prescribes re-hearing any dom7 as a minor triad over a bass a third below: 'The minor seventh chord has to contain the notes (open or closed) of one of the three pure major triads... major makes minor, and minor makes major' (p. 276). The 'inversion arpeggios help in finding the recognizable overall chords' (p. 275), surfacing the minor-triad identity hidden inside every dominant seventh.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/chameleon-chord-recognition",
+            "min7/triad-to-tetrad-conversion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Chromatic contrary-motion studies produce dom7 sonorities as a mechanical byproduct: 'This type of chordal movement is based on mathematical mechanical motion without regard for the harmonic result' (p. 273). Inner voices are never static on chord tones — they descend or ascend by half-step through the dominant-seventh color, creating the characteristic Van Eps chromatic inner-voice texture.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/dissonance-tolerance",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "dissonance-tolerance",
+          "narrative": "Van Eps forbids the student from 'fixing' the dissonances that arise when a dom7 triad collides with an independent bass: 'It is not good to shy away from dissonances. Let tones clash at times' (p. 269). Dissonance is reframed as information — 'these dissonances are very helpful and necessary at times. It is useful information' (p. 288) — and must not be corrected during the learning stage.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/chameleon-chord-recognition",
+            "dom7alt/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "cycle-of-fifths-transposition",
+          "narrative": "All dominant-seventh transposition follows the descending cycle of fifths, not chromatic key-shifts: 'Most of the studies in these books go through the keys employing the descending cycle of fifths (up a fourth or down a fifth) in preference to changing keys chromatically. The reason being that it provides more variety and change of fingering' (p. 18). This is a standing order for every dom7 exercise in the volume.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/triad-over-bass-reading",
+            "dom13/cycle-of-fifths-transposition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "bass-suffix-labeling",
+          "narrative": "Van Eps's bass-suffix chord-symbol notation is mandatory for reading dom7 inversions: 'The letter B at the end of a chord symbol designates the bass note in the chord... If the bass is the third of the chord the last two figures would be the number three and the letter B = 3B etc.' (p. 274). Without this convention the Major/Minor Series dom7 labels are unreadable.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/triad-over-bass-reading",
+            "dom7b9/bass-suffix-labeling"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom13",
+          "function_role": "cycle-of-fifths-transposition",
+          "narrative": "Extended dominant chords including dom13 are generated by 'mathematical mechanical motion without regard for the harmonic result' (p. 273) through the descending cycle of fifths. Van Eps states 'a bass line descending through the cycle of fifths is neutral — neither major or minor — until other voices are introduced' (p. 277), which means the dom13 color only crystallizes when the upper triad is supplied.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom13/inner-voice-chromatic-motion",
+            "dom7/cycle-of-fifths-transposition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom13",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Van Eps claims that chromatic third-to-tenth exercises generate every scale type: 'By using these chromatic exercises in all their various forms, positions, and combinations, all scales Maj., Min., Dim., Aug. may be constructed' (p. 149). The dom13 sonority emerges when the chromatic sixth above the dominant root is sustained as an anchor while inner voices move through the chord's interior.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom13/cycle-of-fifths-transposition",
+            "dom7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom11",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Dom11 sonorities surface as products of chromatic inner-voice motion against a sustained dominant bass. Van Eps's outer-voice-anchor principle applies: 'Notice that the sustained note is describing the C Major scale. All the...' (p. 154) — the held bass identifies the dominant key while the 11th appears as a chromatic passing or neighbor tone in the inner line, not as a pre-planned target chord tone.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom11/dissonance-tolerance",
+            "dom7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom11",
+          "function_role": "dissonance-tolerance",
+          "narrative": "The 11th against a dominant context creates friction with the 3rd; Van Eps prescribes accepting this: 'Dissonances are natural when working with chromatic contrary motion involving a chord line going one way and the bass line going another' (p. 285). The student must 'not shy away from dissonances' (p. 269) and not 'fix' the 11th-vs-3rd clash during the learning stage.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom11/inner-voice-chromatic-motion",
+            "dom7alt/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7alt",
+          "function_role": "dissonance-tolerance",
+          "narrative": "Van Eps's blockout discipline mandates strict adherence to the mechanical form even when altered dominant clashes arise: 'Stick to it, no matter how dissonant it sounds. Later on, when the principle is understood more clearly, deviation should take place' (p. 273). Altered-dominant dissonances from chromatic contrary motion are explicitly named as 'natural' and must not be corrected prematurely.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7alt/inner-voice-chromatic-motion",
+            "dom7/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7alt",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Altered dominant colors emerge from the mechanical chromatic generator: 'This type of chordal movement is based on mathematical mechanical motion without regard for the harmonic result, which produces many interesting relationships' (p. 273). The altered tones (b9, #9, b5, #5) are byproducts of the half-step inner-voice walk, not pre-selected targets. 'Traditional configurations are well known; nontraditional configurations must be found, explored, analyzed, and well practiced' (p. 269).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7alt/dissonance-tolerance",
+            "dom7b9/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7b9",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "The dom7b9 sound is singled out implicitly in the chromatic-pedal-bass chapter: 'When working with long chromatic lines while sustaining a tone, the fingers have to sound two, sometimes three half steps in succession with the same finger, smoothly' (p. 154). The b9 arises when the single-finger chromatic walk descends one half-step below the root against the sustained dominant bass, and must be executed with the same finger without releasing the pedal.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7b9/bass-suffix-labeling",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7b9",
+          "function_role": "bass-suffix-labeling",
+          "narrative": "Van Eps introduces the chord-symbol bass-note suffix so that dom7b9 inversions can be precisely named: 'The letter B at the end of a chord symbol designates the bass note in the chord... If the bass is the third of the chord the last two figures would be the number three and the letter B = 3B etc.' (p. 274). The same b9 voicing carries different functional labels depending on which bass note is sounding beneath it.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7b9/inner-voice-chromatic-motion",
+            "dom7/bass-suffix-labeling"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7b9",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "Van Eps demonstrates the chameleon principle directly with a dominant-family example: 'The G47°35 above is also an E diminished 9th — in other words the symbol for a chord depends on its use — its place in a progression etc.' (p. 141). The dom7b9 is the canonical illustration of this multi-naming doctrine because its upper four voices also spell a fully-diminished seventh chord.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7b9/bass-suffix-labeling",
+            "dim7/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7#9",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "The #9 color arises from the same chromatic inner-voice generator that produces b9: 'By using these chromatic exercises in all their various forms, positions, and combinations, all scales Maj., Min., Dim., Aug. may be constructed' (p. 149). Van Eps prescribes drilling every chromatic third-to-tenth form in 'all their various forms and positions,' which inevitably produces the #9 sonority as a minor-third inner-voice interval against the dominant bass.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7#9/dissonance-tolerance",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7#9",
+          "function_role": "dissonance-tolerance",
+          "narrative": "'It is not good to shy away from dissonances. Let tones clash at times' (p. 269). The #9 against the major 3rd of a dominant chord is one of the sharpest collisions in the system; Van Eps reframes it as 'useful information' (p. 288) arising from mechanical motion and explicitly bars the student from resolving or omitting it during the drill stage.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7#9/inner-voice-chromatic-motion",
+            "dom7alt/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7#11",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "The #11 (tritone above the root) appears as a chromatic passing tone in the upper-voice pattern when the inner line ascends by half-step through the dominant fourth. Van Eps prescribes constructing 'your own exercises by using portions of these forms... use 1 note, 2 notes, 4 notes etc. Selected from the beginning, the middle or any place in the groups' (p. 149), authorizing isolation of the #11 passing moment as a focused drill fragment.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7#11/dissonance-tolerance",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7#11",
+          "function_role": "dissonance-tolerance",
+          "narrative": "Van Eps's doctrine that 'Dissonances are natural when working with chromatic contrary motion involving a chord line going one way and the bass line going another' (p. 285) applies to the #11 dissonance with the dominant perfect 4th. The student is barred from avoiding this interval during the mechanical-motion drill stage.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7#11/inner-voice-chromatic-motion",
+            "dom11/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7b5",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "The dom7b5 emerges when the fifth of a dominant seventh is lowered a half-step by the single-finger chromatic walk: 'the fingers have to sound two, sometimes three half steps in succession with the same finger, smoothly' (p. 154). Van Eps prescribes executing this smoothly without releasing the pedal bass, treating the b5 as a passing chromatic event rather than a pre-formed chord type.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7b5/chameleon-chord-recognition",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7b5",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "'All small chords have second, third, fourth (etc.) callings under varied harmonic conditions, positions and situations' (p. 276). A dom7b5 voicing shares pitch-class content with another dom7b5 a tritone away; Van Eps's multi-naming doctrine requires the student to identify which bass note is active before assigning a symbol — 'the symbol for a chord depends on its use — its place in a progression' (p. 141).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7b5/inner-voice-chromatic-motion",
+            "dom7alt/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7b5",
+          "function_role": "triad-over-bass-reading",
+          "narrative": "Van Eps prescribes hearing every seventh-chord quality as a triad of the opposite modality over a bass: 'major makes minor, and minor makes major' (p. 276). A min7b5 (half-diminished) thus contains a major triad a minor third above its root; 'The inversion arpeggios help in finding the recognizable overall chords' (p. 275), and the student must arpeggio through the voicing to surface that hidden major-triad identity.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7b5/chameleon-chord-recognition",
+            "dim7/triad-over-bass-reading"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7b5",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "The chameleon doctrine directly addresses min7b5 equivalences: 'All small chords have second, third, fourth (etc.) callings under varied harmonic conditions, positions and situations' (p. 276). The same four-note voicing that is a min7b5 in one context is a dom9 with root omitted in another; the bass-suffix labeling system — '3B etc.' (p. 274) — is the mandatory tool for tracking which calling is active.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7b5/triad-over-bass-reading",
+            "dom7b9/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min6",
+          "function_role": "deletion-rule-application",
+          "narrative": "The minor sixth interval between outer voices of a first-inversion minor triad is Van Eps's compression tool: 'The sixth makes a very powerful two note chord and because of this power, the middle notes can be deleted without spoiling the chordal result, (in many instances, therefore, reducing the number of notes from six to four to achieve the effect of compounding two triads)' (p. 19). The min6 outer frame is the anchor of every compressed minor-triad voicing.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min6/inferred-middle-voice",
+            "maj6/deletion-rule-application"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min6",
+          "function_role": "inferred-middle-voice",
+          "narrative": "Within a minor-sixth outer frame, the deleted middle voice is implied by the ear through Van Eps's 'hint/suggestion of a tone' device: 'A note can be inferred but not actually sounded, yet its presence is felt to the point where it's almost heard' (p. 20). The student must internalize which degree is being omitted and confirm it analytically before playing.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min6/deletion-rule-application",
+            "maj6/inferred-middle-voice"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dim7",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "Van Eps illustrates the chameleon principle with a diminished chord as Exhibit A: 'The G47°35 above is also an E diminished 9th — in other words the symbol for a chord depends on its use — its place in a progression etc.' (p. 141). Every dim7 shape is enharmonically equivalent to three other dim7 chords; the student is explicitly required to internalize all four callings via inversion arpeggios.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dim7/triad-over-bass-reading",
+            "dom7b9/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dim7",
+          "function_role": "triad-over-bass-reading",
+          "narrative": "'The inversion arpeggios help in finding the recognizable overall chords' (p. 275). A dim7 chord contains a diminished triad over any of its four bass notes; Van Eps prescribes arpeggiating through the inversion stack to surface whichever dominant-seventh-b9 reading matches the harmonic context — 'major makes minor, and minor makes major' (p. 276) extends to the diminished family via the b9 root substitution.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dim7/chameleon-chord-recognition",
+            "min7b5/triad-over-bass-reading"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dim7",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Van Eps positions the chromatic scale as the universal source: 'The chromatic scale contains every known scale, arpeggio, chord, harmonic situation, theme, etc. in all twelve keys' (p. 257). Diminished-seventh shapes arise as frozen snapshots of the chromatic inner-voice walk when all four voices simultaneously occupy a stack of minor thirds; the student is directed to hear the dim7 as motion rather than as a static block.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dim7/chameleon-chord-recognition",
+            "dom7b9/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "aug7",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "Augmented colors are among the scale types Van Eps claims the chromatic exercises generate: 'all scales Maj., Min., Dim., Aug. may be constructed' (p. 149) by running chromatic third-to-tenth exercises in all forms and positions. The aug7 emerges when the fifth is raised by the half-step inner-voice walk against a sustained dominant bass, and must be accepted as a product of mechanical motion.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "aug7/dissonance-tolerance",
+            "dom7alt/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "aug7",
+          "function_role": "dissonance-tolerance",
+          "narrative": "The augmented fifth creates a strong dissonance against the minor seventh; Van Eps's categorical instruction applies: 'It is not good to shy away from dissonances. Let tones clash at times' (p. 269). The aug7 clash produced by contrary-motion chromatic lines is explicitly listed as 'natural' — 'Dissonances are natural when working with chromatic contrary motion' (p. 285) — and must not be resolved prematurely.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "aug7/inner-voice-chromatic-motion",
+            "dom7alt/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "sus4",
+          "function_role": "super-position-voice-motion",
+          "narrative": "Van Eps's 'super' motion — 'When any one of the voices in a triad is raised one step of the scale it is placed in super position' (p. 160) — produces a sus4 color when the third of a triad is raised one diatonic step. The student is directed to think of this as 'voice motion' not a static chord: 'When the voice motion moves one step above normal... it is termed super motion' (p. 160), so the sus4 is always a melodic event in the inner line.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "sus4/sub-return-voice-motion",
+            "maj7/outer-voice-anchor"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "sus4",
+          "function_role": "sub-return-voice-motion",
+          "narrative": "The sub motion returns the raised voice to its original position: 'When the voice motion moves one step below normal, or, returns from below normal to normal position, it is termed sub motion' (p. 160). A sus4 resolving back to the triad third is therefore a 'super-returns-to-normal' event. Van Eps mandates reading this as a melodic occurrence — 'it is the original voicing that is going to produce others. Therefore, it becomes the boss' (p. 160) — keeping the root triad as the conceptual anchor.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "sus4/super-position-voice-motion",
+            "dom7/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "sus4",
+          "function_role": "inversion-membership-shift",
+          "narrative": "'A first inversion triad with the middle voice super automatically becomes a member of the second inversion family' (p. 160). When the sus4 is produced by raising the third (middle voice of a 1st-inversion triad) one diatonic step, Van Eps prescribes immediately re-identifying the result as a second-inversion member, holding the original inversion in mind: 'it is the original voicing that is going to produce others. Therefore, it becomes the boss — it is the dominating factor regardless of the other inversions produced' (p. 160).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "sus4/super-position-voice-motion",
+            "sus4/sub-return-voice-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7#11",
+          "function_role": "inner-voice-chromatic-motion",
+          "narrative": "The #11 (Lydian) color over a major-seventh context arises when the fourth above the root appears as a chromatic passing tone in the inner voice ascending by half-step. Van Eps prescribes accepting it: 'By using these chromatic exercises in all their various forms, positions, and combinations, all scales Maj., Min., Dim., Aug. may be constructed' (p. 149), with the Lydian mode's raised fourth emerging naturally from the chromatic generator.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7#11/chameleon-chord-recognition",
+            "dom7#11/inner-voice-chromatic-motion"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7#11",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "'All small chords have second, third, fourth (etc.) callings under varied harmonic conditions, positions and situations' (p. 276). A maj7#11 voicing with the root omitted is enharmonically equivalent to other chord types depending on which bass note is sounding; Van Eps's mandatory analytical step is to read the bass-suffix symbol — 'the symbol for a chord depends on its use — its place in a progression' (p. 141) — before assigning the Lydian-major label.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7#11/inner-voice-chromatic-motion",
+            "dom7#11/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "no-barre-articulation",
+          "narrative": "Van Eps prohibits barres in the sixths-with-upper-line studies that produce maj7 colors: 'there are no small or grand barres employed for many reasons; the main one being: the barre system is not suitable for this notation because it is too harplike in nature' (p. 115). Individual notes must be sounded by 'arched-finger hammers that can provide the so-important individual finger control' (p. 115) so that maj7 voicings articulate cleanly without uncontrolled ring.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/open-voicing-fingering",
+            "min7/no-barre-articulation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "no-barre-articulation",
+          "narrative": "The no-barre rule applies to all chord qualities including minor seventh contexts: 'Occasionally double stops are used, but there are no small or grand barres employed' (p. 115). Van Eps reiterates the rationale in the root-position super/sub chapter: 'Many times individual fingers are used where double stops and small barres could be employed; when voice motion continues, double stops won't work' (p. 245) — a barre on a min7 voicing locks inner voices that must move.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/open-voicing-fingering",
+            "maj7/no-barre-articulation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "no-barre-articulation",
+          "narrative": "Three-finger dominant-seventh triads are explicitly preferred over barred fingerings in the super/sub series: 'the reason for using 3 fingers to sound triads such as bar 1 is obvious in the Examples below' (p. 171) — the three-finger approach keeps the remaining finger free for the imminent voice motion that a barre would lock. Van Eps states the rationale as a general rule: 'three-finger triads rationale' is necessary 'in contexts where voice motion is coming.'",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/inner-voice-chromatic-motion",
+            "maj7/no-barre-articulation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "open-string-avoidance",
+          "narrative": "Van Eps prohibits open strings in all dominant-seventh studies except under absolute necessity: 'Open strings are used in the lower register only where absolutely necessary' (p. 71). The reason is transposability — open strings break the fingering-pattern portability that the cycle-of-fifths transposition scheme depends on. The standing workaround is: 'the 1st finger is ready to take the place of the open strings... this is a necessary mechanism because it can be raised a half tone without change' (p. 72).",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/cycle-of-fifths-transposition",
+            "min7/open-string-avoidance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "open-string-avoidance",
+          "narrative": "'Open strings are used in the lower register only where absolutely necessary' (p. 71), with the standing 'first finger replaces open strings' substitution as the prescribed workaround: 'the 1st finger is ready to take the place of the open strings... this is a necessary mechanism because it can be raised a half tone without change — this mechanism will appear often' (p. 72). All minor-seventh fingerboard work must use this substitution to preserve transposability.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/no-barre-articulation",
+            "dom7/open-string-avoidance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "tension-forced-shortens-reach",
+          "narrative": "Van Eps proscribes tensing when executing extended dominant voicings: 'Forcing the fingers by tensing tightens the tendons and actually shortens the reach' (p. 140). Wide dominant-seventh spreads must be approached via 'relaxed power control — not a large hand' (p. 140), and reach 'must be developed gradually by patiently working with material that contains extended spreads... not forcing fingers apart with wedges etc.' (p. 140).",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/inner-voice-chromatic-motion",
+            "maj7/tension-forced-shortens-reach"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "tension-forced-shortens-reach",
+          "narrative": "The proscription on tensing during extended maj7 open voicings is categorical: 'Forcing the fingers by tensing tightens the tendons and actually shortens the reach' (p. 140). Van Eps rejects mechanical stretching aids entirely — 'not forcing fingers apart with wedges etc.' (p. 140) — prescribing instead in-context gradual development 'patiently working with material that contains extended spreads' (p. 140).",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/open-voicing-fingering",
+            "dom7/tension-forced-shortens-reach"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "wrong-note-habit-formation",
+          "narrative": "Van Eps proscribes practicing dominant-seventh exercises at speed before the correct notes are memorized: 'Every wrong note plants the germ of a bad habit because the ear retains the sound of the mistake, and therefore it becomes subconsciously influential; there is a very strong chance that the mistake will be repeated' (p. 163). The prescribed alternative is to practice 'any new study... very slowly and correctly' (p. 163) without exception.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/inner-voice-chromatic-motion",
+            "min7/wrong-note-habit-formation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "wrong-note-habit-formation",
+          "narrative": "The slow-practice proscription applies to all minor-seventh exercises: 'Practice all of these studies very slowly at first to avoid building up bad habits — mistakes are habit forming' (p. 70). In multi-voice minor contexts where three or more voices move simultaneously, premature speed produces wrong-note muscle memory across all voices at once, compounding the harm.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/inner-voice-chromatic-motion",
+            "dom7/wrong-note-habit-formation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "reading-vs-studying",
+          "narrative": "Van Eps proscribes treating sight-reading as practice: 'Reading through exercises does not constitute study. Studying is an analyzing process — a mental understanding and assimilation of a given material. Real practice does not begin until the hands and fingers know where they belong' (p. 115). Every dominant-seventh multi-voice exercise must be memorized physically before it is considered studied.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/wrong-note-habit-formation",
+            "maj7/reading-vs-studying"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "reading-vs-studying",
+          "narrative": "The reading-vs-studying proscription applies with equal force to maj7 voicings: 'Reading through exercises does not constitute study' (p. 115). In major-seventh contexts carrying multiple independent voices, the student who reads through the passage without physically memorizing the voice-leading has not yet begun to practice, and must return to the passage at memorization tempo before moving on.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/no-barre-articulation",
+            "dom7/reading-vs-studying"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "fatigue-factor-efficiency",
+          "narrative": "Van Eps proscribes depressing more strings than are sounding in any dominant-seventh voicing: 'Don't depress more strings than are being used because of the fatigue factor. When three strings are depressed, but only two sounding, the result endurancewise is a 1/3 waste of energy, and over the long haul this becomes a sizable loss — when the hand is fatigued it makes mistakes' (p. 8). Every dominant-seventh finger placement must be audited against this economy rule.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/no-barre-articulation",
+            "maj7/fatigue-factor-efficiency"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "fatigue-factor-efficiency",
+          "narrative": "The fatigue-factor economy rule applies to all major-seventh voicings: 'Don't depress more strings than are being used because of the fatigue factor' (p. 8). In open maj7 voicings that skip strings, the student must press only the four strings that sound and must not lay the unused finger across intermediate strings as a brace — doing so wastes pressure and accelerates hand fatigue across a long session.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/no-barre-articulation",
+            "dom7/fatigue-factor-efficiency"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "blockout-deviation-discipline",
+          "narrative": "Van Eps proscribes early deviation from the strict mechanical blockout form: 'strict adherence to the mathematical form is very important in the learning stage' (p. 289), and 'Stick to it, no matter how dissonant it sounds' (p. 273). Deviation using the five authorized techniques (repeat chord, repeat bass, skip steps, splice cycles, whole-tone shift) is licensed only 'After the basic thought line of the blockout principal is clearly understood' (p. 288).",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/dissonance-tolerance",
+            "dom7alt/blockout-deviation-discipline"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7alt",
+          "function_role": "blockout-deviation-discipline",
+          "narrative": "The two-stage discipline rule bars early deviation specifically in altered-dominant blockout contexts: 'Make up other patterns, select other keys, change the order of the triads, change the bass line also. Then, for the sake of discipline, don't deviate from that format. Stick to it, no matter how dissonant it sounds. Later on, when the principle is understood more clearly, deviation should take place' (p. 273). The harsh altered-dominant clashes that arise are the intended learning material.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7alt/dissonance-tolerance",
+            "dom7/blockout-deviation-discipline"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "fatigue-factor-efficiency",
+          "narrative": "Economy of left-hand pressure is as critical in minor-seventh voicings as in any other quality: 'Don't depress more strings than are being used because of the fatigue factor' (p. 8). Van Eps notes that 'when the hand is fatigued it makes mistakes' (p. 8) — in the minor-seventh super/sub drills where many position shifts follow in sequence, excess pressure accumulates across dozens of repetitions and must be eliminated from each individual voicing.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/no-barre-articulation",
+            "dom7/fatigue-factor-efficiency"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dim7",
+          "function_role": "dissonance-tolerance",
+          "narrative": "Diminished-seventh dissonances arising from chromatic contrary motion must not be resolved or avoided in the learning stage: 'Dissonances are natural when working with chromatic contrary motion involving a chord line going one way and the bass line going another' (p. 285). Van Eps frames the dim7 clash as a pedagogically necessary product of mechanical motion — 'these dissonances are very helpful and necessary at times. It is useful information' (p. 288).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dim7/chameleon-chord-recognition",
+            "dom7/dissonance-tolerance"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min-maj7",
+          "function_role": "no-barre-articulation",
+          "narrative": "The no-barre proscription applies to min-maj7 voicings that arise from mixed-minor voice motion: 'there are no small or grand barres employed... the barre system is not suitable for this notation because it is too harplike in nature' (p. 115). The melodic-minor major-seventh color requires the melodic and harmonic lines to articulate independently, which is impossible under a barre that rings all strings simultaneously.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min-maj7/mixed-minor-voice-motion",
+            "min7/no-barre-articulation"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "aug7",
+          "function_role": "chameleon-chord-recognition",
+          "narrative": "'All small chords have second, third, fourth (etc.) callings under varied harmonic conditions, positions and situations' (p. 276). An aug7 voicing is enharmonically re-readable as three other aug7 chords (since the augmented triad divides the octave into equal thirds); Van Eps prescribes identifying the active bass-suffix context — '3B etc.' (p. 274) — before assigning any label, refusing to let the shape determine the name.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "aug7/inner-voice-chromatic-motion",
+            "dim7/chameleon-chord-recognition"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "maj7",
+          "function_role": "arpeggios-as-frozen-chords",
+          "narrative": "'Arpeggios are broken chords — chords are frozen arpeggios' (p. 11). Every maj7 chord in the volume must be understood as the momentary snapshot of moving voices, not as a static block. Van Eps mandates arpeggiating every maj7 voicing through its inversion sequence so the student hears the voice motion frozen inside it: 'The inversion arpeggios help in finding the recognizable overall chords' (p. 275).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "maj7/triad-to-tetrad-conversion",
+            "min7/arpeggios-as-frozen-chords"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "min7",
+          "function_role": "arpeggios-as-frozen-chords",
+          "narrative": "The 'arpeggios are broken chords — chords are frozen arpeggios' axiom (p. 11) applies universally to minor seventh contexts. Every min7 shape encountered in the super/sub series must be mentally unfolded into its arpeggio to reveal which voice motion produced it. Van Eps states that 'all chords are centers — when voices in a chord are moved one step up or down in any scale the resulting change becomes another center' (p. 161), requiring the student to treat every frozen min7 as a launchpad.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "min7/triad-to-tetrad-conversion",
+            "maj7/arpeggios-as-frozen-chords"
+          ]
+        },
+        {
+          "source_work_id": "harmonic-mechanisms-vol-1",
+          "chord_quality": "dom7",
+          "function_role": "arpeggios-as-frozen-chords",
+          "narrative": "'Arpeggios are broken chords — chords are frozen arpeggios' (p. 11). All dominant seventh chords in the Major/Minor Series are produced by independent mechanical voice motion; the student is directed to use inversion arpeggios — 'The inversion arpeggios help in finding the recognizable overall chords' (p. 275) — to surface which dominant-seventh reading applies before assigning the chord symbol.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dom7/triad-over-bass-reading",
+            "dom7/chameleon-chord-recognition"
+          ]
+        }
+      ]
     },
     {
       "id": "ted-greene",
