@@ -18255,7 +18255,911 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "usage_notes": [
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "tonic-minor-activity-anchor",
+          "narrative": "The entire activities system is anchored to the minor seventh chord as the primary harmonic unit. Martino establishes: 'melodic line forms must be improvised over various harmonic structures, creating a solo. These line forms (hereafter to be referred to as activities) can be related to both a chord and scale form' (p. 7). Every activity is defined relative to a minor seventh inversion, making the minor seventh the irreducible home chord of the method. The player must treat any minor seventh encountered as the direct trigger for the corresponding numbered activity form.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/twelve-key-prerequisite"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-form-selector",
+          "narrative": "The chord inversion of the minor seventh chord is the operative selector for which activity is played. Martino states: 'Each chord form will dictate the activity to be played (except in the case of the first chord form which names both the first and fifth activities)' (p. 10). The mapping is exact: 'Form 1 — Forms 1 & 5 / Form 2 — Form 2 / Form 3 — Form 3 / Form 4 — Form 4' (p. 10). The player must identify the inversion before selecting a melodic line; the inversion is not decorative information but the primary decision variable.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/tonic-minor-activity-anchor",
+            "minor7/cyclic-octave-shared-inversion"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "cyclic-octave-shared-inversion",
+          "narrative": "Activities 1 and 5 share the same chord inversion (Form 1), creating a cyclic structure. Martino writes: 'The fifth and final form of activity in the key of G minor completes the total coverage of the fingerboard in one key (G minor), over a distance of twelve frets (one octave). Notice that both the fifth and first activities start with the same note on the sixth string (a \"G\" note). ERGO: The next logical form to follow, would be the first form of activity one octave higher. Remember: The first and fifth activities share the same chord inversion' (p. 15). This shared inversion means Form 1 invocation always offers both Activity 1 and Activity 5 as valid choices, and the system is infinitely repeatable up the neck.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/horizontal-neck-coverage"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "horizontal-neck-coverage",
+          "narrative": "Five activity forms derived from the relative major scale must cover all twelve frets horizontally in one key. Martino specifies: 'Notice that like the four chord inversions, the five scale patterns move horizontally up the fingerboard, until all twelve frets (one octave) are covered' (p. 8). The scale forms are positional rather than root-based: 'The scale forms illustrated herein do not necessarily start and end on the root of the scale. They instead display every accessible scale tone in position' (p. 8). Coverage is spatial and complete, not selective.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/twelve-key-prerequisite",
+            "minor7/position-determines-key"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "position-determines-key",
+          "narrative": "The position on the neck — not the form shape — determines the key of a minor seventh activity. Martino states: 'The first activity, starting in the third position is the key of G minor. The first activity starting in the fifth position is the key of A minor, etc.' (p. 11). Form shape is invariant across keys; only position changes when transposing. The player must internalize that shifting position two frets higher while keeping the same activity form shape produces the next key up, making fingerboard geography the transposition mechanism.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/twelve-key-prerequisite",
+            "minor7/horizontal-neck-coverage"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "twelve-key-prerequisite",
+          "narrative": "Mastery of all twelve minor keys horizontally is a non-negotiable prerequisite before advancing to vertical (Phase II) work. Martino is explicit: 'Before moving on to PHASE II, the student should learn to play the remaining eleven keys, horizontally up the fingerboard. To achieve this, simply transpose the four chord forms and five forms of activities either up or down the other eleven keys' (p. 16), and further: 'Upon completion of this phase of study you should be able to play all twelve keys horizontally up the fingerboard. Then and only then should you move onto PHASE II' (p. 16). Phase II is gated behind this demonstrable coverage.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/position-determines-key",
+            "minor7/horizontal-neck-coverage"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "relative-major-derivation",
+          "narrative": "The G minor activity system is derived from the Bb major scale through the relative minor relationship, not constructed independently. Martino explains: 'Since G minor is derived from a Bb major scale (Gm being the relative minor of Bb major), it is important to know where on the guitar neck the Bb major (Gm) scales are located. For it is from these scales, along with the previously mentioned chord forms, that five forms of activities can be realized' (p. 7). The player should not conceive the minor scale forms as originating in the minor key itself but as regions of the parent major scale.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/relative-minor-derivation-source",
+            "minor7/tonic-minor-activity-anchor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-1-positional-definition",
+          "narrative": "Activity 1 in G minor occupies a specific positional band and has a specific scalar character. Martino states: 'The first activity (in the key of G minor) starts in the third position, and spans from the second to sixth fret on the fingerboard. It clearly outlines a G minor scale which should make it relatively easy to memorize and associate with its naming key. At this time it should be made clear that the form of activity does not make reference to the key it is in, Bb' (p. 11). The G minor scale outline makes Activity 1 the most tonally transparent of the five forms, but the player must not confuse the minor key association with a root-starting scalar run.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/position-determines-key"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "line-study-ascending-pair-structure",
+          "narrative": "Minor seventh chord progressions in Phase III are approached through ascending pairs of line studies anchored to successive activity forms. Martino explains: 'Both line studies were located on the lower-most region of the fingerboard (as have most of the melodic exercises up until now). Starting with line studies 2A and 2B, the line studies will ascend up the fingerboard with each successive set of line studies' (p. 33). The shared chord progressions remain fixed by letter designation: 'Line studies 1A, 2A, 3A, 4A and 5A will share the same chord progression. The same holds true for the \"B\" studies' (p. 33). The harmonic context is invariant; only the positional starting point ascends.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/horizontal-neck-coverage",
+            "minor7/activity-form-selector"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "cyclic-continuation-practice",
+          "narrative": "Each line study over a minor seventh chord progression is designed for cyclical, open-ended practice rather than one-pass execution. Martino notes: 'At the end of this line study, you will notice an arrow. This merely suggests that the line study can continue onward, starting again on a G minor chord' (p. 31). The continuation arrow is a directive to loop the study indefinitely, treating the end point as the re-entry for the beginning of the same study. This converts a written etude into an improvisation drill with no fixed terminal point.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/line-study-ascending-pair-structure",
+            "minor7/twelve-key-prerequisite"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "student-composition-completion",
+          "narrative": "The final pair of line studies (5A and 5B) over minor seventh progressions is intentionally left incomplete to require active composition from the student. Martino directs: 'studies 5A and 5B have been started and left for you to complete. The studies utilize the same forms as the preceding eight' (p. 50). The student must generate original melodic content using the same activity forms and the same fixed chord progressions established in the earlier eight studies, converting passive imitation into creative application. This is the culminating compositional requirement of Phase III.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/line-study-ascending-pair-structure",
+            "minor7/cyclic-continuation-practice"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "minor-form-as-substitution-target",
+          "narrative": "The minor form is the universal substitution target for all complex chord types in the system. Martino states: 'complex chord changes can often be reduced to or substituted by more simplistic minor chord forms. It is by the means of chord substitution that an original composition titled \"Nadine\" will be reduced to these minor chord forms for the purpose of linear improvisation' (p. 50). Every substitution rule in the system — whether applied to major, dominant, half-diminished, or altered chords — terminates in a minor form that the activities system can handle. The minor chord is not merely one option among equals; it is the reduction target of the entire method.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major7/relative-minor-reduction",
+            "dominant7/dominant-to-minor-conversion",
+            "minor7b5/minor-third-up-substitution"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major6",
+          "function_role": "relative-minor-reduction",
+          "narrative": "A major sixth chord is reduced to its relative minor seventh for the purpose of linear improvisation. Martino provides the specific equivalence: 'Cmaj6 = Am7 (Relative minor)' (p. 50), as part of the broader substitution table showing how complex chords collapse to minor forms. The player should not construct separate melodic vocabulary for major sixth chords; instead, the relative minor is located and the corresponding activity is played. This is a direct substitution with no modification — the relative minor form replaces the major sixth chord completely.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major7/relative-minor-reduction",
+            "major9/secondary-relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major7",
+          "function_role": "relative-minor-reduction",
+          "narrative": "A major seventh chord is substituted by its relative minor ninth, and is also part of the same-quality interchange group. Martino states: 'Cmaj7 = Am9 (Relative minor)' (p. 50), and further that 'Cmaj = Cmaj7 = Cmaj9 etc.' (p. 50), establishing that all major-family chords flatten to the same quality category before substitution. The player should treat Cmaj7 and Am9 as identical for improvisation purposes, playing the relative minor activity without distinguishing between the original major seventh voicing and the minor ninth target.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major6/relative-minor-reduction",
+            "major9/secondary-relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major9",
+          "function_role": "secondary-relative-minor-reduction",
+          "narrative": "A major ninth chord maps not to the primary relative minor but to the secondary relative minor — the III chord of the major key. Martino specifies: 'Cmaj9 = Em7 (Secondary relative minor)' (p. 50), distinguishing it from the Cmaj7 = Am7 primary relative minor mapping. The secondary relative minor (the III chord) is the correct substitution target for major ninth chords because it captures the characteristic tension of the major ninth sonority. The player must recognize that the major ninth requires a different minor substitution than the major seventh, despite both being in the major family.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major7/relative-minor-reduction",
+            "major6/relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7",
+          "function_role": "dominant-to-minor-conversion",
+          "narrative": "Dominant seventh chords (and all same-quality extensions) are converted to minor forms for linear improvisation. Martino establishes the equivalence: 'C7 = Gm' (p. 50) as part of the substitution table, and provides the interval rule: 'To convert a dominant ninth chord to a minor form, go up a perfect fifth from the root of the 9th chord and play minor. i.e.: G9 ... up a P5 = Dm6' (p. 55). The player takes the dominant root, ascends a perfect fifth, and plays the minor form at that location. The quality interchange rule also applies: 'C7 = C9 = C13 — etc.' (p. 50), so all dominant extensions share this substitution path.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant9/perfect-fifth-up-minor",
+            "dominant13/same-quality-family-member"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant9",
+          "function_role": "perfect-fifth-up-minor",
+          "narrative": "The dominant ninth chord has its own explicit interval-formula substitution: move up a perfect fifth and play minor. Martino states: 'RULE: To convert a dominant ninth chord to a minor form, go up a perfect fifth from the root of the 9th chord and play minor. i.e.: G9 ... up a P5 = Dm6' (p. 55). This rule closes the three-way loop in the substitution system: m7b5 → m6 (minor third up from m7b5 root) → dominant ninth (perfect fifth below the minor target). The player can navigate bidirectionally between these three chord types using the same interval relationships.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7/dominant-to-minor-conversion",
+            "minor7b5/minor-third-up-substitution"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant13",
+          "function_role": "same-quality-family-member",
+          "narrative": "The dominant thirteenth chord belongs to the same quality-family as the dominant seventh and dominant ninth, and undergoes the same substitution. Martino includes it explicitly in the interchange group: 'C7 = C9 = C13 — etc.' (p. 50). Before applying any substitution rule, the player should collapse all dominant-family extensions to a single category. The dominant thirteenth is not treated as a distinct harmonic event requiring special melodic vocabulary — it is reduced to the same minor target as C7 or C9, reached by ascending a perfect fifth from the dominant root.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7/dominant-to-minor-conversion",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7altered",
+          "function_role": "step-up-minor-substitution",
+          "narrative": "Altered dominant chords are handled by a distinct rule: ascend one half-step from the dominant root and play minor. Martino is explicit: 'EXPLANATION: One way to create the sound of an altered dominant chord is to go up a step from the root of the dominant chord and play minor. EXAMPLE: For Gb7 altered, go up a step and play G minor' (p. 57). This half-step-up rule is separate from the perfect-fifth-up rule used for unaltered dominant ninths — the player must distinguish between altered and unaltered dominant contexts and apply the correct interval direction.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/melodic-minor-preference",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7altered",
+          "function_role": "melodic-minor-preference",
+          "narrative": "Over altered dominant chords, melodic minor is explicitly preferred over harmonic minor because only melodic minor contains the b7. Martino provides the comparative analysis: 'G harmonic minor G A Bb C D Eb F# / Relation to Gb7 b9 #9 3rd b5 #5 6 root / G melodic minor G A Bb C D E F# / Relation to Gb7 b9 #9 3rd b5 #5 b7 root. It is clear to see from the examples that although both minor scales yield the altered 9ths and 5ths (b9, #9, b5, #5), only the melodic minor contains the b7, which is the \"hot\" note of a dominant 7th chord' (p. 57). The b7 is identified as the decisive pitch; its absence in harmonic minor makes it the inferior choice for altered dominant contexts.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/step-up-minor-substitution",
+            "dominant7altered/harmonic-minor-avoidance"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7altered",
+          "function_role": "harmonic-minor-avoidance",
+          "narrative": "Harmonic minor is identified as the inferior scale choice over altered dominants because it lacks the b7. Martino's table shows that G harmonic minor over Gb7 altered produces the interval '6' (natural sixth) in the position where the b7 should fall (p. 57). The comparative analysis concludes: 'only the melodic minor contains the b7, which is the \"hot\" note of a dominant 7th chord' (p. 57). The player is directed away from harmonic minor in this context — its use over altered dominants omits the defining color tone of the dominant family, making it a functionally incomplete choice despite yielding the correct altered ninths and fifths.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/melodic-minor-preference",
+            "harmonic-minor/altered-dominant-limitation"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7altered",
+          "function_role": "b7-as-decisive-color-tone",
+          "narrative": "The b7 is identified as the essential defining tone of the dominant seventh family, making its presence or absence the decisive factor in scale selection over altered dominants. Martino states: 'only the melodic minor contains the b7, which is the \"hot\" note of a dominant 7th chord' (p. 57). The term 'hot note' indicates functional centrality — the b7 is not merely one pitch among seven but the characteristic tone whose presence signals that a scale is capable of expressing dominant function. A scale without it, such as harmonic minor, cannot fully realize the dominant sound even if it provides the correct altered tensions.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/melodic-minor-preference",
+            "dominant7altered/harmonic-minor-avoidance"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7b5",
+          "function_role": "minor-third-up-substitution",
+          "narrative": "The half-diminished (m7b5) chord is converted to a minor form by ascending a minor third from its root. Martino states: 'RULE: From the root of a minor seventh flat five (m7b5) chord, go up a minor third and play minor. i.e.: Bm7b5 ... up a m3 = Dm6' (p. 55). This substitution is grounded in the inversional equivalence between the two chords: 'In relations to D minor, the Bm7b5 chord is a Dm6 chord in its third inversion. Conversely, a Dm6 chord is a Bm7b5 chord in its first inversion' (p. 55). The player does not need to construct new vocabulary for m7b5 chords; they simply re-root their minor form a minor third higher.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/incomplete-dominant-ninth-reframe",
+            "minor6/inversional-equivalence-to-m7b5"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7b5",
+          "function_role": "incomplete-dominant-ninth-reframe",
+          "narrative": "The m7b5 chord should be understood not as an isolated half-diminished structure but as an incomplete dominant ninth. Martino states: 'OBSERVATION: Minor seventh flat five (m7b5) chords are incomplete dominant ninth chords' (p. 55). This reframing is the conceptual basis for the three-way substitution chain: m7b5 → m6 (via minor third up) → dominant ninth (via the same tones read from a different root). The player who understands m7b5 as a partial dominant ninth can move freely among all three chord types using single interval transpositions.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/minor-third-up-substitution",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7b5",
+          "function_role": "m6-inversion-equivalence-bidirectional",
+          "narrative": "The m7b5 / m6 inversional relationship is explicitly bidirectional: each chord is an inversion of the other. Martino states: 'In relations to D minor, the Bm7b5 chord is a Dm6 chord in its third inversion. Conversely, a Dm6 chord is a Bm7b5 chord in its first inversion' (p. 55). This bidirectionality means the player can move from either chord type to the other without loss of harmonic information — they share an identical pitch collection. The choice of which name to use depends only on which pitch is in the bass, not on any qualitative harmonic difference.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor6/inversional-equivalence-to-m7b5",
+            "minor7b5/incomplete-dominant-ninth-reframe"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7b5",
+          "function_role": "root-as-minor-third-below-minor-target",
+          "narrative": "The m7b5 root serves as a minor third below the target minor root, providing a precise interval anchor for the substitution calculation. Martino gives the explicit example: 'Bm7b5 ... up a m3 = Dm6' (p. 55). From B (root of m7b5), ascending a minor third yields D — the root of the substitution minor chord. The interval from the m7b5 root to the minor target root is always a minor third, regardless of key. The player can use this interval as a real-time calculation: identify the m7b5 root, count up a minor third, and play minor from that point.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/minor-third-up-substitution",
+            "minor6/inversional-equivalence-to-m7b5"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7b5",
+          "function_role": "chord-quality-reframe-before-substitution",
+          "narrative": "Before applying the minor-third-up substitution, the player should reframe the m7b5 chord conceptually as an incomplete dominant ninth, because this reframing explains why the substitution is harmonically valid. Martino states: 'OBSERVATION: Minor seventh flat five (m7b5) chords are incomplete dominant ninth chords' (p. 55). This conceptual reframe is not decorative — it establishes the logical chain m7b5 → dominant ninth → minor sixth that makes the three-way substitution system internally consistent. A player who treats the m7b5 substitution as a memorized rule without the reframe cannot extend the logic to novel contexts.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/incomplete-dominant-ninth-reframe",
+            "minor7b5/minor-third-up-substitution"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor6",
+          "function_role": "inversional-equivalence-to-m7b5",
+          "narrative": "The minor sixth chord and the m7b5 chord are inversionally equivalent — each is an inversion of the other. Martino states: 'the Bm7b5 chord is a Dm6 chord in its third inversion. Conversely, a Dm6 chord is a Bm7b5 chord in its first inversion' (p. 55). This means that when the substitution rule routes a m7b5 to a minor form a minor third higher, the target minor form is specifically a minor sixth voicing, not just any minor quality. The player should use m6 voicings as the destination of m7b5 substitutions.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/minor-third-up-substitution",
+            "minor7b5/incomplete-dominant-ninth-reframe"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor6",
+          "function_role": "dominant-ninth-substitution-target",
+          "narrative": "The minor sixth chord is the specific minor form that results from both the dominant ninth substitution and the m7b5 substitution. The explicit dominant ninth example yields: 'G9 ... up a P5 = Dm6' (p. 55), and the m7b5 example likewise yields: 'Bm7b5 ... up a m3 = Dm6' (p. 55). The minor sixth voicing is consistently the designated substitution target in Chapter 4, making it the operative minor form within the three-way chord equivalence system between m7b5, m6, and dominant ninth. The player should voice the substitution target as m6, not generically as minor seventh.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/m6-inversion-equivalence-bidirectional",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor9",
+          "function_role": "major7-relative-minor-target",
+          "narrative": "The minor ninth chord is the destination of the relative minor substitution applied to major seventh chords. Martino specifies: 'Cmaj7 = Am9 (Relative minor)' (p. 50). The minor ninth — not the minor seventh — is the correct substitution target for major seventh chords because the major seventh degree of the major chord becomes the ninth of its relative minor. The player should voice the relative minor as a minor ninth when substituting for a major seventh chord, preserving the harmonic richness of the original chord quality.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major7/relative-minor-reduction",
+            "minor7/minor-form-as-substitution-target"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "augmented",
+          "function_role": "three-root-enharmonic-expansion",
+          "narrative": "Every augmented triad has three enharmonic root names, each yielding a distinct minor-major-seventh substitution. Martino demonstrates: 'F, A, C# = F augmented / A, C#, E#, (F) = A augmented / (C#) Db, F, A, = Db (C#) augmented. NOTE: Each note of the triad can be called the root and can name the triad' (p. 55). The player should not fix one root for an augmented triad but treat all three pitch-class members as potential roots, each unlocking a different minor-major-seventh improvisation option.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/incomplete-minor-maj7-structure",
+            "augmented/major-sixth-up-substitution-rule"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "augmented",
+          "function_role": "incomplete-minor-maj7-structure",
+          "narrative": "The augmented triad is an incomplete minor-major-seventh chord, and this structural identity is the basis for all augmented-chord substitutions. Martino states: 'Observe now that the augmented triad is an incomplete minor (Ma7) chord. F, A, C# = D, F, A, C# Dm ma(7) / A, C#, E# = F#, A, C#, E#, (F#m maj7) / Db, F, A = Bb, Db, F, A, (Bbm maj7)' (p. 56). Each enharmonic reading of the augmented triad's root yields a different minor-major-seventh completion, providing three distinct substitution paths. The player should understand the augmented triad as a three-way fork into minor-major-seventh territory.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/three-root-enharmonic-expansion",
+            "augmented/major-sixth-up-substitution-rule"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "augmented",
+          "function_role": "major-sixth-up-substitution-rule",
+          "narrative": "The actionable substitution rule for augmented triads is to ascend a major sixth from the root and play melodic or harmonic minor. Martino states: 'TO SUMMARIZE: Over an augmented triad, go up a major 6th from the root and play either melodic or harmonic minor' (p. 56). This condenses all augmented-chord substitution logic into a single interval formula, with the choice between melodic and harmonic minor left to the player's preference. The major sixth interval is the anchor: from any of the three enharmonic roots, the same interval distance applies, yielding three different minor-major-seventh landing points.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/three-root-enharmonic-expansion",
+            "augmented/incomplete-minor-maj7-structure"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "augmented",
+          "function_role": "diminished-analogy-inversion-structure",
+          "narrative": "The augmented triad's triple-root enharmonic structure is explicitly analogized to the diminished seventh chord's inversion structure. Martino states: 'The augmented triad, much like the diminished 7th chord, inverts to form two other augmented triads' (p. 55). This analogy situates the augmented triad within a family of symmetrical chords (augmented and diminished) that share the property of multiple root-name equivalences. The player who already understands diminished seventh enharmonicism can apply the same conceptual framework to augmented triads and immediately grasp the three-root substitution logic.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/three-root-enharmonic-expansion",
+            "diminished7/inversion-analogy-to-augmented"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor-maj7",
+          "function_role": "augmented-triad-completion-target",
+          "narrative": "The minor-major-seventh chord is the completion and substitution target of the augmented triad. Martino shows three specific minor-major-seventh completions from one augmented triad: 'F, A, C# = D, F, A, C# Dm ma(7) / A, C#, E# = F#, A, C#, E#, (F#m maj7) / Db, F, A = Bb, Db, F, A, (Bbm maj7)' (p. 56). The minor-major-seventh chord is reached by adding one more pitch below any note of the augmented triad, treating that added pitch as the new minor root. The player improvising over an augmented chord should target the minor-major-seventh sound as the resolution destination.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/incomplete-minor-maj7-structure",
+            "augmented/major-sixth-up-substitution-rule"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor-maj7",
+          "function_role": "augmented-scale-choice-dual-option",
+          "narrative": "Over an augmented triad treated as an incomplete minor-major-seventh, the player may use either melodic minor or harmonic minor. Martino states the summary rule: 'Over an augmented triad, go up a major 6th from the root and play either melodic or harmonic minor' (p. 56). The dual option — 'either melodic or harmonic' — distinguishes the augmented triad context from the altered dominant context, where melodic minor is explicitly preferred. Over augmented triads, both minor scale types are presented as equally valid choices, giving the player free selection between them.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/major-sixth-up-substitution-rule",
+            "melodic-minor/altered-dominant-scale-choice"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "melodic-minor",
+          "function_role": "altered-dominant-scale-choice",
+          "narrative": "Melodic minor is the prescribed scale for improvising over altered dominant chords when the b7 must be expressed. Martino's comparative analysis shows G melodic minor over Gb7 altered produces 'b9 #9 3rd b5 #5 b7 root' while G harmonic minor produces 'b9 #9 3rd b5 #5 6 root' (p. 57). The conclusion is unambiguous: 'only the melodic minor contains the b7, which is the \"hot\" note of a dominant 7th chord' (p. 57). The b7 is the decisive pitch that establishes the dominant character; its presence or absence distinguishes the two minor scale choices in this context.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/melodic-minor-preference",
+            "harmonic-minor/altered-dominant-limitation"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "harmonic-minor",
+          "function_role": "altered-dominant-limitation",
+          "narrative": "Harmonic minor is an incomplete choice over altered dominant chords because it does not contain the b7. Martino's analysis shows that G harmonic minor over Gb7 altered yields a natural 6th where the b7 should appear: 'G harmonic minor G A Bb C D Eb F# / Relation to Gb7 b9 #9 3rd b5 #5 6 root' (p. 57). The conclusion is that 'although both minor scales yield the altered 9ths and 5ths (b9, #9, b5, #5), only the melodic minor contains the b7, which is the \"hot\" note of a dominant 7th chord' (p. 57). Harmonic minor does not fail entirely — it provides the altered tensions — but it is structurally deficient because it omits the essential dominant color.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/harmonic-minor-avoidance",
+            "melodic-minor/altered-dominant-scale-choice"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "harmonic-minor",
+          "function_role": "slash-chord-pitch-containment-validator",
+          "narrative": "Harmonic minor serves as a pitch-containment validation tool for slash-chord substitutions: if all pitches of a slash chord appear in the harmonic minor of the chosen minor substitution, the substitution is confirmed as sound. Martino demonstrates: 'Also notice that all of the notes in the Db/E chord can be found in an F harmonic minor scale (F, G, Ab, Bb, C, Db, E)' (p. 56). This pitch-containment test provides the player with an empirical confirmation method distinct from the interval-formula approach — it verifies the substitution by checking scale-chord unity rather than by formula alone.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/harmonic-minor-scale-validation",
+            "major/secondary-relative-minor-bass-clash-fallback"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "relative-minor-derivation-source",
+          "narrative": "The major scale is the generative source of the minor activity system, not a chord quality requiring its own separate melodic treatment. Martino establishes this from the outset: 'Since G minor is derived from a Bb major scale (Gm being the relative minor of Bb major), it is important to know where on the guitar neck the Bb major (Gm) scales are located. For it is from these scales, along with the previously mentioned chord forms, that five forms of activities can be realized' (p. 7). The major scale functions as a taxonomic parent, not as an independent improvisational domain. Its primary role in the system is to provide the scale forms from which minor activities are derived.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major6/relative-minor-reduction",
+            "major7/relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "slash-chord-relative-minor-conversion",
+          "narrative": "A major triad with a bass note is converted to its relative minor, with the bass note reinterpreted as a scale degree of the minor. Martino illustrates: 'In bar 10, the harmony is a C major triad with an \"F#\" note in the bass. Convert the C major to A minor (Am) being the relative minor of C major and treat the F# bass note as the 6th of A minor' (p. 56). The bass note is not treated as a harmonic problem to avoid but as a scale-degree anchor within the minor substitution. This reinterpretation makes the dissonant bass note an asset rather than an obstacle in the improvisation.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/secondary-relative-minor-bass-clash-fallback",
+            "minor7/minor-form-as-substitution-target"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "secondary-relative-minor-bass-clash-fallback",
+          "narrative": "When the primary relative minor creates a b5th clash with the bass note of a slash chord, the secondary relative minor (the III chord of the major key) is used instead. Martino explains: 'If we view the Db major triad alone, the most obvious substitution would be its relative minor (Bb minor). However, the \"E\" note in the bass would not go very well with Bb minor (creating a b5th in the bass). Therefore, we go to the secondary relative minor of Db major (which is the III chord of Db), namely, F minor' (p. 56). The secondary relative minor is a fallback rule, invoked specifically when the primary relative minor produces an undesirable bass interval.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/slash-chord-relative-minor-conversion",
+            "major9/secondary-relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "primary-relative-minor-b5-bass-avoidance",
+          "narrative": "The primary relative minor substitution must not be applied when it produces a b5th interval against the bass note of a slash chord. Martino specifies this constraint with a concrete example: 'the \"E\" note in the bass would not go very well with Bb minor (creating a b5th in the bass)' (p. 56) in the context of a Db/E chord. The b5th in the bass is the disqualifying condition; the player must test the primary relative minor against the actual bass note and reject it if a b5th results, falling back to the secondary relative minor.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/secondary-relative-minor-bass-clash-fallback",
+            "major/slash-chord-relative-minor-conversion"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "secondary-relative-minor-as-iii-chord",
+          "narrative": "The secondary relative minor is precisely defined as the III chord of the major key — not a vague second option but a specific diatonic chord. Martino states: 'we go to the secondary relative minor of Db major (which is the III chord of Db), namely, F minor' (p. 56). The III chord designation gives the player an exact location within the major key's diatonic hierarchy: count up to the third scale degree of the major key to find the secondary relative minor root. This formula is consistent with the Cmaj9 = Em7 equivalence from the substitution table (Em7 is the III chord of C major).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major9/secondary-relative-minor-reduction",
+            "major/secondary-relative-minor-bass-clash-fallback"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "harmonic-minor-scale-validation",
+          "narrative": "The validity of a minor substitution for a slash chord can be confirmed by verifying that the slash chord's complete pitch content is contained within the harmonic minor scale of the substitution target. Martino demonstrates: 'Also notice that all of the notes in the Db/E chord can be found in an F harmonic minor scale (F, G, Ab, Bb, C, Db, E)' (p. 56). This pitch-containment test provides the player with an empirical confirmation method: if all slash-chord tones appear in the minor scale of the chosen substitution, the substitution is harmonically sound.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/secondary-relative-minor-bass-clash-fallback",
+            "harmonic-minor/slash-chord-pitch-containment-validator"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "same-quality-family-interchange",
+          "narrative": "All major-family chords (major, major seventh, major ninth) are interchangeable before substitution lookup. Martino states: 'Substitute chords of the same name and quality' (p. 50) and provides the equivalences: 'Cmaj = Cmaj7 = Cmaj9 etc.' (p. 50). The player should collapse any major-family chord to the same category before determining the relative minor substitution, rather than maintaining separate substitution paths for major, major seventh, and major ninth. Quality-family membership is determined first, substitution interval is applied second.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major6/relative-minor-reduction",
+            "major7/relative-minor-reduction",
+            "major9/secondary-relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "chord-reduction-to-minor-universal-principle",
+          "narrative": "The universal principle underlying all chord substitutions is that complex harmony is always reducible to simpler minor forms. Martino states the principle directly: 'Application through substitution and reduction. As was previously mentioned, complex chord changes can often be reduced to or substituted by more simplistic minor chord forms. It is by the means of chord substitution that an original composition titled \"Nadine\" will be reduced to these minor chord forms for the purpose of linear improvisation' (p. 50). No chord quality is too complex to be reduced; the method's claim is that any chord encountered in jazz repertoire can be converted to a minor form the activities system can handle.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/minor-form-as-substitution-target",
+            "dominant7/dominant-to-minor-conversion",
+            "minor7b5/minor-third-up-substitution"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "unfamiliar-chord-as-inversion-reframe",
+          "narrative": "The master's characteristic analytical move across all four phases is to reframe any unfamiliar chord as an inversion or incomplete version of a familiar diatonic structure, converting apparent harmonic complexity into simple interval formulas. This principle is applied to m7b5 (reframed as Dm6 third inversion), dominant ninths (reframed as minor sixths via perfect fifth), and augmented triads (reframed as incomplete minor-major-seventh chords). Martino summarizes the method's claim: 'complex chord changes can often be reduced to or substituted by more simplistic minor chord forms' (p. 50). No chord type is treated as requiring separate memorization; all are revealed as interval-transpositions of known structures.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7b5/incomplete-dominant-ninth-reframe",
+            "augmented/incomplete-minor-maj7-structure",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "five-step-reduction-procedure",
+          "narrative": "Applying the substitution system to a real composition requires a specific five-step workflow. Martino prescribes: '1) Study the song in its original form (page 52). a) Play the melody. b) Study the chord changes. 2) ... a) Learn the chord voicings (provided in both musical and graphic forms). b) Study the substitutions found immediately below the compositional harmony. 3) Study the analysis on pages 55 through 57. a) Relate each substitution to the compositional harmony, with the aid of the written analysis. b) Memorize the substitutions. 4) Examine the sample solo ... a) Play through the sample solo until the study can be performed nonstop. b) Record the changes on tape and play the solo over them. 5) Now that you've learned the tune thoroughly, compose your own solo over the changes, utilizing the substitutions given or any of your own substitute forms' (p. 50). Composition is the final step, preceded by four stages of analysis and imitation.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/application-to-jazz-standards",
+            "minor7/student-composition-completion"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "application-to-jazz-standards",
+          "narrative": "The substitution system must be transferred from the study piece to canonical jazz standards as the ultimate application target. Martino directs: 'ERGO: The next logical step of the procedure would be to apply the principles learned in this work to more common forms of progressions and songs. EXAMPLES: \"Stella by Starlight\" ... Victor Young / \"All the Things You Are\" ... Jerome Kern / \"The Days of Wine and Roses\" ... Henry Mancini / \"Summertime\" ... George Gershwin / \"Scrapple From the Apple\" ... Charlie Parker' (p. 50). The standard repertoire is not an optional extension but the designated destination of the method — the study piece is the training ground, and the standards are the target.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/five-step-reduction-procedure",
+            "minor7/minor-form-as-substitution-target"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "original-form-melody-study-before-substitution",
+          "narrative": "Before studying substitutions, the player must first study the composition in its original form, including playing the melody and studying the chord changes. Martino prescribes as step 1 of the procedure: '1) Study the song in its original form (page 52). a) Play the melody. b) Study the chord changes' (p. 50). Substitution analysis cannot precede familiarity with the original harmonic and melodic content. The player must know what is being substituted before applying the reduction formulas — the original form is the reference point against which all substitutions are measured.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/five-step-reduction-procedure",
+            "minor7/memorization-through-analysis-not-rote"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "original-substitute-forms-encouraged",
+          "narrative": "After learning the provided substitutions, the player is encouraged to develop and apply their own substitute forms. Martino's step 5 states: 'Now that you've learned the tune thoroughly, compose your own solo over the changes, utilizing the substitutions given or any of your own substitute forms' (p. 50). The phrase 'or any of your own substitute forms' explicitly opens the substitution vocabulary beyond what the book provides. The five-step procedure culminates not in replication of provided content but in autonomous substitution choices by the player.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/five-step-reduction-procedure",
+            "minor7/student-composition-completion"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "voicing-study-in-both-notation-and-graphic",
+          "narrative": "Chord voicings used in substitutions must be learned in both musical notation and graphic (fingerboard diagram) form. Martino prescribes in step 2a of the procedure: 'Learn the chord voicings (provided in both musical and graphic forms)' (p. 50). Fluency in both representations is required — the notation provides pitch-level analysis, while the graphic form provides the physical fingerboard location. A student who can read notation but not fingerboard diagrams, or vice versa, has incomplete command of the substitution vocabulary.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/five-step-reduction-procedure",
+            "minor7/pre-activity-chord-voicing-practice"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major7",
+          "function_role": "arpeggio-basis-for-activity-2",
+          "narrative": "Activity 2 is explicitly defined in terms of a Bbmaj7 arpeggio, making the major seventh arpeggio the melodic content of this particular activity form. Martino states that Activity 2 'outlines a Bbmaj7 arpeggio, starting from the maj7 degree of the Bbmaj7 (an \"A\" note)' (p. 12). The player should conceive Activity 2 not as a scalar run but as an arpeggio-based line starting from the major seventh degree of the relative major. This arpeggio orientation is specific to Activity 2 and distinguishes it from the scalar orientation of Activities 1 and 3.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-2-bbmaj7-arpeggio-basis",
+            "major7/relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major7",
+          "function_role": "same-quality-family-collapse",
+          "narrative": "Major seventh chords belong to the same quality family as plain major and major ninth chords, and all are treated identically before applying the relative minor substitution. Martino specifies: 'Cmaj = Cmaj7 = Cmaj9 etc.' (p. 50). The player should not maintain separate voicing libraries or substitution paths for Cmaj versus Cmaj7; they are the same category-level entity in this system. Quality-family collapse precedes all substitution decisions.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major7/relative-minor-reduction",
+            "major9/secondary-relative-minor-reduction",
+            "major6/relative-minor-reduction"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7",
+          "function_role": "same-quality-family-collapse",
+          "narrative": "All dominant-family extensions are interchangeable before applying the substitution rule. Martino states: 'C7 = C9 = C13 — etc.' (p. 50) as the first step in the substitution table. The player should not treat a C13 chord as requiring a different melodic approach than a C7; all are flattened to the dominant category, and then the perfect-fifth-up minor substitution is applied. Quality-family collapse is the obligatory pre-step before substitution interval lookup.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7/dominant-to-minor-conversion",
+            "dominant13/same-quality-family-member",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7",
+          "function_role": "three-way-substitution-chain",
+          "narrative": "The dominant seventh chord participates in a three-way equivalence chain with m7b5 and m6 chords. Martino establishes: 'Minor seventh flat five (m7b5) chords are incomplete dominant ninth chords' (p. 55) and provides the reciprocal rules: from m7b5, go up a minor third to reach m6; from the dominant ninth, go up a perfect fifth to reach the same m6 (p. 55). The chain is: m7b5 → m6 (minor third up from m7b5 root) = dominant ninth → m6 (perfect fifth up from dominant root). The player can enter the chain at any point and navigate to any other using these interval relationships.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant9/perfect-fifth-up-minor",
+            "minor7b5/incomplete-dominant-ninth-reframe",
+            "minor6/inversional-equivalence-to-m7b5"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant7",
+          "function_role": "unaltered-versus-altered-substitution-distinction",
+          "narrative": "Unaltered dominant chords and altered dominant chords require different substitution rules and must not be confused. Unaltered dominants (including ninth and thirteenth) use the perfect-fifth-up minor rule: 'G9 ... up a P5 = Dm6' (p. 55). Altered dominants use the half-step-up minor rule: 'For Gb7 altered, go up a step and play G minor' (p. 57). The interval distances are different (perfect fifth versus half step), and the scale choices at the destination are different (any minor versus preferably melodic minor). The player must classify the dominant as altered or unaltered before selecting the correct substitution path.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant7altered/step-up-minor-substitution",
+            "dominant9/perfect-fifth-up-minor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "dominant9",
+          "function_role": "root-as-perfect-fifth-below-minor-target",
+          "narrative": "The dominant ninth root serves as a perfect fifth below the target minor root. Martino states: 'To convert a dominant ninth chord to a minor form, go up a perfect fifth from the root of the 9th chord and play minor. i.e.: G9 ... up a P5 = Dm6' (p. 55). From G (root of the dominant ninth), ascending a perfect fifth yields D — the root of the Dm6 substitution. This is the same target minor chord as the m7b5 substitution from Bm7b5, confirming that the three chord types share a common pitch collection and the minor sixth is the common destination.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "dominant9/perfect-fifth-up-minor",
+            "minor7b5/root-as-minor-third-below-minor-target"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "pre-activity-chord-voicing-practice",
+          "narrative": "Before playing each activity, the player should first play the corresponding chord form to reinforce the chord-to-activity association. Martino recommends: 'When learning these activities it's a good idea to play their respective chord forms immediately before playing each activity. Each chord form will dictate the activity to be played' (p. 10). This pre-activity chord voicing is a learning tool for internalizing the mapping rule — the chord is played first as a reference frame, then the activity follows from it. The chord form is both an aural primer and the operative selector.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/tonic-minor-activity-anchor"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "scale-form-not-root-anchored",
+          "narrative": "Activity scale forms must not be read as root-to-root scales; they display all accessible scale tones in a position. Martino states: 'NOTE: The scale forms illustrated herein do not necessarily start and end on the root of the scale. They instead display every accessible scale tone in position' (p. 8). This is a direct corrective instruction: a player accustomed to root-anchored scale practice will misread the diagrams. The forms are positional maps of available pitches, not linear scales starting from the root. The correct mental model is spatial coverage of all accessible scale tones in the given position.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/horizontal-neck-coverage",
+            "minor7/activity-1-positional-definition"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "form-1-chord-shared-dual-activity",
+          "narrative": "Chord Form 1 is unique in the system because it activates two activity forms simultaneously. Martino states: 'Each chord form will dictate the activity to be played (except in the case of the first chord form which names both the first and fifth activities)' (p. 10), and the mapping table confirms: 'Form 1 — Forms 1 & 5' (p. 10). When Chord Form 1 is encountered, the player must choose between Activity 1 and Activity 5, not apply both simultaneously. This dual-activation property is the method's single exception to the one-to-one chord-to-activity mapping rule.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/cyclic-octave-shared-inversion",
+            "minor7/activity-form-selector"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-2-bbmaj7-arpeggio-basis",
+          "narrative": "Activity 2 in G minor is built on a Bbmaj7 arpeggio starting from its major seventh degree. Martino specifies: '[Activity 2] in the key of G minor, lies totally in the fifth position, spanning the fifth to eighth fret. It outlines a Bbmaj7 arpeggio, starting from the maj7 degree of the Bbmaj7 (an \"A\" note)' (p. 12). The player should understand Activity 2 not as a generic minor scale but as a specific arpeggio shape with a defined starting pitch — the major seventh degree, not the root. This arpeggio orientation gives Activity 2 a distinctive color within the five-form system.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "major7/arpeggio-basis-for-activity-2"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-3-out-of-position-extension",
+          "narrative": "Activity 3 in G minor is primarily positional but includes a single out-of-position note that must be learned as an exception. Martino states: 'The third activity, with the exception of the Bb note on the second string, lies in the seventh position. The G minor scale and arpeggio are visible throughout this activity' (p. 13). The out-of-position Bb is not an error or fingering choice — it is a structural feature of Activity 3's design that the player must internalize as part of the form. Activities are position-based but permit individual-note extensions.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/horizontal-neck-coverage"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-3-scale-and-arpeggio-dual-presence",
+          "narrative": "Activity 3 contains both scale and arpeggio outlines simultaneously, making it harmonically richer than a pure scale or pure arpeggio form. Martino states: 'The G minor scale and arpeggio are visible throughout this activity' (p. 13). The dual presence of scale tones and arpeggio tones within the same positional form means the player has access to both stepwise melodic motion and wider intervallic leaps within a single activity. This dual content differentiates Activity 3 from Activity 2 (arpeggio-dominant) and from Activity 1 (more purely scalar in G minor outline).",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-3-out-of-position-extension",
+            "minor7/activity-2-bbmaj7-arpeggio-basis"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-5-g-minor-octave-completion",
+          "narrative": "Activity 5 is defined by its function as the fingerboard completion point and octave boundary. Martino writes: 'The fifth and final form of activity in the key of G minor completes the total coverage of the fingerboard in one key (G minor), over a distance of twelve frets (one octave). Notice that both the fifth and first activities start with the same note on the sixth string (a \"G\" note). ERGO: The next logical form to follow, would be the first form of activity one octave higher' (p. 15). The shared starting note on the sixth string is the physical confirmation of the cyclic structure; the player can verify the octave relationship by ear and by fretboard location.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/cyclic-octave-shared-inversion",
+            "minor7/horizontal-neck-coverage"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "activity-key-not-from-parent-major-name",
+          "narrative": "The activity form does not make reference to the parent major key; it is named by the minor key it represents. Martino clarifies: 'At this time it should be made clear that the form of activity does not make reference to the key it is in, Bb' (p. 11), noting that Activity 1 in third position is called 'the key of G minor,' not 'the key of Bb.' The player must name activities by their minor key, not by the parent major scale from which the scale forms are derived. This naming convention avoids confusion between the parent major and the operative minor key.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/relative-major-derivation",
+            "minor7/position-determines-key"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "phase-ii-vertical-extension",
+          "narrative": "After mastering all twelve keys horizontally, the activities system is extended vertically — applying all five forms in a single fingerboard sector across all twelve minor keys. The chapter delivers this content entirely through fingerboard diagrams and notation without introducing new conceptual rules, confirming that the chord-inversion-to-activity mapping established in Phase I governs Phase II without modification. The transposition procedure from Phase I — 'Locate the four chord inversions and scales. Play the appropriate activity (line form), according to the chord inversion (form 1, 2, 3, etc.)' (p. 16) — remains the complete operative instruction for all twelve vertical keys.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/twelve-key-prerequisite",
+            "minor7/position-determines-key"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "transposition-two-step-procedure",
+          "narrative": "Transposing the activities system to any of the twelve keys requires exactly two steps. Martino states: 'EXAMPLE: Horizontal movement in the key of C minor (Eb major). 1) Locate the four chord inversions and scales. 2) Play the appropriate activity (line form), according to the chord inversion (form 1, 2, 3, etc.)' (p. 16). The procedure is not more complex than these two steps: locate the inversions and scales in the new key (step 1), then apply the chord-to-activity mapping (step 2). All twelve minor keys are accessible by the same two-step procedure without modification.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/twelve-key-prerequisite",
+            "minor7/position-determines-key"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "line-study-2a-form-2-anchor",
+          "narrative": "Line study pair 2A/2B is anchored to the second form of activity in G minor, establishing a specific position-activity correspondence for each study pair. Martino states: 'Line studies 2A and 2B start with the second form of activity in G minor' (p. 33). Each successive pair moves higher on the neck while maintaining this activity-form anchor, so the positional start of each pair is determined by which numbered form is designated as its anchor. The study pair's fingerboard region is not freely chosen but dictated by the form number.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/line-study-ascending-pair-structure",
+            "minor7/activity-form-selector"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "memorization-through-analysis-not-rote",
+          "narrative": "The prescribed method for memorizing substitutions is analytical — relating each substitution to the compositional harmony through the written analysis — not rote repetition. Martino's step 3 of the five-step procedure states: '3) Study the analysis on pages 55 through 57. a) Relate each substitution to the compositional harmony, with the aid of the written analysis. b) Memorize the substitutions' (p. 50). Analysis precedes memorization; the player must understand why each substitution works before committing it to memory. Rote memorization without analytical grounding is not the method.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/five-step-reduction-procedure",
+            "major/application-to-jazz-standards"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "solo-recording-as-practice-tool",
+          "narrative": "Recording the chord changes on tape and playing the sample solo over the recording is prescribed as a specific practice modality. Martino includes it as step 4b: 'Record the changes on tape and play the solo over them' (p. 50). This is not an optional enrichment activity but a sequenced step in the workflow — it follows playing through the sample solo nonstop and precedes composing original solos. The recording step creates an external harmonic reference against which the student can hear their lines in real musical context.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/student-composition-completion",
+            "major/five-step-reduction-procedure"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "sample-solo-nonstop-performance-target",
+          "narrative": "The sample solo over the chord changes must be performed nonstop before proceeding to original composition. Martino prescribes step 4a: 'Play through the sample solo until the study can be performed nonstop' (p. 50). The 'nonstop' standard is the fluency threshold — hesitation, stopping, or inconsistency disqualifies a student from advancing to the composition step. This is a performance standard rather than a comprehension standard; understanding the solo analytically is not sufficient without demonstrating physical continuity through it.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/student-composition-completion",
+            "minor7/solo-recording-as-practice-tool"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "phase-advancement-gating",
+          "narrative": "Each phase of the method is gated behind demonstrated mastery of the preceding phase; advancement is not self-determined. Martino is explicit: 'Upon completion of this phase of study you should be able to play all twelve keys horizontally up the fingerboard. Then and only then should you move onto PHASE II' (p. 16). The phrase 'then and only then' imposes a strict sequential gate. Phase II work undertaken before Phase I completion is implicitly proscribed — the student who advances prematurely has bypassed the foundational coverage that Phase II presupposes.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/twelve-key-prerequisite",
+            "minor7/phase-ii-vertical-extension"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "premature-phase-advancement-proscription",
+          "narrative": "Advancing to Phase II before completing Phase I in all twelve keys is explicitly prohibited. Martino's gating rule states: 'Then and only then should you move onto PHASE II' (p. 16), after specifying that Phase I completion requires playing 'all twelve keys horizontally up the fingerboard' (p. 16). The conditional 'then and only then' is the prescriptive barrier: any student who cannot demonstrate twelve-key horizontal coverage has not satisfied the prerequisite and must not proceed. The method's pedagogical integrity depends on sequential phase completion.",
+          "polarity": "proscriptive",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/phase-advancement-gating",
+            "minor7/twelve-key-prerequisite"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor",
+          "function_role": "same-quality-family-interchange",
+          "narrative": "Minor chords of the same root but different extensions (minor sixth, minor seventh, minor ninth) are interchangeable within the activities system. Martino states: 'Cm6 = Cm7 = Cm9 etc.' (p. 50) as part of the same-quality substitution table. Before applying any position or activity rule, the player should flatten all minor-family extensions to a single category. This quality-family collapsing is the first step in the substitution workflow, ensuring that chord-quality distinctions within the minor family do not produce unnecessary complexity in the decision process.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/minor-form-as-substitution-target",
+            "minor6/inversional-equivalence-to-m7b5"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "diminished7",
+          "function_role": "inversion-analogy-to-augmented",
+          "narrative": "The diminished seventh chord is cited as the structural model for understanding augmented triad enharmonicism. Martino states: 'The augmented triad, much like the diminished 7th chord, inverts to form two other augmented triads' (p. 55). The diminished seventh's property — that any of its four pitches can serve as the root — is the template the student should use to understand the augmented triad's analogous three-root property. Understanding diminished seventh enharmonicism is thus a prerequisite for grasping the augmented triad substitution system.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "augmented/diminished-analogy-inversion-structure",
+            "augmented/three-root-enharmonic-expansion"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "complexity-reframe-as-real-time-formula",
+          "narrative": "The entire system's pedagogical claim is that real-time execution of complex harmony is achievable through memorized interval formulas rather than chord-by-chord memorization of scales. Martino's method converts m7b5, dominant ninths, altered dominants, augmented triads, and slash chords into simple interval instructions (minor third up, perfect fifth up, half-step up, major sixth up) that the player can execute in real time. The system's ambition is stated directly: complex chord changes 'can often be reduced to or substituted by more simplistic minor chord forms' (p. 50). Execution speed and reliability depend on formula internalization, not scale-chord memorization.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "major/chord-reduction-to-minor-universal-principle",
+            "major/unfamiliar-chord-as-inversion-reframe"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "g-minor-as-foundational-home-key",
+          "narrative": "G minor is the designated home key for all Phase I and Phase III activities, not merely a convenience example. Martino opens the method: 'The key we will be dealing with at the present time is G minor' (p. 7), and all five activity forms are defined in G minor before transposition is addressed. The line studies of Phase III are also anchored to G minor: 'Both line studies were located on the lower-most region of the fingerboard ... Starting with line studies 2A and 2B, the line studies will ascend up the fingerboard with each successive set of line studies' (p. 33), each pair anchored to numbered forms of activity in G minor. G minor functions as the system's canonical reference key throughout the method.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/tonic-minor-activity-anchor",
+            "minor7/relative-major-derivation"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "major",
+          "function_role": "chord-inversion-as-improvisation-navigation-tool",
+          "narrative": "Chord inversions are not merely voicing choices but the primary navigation tool for improvisation decisions throughout the activities system. Martino establishes this from the opening of Phase I: 'Each chord form will dictate the activity to be played' (p. 10), with the four chord inversion forms each mapping to one or two activity forms. The chord inversion is the improviser's real-time selector — upon hearing or playing a chord, the inversion (root position, first inversion, second inversion, third inversion) determines which melodic line form to deploy. Chord inversion identification is therefore a prerequisite for any improvisation within the system.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/activity-form-selector",
+            "minor7/pre-activity-chord-voicing-practice"
+          ]
+        },
+        {
+          "source_work_id": "linear-expressions",
+          "chord_quality": "minor7",
+          "function_role": "vertical-twelve-key-single-sector",
+          "narrative": "Phase II extends the activities system vertically by applying all five forms across all twelve minor keys within a single fingerboard sector, rather than moving to different neck regions. Phase II content is delivered through fingerboard diagrams and notation, and the operative rule — 'chord inversion dictates the matching line form' — carries forward from Phase I without modification. The transposition procedure from Phase I: '1) Locate the four chord inversions and scales. 2) Play the appropriate activity (line form), according to the chord inversion (form 1, 2, 3, etc.)' (p. 16) remains the complete operative instruction for all twelve vertical keys in Phase II.",
+          "provenance": "extracted",
+          "cross_ref": [
+            "minor7/phase-advancement-gating",
+            "minor7/twelve-key-prerequisite"
+          ]
+        }
+      ]
     },
     {
       "id": "ted-dunbar",
@@ -42471,7 +43375,1781 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "usage_notes": [
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major-triad",
+          "function_role": "tonic-resolution",
+          "polarity": "proscriptive",
+          "narrative": "Bernstein warns against overemphasizing the I chord as a destination, stating that \"when the I chord is overemphasized, it can give the impression that the song is being dragged or held back\" (p. 13). The plain major triad on the tonic is the paradigmatic over-resolved sonority his method is designed to escape. A bare major triad on I communicates finality and should be avoided mid-phrase to maintain forward momentum.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Don't overemphasize the I chord, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "major69/tonic-resolution",
+            "major69/under-resolved-tonic"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "under-resolved-tonic",
+          "narrative": "Bernstein's signature move on the tonic is to substitute a V-derived I69 chord rather than a root-position I chord, specifically to keep tension alive. Playing \"Ornithology\" he demonstrated \"his preference for not playing the roots of the I (one) chords. Instead, he would opt for an I69 chord derived from the V of the respective I (one) chord. This choice adds a unique tension and flavor to the I (one) chord, not resolving the tension fully\" (p. 12). The major 6/9 voicing is the prescribed outfit for the tonic whenever forward momentum must be preserved.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Don't overemphasize the I chord, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "major-triad/tonic-resolution",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "tonic-color-extension",
+          "narrative": "Beyond the specific avoid-the-root move, the major 6/9 sonority is Bernstein's default tonic color because its tensions (the 6 and the 9) are the flavors he memorizes sensorially rather than symbolically: \"he can hear certain chords and associate them with similar flavors, just like how one can find the same spice but with different nuances of freshness or sweetness\" (p. 7). The major 6/9 registers as a bright, open tension that still reads as home, making it the preferred landing sonority for a melodic phrase on the I chord.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Chords as flavor/spice, p. 7"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "shell-voicing/tonic-entry"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "shell-voicing",
+          "function_role": "tonic-entry",
+          "narrative": "The first chord layer added after monophonic melody delivery is always a conservative shell voicing — root, 3rd, and 7th only. \"Initially, he would take a somewhat conservative approach to the chord voicings, mostly sticking to basic shell voicings, with occasional signature chord runs where he knew they would work\" (p. 6). Extensions are added only after the melody-chord relationship has been internalized through this stripped-down layer, reflecting the foundational discipline of the method.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Conservative chord entry, p. 6"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Start with root, third, seventh, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/dominant-entry",
+            "shell-voicing/subdominant-entry"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "shell-voicing",
+          "function_role": "dominant-entry",
+          "narrative": "The same foundation-before-embellishment rule that applies to the tonic applies equally to dominant function chords: begin with the root-3-7 shell and listen to how the melody sits against it before adding the b9, #11, or 13. \"He encouraged me to focus on listening to the melody and understanding the relationship between the basic chords and the melody before making more informed decisions about incorporating chord extensions\" (p. 9). On V chords the 3 and the 7 already contain the tritone, so the shell is tonally sufficient while the ear calibrates the melody.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Start with root, third, seventh, p. 9"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Foundation before embellishment, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/tonic-entry",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "shell-voicing",
+          "function_role": "subdominant-entry",
+          "narrative": "Bernstein generalizes the shell-voicing entry discipline to all chord qualities and functions. On subdominant chords the basic root-3-7 layer is established first, and \"Bernstein ensures that he can create something tasteful using the fundamental elements before exploring new ideas. It's akin to working with layers, where he prioritizes building a solid foundation with the basic layers before progressing to new techniques or embellishments\" (p. 9). The ii shell (root, 3, 7) gives the player a reliable harmonic frame before extensions such as the 11 are layered in.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Foundation before embellishment, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/tonic-entry",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "resolving-dominant",
+          "narrative": "On resolving dominant chords Bernstein prescribes controlled tension: the tritone formed by the 3rd and 7th is the active core, but the player should \"employ a wide range of passing chords and interweave little melodies in between\" rather than sitting on a static V7 voicing (p. 12). Jazz is framed as fundamentally \"the interplay of tension and resolution, or V's and I's with various flavors. The crucial skill to develop is the ability to transition creatively between these chord progressions\" (p. 12). The resolving dominant is the moment of maximum harmonic energy to be shaped, not merely voiced.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Jazz as tension and resolution, p. 12"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Chords as tools, not static entities, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/altered-dominant",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "dress-the-melody-note",
+          "narrative": "The B7#11 voicing is the worked example Bernstein uses to demonstrate the dressing-the-notes principle: \"if the bass were to play the same melody note, it could make the melody feel weak. Instead, he prefers to play a B7#11 chord, where the F becomes the #11, allowing the melody note to have a different 'outfit' that enhances its impact and makes it feel good\" (p. 9). By recontextualizing the melody note as a sharp-11 tension rather than a bass-doubled root, the comper gives that note importance. This is the paradigm for voicing choice across all chord qualities.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "B7#11 outfit example, p. 9"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/tritone-substitution-dressing",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "tritone-substitution-dressing",
+          "narrative": "The #11 dominant voicing is the harmonic identity of the tritone substitution, a substitution Bernstein prescribes over resolving dominants. He \"sometimes likes to play the ii V a tritone up or down the original during the dominant chords that resolve. This is like playing the related ii chord of the tritone substitution\" (p. 13). The sharp-11 characteristic of the tritone-sub dominant is therefore a comping resource and a soloing target-note context whenever the substitution is in play.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Tritone ii-V substitution, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/dress-the-melody-note",
+            "minor7/tritone-sub-ii"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "subdominant-pre-dominant",
+          "narrative": "The ii–7 chord is the most common pre-dominant and is the context where Bernstein's target-note method is first explicitly illustrated. The player identifies which melody note lands on or leads into the minor 7th chord and lets that note determine voicing — \"when the melody targeted a specific note of the chord, he encouraged me to take note of it as something to remember and as a guideline for deciding which types of chords to use\" (p. 7). On the ii–7 the root-3-7 shell establishes the sound before any 11 is added.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Melody dictates chord choice, p. 7"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Start with root, third, seventh, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "minor7/tritone-sub-ii",
+            "shell-voicing/subdominant-entry"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "tritone-sub-ii",
+          "narrative": "When Bernstein deploys the tritone substitution over a resolving dominant, the ii chord of the new key a tritone away is a minor 7 chord. \"He sometimes likes to play the ii V a tritone up or down the original during the dominant chords that resolve. This is like playing the related ii chord of the tritone substitution\" (p. 13). Rhythmic placement is critical: \"rhythm plays a vital role, particularly in the case of the ii V with a tritone up, as playing it in the incorrect position within the bar can create a sense of awkwardness\" (p. 13). The tritone-sub ii–7 is a specific, rhythmically placed sonority, not a random chromatic chord.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Tritone ii-V substitution, p. 13"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Rhythmic placement of substitutions, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/tritone-substitution-dressing",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "sustained-single-chord-internal-motion",
+          "narrative": "When a minor 7 chord is sustained over two or four measures, Bernstein insists it must not remain static. \"When a tune calls for a chord to be sustained over 4 or 2 measures, it becomes essential to explore the play between harmonic tension and resolution within that chord. Also utilizing space and rhythm effectively is key while doing this\" (p. 12). The player must generate internal tension and resolution, weaving passing chords and inner melodies through the sustained minor 7 field. This is where \"the fun and creativity in music truly come alive\" (p. 12).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Internal motion within a single chord, p. 12"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Tension is where creativity lives, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "minor7/subdominant-pre-dominant",
+            "major69/under-resolved-tonic"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor6",
+          "function_role": "minor-tonic-default",
+          "narrative": "On a minor I chord functioning as tonic Bernstein states that \"it's usually more appropriate to play a Dm6 chord, where the major 6th replaces the minor 7th within the chord\" (p. 7). The minor 6 chord is the default voicing for a minor tonic because the major 6th gives brightness and avoids the complete minor-mode closure. This is the starting point before the melody is consulted to see if it overrides the default.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Dm6 vs Dm7 from melody, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor7/minor-tonic-melody-override",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "minor-tonic-melody-override",
+          "narrative": "The Dm6-vs-Dm7 example is the canonical illustration of melody-driven voicing selection. When the melody supplies the b7 of the chord, the default Dm6 is overridden: \"in this particular song, the melody plays the minor 7th of the chord, so he suggested playing more of a Dm7-type chord, possibly using quartal voicings to emphasize the 7th and the 11th\" (p. 7). The minor 7 (with quartal voicing) is chosen not by harmonic theory but by the specific melody note that is being dressed.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Dm6 vs Dm7 from melody, p. 7"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Melody dictates chord choice, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor6/minor-tonic-default",
+            "quartal/melody-driven-quartal"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "quartal",
+          "function_role": "melody-driven-quartal",
+          "narrative": "Quartal voicings appear specifically in the context of the Dm7 example where the melody is the b7 and the 11th needs to be foregrounded. Bernstein suggests \"playing more of a Dm7-type chord, possibly using quartal voicings to emphasize the 7th and the 11th\" (p. 7). The quartal stack is not a stylistic default but is prescribed when the melody note demands that the 11th be heard prominently and the chord needs to avoid suggesting a specific bass voicing that would weaken the melody.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Dm6 vs Dm7 from melody, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor7/minor-tonic-melody-override",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "internal-motion-tension-zone",
+          "narrative": "On sustained dominant chords Bernstein locates the primary creative territory in the tension zone itself, not at resolution. \"According to Bernstein, the tension is where the fun and creativity in music truly come alive. It is in these moments that you can explore various ways to navigate and shape that tension\" (p. 12). The player should \"employ a wide range of passing chords and interweave little melodies in between\" the target sonorities rather than waiting to arrive at the I chord to do interesting work.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Tension is where creativity lives, p. 12"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Chords as tools, not static entities, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7sharp11/altered-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "altered-dominant",
+          "narrative": "Bernstein's sensory-flavor approach to tensions means each altered-dominant color is memorized as a distinct taste rather than a symbol. He \"thinks about chords and tensions in terms of relating them to the senses and something more memorable, rather than as a collection of abstract names and numbers. This way, he can hear certain chords and associate them with similar flavors, just like how one can find the same spice but with different nuances of freshness or sweetness\" (p. 7). The #11 flavor on a dominant is one of those memorized spices, applicable whenever the melody note can be reframed as that tension.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Chords as flavor/spice, p. 7"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "B7#11 outfit example, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/dress-the-melody-note",
+            "dominant7/internal-motion-tension-zone"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "tonic-melody-dress",
+          "narrative": "When the melody lands on the 7th of a major tonic chord, the voicing must honor that tension. Target notes in the melody dictate voicing choice universally: \"when the melody targeted a specific note of the chord, he encouraged me to take note of it as something to remember and as a guideline for deciding which types of chords to use\" (p. 7). A major 7 voicing is prescribed specifically when the melody sits on the leading tone and must be given its proper outfit rather than being buried in a root-position voicing that makes it sound like a weak passing note.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Melody dictates chord choice, p. 7"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "major69/tonic-color-extension",
+            "shell-voicing/tonic-entry"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "guide-tone-top-voice",
+          "narrative": "Bernstein's two-phase comping-construction places the guide-tone line as the primary melodic layer: \"one can create their own guide tones for each chord, aiming to establish a strong and captivating melodic line. Afterwards, you have the freedom to determine how to fill in the remaining notes of the chord\" (p. 10). On a major tonic the major 7th is a strong guide-tone candidate as the highest-tension diatonic note, and comping voicings mirror the solo target notes: \"these landing points are closely connected to the notes he chooses for the top voicings while comping\" (p. 25).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Build own guide tones, p. 10"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Comping voicings mirror solo targets, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major7/tonic-melody-dress"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "guide-tone-line-construction",
+          "narrative": "The guide-tone construction rule applies across all chord qualities including the ii–7: design a captivating melodic line through the top voices, then fill inner voices to dress those guide tones. \"Once you have established a solid structure with strong guide notes and bass notes, you have the flexibility to incorporate any notes in between. The idea is to consider notes that would 'dress better' the guide tones, enhancing their impact and making them feel pleasing\" (p. 10). On a minor 7 chord the guide tone is chosen by what the melody has established as the important note.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Fill in around guide tones, p. 10"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Build own guide tones, p. 10"
+            }
+          ],
+          "cross_ref": [
+            "minor7/subdominant-pre-dominant",
+            "minor7/minor-tonic-melody-override"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "guide-tone-line-construction",
+          "narrative": "On dominant chords the guide-tone line is the most critical because V chords already contain the tritone (3rd and 7th), making them the most active voice-leading moment. Bernstein prescribes building the comping by first establishing a melodic line through the top of the dominant voicing, referencing Jim Hall's model: \"Jim Hall had a unique way of envisioning each string on the guitar as an individual, aiming to bring joy to all by providing them with beautiful melodies to sing\" (p. 13). Each voice in the dominant chord should have a singable melodic motion into the resolution.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Voice leading as choir writing, p. 13"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Build own guide tones, p. 10"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7sharp11/altered-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "comping-top-voice-solo-target",
+          "narrative": "The major 6/9 chord's top-voice notes (the 6th and 9th) are simultaneously the comping guide-tone choices and the solo target-note landing points: \"these landing points are closely connected to the notes he chooses for the top voicings while comping. This is because those notes often embody strong and melodically pleasing phrases\" (p. 25). This unification of comping and soloing into a single target-note system is a defining structural feature of Bernstein's method — the 6 and 9 are the prescribed landing colors on a major tonic in both roles.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Comping voicings mirror solo targets, p. 25"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Melody target notes as basis, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major7/guide-tone-top-voice"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "comping-top-voice-solo-target",
+          "narrative": "The same unification of comping and soloing applies on minor 7 chords. The player identifies the melody's target note on the ii–7 and builds both the comping top voice and the solo line to land on the same note. \"Bernstein consistently emphasizes the concept of using the target notes of the melody as the basis for melodic improvisation whenever we play a tune\" (p. 25), and the top of the comping voicing reinforces that same target. The minor 7th, 11th, or 3rd can be the target depending on what the original melody establishes.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Melody target notes as basis, p. 25"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Comping voicings mirror solo targets, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "minor7/guide-tone-line-construction",
+            "minor7/subdominant-pre-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "comping-top-voice-solo-target",
+          "narrative": "On dominant function chords, the top-voice note chosen for comping mirrors the solo's intended landing point. Building lines that lead to target notes is prescribed across all chord contexts: \"Once you can identify these notes, he encourages exploring melodic lines that lead to these target notes, starting with simple ideas and later exploring more complex ones, imparting a narrative quality and providing a specific framework for storytelling during improvisation\" (p. 25). The dominant chord's available targets (3, 5, 7, 9, 13, #11) are selected by what the melody has established, not by theoretical default.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Lines leading to target notes, p. 25"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Comping voicings mirror solo targets, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7/guide-tone-line-construction"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "chromatic-approach-any-target",
+          "narrative": "Over dominant chords Bernstein's permissive chromatic stance is fully operational: \"when you focus on a specific degree of the scale, you have the freedom to use the entire chromatic scale to target that note. Every note can relate to any other note within the context of any chord\" (p. 19). The party-for-the-target analogy specifies that \"not only can you invite your family members (the corresponding scale notes), but also your friends and neighbors (the outside notes)\" (p. 19). Any chromatic note may approach a chosen target tone as long as it serves the line.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Chromatic notes around target, p. 19"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Party-for-the-target analogy, p. 19"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7sharp11/altered-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "chromatic-approach-any-target",
+          "narrative": "The party-for-the-target chromatic stance applies on all chord qualities including minor 7 chords. The player selects a target note (any chord tone or extension of the minor 7 chord) and approaches it with any chromatic note: \"every note can relate to any other note within the context of any chord\" (p. 19). The pedagogical illustration uses the note D to show how the same pitch carries a different flavor depending on its harmonic context, including over a minor 7 chord: \"He chose the note D for both examples to also explain how a note can have a different flavor depending on the harmonic context\" (p. 17).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Chromatic notes around target, p. 19"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "A note's flavor depends on harmony, p. 17"
+            }
+          ],
+          "cross_ref": [
+            "minor7/subdominant-pre-dominant",
+            "minor7/guide-tone-line-construction"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "chromatic-approach-any-target",
+          "narrative": "The permissive chromatic stance extends to major 7 chords as well: any chromatic note may approach the chosen target on a major chord if it serves the melodic line. The diatonic notes are \"family\" and chromatic notes are \"friends and neighbors\" at the party dedicated to the target note (p. 19). This means that on a major I chord, chromatic neighbor and passing tones are fully available as long as the line arrives at its stated target, making chromaticism a logical extension of the target-note method rather than a separate harmonic concept.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Party-for-the-target analogy, p. 19"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Chromatic notes around target, p. 19"
+            }
+          ],
+          "cross_ref": [
+            "major69/tonic-color-extension",
+            "major7/guide-tone-top-voice"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "single-target-variation",
+          "narrative": "Over dominant chords the single-target-note variation method is the core vocabulary-building exercise: \"This alternative method involves crafting phrases that center around a particular note of the chord. This selected note can be any fundamental note or extension of the chord, and it serves as the central element of the phrase\" (p. 15). The dominant chord is the most common context for this exercise because its rich extension set (b9, 9, #9, b13, 13, #11) provides many target options, each with a different sensory flavor.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Target notes around a chord tone, p. 15"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/two-target-variation",
+            "dominant7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "two-target-variation",
+          "narrative": "The advanced expansion of single-target practice on dominant chords is building phrases around two simultaneous target notes: \"The next step in this process is to expand upon the previous method by selecting two notes and creating phrases that revolve around them. This approach adds an extra layer of complexity and introduces a different quality to the lines\" (p. 19). On a dominant chord, pairing two extensions (e.g., the b9 and the 13) as simultaneous targets produces lines with a richer harmonic flavor while maintaining the goal-directed quality of the single-target method.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Two-note target practice, p. 19"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/single-target-variation",
+            "dominant7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "single-target-variation",
+          "narrative": "The single-target-note variation method applies on minor 7 chords as it does on all chord qualities. The player selects one note — any chord tone or extension of the minor 7 harmony — and builds multiple phrases that orbit that target, generating variations by following the ear while preserving the central note as the landing point. Recursive generation applies: creativity is defined as \"taking good musical ideas and creating variations that convey the same meaning but with different flavors... developing the ability to produce ten new ideas from one and then ten more from those ten\" (p. 13).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Target notes around a chord tone, p. 15"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Creativity as variation generation, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "minor7/two-target-variation",
+            "minor7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "two-target-variation",
+          "narrative": "Two-simultaneous-target-note practice is applicable on minor 7 chords as part of the graduated complexity that Bernstein's method prescribes. After building fluency with single-target phrases on the ii–7, the player moves to pairing two targets, which \"adds an extra layer of complexity and introduces a different quality to the lines\" (p. 19). The note D used in the chapter's harmonic-flavor illustration is explicitly a minor-7-chord context, demonstrating that the method teaches ear-based note-flavor differentiation alongside the structural target-note skill.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Two-note target practice, p. 19"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "A note's flavor depends on harmony, p. 17"
+            }
+          ],
+          "cross_ref": [
+            "minor7/single-target-variation",
+            "minor7/guide-tone-line-construction"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "single-target-variation",
+          "narrative": "On the tonic major the major 6/9 chord provides the primary solo landing targets, and single-target-note practice orients phrases toward those notes. Bernstein \"consistently emphasizes the concept of using the target notes of the melody as the basis for melodic improvisation whenever we play a tune\" (p. 25). Building lines that lead to the 6th or 9th of the tonic is the prescribed practice procedure, \"starting with simple ideas and later exploring more complex ones, imparting a narrative quality\" (p. 25).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Melody target notes as basis, p. 25"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Lines leading to target notes, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "major69/comping-top-voice-solo-target",
+            "major69/under-resolved-tonic"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "rhythmic-placement-substitution",
+          "narrative": "Bernstein explicitly warns that the tritone-sub ii-V must be placed at the correct rhythmic position in the bar. \"Rhythm plays a vital role, particularly in the case of the ii V with a tritone up, as playing it in the incorrect position within the bar can create a sense of awkwardness\" (p. 13). The dominant chord is the host for this substitution, and the rule underscores the method's principle that rhythm carries meaning equivalent to harmony: \"He believed that rhythm gives meaning to the musical idea\" (p. 8). A harmonically correct substitution at the wrong beat is worse than no substitution.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Rhythmic placement of substitutions, p. 13"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Rhythm gives notes meaning, p. 8"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "minor7/tritone-sub-ii"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "passing-chord-inner-melody",
+          "narrative": "Chords are not static entities but transitional tools: Bernstein \"employs a wide range of passing chords and interweaves little melodies in between\" target sonorities (p. 12). On dominant function chords specifically, passing chords and inner melodic lines are woven between the core voicing and the resolution target, reflecting the method's hierarchy that \"chords are not static entities, as they may sometimes appear on a lead sheet, but rather tools for manipulating tension and resolution\" (p. 12). Each passing chord must give a voice a singable melodic path.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Chords as tools, not static entities, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/guide-tone-line-construction",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor6",
+          "function_role": "minor-tonic-comping-default",
+          "narrative": "The minor 6 chord is prescribed as the default comping voicing on a minor tonic — the root-3-7 (major 6th) shell — before any melody consultation overrides it. \"In such contexts, where a minor I (one) chord serves as the tonic of the song, Bernstein explained that it's usually more appropriate to play a Dm6 chord, where the major 6th replaces the minor 7th within the chord\" (p. 7). The major 6th provides a brighter, less closed sound than the minor 7th, and its default use reflects the preference for tension-preserving voicings at resolution points.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Dm6 vs Dm7 from melody, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor6/minor-tonic-default",
+            "minor7/minor-tonic-melody-override"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "chord-as-flavor-memorization",
+          "narrative": "Every extension on a major chord is memorized as a sensory flavor rather than a symbol: \"Bernstein thinks about chords and tensions in terms of relating them to the senses and something more memorable, rather than as a collection of abstract names and numbers. This way, he can hear certain chords and associate them with similar flavors, just like how one can find the same spice but with different nuances of freshness or sweetness\" (p. 7). The major 7th voicing has its own flavor profile, and extensions (9, #11, 13) are registered as distinct sensory spices over that base.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Chords as flavor/spice, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "major69/tonic-color-extension",
+            "dominant7sharp11/altered-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "chord-as-flavor-memorization",
+          "narrative": "The dominant chord's many flavors — pure V7, V7b9, V7#9, V7b13, V7#11 — are each memorized sensorially. \"He can hear certain chords and associate them with similar flavors, just like how one can find the same spice but with different nuances of freshness or sweetness\" (p. 7). This sensory-flavor system is the foundation of ear-based voicing selection over chord symbols, allowing rapid identification of the right outfit for the melody note without symbol computation.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Chords as flavor/spice, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/altered-dominant",
+            "dominant7/internal-motion-tension-zone"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "chord-as-flavor-memorization",
+          "narrative": "Minor 7 chord flavors — including the difference between a Dm6 and a Dm7, between a pure minor 7 and a minor 7 with #11 — are memorized by ear as sensory spices. The same D note \"can have a different flavor depending on the harmonic context\" (p. 17), a direct illustration of how the minor 7 chord context changes the note's meaning. Bernstein's method replaces symbol manipulation with flavor recognition as the primary mode of harmonic navigation.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "A note's flavor depends on harmony, p. 17"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Chords as flavor/spice, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor6/minor-tonic-default",
+            "minor7/minor-tonic-melody-override"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "one-shape-moving-hand",
+          "narrative": "The one-shape-moving-hand move is illustrated with reference to comping where Bernstein \"seemed to utilize the same chord shape for each chord, moving his hand around the neck instead of changing finger positions\" (p. 29). A major 6/9 shape is a natural candidate for this move on the tonic, as its intervallic structure can be transposed intact to cover related chords by neck position alone. This economy of physical motion is described as a characteristic Bernstein technique that results in consistent tonal quality across chord changes.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 10",
+              "citation": "One shape, moving hand, p. 29"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major69/comping-top-voice-solo-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "one-shape-moving-hand",
+          "narrative": "The one-shape-moving-hand technique applies on dominant chords: rather than reshaping the hand for each chord change, Bernstein maintains a single shape and shifts position on the neck. \"Bernstein also recounted an interesting encounter where someone praised his comping, noticing that he seemed to utilize the same chord shape for each chord, moving his hand around the neck instead of changing finger positions\" (p. 29). Dominant 7th shapes shifted to the tritone distance can produce the tritone-substitution sound without any physical reshaping, exemplifying the interaction between this physical technique and his harmonic devices.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 10",
+              "citation": "One shape, moving hand, p. 29"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/tritone-substitution-dressing",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "one-shape-moving-hand",
+          "narrative": "Minor 7 chord shapes are also subject to the one-shape-moving-hand approach. By transposing a single minor 7 voicing shape around the neck rather than reshaping, Bernstein achieves a consistent sound quality — \"a more consistent sound, offering a phrasing advantage\" (p. 28) — across the ii–7 and the tritone-sub ii–7 that appears a tritone away. This positional consistency also serves the comping aesthetic by keeping the guide-tone line's tonal character uniform.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 10",
+              "citation": "One shape, moving hand, p. 29"
+            },
+            {
+              "source": "Chapter 9",
+              "citation": "Single-string intervals and slides, p. 28"
+            }
+          ],
+          "cross_ref": [
+            "minor7/tritone-sub-ii",
+            "minor7/guide-tone-line-construction"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "reharmonization-anticipate-melody",
+          "narrative": "Reharmonization in real time is prescribed when the comper can anticipate the soloist's upcoming melody note and wants to dress it proactively. \"Another aspect that Bernstein enjoys doing is reharmonizing sections of the melody when he anticipates the notes I'm going to play in the song's heads. This creates intriguing harmonic movements, 'dressing the notes,' and enhancing their sound while still respecting the essential harmonic narrative of the song\" (p. 10). On a major tonic moment, reharmonization might introduce a more tension-laden voicing that gives the anticipated melody note a richer outfit.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Reharm to anticipate melody, p. 10"
+            }
+          ],
+          "cross_ref": [
+            "major69/tonic-color-extension",
+            "dominant7sharp11/tritone-substitution-dressing"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "reharmonization-anticipate-melody",
+          "narrative": "Dominant chords are the prime site for reharmonization because their tension is greatest and the range of available substitutions is widest. Bernstein prescribes anticipatory reharmonization that serves the melody note while preserving the harmonic narrative: the reharmonization should still be felt as a dominant function, not as a random chromatic intrusion. \"This creates intriguing harmonic movements, 'dressing the notes,' and enhancing their sound while still respecting the essential harmonic narrative of the song\" (p. 10). The reharmonization is an extension of dressing-the-notes, not a departure from it.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Reharm to anticipate melody, p. 10"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7sharp11/altered-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "reharmonization-anticipate-melody",
+          "narrative": "On major tonic sections, anticipatory reharmonization might substitute a major 6/9 with a different extension set or introduce a secondary dominant to enrich the melody note's outfit. The principle remains: \"the notes he chooses for the top voicings while comping\" are drawn from the melody's own target notes (p. 25), and when the comper can anticipate those notes, the voicing is designed to make them shine. The 6/9 chord's flexibility as a tonic allows for inner-voice motion that produces the reharmonized quality without destroying the tonic feeling.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Reharm to anticipate melody, p. 10"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Comping voicings mirror solo targets, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "major69/comping-top-voice-solo-target",
+            "dominant7/reharmonization-anticipate-melody"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "rhythm-equal-to-voicing",
+          "narrative": "Rhythmic content on dominant chords is as structurally important as the voicing itself. \"Bernstein emphasized the importance of rhythm in his comping, considering it to be equally vital as the chords he played. He believed that finding captivating rhythms that propelled the music forward was a key aspect\" (p. 11). The dominant is the most propulsive moment in the harmonic cycle, and a rhythmically inert V7 voicing wastes its energy. Borrowed rhythmic motifs — such as the Star Eyes intro rhythm — are prescribed as developable comping units.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Rhythm equal to chords, p. 11"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Rhythmic motif from Star Eyes, p. 11"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "dominant7/internal-motion-tension-zone"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "rhythm-equal-to-voicing",
+          "narrative": "On minor 7 chords the rhythmic figure is as load-bearing as the voicing choice. The Star Eyes intro rhythm is illustrated as a motif borrowed into comping over a soloist (p. 11), a technique applicable equally over ii–7 chords. Bernstein elevates rhythmic content to equal status with voicing: \"finding captivating rhythms that propelled the music forward was a key aspect\" (p. 11). A well-voiced ii–7 with a flat rhythmic presentation fails the comping aesthetic, while a rhythmically alive shell voicing may succeed.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Rhythm equal to chords, p. 11"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Rhythm equals chords in comping, p. 11"
+            }
+          ],
+          "cross_ref": [
+            "minor7/guide-tone-line-construction",
+            "minor7/sustained-single-chord-internal-motion"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "rhythm-equal-to-voicing",
+          "narrative": "On tonic major chords the rhythmic dimension of comping is as important as the voicing choice. Even a perfectly voiced major 6/9 that lands rhythmically on a weak beat fails to propel the music. Bernstein's prescription is explicit: rhythm in comping is \"equally vital as the chords he played\" (p. 11), and borrowed rhythmic figures become motifs for variation and development. The tonic landing is an opportunity to establish a rhythmic idea that can be developed through the next phrase.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Rhythm equal to chords, p. 11"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major69/comping-top-voice-solo-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "tension-not-resolution-as-creative-site",
+          "narrative": "The dominant chord is explicitly named as the site of maximum creative energy. \"According to Bernstein, the tension is where the fun and creativity in music truly come alive. It is in these moments that you can explore various ways to navigate and shape that tension\" (p. 12). A player who rushes to the resolution wastes the dominant chord's potential. The prescription is to dwell in the tension zone with passing chords, inner melodies, rhythmic development, and chromatic approaches — maximizing the value of the dominant before releasing.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Tension is where creativity lives, p. 12"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Jazz as tension and resolution, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/internal-motion-tension-zone",
+            "dominant7/resolving-dominant"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major-triad",
+          "function_role": "proscribed-static-comping",
+          "polarity": "proscriptive",
+          "narrative": "A bare major triad used as a static comping voicing violates the dressing-the-notes principle because it fails to give the melody note an interesting outfit. Bernstein's entire comping philosophy is built around making each note feel important: \"you can make each note feel good by giving it the right 'outfit' and making it feel important\" (p. 9). A plain major triad with no extensions doubles the bass-note territory and creates the exact weakness the B7#11 outfit example is designed to correct — \"if the bass were to play the same melody note, it could make the melody feel weak\" (p. 9).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "B7#11 outfit example, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "shell-voicing/tonic-entry"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "proscribed-scale-over-chord",
+          "polarity": "proscriptive",
+          "narrative": "Using a scale as the primary improvisation framework over a dominant chord is the paradigmatic failure the method is designed to correct. \"These schools often focus on providing students with chord progressions and corresponding scales, without emphasizing the concept of narrative, meaning, and effectively communicating a story through musical ideas\" (p. 4). Over a dominant chord, deploying the Mixolydian scale without phrase-level intent is the anti-model — the scale is available, but \"the focus on learning scales that fit over chords often neglects the concept of ideas, which he likens to words. Without clear ideas or words, it becomes challenging to convey meaningful musical expressions\" (p. 4).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 2",
+              "citation": "Critique of scale-chord pedagogy, p. 4"
+            },
+            {
+              "source": "Chapter 2",
+              "citation": "Ideas as words, scales as not-words, p. 4"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/single-target-variation",
+            "dominant7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "proscribed-scale-over-chord",
+          "polarity": "proscriptive",
+          "narrative": "Over minor 7 chords, deploying the Dorian scale as the primary improvisational framework without phrase-level narrative intent is the exact error Bernstein's method targets. The method's core critique of academic jazz pedagogy is that it \"focus[es] on providing students with chord progressions and corresponding scales, without emphasizing the concept of narrative\" (p. 4). Playing Dorian over ii–7 without goal-directed phrases is \"trying to generate words as you speak, rather than learning and creatively combining words by understanding the syntax of the language\" (p. 4).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 2",
+              "citation": "Critique of scale-chord pedagogy, p. 4"
+            },
+            {
+              "source": "Chapter 2",
+              "citation": "Generate vs. recombine, p. 4"
+            }
+          ],
+          "cross_ref": [
+            "minor7/single-target-variation",
+            "minor7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "proscribed-scale-over-chord",
+          "polarity": "proscriptive",
+          "narrative": "Running an Ionian scale over a major 7 chord without narrative intent is the same proscribed behavior on the tonic as on any other chord. Bernstein's method replaces scale deployment with phrase-based recombination at every harmonic moment: \"it's akin to trying to generate words as you speak, rather than learning and creatively combining words by understanding the syntax of the language\" (p. 4). On the tonic major, the prescribed behavior is target-note-oriented lines, not scale-running.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 2",
+              "citation": "Generate vs. recombine, p. 4"
+            },
+            {
+              "source": "Chapter 2",
+              "citation": "Critique of scale-chord pedagogy, p. 4"
+            }
+          ],
+          "cross_ref": [
+            "major7/guide-tone-top-voice",
+            "major69/single-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "proscribed-button-pressing",
+          "polarity": "proscriptive",
+          "narrative": "Over dominant chords, playing what the hand sees on the fingerboard without ear-evaluation is explicitly called 'pressing the buttons' and is proscribed. Bernstein \"stressed that this aspect distinguishes a genuine musical phrase from merely 'pressing the buttons' and allowing the fingers to take control\" (p. 21). Even on guitar, where the instrument's shape-oriented nature can generate ideas, the evaluation step — listening to whether what was played constitutes an intentional phrase — is mandatory. The shape generates a candidate; the ear decides whether it qualifies as vocabulary.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Phrasing vs pressing buttons, p. 21"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Shape-based idea generation, p. 21"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/single-target-variation",
+            "dominant7/chromatic-approach-any-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "proscribed-over-resolution",
+          "polarity": "proscriptive",
+          "narrative": "Playing a root-position I chord with a clear strong-beat root is proscribed as over-resolving. Bernstein's signature tonic move is the V-derived I69 that avoids the root: \"his preference for not playing the roots of the I (one) chords\" (p. 12). The over-resolved tonic \"can give the impression that the song is being dragged or held back\" (p. 13). The major 6/9 without root is the correction — it lands as home but retains enough tension to keep the music moving.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Don't overemphasize the I chord, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major-triad/tonic-resolution"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "proscribed-premature-extension",
+          "polarity": "proscriptive",
+          "narrative": "Adding extensions to a major tonic chord before the root-3-7 relationship to the melody is internalized is explicitly proscribed as rushing to step 12 before step 1. \"He stopped me and pointed out that I was trying to rush to step 12 without adequately accomplishing step 1, which is mastering the melody\" (p. 7). On any chord quality including major, extensions are the last layer — a player who reaches for a major 7#11 voicing before hearing how the melody sits against a basic major shell is violating the method's foundational sequence.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Step 1 before step 12, p. 7"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Foundation before embellishment, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/tonic-entry",
+            "major69/tonic-color-extension"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "proscribed-premature-extension",
+          "polarity": "proscriptive",
+          "narrative": "Over dominant chords the same premature-extension proscription applies: do not add altered tones before the basic 3-b7 tritone relationship to the melody is heard. The layered-foundation principle is universal: \"he prioritizes building a solid foundation with the basic layers before progressing to new techniques or embellishments\" (p. 9). Adding b9, #9, or #11 to a dominant chord before the shell relationship is secure produces the same texture-overload warned against in the 'juggling on a unicycle' maxim: \"trying to juggle while riding an unicycle\" (p. 6).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Foundation before embellishment, p. 9"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Juggling on a unicycle, p. 6"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/dominant-entry",
+            "dominant7/guide-tone-line-construction"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "voice-leading-choir-model",
+          "narrative": "Jim Hall's choir model is prescriptive for all dominant chord voice leading: each string is a singer who must be given a beautiful melodic line. \"Bernstein likened creating good voice leading to composing for a choir... Jim Hall had a unique way of envisioning each string on the guitar as an individual, aiming to bring joy to all by providing them with beautiful melodies to sing\" (p. 13). On a dominant chord moving to a tonic, every voice has an obligation: the 7th resolves down a half-step, the 3rd resolves up or leads smoothly, and inner voices must have melodic coherence, not just harmonic correctness.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Voice leading as choir writing, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/guide-tone-line-construction",
+            "dominant7/passing-chord-inner-melody"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "voice-leading-choir-model",
+          "narrative": "The Jim Hall choir model applies on minor 7 chords as well: each voice in a ii–7 voicing must be given a melodic line worth singing. \"Jim Hall had a unique way of envisioning each string on the guitar as an individual, aiming to bring joy to all by providing them with beautiful melodies to sing\" (p. 13). The ii–7 chord's voices must lead smoothly into the V7 and ultimately the I, with the guide-tone line on top and inner voices designed to dress it rather than simply fill harmonic space.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Voice leading as choir writing, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "minor7/guide-tone-line-construction",
+            "dominant7/voice-leading-choir-model"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "voice-leading-choir-model",
+          "narrative": "At the tonic major, the choir-model voice-leading principle prescribes that the resolution into the I chord must have melodic beauty in every voice, not just harmonic arrival. The top voice of the 6/9 landing chord — which mirrors the solo target note — should be the culmination of a singable guide-tone line that has been constructed across the preceding ii–V motion. \"Jim Hall had a unique way of envisioning each string on the guitar as an individual, aiming to bring joy to all by providing them with beautiful melodies to sing\" (p. 13).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Voice leading as choir writing, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "major69/comping-top-voice-solo-target",
+            "minor7/voice-leading-choir-model"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "ear-led-free-variation",
+          "narrative": "The first of Bernstein's three named variation methods — ear-led free variation — applies over all chord qualities including dominant. The player takes a known phrase, preserves its overall structure, and freely varies the notes by ear: \"This method involves taking the overall structure of the melodic line as a starting point and freely experimenting without many constraints. The primary guide in this process is the ear, which helps in discovering variations that retain the essence of the original while introducing distinct flavors\" (p. 14). Over dominant chords this produces family-related phrases with different extension-tone colorings.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Open approach to variation, p. 14"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/single-target-variation",
+            "dominant7/two-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "ear-led-free-variation",
+          "narrative": "Ear-led free variation is the entry point for vocabulary expansion on minor 7 chords. The player starts from a known ii–7 phrase and varies it by following the ear while preserving the overall structure: \"freely experimenting without many constraints. The primary guide in this process is the ear\" (p. 14). This method produces ten variations from one starting phrase, each with a different flavor over the minor 7 context, and then recursively generates ten more from each of those: creativity defined as \"developing the ability to produce ten new ideas from one and then ten more from those ten\" (p. 13).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Open approach to variation, p. 14"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Creativity as variation generation, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "minor7/single-target-variation",
+            "minor7/two-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "ear-led-free-variation",
+          "narrative": "On the tonic major the ear-led free variation method generates families of tonic-landing phrases from a single classic vocabulary item. Starting from a known line that lands on the 6th or 9th of the major 6/9 chord, the player preserves the phrase's overall structure and varies notes by ear to produce variants with different extension-tone flavors at the landing. This connects to the method's learn-classic-then-abstract arc: \"he would demonstrate a well-known vocabulary piece and then proceed to create variations, gradually abstracting further from the original idea\" (p. 30).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Open approach to variation, p. 14"
+            },
+            {
+              "source": "Chapter 10",
+              "citation": "Learn classic lines, then abstract, p. 30"
+            }
+          ],
+          "cross_ref": [
+            "major69/single-target-variation",
+            "major69/comping-top-voice-solo-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "classic-line-then-abstract",
+          "narrative": "On dominant chords the entire tradition of bebop vocabulary supplies the classic lines that are learned first and then progressively abstracted. \"He has emphasized the significance of learning classic lines. He would demonstrate a well-known vocabulary piece and then proceed to create variations, gradually abstracting further from the original idea\" (p. 30). The dominant chord is the site where canonical bebop phrases (bebop scale runs, ii-V arrivals, tritone-sub approaches) are learned verbatim before being abstracted into personal variations consistent with Bernstein's impressionistic style.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 10",
+              "citation": "Learn classic lines, then abstract, p. 30"
+            },
+            {
+              "source": "Chapter 10",
+              "citation": "Impressionist analogy, p. 30"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/ear-led-free-variation",
+            "dominant7/single-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "classic-line-then-abstract",
+          "narrative": "On minor 7 chords the learn-classic-then-abstract arc applies: the player begins with canonical ii–7 vocabulary from the blues, swing, bebop, and hard-bop traditions and abstracts progressively. Bernstein \"possesses a comprehensive understanding of the entire evolution of jazz\" and prescribes studying it specifically with \"primary emphasis on blues, swing, bebop, and hard bop\" (p. 30). Classic ii–7 lines from these traditions form the seed library from which ear-led variation, single-target variation, and two-target variation all depart.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 10",
+              "citation": "Study the whole jazz tradition, p. 30"
+            },
+            {
+              "source": "Chapter 10",
+              "citation": "Learn classic lines, then abstract, p. 30"
+            }
+          ],
+          "cross_ref": [
+            "minor7/ear-led-free-variation",
+            "minor7/single-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "tritone-sub-voice-leading",
+          "narrative": "The #11 dominant chord as tritone substitution creates a specific voice-leading opportunity: the b7 of the original V7 becomes the 3rd of the tritone-sub V7#11, and the 3rd of the original becomes the b7 of the sub — the tritone is shared, and voice leading can exploit this. Bernstein's choir model applies directly: \"Jim Hall had a unique way of envisioning each string on the guitar as an individual, aiming to bring joy to all by providing them with beautiful melodies to sing\" (p. 13). The #11 dominant's voice-leading identity is determined by how its voices lead singably into the target.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Voice leading as choir writing, p. 13"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Tritone ii-V substitution, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/tritone-substitution-dressing",
+            "dominant7/voice-leading-choir-model"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "melody-as-monophonic-first-step",
+          "narrative": "On any chord quality, the very first task is to deliver the melody as a monophonic instrument before any comping layer is added. \"For Bernstein, the initial step in learning a song is to be able to play the melody as a monophonic instrument and accurately deliver the story\" (p. 7). Over major tonic chords this means playing the melody note alone, feeling how it sits in the harmonic space, and understanding which chord tone it represents before any voicing is chosen. This monophonic clarity is the prerequisite for all subsequent dressing-the-notes decisions.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Melody as monophonic delivery, p. 7"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Step 1 before step 12, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/tonic-entry",
+            "major69/tonic-color-extension"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "melody-as-monophonic-first-step",
+          "narrative": "On minor 7 chords the monophonic-first rule is identical: play the melody note alone over the ii–7 before adding any chord layer. The lyric-syllable articulation guide applies regardless of chord quality: \"He also emphasized the importance of the relationship between the melody and lyrics, noting how understanding the words helps to grasp the connection between syllables and notes\" (p. 7). This means that on a minor 7 chord in the context of a song, the player first hears the melody note as a note within the lyric phrase, then identifies which extension it represents.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Melody as monophonic delivery, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "minor6/minor-tonic-default",
+            "minor7/minor-tonic-melody-override"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "melody-as-monophonic-first-step",
+          "narrative": "The monophonic-first rule is equally operative on dominant chords: the melody note over a V7 is played alone before any chord voicing is chosen, and that note's identity relative to the dominant (3rd, b7, 9th, 13th, #11, b9, etc.) determines the voicing outfit. \"Never sacrifice the phrasing of the melody... playing the chords during the spaces suggested by the melody\" (p. 6). The melody leads and the dominant voicing follows it into the spaces it creates, not the reverse.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Melody as monophonic delivery, p. 7"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Never sacrifice melody phrasing, p. 6"
+            }
+          ],
+          "cross_ref": [
+            "shell-voicing/dominant-entry",
+            "dominant7/dress-the-melody-note"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "dress-the-melody-note",
+          "narrative": "The dressing-the-notes principle applies universally across chord qualities but is most explicitly illustrated on dominant chords via the B7#11 example. The goal is always to \"make each note feel good by giving it the right 'outfit' and making it feel important\" (p. 9), and on dominant chords the range of available outfits is widest — the melody note can be reframed as the 3rd, b7, b9, #9, #11, or b13 of various altered dominant voicings. The B7#11 example demonstrates this by reframing an F as the #11 rather than allowing it to double the bass.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "B7#11 outfit example, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/dress-the-melody-note",
+            "dominant7/reharmonization-anticipate-melody"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major7",
+          "function_role": "dress-the-melody-note",
+          "narrative": "On major tonic chords the dressing-the-notes principle selects between voicings based on which makes the melody note feel most important. If the melody is the 9th, a major 9 voicing foregrounds it; if it is the 6th, a 6/9 voicing honors it; if it is the major 7th, the voicing is built to make that leading tone shimmer. \"You can make each note feel good by giving it the right 'outfit' and making it feel important\" (p. 9). The melody dictates the outfit; the chord quality names the garment rack from which the outfit is chosen.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Melody dictates chord choice, p. 7"
+            }
+          ],
+          "cross_ref": [
+            "major7/tonic-melody-dress",
+            "major69/tonic-color-extension"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "dress-the-melody-note",
+          "narrative": "On minor 7 chords the dressing-the-notes principle produces the Dm6-vs-Dm7 distinction: the default Dm6 outfit is replaced by a Dm7 quartal outfit when the melody is the b7. \"In this particular song, the melody plays the minor 7th of the chord, so he suggested playing more of a Dm7-type chord, possibly using quartal voicings to emphasize the 7th and the 11th\" (p. 7). The minor 7 chord's melody-driven voicing selection is the most detailed worked example in the document of how dressing the notes operates in practice.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 4",
+              "citation": "Dm6 vs Dm7 from melody, p. 7"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "minor6/minor-tonic-default",
+            "minor7/minor-tonic-melody-override"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "tune-learning-context",
+          "narrative": "Every harmonic concept — including how to use a major 6/9 chord — is contextualized in a specific tune rather than presented abstractly. \"He emphasized the importance of contextualizing ideas within specific musical pieces. Rarely does he explain a concept without relating it to a musical context\" (p. 3). The major 6/9 as tonic sonority is encountered through specific tunes (\"Ornithology\" is the explicitly named example for the I-chord move), and its use is learned in that narrative context rather than as an isolated harmonic category.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 1",
+              "citation": "No strict method, p. 3"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "dominant7/tune-learning-context"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "tune-learning-context",
+          "narrative": "Dominant chord usage is learned through specific tunes, never through abstract V7 exercises. \"All of these ideas were consistently discussed within the context of specific tunes\" (p. 4), and the Ornithology example, the Star Eyes rhythmic motif, and the tritone-substitution discussion are all grounded in named repertoire. The dominant chord's harmonic vocabulary — its tensions, its substitutions, its inner motion — is acquired through tune-embedded vocabulary, not through chord-scale drill.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 2",
+              "citation": "Concepts live in tunes, p. 4"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/resolving-dominant",
+            "major69/tune-learning-context"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "b7sharp11-as-tension-outfit",
+          "narrative": "The dominant 7 sharp-11 voicing is specifically prescribed when the melody note needs to be reframed as a tension rather than a bass-doubled weakness. The B7#11 example is the method's canonical outfit illustration: by playing a tritone-related dominant chord, the F in the melody becomes a #11 tension rather than a potentially doubled bass note (p. 9). This chord quality is the go-to outfit when the melody sits on the tritone of the original dominant, and it is the most concrete single-chord prescription in the entire document.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 5",
+              "citation": "B7#11 outfit example, p. 9"
+            },
+            {
+              "source": "Chapter 5",
+              "citation": "Dressing the notes, p. 9"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/dress-the-melody-note",
+            "dominant7sharp11/tritone-substitution-dressing"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "narrative-landing-point",
+          "narrative": "The major 6/9 tonic chord is the narrative resolution — the landing point of the musical sentence — and as such it must be arrived at through lines that have been deliberately constructed to lead there. \"Once you can identify these notes, he encourages exploring melodic lines that lead to these target notes, starting with simple ideas and later exploring more complex ones, imparting a narrative quality\" (p. 25). The 6th and 9th of the tonic are the prescribed landing extensions because they communicate arrival without the finality of a root-position triad.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Lines leading to target notes, p. 25"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Melody target notes as basis, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major69/comping-top-voice-solo-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "narrative-tension-point",
+          "narrative": "The dominant chord is the narrative tension point of the musical sentence — the moment analogous to the comedian's setup before the punchline. Bernstein's comedian-and-jokes analogy frames improvisation as \"setups, narratives, and punchlines that resonate with the audience\" (p. 5), with the dominant functioning as setup and tension, and the tonic as punchline and resolution. The dominant must therefore contain the maximum narrative energy and be treated as a site for creative development, not merely a chord to pass through.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 3",
+              "citation": "Comedian-and-jokes analogy, p. 5"
+            },
+            {
+              "source": "Chapter 6",
+              "citation": "Tension is where creativity lives, p. 12"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/tension-not-resolution-as-creative-site",
+            "major69/narrative-landing-point"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "narrative-buildup-point",
+          "narrative": "The ii–7 chord is the narrative buildup — the beginning of the setup phrase that leads through V7 to the tonic resolution. In the comedian analogy it is the beginning of the narrative arc, and phrases on the ii–7 must anticipate and lead logically into the dominant tension. Bernstein's target-note system means the ii–7 phrase is already reaching toward its goal: \"he encourages exploring melodic lines that lead to these target notes\" (p. 25). The line started on the ii–7 must be pointed at the target it will reach on or through the V7.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 3",
+              "citation": "Comedian-and-jokes analogy, p. 5"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Lines leading to target notes, p. 25"
+            }
+          ],
+          "cross_ref": [
+            "minor7/subdominant-pre-dominant",
+            "dominant7/narrative-tension-point"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "silence-as-punctuation",
+          "narrative": "Silence over dominant chords functions as punctuation — it demarcates the end of one musical sentence and the beginning of the next, exactly as a comma or period works in speech. \"He frequently stressed the significance of silence in solos, comparing it to punctuation in language. He believed it was crucial to clearly articulate the beginning and end of an idea\" (p. 26). A line that runs through the dominant without silence before the tonic resolution produces a run-on sentence; a silence before the resolution gives the resolution structural weight.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Silence as punctuation, p. 26"
+            },
+            {
+              "source": "Chapter 4",
+              "citation": "Punctuation analogy, p. 8"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/tension-not-resolution-as-creative-site",
+            "major69/narrative-landing-point"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "silence-as-punctuation",
+          "narrative": "After landing on the tonic major 6/9 chord, silence is the prescribed punctuation that completes the sentence. The landing note on the 6th or 9th is the punchline, and silence follows it as a period follows a sentence. \"He believed it was crucial to clearly articulate the beginning and end of an idea\" (p. 26), and the tonic landing's end is marked by silence so the listener can register the resolution. Running immediately into the next phrase without silence blurs the sentence boundary and undermines the narrative.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Silence as punctuation, p. 26"
+            }
+          ],
+          "cross_ref": [
+            "major69/narrative-landing-point",
+            "dominant7/silence-as-punctuation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "silence-as-punctuation",
+          "narrative": "Silence on minor 7 chords before entering the dominant can create anticipation and build the sense of setup. Strategic pacing of density is prescribed: \"Rather than playing every possible subdivision in the first chorus, he suggested creating anticipation by introducing faster subdivisions later in the solo and then returning to slower ones\" (p. 26). A silence on the ii–7 before entering the V7 phrase is a structural punctuation that frames the dominant as the announced arrival rather than a casual chord change.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Silence as punctuation, p. 26"
+            },
+            {
+              "source": "Chapter 9",
+              "citation": "Strategic use of subdivisions, p. 26"
+            }
+          ],
+          "cross_ref": [
+            "minor7/narrative-buildup-point",
+            "dominant7/silence-as-punctuation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "rhyme-and-motivic-connection",
+          "narrative": "Dominant chords are a key site for motivic rhyming across the form — returning to a phrase shape or tension-resolution pattern that was established earlier creates the call-and-response or parallel-rhyme structure Bernstein prescribes. \"We also explored the idea of rhymes in soloing — connecting melodic ideas through call and response or developing and resolving tension in similar ways. He likened this to poetry, where simple and predictable rhymes coexist with more complex rhymes that occur in unexpected places\" (p. 26). A V7 phrase that echoes an earlier V7 phrase creates a complex rhyme that rewards the attentive listener.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Rhymes between ideas, p. 26"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/narrative-tension-point",
+            "major69/narrative-landing-point"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "rhyme-and-motivic-connection",
+          "narrative": "The major 6/9 tonic landing is a rhyme site: when a line arrives at the same target note on the tonic as an earlier phrase did, it creates a rhyme between the two sentences. Bernstein likened this to poetry \"where simple and predictable rhymes coexist with more complex rhymes that occur in unexpected places\" (p. 26). The tonic 6th or 9th as a recurring landing target becomes the rhyme-note that connects phrases across the form, giving the solo its sense of internal coherence and narrative structure.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Rhymes between ideas, p. 26"
+            }
+          ],
+          "cross_ref": [
+            "major69/narrative-landing-point",
+            "major69/comping-top-voice-solo-target"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7sharp11",
+          "function_role": "rhythmic-placement-critical",
+          "polarity": "proscriptive",
+          "narrative": "The tritone-sub dominant (#11) must be placed at the correct rhythmic position within the bar or it creates awkwardness. \"Rhythm plays a vital role, particularly in the case of the ii V with a tritone up, as playing it in the incorrect position within the bar can create a sense of awkwardness\" (p. 13). A dominant 7 #11 chord deployed at the wrong beat — even with impeccable voice leading — fails because rhythm carries meaning equivalent to harmony. The proscription is explicit: wrong rhythmic placement of this specific chord quality is a documented error.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 7",
+              "citation": "Rhythmic placement of substitutions, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "dominant7sharp11/tritone-substitution-dressing",
+            "dominant7/rhythmic-placement-substitution"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major-triad",
+          "function_role": "proscribed-root-position-i-chord",
+          "polarity": "proscriptive",
+          "narrative": "A root-position major triad on the I chord with the root in both bass and melody is the paradigm of over-resolution that Bernstein's entire tonic-substitution practice is designed to avoid. Playing \"Ornithology\" he demonstrated \"his preference for not playing the roots of the I (one) chords\" (p. 12), opting instead for the V-derived I69 to keep tension alive. The root-position major triad communicates complete resolution and stops the music's forward motion — precisely the arrested-momentum quality described as making \"the song feel dragged or held back\" (p. 13).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 6",
+              "citation": "Avoid the root of the I chord, p. 12"
+            },
+            {
+              "source": "Chapter 7",
+              "citation": "Don't overemphasize the I chord, p. 13"
+            }
+          ],
+          "cross_ref": [
+            "major69/under-resolved-tonic",
+            "major69/proscribed-over-resolution"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "contrast-dynamic-range",
+          "narrative": "Dynamic contrast on dominant chords — soft against loud within the V7 phrase — is prescribed as a narrative tool. \"He shared the concept of utilizing contrasting elements during solos, such as combining soft and loud notes, short and long notes, and conveying serious and lighthearted moments. He emphasized how this contrast can engage listeners and serve as a powerful tool for developing an interesting narrative\" (p. 26). A uniform-dynamic V7 phrase fails to engage; a phrase that grows loud into the dominant's peak tension point and releases into silence maximizes the chord's structural energy.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 9",
+              "citation": "Contrast as narrative tool, p. 26"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/tension-not-resolution-as-creative-site",
+            "dominant7/silence-as-punctuation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "minor7",
+          "function_role": "flexible-vocabulary-delivery",
+          "narrative": "New vocabulary learned on minor 7 chords must be flexible enough to appear unforced in real-time playing. \"Bernstein emphasizes the importance of being flexible in the delivery of ideas to ensure they feel organic within the flow of a solo. He likens it to a conversation, where you don't want to be preoccupied with when to interject something you've just learned\" (p. 24). A ii–7 phrase that was practiced in isolation but can only be deployed in its exact original form is insufficiently internalized — it must be flexible enough to enter any ii–7 context without sounding rehearsed.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Flexibility in delivery, p. 24"
+            }
+          ],
+          "cross_ref": [
+            "minor7/single-target-variation",
+            "minor7/ear-led-free-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "flexible-vocabulary-delivery",
+          "narrative": "Dominant chord vocabulary must be flexible enough to enter organically at the right moment in the musical conversation. \"He likens it to a conversation, where you don't want to be preoccupied with when to interject something you've just learned\" (p. 24). A V7 phrase that interrupts the musical flow because it was forced into an ill-fitting moment violates the method's conversational ideal. Natural fingerings support this flexibility: \"using fingerings that feel natural and comfortable for us, as trying to execute ideas with awkward fingerings can hinder the process of internalization\" (p. 24).",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Flexibility in delivery, p. 24"
+            },
+            {
+              "source": "Chapter 8",
+              "citation": "Use natural fingerings to internalize, p. 24"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/single-target-variation",
+            "dominant7/ear-led-free-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "major69",
+          "function_role": "flexible-vocabulary-delivery",
+          "narrative": "Tonic-landing vocabulary on the major 6/9 chord must be deployed with the same organic conversational flexibility as any other phrase. The internalization test is whether the phrase can enter \"unforced in the real-time conversation of a solo\" (p. 24). On the tonic major, this means the landing phrase must be available in multiple forms — from simple direct arrival to more elaborate chromatic approach — and the player must be able to choose the appropriate complexity level in the moment without mechanical rigidity.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Flexibility in delivery, p. 24"
+            }
+          ],
+          "cross_ref": [
+            "major69/narrative-landing-point",
+            "major69/single-target-variation"
+          ]
+        },
+        {
+          "source_work_id": "improvisation-method-as-documented-2023",
+          "chord_quality": "dominant7",
+          "function_role": "natural-fingering-for-internalization",
+          "narrative": "When learning dominant chord vocabulary, fingering choice must serve internalization rather than display. \"He suggests using fingerings that feel natural and comfortable for us, as trying to execute ideas with awkward fingerings can hinder the process of internalization\" (p. 24). On dominant chords where the target note is an extension (b9, 13, #11), the fingering should assign the middle or ring finger to that note: \"he deliberately plays these notes with the strongest fingers available, often opting for the middle or ring finger\" (p. 28), ensuring tonal weight and reliable intonation on the melodic priority.",
+          "provenance": "extracted",
+          "references": [
+            {
+              "source": "Chapter 8",
+              "citation": "Use natural fingerings to internalize, p. 24"
+            },
+            {
+              "source": "Chapter 9",
+              "citation": "Strong fingers on target notes, p. 28"
+            }
+          ],
+          "cross_ref": [
+            "dominant7/flexible-vocabulary-delivery",
+            "dominant7/single-target-variation"
+          ]
+        }
+      ]
     },
     {
       "id": "mickey-baker",
