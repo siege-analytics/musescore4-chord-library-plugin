@@ -27287,7 +27287,7 @@
         },
         {
           "chord_quality": "dom7",
-          "function_role": "tritone-substitution-target",
+          "function_role": "tritone-substitution",
           "narrative": "Laukens teaches tritone substitution as a modification of any dom7 chord: 'The basic application of a tritone sub is to take any 7th chord you see and play another 7th chord that occurs a tritone (#4 aka b5) away' (Chapter 5, p. 105). The substitution is validated by the shared 3rd and 7th between tritone-related dom7 chords — e.g., C7 and F#7 share E and Bb. In Chapter 6 (p. 169), bar-specific applications are given for jazz blues (e.g., bar 10: 'Bb7 in place of E7, the V7 of Am7').",
           "source_principle_ids": [
             "tritone-substitution"
@@ -29517,7 +29517,7 @@
         },
         {
           "chord_quality": "dom7",
-          "function_role": "harmonic-family-membership-original-v7",
+          "function_role": "harmonic-family-membership",
           "narrative": "dom7 as original V7 targeted by the tritone substitution. G7 is the canonical V7 whose altered extensions are highlighted by the substitute (chapter 1 p.1).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29531,7 +29531,7 @@
         },
         {
           "chord_quality": "dom7",
-          "function_role": "measure-slot-assignment-sub-v7",
+          "function_role": "measure-slot-assignment",
           "narrative": "Substitute dom7 occupies bar 2 — all soloing material (arpeggio/pentatonic/modal) assigned to that slot. 'Bar 1: Dm7 arpeggio / Bar 2: Descending Db7 arpeggio / Bar 3: CM7 arpeggio' (chapter 1 p.2).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29601,7 +29601,7 @@
         },
         {
           "chord_quality": "dom7",
-          "function_role": "tritone-substitution-rule-sub-v7",
+          "function_role": "tritone-substitution",
           "narrative": "'The basic application of a tritone chord substitution is to take any 7th chord and play another 7th chord that has its root a tritone away from the original' (chapter 1 p.1) — yields Dm7 | Db7 | CM7 in C major.",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29615,7 +29615,7 @@
         },
         {
           "chord_quality": "maj7",
-          "function_role": "harmonic-family-membership-i-maj7-tonic",
+          "function_role": "harmonic-family-membership",
           "narrative": "maj7 as tonic I resolving II-V-I. CM7 = destination in Dm7|Db7|CM7. 'Bar 3: CM7 arpeggio (C-E-G-B)' as resolution statement (chapter 1 p.1-2).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29629,7 +29629,7 @@
         },
         {
           "chord_quality": "maj7",
-          "function_role": "measure-slot-assignment-i-maj7-resolution-target",
+          "function_role": "measure-slot-assignment",
           "narrative": "All chromatic/arpeggio motion from substitute dom7 resolves into maj7 tonic in bar 3 — 'chromaticism to approach the root of CM7' is the terminal gesture (chapter 1 p.4).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29643,7 +29643,7 @@
         },
         {
           "chord_quality": "min7",
-          "function_role": "harmonic-family-membership-ii-chord",
+          "function_role": "harmonic-family-membership",
           "narrative": "min7 as ii in II-V-I: Dm7 | G7 | CM7. Dm7 occupies the ii slot before the dominant (chapter 1 p.1).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
@@ -29657,7 +29657,7 @@
         },
         {
           "chord_quality": "min7",
-          "function_role": "measure-slot-assignment-ii-chord-arpeggio",
+          "function_role": "measure-slot-assignment",
           "narrative": "ii min7 occupies bar 1, voiced with its own arpeggio. 'Bar 1: Dm7 arpeggio (D-F-A-C)' as direct approach (chapter 1 p.2).",
           "source_principle_ids": [],
           "source_work_id": "tritone-substitution-licks",
