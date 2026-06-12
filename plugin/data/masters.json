@@ -67644,6 +67644,112 @@
           "provenance": "extracted"
         }
       ]
+    },
+    {
+      "id": "howard-roberts",
+      "name": "Howard Roberts",
+      "lived": "1929-1992",
+      "traditions": [
+        "jazz",
+        "studio"
+      ],
+      "instrument": "6-string electric",
+      "biography": "American studio guitarist and educator, Wrecking Crew session veteran. Known for terse pragmatic teaching emphasizing chord-melody arrangements and bebop vocabulary. Author of Chord Melody and Jazz Guitar Technique in 20 Weeks.",
+      "principles": [],
+      "works": [
+        {
+          "id": "chord-melody",
+          "title": "Chord Melody",
+          "year": 1971,
+          "instrument_scope": "6-string"
+        },
+        {
+          "id": "jazz-guitar-technique-20-weeks",
+          "title": "Jazz Guitar Technique in 20 Weeks",
+          "year": 1971,
+          "instrument_scope": "6-string"
+        }
+      ],
+      "status": "pending-extraction"
+    },
+    {
+      "id": "mick-goodrick",
+      "name": "Mick Goodrick",
+      "lived": "1945-2022",
+      "traditions": [
+        "jazz"
+      ],
+      "instrument": "6-string electric",
+      "biography": "American jazz guitarist and Berklee educator. The Advancing Guitarist (1987) and the Almanac of Guitar Voice Leading (4 vols) are the canonical voice-leading texts in jazz guitar pedagogy.",
+      "principles": [],
+      "works": [
+        {
+          "id": "almanac-vol-1",
+          "title": "Almanac of Guitar Voice Leading, Vol 1",
+          "year": 2001,
+          "instrument_scope": "6-string"
+        },
+        {
+          "id": "almanac-vol-2",
+          "title": "Almanac of Guitar Voice Leading, Vol 2",
+          "year": 2002,
+          "instrument_scope": "6-string"
+        },
+        {
+          "id": "almanac-vol-3",
+          "title": "Almanac of Guitar Voice Leading, Vol 3",
+          "year": 2003,
+          "instrument_scope": "6-string"
+        },
+        {
+          "id": "almanac-vol-4",
+          "title": "Almanac of Guitar Voice Leading, Vol 4",
+          "year": 2005,
+          "instrument_scope": "6-string"
+        }
+      ],
+      "status": "pending-extraction"
+    },
+    {
+      "id": "barry-harris",
+      "name": "Barry Harris",
+      "lived": "1929-2021",
+      "traditions": [
+        "jazz",
+        "bebop"
+      ],
+      "instrument": "piano",
+      "biography": "American bebop pianist and educator. The sixth-diminished system documented in the Jazz Workshop is the seminal bebop harmonic method, widely adapted by guitarists for chord-melody and substitution work. Note: piano-pedagogy source, translatable directly to guitar voicings.",
+      "principles": [],
+      "works": [
+        {
+          "id": "jazz-workshop",
+          "title": "Jazz Workshop",
+          "year": 1986,
+          "instrument_scope": "piano-translatable-to-guitar"
+        }
+      ],
+      "status": "pending-extraction"
+    },
+    {
+      "id": "bert-ligon",
+      "name": "Bert Ligon",
+      "lived": "1955-",
+      "traditions": [
+        "jazz"
+      ],
+      "instrument": "concert-pitch",
+      "biography": "American jazz educator and author. Connecting Chords with Linear Harmony (1996) is a canonical text on linear voice-leading and chord-progression generation. Concert-pitch pedagogy translatable to guitar.",
+      "principles": [],
+      "works": [
+        {
+          "id": "connecting-chords-with-linear-harmony",
+          "title": "Connecting Chords with Linear Harmony",
+          "year": 1996,
+          "instrument_scope": "concert-pitch-translatable-to-guitar"
+        }
+      ],
+      "status": "pending-extraction"
     }
   ]
 }
