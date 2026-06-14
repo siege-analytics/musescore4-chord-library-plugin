@@ -95,8 +95,43 @@ def find_page_of_quote(quote: str, transcript: str, pages: list[dict]) -> int | 
 
 _WS_RE = re.compile(r"\s+")
 
+# OCR engines emit hard line breaks every ~40 chars and hyphenate
+# overflow words: 'mat-\nter', 'effi-\nciency'. The validator needs to
+# recognize a quote where the LLM correctly de-hyphenated ('matter',
+# 'efficiency') as still verbatim. Match a word char, a literal hyphen,
+# one-or-more whitespace chars (the line break + indent), and another
+# word char on the next line. Compound words like 'well-known' don't
+# match (no whitespace between hyphen and the next word char). Em-dash
+# patterns like ' - ' don't match because there's no word char on the
+# left of the hyphen (a space precedes it).
+_SOFT_HYPHEN_RE = re.compile(r"(\w)-\s+(?=\w)")
+
+# Typographic punctuation that OCR emits as Unicode and LLMs echo as
+# ASCII. Substring fidelity should not depend on which form survives.
+# Curly quotes from PDF extraction map to straight quotes; em-dashes
+# and ellipses map to their ASCII multi-char equivalents BEFORE
+# whitespace collapse so the substring check sees the same shape.
+_TYPOGRAPHIC_MAP = str.maketrans({
+    "‘": "'",   # left single quote
+    "’": "'",   # right single quote / apostrophe
+    "“": '"',   # left double quote
+    "”": '"',   # right double quote
+    "–": "-",   # en-dash
+    "—": "-",   # em-dash
+    "…": "...", # horizontal ellipsis
+    " ": " ",   # non-breaking space
+})
+
 
 def _normalize_whitespace(s: str) -> str:
+    # Normalize Unicode typographic chars to ASCII so curly-vs-straight
+    # quote mismatches (LLM-echoed quote text vs PDF-OCR'd quote text)
+    # don't fail the fidelity check.
+    s = s.translate(_TYPOGRAPHIC_MAP)
+    # Join soft-hyphenated line breaks: 'mat-\nter' -> 'matter'.
+    # Must precede whitespace collapsing because that step turns the
+    # newline into a single space, which loses the line-break signal.
+    s = _SOFT_HYPHEN_RE.sub(r"\1", s)
     return _WS_RE.sub(" ", s).strip()
 
 

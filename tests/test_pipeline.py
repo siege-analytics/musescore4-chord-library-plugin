@@ -97,6 +97,82 @@ def test_verify_quote_pdftotext_artifact_NOT_normalized():
     assert not text.verify_quote_in_transcript(quote_corrected, transcript)
 
 
+def test_verify_quote_soft_hyphen_at_line_break_joined():
+    """#505: OCR emits hard line breaks with soft hyphens ('mat-\\nter').
+    The LLM correctly de-hyphenates in its echo ('matter'). The validator
+    must accept the de-hyphenated quote as still verbatim."""
+    transcript = "Mechanical efficiency is primarily a mat-\nter of avoiding waste."
+    quote_de_hyphenated = "Mechanical efficiency is primarily a matter of avoiding waste."
+    assert text.verify_quote_in_transcript(quote_de_hyphenated, transcript)
+
+
+def test_verify_quote_multiple_soft_hyphens_joined():
+    """#505: chapter with multiple soft hyphens — each must be joined."""
+    transcript = (
+        "Develop a sense of efi-\n"
+        "ciency but avoid fearing radi-\n"
+        "cal interval jumps."
+    )
+    quote = "Develop a sense of eficiency but avoid fearing radical interval jumps."
+    assert text.verify_quote_in_transcript(quote, transcript)
+
+
+def test_verify_quote_compound_word_preserved():
+    """#505: legitimate compound words ('well-known', 'chord-melody') do NOT
+    match the soft-hyphen pattern (no whitespace between the hyphen and the
+    next word char) and must stay intact through normalization."""
+    transcript = "The well-known chord-melody technique requires both hands."
+    quote_intact = "The well-known chord-melody technique requires both hands."
+    assert text.verify_quote_in_transcript(quote_intact, transcript)
+    # The de-hyphenated form must NOT match (would be a real
+    # hallucination of a non-existent compound).
+    quote_broken = "The wellknown chordmelody technique requires both hands."
+    assert not text.verify_quote_in_transcript(quote_broken, transcript)
+
+
+def test_verify_quote_em_dash_style_preserved():
+    """#505: em-dash style ' - ' (space-hyphen-space) is not a soft hyphen
+    and must stay intact — preserving sentence punctuation fidelity."""
+    transcript = "He plays bebop - the canonical style - with conviction."
+    quote = "He plays bebop - the canonical style - with conviction."
+    assert text.verify_quote_in_transcript(quote, transcript)
+
+
+def test_verify_quote_curly_quotes_normalized_to_straight():
+    """#505: OCR emits Unicode curly quotes (“ ” ‘ ’). The LLM
+    typically echoes ASCII straight quotes. The validator must treat
+    them as equivalent — otherwise every quoted-passage substring fails."""
+    transcript = "He calls it the “singing” string, with ‘sustain’ as its signature."
+    quote_ascii = 'He calls it the "singing" string, with \'sustain\' as its signature.'
+    assert text.verify_quote_in_transcript(quote_ascii, transcript)
+
+
+def test_verify_quote_unicode_dashes_normalized():
+    """#505: en-dash (–) and em-dash (—) both normalize to
+    ASCII hyphen so the substring check ignores typographic style."""
+    transcript = "Pages 12–15 cover the topic—a comprehensive treatment."
+    quote_ascii = "Pages 12-15 cover the topic-a comprehensive treatment."
+    assert text.verify_quote_in_transcript(quote_ascii, transcript)
+
+
+def test_verify_quote_unicode_ellipsis_normalized():
+    """#505: Unicode horizontal ellipsis (…) normalizes to '...'."""
+    transcript = "He paused… then continued the phrase."
+    quote_ascii = "He paused... then continued the phrase."
+    assert text.verify_quote_in_transcript(quote_ascii, transcript)
+
+
+def test_verify_quote_hallucination_still_rejected_after_normalization():
+    """#505 regression: the new normalization rules must not accept a
+    truly fabricated quote. Soft-hyphen + curly-quote + em-dash all
+    applied; the quote must still fail because the content is wrong."""
+    transcript = "Mechanical effi-\nciency is primary in our “method.”"
+    # Real source talks about efficiency in our method; this paraphrase
+    # changes 'effi-ciency' to 'efficacy' and 'method' to 'approach'.
+    hallucination = 'Mechanical efficacy is primary in our "approach."'
+    assert not text.verify_quote_in_transcript(hallucination, transcript)
+
+
 def test_find_page_of_quote_single_page():
     pages = [
         {"n": 1, "start": 0, "length": 20, "preview": "Page-1"},
