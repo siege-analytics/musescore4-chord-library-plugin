@@ -1,0 +1,371 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-48-05-harris-jazz-workshop",
+    "stage": "s5",
+    "source_pdf": "Harris, Barry - Jazz Workshop.pdf",
+    "extracted_at": "2026-06-15T20:41:43+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "barry-harris",
+  "work_id": "jazz-workshop",
+  "usage_notes": [
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Harris assigns the dominant 7th chord to the major 6 diminished scale family. Every dom7 chord belongs to a family of four related dominants sharing the same diminished triad, built a major 3rd above the dominant note. 'The rule of thumb for finding a related diminished chord is to build it a major 3rd above the dominant note.' Chapter 1, p. 27.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 1, p. 27"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "related-dominant-substitution",
+      "narrative": "The four dominant 7th chords derived from the same diminished triad are interchangeable when resolving V7-I. Harris illustrates with D7-Gmaj7: F7, Ab7, and B7 are also related to F# diminished and make interesting voicings when played against D in the bass. Chapter 4, p. 83.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 4, p. 83"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bass-continuity-with-related-dominants",
+      "narrative": "When substituting related dominants over a V7-I resolution, Harris prescribes keeping the original dominant root in the bass while shifting the upper voicing to the related dominant chord. The D7-Gmaj7 example shows F7, Ab7, and B7 played against D in the bass, preserving bass-line identity while varying harmonic color. Chapter 4, p. 83.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 4, p. 83"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "three-arpeggio-positions",
+      "narrative": "For the dominant 7th scale, Harris specifies exactly three important arpeggios: on the tonic, the 5th, and the 7th. These are the only arpeggio positions the student prioritizes in practice. Chapter 1, p. 13.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:half-step-improvisation"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 1, p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "half-step-bebop-vocabulary",
+      "narrative": "The dominant 7th scale has its own set of scale-degree-specific rules for inserting chromatic half-steps in descending phrases to generate bebop vocabulary. Half-steps typify the language of the bebop player and are an endless source of improvisational ideas. Chapter 1, p. 17.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:half-step-improvisation"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 1, p. 17"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "key-specific-diminished-application",
+      "narrative": "When applying diminished extensions over dominant 7th chords in minor keys, Harris specifies the diminished chord by key: C7 in F minor uses E-diminished; G7 in C minor uses B-diminished. The related diminished selection is both key- and chord-specific. Chapter 5, p. 93.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 5, p. 93"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj6",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Harris assigns the major 6th chord as the primary identity of the major 6 diminished scale family. It is the foundational chord from which all major-function voicings derive via 'a scale for chording, and a method of assigning virtually any chord to one of two scales\u2014the major 6 diminished and the minor 6 diminished.' Chapter 3, p. 66.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 66"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj6",
+      "function_role": "scale-for-chording-source",
+      "narrative": "The C6 diminished scale\u2014built on the major 6th chord\u2014contains three interlocking diminished chords providing its internal architecture: the C and A belong to one diminished, the E and G to a second, and the B diminished chord provides the other four notes. All voicings within a major-function passage are drawn from this scale. Chapter 3, p. 67.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 67"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj6",
+      "function_role": "voice-leading-into-next-chord",
+      "narrative": "When moving between major-6-scale voicings, Harris's governing rule applies directly: remember to move each note to the next note of the scale. Each voice in a maj6-family voicing steps to its adjacent neighbor in the major 6 diminished scale, creating smooth voice motion. Chapter 3, p. 71.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 71"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "harmonic-family-reclassification",
+      "narrative": "Harris collapses the min7 chord into the major 6 diminished scale family by redefining it as an inversion: 'Every minor 7 chord is an inversion of a major 6th chord.' The student should think of any m7 chord not as its own category but as a major 6th chord viewed from a different inversion, unlocking all major-6-diminished voicings for min7 contexts. Chapter 3, p. 69.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "voicing-source-scale",
+      "narrative": "Because every min7 chord is an inversion of a major 6th chord, all voicings for a min7 chord are drawn from the major 6 diminished scale of the corresponding major 6th chord. The student assigns the min7 to that scale and applies the standard movable-chord voice-leading rules. Chapter 3, p. 69-71.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "important-minor-function",
+      "narrative": "Harris names a special role for the min7 chord: 'Important minor is the term given to the chord found on the 5th degree of a dominant 7th scale (5 of 5).' This specific min7\u2014the minor 7th a 5th above the dominant\u2014serves as a reusable harmonic tool in progressions like Rhythm Changes. Chapter 2, p. 46.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 2, p. 46"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "harmonic-family-reclassification",
+      "narrative": "Harris collapses the min7b5 (half-diminished) chord into the minor 6 diminished scale family: 'every minor7 flat5 chord is an inversion of a minor 6th chord.' The student should think of any m7b5 as a minor 6th chord in inversion, unlocking all minor-6-diminished voicings for half-diminished contexts. Chapter 3, p. 69.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "voicing-source-scale",
+      "narrative": "Because every m7b5 chord is an inversion of a minor 6th chord, all voicings are drawn from the minor 6 diminished scale of the corresponding minor 6th chord. The movable-chord rule applies: move each note to the next note of the minor 6 diminished scale. Chapter 3, p. 69-71.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min6",
+      "function_role": "harmonic-family-membership",
+      "narrative": "The minor 6th chord is the foundational identity of the minor 6 diminished scale family, the second of Harris's two universal chording scales. Chapter 3, p. 66.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 66"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min6",
+      "function_role": "minor-6-diminished-scale-construction",
+      "narrative": "The minor 6 diminished scale is constructed by fusing the minor 6 chord with its related diminished chord: 'This scale is formed by combining a minor 6 chord with its related diminished chord. The diminished chord is built from a major 3rd above the dominant note of the scale.' Chapter 2, p. 58.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 2, p. 58"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min6",
+      "function_role": "major-minor-minor6-voice-leading",
+      "narrative": "Harris prescribes a specific named voice-leading unit ending on a minor-with-6th-in-bass chord: 'the progression from major to minor to minor with the 6th degree in the bass: (Bb major-G minor-Gm/E).' The min6 position is the cadential arrival of this three-chord formula. Chapter 4, p. 79.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 4, p. 79"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "related-diminished-chord-locator",
+      "narrative": "Harris prescribes building the related diminished chord a major 3rd above the dominant note to locate the four interchangeable dominant 7th chords in any key. 'Just go up a major 3rd from the root of the dominant 7th chord.' Chapter 1, p. 27; Chapter 2, p. 42.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony",
+        "barry-harris:jazz-workshop:half-step-improvisation"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 1, p. 27"
+        },
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 2, p. 42"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "four-dominants-generator",
+      "narrative": "Each diminished chord generates exactly four related dominant 7th chords, all interchangeable in cadential contexts. F# diminished generates D7, F7, Ab7, B7. The diminished chord is the organizational hub for a family of four V7 colors. Chapter 4, p. 83.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 4, p. 83"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "scale-architecture-component",
+      "narrative": "Within the C6 diminished scale, three interlocking diminished chords provide the scale's internal architecture and serve as symmetric stepping-stones for moving voicings. Chapter 3, p. 67.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 3, p. 67"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "key-specific-minor-key-application",
+      "narrative": "In minor key contexts, Harris specifies which diminished chord to apply over each dominant by key: C7 in F minor uses E-diminished; G7 in C minor uses B-diminished. The student selects the related diminished by key signature. Chapter 5, p. 93.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:diminished-scale-harmony"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 5, p. 93"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug",
+      "function_role": "vocalist-warmup-arpeggio",
+      "narrative": "Harris defines the augmented arpeggio as a variant of the major arpeggio with the 5th raised a half-step: 'An Ab augmented arpeggio (the 5th degree is raised a half-step from the major).' It appears in the vocalist's warm-up series as a technical skill prerequisite for improvisation freedom. Chapter 5, p. 95.",
+      "source_principle_ids": [
+        "barry-harris:jazz-workshop:half-step-improvisation"
+      ],
+      "source_work_id": "jazz-workshop",
+      "references": [
+        {
+          "source": "jazz-workshop",
+          "citation": "Chapter 5, p. 95"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}
