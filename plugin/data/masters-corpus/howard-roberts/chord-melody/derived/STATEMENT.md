@@ -1,0 +1,82 @@
+---
+run_id: 2026-06-12T09-45-18-roberts-chord-melody
+stage: s4
+source_pdf: Roberts, Howard - Chord Melody.pdf
+model: claude-sonnet
+extracted_at: 2026-06-15T19:45:56+00:00
+schema_version: 0.1
+---
+
+# Chord Melody (Howard Roberts) — Statement of Outputs
+
+## Overview
+
+Howard Roberts's *Chord Melody* is a five-chapter guitar method built around a single animating conviction: that chord melody playing is not an arrangement trick but a mature improvisational language, and that the student should move steadily from rule-governed exercises toward a wholly personal, extemporaneous style. The book's arc — foundational fingering principles, harmonic vocabulary, analytical studies, practical arranging craft, and a closing solo demonstration — is not merely additive. Each chapter recontextualizes what came before, so that rules introduced early are revealed, by the end, to be provisional scaffolding around a deeper ear-based judgment. The method's ultimate aim is a player who has internalized the language deeply enough to improvise chord melody in a voice entirely their own.
+
+Roberts's signature intellectual move, introduced from the very first page and recurring throughout, is the paired-principle structure: he never states a criterion without immediately qualifying it with its counterweight. Musical quality and mechanical efficiency are held in deliberate tension; the rule for string selection is immediately tempered by a prohibition against fearing large position jumps. This paired structure teaches the student to hold two considerations simultaneously rather than collapsing a complex judgment into a single formula — and that cognitive discipline is itself one of the method's core deliverables.
+
+The method's deepest reframing is harmonic: Roberts insists that chord melody is not a vertical stacking problem but a horizontal, melodic one. Chords are the momentary convergence of four independent melodic lines always in motion. The listener's harmonic memory is treated not as a limitation but as a compositional resource — permission to be sparse, to drop voices, to punctuate rather than constantly restrike. Chapter 5 enacts a final pedagogical inversion, offering only a fully notated solo without any prose, positioning the student as a listener-analyst absorbing an integrated mature style rather than a rule-applier executing a checklist.
+
+---
+
+## Systems
+
+### Voice-Leading Harmony System
+
+Roberts's central system treats chord melody not as vertical chord placement but as the simultaneous management of four independent melodic lines. Its members span voicing density (close vs. open), motion types (parallel, contrary, counter), and textural devices (block chords, sustained backgrounds, common tones, short punctuations, and two-note dyads). Traversal rules govern how the guitarist moves between chords — treating all four chordal tones as independent melody lines, delaying finger release to maximize sustain, activating counter lines when the main melody is static, changing voicing with each new melody note for the block chord effect, and transposing the melody up an octave when register demands it. Modification rules govern how voicings are altered — converting close to open by octave displacement, dropping tones while trusting listener harmonic memory, substituting diminished chords for dominant 7b9, adding extensions as color only, connecting diatonic points with chromatic passing chords, deploying close voicings as textural contrast against open ones, using brief chord accents to imply harmonic flow, and enforcing the fourth string as the absolute register floor. The system's governing logic is horizontal rather than vertical: every rule ultimately serves melodic continuity.
+
+**Members:** Close Block Voicing, Open Voicing, Parallel Motion, Contrary Motion, Counter Line, Block Chords, Sustained Chord Background, Common Tone, Short Chord Punctuation, Two-Note Dyad.
+
+**Traversal Rules:**
+
+1. **Four-Voice Melodic Motion** — Move between chords by treating all four chordal tones as independent melody lines, connecting them through parallel, contrary, or counter motion. Engine payload: `VoiceMotion`. (Chapter 2; ch02.md — "one is really dealing with four separate melody lines," p. 6)
+2. **Sustain and Delay Finger Movement** — Keep fingers in place until absolutely necessary to move, maximizing chord-tone sustain to generate melodic and harmonic continuity. Engine payload: `VoiceMotion`. (Chapter 3; ch03.md — "keep your fingers in place until it's absolutely necessary to move them," p. 15)
+3. **Counter Line Activation on Static Melody** — When the main melody has little motion, activate the counter line (second voice from top) to maintain horizontal interest. Engine payload: `VoiceMotion`. (Chapter 2; ch02.md — "When the main melody has little motion, the counter line can be more active," p. 7)
+4. **Block Chord Voicing Change Per Melody Note** — Change voicing or inversion with each new melody note so all lines appear to move together. Engine payload: `VoiceMotion`. (Chapter 2; ch02.md — "change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once," p. 9)
+5. **Counter Line Developmental Evolution** — Inner voices evolve progressively from passing tones to counter lines to fully melodic patterns across a phrase. Engine payload: `_pending:inner-voice-development`. (Chapter 3; ch03.md — "extension of the passing tones into a more melodic pattern," p. 31)
+6. **Octave Jump for Register Navigation** — Transpose the melody up an octave when the melody sits too low to accommodate chord voicing below it. Engine payload: `PositionContinuity`. (Chapter 4; ch04.md — "transpose the melody up an octave (this is called 'jumping octaves') several times throughout the course of a solo," p. 36)
+
+**Modification Rules:**
+
+1. **Close-to-Open Voicing Conversion by Octave Displacement** — Convert a close voicing to an open voicing by moving one or more chordal tones up or down an octave. Engine payload: `_pending:voicing-spread`. (Chapter 2; ch02.md — "moving one or more chordal tones up or down an octave," p. 6)
+2. **Drop Chord Tones Relying on Listener Harmonic Memory** — When sustaining a chord through a long melody sequence, drop chord tones as fingering demands, trusting listener memory. Engine payload: `OmissionAllow`. (Chapter 2; ch02.md — "the listener usually remember those notes that have been dropped," p. 9)
+3. **Diminished Chord Substitution for Dominant 7b9** — Replace a dominant 7b9 chord with a diminished chord to inject chromaticism. Engine payload: `SubstitutionExpand`. (Chapter 3; ch03.md — "Eo and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief," p. 13)
+4. **Extensions as Color Without Functional Change** — Add major 7th, 6th, 9th, and other extensions freely to enrich voicing color without altering scale function. Engine payload: `ColorToneRequire`. (Chapter 4; ch04.md — "addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord," p. 36)
+5. **Chromatic Passing Chord Harmonization** — Connect diatonic progression points with chromatic passing chords (including altered forms like m7+5), even when momentarily dissonant. Engine payload: `NCTHarmonization`. (Chapter 3; ch03.md — "connected by the passing chords G#m7+5, Am7+5," p. 11; Chapter 4; ch04.md — "Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant," p. 38)
+6. **Close Voicing as Textural Contrast** — Deploy close voicings deliberately as textural contrast against the broader sound of open voicings. Engine payload: `TextureCycle`. (Chapter 3; ch03.md — "These can be used as texture contrast to the big sound of open voicings," p. 12)
+7. **Short Punctuation for Harmonic Continuity** — Use brief chord accents placed with authority within the bar to imply harmonic flow. Engine payload: `_pending:implied-harmony-punctuation`. (Chapter 2; ch02.md — "outline the flow of harmony by short chord punctuations... played with authority and appropriately placed within the bar," p. 10)
+8. **Fourth String Register Floor** — The fourth string is the absolute lower limit for low-register melody playing with any chord fragment beneath it. Engine payload: `DensityFloor`. (Chapter 4; ch04.md — "play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath," p. 36)
+
+---
+
+### Fingering Selection System
+
+Roberts's secondary system governs how the guitarist chooses between alternative fingerings for any given passage. Its logic is the same paired-principle structure that governs the whole method: two competing criteria — musical quality (tone and sustain) and mechanical efficiency (avoidance of unnecessary movement) — are held in deliberate tension rather than resolved into a single formula. The traversal rule for string selection directs the player toward whichever string set maintains the greatest vibrating string length, producing superior sustain and singing tone. The single modification rule immediately qualifies the efficiency criterion: large position jumps and interval leaps are not failures of economy but legitimate, frequently expressive techniques that supply contrast to smooth scalar movement and must not be suppressed.
+
+**Members:** Musical Quality Criterion, Mechanical Efficiency Criterion, Position Jump / Large Interval Leap.
+
+**Traversal Rules:**
+
+1. **Prefer Greater Vibrating String Length** — Choose the string set that maintains the greater vibrating string length. Engine payload: `StringSetTransition`. (Chapter 1; ch01.md — "choosing a fingering or a set of strings in which the greater string length is maintained," p. 4)
+
+**Modification Rules:**
+
+1. **Permit Radical Jumps for Expressive Contrast** — Do not suppress large position jumps or interval leaps in pursuit of efficiency. Engine payload: `PositionContinuity`. (Chapter 1; ch01.md — "do not also develop a fear of radical jumps or large intervals on the fingerboard," p. 4)
+
+---
+
+## Pending Work
+
+- **`_pending:inner-voice-development`** (traversal rule `counter-line-developmental-evolution`, Voice-Leading Harmony System) — the mechanism for modeling the progressive evolution of inner voices across a phrase from passing tones through counter lines to fully melodic patterns is not yet formalized. Source: Chapter 3; ch03.md, p. 31.
+- **`_pending:voicing-spread`** (modification rule `close-to-open-octave-displacement`, Voice-Leading Harmony System) — the operation for selecting which tone(s) to displace, in which direction, and by how much when opening a close voicing is not yet specified. Source: Chapter 2; ch02.md, p. 6.
+- **`_pending:implied-harmony-punctuation`** (modification rule `short-punctuation-harmonic-continuity`, Voice-Leading Harmony System) — the engine operation for modeling a short chord punctuation that implies harmonic flow without complete restatement is not yet formalized. Source: Chapter 2; ch02.md, p. 10.
+
+---
+
+## Provenance Notes
+
+**Chapter 1 (Fingerings, p. 4):** Yielded the Fingering Selection System in its entirety — both members and both rules. The chapter's sole function is establishing the evaluative framework before any harmonic content appears.
+
+**Chapters 2–4:** Together yielded the Voice-Leading Harmony System. Chapter 2 contributed the foundational taxonomy of members (voicing types, motion types, textural devices) and four traversal rules. Chapter 3 contributed the sustain-and-delay rule, diminished substitution and chromatic passing chord modification rules, textural contrast rule, and counter line developmental evolution rule. Chapter 4 contributed the octave jump traversal rule, extensions-as-color and fourth-string floor modification rules, and a second reference anchor for chromatic passing chord harmonization.
+
+**Chapter 5 (Chord Melody Solo, pp. 54–56):** Did not yield a distinct system. The chapter is a fully notated solo demonstrating cumulative integration of all prior content; its pedagogical role (inverting teaching mode from rule-to-example to example-only) is captured in the Overview. It serves as provenance confirmation that all identified systems are present and interpenetrating in the mature style, but introduces no extractable rule or member of its own.
