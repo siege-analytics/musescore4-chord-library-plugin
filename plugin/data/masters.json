@@ -8733,6 +8733,1059 @@
             }
           ],
           "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "scale-pairing-major-or-lydian",
+          "narrative": "Group 1 major chords — including maj7 — take either the major scale or the Lydian scale: 'group 1 major chords most commonly take one of two scales, either the MAJOR or the LYDIAN. As to which of the two to use, it is almost always a matter of personal preference... they both sound good in most cases.' Chapter 1, p. 10.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "lydian-scale-color-option",
+          "narrative": "When using the Lydian scale over a major Group 1 chord, the #4 (raised fourth) is the sole distinguishing tone from the plain major scale: 'the Lydian's, it is simply a Major scale with a #4th instead of the regular 4th.' This raised fourth provides the 'hippest' color of the two options. Chapter 1, p. 10.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "upper-partial-extension-system",
+          "narrative": "Major 7th chord formulas extend upward via the upper-partial system: when the formula expands to 1, 3, 5, 7, 9 it becomes a ninth chord; to 1, 3, 5, 7, 9, 11 an eleventh; to 1, 3, 5, 7, 9, 11, 13 a thirteenth. 'The 11th is the same letter name as the 4th, and the 13th tone is the same letter name as the 6th.' Chapter 1, p. 10.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "position-based-soloing",
+          "narrative": "Over major Group 1 chords, the player should combine major and Lydian scale knowledge within a 5-6 fret fingerboard area: 'you will want to know separate scales for the different chords in the song, but if you know enough positions of each scale, you will be able to stay in one little 5 or 6 fret area and play through the whole song.' Chapter 4, p. 60.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "position-stay-5-6-frets"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.60"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "fingerboard-visualization-requirement",
+          "narrative": "Soloing over major Group 1 chords demands active fingerboard visualization, not rote pattern recall: 'Remember to VISUALIZE the notes on the fingerboard as discussed earlier; at the risk of boring you, let me say it again: THIS IS VERY IMPORTANT! It is one of the best things you can do for yourself.' Chapter 4, p. 67.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "visualize-fingerboard-primary"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.67"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "jazz-waltz-application",
+          "narrative": "The major (and Lydian) scale runs learned over major chords can be applied in 3/4 time: '3/4 time can be very attractive in jazz, creating the feel known as \"Jazz Waltz\". You may find it highly stimulating for variety's sake, to make up some runs in 3/4 time... or even just using the Major (or Lydian) scale.' Chapter 4, p. 71.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.71"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "scale-pairing-minor-7th-scale",
+          "narrative": "The Minor 7th scale — a major scale with lowered 3rd and 7th — is the prescribed scale for minor 7th chords: 'The Minor 7th scale is simply a Major Scale with LOWERED 3rd (b3) and LOWERED 7th (b7) tones.' Chapter 4, p. 66.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.66"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "root-based-internalization",
+          "narrative": "Do not think of the minor 7th scale as a relative major scale starting a whole step lower: 'You will probably notice that each m7 scale has the same notes as a major scale whose root is a whole step lower. But, as cautioned before on dom. 7 scales, for your own good, don't think of the m7 scale in this way now.' Chapter 4, p. 69.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "root-based-thinking"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.69"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "ii-V-I-context-application",
+          "narrative": "Minor 7th chord runs should be learned and practiced within the ii-V-I progression context: 'This particular series of sounds is one of the most common in jazz (it is known as \"ii-V-I\" if that means anything to you now)... and is a practical way, at this stage of the game, for you to become acquainted with m7 runs.' Chapter 4, p. 67.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.67"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "combining-scales-in-position",
+          "narrative": "Minor 7th scale runs should be combined with other scales (Major, Dominant 7th) within a single 5-6 fret fingerboard position, so the player can navigate the full ii-V-I without shifting. Chapter 4 explicitly names 'Combining Scales in One Position' as a technique for multi-chord soloing. Chapter 4, p. 60.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "position-stay-5-6-frets"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.60"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "scale-pairing-dominant-7th-scale",
+          "narrative": "The Dominant 7th scale — a major scale with a lowered 7th — is the prescribed scale for dominant 7th chords: 'The Dominant 7th scale is simply a Major scale with a lowered 7th tone.' Any chord built from some combination of (and only) these scale tones can take this scale. Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "root-based-internalization",
+          "narrative": "Do not treat the Dominant 7th scale as a major scale starting a 4th above: 'Don't fall for the \"oh, dom. 7th scales, they're really just major scales up a 4th-trap\" — it will only tend to make things harder later if you do.' Dominant 7th must be internalized from its own root. Chapter 3, p. 43.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "root-based-thinking"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.43"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "group-1-dominant-run-selection",
+          "narrative": "For Group-1 dominants (chords without the 11th), select runs that contain the 3rd: 'for maximum synchronization of runs and chords, you could generalize and say that if a run contains the 3rd, use it over any of the group-1 dominants.' Runs with both or neither the 3rd and 11th work over either group. Chapter 4, p. 59.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "dominant-run-group-sync"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "group-2-dominant-run-selection",
+          "narrative": "For Group-2 dominants (chords that include the 11th), select runs that contain the 11th: 'if a run contains the 11th, use it over any of the group-2 dominants. And if a run contains both (or neither) the 3rd and 11th, use it over any chord in either group of chords. But watch out for ending or lingering tones.' Chapter 4, p. 59.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "dominant-run-group-sync"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.59"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "register-governs-extension-color",
+          "narrative": "The perceptual weight of b7 and 9 over dominant 7th chords is determined by register, not merely note choice: 'b7 and 9 really start to come alive in this \"higher\" register (it's still a fairly low register, but high enough so that these two tones don't sound like big, weighty bass tones, but rather, more like spicy lower mid-range notes).' Chapter 4, p. 58.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "register-governs-color"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.58"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "jazz-waltz-application",
+          "narrative": "Dominant 7th scale runs can be applied in 3/4 time for jazz waltz feel: 'You may find it highly stimulating for variety's sake, to make up some runs in 3/4 time... or even just using... the Dom. 7 scale.' This applies across Group-1 and Group-2 dominant contexts. Chapter 4, p. 71.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.71"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "scale-chord-compatibility-rule",
+          "narrative": "The scale-to-chord compatibility rule applies directly to dominant 7th chords: 'Any chord containing some combination of any of (but only) these chord tones, can take the Dominant 7th scale.' Chords that include non-scale tones fall outside this pairing. Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "combining-scales-in-one-position",
+          "narrative": "Major and Dominant 7th scales should be combined within a single position to allow seamless soloing across I to V chord changes: 'you will see examples of runs that combine the Major and Dom. 7th scales, in one position at a time... you will be able to stay in one little 5 or 6 fret area and play through the whole song.' Chapter 4, p. 60.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "position-stay-5-6-frets"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.60"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "arpeggio-string-set-flexibility",
+          "narrative": "When running dominant 7th type arpeggios, arpeggio tones need not be confined to the highest strings: 'These notes may be played on other strings too (5th & 4th strings).' This extends positional reach within the fingerboard area. Chapter 6, p. 107.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "arpeggio-string-flexibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 6 p.107"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "harmonic-family-membership-group-3",
+          "narrative": "Dominant chords built from the Overtone Dominant scale — which adds a #4 (#11) to the Dominant 7th scale — belong to Group 3 dominants: 'The Overtone Dominant scale is simply a Dominant 7th scale with a #4th tone instead of the regular 4th.' Chapter 4, p. 82.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 p.82"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "scale-pairing-overtone-dominant",
+          "narrative": "Group 3 dominant chords (with #11) take the Overtone Dominant scale (also called the Lydian Dominant scale): 'Because it contains the #4th (#11th), the Overtone Dominant scale is also called the LYDIAN Dominant scale.' The #11 is its single distinguishing feature from the plain Dominant 7th scale. Chapter 5, p. 83.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.83"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "not-an-altered-dominant",
+          "narrative": "Do not classify the Overtone Dominant / dom7#11 as an altered dominant chord: 'The Overtone Dominant scale is not considered to be an altered dominant scale — that #11 is not really a b5th, even though we may call it that — check the Overtone Series diagram again if you are in doubt.' The #11 reflects the overtone series, not chromatic alteration. Chapter 5, p. 94.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "overtone-dom-not-altered"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.94"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "upper-structure-triad-polytonality",
+          "narrative": "Over a dom7#11 chord using the Lydian Dominant scale, the three 'hippest' notes — the 9, #11, and 13 — form a major triad rooted a whole step above the chord root: 'the 9, #11 and 13 form a major triad whose root is a whole step above the root of the scale.' This is the device of POLYTONALITY, treated as a full chapter subject in Volume II. Chapter 5, p. 83.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "upper-structure-triad"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.83"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "chord-form-visualization-prerequisite",
+          "narrative": "Before attempting to play Overtone Dominant / Group 3 runs, the player must be able to visualize the Group 3 chord forms in that position: 'If you have trouble visualizing any of these runs, then please, for your own good, go back and learn the chord forms (group 4) for this position. This should straighten it out.' Chapter 5, p. 99.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "chord-form-prerequisite"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.99"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "scale-pairing-altered-dominant-types",
+          "narrative": "Group 4 altered dominant chords take one of three Altered Dominant scale types. All three types are presented in the same fingerboard position simultaneously: 'the three types of A.D. scales are all so similar that your brain, while noting the differences, can absorb them all in a kind of \"package deal\", one position at a time.' Chapter 5, p. 96.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "altered-dom-package-deal"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.96"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "package-deal-comparative-learning",
+          "narrative": "The three altered dominant scale types should be learned side by side in the same position to develop color sensitivity: 'because they are all juxtaposed in the same position, the subtle differences between them will be more evident to you, thereby increasing your sensitivity to these slightly different colors, and helping you to learn the sounds faster.' Chapter 5, p. 96.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "altered-dom-package-deal"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.96"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "chord-form-prerequisite-for-runs",
+          "narrative": "When runs in altered dominant positions are hard to visualize, the player must return to the Group 4 chord forms before proceeding: 'If you have trouble visualizing any of these runs, then please, for your own good, go back and learn the chord forms (group 4) for this position.' Chapter 5, p. 99.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "chord-form-prerequisite"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.99"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "harmonic-family-membership-group-4",
+          "narrative": "A dominant chord containing b9 qualifies as a Group 4 altered dominant chord: 'any dominant 7th scale with one or more of the following tones: b9, #9, b5 or #5 (b13)' defines the altered dominant family. The b9 tone is one of the four defining altered tones. Chapter 5, p. 94.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "altered-dominant-definition"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.94"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#9",
+          "function_role": "harmonic-family-membership-group-4",
+          "narrative": "A dominant chord containing #9 qualifies as a Group 4 altered dominant chord. The #9 is one of the four altered tones: 'Any Dom. 7th type chord that contains any one or more of the four altered tones (b9, #9, b5 and #5 or b13) will be considered as being part of what we call the GROUP 4 DOMINANT CHORDS.' Chapter 5, p. 94.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "altered-dominant-definition"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.94"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#9",
+          "function_role": "sharp9-substitution-or-addition",
+          "narrative": "In altered dominant contexts, the #9 may substitute for or be played alongside the natural 9: 'INSTEAD OF OR IN ADDITION TO THE #9.' This substitution rule applies across altered dominant exercises in Chapter 7. Chapter 7, p. 131.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "sharp9-substitution"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 7 p.131"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug7",
+          "function_role": "type-3-chord-substitution",
+          "narrative": "Over Type 3 altered dominant exercises, A7+ (augmented 7th) may be substituted for A7#9+ as a chord choice: 'As before, and on all Type 3 altered dominant pages coming up, you may wish to try A7+ for A7#9+.' This substitution allowance applies as a standing rule across all subsequent Type 3 pages. Chapter 6, p. 105.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "type3-chord-substitution"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 6 p.105"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b5",
+          "function_role": "harmonic-family-membership-group-4",
+          "narrative": "A dominant chord containing b5 qualifies as a Group 4 altered dominant chord. The b5 is one of the four defining altered tones listed in the altered dominant definition: 'any dominant 7th scale with one or more of the following tones: b9, #9, b5 or #5 (b13).' Chapter 5, p. 94.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "altered-dominant-definition"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 p.94"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "chord-formula-derivation-from-major-scale",
+          "narrative": "All chord formulas — for any chord quality — are derived from the major scale: 'All chords have a certain group of tones called a formula, that is derived from the major scale.' The major scale is the universal reference from which every chord type is defined via raising or lowering scale degrees. Chapter 1, p. 9.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "chord-takes-a-scale-rule",
+          "narrative": "The operational pairing concept: 'certain kind of chord \"takes\" a certain scale, what they mean is that that particular scale sounds good when played with that particular chord.' This governs all chord-scale pairings throughout the book. Chapter 1, p. 10.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "eighth-note-primary-rhythmic-unit",
+          "narrative": "Regardless of chord quality, the eighth note is jazz's default rhythmic unit for single-note lines: 'At medium and fast tempos, which most of the runs in this book are intended for, the normal unit of rhythm in jazz is the 8th note. Great players often create a very fluid sound by running long streams of 8th notes together in measure after measure.' Chapter 3, p. 39.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "8th-note-primary-unit"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.39"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "swing-and-straight-both-required",
+          "narrative": "Every 8th-note run, over any chord quality, must be practiced in both swing feel and straight feel: 'all the 8th notes in this book should be played as jazz 8ths and straight 8ths, because both feels are necessary to today's music.' Chapter 3, p. 39.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "swing-straight-both-required"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.39"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "swing-feel-definition",
+          "narrative": "Swing feel over any chord is produced by interpreting written straight 8ths as triplets with the middle note tied or missing: 'In the swing feel, each group of two 8th notes is actually played as if it were a group of three triplets, with the middle one tied or missing. The ear then only hears two notes, which it interprets as kind of funny 8th notes.' Chapter 3, p. 39.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.39"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "double-timing-texture",
+          "narrative": "Double-timing — running 16th notes at medium or fast tempos — is an advanced texture applicable over any chord quality: 'Players who possess great technique often love to break into 16th notes at medium (or even fast!) tempos; this is commonly referred to as double-timing.' Chapter 3, p. 40.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "double-timing-texture"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.40"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "clean-playing-before-tempo-increase",
+          "narrative": "For all chord contexts, cleanliness must precede tempo increases: 'The speed that is required here comes of course, as a result of constantly pushing yourself a little, gradually increasing the tempos on all the runs you are practicing; but also by making sure you are playing cleanly at any tempo before moving on to a faster one.' Chapter 3, p. 40.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "clean-before-tempo"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.40"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "trill-as-decoration-not-substitution",
+          "narrative": "The trill, applicable over any chord, decorates a held note rather than replacing it: 'another way to look at this, and a way that I prefer, is that A is not really being replaced, but instead, is just being decorated, you know, like we're kind of playing around with the A note, but not getting rid of it, just enhancing it.' Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "trill-as-decoration"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "trill-placement-strong-beat",
+          "narrative": "Trills should be placed predominantly on the strong part of the beat: 'The trill is more commonly used on the strong part of the beat than the weak one, but experiment and see what you like.' Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "trill-on-strong-beat"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "hammer-on-scale-tone-constraint",
+          "narrative": "At this stage of study, hammer-on target notes must be found within the currently active scale: 'This higher note, for now, will be found in the scale you are working with at that moment.' Hammer-ons to non-scale tones are outside scope at this level. Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "hammer-on-scale-tone"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "hammer-on-jazz-context-limitation",
+          "narrative": "Do not use hammer-ons as standalone jazz devices at this stage: 'With the exception of a special usage known as the grace note (to be covered in Volume II), hammer-ons, by themselves, have not been commonly used by most jazz guitarists. But they are commonly used as part of the device known as the trill.' Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:rhythmic-articulation-system",
+            "hammer-on-scale-tone"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "octave-higher-same-position-practice",
+          "narrative": "Every run pattern, over any chord quality, should be tried an octave higher within the same fingerboard position: 'Also try this run an octave higher in the same position.' This is a standing practice rule applied throughout Chapter 7. Chapter 7, p. 120.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "octave-higher-same-position"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 7 p.120"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "alternate-position-practice",
+          "narrative": "Each set of scale runs should also be fingered in at least one alternate position to expand positional fluency: 'Try fingering all these Em9 runs in the 5th position too.' Chapter 6, p. 109.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "alternate-position-practice"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 6 p.109"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "left-hand-finger-placement",
+          "narrative": "Left-hand fretting should not be done on the tip of the finger: 'REMINDER: not on tip of finger.' This technique rule applies across all chord contexts and positions. Chapter 6, p. 111.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 6 p.111"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "scale-degree-numeric-notation-system",
+          "narrative": "All scale and chord relationships are described using numeric scale-degree notation derived from the major scale: 'The different notes in a major scale are often referred to by number, for instance, if you see the statement \"G is the 4th of D\", this means \"G is the 4th note in the D major scale.\" This number business also applies to intervals.' Chapter 1, p. 8.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.8"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "b7-notation-clarification",
+          "narrative": "The symbol 'b7' means the 7th tone is lowered by a half-step, NOT that it always ends up as a flat note in its absolute spelling: 'Notice that the term \"b7\" means that the 7th tone is lowered one-half-step, NOT that the lowered 7th tone always ends up being a \"flat\" note.' Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj",
+          "function_role": "triad-formula",
+          "narrative": "The major triad formula is 1, 3, 5 derived from the major scale: 'the Major triad's formula is 1, 3, 5.' It is the most basic major chord type from which maj7 and other extensions are built. Chapter 1, p. 9.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min",
+          "function_role": "triad-formula",
+          "narrative": "The minor triad formula is 1, b3, 5: 'the Minor triad's is 1, b3, 5.' It establishes the lowered-third characteristic that carries into all minor chord formulas. Chapter 1, p. 9.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim",
+          "function_role": "triad-formula",
+          "narrative": "The diminished triad formula is 1, b3, b5: 'the Diminished triad's is 1, b3, b5.' Chapter 1, p. 9.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug",
+          "function_role": "triad-formula",
+          "narrative": "The augmented triad formula is 1, 3, #5: 'the Augmented triad's is 1, 3, #5.' Chapter 1, p. 9.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "formula-derivation",
+          "narrative": "The dominant 7th chord formula is derived from the major scale with a lowered 7th: the Dominant 7th scale is 'simply a Major scale with a lowered 7th tone.' Any chord built from those tones — 1, 3, 5, b7 — is a dominant 7th type chord that can take that scale. Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "type-3-area-4a-boundary",
+          "narrative": "No Type 3 altered dominant material exists for fingerboard Area 4A on the guitar — this is an instrument-specific structural constraint: 'There won't be any Type 3 - 4A.. it's just the way the instrument works out.' Do not expect or construct such exercises. Chapter 7, p. 118.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system",
+            "type3-area4a-absence"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 7 p.118"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "higher-register-arpeggio-extension",
+          "narrative": "Altered dominant arpeggio patterns should be extended into the upper register using the EXTRA ARPEGGIOS FOR HIGHER REGISTER section, supplementing the standard fingering-area exercises: 'EXTRA ARPEGGIOS FOR HIGHER REGISTER' extends the altered dominant patterns upward. Chapter 7, p. 133.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:fingerboard-position-system"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 7 p.133"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "three-core-soloing-questions",
+          "narrative": "Greene organizes all single-note soloing around three fundamental questions applicable over any chord: what notes sound good, where those notes are on the instrument, and how to play them interestingly — 'playing successions of single notes, which form melodies.' Chapter 1, p. 6.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 1 p.6"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "arpeggio-as-soloing-material",
+          "narrative": "Major chord arpeggios (chord tones 1, 3, 5, 7 played successively) are prescribed as foundational soloing material over major Group 1 chords, alongside scalar runs. Chapter 2 covers 'Major Chord Forms; Major Chord Runs' and arpeggios as core content. Chapter 2, pp. 11-40.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 2 pp.11-40"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "arpeggio-as-soloing-material",
+          "narrative": "Dominant 7th type arpeggios are prescribed as core soloing material alongside scalar runs over dominant chords. Chapter 4 dedicates a section to 'Dominant 7th Type Arpeggios and Runs' across multiple fingerboard areas. Chapter 4, pp. 61-85.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 4 pp.61-85"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "arpeggio-as-soloing-material",
+          "narrative": "Minor 7th type arpeggios are prescribed alongside scalar runs over minor 7th chords. Chapter 5 covers 'Minor 7th Type Arpeggios and Runs' as core material within the ii-V-I context. Chapter 5, pp. 86-105.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 5 pp.86-105"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7#11",
+          "function_role": "arpeggio-as-soloing-material",
+          "narrative": "Overtone Dominant arpeggios are prescribed as soloing material over Group 3 dominant chords. Chapter 6 covers 'Overtone Dominant Arpeggios and Runs' across fingerboard areas with notes that 'may be played on other strings too (5th & 4th strings).' Chapter 6, pp. 106-120.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "arpeggio-string-flexibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 6 pp.106-120"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7alt",
+          "function_role": "arpeggio-as-soloing-material",
+          "narrative": "Altered Dominant arpeggios are prescribed as soloing material over Group 4 dominant chords. Chapter 7 covers 'Altered Dominant Arpeggios and Runs' across Areas 4A, 5, and 5A, with a supplementary higher-register section. Chapter 7, pp. 121-137.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 7 pp.121-137"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "melody-note-awareness",
+          "narrative": "Across all chord types, the student must be aware of melody notes within the scale runs — Chapter 2 (major), Chapter 4 (dominant), Chapter 5 (minor 7th and altered dominant) all include 'Melody Notes' as a dedicated subsection, indicating that melodic targeting within scales is prescribed at every chord-quality level. Chapter 2-5 passim.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 2-5 passim"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "scale-chord-compatibility-only-chord-tones",
+          "narrative": "Only chords whose tones are drawn from (and only from) the Dominant 7th scale's chord tones may take that scale. Chords that include tones outside the scale's chord-tone set fall outside the pairing: 'Any chord containing some combination of any of (but only) these chord tones, can take the Dominant 7th scale.' Chapter 3, p. 41.",
+          "source_principle_ids": [
+            "ted-greene:single-note-soloing-vol-1:chord-scale-pairing",
+            "scale-chord-compatibility"
+          ],
+          "source_work_id": "single-note-soloing-vol-1",
+          "references": [
+            {
+              "source": "single-note-soloing-vol-1",
+              "citation": "chapter 3 p.41"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
         }
       ]
     },
