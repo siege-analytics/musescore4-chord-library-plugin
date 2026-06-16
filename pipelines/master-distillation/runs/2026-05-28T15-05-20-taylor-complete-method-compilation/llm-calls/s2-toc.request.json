@@ -1,0 +1,53 @@
+{
+  "stage": "s2",
+  "scope": "toc",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting the structural outline of a guitar method book from its front matter.\n\nThe user will give you the verbatim text of the first ~20 pages of a book.\nIdentify the chapters or major sections of the book (whichever the book uses\n\u2014 some method books use \"Lesson\", \"Chapter\", \"Part\", \"Section\", \"Unit\").\n\nOutput a JSON object with this shape:\n\n  { \"chapters\": [\n      { \"n\": 1, \"title\": \"...\", \"start_page\": <int>, \"end_page\": <int> },\n      ...\n  ] }\n\nRules:\n- `n` is the 1-indexed chapter number you assign (independent of the book's\n  own numbering \u2014 book may start at 0 or use Roman numerals).\n- `title` is the chapter's title as it appears in the book.\n- `start_page` is the first page of the chapter; `end_page` is the last.\n- If the front matter doesn't list page numbers, infer from the chapter\n  headings you see \u2014 start_page is where the chapter HEADING appears, and\n  end_page is one less than the next chapter's start_page (or the book's\n  last page for the final chapter).\n- Skip the table of contents itself, the title page, the copyright page,\n  the author bio \u2014 they are not \"chapters\" in this sense.\n- If the book is short and not subdivided, output a single chapter covering\n  the entire content.",
+  "user_prompt": "Total pages in the book: 408.\nFirst 20 pages follow. Identify chapters.\n\n<<<TEXT\nMartin Taylor's Complete Jazz Guitar\nMethod Compilation: Master Jazz Guitar\n\n4.8 out of 5.0 (1045 reviews)\n\nJAZZ AZ/GUITAR\n\nMETHODCOMPILATION\n\ntase cr Gastar Char\u00e9-Meioy, eakrg Bisson \u00a7 Single Nets Solaing\n\n>\nxe)\n9\no\nxe)\nbe\n0\n\u00a3\nU\n6\n\u00a2\nfe)\n>\n| @\ni)\n\nWralking Bass for Jazz Guitar\nSingle Note Soloing for Jazz Guitar\n\n( J INSTANT DOWNLOAD }\n\nwww.ebookmarketplace.store\n\n\nHome > Digital Library \u00bb Uncategorized \u00bb Premium Collection\n\nMartin Taylor's Complete Jazz Jazz\nGuitar Method Compilation: Master\n\nann TAYLOR'S COMPLETE\n\n\u2014\nJAZ/GUITAR\n\nMETHODCOMPLATION\n\nrar ey ae Bass Sg en So\n\n>\n3\nio\no\nv\n\u00bb\n0\n\u00a3\nU\n\u00b0\n\u00a3\n0\n>\nA\n0\n\nWalking Bass for Jazz Guitar\nSingle Note Soloing for Jazz Guitar\n\n[premium INSTANT HIGH-QUALITY\n\nAvailable Formats\n\n\u00a9 PDF eBook o Study Guide o Test Bank\n\nINSTANT DOWNLOAD VIEW LIBRARY\n\nKk KKK\n\n4.8 out of 5.0\n(1045 reviews)\n\nEDUCATIONAL MATERIALS - STUDY SUPPLEMENTS - TESTING RESOURCES ]\n\nTags\n\n\nCollection Highlights\n\nApplied Facilities Management for the Hospitality $34.99\nPredictive HR Analytics: Mastering the HR Metric 2 $34.99\n\na How the World Works: A Brief Survey of Internation $34.99\nEe Applied English Phonology 3rd Edition Ebook and Te\n\nPrimary Care for the Physical Therapist : Examinat\n\nA Marsh's Becoming a Teacher, 6th Edition\n\nois Applied Economics for Agribusiness Ebook and TestB\n\nPRIMARY Primary Care Art and Science of Advanced Practice\n\n\nHow the Mind Works\n\nApplied Corporate Finance, 4th Edition Ebook and T\n\nPrimary and Middle Years Mathematics: Teaching Dev\n\nMarriages, Families, and Relationships: Making Cho\n\nApplied Calculus for the Managerial, Life, and Soc\n\nPricing Strategies: A Marketing Approach Ebook and\n\nHow the Brain Learns to Read (NULL)\n\nPreventive Stress Management in Organizations Eboo\n\nApplied Calculus for the Managerial, Life, and Soc\n\n\n\nE-book Link\n\nhttps://ebookmarketplace.store/product/Martin-Taylor's-Complete-Jazz-Guitar-Method-\nCompilation:-Master-Jazz-Guitar-Chord-Melody,-W...\n\nDescription\n\nMartin Taylor's Complete Jazz Guitar Method Compilation: Master Jazz Guitar Chord-\nMelody, Walking Basslines & Single-Note Soloing (Play Jazz Guitar)\n\n\n\n\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n\n\n\n\n\n\n\u2014\u2014\u2014\u2014\u2014\n\n\n\u2014\u2014 \u2014.-\u00ab \u2014\n\n\n\n\n\n\n\n\n---\n\n\n\n\n\n$A SSS\n\n\n\n\nTEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "chapters"
+    ],
+    "properties": {
+      "chapters": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "n",
+            "title",
+            "start_page",
+            "end_page"
+          ],
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "end_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "book has 408 pages; using first 20 as front matter."
+}
