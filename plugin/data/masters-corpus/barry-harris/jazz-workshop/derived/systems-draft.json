@@ -1,0 +1,296 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-48-05-harris-jazz-workshop",
+    "stage": "s4",
+    "source_pdf": "Harris, Barry - Jazz Workshop.pdf",
+    "extracted_at": "2026-06-15T20:37:18+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "barry-harris",
+  "work_id": "jazz-workshop",
+  "systems": [
+    {
+      "id": "barry-harris:jazz-workshop:diminished-scale-harmony",
+      "name": "6th-Chord Diminished Scale Harmonic System",
+      "summary": "Barry Harris's central harmonic system assigns virtually all chords to one of two foundational scales\u2014the major 6 diminished and the minor 6 diminished\u2014and treats every chord voicing as a position within that scale rather than a fixed vertical point. The system rests on two axiomatic equivalences: every m7 chord is an inversion of a major 6th chord, and every m7b5 chord is an inversion of a minor 6th chord. Movement between voicings is governed by a single mechanical rule: move each note to the next note of the scale. Related dominant 7th chords sharing the same diminished triad become interchangeable members of a single harmonic family, enabling substitution while the bass holds its root.",
+      "members": [
+        {
+          "id": "major-6-diminished-scale",
+          "name": "Major 6 Diminished Scale",
+          "summary": "Eight-note scale comprising a major 6th chord fused with three interlocking diminished chords; the primary scale for chording on major and dominant harmony."
+        },
+        {
+          "id": "minor-6-diminished-scale",
+          "name": "Minor 6 Diminished Scale",
+          "summary": "Eight-note scale formed by combining a minor 6 chord with its related diminished chord; governs minor harmony and m7b5 voicings."
+        },
+        {
+          "id": "related-diminished-chord",
+          "name": "Related Diminished Chord",
+          "summary": "The diminished chord built a major 3rd above the dominant note; identifies the four related dominant 7th chords that share the same diminished triad."
+        },
+        {
+          "id": "dominant-7th-chord",
+          "name": "Dominant 7th Chord",
+          "summary": "The V7 chord; one of four related dominants derived from the same diminished triad, interchangeable in cadential contexts."
+        },
+        {
+          "id": "major-6th-chord",
+          "name": "Major 6th Chord (= m7 inversion)",
+          "summary": "A major triad with added 6th; axiomatically equivalent to a minor 7th chord in inversion."
+        },
+        {
+          "id": "minor-6th-chord",
+          "name": "Minor 6th Chord (= m7b5 inversion)",
+          "summary": "A minor triad with added 6th; axiomatically equivalent to a minor 7 flat-5 chord in inversion."
+        },
+        {
+          "id": "important-minor",
+          "name": "Important Minor",
+          "summary": "The minor 7th chord on the 5th degree of a dominant 7th scale (5 of 5)."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "move-each-note-to-next-scale-tone",
+          "name": "Move Each Note to the Next Note of the Scale",
+          "summary": "When progressing from one voicing to the next, every voice moves to its adjacent neighbor in the 6 diminished scale, generating smooth stepwise voice motion across the chord sequence.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Moving Voicing Rule",
+              "quote_excerpt": "Remember to move each note to the next note of the scale."
+            }
+          ]
+        },
+        {
+          "id": "related-dominant-substitution",
+          "name": "Related Dominant 7th Substitution",
+          "summary": "The four dominant 7th chords sharing the same diminished triad may substitute for one another when resolving V7\u2013I, enabling harmonic color shifts without changing bass or functional direction.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Related dominant 7th substitutions",
+              "quote_excerpt": "related dominant 7th chords may be used to substitute"
+            }
+          ]
+        },
+        {
+          "id": "scale-position-continuity",
+          "name": "Scale-Position Continuity in Chording",
+          "summary": "All voicings for a given harmony are treated as positions within a single 6 diminished scale rather than discrete fixed chords, so movement through the progression maintains scale-position logic throughout.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Scale for Chording Concept",
+              "quote_excerpt": "a 'scale for chording,'"
+            }
+          ]
+        },
+        {
+          "id": "symmetry-movement-on-diminished-scale",
+          "name": "Symmetric Movement via Interlocking Diminished Chords",
+          "summary": "The three interlocking diminished chords within the C6 diminished scale provide symmetric stepping-stones for moving voicings at equal intervals around the diminished axis.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "C6 Diminished Scale Construction",
+              "quote_excerpt": "comprised of all 3 diminished chords"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "m7-as-major6-inversion",
+          "name": "m7 Chord Reinterpreted as Major 6th Inversion",
+          "summary": "Any minor 7th chord is reclassified as an inversion of the major 6th chord above its root, collapsing it into the major 6 diminished scale family and unlocking all voicings from that scale.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "m7 and m7b5 Re-thinking",
+              "quote_excerpt": "Every minor 7 chord is an inversion of a major 6th chord"
+            }
+          ]
+        },
+        {
+          "id": "m7b5-as-minor6-inversion",
+          "name": "m7b5 Chord Reinterpreted as Minor 6th Inversion",
+          "summary": "Any minor 7 flat-5 chord is reclassified as an inversion of the minor 6th chord, assigning it to the minor 6 diminished scale and unifying the half-diminished family with minor-6th voicings.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "m7 and m7b5 Re-thinking",
+              "quote_excerpt": "every minor7 flat5 chord is an inversion of a minor 6th chord"
+            }
+          ]
+        },
+        {
+          "id": "minor-6-diminished-scale-construction",
+          "name": "Minor 6 Diminished Scale Construction",
+          "summary": "A minor-key chord is expanded by fusing the minor 6 chord with its related diminished chord (built a major 3rd above the dominant note), yielding the minor 6 diminished scale as the governing voice-leading environment.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor 6 Diminished Scale Definition",
+              "quote_excerpt": "combining a minor 6 chord with its related diminished chord"
+            }
+          ]
+        },
+        {
+          "id": "major-minor-minor6-voice-leading",
+          "name": "Major\u2013Minor\u2013Minor/6 Voice-Leading Move",
+          "summary": "A named, reusable harmonic unit in which the harmony descends from major to minor to minor-with-6th-in-bass, providing a formulaic bass-line voice-leading template.",
+          "engine_payload": {
+            "kind": "_pending:named-voice-leading-unit"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Major-minor-minor/6 progression",
+              "quote_excerpt": "the progression from major to minor to minor with the 6th degree in the bass"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "barry-harris:jazz-workshop:half-step-improvisation",
+      "name": "Half-Step Practice Model for Improvisation",
+      "summary": "Barry Harris's half-step practice model is a rule-based system for generating bebop improvisation vocabulary by adding chromatic half-steps at scale-degree-specific positions within the descending form of the dominant 7th, major, and minor (ascending melodic) scales. Each scale family has its own distinct set of rules specifying exactly where half-steps are inserted. The Related Diminished Chord extends the system into chromatic territory by supplying additional approach-note resources. The minor scale version uses ascending melodic minor with a single exception at the b3rd position.",
+      "members": [
+        {
+          "id": "dominant-7th-scale",
+          "name": "Dominant 7th Scale",
+          "summary": "The primary scale of the half-step system."
+        },
+        {
+          "id": "major-scale",
+          "name": "Major Scale",
+          "summary": "Second scale family in the system; has four distinct half-step rules organized by starting degree group."
+        },
+        {
+          "id": "ascending-melodic-minor-scale",
+          "name": "Ascending Melodic Minor Scale",
+          "summary": "Third scale family (tonic-2-b3-4-5-6-maj7); uses the same placement rules as major with one exception at the b3rd degree."
+        },
+        {
+          "id": "up-and-down-scale-phrase",
+          "name": "'Up and Down' Scale Phrase",
+          "summary": "Two-bar phrase from tonic up to the 7th degree and straight back down; the fundamental unit of scale practice."
+        },
+        {
+          "id": "three-important-arpeggios",
+          "name": "Three Important Arpeggios on the Dominant 7th",
+          "summary": "Arpeggios built on the tonic, 5th, and 7th degrees of the dominant 7th scale."
+        },
+        {
+          "id": "pivoting-technique",
+          "name": "Pivoting Technique",
+          "summary": "A multi-purpose melodic technique that enables lines of any length and range by shifting accentual structure at new highest/lowest notes."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "half-step-insertion-dominant",
+          "name": "Half-Step Insertion Rules for Dominant 7th Scale",
+          "summary": "Scale-degree-specific rules specify exactly where chromatic half-steps are inserted in the descending dominant 7th scale to generate bebop vocabulary.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Harris Half-Step Practice Model definition",
+              "quote_excerpt": "each have their own set of 'rules' for adding half-steps"
+            }
+          ]
+        },
+        {
+          "id": "half-step-insertion-major",
+          "name": "Half-Step Insertion Rules for Major Scale",
+          "summary": "Four distinct rule sets govern where half-steps appear in descending major scale phrases.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "major scale half-step rules",
+              "quote_excerpt": "The first rule for descending from the 1-3-5 and major7 is: 1\nadded half-step between the 6-5."
+            }
+          ]
+        },
+        {
+          "id": "half-step-insertion-minor",
+          "name": "Half-Step Insertion Rules for Ascending Melodic Minor Scale",
+          "summary": "The same placement rules as the major scale apply to the ascending melodic minor, with the single exception that the b3rd position uses any substitute note since b3 is already present in the scale.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "minor scale half-step rules",
+              "quote_excerpt": "The added half-steps for this scale fall in the same places as do\nthe half-steps for the major scale."
+            }
+          ]
+        },
+        {
+          "id": "related-diminished-locator",
+          "name": "Related Diminished Chord Locator Rule",
+          "summary": "To find the related diminished chord from any dominant 7th, build it a major 3rd above the dominant note; this locates the chromatic extension resource for that dominant's half-step vocabulary.",
+          "engine_payload": {
+            "kind": "_pending:chromatic-generator-locator"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "finding related diminished chord",
+              "quote_excerpt": "The rule of thumb for finding a related diminished chord is to\nbuild it a major 3rd above the dominant note."
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "minor-b3-exception",
+          "name": "Minor Scale b3rd Exception Substitution",
+          "summary": "Where the standard half-step rules would insert a b3rd chromatic approach, the minor-scale version substitutes any other note because b3 is already a diatonic member of the ascending melodic minor scale.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "minor scale half-step rules",
+              "quote_excerpt": "Because this note is already present in the melodic minor scale, any other note may be used in its place"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
