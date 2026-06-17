@@ -1,0 +1,1745 @@
+{
+  "master": "howard-roberts",
+  "work": "chord-melody",
+  "rule_id_prefix": "roberts-",
+  "source": {
+    "stage_b_branch": "feat/457-stage-b-howard-roberts-chord-melody",
+    "run_id": "2026-06-12T09-45-18-roberts-chord-melody",
+    "source_pdf": "Roberts, Howard - Chord Melody.pdf"
+  },
+  "chapters": [
+    {
+      "chapter": {
+        "n": 1,
+        "title": "Fingerings",
+        "summary": "Chapter 1 introduces the two-part evaluative framework — musical quality and mechanical efficiency — that governs all fingering decisions. Roberts prescribes favoring string sets with greater vibrating length for sustain, minimizing unnecessary hand motion, and explicitly counters over-reliance on efficiency by legitimizing radical position jumps. His signature paired-principle structure balances tonal idealism against pragmatic economy.",
+        "key_phrases": [
+          "musical quality",
+          "mechanical efficiency",
+          "greater string length",
+          "sustain",
+          "unnecessary movements",
+          "radical jumps",
+          "large intervals",
+          "string numbers",
+          "fingering numbers",
+          "thumb"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Fingerings",
+          "page_range": [
+            4,
+            4
+          ],
+          "summary": "Establishes the two-criterion evaluative framework (musical quality and mechanical efficiency), prescribes string selection for sustain, defines mechanical efficiency as minimizing wasted motion, legitimizes large interval jumps as valid technique, and defines the notational system for string numbers, fingering numbers, and thumb indication.",
+          "key_phrases": [
+            "musical quality",
+            "mechanical efficiency",
+            "greater string length",
+            "sing and sustain",
+            "unnecessary movements",
+            "radical jumps",
+            "large intervals",
+            "string numbers in circles",
+            "fingering numbers left of notes",
+            "thumb indicated T"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-string-selection-by-sustain",
+              "name": "Prefer string set with greatest vibrating length",
+              "when": {
+                "voicing.selection_order": "evaluating_string_set_candidates"
+              },
+              "then": {
+                "voicing.strings": "string_set_with_greatest_vibrating_length"
+              },
+              "preference": "soft — yields to mechanical necessity when sustain gain is negligible",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A chord voicing where the lower-string option produces unacceptable mechanical awkwardness or a clashing open string — in that case mechanical efficiency overrides sustain preference.",
+              "anchor": "the musical quality can be enhanced by choosing a fingering or a set of strings in which the greater string length is maintained, thus permitting the Strings to \"sing\" and sustain longer",
+              "source_page": 4
+            },
+            {
+              "rule_id": "roberts-minimize-unnecessary-motion",
+              "name": "Eliminate unnecessary or awkward hand/finger movements",
+              "when": {
+                "voicing.selection_order": "evaluating_fingering_candidates"
+              },
+              "then": {
+                "voicing.shape": "fingering_with_fewest_unnecessary_or_awkward_movements"
+              },
+              "preference": "soft — large interval jumps are permitted when musically required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A passage requiring a radical position jump for musical contrast — the jump is legitimate even though it violates the efficiency heuristic.",
+              "anchor": "Mechanical efficiency is primarily a matter of avoiding unnecessary or awkward hand or finger movements",
+              "source_page": 4
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 4,
+              "summary": "Establishes the two-criterion framework: musical quality first, mechanical efficiency second, as the joint basis for evaluating any fingering change.",
+              "key_phrases": [
+                "musical quality",
+                "mechanical efficiency",
+                "feasibility",
+                "evaluating fingering changes"
+              ],
+              "verbatim_anchor": "In evaluating the feasibility of a change, first consider musical quality and mechanical efficiency",
+              "engine_rules": []
+            },
+            {
+              "page": 4,
+              "summary": "Prescribes string selection rule: choose the string set that maximizes vibrating length so that notes sing and sustain longer.",
+              "key_phrases": [
+                "greater string length",
+                "sing",
+                "sustain",
+                "string set",
+                "musical quality"
+              ],
+              "verbatim_anchor": "the musical quality can be enhanced by choosing a fingering or a set of strings in which the greater string length is maintained, thus permitting the Strings to \"sing\" and sustain longer",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-string-selection-by-sustain",
+                  "name": "Prefer string set with greatest vibrating length",
+                  "when": {
+                    "voicing.selection_order": "evaluating_string_set_candidates"
+                  },
+                  "then": {
+                    "voicing.strings": "string_set_with_greatest_vibrating_length"
+                  },
+                  "preference": "soft — yields to mechanical necessity when sustain gain is negligible",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A chord voicing where the lower-string option produces unacceptable mechanical awkwardness or a clashing open string — in that case mechanical efficiency overrides sustain preference.",
+                  "anchor": "the musical quality can be enhanced by choosing a fingering or a set of strings in which the greater string length is maintained, thus permitting the Strings to \"sing\" and sustain longer",
+                  "source_page": 4
+                }
+              ]
+            },
+            {
+              "page": 4,
+              "summary": "Defines mechanical efficiency as the elimination of unnecessary or awkward hand and finger movements.",
+              "key_phrases": [
+                "mechanical efficiency",
+                "unnecessary movements",
+                "awkward movements",
+                "hand movements",
+                "finger movements"
+              ],
+              "verbatim_anchor": "Mechanical efficiency is primarily a matter of avoiding unnecessary or awkward hand or finger movements",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-minimize-unnecessary-motion",
+                  "name": "Eliminate unnecessary or awkward hand/finger movements",
+                  "when": {
+                    "voicing.selection_order": "evaluating_fingering_candidates"
+                  },
+                  "then": {
+                    "voicing.shape": "fingering_with_fewest_unnecessary_or_awkward_movements"
+                  },
+                  "preference": "soft — large interval jumps are permitted when musically required",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A passage requiring a radical position jump for musical contrast — the jump is legitimate even though it violates the efficiency heuristic.",
+                  "anchor": "Mechanical efficiency is primarily a matter of avoiding unnecessary or awkward hand or finger movements",
+                  "source_page": 4
+                }
+              ]
+            },
+            {
+              "page": 4,
+              "summary": "Counters over-application of the efficiency principle: radical jumps and large intervals are legitimate techniques, and position leaps can provide desirable contrast to stepwise melodic lines.",
+              "key_phrases": [
+                "radical jumps",
+                "large intervals",
+                "mechanical efficiency",
+                "contrast",
+                "scale-wise movement"
+              ],
+              "verbatim_anchor": "do not also develop a fear of radical jumps or large intervals on the fingerboard. for these techniques are frequently required. For example, radical interval jumps may supply a nice contrast to smooth scale-wise line movement",
+              "engine_rules": []
+            },
+            {
+              "page": 4,
+              "summary": "Defines the notational system used throughout the method: string numbers in circles below the staff indicate the lower note of a chord; fingering numbers appear to the left of notes; thumb use is marked T.",
+              "key_phrases": [
+                "string numbers",
+                "circles",
+                "fingering numbers",
+                "thumb",
+                "T indication",
+                "notation convention"
+              ],
+              "verbatim_anchor": "String numbers indicate the lower note of the chord and are in circles under the staff. Fingering numbers are placed to the left of the notes. The thumb is frequently used throughout the studies and is indicated (T)",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 2,
+        "title": "Chord Melody Devices",
+        "summary": "Establishes core voicing vocabulary (close block, open) and conversion technique, asserts voice leading as the primary connective force across four simultaneous melody lines, defines motion types (parallel, contrary, counter lines), and introduces four practical chord-melody devices: block chords, sustained chord background, common tones, and short punctuations. Listener harmonic memory is treated as a compositional resource throughout.",
+        "key_phrases": [
+          "close block voicings",
+          "open voicings",
+          "octave displacement",
+          "voice leading",
+          "parallel motion",
+          "contrary motion",
+          "counter lines",
+          "common tone",
+          "block chords",
+          "sustained chord background",
+          "short chord punctuations",
+          "listener's harmonic memory"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Voicing Types and Conversion",
+          "page_range": [
+            5,
+            6
+          ],
+          "summary": "Defines close block and open voicings as the two fundamental vertical harmony structures, and prescribes octave displacement of one or more chord tones as the technique for converting close voicings to open ones.",
+          "key_phrases": [
+            "close block voicings",
+            "open voicings",
+            "octave displacement",
+            "chordal tones up or down an octave"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-open-voicing-construction",
+              "name": "Open Voicing via Octave Displacement",
+              "when": {
+                "voicing.density": "close",
+                "harmonic.context": "any"
+              },
+              "then": {
+                "voicing.density": "open",
+                "octave.shift": "move one or more chordal tones up or down one octave",
+                "voicing.selection_order": "as far as reach permits"
+              },
+              "preference": "expand spread as far as hand reach allows",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A voicing widened by interval adjustment other than octave displacement does not satisfy this technique",
+              "anchor": "Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave.",
+              "source_page": 6
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 5,
+              "summary": "Defines close block voicings as notes packed closely together — the foundational vertical harmony structure.",
+              "key_phrases": [
+                "close block voicings",
+                "notes packed closely together"
+              ],
+              "verbatim_anchor": "Close Block Voicings in which the notes are packed closely together.",
+              "engine_rules": []
+            },
+            {
+              "page": 6,
+              "summary": "Defines open voicings as notes spread apart, and gives the octave-displacement technique for converting close to open voicings.",
+              "key_phrases": [
+                "open voicings",
+                "notes spread apart",
+                "octave displacement"
+              ],
+              "verbatim_anchor": "Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-open-voicing-construction",
+                  "name": "Open Voicing via Octave Displacement",
+                  "when": {
+                    "voicing.density": "close",
+                    "harmonic.context": "any"
+                  },
+                  "then": {
+                    "voicing.density": "open",
+                    "octave.shift": "move one or more chordal tones up or down one octave",
+                    "voicing.selection_order": "as far as reach permits"
+                  },
+                  "preference": "expand spread as far as hand reach allows",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A voicing widened by interval adjustment other than octave displacement does not satisfy this technique",
+                  "anchor": "Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave.",
+                  "source_page": 6
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Voice Leading and Motion Types",
+          "page_range": [
+            6,
+            7
+          ],
+          "summary": "Establishes voice leading as the primary connective force between chords — four-part harmony equals four simultaneous melody lines. Defines parallel motion (all tones move same steps, same direction) and contrary motion (tones move in opposite directions). Introduces counter lines as melodic accompaniment, typically placed in the second voice from the top on guitar, with activity inversely related to melody motion.",
+          "key_phrases": [
+            "voice leading",
+            "four melody lines",
+            "parallel motion",
+            "contrary motion",
+            "counter lines",
+            "second voice from top",
+            "when melody is static counter line is active"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-counter-line-placement",
+              "name": "Counter Line Default String Placement",
+              "when": {
+                "harmonic.context": "chord-melody arrangement",
+                "progression.type": "any"
+              },
+              "then": {
+                "voicing.strings": "second voice from top"
+              },
+              "preference": "place counter line in second voice from top on guitar",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A counter line placed in the bass voice or top melody voice does not follow this guideline",
+              "anchor": "on guitar, are frequently found in the second voice from the top",
+              "source_page": 7
+            },
+            {
+              "rule_id": "roberts-counter-line-activity",
+              "name": "Counter Line Activity Inversely Related to Melody Motion",
+              "when": {
+                "harmonic.context": "main melody has little motion"
+              },
+              "then": {
+                "voicing.shape": "activate counter line with more motion"
+              },
+              "preference": "increase counter line activity when melody rests or sustains",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A static counter line under a static melody does not apply this rule; an active counter line under an active melody contradicts it",
+              "anchor": "When the main melody has little motion, the counter line can be more active.",
+              "source_page": 7
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 6,
+              "summary": "Asserts voice leading as the single most important factor linking chords; in four-part harmony there are four independent melody lines.",
+              "key_phrases": [
+                "voice leading",
+                "primary connective force",
+                "four melody lines"
+              ],
+              "verbatim_anchor": "The melody lines formed by each of the chordal tones is the most important single factor linking one chord to another. In four part harmony, for example, one is really dealing with four separate melody lines.",
+              "engine_rules": []
+            },
+            {
+              "page": 6,
+              "summary": "Defines parallel motion as a progression where every chord tone moves the same number of scale steps in the same direction.",
+              "key_phrases": [
+                "parallel motion",
+                "same scale steps",
+                "same direction"
+              ],
+              "verbatim_anchor": "PARALLEL MOTION, a chord progression in which each tone is moving the same number of scale steps and in the same direction.",
+              "engine_rules": []
+            },
+            {
+              "page": 7,
+              "summary": "Defines contrary motion as chordal tones moving in opposite directions.",
+              "key_phrases": [
+                "contrary motion",
+                "opposite directions"
+              ],
+              "verbatim_anchor": "CONTRARY MOTION is, as the word im plies, a situation in which the chordal tones are moving in opposite directions.",
+              "engine_rules": []
+            },
+            {
+              "page": 7,
+              "summary": "Defines counter lines as melodic accompaniment typically in the second voice from the top on guitar; prescribes greater counter-line activity when the main melody has little motion.",
+              "key_phrases": [
+                "counter lines",
+                "second voice from top",
+                "melodic accompaniment",
+                "connecting lines",
+                "activity when melody static"
+              ],
+              "verbatim_anchor": "COUNTER LINES are usually treated as a melodic accompaniment to the main body of a tune. They are also used as connecting lines from one chord to another and, on guitar, are frequently found in the second voice from the top. When the main melody has little motion, the counter line can be more active.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-counter-line-placement",
+                  "name": "Counter Line Default String Placement",
+                  "when": {
+                    "harmonic.context": "chord-melody arrangement",
+                    "progression.type": "any"
+                  },
+                  "then": {
+                    "voicing.strings": "second voice from top"
+                  },
+                  "preference": "place counter line in second voice from top on guitar",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A counter line placed in the bass voice or top melody voice does not follow this guideline",
+                  "anchor": "on guitar, are frequently found in the second voice from the top",
+                  "source_page": 7
+                },
+                {
+                  "rule_id": "roberts-counter-line-activity",
+                  "name": "Counter Line Activity Inversely Related to Melody Motion",
+                  "when": {
+                    "harmonic.context": "main melody has little motion"
+                  },
+                  "then": {
+                    "voicing.shape": "activate counter line with more motion"
+                  },
+                  "preference": "increase counter line activity when melody rests or sustains",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A static counter line under a static melody does not apply this rule; an active counter line under an active melody contradicts it",
+                  "anchor": "When the main melody has little motion, the counter line can be more active.",
+                  "source_page": 7
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Block Chords",
+          "page_range": [
+            8,
+            9
+          ],
+          "summary": "Defines block chords as a full chord placed under each melody note using close or open voicings. Prescribes changing voicing or inversion with every new melody note to preserve the block-chord effect. Notes the Gm7-for-Ebmaj9 substitution as an example of block-chord harmonic flexibility.",
+          "key_phrases": [
+            "block chords",
+            "full chord under every melody note",
+            "change voicing with melody",
+            "Gm7 substitute for Ebmaj9",
+            "picking techniques"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-block-chord-voicing-change",
+              "name": "Change Voicing or Inversion with Each Melody Note",
+              "when": {
+                "harmonic.context": "block chord style",
+                "melody.scale_degree": "changes"
+              },
+              "then": {
+                "voicing.shape": "change voicing or inversion",
+                "voicing.strings": "move chordal tones in same direction as melody where possible"
+              },
+              "preference": "chordal tones move with melody and preferably in the same direction",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Holding the same chord form while the melody changes destroys the block chord effect",
+              "anchor": "it is more desirable to change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once.",
+              "source_page": 9
+            },
+            {
+              "rule_id": "roberts-gm7-for-ebmaj9-sub",
+              "name": "Gm7 as Substitute for Ebmaj9",
+              "when": {
+                "chord_quality": "Ebmaj9",
+                "harmonic.context": "block chord substitution"
+              },
+              "then": {
+                "voicing.quality": "Gm7"
+              },
+              "preference": null,
+              "quality_binding": [
+                "maj9"
+              ],
+              "falsifier": "Substituting a chord with no shared tones with Ebmaj9 would not satisfy this specific substitution",
+              "anchor": "The Gm7 in bar 3 is being used as a substitute for Eb maj 9.",
+              "source_page": 8
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 8,
+              "summary": "Defines block chords as placing a full chord (close or open voicing) underneath each melody note to produce melody and harmony simultaneously.",
+              "key_phrases": [
+                "block chords",
+                "full chord under melody note",
+                "close or open voicings"
+              ],
+              "verbatim_anchor": "BLOCK CHORDS. Here is a rudimentary. yet effective way of producing melody and harmony simultaneously. This is done by placing a full chord underneath each melody note. The chords can be either close or open voicings.",
+              "engine_rules": []
+            },
+            {
+              "page": 8,
+              "summary": "Suggests experimenting with picking techniques for block chords: all down strokes, alternating strokes, or simultaneous finger plucking.",
+              "key_phrases": [
+                "picking techniques",
+                "down strokes",
+                "alternate strokes",
+                "plucking simultaneously"
+              ],
+              "verbatim_anchor": "You might experiment with picking techniques here: For example, all down strokes, or alternate down and up strokes, or plucking all strings simultaneously with fingers.",
+              "engine_rules": []
+            },
+            {
+              "page": 8,
+              "summary": "Gives a specific substitution example: Gm7 used in place of Ebmaj9 in block chord context.",
+              "key_phrases": [
+                "Gm7",
+                "Ebmaj9",
+                "chord substitution"
+              ],
+              "verbatim_anchor": "The Gm7 in bar 3 is being used as a substitute for Eb maj 9.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-gm7-for-ebmaj9-sub",
+                  "name": "Gm7 as Substitute for Ebmaj9",
+                  "when": {
+                    "chord_quality": "Ebmaj9",
+                    "harmonic.context": "block chord substitution"
+                  },
+                  "then": {
+                    "voicing.quality": "Gm7"
+                  },
+                  "preference": null,
+                  "quality_binding": [
+                    "maj9"
+                  ],
+                  "falsifier": "Substituting a chord with no shared tones with Ebmaj9 would not satisfy this specific substitution",
+                  "anchor": "The Gm7 in bar 3 is being used as a substitute for Eb maj 9.",
+                  "source_page": 8
+                }
+              ]
+            },
+            {
+              "page": 9,
+              "summary": "States the rule for preserving the block chord effect: voicing and inversion must change with each new melody note, with chordal tones moving in the same direction as the melody; holding a fixed chord form while the melody moves destroys the effect.",
+              "key_phrases": [
+                "block chord effect",
+                "change voicing with melody",
+                "same direction as melody",
+                "all lines moving at once"
+              ],
+              "verbatim_anchor": "it is more desirable to change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-block-chord-voicing-change",
+                  "name": "Change Voicing or Inversion with Each Melody Note",
+                  "when": {
+                    "harmonic.context": "block chord style",
+                    "melody.scale_degree": "changes"
+                  },
+                  "then": {
+                    "voicing.shape": "change voicing or inversion",
+                    "voicing.strings": "move chordal tones in same direction as melody where possible"
+                  },
+                  "preference": "chordal tones move with melody and preferably in the same direction",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "Holding the same chord form while the melody changes destroys the block chord effect",
+                  "anchor": "it is more desirable to change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once.",
+                  "source_page": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Sustained Chord Background and Dropped Tones",
+          "page_range": [
+            9,
+            9
+          ],
+          "summary": "Defines sustained chord background as holding one chord across multiple melody notes. Permits dropping chord tones when fingering requires it, relying on listener harmonic memory to fill in the omitted tones — provided each tone is sustained as long as physically possible.",
+          "key_phrases": [
+            "sustained chord background",
+            "drop chord tones",
+            "listener harmonic memory",
+            "sustained as long as possible"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-dropped-tone-tolerance",
+              "name": "Drop Chord Tones When Fingering Requires; Sustain as Long as Possible",
+              "when": {
+                "harmonic.context": "sustained chord background"
+              },
+              "then": {
+                "voicing.shape": "drop one or more chordal tones as needed",
+                "voicing.selection_order": "sustain each chordal tone for as long as possible before dropping"
+              },
+              "preference": "listener's harmonic memory compensates for dropped tones if each tone was sustained maximally before release",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Dropping a tone immediately without sustaining it first prevents listener memory from registering it",
+              "anchor": "if each chordal tone is sustained for as long as possible, the listener usually remember those notes that have been dropped.",
+              "source_page": 9
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 9,
+              "summary": "Defines sustained chord background as a modification of block chord style where one chord is held through two or more melody notes.",
+              "key_phrases": [
+                "sustained chord background",
+                "modification of block chord",
+                "one chord through multiple melody notes"
+              ],
+              "verbatim_anchor": "SUSTAINED CHORD BACKGROUND is a modification of the block chord style. in that one chord is sustained through two or more melody notes.",
+              "engine_rules": []
+            },
+            {
+              "page": 9,
+              "summary": "Prescribes dropping chord tones when fingering demands it, provided each tone is sustained as long as possible so listener harmonic memory reconstructs the harmony.",
+              "key_phrases": [
+                "drop chord tones",
+                "fingering requirements",
+                "listener harmonic memory",
+                "sustained as long as possible"
+              ],
+              "verbatim_anchor": "if each chordal tone is sustained for as long as possible, the listener usually remember those notes that have been dropped.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-dropped-tone-tolerance",
+                  "name": "Drop Chord Tones When Fingering Requires; Sustain as Long as Possible",
+                  "when": {
+                    "harmonic.context": "sustained chord background"
+                  },
+                  "then": {
+                    "voicing.shape": "drop one or more chordal tones as needed",
+                    "voicing.selection_order": "sustain each chordal tone for as long as possible before dropping"
+                  },
+                  "preference": "listener's harmonic memory compensates for dropped tones if each tone was sustained maximally before release",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "Dropping a tone immediately without sustaining it first prevents listener memory from registering it",
+                  "anchor": "if each chordal tone is sustained for as long as possible, the listener usually remember those notes that have been dropped.",
+                  "source_page": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Short Chord Punctuations",
+          "page_range": [
+            10,
+            10
+          ],
+          "summary": "Introduces short chord punctuations as a device that outlines harmonic flow without full sustained voicings. Harmonic continuity is preserved when punctuations are played with authority and placed appropriately within the bar; choosing melodies that emphasize chord tones further reinforces continuity.",
+          "key_phrases": [
+            "short chord punctuations",
+            "listener harmonic memory",
+            "harmonic continuity",
+            "played with authority",
+            "appropriately placed",
+            "melody emphasizes chordal tones"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-short-punctuation-placement",
+              "name": "Short Punctuations Must Be Authoritative and Well-Placed to Maintain Harmonic Continuity",
+              "when": {
+                "harmonic.context": "short chord punctuation",
+                "bar.position": "appropriate placement within bar"
+              },
+              "then": {
+                "voicing.shape": "short chord punctuation played with authority",
+                "voicing.selection_order": "prefer voicings that emphasize chordal tones in melody"
+              },
+              "preference": "reinforce harmonic continuity by choosing melodies that emphasize chordal tones",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A weakly articulated or poorly timed punctuation fails to outline harmonic flow and breaks continuity",
+              "anchor": "These can be used without sacrificing harmonic continuity, when they are played with authority and appropriately placed within the bar.",
+              "source_page": 10
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 10,
+              "summary": "Defines short chord punctuations as leveraging listener harmonic memory to outline harmony without full voicings; continuity depends on authority of attack, timing within the bar, and melody that emphasizes chord tones.",
+              "key_phrases": [
+                "short chord punctuations",
+                "outline harmony",
+                "listener harmonic memory",
+                "authority",
+                "chordal tones in melody"
+              ],
+              "verbatim_anchor": "These can be used without sacrificing harmonic continuity, when they are played with authority and appropriately placed within the bar. This continuity can be further reinforced by choosing melodies which emphasize chordal tones.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-short-punctuation-placement",
+                  "name": "Short Punctuations Must Be Authoritative and Well-Placed to Maintain Harmonic Continuity",
+                  "when": {
+                    "harmonic.context": "short chord punctuation",
+                    "bar.position": "appropriate placement within bar"
+                  },
+                  "then": {
+                    "voicing.shape": "short chord punctuation played with authority",
+                    "voicing.selection_order": "prefer voicings that emphasize chordal tones in melody"
+                  },
+                  "preference": "reinforce harmonic continuity by choosing melodies that emphasize chordal tones",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A weakly articulated or poorly timed punctuation fails to outline harmonic flow and breaks continuity",
+                  "anchor": "These can be used without sacrificing harmonic continuity, when they are played with authority and appropriately placed within the bar.",
+                  "source_page": 10
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 3,
+        "title": "Chord Melody Studies",
+        "summary": "Chord melody as layered harmonic decisions. Close voicings serve as textural contrast against open voicings. Chord symbols are subordinate to voice leading; Roman numeral identity derives from full-phrase analysis only. Diminished chords substitute for dom7b9 to inject chromaticism. Master continuity rule: sustain each chord tone as long as physically possible. Two-note dyads imply harmony. Chromatic passing chords (m7+5 shapes) connect diatonic chords. Inner voices evolve from passing tones to counter-lines to melodic patterns. Complete structural device taxonomy enumerated.",
+        "key_phrases": [
+          "close voicings",
+          "open voicings",
+          "texture contrast",
+          "voice leading",
+          "diminished substitution",
+          "dom7b9",
+          "sustain chord tones",
+          "two-note voicings",
+          "chromatic passing chords",
+          "m7+5",
+          "counter line",
+          "block chords",
+          "contrary motion",
+          "parallel motion"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Close Voicings as Texture Contrast",
+          "page_range": [
+            11,
+            12
+          ],
+          "summary": "Close voicings are effective but underused on guitar. They function as a textural contrast to the broader sound produced by open voicings, giving the arranger a palette shift between dense and spacious harmonic textures.",
+          "key_phrases": [
+            "close voicings",
+            "open voicings",
+            "texture contrast",
+            "voicing density"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-close-voicing-texture-contrast",
+              "name": "Close Voicing as Texture Contrast",
+              "when": {
+                "harmonic.context": "texture-shift-desired",
+                "voicing.density": "open"
+              },
+              "then": {
+                "voicing.density": "close",
+                "voicing.selection_order": "prefer-close-interval-stack"
+              },
+              "preference": "deploy close voicings sparingly for contrast rather than as default texture",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "If the preceding passage is already close-voiced, switching to close voicing provides no contrast and the rule does not apply.",
+              "anchor": "close voicings, very effective but not too often used, on the guitar. These can be used as texture contrast to the big sound of open voicings",
+              "source_page": 12
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 12,
+              "summary": "Example 13 demonstrates close voicings as an available textural device. Because open voicings dominate typical guitar chord melody, close voicings carry inherent contrast value when introduced selectively.",
+              "key_phrases": [
+                "close voicings",
+                "texture contrast",
+                "open voicings"
+              ],
+              "verbatim_anchor": "close voicings, very effective but not too often used, on the guitar. These can be used as texture contrast to the big sound of open voicings",
+              "engine_rules": []
+            }
+          ]
+        },
+        {
+          "title": "G6 Functioning as Dominant Chord (Eb7b9 Sub)",
+          "page_range": [
+            12,
+            12
+          ],
+          "summary": "A G6 chord can serve as a tritone-related dominant substitution, functioning enharmonically as Eb7b9 in context. This is a specific quality-binding example of a chord with one identity at face value and another in harmonic context.",
+          "key_phrases": [
+            "G6",
+            "dominant substitution",
+            "Eb7b9",
+            "harmonic context",
+            "reharmonization"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-g6-as-eb7b9-dominant-sub",
+              "name": "G6 as Eb7b9 Dominant Substitute",
+              "when": {
+                "chord_quality": "maj6",
+                "harmonic.context": "dominant-function-toward-Ab-or-Eb-tonic"
+              },
+              "then": {
+                "voicing.quality": "dom7b9-substitute",
+                "voicing.tensions": "b9",
+                "voicing.shape": "retain-maj6-fingering"
+              },
+              "preference": "interpret maj6 voicing as dom7b9 substitute when surrounding harmonic context implies dominant function a tritone away",
+              "quality_binding": [
+                "maj6"
+              ],
+              "falsifier": "G6 in a tonic or pre-dominant context (e.g., I6 in G major with no dominant pull toward Eb) does not function as Eb7b9.",
+              "anchor": "The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9)",
+              "source_page": 12
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 12,
+              "summary": "Bar 3 of Example 13 shows G6 reinterpreted as Eb7b9. The notes of G6 (G, B, D, E) map onto the 3rd, 5th, 7th, and b9 of an Eb dominant seventh chord, making the substitution acoustically coherent without a change in fingering.",
+              "key_phrases": [
+                "G6",
+                "Eb7b9",
+                "tritone substitution"
+              ],
+              "verbatim_anchor": "The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9)",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-g6-as-eb7b9-dominant-sub",
+                  "name": "G6 as Eb7b9 Dominant Substitute",
+                  "when": {
+                    "chord_quality": "maj6",
+                    "harmonic.context": "dominant-function-toward-Ab-or-Eb-tonic"
+                  },
+                  "then": {
+                    "voicing.quality": "dom7b9-substitute",
+                    "voicing.tensions": "b9",
+                    "voicing.shape": "retain-maj6-fingering"
+                  },
+                  "preference": "interpret maj6 voicing as dom7b9 substitute when surrounding harmonic context implies dominant function a tritone away",
+                  "quality_binding": [
+                    "maj6"
+                  ],
+                  "falsifier": "G6 in a tonic or pre-dominant context (e.g., I6 in G major with no dominant pull toward Eb) does not function as Eb7b9.",
+                  "anchor": "The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9)",
+                  "source_page": 12
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Diminished Chords as Chromatic Dominant Substitution",
+          "page_range": [
+            13,
+            13
+          ],
+          "summary": "Diminished seventh chords (E°, Db°) substitute for A7b9, injecting chromaticism into otherwise diatonic lines. Because a fully-diminished seventh chord contains the b9 and is symmetrically divisible, any of its four enharmonic positions can function as a dom7b9 voicing on the root a half-step below.",
+          "key_phrases": [
+            "diminished substitution",
+            "dom7b9",
+            "chromaticism",
+            "E diminished",
+            "Db diminished",
+            "A7b9"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-dim7-sub-for-dom7b9",
+              "name": "Diminished 7 Substitution for Dom7b9",
+              "when": {
+                "chord_quality": "dom7b9",
+                "harmonic.context": "chromatic-relief-desired"
+              },
+              "then": {
+                "voicing.quality": "dim7",
+                "voicing.shape": "diminished-seventh-built-on-chord-third",
+                "voicing.tensions": "b9"
+              },
+              "preference": "prefer dim7 substitute when diatonic context risks monotony; the dim7 built on the 3rd of any dom7b9 contains the full upper structure",
+              "quality_binding": [
+                "dom7b9"
+              ],
+              "falsifier": "Diminished chord used as a passing chord between two diatonic chords (e.g., I° between I and ii) is not functioning as a dom7b9 substitute and this rule does not apply.",
+              "anchor": "The E° and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief from the monotony of diatonic lines",
+              "source_page": 13
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 13,
+              "summary": "Examples on p. 13 show E° and Db° each standing in for A7b9. The symmetrical structure of the diminished seventh chord means four different root names share the same four pitches, so multiple chromatic approach points are available without changing the voicing shape.",
+              "key_phrases": [
+                "diminished sub",
+                "A7b9",
+                "chromatic relief"
+              ],
+              "verbatim_anchor": "The E° and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief from the monotony of diatonic lines",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-dim7-sub-for-dom7b9",
+                  "name": "Diminished 7 Substitution for Dom7b9",
+                  "when": {
+                    "chord_quality": "dom7b9",
+                    "harmonic.context": "chromatic-relief-desired"
+                  },
+                  "then": {
+                    "voicing.quality": "dim7",
+                    "voicing.shape": "diminished-seventh-built-on-chord-third",
+                    "voicing.tensions": "b9"
+                  },
+                  "preference": "prefer dim7 substitute when diatonic context risks monotony; the dim7 built on the 3rd of any dom7b9 contains the full upper structure",
+                  "quality_binding": [
+                    "dom7b9"
+                  ],
+                  "falsifier": "Diminished chord used as a passing chord between two diatonic chords (e.g., I° between I and ii) is not functioning as a dom7b9 substitute and this rule does not apply.",
+                  "anchor": "The E° and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief from the monotony of diatonic lines",
+                  "source_page": 13
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Chord Symbol vs. Voice Leading Primacy",
+          "page_range": [
+            13,
+            13
+          ],
+          "summary": "Voice leading creates the sounds; chord symbols are post-hoc labels. Roman numeral or functional identity can only be assigned after analyzing the full phrase. This is a foundational compositional principle, not an engine rule.",
+          "key_phrases": [
+            "voice leading",
+            "chord symbols",
+            "Roman numeral analysis",
+            "functional harmony",
+            "phrase analysis"
+          ],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 13,
+              "summary": "Roberts explicitly states that chord symbol identification is 'awkward and unnecessary' for certain voice-led sounds. The functional identity of a chord (II7, V7, etc.) depends on full-phrase analysis, not isolated labeling. This is a meta-principle governing analysis, not a voicing-selection rule.",
+              "key_phrases": [
+                "voice leading primacy",
+                "chord symbol",
+                "Roman numeral",
+                "phrase analysis"
+              ],
+              "verbatim_anchor": "the spelling of the chord symbols in Exumple 16 is less important than the voice leading which creates them.",
+              "engine_rules": []
+            }
+          ]
+        },
+        {
+          "title": "Sustaining Chord Tones — Continuity Principle",
+          "page_range": [
+            15,
+            15
+          ],
+          "summary": "The master continuity rule for chord melody: hold every fretted note for as long as physically possible. Move fingers only when absolutely necessary. This maximizes harmonic resonance and creates the characteristic sustained chord melody sound.",
+          "key_phrases": [
+            "sustain chord tones",
+            "continuity",
+            "finger placement",
+            "chord melody style",
+            "voice leading continuity"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-sustain-each-chord-tone",
+              "name": "Sustain Each Chord Tone for Maximum Duration",
+              "when": {
+                "harmonic.context": "chord-melody-execution"
+              },
+              "then": {
+                "voicing.selection_order": "hold-all-fretted-notes-until-physically-forced-to-move",
+                "voicing.shape": "delay-finger-movement-to-last-necessary-moment"
+              },
+              "preference": "always default to sustaining; movement is the exception, not the rule",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A chord requiring a full position shift where no notes are common between successive chords — in that case no tones can be physically sustained across the change.",
+              "anchor": "Sustain each chordal tone for as long as possible. In general. this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style",
+              "source_page": 15
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 15,
+              "summary": "This rule is the single most actionable physical technique in the chapter. It transforms discrete chord grabs into a legato harmonic texture. The implementation is purely mechanical: do not lift fingers until the next voicing demands it.",
+              "key_phrases": [
+                "sustain",
+                "fingers in place",
+                "continuity"
+              ],
+              "verbatim_anchor": "Sustain each chordal tone for as long as possible. In general. this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-sustain-each-chord-tone",
+                  "name": "Sustain Each Chord Tone for Maximum Duration",
+                  "when": {
+                    "harmonic.context": "chord-melody-execution"
+                  },
+                  "then": {
+                    "voicing.selection_order": "hold-all-fretted-notes-until-physically-forced-to-move",
+                    "voicing.shape": "delay-finger-movement-to-last-necessary-moment"
+                  },
+                  "preference": "always default to sustaining; movement is the exception, not the rule",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A chord requiring a full position shift where no notes are common between successive chords — in that case no tones can be physically sustained across the change.",
+                  "anchor": "Sustain each chordal tone for as long as possible. In general. this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style",
+                  "source_page": 15
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Two-Note Voicings for Implied Harmony",
+          "page_range": [
+            18,
+            18
+          ],
+          "summary": "Two-note dyads can create an overall effect of harmony, an underexplored technique in guitar improvisation. With practice, dyadic harmony expands stylistic versatility.",
+          "key_phrases": [
+            "two-note voicings",
+            "dyads",
+            "implied harmony",
+            "improvisation",
+            "stylistic versatility"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-two-note-dyad-implied-harmony",
+              "name": "Two-Note Dyad as Implied Harmony",
+              "when": {
+                "voicing.density": "sparse",
+                "harmonic.context": "improvisation-or-linear-passage"
+              },
+              "then": {
+                "voicing.strings": "two-string-dyad",
+                "voicing.density": "implied",
+                "voicing.quality": "dyad-suggestive-of-parent-chord"
+              },
+              "preference": "prefer dyads when full voicings would interrupt melodic momentum; the listener's ear completes the harmony",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "When full block-chord texture is required (e.g., a sustained chord background), a two-note dyad fails to fill the harmonic space and the rule does not apply.",
+              "anchor": "The use of two notes to create the overall effect of harmony has been Telativels unexplored in guitar playing, particularly in improvisation, and could, with practice, make a valuable contribution to the versatility of one's style",
+              "source_page": 18
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 18,
+              "summary": "Roberts flags two-note voicings as a largely untapped resource in guitar improvisation. By selecting the most harmonically informative two notes of a chord (typically the 3rd and 7th, or root and guide tone), the guitarist implies the full chord with minimal fretting demand.",
+              "key_phrases": [
+                "two-note",
+                "dyad",
+                "implied harmony",
+                "improvisation"
+              ],
+              "verbatim_anchor": "The use of two notes to create the overall effect of harmony has been Telativels unexplored in guitar playing, particularly in improvisation, and could, with practice, make a valuable contribution to the versatility of one's style",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-two-note-dyad-implied-harmony",
+                  "name": "Two-Note Dyad as Implied Harmony",
+                  "when": {
+                    "voicing.density": "sparse",
+                    "harmonic.context": "improvisation-or-linear-passage"
+                  },
+                  "then": {
+                    "voicing.strings": "two-string-dyad",
+                    "voicing.density": "implied",
+                    "voicing.quality": "dyad-suggestive-of-parent-chord"
+                  },
+                  "preference": "prefer dyads when full voicings would interrupt melodic momentum; the listener's ear completes the harmony",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "When full block-chord texture is required (e.g., a sustained chord background), a two-note dyad fails to fill the harmonic space and the rule does not apply.",
+                  "anchor": "The use of two notes to create the overall effect of harmony has been Telativels unexplored in guitar playing, particularly in improvisation, and could, with practice, make a valuable contribution to the versatility of one's style",
+                  "source_page": 18
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Chromatic Passing Chords Connecting Diatonic Progression",
+          "page_range": [
+            29,
+            31
+          ],
+          "summary": "Diatonic chords within a progression (G6, Am7, Bm7, Cmaj7) are connected by chromatic passing chords built as m7+5 (minor seventh sharp five) shapes. These passing chords provide smooth half-step voice leading between diatonic targets.",
+          "key_phrases": [
+            "passing chords",
+            "m7+5",
+            "chromatic connection",
+            "diatonic progression",
+            "G#m7+5",
+            "Am7+5"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-m7plus5-chromatic-passing",
+              "name": "m7+5 Chromatic Passing Chord Between Diatonic Chords",
+              "when": {
+                "progression.type": "diatonic",
+                "progression.position": "between-diatonic-chords",
+                "harmonic.context": "chromatic-connection-desired"
+              },
+              "then": {
+                "voicing.quality": "m7+5",
+                "voicing.fret_offset": "half-step-below-target-diatonic-chord-root",
+                "voicing.shape": "minor-seventh-sharp-five"
+              },
+              "preference": "prefer m7+5 passing chord a half-step below each diatonic target to create smooth chromatic approach",
+              "quality_binding": [
+                "m7+5"
+              ],
+              "falsifier": "If the diatonic chords are a whole step apart and a half-step passing chord would land on another diatonic chord, the chromatic passing function is absorbed and a different passing quality may be required.",
+              "anchor": "Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj 7 (one chord per bart being connected by the passing chords G#m7+5, Am7+5, et",
+              "source_page": 29
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 29,
+              "summary": "Example 35 places a G#m7+5 between G6 and Am7, and an Am7+5 between Am7 and Bm7. Each passing chord is a half-step below the following diatonic target, producing a chromatic approach that smooths what would otherwise be stepwise diatonic leaps.",
+              "key_phrases": [
+                "m7+5",
+                "passing chord",
+                "half-step approach",
+                "diatonic"
+              ],
+              "verbatim_anchor": "Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj 7 (one chord per bart being connected by the passing chords G#m7+5, Am7+5, et",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-m7plus5-chromatic-passing",
+                  "name": "m7+5 Chromatic Passing Chord Between Diatonic Chords",
+                  "when": {
+                    "progression.type": "diatonic",
+                    "progression.position": "between-diatonic-chords",
+                    "harmonic.context": "chromatic-connection-desired"
+                  },
+                  "then": {
+                    "voicing.quality": "m7+5",
+                    "voicing.fret_offset": "half-step-below-target-diatonic-chord-root",
+                    "voicing.shape": "minor-seventh-sharp-five"
+                  },
+                  "preference": "prefer m7+5 passing chord a half-step below each diatonic target to create smooth chromatic approach",
+                  "quality_binding": [
+                    "m7+5"
+                  ],
+                  "falsifier": "If the diatonic chords are a whole step apart and a half-step passing chord would land on another diatonic chord, the chromatic passing function is absorbed and a different passing quality may be required.",
+                  "anchor": "Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj 7 (one chord per bart being connected by the passing chords G#m7+5, Am7+5, et",
+                  "source_page": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Counter Line Development into Melodic Pattern",
+          "page_range": [
+            31,
+            31
+          ],
+          "summary": "Inner voice passing tones can be developed progressively: first as isolated passing tones, then as a continuous counter line, and finally extended into a fully melodic pattern. This establishes a developmental hierarchy from harmonic filler to independent melodic voice.",
+          "key_phrases": [
+            "counter line",
+            "passing tones",
+            "melodic pattern",
+            "inner voice",
+            "developmental hierarchy"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-passing-tone-to-counter-line-development",
+              "name": "Develop Passing Tones into Counter Line and Melodic Pattern",
+              "when": {
+                "harmonic.context": "inner-voice-passing-tone-present",
+                "progression.type": "any"
+              },
+              "then": {
+                "voicing.selection_order": "extend-passing-tone-to-continuous-counter-line-then-to-melodic-pattern",
+                "voicing.shape": "sustain-and-connect-inner-voice-movement"
+              },
+              "preference": "prefer to develop isolated inner-voice passing tones into sustained counter lines before elevating them to foreground melodic patterns",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A single isolated passing tone that resolves immediately and has no continuation cannot be developed into a counter line without forcing artificial melodic material.",
+              "anchor": "Example 37 shows further development of a counter line resulting from the extension of the passing tones into a more melodic pattern",
+              "source_page": 31
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 31,
+              "summary": "Example 37 demonstrates the three-stage developmental arc: (1) passing tone as isolated inner-voice event, (2) passing tones connected into a continuous counter line, (3) counter line extended and shaped into an independent melodic pattern. Each stage increases the structural weight of the inner voice.",
+              "key_phrases": [
+                "passing tone",
+                "counter line",
+                "melodic pattern",
+                "development"
+              ],
+              "verbatim_anchor": "Example 37 shows further development of a counter line resulting from the extension of the passing tones into a more melodic pattern",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-passing-tone-to-counter-line-development",
+                  "name": "Develop Passing Tones into Counter Line and Melodic Pattern",
+                  "when": {
+                    "harmonic.context": "inner-voice-passing-tone-present",
+                    "progression.type": "any"
+                  },
+                  "then": {
+                    "voicing.selection_order": "extend-passing-tone-to-continuous-counter-line-then-to-melodic-pattern",
+                    "voicing.shape": "sustain-and-connect-inner-voice-movement"
+                  },
+                  "preference": "prefer to develop isolated inner-voice passing tones into sustained counter lines before elevating them to foreground melodic patterns",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A single isolated passing tone that resolves immediately and has no continuation cannot be developed into a counter line without forcing artificial melodic material.",
+                  "anchor": "Example 37 shows further development of a counter line resulting from the extension of the passing tones into a more melodic pattern",
+                  "source_page": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Structural Devices of Chord Melody — Summary Taxonomy",
+          "page_range": [
+            32,
+            35
+          ],
+          "summary": "Example 38 synthesizes all structural devices covered in the chapter into a complete chord melody solo. The taxonomy includes: vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained chord backgrounds, and short chord punctuations.",
+          "key_phrases": [
+            "vertical textures",
+            "contrary motion",
+            "parallel motion",
+            "counter lines",
+            "block chords",
+            "sustained chord backgrounds",
+            "short chord punctuations",
+            "structural devices",
+            "chord melody solo"
+          ],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 32,
+              "summary": "Roberts enumerates seven structural devices for chord melody: vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained chord backgrounds, and short chord punctuations. Example 38 is a synthesis étude requiring the student to identify each device in context. This section is taxonomic rather than prescriptive — it names the tools without specifying when/then application conditions.",
+              "key_phrases": [
+                "taxonomy",
+                "structural devices",
+                "synthesis"
+              ],
+              "verbatim_anchor": "Look for vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained chord backgrounds and short chord punctuations.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 4,
+        "title": "Project Studies",
+        "summary": "Practical chord melody arranging. Core physical constraint: melody placed too low leaves no strings for chord beneath it. Absolute floor is the 4th string. Jumping octaves (transposing melody up an octave) is an essential and frequent technique to maintain register. Extensions (maj7, 6, 9) affect only color and texture, not scale function — arranger may freely enrich voicings. Any chromatic melody note within finger range can be harmonized against any chord form, possibly with dissonance. When melody and harmony move independently, interesting extensions emerge naturally. Method: start simple, repeat until instinct develops, then extemporaneous chord melody improv becomes reachable.",
+        "key_phrases": [
+          "melody register",
+          "chord voicing",
+          "jumping octaves",
+          "4th string floor",
+          "extensions are coloristic",
+          "chromatic harmonization",
+          "melody/harmony independence",
+          "extemporaneous chord melody"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Melody Register and Physical Voicing Constraints",
+          "page_range": [
+            36,
+            36
+          ],
+          "summary": "Establishes the foundational physical constraint of chord melody on guitar: a melody note placed too low on the staff exhausts the available strings, leaving no room to form a satisfactory chord beneath it. The absolute lower limit for melody is the 4th string; below that, no workable chord fragment can be placed beneath.",
+          "key_phrases": [
+            "melody too low",
+            "no strings for chord",
+            "4th string floor",
+            "chord beneath melody"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-melody-register-constraint",
+              "name": "Melody Register Voicing Constraint",
+              "when": {
+                "melody.string": ">=4",
+                "harmonic.context": "chord-voicing-required-beneath-melody"
+              },
+              "then": {
+                "voicing.density": "reduced-or-fragment"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A satisfactory full chord voicing is found beneath a melody note on string 5 or 6 — which would contradict the constraint.",
+              "anchor": "if the melody note is placed too low on the staff, you will not have enough strings left to form a satisfactory chord beneath it.",
+              "source_page": 36
+            },
+            {
+              "rule_id": "roberts-4th-string-floor",
+              "name": "4th String Absolute Floor for Melody",
+              "when": {
+                "melody.string": ">4"
+              },
+              "then": {
+                "octave.shift": "+1",
+                "voicing.selection_order": "restart-with-transposed-melody"
+              },
+              "preference": "invariant",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": null,
+              "anchor": "It is possible however to play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath.",
+              "source_page": 36
+            },
+            {
+              "rule_id": "roberts-octave-jump-when-melody-too-low",
+              "name": "Jumping Octaves When Melody Too Low",
+              "when": {
+                "melody.string": ">=4",
+                "harmonic.context": "voicing-density-insufficient-due-to-low-melody-register"
+              },
+              "then": {
+                "octave.shift": "+1",
+                "voicing.strings": "recalculate-from-transposed-melody-position"
+              },
+              "preference": "strong — apply whenever low register prevents satisfactory voicing",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Melodic continuity is lost when jumping octave — contradicts 'without losing melodic continuity' claim",
+              "anchor": "you will often find it both helpful and necessary to transpose the melody up an octave (this is called \"jumping octaves\") several times throughout the course of a solo. With experience and finesse, this can be done without losing melodic continuity.",
+              "source_page": 36
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 36,
+              "summary": "Melody placed too low on the staff prevents formation of a satisfactory chord beneath it — the core physical constraint of chord melody guitar arranging.",
+              "key_phrases": [
+                "melody too low",
+                "not enough strings",
+                "chord beneath"
+              ],
+              "verbatim_anchor": "if the melody note is placed too low on the staff, you will not have enough strings left to form a satisfactory chord beneath it.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-melody-register-constraint",
+                  "name": "Melody Register Voicing Constraint",
+                  "when": {
+                    "melody.string": ">=4",
+                    "harmonic.context": "chord-voicing-required-beneath-melody"
+                  },
+                  "then": {
+                    "voicing.density": "reduced-or-fragment"
+                  },
+                  "preference": "required",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A satisfactory full chord voicing is found beneath a melody note on string 5 or 6 — which would contradict the constraint.",
+                  "anchor": "if the melody note is placed too low on the staff, you will not have enough strings left to form a satisfactory chord beneath it.",
+                  "source_page": 36
+                }
+              ]
+            },
+            {
+              "page": 36,
+              "summary": "Jumping octaves — transposing the melody up an octave — is a frequently necessary technique that, applied with finesse, preserves melodic continuity.",
+              "key_phrases": [
+                "jumping octaves",
+                "transpose melody",
+                "melodic continuity"
+              ],
+              "verbatim_anchor": "you will often find it both helpful and necessary to transpose the melody up an octave (this is called \"jumping octaves\") several times throughout the course of a solo. With experience and finesse, this can be done without losing melodic continuity.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-octave-jump-when-melody-too-low",
+                  "name": "Jumping Octaves When Melody Too Low",
+                  "when": {
+                    "melody.string": ">=4",
+                    "harmonic.context": "voicing-density-insufficient-due-to-low-melody-register"
+                  },
+                  "then": {
+                    "octave.shift": "+1",
+                    "voicing.strings": "recalculate-from-transposed-melody-position"
+                  },
+                  "preference": "strong — apply whenever low register prevents satisfactory voicing",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "Melodic continuity is lost when jumping octave — contradicts 'without losing melodic continuity' claim",
+                  "anchor": "you will often find it both helpful and necessary to transpose the melody up an octave (this is called \"jumping octaves\") several times throughout the course of a solo. With experience and finesse, this can be done without losing melodic continuity.",
+                  "source_page": 36
+                }
+              ]
+            },
+            {
+              "page": 36,
+              "summary": "The 4th string is the absolute lower limit for a melody note that still permits some chord fragment beneath it — below the 4th string is categorically excluded.",
+              "key_phrases": [
+                "4th string",
+                "no lower",
+                "chord fragment"
+              ],
+              "verbatim_anchor": "It is possible however to play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-4th-string-floor",
+                  "name": "4th String Absolute Floor for Melody",
+                  "when": {
+                    "melody.string": ">4"
+                  },
+                  "then": {
+                    "octave.shift": "+1",
+                    "voicing.selection_order": "restart-with-transposed-melody"
+                  },
+                  "preference": "invariant",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": null,
+                  "anchor": "It is possible however to play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath.",
+                  "source_page": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Extensions as Coloristic, Not Functional",
+          "page_range": [
+            36,
+            36
+          ],
+          "summary": "Chord extensions — maj7, 6th, 9th — affect only the color and texture of a chord voicing; they do not alter its diatonic scale function or its role in the progression. The arranger is therefore free to substitute or enrich any chord with these tensions without consequence to harmonic function.",
+          "key_phrases": [
+            "maj7",
+            "6th",
+            "9th",
+            "color and texture",
+            "scale function unchanged",
+            "extensions are free"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-extensions-are-free",
+              "name": "Extensions Are Coloristic — Function Unchanged",
+              "when": {
+                "chord_quality": "any",
+                "harmonic.context": "enrichment-with-maj7-6-or-9-desired"
+              },
+              "then": {
+                "voicing.tensions": "add-maj7-6-or-9-freely",
+                "voicing.quality": "enriched-color-same-function"
+              },
+              "preference": "permissive — extensions never alter scale function or progression role",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Adding maj7/6/9 to a chord changes its diatonic role or resolution behavior in the progression",
+              "anchor": "the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord and do not change its scale function or its role in the progression",
+              "source_page": 36
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 36,
+              "summary": "Maj7, 6th, 9th and similar extensions are purely coloristic; they cannot alter a chord's diatonic scale function or its role in the harmonic progression.",
+              "key_phrases": [
+                "extensions",
+                "color",
+                "texture",
+                "scale function",
+                "role in progression"
+              ],
+              "verbatim_anchor": "the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord and do not change its scale function or its role in the progression",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-extensions-are-free",
+                  "name": "Extensions Are Coloristic — Function Unchanged",
+                  "when": {
+                    "chord_quality": "any",
+                    "harmonic.context": "enrichment-with-maj7-6-or-9-desired"
+                  },
+                  "then": {
+                    "voicing.tensions": "add-maj7-6-or-9-freely",
+                    "voicing.quality": "enriched-color-same-function"
+                  },
+                  "preference": "permissive — extensions never alter scale function or progression role",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "Adding maj7/6/9 to a chord changes its diatonic role or resolution behavior in the progression",
+                  "anchor": "the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord and do not change its scale function or its role in the progression",
+                  "source_page": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Harmonizing Chromatic Melody Notes",
+          "page_range": [
+            38,
+            40
+          ],
+          "summary": "Any chromatic melody note that lies within physical finger reach can be harmonized against any given chord form. The result may be dissonant, but it is always permissible. When melody and harmony each maintain their own independent motion — neither subordinating to the other — interesting extension colors emerge organically.",
+          "key_phrases": [
+            "chromatic melody note",
+            "harmonize with given chord",
+            "may be dissonant",
+            "melody and harmony independent",
+            "interesting extensions"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "roberts-chromatic-melody-harmonizable",
+              "name": "Any Chromatic Melody Note Is Harmonizable",
+              "when": {
+                "melody.scale_degree": "chromatic",
+                "harmonic.context": "melody-within-finger-range-of-chord-form"
+              },
+              "then": {
+                "voicing.shape": "any-reachable-form-of-given-chord",
+                "voicing.tensions": "accept-dissonance"
+              },
+              "preference": "permissive — no chromatic note within finger range is unharmonizable",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A chromatic melody note within finger range cannot be harmonized against any chord form — it must be avoided or the chord must change.",
+              "anchor": "Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant.",
+              "source_page": 38
+            },
+            {
+              "rule_id": "roberts-melody-harmony-independence",
+              "name": "Independent Melody and Harmony Voices Yield Extension Colors",
+              "when": {
+                "harmonic.context": "independent-voice-movement"
+              },
+              "then": {
+                "voicing.tensions": "accept-emergent-extensions",
+                "voicing.quality": "coloristically-enriched-by-independence"
+              },
+              "preference": "compositional principle — let melody and harmony move with their own force",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Independent melody/harmony motion produces no interesting extensions — all results are purely consonant triadic.",
+              "anchor": "In each case the melody and the harmony have their own force and are independent of each other. Note the interesting extensions that occur as a result of this independence.",
+              "source_page": 40
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 38,
+              "summary": "Any chromatic note within physical reach can always be harmonized with a given chord form, with the understanding that it may occasionally create dissonance.",
+              "key_phrases": [
+                "chromatic note",
+                "finger range",
+                "harmonized",
+                "dissonant"
+              ],
+              "verbatim_anchor": "Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-chromatic-melody-harmonizable",
+                  "name": "Any Chromatic Melody Note Is Harmonizable",
+                  "when": {
+                    "melody.scale_degree": "chromatic",
+                    "harmonic.context": "melody-within-finger-range-of-chord-form"
+                  },
+                  "then": {
+                    "voicing.shape": "any-reachable-form-of-given-chord",
+                    "voicing.tensions": "accept-dissonance"
+                  },
+                  "preference": "permissive — no chromatic note within finger range is unharmonizable",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "A chromatic melody note within finger range cannot be harmonized against any chord form — it must be avoided or the chord must change.",
+                  "anchor": "Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant.",
+                  "source_page": 38
+                }
+              ]
+            },
+            {
+              "page": 40,
+              "summary": "In chromatic descent passages, melody and harmony maintain their own independent force; this independence is the generative mechanism for interesting extension colors.",
+              "key_phrases": [
+                "melody and harmony independent",
+                "own force",
+                "interesting extensions"
+              ],
+              "verbatim_anchor": "In each case the melody and the harmony have their own force and are independent of each other. Note the interesting extensions that occur as a result of this independence.",
+              "engine_rules": [
+                {
+                  "rule_id": "roberts-melody-harmony-independence",
+                  "name": "Independent Melody and Harmony Voices Yield Extension Colors",
+                  "when": {
+                    "harmonic.context": "independent-voice-movement"
+                  },
+                  "then": {
+                    "voicing.tensions": "accept-emergent-extensions",
+                    "voicing.quality": "coloristically-enriched-by-independence"
+                  },
+                  "preference": "compositional principle — let melody and harmony move with their own force",
+                  "quality_binding": [
+                    "any"
+                  ],
+                  "falsifier": "Independent melody/harmony motion produces no interesting extensions — all results are purely consonant triadic.",
+                  "anchor": "In each case the melody and the harmony have their own force and are independent of each other. Note the interesting extensions that occur as a result of this independence.",
+                  "source_page": 40
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Working Method and Pedagogical Goal",
+          "page_range": [
+            42,
+            52
+          ],
+          "summary": "The recommended working method is simplicity-first: find chord voicings that sound good and permit the melody to be played, without over-engineering. Repeated practice builds instinct for voicing selection, octave jumps, and all other chord melody decisions — ultimately enabling extemporaneous chord melody improvisation in the player's own style.",
+          "key_phrases": [
+            "simplicity-first",
+            "voicings that sound good",
+            "permit the melody",
+            "instinct",
+            "extemporaneous improvising",
+            "chord melody style of your own"
+          ],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 42,
+              "summary": "Working method: keep arrangements as simple as possible; prioritize voicings that sound good and allow the melody to ring clearly. This is meta-pedagogical guidance, not a when/then engine rule.",
+              "key_phrases": [
+                "simple as possible",
+                "voicings that sound good",
+                "permit the melody"
+              ],
+              "verbatim_anchor": "develop chord melody solos for each of these examples, keeping them as simple as possible. Concentrate mainly on finding chord voicings that sound good to you and still permit the melody to be played.",
+              "engine_rules": []
+            },
+            {
+              "page": 52,
+              "summary": "Repeated practice of this method builds instinct for voicing and octave decisions, bringing the player within reach of extemporaneous chord melody improvisation in a personal style. Pedagogical framing, not an engine rule.",
+              "key_phrases": [
+                "proficient",
+                "instinct",
+                "extemporaneous improvising",
+                "chord melody style of your own"
+              ],
+              "verbatim_anchor": "The more of this you do, the more proficient you will become and you will then begin to acquire an instinct for finding the right chord voicings, jumping octaves, etc., thus bringing you within reach of extemporaneous improvising in a chord melody style of your own.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 5,
+        "title": "Chord Melody Solo",
+        "summary": "Chapter 5 is the closing solo of the method — a fully notated chord melody performance piece (Example 39, the master's solo) that demonstrates the cumulative application of every device introduced in Chapters 1–4 (close and open voicings, parallel and contrary motion, counter lines, block chords, sustained backgrounds, short punctuations, octave jumps, chromatic substitutions). No new teaching prose appears, so no engine rules are extracted; the chapter functions as a worked example, intended to be studied and absorbed as one would a transcription of a master performance. The chapter's s2 file explicitly marks: 'No load-bearing passages identified in this chapter.'",
+        "key_phrases": [
+          "chord melody solo",
+          "synthesis",
+          "worked example",
+          "master performance",
+          "no new prose"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Closing Solo — Synthesis Performance Piece",
+          "page_range": [
+            54,
+            56
+          ],
+          "summary": "A fully notated chord melody solo with no accompanying prose. The pedagogical move is inverted: rather than stating rules and illustrating them, Roberts lets the solo embody the integrated mature style toward which the whole method points. Since no quotable instructional text exists in this chapter, no engine rules can be articulated as when/then without inventing them. Skipped per the rule that rules which can't be articulated should not be invented.",
+          "key_phrases": [
+            "worked example",
+            "no load-bearing passages",
+            "synthesis",
+            "mature style"
+          ],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 54,
+              "summary": "Chapter 5 contains only a notated solo performance. The s2 chapter file explicitly states no load-bearing passages were identified, so no verbatim anchors exist to ground engine rules. Engine-rule extraction is therefore correctly empty for this chapter.",
+              "key_phrases": [
+                "solo",
+                "no load-bearing passages",
+                "worked example"
+              ],
+              "verbatim_anchor": "No load-bearing passages identified in this chapter.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
