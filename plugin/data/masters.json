@@ -68708,7 +68708,163 @@
       ],
       "instrument": "6-string electric",
       "biography": "American studio guitarist and educator, Wrecking Crew session veteran. Known for terse pragmatic teaching emphasizing chord-melody arrangements and bebop vocabulary. Author of Chord Melody and Jazz Guitar Technique in 20 Weeks.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "four-voice-horizontal-chord-melody",
+          "name": "Four-Voice Horizontal Chord Melody",
+          "summary": "Roberts treats chord melody not as vertical chord placement but as the simultaneous management of four independent melodic lines: 'one is really dealing with four separate melody lines' (Ch.2 p.6). Chords are the momentary convergence of lines in continuous motion, connected through parallel, contrary, or counter motion. The governing imperative is to 'keep your fingers in place until it's absolutely necessary to move them' (Ch.3 p.15), maximizing sustain and melodic continuity across voicing changes. Extensions (maj7, 6th, 9th) 'only affect the color and texture of the chord' (Ch.4 p.36) without altering scale function.",
+          "voicingStyleTags": [
+            "roberts",
+            "voice-leading",
+            "chord-melody",
+            "drop-2",
+            "drop-3"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "independent-voices",
+            "chord-melody",
+            "sustained",
+            "minimal-change"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 2
+          },
+          "references": [
+            {
+              "source": "Howard Roberts — Chord Melody",
+              "citation": "Ch.2 p.6 ('one is really dealing with four separate melody lines'); Ch.3 p.15 ('keep your fingers in place until it's absolutely necessary to move them'); Ch.4 p.36 ('addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "open-voicing-textural-contrast",
+          "name": "Open Voicing and Textural Contrast",
+          "summary": "Roberts converts close voicings to open voicings by 'moving one or more chordal tones up or down an octave' (Ch.2 p.6), spreading the sound while preserving voice-leading logic. Close block voicings are deployed deliberately 'as texture contrast to the big sound of open voicings' (Ch.3 p.12), not as a default. When sustaining a chord through a long melody sequence, chord tones may be dropped as fingering demands because 'the listener usually remember those notes that have been dropped' (Ch.2 p.9). The fourth string is the absolute lower limit for low-register melody playing with any chord fragment beneath it (Ch.4 p.36).",
+          "voicingStyleTags": [
+            "roberts",
+            "chord-melody",
+            "density-as-lever",
+            "voice-leading"
+          ],
+          "playStyleTags": [
+            "chord-melody",
+            "voice-leading",
+            "progressive-density",
+            "rest-tolerant"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 2
+          },
+          "references": [
+            {
+              "source": "Howard Roberts — Chord Melody",
+              "citation": "Ch.2 p.6 ('moving one or more chordal tones up or down an octave'); Ch.3 p.12 ('used as texture contrast to the big sound of open voicings'); Ch.2 p.9 ('the listener usually remember those notes that have been dropped'); Ch.4 p.36 (fourth-string register floor)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "chromatic-passing-and-substitution",
+          "name": "Chromatic Passing and Diminished Substitution",
+          "summary": "Roberts connects diatonic progression points with chromatic passing chords including altered forms like m7+5: 'connected by the passing chords G#m7+5, Am7+5' (Ch.3 p.11). Dominant 7b9 chords are freely replaced by diminished chords — 'Eo and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief' (Ch.3 p.13). Any chromatic melody note 'can always be harmonized with a given chord form, although it may occasionally be dissonant' (Ch.4 p.38). Short chord punctuations are 'played with authority and appropriately placed within the bar' to imply harmonic flow without constant restriking (Ch.2 p.10).",
+          "voicingStyleTags": [
+            "roberts",
+            "chord-melody",
+            "voice-leading",
+            "tritone-sub"
+          ],
+          "playStyleTags": [
+            "chromatic",
+            "chromatic-cadential",
+            "chord-melody",
+            "voice-leading",
+            "controllable-tension"
+          ],
+          "applies_to_modes": [
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Howard Roberts — Chord Melody",
+              "citation": "Ch.3 p.11 ('connected by the passing chords G#m7+5, Am7+5'); Ch.3 p.13 ('Eo and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief'); Ch.4 p.38 ('Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant'); Ch.2 p.10 ('outline the flow of harmony by short chord punctuations... played with authority and appropriately placed within the bar')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "key-center-five-pattern-navigation",
+          "name": "Key-Center Five-Pattern Navigation",
+          "summary": "Roberts organizes the entire fingerboard through key-center analysis and five movable finger-per-fret scale patterns: 'for each new one, move your hand to a convenient fingering pattern for that particular scale' (Ch.3 p.8). Moving between patterns requires exactly three moves — position skips, stretching to the adjacent pattern, or sliding on the half step between patterns (Ch.3 p.10). No more than 3–4 consecutive scale tones in the same direction are permitted: 'don't play more than 3 or 4 scale tones in the same direction' (Ch.4 p.13). The ear remains 'the final arbiter' — key-center brackets represent one analysis, and 'if they're right, they will sound right' (Ch.7 p.19).",
+          "voicingStyleTags": [
+            "roberts",
+            "chord-scale-system",
+            "moveable-shapes"
+          ],
+          "playStyleTags": [
+            "position-aware",
+            "position-cycling",
+            "scale-arpeggio-per-function",
+            "ear-pragmatism",
+            "linear-improvisation",
+            "chromatic-position-shift"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo",
+            "chord-melody"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Howard Roberts — Jazz Guitar Technique in 20 Weeks",
+              "citation": "Ch.3 p.8 ('for each new one, move your hand to a convenient fingering pattern for that particular scale'); Ch.3 p.10 ('There are essentially three moves involved in moving from one pattern to another'); Ch.4 p.13 ('don't play more than 3 or 4 scale tones in the same direction'); Ch.7 p.19 ('If they're right, they will sound right and if they're wrong, you will know it immediately')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "accuracy-imprinting-technique-discipline",
+          "name": "Accuracy, Imprinting, and Physical Discipline",
+          "summary": "Roberts's technical program rests on two interlocking laws: accuracy precedes speed — 'Care should be taken not to sacrifice accuracy and precision in order to meet the tempo goals' (Ch.8 p.19) — and the no-flam synchronization law, which requires 'the left and right hands must be in perfect synchronization. No Flams!' (Ch.2 p.5). Maintaining a given tempo for approximately 21 consecutive days 'will be permanently imprinted' into the nervous system as motor reflex (Ch.7 p.18). Right-hand 'flexibility — the ability to adapt the right hand to a variety of moves — is the key to longevity' (Ch.2 p.5); any fixed anchor system becomes a hard speed ceiling under tension.",
+          "voicingStyleTags": [
+            "roberts",
+            "rule-governed-pedagogy"
+          ],
+          "playStyleTags": [
+            "body-first",
+            "deliberate-pacing",
+            "no-anchor",
+            "alternate",
+            "earn-before-free",
+            "why-before-how"
+          ],
+          "applies_to_modes": [
+            "single-note-solo",
+            "chord-melody",
+            "improv-line"
+          ],
+          "tolerance_hints": {},
+          "references": [
+            {
+              "source": "Howard Roberts — Jazz Guitar Technique in 20 Weeks",
+              "citation": "Ch.8 p.19 ('Care should be taken not to sacrifice accuracy and precision in order to meet the tempo goals'); Ch.2 p.5 ('the left and right hands must be in perfect synchronization. No Flams!'; 'flexibility — the ability to adapt the right hand to a variety of moves — is the key to longevity'; 'avoid is any kind of anchor system that inhibits freedom of movement'); Ch.7 p.18 ('approximately 21 days, on a daily basis, the ability acquired during that period of time will be permanently imprinted')."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "chord-melody",
@@ -68734,7 +68890,226 @@
       ],
       "instrument": "6-string electric",
       "biography": "American jazz guitarist and Berklee educator. The Advancing Guitarist (1987) and the Almanac of Guitar Voice Leading (4 vols) are the canonical voice-leading texts in jazz guitar pedagogy.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "goodrick-m-lode-voice-leading-foundation",
+          "name": "M-Lode: All Voicing Is Based on Voice-Leading",
+          "summary": "The M-Lode (Mother Lode) system treats every chord family — triads, 7th chords, TBN I/II, 3- and 4-part quartal, spread clusters — as subject to the same voice-leading analysis. Every voice moves by 2nd, 3rd, or common tone as the system traverses diatonic positions; these motions are tracked in paired Intervallic Voice-Leading and Functional Voice-Leading grids. The foundational principle, stated explicitly: 'All of the M-Lode is based on voice-leading.'",
+          "voicingStyleTags": [
+            "goodrick",
+            "voice-leading",
+            "quartal",
+            "drop-2",
+            "drop-3",
+            "family-system"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "voice-leading-engine",
+            "function-first",
+            "independent-voices"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 2",
+              "citation": "Ch.16 p.22 ('All of the M-Lode is based on voice-leading.'); Ch.19 p.27 ('5 → 2nd / 2 → 2nd / 1 → 2nd' intervallic voice-leading grid for Drop 2); Ch.22 p.129 ('7 → 3rd / 3 → 2nd / 4 → c.t. / 1 → c.t.' Drop 2 & 4 Cycle 2 voice-leading entry)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "goodrick-cycle-indexed-traversal",
+          "name": "Six-Cycle × Three-Scale Grid: Cycle-Indexed Voice-Leading Traversal",
+          "summary": "Every voicing family is catalogued across six root-motion cycles (Cycles 2–7) within three parent scales (C Major, C Melodic Minor, C Harmonic Minor), forming an 18-environment grid. Cycle and scale are orthogonal axes that can be varied independently. Within each traversal step the Most Stepwise Resolution Pattern (M.S.R.P.) string identifies the voicing path producing the most stepwise melodic motion in the top voice; Cycles 2 and 7 each carry two different voice-leadings because the diatonic 5th interval risks voice-crossing.",
+          "voicingStyleTags": [
+            "goodrick",
+            "voice-leading",
+            "family-system",
+            "interval-indexed"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "voice-leading-engine",
+            "twelve-key-mastery",
+            "position-cycling"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 1",
+              "citation": "Ch.1 p.12 ('six cycles (2-7) within three parent scales: C Major, C Melodic Minor, and C Harmonic Minor'; 'Most Stepwise Resolution Pattern (M.S.R.P.) strings')."
+            },
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 2",
+              "citation": "Ch.16 p.21 ('Cycles 2 and 7 have two different voice-leadings'; 'interval of a diatonic 5th that occurs in the movement from one inversion to the next'); Ch.16 p.22 ('six cycles (cycles 2-7) and three parent scales (C Major, C Melodic Minor, and C Harmonic Minor)')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "goodrick-three-layer-analytical-system",
+          "name": "Three-Layer Analysis: Intervallic, Functional, M.S.R.P.",
+          "summary": "Every voicing entry in the M-Lode receives three mandatory analytical lenses applied uniformly across all chord families: (1) Intervallic Voice-Leading maps each voice's motion to a specific interval; (2) Functional Voice-Leading maps motion in terms of scale-degree function (root, 3rd, 5th, 7th), enabling substitution between voicings that share identical functional profiles; (3) M.S.R.P. encodes the most stepwise top-voice path through the complete cycle as a melodic efficiency benchmark. Volumes 1–2 used only three of the six possible generic voice-leading patterns; Vol. 3 introduces the remaining three.",
+          "voicingStyleTags": [
+            "goodrick",
+            "voice-leading",
+            "guide-tone-line",
+            "functional-family-substitution"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "function-first",
+            "function-first-analysis",
+            "voice-led-substitution"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 1",
+              "citation": "Ch.1 p.12 ('intervallic voice-leading relationships, functional voice-leading information, and Most Stepwise Resolution Pattern (M.S.R.P.) strings')."
+            },
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 2",
+              "citation": "Ch.19 p.27 ('Intervallic Voice-Leading (pitch relationships)' and 'Functional Voice-Leading (harmonic context)' grid headers)."
+            },
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 3",
+              "citation": "Ch.10 p.56 ('Only 3 different generic voice-leadings were used out of 6!')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "goodrick-m-lode-taxonomy-pairing",
+          "name": "M-Lode Taxonomy: Paired 3-Part / 4-Part Chord Families",
+          "summary": "The complete M-Lode is a closed, finite classification of all chord voicings organised into paired 3-part / 4-part counterparts: Triads ↔ 7th Chords; 7th-no-3rd ↔ TBN I; 7th-no-5th ↔ TBN II; 3-Part 4ths ↔ 4-Part 4ths; 3-Part Spread Clusters ↔ 4-Part Spread Clusters. Interval omission is restricted to the three purely 3-part families. Stacked-fourth chords must be labelled using sus4 notation. Spread clusters are named by literal pitch content (e.g., 'C D E') rather than chord symbols. Each 3-part chord type appears inside exactly four different 4-part families, creating a cross-family reharmonization lattice.",
+          "voicingStyleTags": [
+            "goodrick",
+            "quartal",
+            "family-system",
+            "substitution-derivation",
+            "homonym-naming"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "function-first",
+            "family-gated-substitution",
+            "reduction-rules"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 3",
+              "citation": "Ch.3 p.7 ('the REAL, COMPLEAT M-LODE depiction is: 3-Part Structures 4-Part Structures'); Ch.3 p.6 ('Just name it like it is! Call it C D E!' — spread-cluster literal-pitch naming rule); Ch.4 p.8 ('the omission of interval types only occurs within particular 3-part chord families (triad; 3-part 4th; spread cluster)')."
+            },
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 4",
+              "citation": "Ch.4 p.9 ('Each 3-part chord appears four times' — four-family symmetry reharmonization lattice)."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "goodrick-voice-combination-exhaustion",
+          "name": "Exhaustive Voice-Combination Practice",
+          "summary": "Every 4-part chord must be practiced through all 6 two-voice (counterpoint pair) subsets and all 4 three-voice subsets. A 4-part voicing may also be split into two 2-note groupings via 'Joe's 2 Plus 2 Thing', cycled as call-and-response pairs. Any 4-part voicing has 24 distinct arpeggio orderings. Five application modes cycle any voicing: melodies, arpeggios, counterpoint, 3-part chords, 4-part chords. When arpeggiated, alternate direction: ascend the first chord, descend the second.",
+          "voicingStyleTags": [
+            "goodrick",
+            "voice-leading",
+            "family-system",
+            "arpeggio-comping"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "independent-voices",
+            "arpeggio-comp",
+            "sequential",
+            "deliberate-pacing",
+            "twelve-key-mastery"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar",
+            "improv-line"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 2
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 2",
+              "citation": "Ch.7 p.12 ('Play all 6 possible combinations of 2 voices'); Ch.7 p.13 ('Play all 4 possible combinations of 3 voices'); Ch.6 p.11 ('1. melodies 2. arpeggios 3. counterpoint (2 simultaneous voices) 4. 3-part chords 5. 4-part chords'; 'Arpeggiate up the first chord, then down the second chord'); Ch.15 p.20 ('Any [and ALL] 4-part voicings can be arpeggiated in 24 different sequences')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "goodrick-drop-voicing-modification-system",
+          "name": "Drop Voicing and Octave-Insertion Modification System",
+          "summary": "Close-position voicings are opened via a hierarchy of drop procedures — Drop 2, Drop 3, Drop 4, Drop 2&3, Drop 2&4, Double Drop 2 Drop 3 — applied across root position and all inversions. An octave may also be inserted between any two voices within a 3- or 4-part chord to produce wider spreads. When any voice moves by a 3rd within a traversal step, a passing tone may fill that interval. In quartal contexts 3rds and 6ths are excluded as primary intervals; diminished 4ths (e.g., B–Eb) sound triadic and must be avoided. 4-way close serves as the density floor; 4-part chords as the density ceiling, with reduction proceeding downward via single-voice omission.",
+          "voicingStyleTags": [
+            "goodrick",
+            "voice-leading",
+            "drop-2",
+            "drop-3",
+            "quartal",
+            "density-as-lever",
+            "density-complement"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "drop-2",
+            "drop-3",
+            "progressive-density",
+            "reduction-rules"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Mick Goodrick — Almanac of Voice-Leading Vol. 2",
+              "citation": "Ch.8 p.14 ('inserting an octave between any 2 voices within a 3-part chord or a 4-part chord'); Ch.10 p.15 ('Drop 4 is an option'; 'do the \"octave insertion thing\" between the middle two voices'); Ch.13 p.17 ('Anytime one of the voices moves a distance of a 3rd, you can fill in that interval with a melodic passing tone'); Ch.5 p.9 ('tertial harmony and quartal harmony are pretty much exact opposites'; 'they don't work very well in a 4th voicings context'); Ch.16 p.21 ('find as many playable voicings for 4-way close as we can')."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "almanac-vol-1",
@@ -68773,7 +69148,114 @@
       ],
       "instrument": "piano",
       "biography": "American bebop pianist and educator. The sixth-diminished system documented in the Jazz Workshop is the seminal bebop harmonic method, widely adapted by guitarists for chord-melody and substitution work. Note: piano-pedagogy source, translatable directly to guitar voicings.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "barry-harris-6th-diminished-scale-chording",
+          "name": "6th-Chord Diminished Scale for Chording",
+          "summary": "All chord voicings in major and dominant harmony are treated as positions within the major 6 diminished scale — a fused eight-note scale combining a major 6th chord with three interlocking diminished chords. Every minor 7th chord is reclassified as an inversion of the major 6th chord above its root, and every m7b5 is reclassified as an inversion of a minor 6th chord, collapsing both into their respective 6 diminished scale families. Voice motion between voicings obeys a single mechanical rule: move each note to the next note of the scale.",
+          "voicingStyleTags": [
+            "barry-harris",
+            "family-system",
+            "voice-leading",
+            "rule-governed-pedagogy",
+            "functional-family-substitution",
+            "synonym-substitution"
+          ],
+          "playStyleTags": [
+            "voice-leading",
+            "voice-leading-engine",
+            "named-rule-systems",
+            "function-first",
+            "family-gated-substitution"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "chord-melody",
+            "solo-guitar"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 3
+          },
+          "references": [
+            {
+              "source": "Barry Harris — Jazz Workshop",
+              "citation": "Ch.3 'Scale for Chording Concept' ('a scale for chording'; 'Remember to move each note to the next note of the scale.'); Ch.3 'm7 and m7b5 Re-thinking' ('Every minor 7 chord is an inversion of a major 6th chord'; 'every minor7 flat5 chord is an inversion of a minor 6th chord.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "barry-harris-related-dominant-substitution",
+          "name": "Related Dominant 7th Substitution via Shared Diminished Triad",
+          "summary": "Four dominant 7th chords that share the same diminished triad — identified by building that diminished chord a major 3rd above the dominant note — are interchangeable members of a single harmonic family. Any of the four may substitute for one another in a V7–I resolution, enabling harmonic color shifts while the bass holds its root. The symmetric structure of the three interlocking diminished chords within the 6 diminished scale provides the stepping-stones for equal-interval movement between these related dominants.",
+          "voicingStyleTags": [
+            "barry-harris",
+            "tritone-sub",
+            "functional-family-substitution",
+            "dom7-vehicle",
+            "substitution-derivation"
+          ],
+          "playStyleTags": [
+            "family-gated-substitution",
+            "tritone-sub",
+            "chromatic-cadential",
+            "function-first",
+            "named-rule-systems"
+          ],
+          "applies_to_modes": [
+            "comping",
+            "improv-line",
+            "chord-melody"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 2
+          },
+          "references": [
+            {
+              "source": "Barry Harris — Jazz Workshop",
+              "citation": "Ch.4 'Related dominant 7th substitutions' ('related dominant 7th chords may be used to substitute.'); Ch.3 'C6 Diminished Scale Construction' ('comprised of all 3 diminished chords.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "barry-harris-half-step-bebop-scale-practice",
+          "name": "Half-Step Insertion Practice Model for Bebop Improvisation",
+          "summary": "Bebop improvisation vocabulary is generated by inserting chromatic half-steps at scale-degree-specific positions within the descending forms of the dominant 7th, major, and ascending melodic minor scales. Each scale family has its own exact rule set for where half-steps are placed. The related diminished chord — built a major 3rd above the dominant note — supplies additional chromatic approach-note resources. The ascending melodic minor uses the same placement rules as the major scale with a single exception: because b3 is already diatonic, any substitute note may replace the chromatic approach at that position. Phrases are organized around a two-bar 'up and down' unit and extended via pivoting technique.",
+          "voicingStyleTags": [
+            "barry-harris",
+            "rule-governed-pedagogy",
+            "named-techniques",
+            "phrase-based"
+          ],
+          "playStyleTags": [
+            "named-rule-systems",
+            "chromatic",
+            "chromatic-cadential",
+            "linear-improvisation",
+            "bebop-articulation",
+            "phrase-as-unit",
+            "scale-derivation"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 1
+          },
+          "references": [
+            {
+              "source": "Barry Harris — Jazz Workshop",
+              "citation": "Ch.1 'Harris Half-Step Practice Model definition' ('each have their own set of rules for adding half-steps.'); Ch.1 'finding related diminished chord' ('The rule of thumb for finding a related diminished chord is to build it a major 3rd above the dominant note.'); Ch.1 'minor scale half-step rules' ('The added half-steps for this scale fall in the same places as do the half-steps for the major scale'; 'Because this note is already present in the melodic minor scale, any other note may be used in its place.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "jazz-workshop",
@@ -68793,7 +69275,143 @@
       ],
       "instrument": "concert-pitch",
       "biography": "American jazz educator and author. Connecting Chords with Linear Harmony (1996) is a canonical text on linear voice-leading and chord-progression generation. Concert-pitch pedagogy translatable to guitar.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "ligon-three-outlines",
+          "name": "Three Melodic Outlines over ii–V–I",
+          "summary": "Ligon's system defines three distinct motion-types for structuring bebop lines over ii–V–I: (1) stepwise descent beginning on the third of the ii chord through V7 to the third of I; (2) ascending arpeggiation of the ii chord (1–3–5–7) whose seventh resolves to the third of V7; (3) descending arpeggiation (5–3–1) with the seventh below as a pointer tone to the third of V7. The three outlines are not interchangeable shapes but distinct structural skeletons applicable to any root-motion-by-fifths progression regardless of chord quality.",
+          "voicingStyleTags": [
+            "ligon",
+            "ii-v-i-foundation",
+            "guide-tone-line",
+            "named-device-vocabulary"
+          ],
+          "playStyleTags": [
+            "linear-improvisation",
+            "chord-tone-targeting",
+            "7th-to-3rd-resolution",
+            "monophonic-delivery",
+            "single-harmonic-vehicle"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 1
+          },
+          "references": [
+            {
+              "source": "Bert Ligon — Connecting Chords with Linear Harmony",
+              "citation": "Ch.2 p.5 ('the 7th of chords in these progressions resolve downward to the third of the following chord. The seventh is the pointer.'); Ch.4 p.29 ('Anytime the root movement is down in fifths any of these outlines will work, regardless of the quality of the chord.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "ligon-guide-tone-voice-leading",
+          "name": "Guide-Tone Resolution Chain as Connective Tissue",
+          "summary": "The third and seventh of each chord are the structural anchors of every Ligon outline. The seventh is the restless pointer that resolves downward to the third of the following chord across barlines; the third is the more consonant tone that appears earlier in the line. The root is omitted from melodic lines because the bass covers it, leaving the guide-tone pair to carry all harmonic specificity. Target tones (thirds and sevenths) are placed on metrically significant beats so chromatic non-chord tones are heard as embellishment rather than harmonic noise. In Outline No. 2 the seventh is withheld until the V7 chord arrives — the 'punch line' not given away ahead of time.",
+          "voicingStyleTags": [
+            "ligon",
+            "guide-tones",
+            "guide-tone-engine",
+            "voice-leading"
+          ],
+          "playStyleTags": [
+            "7th-to-3rd-resolution",
+            "stepwise-resolution",
+            "voice-leading",
+            "chord-tone-targeting",
+            "structurally-timed",
+            "spine-of-line"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 1
+          },
+          "references": [
+            {
+              "source": "Bert Ligon — Connecting Chords with Linear Harmony",
+              "citation": "Ch.2 p.5 ('the 7th of chords in these progressions resolve downward to the third of the following chord. The seventh is the pointer.'); Ch.2 p.6 ('Thirds are more consonant and usually occur earlier in a melody line before the more dissonant sevenths.'); Ch.4 p.43 ('Target notes occur in rhythmically significant spots, non-harmonic chromatic notes resolve when and where we expect them.'); Ch.5 p.54 ('This tone is usually saved for the V7 chord. It is the punch line, the denouement of the story, that is not given away by using it ahead of time as a passing tone.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "ligon-chromatic-elaboration",
+          "name": "Chromatic Elaboration of Outline Skeletons",
+          "summary": "Once a melodic outline is established, Ligon provides a governed set of chromatic modification rules that decorate without obscuring harmonic function. C.E.S.H. superimposes a descending chromatic line over static harmony (e.g., D–C#–C–B over Dm7–G7 in C). Upper neighbor tones are diatonic; lower neighbor tones are chromatic (the Mozart-to-Parker convention). Flatted alterations continue downward; sharped alterations continue upward. Target tones may be encircled by approaching from both diatonic UNT and chromatic LNT in succession. Flat-9, sharp-9, and flat-13 are borrowed from the parallel minor over dominant chords. Octave displacement replaces a stepwise descending second with an ascending seventh to the compound equivalent.",
+          "voicingStyleTags": [
+            "ligon",
+            "guide-tone-line",
+            "named-device-vocabulary",
+            "full-chromatic"
+          ],
+          "playStyleTags": [
+            "chromatic",
+            "chromatic-cadential",
+            "chromatic-license",
+            "linear-improvisation",
+            "altered-dominant",
+            "named-rule-systems"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 1
+          },
+          "references": [
+            {
+              "source": "Bert Ligon — Connecting Chords with Linear Harmony",
+              "citation": "Ch.3 p.15 (C.E.S.H. definition: 'The most common example in a ii - V progression is the descending movement from the root of the ii chord to the third of the V7 chord, In the key of C (D minor - G7), the movement of D-C#-C-B.'); Ch.3 p.11 ('The common practice (from Mozart to Charlie Parker) is to use the diatonic (from the key) upper neighbor tone (UNT) and the chromatic lower neighbor tone (LNT).'; 'Chromatically altered tones tend to continue in the direction in which they have been altered.'); Ch.3 p.16 ('Over G7, the dominant of C major, jazz musicians often use A-flat (flat 9), B-flat (sharp 9) and E-flat (flat 13) from the parallel key of C minor.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        },
+        {
+          "id": "ligon-outline-combination-fragmentation",
+          "name": "Outline Combination, Fragmentation, and Modal Extension",
+          "summary": "Outlines may be combined sequentially — the most common pairing joins Outline No. 2 with Outline No. 1, as in the Parker model. Any outline may be reduced to a fragment provided the target tones (third and seventh) are still placed and resolved; harmonic clarity survives omission of non-target chord tones. Bebop outlines may also be superimposed over modal harmony via leading-tone approach, extending the vocabulary beyond root-motion-by-fifths contexts. A single line can imply compound melody through a third-to-flat-nine leap on the dominant, splitting into two implied voices.",
+          "voicingStyleTags": [
+            "ligon",
+            "guide-tone-line",
+            "named-device-vocabulary",
+            "ii-v-i-foundation"
+          ],
+          "playStyleTags": [
+            "phrase-recombination",
+            "linear-improvisation",
+            "modal-improv",
+            "chord-tone-targeting",
+            "self-extension-via-variation",
+            "finite-vocabulary"
+          ],
+          "applies_to_modes": [
+            "improv-line",
+            "single-note-solo"
+          ],
+          "tolerance_hints": {
+            "requireRootInBass": false,
+            "minSoundingNotes": 1
+          },
+          "references": [
+            {
+              "source": "Bert Ligon — Connecting Chords with Linear Harmony",
+              "citation": "Ch.5 p.59 ('Parker begins with outline no.2 and ends with outline no.1.'); Ch.7 p.76 ('Fragments of outlines have been previously shown where harmonic clarity was still present with some of the elements missing.'); Ch.8 p.78 ('Some jazz improvisers bring some of the be-bop vocabulary with them when playing on modal pieces.')."
+            }
+          ],
+          "example_voicing_signatures": []
+        }
+      ],
       "works": [
         {
           "id": "connecting-chords-with-linear-harmony",
