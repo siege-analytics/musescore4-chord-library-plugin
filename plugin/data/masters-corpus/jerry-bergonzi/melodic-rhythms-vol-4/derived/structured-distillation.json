@@ -1,0 +1,1731 @@
+{
+  "book": {
+    "summary": "Jerry Bergonzi's Melodic Rhythms Vol. 4 is a cumulative jazz improvisation pedagogy organized around four interlocking systems: consecutive-note displacement, polyrhythmic construction, time-zone gear-switching, and rhythmic grammar. The method builds rhythmic awareness bottom-up through systematic displacement of fixed note-groupings across all eight metrical entry points, then extends into metric superimposition, triplet vocabulary, gear-switching across five subdivisions, and finally compositional phrasing constraints. Sophistication is explicitly decoupled from effectiveness; the goal is internalized perceptual flexibility, not complexity.",
+    "key_phrases": [
+      "note-grouping displacement",
+      "eight entry points",
+      "metric superimposition",
+      "time zones / gears",
+      "polyrhythmic independence",
+      "rhythmic grammar",
+      "window in the mind",
+      "eighth-note trap",
+      "hemiola",
+      "hemiovals",
+      "pocket",
+      "expansion and contraction",
+      "gear-switching",
+      "harmony anticipation",
+      "beat-one avoidance",
+      "silence as choice"
+    ]
+  },
+  "chapters": [
+    {
+      "chapter": {
+        "n": 1,
+        "title": "Notes Per Bar",
+        "summary": "Establishes foundational philosophy: note density is not correlated with musical value. Introduces the core technique of treating note groupings as independent of bar-line structure, connecting internal mental grouping to physical articulation, and naming polyrhythm as the ultimate destination of grouping exercises.",
+        "key_phrases": [
+          "rhythmic variety vs. density",
+          "playing over bar lines",
+          "disconnected note groupings",
+          "polyrhythm via note groupings",
+          "five-note grouping duration flexibility",
+          "22 one-bar rhythms",
+          "awareness not complexity"
+        ]
+      },
+      "sections": [
+        {
+          "title": "rhythmic variety vs. density",
+          "summary": "The foundational principle that sophistication and effectiveness are distinct; the goal is rhythmic awareness rather than maximum note density.",
+          "key_phrases": [
+            "sophistication",
+            "effectiveness",
+            "awareness",
+            "note density"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-density-not-quality",
+              "name": "Note Density Decoupled from Musical Value",
+              "when": {
+                "phrase.position": "any",
+                "rhythm.subdivision": "any"
+              },
+              "then": {
+                "phrase.cell_id": "density_awareness_check"
+              },
+              "preference": "Prefer rhythmic awareness and variety over maximizing note count per bar",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7",
+                "sus4"
+              ],
+              "polarity": "proscriptive",
+              "falsifier": "A passage that equates denser note-filling with superior improvisation",
+              "anchor": "More notes per bar is not better than a few, just different.",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": [
+            {
+              "summary": "Using different rhythms each bar is sophisticated but not necessarily more effective; the 22-rhythm exercise builds awareness of which rhythms are being used and where the player is in the bar.",
+              "key_phrases": [
+                "different rhythms",
+                "awareness",
+                "where you are in the bar"
+              ],
+              "verbatim_anchor": "More notes per bar is not better than a few, just different.",
+              "engine_rules": [
+                {
+                  "rule_id": "bergonzi-rhythmic-awareness-primary",
+                  "name": "Rhythmic Awareness as Primary Goal",
+                  "when": {
+                    "phrase.position": "any",
+                    "cell.context": "practice"
+                  },
+                  "then": {
+                    "phrase.cell_id": "rhythm_position_tracking"
+                  },
+                  "preference": "Track which rhythms are in use and bar-position at all times",
+                  "quality_binding": [
+                    "dom7",
+                    "maj7",
+                    "min7"
+                  ],
+                  "polarity": "prescriptive",
+                  "falsifier": "Improvisation that ignores bar position",
+                  "anchor": "your awareness of where you are in the bar",
+                  "source_chapter": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "playing over bar lines",
+          "summary": "Defines the core technique: pick a fixed number of notes and play that grouping independent of bar lines — within, over, or through the bar.",
+          "key_phrases": [
+            "bar-line independence",
+            "note groupings",
+            "three-note groupings",
+            "polyrhythmic thinking"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-bar-line-independence",
+              "name": "Note Grouping Bar-Line Independence",
+              "when": {
+                "phrase.position": "any",
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "line.metric_placement": "independent_of_bar_line",
+                "displacement.step": "within_over_or_through"
+              },
+              "preference": "Play fixed-count groupings without anchoring start or end to bar lines",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7",
+                "sus4"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "A grouping that always begins and ends on beat one",
+              "anchor": "play them independent of bar lines",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": [
+            {
+              "summary": "Pick a specific number of notes and play that grouping as many or few times as desired — within a bar, over the bar, or through the bar. Example uses three-note groupings.",
+              "key_phrases": [
+                "specific number of notes",
+                "over the bar",
+                "through the bar"
+              ],
+              "verbatim_anchor": "play them independent of bar lines. In other words, pick a specific number of notes and then play that grouping as many or",
+              "engine_rules": []
+            }
+          ]
+        },
+        {
+          "title": "disconnected note groupings",
+          "summary": "Internal mental grouping affects articulation even when the groupings are overlapped and invisible to the listener.",
+          "key_phrases": [
+            "internal grouping",
+            "articulation",
+            "overlapped groupings",
+            "thought process"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-mental-grouping-articulation",
+              "name": "Mental Grouping Drives Articulation",
+              "when": {
+                "cell.context": "internal_conception",
+                "rhythm.subdivision": "any"
+              },
+              "then": {
+                "phrase.cell_id": "articulation_shaped_by_grouping"
+              },
+              "preference": "Conceive notes in explicit groupings even when groupings overlap or are invisible to listeners",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Playing without internal grouping conception that produces undifferentiated articulation",
+              "anchor": "How I'm thinking about these groupings of notes will effect the articulation of the lines.",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": [
+            {
+              "summary": "Note groupings can be disconnected and overlapped; the listener cannot detect the internal grouping, but practicing this way leads to new rhythmic ideas, and the thought process directly affects articulation.",
+              "key_phrases": [
+                "overlapped",
+                "listener unaware",
+                "new rhythmic ideas",
+                "articulation"
+              ],
+              "verbatim_anchor": "How I'm thinking about these groupings of notes will effect the articulation of the lines.",
+              "engine_rules": []
+            }
+          ]
+        },
+        {
+          "title": "polyrhythm via note groupings",
+          "summary": "Grouping exercises are the entry point into hearing polyrhythms; five-note groupings are the named gateway.",
+          "key_phrases": [
+            "polyrhythm",
+            "five-note grouping",
+            "imagination",
+            "esoteric"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-five-note-polyrhythm-gateway",
+              "name": "Five-Note Grouping as Polyrhythm Entry Point",
+              "when": {
+                "phrase.length": 5,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "5:variable",
+                "phrase.cell_id": "polyrhythm_awareness_onset"
+              },
+              "preference": "Use five-note eighth-note groupings to begin hearing polyrhythmic cross-rhythms",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Five-note groupings used only without polyrhythmic awareness",
+              "anchor": "begin hearing polyrhythms. For example, take a five-note grouping",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "five-note grouping duration flexibility",
+          "summary": "A single five-note grouping can be stretched or compressed across any number of beats.",
+          "key_phrases": [
+            "duration flexibility",
+            "one beat",
+            "two beats",
+            "three beats",
+            "four beats",
+            "expansion contraction"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-five-note-duration-flex",
+              "name": "Five-Note Group Duration Flexibility",
+              "when": {
+                "phrase.length": 5,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "displacement.step": "any_beat_span",
+                "time_zone.gear": "variable"
+              },
+              "preference": "Play five consecutive notes occupying 1, 1.5, 2, 3, or 4 beats",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7",
+                "sus4"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Five-note group always played at one fixed duration",
+              "anchor": "The five notes can be played as 1 beat or 1 1/2 beats. 2 beats, 3 beats, or + beats, etc.",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "22 one-bar rhythms exercise",
+          "summary": "22 one-bar rhythms built from quarter and eighth notes; sixteenth notes and triplets deliberately omitted; to be felt physically and played through Tune 2.",
+          "key_phrases": [
+            "22 rhythms",
+            "quarter notes",
+            "eighth notes",
+            "sixteenth notes omitted",
+            "triplets omitted",
+            "embodied practice",
+            "Tune 2"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-22-rhythms-no-sixteenth",
+              "name": "22-Rhythm Palette Excludes Sixteenth Notes and Triplets",
+              "when": {
+                "cell.context": "22_rhythm_exercise",
+                "rhythm.subdivision": [
+                  "sixteenth",
+                  "triplet"
+                ]
+              },
+              "then": {
+                "phrase.cell_id": "exclusion_enforced"
+              },
+              "preference": "Use only quarter notes and eighth notes in the 22 one-bar rhythms; defer sixteenth notes and triplets",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "proscriptive",
+              "falsifier": "Sixteenth note or triplet used within the 22-rhythm chapter exercise set",
+              "anchor": "Sixteenth notes and triplets have been purposely omitted at this point.",
+              "source_chapter": 1
+            },
+            {
+              "rule_id": "bergonzi-22-rhythms-embodied",
+              "name": "22 Rhythms Practiced as Embodied Physical Feel",
+              "when": {
+                "cell.context": "22_rhythm_exercise"
+              },
+              "then": {
+                "phrase.cell_id": "body_internalization"
+              },
+              "preference": "Feel each rhythm inside the body as a rhythm instrument would",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Rhythm practiced purely intellectually without physical internalization",
+              "anchor": "feel the rhythm inside your body",
+              "source_chapter": 1
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 2,
+        "title": "22 Rhythms",
+        "summary": "Extends the 22 one-bar rhythms via rhythmic displacement — shifting each rhythm one or two beats early or late — and demonstrates that half-beat offsets generate perceptually distinct rhythms. Develops hearing across bar lines.",
+        "key_phrases": [
+          "rhythm displacement",
+          "one beat early",
+          "one beat late",
+          "half-beat displacement",
+          "phrasing over the bar",
+          "hearing across bar lines"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Rhythm displacement concept",
+          "summary": "After playing each one-bar rhythm through Tune 2, alter placement by shifting early or late to hear rhythms independent of bar lines.",
+          "key_phrases": [
+            "beat early",
+            "beat late",
+            "phrasing over the bar",
+            "displacement"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-rhythm-displacement-early-late",
+              "name": "Rhythmic Displacement by Whole-Beat Offsets",
+              "when": {
+                "cell.context": "22_rhythm_displacement",
+                "meter.position": "any"
+              },
+              "then": {
+                "rhythm.shift_amount": [
+                  "minus_1_beat",
+                  "minus_2_beats",
+                  "plus_1_beat"
+                ],
+                "line.metric_placement": "displaced_from_original"
+              },
+              "preference": "Systematically play each of the 22 rhythms one beat early, two beats early, and one beat late",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Rhythm always played at its notated position without displacement",
+              "anchor": "you can play each rhythm one beat early, or two beats early, or one beat late",
+              "source_chapter": 2
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Half-beat displacement effect",
+          "summary": "Displacing a rhythm by 1/2 beat, 1 1/2 beats, or 2 1/2 beats creates entirely different-sounding rhythms.",
+          "key_phrases": [
+            "half-beat",
+            "off-beat displacement",
+            "perceptually distinct",
+            "different sounding"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-half-beat-displacement-distinct",
+              "name": "Half-Beat Displacement Produces Perceptually Distinct Rhythms",
+              "when": {
+                "displacement.cycle": "any",
+                "rhythm.shift_amount": [
+                  "0.5_beat",
+                  "1.5_beats",
+                  "2.5_beats"
+                ]
+              },
+              "then": {
+                "line.metric_placement": "perceptually_distinct_rhythm"
+              },
+              "preference": "Use half-beat offsets (1/2, 1 1/2, 2 1/2 beats) to generate new rhythmic identities from existing patterns",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Half-beat displacement treated as a mere timing shift without perceptual effect",
+              "anchor": "displacing a rhythm 1/2 of a beat, or 1 1/2 beats, or 2 1/2 beats, you create entirely different sounding rhythms at times.",
+              "source_chapter": 2
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 3,
+        "title": "Eighth-note rhythms",
+        "summary": "Introduces systematic displacement of four consecutive eighth notes across all eight entry points in the bar, the harmony anticipation rule for late-entry positions, the combining of one-bar rhythms into multi-bar phrases, and 3/4-over-4/4 metric superimposition.",
+        "key_phrases": [
+          "four consecutive eighth notes",
+          "eight entry points",
+          "harmony anticipation",
+          "3/4 over 4/4",
+          "combining one-bar rhythms",
+          "random beat placement"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Eighth-note displacement method",
+          "summary": "Core displacement method: play 4 consecutive eighth notes starting from each of eight different positions in the bar.",
+          "key_phrases": [
+            "four consecutive eighth notes",
+            "eight positions",
+            "displacement"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-4-eighth-displacement-8-positions",
+              "name": "Four Consecutive Eighth Notes Displaced Across Eight Entry Points",
+              "when": {
+                "phrase.length": 4,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "displacement.step": "all_eight_entry_points",
+                "line.metric_placement": "systematic_position_traversal"
+              },
+              "preference": "Begin with beat 1 entry, then systematically start on each of the eight eighth-note positions in the bar",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Skipping any of the eight entry points before randomization",
+              "anchor": "displace the grouping by starting on eight different place#in the bar.",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Harmony anticipation rule",
+          "summary": "For displacement positions 6, 7, and 8, anticipate the next chord via approaching notes or direct statement.",
+          "key_phrases": [
+            "harmony anticipation",
+            "and of three",
+            "beat four",
+            "and of four",
+            "next chord"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-harmony-anticipation-late-entry",
+              "name": "Harmony Anticipation at Eighth-Note Entry Points 6-8",
+              "when": {
+                "meter.position": [
+                  "and_of_3",
+                  "beat_4",
+                  "and_of_4"
+                ],
+                "phrase.length": 4,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "line.metric_placement": "next_chord_anticipated",
+                "phrase.cell_id": "approach_or_direct_next_chord"
+              },
+              "preference": "At positions 6, 7, 8, approach the next chord or state it directly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Late entry positions that resolve only to the current chord",
+              "anchor": "For #6, #7, and #8, the harmony can be anticipated.",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Chord anticipation on beat 5 grouping",
+          "summary": "A rhythmic displacement that starts such that the last eighth note sounds the next chord.",
+          "key_phrases": [
+            "last eighth note",
+            "next chord",
+            "automatic anticipation"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-last-eighth-next-chord",
+              "name": "Final Eighth Note Sounds Next Chord at Displacement 5",
+              "when": {
+                "displacement.cycle": "position_5",
+                "phrase.length": 4,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "phrase.cell_id": "final_note_is_next_chord_tone"
+              },
+              "preference": "At displacement position 5, let the final eighth note sound a tone of the next chord",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Position 5 ending on current-chord tone rather than next-chord tone",
+              "anchor": "On this rhythm the last eighth note would sound the next chord.",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Eighth notes vs. quarter notes notation",
+          "summary": "Eighth-note downbeats in these exercises could have been notated as quarter notes; they are kept as eighth notes to preserve the logical connection to the 22 one-bar rhythms.",
+          "key_phrases": [
+            "notational choice",
+            "eighth note downbeats",
+            "quarter notes",
+            "method clarity"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "Combining one-bar rhythms",
+          "summary": "After mastering individual one-bar displacement patterns, combine two, three, or four of them into multi-bar rhythmic phrases.",
+          "key_phrases": [
+            "two-bar rhythm",
+            "three-bar rhythm",
+            "four-bar rhythm",
+            "combining"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-combine-multi-bar-rhythms",
+              "name": "Combine One-Bar Rhythms into Multi-Bar Phrases",
+              "when": {
+                "cell.context": "post_single_bar_mastery",
+                "displacement.cycle": "completed"
+              },
+              "then": {
+                "phrase.cell_id": "multi_bar_phrase_construction",
+                "phrase.length": [
+                  "2_bars",
+                  "3_bars",
+                  "4_bars"
+                ]
+              },
+              "preference": "Combine two, three, and four one-bar rhythms and play through a tune",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Practicing only isolated one-bar patterns after mastering individual displacement",
+              "anchor": "Combine two of the one-bar rhythms. Create a two-bar rhythm and play it through a tune.",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "3/4 over 4/4 superimposition",
+          "summary": "A four-note grouping creates 3/4 superimposition over 4/4 that takes three bars of 4/4 to resolve.",
+          "key_phrases": [
+            "3/4 over 4/4",
+            "metric superimposition",
+            "three bars of 4/4"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-3-over-4-superimposition",
+              "name": "3/4-over-4/4 Metric Superimposition",
+              "when": {
+                "phrase.length": 4,
+                "rhythm.subdivision": "eighth",
+                "chord_quality": "dom7"
+              },
+              "then": {
+                "polyrhythm.ratio": "3:4",
+                "displacement.cycle": "3_bars_of_4/4_to_resolve"
+              },
+              "preference": "Play a four-note grouping continuously to create felt 3/4 over 4/4; note the three-bar resolution cycle",
+              "quality_binding": [
+                "dom7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Three-note grouping assumed to be 3/4 superimposition without tracking resolution cycle",
+              "anchor": "This is a 3/4 pattern which takes three bars of 4/4 to work out.",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Random beat placement exercise",
+          "summary": "After systematic drilling of all positions, practice placing four consecutive eighth notes on random beats.",
+          "key_phrases": [
+            "random",
+            "different beats",
+            "internalized flexibility"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-random-entry-after-drill",
+              "name": "Randomize Entry Points After Ordered Drilling",
+              "when": {
+                "cell.context": "post_ordered_drill",
+                "phrase.length": 4,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "displacement.step": "random",
+                "line.metric_placement": "free_improvisation"
+              },
+              "preference": "After completing all eight ordered positions, mix starting beats randomly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Randomization used before completing ordered position drilling",
+              "anchor": "Try playing four consecutive eighth notes on different beats randomly",
+              "source_chapter": 3
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 4,
+        "title": "Playing five consecutive eighth notes",
+        "summary": "Extends the displacement system to five consecutive eighth notes across all eight entry points, applies the harmony anticipation rule to positions 5-7, introduces mixing entry points after systematic drilling, and names the perceptual goal as a window in the mind for hearing form.",
+        "key_phrases": [
+          "five consecutive eighth notes",
+          "eight entry points",
+          "bar line crossing",
+          "mixing entry points",
+          "window in the mind",
+          "form awareness"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Five Consecutive Eighth Notes",
+          "summary": "Core drill: practice five consecutive eighth notes beginning at each of the eight entry points in the bar.",
+          "key_phrases": [
+            "five consecutive",
+            "eight entry points",
+            "Tunes 1 2 3"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-5-eighth-all-entry-points",
+              "name": "Five Consecutive Eighth Notes Across All Eight Entry Points",
+              "when": {
+                "phrase.length": 5,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "displacement.step": "all_eight_entry_points",
+                "line.metric_placement": "systematic_position_traversal"
+              },
+              "preference": "Drill five consecutive eighth notes starting on each of the eight eighth-note positions in the bar using Tunes 1, 2, 3",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Skipping any entry point before moving to randomization",
+              "anchor": "practice playing five consecutive eighth notes beginning on these eight",
+              "source_chapter": 4
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Eighth Notes Crossing Bar Line",
+          "summary": "For positions 5, 6, and 7, five-note groups crossing the bar line can anticipate the next chord.",
+          "key_phrases": [
+            "crossing bar line",
+            "positions 5 6 7",
+            "anticipate next chord"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-5-note-bar-cross-anticipation",
+              "name": "Five-Note Bar-Cross Harmony Anticipation at Positions 5-7",
+              "when": {
+                "displacement.cycle": [
+                  "position_5",
+                  "position_6",
+                  "position_7"
+                ],
+                "phrase.length": 5,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "line.metric_placement": "next_chord_anticipated",
+                "phrase.cell_id": "approach_or_direct_next_chord"
+              },
+              "preference": "When five-note groups cross the bar line at positions 5-7, anticipate the next chord",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Bar-crossing five-note group at position 5-7 that ignores next-chord anticipation",
+              "anchor": "For #5, #6, and #7, the eighth notes before crossing the bar line can either anticipate the next",
+              "source_chapter": 4
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Mixing Entry Points",
+          "summary": "After structured drilling of positions 1-8, start five consecutive eighth notes on different beats randomly.",
+          "key_phrases": [
+            "mixing",
+            "random",
+            "internalized"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-5-note-randomize-after-drill",
+              "name": "Mix Five-Note Entry Points After Systematic Drilling",
+              "when": {
+                "cell.context": "post_ordered_drill_5_notes",
+                "phrase.length": 5
+              },
+              "then": {
+                "displacement.step": "random",
+                "line.metric_placement": "free_improvisation"
+              },
+              "preference": "After mastering steps 1-8 in order, mix starting points freely and randomly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Random practice before completing all eight ordered positions",
+              "anchor": "Start five consecutive eighth notes on different beats randomly",
+              "source_chapter": 4
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Polyrhythm and Form Awareness",
+          "summary": "Systematic practice across entry points develops a window in the mind for hearing larger spans of time and form.",
+          "key_phrases": [
+            "window in the mind",
+            "form awareness",
+            "bigger picture",
+            "perceptual transformation"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-window-in-mind-form",
+              "name": "Entry-Point Drilling Opens Window for Form Awareness",
+              "when": {
+                "cell.context": "displacement_mastery"
+              },
+              "then": {
+                "phrase.cell_id": "large_scale_form_perception"
+              },
+              "preference": "Practice systematic entry-point displacement as means to internalize perception of larger time spans and form",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Displacement practice treated as purely mechanical with no perceptual goal",
+              "anchor": "Practicing with these devices opens up a window in the part of the mind that hears bigger",
+              "source_chapter": 4
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 5,
+        "title": "Playing six consecutive eighth notes",
+        "summary": "Extends displacement system to six consecutive eighth notes; introduces 3/4, 5/4, 7/4, and 9/4 metric superimpositions over 4/4; reinforces the window-in-the-mind perceptual rationale.",
+        "key_phrases": [
+          "six consecutive eighth notes",
+          "3/4 over 4/4 off-beat",
+          "7/4 over 4/4",
+          "9/4 over 4/4",
+          "5/4 over 4/4",
+          "form awareness"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Polyrhythm: 3/4 over 4/4 (off-beat)",
+          "summary": "A 3/4 pattern over 4/4 starting on the and of beat 1 (upbeat) rather than beat 1.",
+          "key_phrases": [
+            "3/4 over 4/4",
+            "and of beat",
+            "upbeat start"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-3-over-4-upbeat-variant",
+              "name": "3/4-over-4/4 Starting on Upbeat",
+              "when": {
+                "meter.position": "and_of_beat_1",
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "3:4",
+                "line.metric_placement": "upbeat_initiated_superimposition"
+              },
+              "preference": "Initiate 3/4 superimposition on the 'and' of beat rather than on beat 1 for additional textural variety",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "3/4 superimposition always anchored to beat 1",
+              "anchor": "another 3/4 pattern over 4/4 which starts on the \"and\" of beat",
+              "source_chapter": 5
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Polyrhythm: 7/4 over 4/4",
+          "summary": "Seven-beat metric superimposition over 4/4.",
+          "key_phrases": [
+            "7/4 over 4/4",
+            "seven-beat pattern"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-7-over-4-superimposition",
+              "name": "7/4-over-4/4 Metric Superimposition",
+              "when": {
+                "phrase.length": 7,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "7:4",
+                "displacement.cycle": "8_bars_of_4/4_to_resolve"
+              },
+              "preference": "Sustain a seven-beat phrase pattern over 4/4 for the full eight-bar resolution cycle",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Seven-beat grouping abandoned before the eight-bar resolution point",
+              "anchor": "Here is a 7/4 pattern over 4/4.",
+              "source_chapter": 5
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Polyrhythm: 9/4 over 4/4",
+          "summary": "Nine-beat metric superimposition over 4/4.",
+          "key_phrases": [
+            "9/4 over 4/4",
+            "nine-beat"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-9-over-4-superimposition",
+              "name": "9/4-over-4/4 Metric Superimposition",
+              "when": {
+                "phrase.length": 9,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "9:4"
+              },
+              "preference": "Sustain a nine-beat phrase pattern over 4/4",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": null,
+              "anchor": "Here is a 9/4 pattern over 4/4,",
+              "source_chapter": 5
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Polyrhythm: 5/4 over 4/4",
+          "summary": "Five-beat metric superimposition over 4/4; aligns on the sixth bar.",
+          "key_phrases": [
+            "5/4 over 4/4",
+            "five-beat",
+            "sixth bar alignment"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-5-over-4-superimposition",
+              "name": "5/4-over-4/4 Metric Superimposition Aligning on Bar 6",
+              "when": {
+                "phrase.length": 5,
+                "rhythm.subdivision": "eighth",
+                "chord_quality": "dom7"
+              },
+              "then": {
+                "polyrhythm.ratio": "5:4",
+                "displacement.cycle": "aligns_beat_1_on_bar_6"
+              },
+              "preference": "Play five-beat pattern over 4/4 for full cycle; note that the pattern returns to beat 1 on the sixth bar",
+              "quality_binding": [
+                "dom7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "5/4 pattern abandoned before six-bar resolution cycle completes",
+              "anchor": "This is a 5/4 pattern over 4/4.",
+              "source_chapter": 5
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Form Awareness via Time-Signature Devices",
+          "summary": "Polyrhythmic superimposition internalizes large-scale musical form by exercising the perceptual window for bigger time spans.",
+          "key_phrases": [
+            "form awareness",
+            "window in mind",
+            "time-signature devices"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 6,
+        "title": "Playing seven consecutive eighth notes",
+        "summary": "Extends displacement system to seven consecutive eighth notes; defines three harmonic roles for late-entry positions; introduces 7/4 and 5/4 over 4/4 with seven-note groups; establishes randomization then integration of superimposition back into random starts.",
+        "key_phrases": [
+          "seven consecutive eighth notes",
+          "anticipate approach sound current",
+          "7/4 over 4/4",
+          "5/4 over 4/4",
+          "random starting beats",
+          "time signature devices integration"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Eighth notes anticipating next chord",
+          "summary": "When starting on beats 3, 3-and, 4, or 4-and, consecutive eighth notes can anticipate the next chord, approach it, or sound the chord of the moment.",
+          "key_phrases": [
+            "three harmonic roles",
+            "anticipate",
+            "approach notes",
+            "chord of the moment",
+            "beat 3",
+            "beat 4"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-7-note-three-harmonic-roles",
+              "name": "Three Harmonic Roles for Late-Position Seven-Note Groups",
+              "when": {
+                "meter.position": [
+                  "beat_3",
+                  "and_of_3",
+                  "beat_4",
+                  "and_of_4"
+                ],
+                "phrase.length": 7,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "phrase.cell_id": "next_chord_anticipate_or_approach_or_current"
+              },
+              "preference": "At late entry positions (beat 3 through and-of-4), choose from: anticipate next chord, approach it via passing tones, or sound current chord",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Late entry positions restricted to only one harmonic role",
+              "anchor": "these eighth notes can anticipate the next chord, or they can be approach notes to the next chord, or they can sound the chord of the moment.",
+              "source_chapter": 6
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Seven/four pattern over 4/4",
+          "summary": "7/4 polymetric pattern over 4/4 using seven-note groupings.",
+          "key_phrases": [
+            "7/4",
+            "polymetric",
+            "seven notes"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "Five/four pattern over 4/4",
+          "summary": "5/4 cross-rhythm device reinforcing polymetric layering.",
+          "key_phrases": [
+            "5/4",
+            "cross-rhythm",
+            "polymetric"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "Applying time-signature devices",
+          "summary": "After practicing prescribed polymetric patterns 10-14, return to random-start exercise #9 and apply time-signature devices within it.",
+          "key_phrases": [
+            "integration",
+            "random starts",
+            "time signature devices",
+            "loop closure"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-integrate-superimposition-random-starts",
+              "name": "Close Pedagogical Loop: Apply Superimposition to Random Starts",
+              "when": {
+                "cell.context": "post_polymetric_drill_10_to_14"
+              },
+              "then": {
+                "displacement.step": "random_with_metric_superimposition",
+                "line.metric_placement": "free_with_time_signature_devices"
+              },
+              "preference": "After drilling polymetric patterns 10-14, return to exercise 9 (random starts) and apply the superimposition techniques within it",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Superimposition exercises never integrated back into free random-start playing",
+              "anchor": "After practicing #10-14 go back and try #9 again using\n\nsome of these time signature devices.",
+              "source_chapter": 6
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Random starting-beat practice",
+          "summary": "After ordered drilling, practice starting seven-note groups from different random beats.",
+          "key_phrases": [
+            "random",
+            "seven consecutive",
+            "different beats"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-7-note-randomize-entry",
+              "name": "Randomize Seven-Note Entry Points After Ordered Drill",
+              "when": {
+                "cell.context": "post_ordered_drill_7_notes",
+                "phrase.length": 7
+              },
+              "then": {
+                "displacement.step": "random",
+                "line.metric_placement": "free_improvisation"
+              },
+              "preference": "After mastering all ordered entry points for seven-note groups, mix starting beats randomly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Random starts before completing all eight ordered positions",
+              "anchor": "Try starting six consecutive eighth notes form different beats randomly, for example:",
+              "source_chapter": 6
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 7,
+        "title": "Playing three consecutive eighth notes",
+        "summary": "Applies the established displacement system to three consecutive eighth notes. No load-bearing pedagogical passages were identified beyond the structural continuation of the displacement method.",
+        "key_phrases": [
+          "three consecutive eighth notes",
+          "displacement",
+          "entry points"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Three-Note Displacement",
+          "summary": "No distinct load-bearing passages extracted; the chapter applies the displacement method to three-note groups following the same four-stage loop.",
+          "key_phrases": [
+            "three-note grouping",
+            "entry points"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 8,
+        "title": "Playing two consecutive eighth notes",
+        "summary": "Note: chapter title is 'two consecutive eighth notes' but extracted content covers seven consecutive eighth notes — likely a chapter ordering artifact in the extraction. Contains the foundational starting-point grid, randomization step, 7/4, 6/4, and 11/4 superimpositions over 4/4, and the polyrhythm-into-random-starts integration.",
+        "key_phrases": [
+          "seven consecutive eighth notes",
+          "starting points grid",
+          "random beat starting",
+          "7/4 over 4/4",
+          "6/4 over 4/4",
+          "11/4 over 4/4",
+          "applying polyrhythms to random starts"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Seven Consecutive Eighth Notes",
+          "summary": "Core drill instruction for seven consecutive eighth notes using Tunes 1, 2, 3, and 4.",
+          "key_phrases": [
+            "seven consecutive",
+            "Tunes 1 2 3 4"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "Starting Points",
+          "summary": "The eight metrical positions — beat 1, and of 1, beat 2, and of 2, beat 3, and of 3, beat 4, and of 4 — constitute the foundational grid for eighth-note grouping displacement.",
+          "key_phrases": [
+            "beat one",
+            "and of beat one",
+            "beat two",
+            "and of beat two",
+            "foundational grid"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-eight-position-grid-definition",
+              "name": "Eight Metrical Entry Positions as Displacement Grid",
+              "when": {
+                "rhythm.subdivision": "eighth",
+                "phrase.position": "any"
+              },
+              "then": {
+                "displacement.step": [
+                  "beat_1",
+                  "and_of_1",
+                  "beat_2",
+                  "and_of_2",
+                  "beat_3",
+                  "and_of_3",
+                  "beat_4",
+                  "and_of_4"
+                ]
+              },
+              "preference": "Define eight starting positions as the complete set of metrical entry points for all consecutive-note displacement work",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Fewer than eight positions treated as the full set",
+              "anchor": "1. Starting on beat one.\n\n2. Starting on the \"and\" of beat one.\n\n3. Starting on beat two.\n\n4. Starting on the \"and\" of beat two.",
+              "source_chapter": 8
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Random Beat Starting Practice",
+          "summary": "Synthesis step converting ordered drills into internalized flexibility by starting randomly.",
+          "key_phrases": [
+            "random",
+            "internalized flexibility",
+            "synthesis"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "11/4 Pattern over 4/4",
+          "summary": "Advanced asymmetric polyrhythmic device: eleven-beat grouping over 4/4.",
+          "key_phrases": [
+            "11/4",
+            "asymmetric",
+            "polyrhythm"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-11-over-4-superimposition",
+              "name": "11/4-over-4/4 Asymmetric Metric Superimposition",
+              "when": {
+                "phrase.length": 11,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "11:4"
+              },
+              "preference": "Sustain an eleven-beat pattern over 4/4 as an advanced cross-rhythm device",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": null,
+              "anchor": "This is an 11/4 pattern over 4/4.",
+              "source_chapter": 8
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "6/4 Pattern over 4/4",
+          "summary": "Six-note polyrhythmic pattern — 6/4 superimposition over 4/4.",
+          "key_phrases": [
+            "6/4",
+            "six-note",
+            "polyrhythm"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-6-over-4-superimposition",
+              "name": "6/4-over-4/4 Metric Superimposition",
+              "when": {
+                "phrase.length": 6,
+                "rhythm.subdivision": "eighth"
+              },
+              "then": {
+                "polyrhythm.ratio": "6:4"
+              },
+              "preference": "Sustain a six-beat pattern over 4/4",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": null,
+              "anchor": "This is a 6/4 pattern over 4/4.",
+              "source_chapter": 8
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Applying Polyrhythms to Random Starts",
+          "summary": "Closes the pedagogical loop by returning to random-start exercise after mastering polyrhythmic patterns 10-14.",
+          "key_phrases": [
+            "integration",
+            "loop closure",
+            "polyrhythms and random starts"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-polyrhythm-loop-close-integration",
+              "name": "Integrate Polyrhythms Back Into Random-Start Free Play",
+              "when": {
+                "cell.context": "post_polymetric_drill_10_to_14"
+              },
+              "then": {
+                "displacement.step": "random_with_metric_superimposition"
+              },
+              "preference": "After exercises 10-14, return to random-start exercise 9 deploying time-signature devices spontaneously",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Polyrhythm exercises never fed back into free-start context",
+              "anchor": "After practicing #10-14 go back and try #9 again using some of these time signature devices,",
+              "source_chapter": 8
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 9,
+        "title": "Triplet groupings",
+        "summary": "Transfers the displacement method to triplet subdivision: three consecutive eighth-note triplets are displaced across positions; odd meters are superimposed over 4/4; selectively silencing two of six triplet subdivisions generates new rhythmic textures.",
+        "key_phrases": [
+          "eighth-note triplets",
+          "triplet displacement",
+          "odd meters over 4/4",
+          "selective triplet silencing",
+          "four of six notes"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Consecutive eighth note groupings",
+          "summary": "Apply displacement method to three consecutive eighth-note triplet groupings across different metrical positions.",
+          "key_phrases": [
+            "three consecutive",
+            "triplet",
+            "different places"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-triplet-3-displacement",
+              "name": "Three Consecutive Triplet Groupings Displaced Across Bar",
+              "when": {
+                "phrase.length": 3,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "displacement.step": "all_eight_entry_points",
+                "line.metric_placement": "systematic_position_traversal"
+              },
+              "preference": "Practice three consecutive eighth-note triplets starting from different positions within the bar using the same eight-position grid",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Triplet displacement restricted to downbeat starts",
+              "anchor": "practice playing groupings of three consecutive eighth notes starting on\ndifferent places within the bar.",
+              "source_chapter": 9
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Odd meters over 4/4",
+          "summary": "Exercises 10-13 are written in varying time signatures but played as superimpositions over the 4/4 pulse.",
+          "key_phrases": [
+            "superimposed",
+            "varying time signatures",
+            "4/4 pulse"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-odd-meter-over-4-4-triplet",
+              "name": "Odd-Meter Triplet Superimposition over 4/4 Pulse",
+              "when": {
+                "rhythm.subdivision": "triplet",
+                "chord_quality": "dom7"
+              },
+              "then": {
+                "polyrhythm.ratio": "variable_odd_over_4",
+                "line.metric_placement": "superimposed_over_4_4"
+              },
+              "preference": "Notate in odd time signatures but always feel and play as superimposition over 4/4",
+              "quality_binding": [
+                "dom7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Odd-meter exercises played by actually changing felt meter rather than superimposing",
+              "anchor": "The following exercises, 10-13, are written out in varying time signatures but should be played\nsuperimposed over",
+              "source_chapter": 9
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Triplet groupings",
+          "summary": "Sound only four of six available subdivisions across two consecutive eighth-note triplet groups.",
+          "key_phrases": [
+            "four of six",
+            "selective silencing",
+            "two triplet groups"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-triplet-selective-silencing",
+              "name": "Sound Four of Six Triplet Subdivisions",
+              "when": {
+                "phrase.length": 6,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "phrase.cell_id": "four_of_six_notes_sounded"
+              },
+              "preference": "Across two consecutive triplet groups (six total subdivisions), sound only four; let two remain silent",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "All six triplet subdivisions sounded, eliminating the rhythmic texture of selective silencing",
+              "anchor": "only four of the six notes are sounded.",
+              "source_chapter": 9
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 10,
+        "title": "Five consecutive eighth-note triplets",
+        "summary": "Applies the displacement method to five consecutive eighth-note triplets; introduces melodic displacement as an internalization technique and randomized free practice as the synthesis step.",
+        "key_phrases": [
+          "five consecutive triplets",
+          "melodic displacement",
+          "randomized triplet groupings",
+          "internalization"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Melodic displacement exercise",
+          "summary": "Internalize triplet groupings by playing the same four-note melody starting on different beats.",
+          "key_phrases": [
+            "melodic displacement",
+            "four-note melody",
+            "different beats",
+            "internalization"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-melodic-displacement-triplet-internalization",
+              "name": "Melodic Displacement to Internalize Triplet Groupings",
+              "when": {
+                "rhythm.subdivision": "triplet",
+                "cell.context": "internalization_drill"
+              },
+              "then": {
+                "displacement.step": "melodic_starting_point_variation",
+                "phrase.cell_id": "same_melody_different_beats"
+              },
+              "preference": "Play the same short melody starting on each entry point to get used to the feel of triplet displacement",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Melodic displacement skipped in favor of only abstract rhythmic drilling",
+              "anchor": "try playing the same four-note melody starting on the differ-\n\nent beats",
+              "source_chapter": 10
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Randomized triplet groupings",
+          "summary": "After systematic drilling, practice playing triplet groupings randomly across positions.",
+          "key_phrases": [
+            "random",
+            "triplet groupings",
+            "free application"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-triplet-randomize-after-drill",
+              "name": "Randomize Triplet Groupings After Structured Drill",
+              "when": {
+                "cell.context": "post_ordered_drill_triplet",
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "displacement.step": "random"
+              },
+              "preference": "After completing all ordered positions for triplet groupings, mix them randomly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Random triplet groupings used before completing ordered position drilling",
+              "anchor": "16, Practice plaving these preceding triplet groupings randomly.",
+              "source_chapter": 10
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 11,
+        "title": "Six consecutive eighth-note triplets",
+        "summary": "Applies the displacement system to six consecutive eighth-note triplets anchored to Tune 5; introduces 7/4 triplet superimposition; closes with randomized free practice.",
+        "key_phrases": [
+          "six consecutive triplets",
+          "Tune 5",
+          "It Happened",
+          "7/4 over 4/4",
+          "random triplet practice"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Six consecutive triplets practice",
+          "summary": "Anchor six-triplet displacement exercises to Tune 5 (It Happened).",
+          "key_phrases": [
+            "Tune 5",
+            "It Happened",
+            "six triplets"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "7/4 over 4/4 rhythm",
+          "summary": "Superimpose a 7/4 triplet phrase over 4/4.",
+          "key_phrases": [
+            "7/4 triplet",
+            "superimposition"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-7-over-4-triplet-superimposition",
+              "name": "7/4-over-4/4 Triplet Phrase Superimposition",
+              "when": {
+                "phrase.length": 7,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "polyrhythm.ratio": "7:4",
+                "time_zone.gear": "triplet"
+              },
+              "preference": "Sustain a seven-unit triplet phrase over 4/4 for the full resolution cycle",
+              "quality_binding": [
+                "dom7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": null,
+              "anchor": "Try this 7/4 rhythm over 4/4.",
+              "source_chapter": 11
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "Random triplet practice",
+          "summary": "Internalize six-triplet groupings through free improvisation.",
+          "key_phrases": [
+            "random",
+            "six consecutive triplets",
+            "free improvisation"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-6-triplet-random-free",
+              "name": "Randomize Six-Triplet Groupings for Free Improvisation",
+              "when": {
+                "cell.context": "post_ordered_drill_6_triplet",
+                "phrase.length": 6,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "displacement.step": "random",
+                "line.metric_placement": "free_improvisation"
+              },
+              "preference": "After ordered drilling, practice six consecutive triplets starting randomly",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Random triplet starts used before completing the ordered drill",
+              "anchor": "Practice playing six consecutive eighth-note triplets randomly.",
+              "source_chapter": 11
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 12,
+        "title": "Seven consecutive eighth-note triplets",
+        "summary": "Applies displacement system to seven consecutive eighth-note triplets using Tune 5; randomization and 5/4-over-4/4 superimposition complete the pedagogical loop.",
+        "key_phrases": [
+          "seven consecutive triplets",
+          "Tune 5",
+          "randomization",
+          "5/4 over 4/4",
+          "improvisational application"
+        ]
+      },
+      "sections": [
+        {
+          "title": "Seven Consecutive Triplets Exercise",
+          "summary": "Drill seven consecutive eighth-note triplets using Tune 5.",
+          "key_phrases": [
+            "Tune 5",
+            "seven triplets"
+          ],
+          "engine_rules": [],
+          "paragraphs": []
+        },
+        {
+          "title": "Random Triplet Practice",
+          "summary": "Synthesis: randomize seven-consecutive-triplet starts to convert drilling into improvisational application.",
+          "key_phrases": [
+            "random",
+            "seven consecutive triplets",
+            "improvisational"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-7-triplet-randomize",
+              "name": "Randomize Seven-Consecutive-Triplet Starts",
+              "when": {
+                "cell.context": "post_ordered_drill_7_triplet",
+                "phrase.length": 7,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "displacement.step": "random",
+                "line.metric_placement": "free_improvisation"
+              },
+              "preference": "After mastering ordered positions for seven triplets, mix starts freely",
+              "quality_binding": [
+                "dom7",
+                "maj7",
+                "min7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": "Random starts used before completing ordered triplet drilling",
+              "anchor": "15. Practice playing seven consecutive eighth-note triplets randomly.",
+              "source_chapter": 12
+            }
+          ],
+          "paragraphs": []
+        },
+        {
+          "title": "5/4 Over 4/4 Rhythm",
+          "summary": "5/4 polymetric layering technique in the triplet context.",
+          "key_phrases": [
+            "5/4",
+            "triplet",
+            "polymetric"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "bergonzi-5-over-4-triplet-superimposition",
+              "name": "5/4-over-4/4 Triplet Superimposition",
+              "when": {
+                "phrase.length": 5,
+                "rhythm.subdivision": "triplet"
+              },
+              "then": {
+                "polyrhythm.ratio": "5:4",
+                "time_zone.gear": "triplet"
+              },
+              "preference": "Sustain a five-unit triplet phrase over 4/4 for full resolution cycle",
+              "quality_binding": [
+                "dom7"
+              ],
+              "polarity": "prescriptive",
+              "falsifier": null,
+              "anchor": "1+. Try this 5/4 rhythm over 4/4.",
+              "source_chapter": 12
+            }
+          ],
+          "paragraphs": []
+        }
+      ]
+    }
+  ]
+}
