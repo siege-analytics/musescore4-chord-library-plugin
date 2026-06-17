@@ -1,45 +1,876 @@
 {
+  "_provenance": {
+    "run_id": "2026-06-17-mick-goodrick-almanac-vol-2",
+    "stage": "s6-engine-rules",
+    "source_pdf": null,
+    "extracted_at": "2026-06-17T09:44:55-05:00",
+    "schema_version": "0.1",
+    "model": "claude-opus-4-7",
+    "ticket": "#527"
+  },
   "master_id": "mick-goodrick",
   "work_id": "almanac-vol-2",
   "engine_rules": [
-    {"rule_id":"goodrick-v2-quartal-interval-inventory","name":"Restrict quartal voicing to 4ths, 5ths, 2nds, 7ths","when":{"voicing.family":"quartal"},"then":{"voicing.allowed_intervals":["2nd","4th","5th","7th"],"voicing.excluded_intervals":["3rd","6th"]},"preference":"required","quality_binding":["any"],"falsifier":"A quartal voicing containing a 3rd or 6th as primary structural interval","anchor":"Primary intervals: 4ths and 5ths","source_page":10},
-    {"rule_id":"goodrick-v2-quartal-tertial-opposition","name":"Treat quartal and tertial harmony as structural opposites","when":{"voicing.family":"quartal"},"then":{"harmonic.context":"non-tertial","voicing.color_intervals":["3rd","6th"]},"preference":"required","quality_binding":["any"],"falsifier":"Quartal voicing treated as tertial chord with added color tones","anchor":"tertial harmony and quartal harmony are pretty much exact opposites.","source_page":9},
-    {"rule_id":"goodrick-v2-quartal-diminished-fourth-avoid","name":"Avoid B-Eb in quartal voicings","when":{"voicing.family":"quartal","voicing.interval_pair":"B-Eb"},"then":{"voicing.action":"exclude","voicing.reason":"enharmonic-collapse-to-major-3rd"},"preference":"avoid","quality_binding":["any"],"falsifier":"A B-Eb interval in quartal context that does not collapse to triadic sound","anchor":"they don't work very well in a 4th voicings context.","source_page":9},
-    {"rule_id":"goodrick-v2-drop-d-pedal-dorian","name":"Use drop-D pedal for quartal cycle exploration in D Dorian","when":{"voicing.family":"quartal","arrangement.style":"free-exploration"},"then":{"scale.context":"D-Dorian","voicing.technique":"drop-D-pedal","tuning.low_string":"D"},"preference":"recommended","quality_binding":["any"],"falsifier":"D Dorian containing an avoid note that obstructs free pedal exploration","anchor":"tune the low E string down a whole step to D. Use the low D string as a pedal","source_page":10},
-    {"rule_id":"goodrick-v2-dorian-no-avoid-notes","name":"Prefer D Dorian as avoid-note-free quartal context","when":{"voicing.family":"quartal","scale.context":"D-Dorian"},"then":{"voicing.avoid_note_count":0,"arrangement.style":"unrestricted-cycle-traversal"},"preference":"preferred","quality_binding":["any"],"falsifier":"Another Dorian mode that also has zero avoid notes","anchor":"there aren't any \"avoid\" notes in Dorian","source_page":10},
-    {"rule_id":"goodrick-v2-arpeggio-direction-alternation","name":"Alternate arpeggio direction on successive chord positions","when":{"voicing.deployment_mode":"arpeggios","progression.type":"diatonic-cycle"},"then":{"voicing.arpeggio_direction":"alternating-up-down","voice_leading.constraint":"ascend-odd-descend-even"},"preference":"required","quality_binding":["any"],"falsifier":"Two successive chords arpeggiated in the same direction","anchor":"Arpeggiate up the first chord, then down the second chord","source_page":11},
-    {"rule_id":"goodrick-v2-five-application-modes","name":"Apply every voicing through all five M-Lode deployment modes","when":{"voicing.family":["quartal","triads","seventh-chords","tbn-i","tbn-ii","spread-clusters"]},"then":{"voicing.deployment_modes":["melodies","arpeggios","counterpoint","3-part-chords","4-part-chords"]},"preference":"recommended","quality_binding":["any"],"falsifier":"A voicing family for which fewer than five deployment modes are applicable","anchor":"1. melodies 2. arpeggios 3. counterpoint (2 simultaneous voices) 4. 3-part chords 5. 4-part chords","source_page":11},
-    {"rule_id":"goodrick-v2-stepwise-voice-motion","name":"Move each voice by 2nd, 3rd, or common tone across diatonic cycle positions","when":{"progression.type":"diatonic-cycle","voicing.family":["quartal","seventh-chords","spread-clusters"]},"then":{"voice_leading.constraint":"stepwise-or-common-tone","voice_leading.max_motion":"3rd"},"preference":"required","quality_binding":["any"],"falsifier":"A voice moving by a 4th or larger between adjacent cycle positions without common-tone annotation","anchor":"All of the M-Lode is based on voice-leading.","source_page":22},
-    {"rule_id":"goodrick-v2-common-tone-annotation","name":"Mark non-moving voices as c.t. in voice-leading analysis","when":{"voice_leading.constraint":"stepwise-or-common-tone"},"then":{"voice_leading.static_voice_label":"c.t.","voice_leading.c.t._is_distinct_category":true},"preference":"required","quality_binding":["any"],"falsifier":"A static voice omitted from or merged with moving voices in the analysis grid","anchor":"1 -> c.t.","source_page":27},
-    {"rule_id":"goodrick-v2-intervallic-functional-grid","name":"Analyze every voicing in paired Intervallic and Functional grids","when":{"voicing.family":["quartal","spread-clusters","seventh-chords"]},"then":{"analysis.grid_types":["intervallic","functional"],"analysis.intervallic_cell":"motion-interval-per-voice","analysis.functional_cell":"scale-degree-destination-per-voice"},"preference":"required","quality_binding":["any"],"falsifier":"An analysis grid that omits either intervallic or functional dimension","anchor":"5 -> 2nd / 2 -> 2nd / 1 -> 2nd","source_page":27},
-    {"rule_id":"goodrick-v2-cycles-2-7-dual-voice-leading","name":"Apply two distinct voice-leadings at Cycles 2 and 7","when":{"cycle.id":["2","7"]},"then":{"voice_leading.variant_count":2,"voice_leading.hazard":"voice-crossing-on-diatonic-5th"},"preference":"required","quality_binding":["any"],"falsifier":"Cycles 2 or 7 resolved with a single voice-leading without addressing the diatonic 5th voice-crossing","anchor":"Cycles 2 and 7 have two different voice-leadings.","source_page":21},
-    {"rule_id":"goodrick-v2-octave-insertion-expansion","name":"Derive new voicing variants by inserting an octave between any two voices","when":{"voicing.family":["quartal","triads","seventh-chords","spread-clusters"]},"then":{"voicing.expansion_method":"octave-insertion","voicing.insertion_positions":"any-adjacent-voice-pair"},"preference":"recommended","quality_binding":["any"],"falsifier":"A voicing expansion that adds a non-octave interval between voices","anchor":"inserting an octave between any 2 voices within a 3-part chord or a 4-part chord","source_page":14},
-    {"rule_id":"goodrick-v2-octave-insertion-applies-to-quartal","name":"Apply octave insertion equally to 3-part quartal voicings","when":{"voicing.family":"quartal","voicing.part_count":3},"then":{"voicing.expansion_method":"octave-insertion","voicing.result_families":["drop-2-drop-4","drop-3-and-4"]},"preference":"recommended","quality_binding":["any"],"falsifier":"Octave insertion applied only to tertial chord families and not quartal","anchor":"Of course, all of this applies to the 3-part 4th voicings as well","source_page":14},
-    {"rule_id":"goodrick-v2-drop-voicing-type-selection","name":"Select drop voicing type from canonical set","when":{"voicing.density":"open"},"then":{"voicing.drop_types":["Drop-2","Drop-3","Drop-4","Drop-2-and-3","Drop-2-and-4","Double-Drop-2-Drop-4","Drop-3-and-4"]},"preference":"recommended","quality_binding":["any"],"falsifier":"A drop voicing type not derivable from the canonical close-voicing octave-insertion process","anchor":"Drop 4 is an option.","source_page":15},
-    {"rule_id":"goodrick-v2-fingerstyle-drop-3-4-requirement","name":"Restrict Drop 3 and 4, Double Drop 2/Drop 4 to fingerstyle players","when":{"voicing.drop_type":["Drop-3-and-4","Double-Drop-2-Drop-4"]},"then":{"arrangement.technique":"fingerstyle-only"},"preference":"required","quality_binding":["any"],"falsifier":"Drop 3 and 4 executed comfortably with a pick","anchor":"only for finger-style guitarists] would be: Drop 3 and 4","source_page":15},
-    {"rule_id":"goodrick-v2-single-voice-omission","name":"Derive 3-part subset from any 4-part chord by dropping one voice","when":{"voicing.part_count":4},"then":{"voicing.omission_configurations":4,"voicing.result_part_count":3,"voicing.result_families":["7th-no-5th","7th-no-3rd","3-part-spread-cluster"]},"preference":"recommended","quality_binding":["any"],"falsifier":"Fewer than four valid omission configurations for a 4-part diatonic chord","anchor":"it just amounts to leaving out one of the voices... There are 4 possible configurations.","source_page":19},
-    {"rule_id":"goodrick-v2-passing-tone-third-fill","name":"Fill any voice motion of a 3rd with a diatonic passing tone","when":{"voice_leading.interval":"3rd"},"then":{"voicing.non_chord_tone":"passing-tone","nct.placement":"between-two-chord-tones-a-3rd-apart"},"preference":"recommended","quality_binding":["any"],"falsifier":"A voice motion by 3rd that cannot accommodate a diatonic passing tone","anchor":"Anytime one of the voices moves a distance of a 3rd, you can fill in that interval with a melodic passing tone.","source_page":17},
-    {"rule_id":"goodrick-v2-passing-tone-two-voices-in-thirds","name":"Apply passing tones to both voices when two voices simultaneously move in 3rds","when":{"voice_leading.interval":"3rd","voice_leading.simultaneous_thirds_count":2},"then":{"voicing.non_chord_tone":"passing-tone","nct.voice_count":2},"preference":"recommended","quality_binding":["any"],"falsifier":"Two voices moving in simultaneous 3rds where only one receives a passing tone","anchor":"two voices move in 3rds","source_page":18},
-    {"rule_id":"goodrick-v2-density-floor-4-way-close","name":"Begin voicing and arpeggio practice at 4-way close density","when":{"arrangement.style":"practice-context","voicing.family":["quartal","seventh-chords","spread-clusters"]},"then":{"voicing.density":"4-way-close","voicing.minimum_starting_density":"close"},"preference":"required","quality_binding":["any"],"falsifier":"Beginning M-Lode arpeggio practice with open or drop voicings before 4-way close","anchor":"look at all of the 4-way close options within the M-Lode","source_page":20},
-    {"rule_id":"goodrick-v2-open-string-voicing-priority","name":"Seek open-string-playable versions of 4-way close voicings","when":{"voicing.density":"4-way-close","arrangement.style":"guitar-idiomatic"},"then":{"voicing.open_strings":"preferred","voicing.playability":"maximize"},"preference":"preferred","quality_binding":["any"],"falsifier":"A 4-way close voicing position where no open-string variant exists on guitar","anchor":"find as many playable voicings for 4-way close as we can","source_page":21},
-    {"rule_id":"goodrick-v2-harmonic-minor-preference","name":"Prefer C Harmonic Minor as scale context for M-Lode voicing exploration","when":{"scale.context":["C-Major","C-Melodic-Minor","C-Harmonic-Minor"],"arrangement.style":"exploratory"},"then":{"scale.context":"C-Harmonic-Minor","scale.priority":1},"preference":"preferred","quality_binding":["any"],"falsifier":"C Major or C Melodic Minor producing equal or richer chromatic voice-leading density than C Harmonic Minor","anchor":"IT JUST SOUNDS BETTER IN HARMONIC MINOR","source_page":20},
-    {"rule_id":"goodrick-v2-harmonic-minor-chromatic-density","name":"Treat C Harmonic Minor as highest chromatic density voice-leading environment","when":{"scale.context":"C-Harmonic-Minor"},"then":{"voice_leading.chromatic_density":"maximum","voicing.sonic_reward":"highest"},"preference":"preferred","quality_binding":["any"],"falsifier":"C Major producing denser chromatic voice-leading than C Harmonic Minor","anchor":"ending in C Harmonic Minor, which the method identifies as the most sonically rewarding and the most chromatically dense voice-leading environment in the entire system","source_page":null},
-    {"rule_id":"goodrick-v2-24-arpeggio-permutations","name":"Generate all 24 arpeggio orderings for any 4-part voicing","when":{"voicing.part_count":4,"voicing.deployment_mode":"arpeggios"},"then":{"voicing.arpeggio_sequence_count":24,"voicing.permutation_method":"exhaustive-voice-ordering"},"preference":"recommended","quality_binding":["any"],"falsifier":"A 4-part voicing with fewer than 24 distinct arpeggio orderings","anchor":"Any [and ALL] 4-part voicings can be arpeggiated in 24 different sequences","source_page":20},
-    {"rule_id":"goodrick-v2-2-voice-combination-exhaustion","name":"Practice all 6 two-voice subsets of every 4-part chord","when":{"voicing.part_count":4,"voicing.deployment_mode":"counterpoint"},"then":{"voicing.2-voice-subset-count":6,"practice.traversal":"exhaustive"},"preference":"required","quality_binding":["any"],"falsifier":"A 4-part chord yielding more or fewer than 6 two-voice combinations","anchor":"Play all 6 possible combinations of 2 voices","source_page":12},
-    {"rule_id":"goodrick-v2-3-voice-combination-exhaustion","name":"Practice all 4 three-voice subsets of every 4-part chord","when":{"voicing.part_count":4,"voicing.deployment_mode":"3-part-chords"},"then":{"voicing.3-voice-subset-count":4,"practice.traversal":"exhaustive"},"preference":"required","quality_binding":["any"],"falsifier":"A 4-part chord yielding more or fewer than 4 three-voice combinations","anchor":"Play all 4 possible combinations of 3 voices","source_page":13},
-    {"rule_id":"goodrick-v2-joe-2-plus-2-call-response","name":"Divide 4-part chord into two alternating 2-note call-and-response pairs","when":{"voicing.part_count":4,"voicing.deployment_mode":"arpeggios"},"then":{"voicing.grouping":"2+2","voicing.pair_roles":["call","response"],"voicing.alternation":"pair-based"},"preference":"recommended","quality_binding":["any"],"falsifier":"A 4-part chord that cannot be divided into two meaningful 2-note groupings","anchor":"divide the 4-part chord into two 2-note groupings","source_page":16},
-    {"rule_id":"goodrick-v2-spread-cluster-physical-caution","name":"Approach spread cluster voicings with physical preparation","when":{"voicing.family":"spread-clusters"},"then":{"arrangement.technique":"fingerstyle-prepared","arrangement.physical_demand":"high","arrangement.caution":"required"},"preference":"avoid","quality_binding":["any"],"falsifier":"A spread cluster voicing that is physically undemanding on guitar","anchor":"BE VERY CAREFUL!!!","source_page":22},
-    {"rule_id":"goodrick-v2-chord-names-omitted","name":"Treat voicings as unnamed harmonic objects for functional flexibility","when":{"voicing.family":["quartal","seventh-chords","tbn-i","tbn-ii","spread-clusters"]},"then":{"voicing.naming_convention":"omit","harmonic.context":"function-agnostic"},"preference":"required","quality_binding":["any"],"falsifier":"A system that names chord qualities to restrict voicing function to one harmonic role","anchor":"chords are deliberately left unnamed to preserve their harmonic flexibility across functions","source_page":null},
-    {"rule_id":"goodrick-v2-six-cycle-traversal","name":"Traverse every voicing family through all six diatonic cycles","when":{"voicing.family":["quartal","triads","seventh-chords","tbn-i","tbn-ii","spread-clusters"]},"then":{"cycle.count":6,"progression.type":"diatonic-cycle","traversal.scope":"all-six-cycles"},"preference":"required","quality_binding":["any"],"falsifier":"A voicing family traversed through fewer than six diatonic cycles","anchor":"voice-led through six cycles in each of the three scales","source_page":null},
-    {"rule_id":"goodrick-v2-three-scale-contexts","name":"Realize every voicing family in all three diatonic scale contexts","when":{"voicing.family":["quartal","triads","seventh-chords","tbn-i","tbn-ii","spread-clusters"]},"then":{"scale.context":["C-Major","C-Melodic-Minor","C-Harmonic-Minor"]},"preference":"required","quality_binding":["any"],"falsifier":"A voicing family realized in only one or two of the three scale systems","anchor":"every 3-part and 4-part chord voicing available within the three diatonic scales - C Major, C Melodic Minor, and C Harmonic Minor","source_page":null},
-    {"rule_id":"goodrick-v2-4-part-family-completeness","name":"Use the five 4-part families as the complete diatonic 4-part taxonomy","when":{"voicing.part_count":4,"scale.context":["C-Major","C-Melodic-Minor","C-Harmonic-Minor"]},"then":{"voicing.families":["seventh-chords","tbn-i","tbn-ii","4-part-4ths","spread-clusters"],"voicing.family_count":5,"voicing.completeness":"exhaustive"},"preference":"required","quality_binding":["any"],"falsifier":"A 4-part chord type within a seven-note diatonic scale not covered by these five families","anchor":"these five 4-part chord families are not merely a selection but the only 4-part families possible within seven-note diatonic scales","source_page":null},
-    {"rule_id":"goodrick-v2-m-lode-voicing-count","name":"Target 1000+ total voicings across the complete M-Lode system","when":{"voicing.family":["quartal","triads","seventh-chords","tbn-i","tbn-ii","spread-clusters","3-part-spread-clusters","7th-no-5th","7th-no-3rd"]},"then":{"voicing.total_count_floor":1000,"voicing.3-part-chord-count_floor":20,"voicing.4-part-chord-count_floor":30},"preference":null,"quality_binding":["any"],"falsifier":"A complete M-Lode realization producing fewer than 1000 total voicings","anchor":"20 different 3-part chords (240 voicings), 30+ different 4-part chords (800+ voicings), and 1,000+ total voicings","source_page":null},
-    {"rule_id":"goodrick-v2-3-part-supplement-families","name":"Include 3-part Spread Clusters, 7th-no-5th, and 7th-no-3rd as M-Lode supplement families","when":{"voicing.part_count":3,"voicing.derivation":"omission-from-4-part"},"then":{"voicing.supplement_families":["3-part-spread-clusters","7th-no-5th","7th-no-3rd"],"voicing.guitar_playability":"high"},"preference":"recommended","quality_binding":["any"],"falsifier":"A 3-part omission-derived family outside these three types","anchor":"three additional 3-part chord families within the M-Lode: 3-part Spread Clusters, 7th Chord (no 5th), and 7th Chord (no 3rd)","source_page":null},
-    {"rule_id":"goodrick-v2-3-part-4ths-interval-count","name":"Enforce exact interval count for 3-part quartal voicing","when":{"voicing.family":"quartal","voicing.part_count":3},"then":{"voicing.interval_count":{"2nd":2,"4th":4,"5th":2,"7th":1}},"preference":"required","quality_binding":["any"],"falsifier":"A 3-part quartal voicing with interval counts deviating from Two 2nds, Four 4ths, Two 5ths, One 7th","anchor":"Two 2nds, Four 4ths, Two 5ths, One 7th","source_page":10},
-    {"rule_id":"goodrick-v2-msrp-memorization-drill","name":"Apply MSRP memorized note-sequence drill at 3-part 4ths level","when":{"voicing.family":"quartal","voicing.part_count":3,"arrangement.style":"practice-context"},"then":{"practice.drill":"M.S.R.P.","practice.method":"memorized-note-sequence-loop"},"preference":"recommended","quality_binding":["any"],"falsifier":"M.S.R.P. drill applied before the 3-part 4ths entry level","anchor":"The M.S.R.P. (memorized note-sequence) drill loop appears at the 3-part 4ths level","source_page":null},
-    {"rule_id":"goodrick-v2-index-card-voice-isolation","name":"Use index card strips for tactile voice isolation and reduction practice","when":{"arrangement.style":"practice-context","voicing.part_count":4},"then":{"practice.tool":"index-card-strips","practice.strip_count":8,"practice.purpose":"voice-isolation-and-reduction"},"preference":"recommended","quality_binding":["any"],"falsifier":"An alternative practice aid that achieves equivalent voice isolation without physical notation strips","anchor":"eight half-inch strips cut from a 4x6 card","source_page":null},
-    {"rule_id":"goodrick-v2-quartal-melody-generation","name":"Generate melodies by arpeggiation of quartal voicing shapes","when":{"voicing.family":"quartal","voicing.deployment_mode":"melodies"},"then":{"voicing.melodic_source":"arpeggio-of-quartal-shape","voice_leading.constraint":"chord-tone-sequence"},"preference":"recommended","quality_binding":["any"],"falsifier":"A quartal arpeggiation that produces no usable melodic material","anchor":"arpeggiate quartal voicings to discover melodies","source_page":10},
-    {"rule_id":"goodrick-v2-cycle-7-drop-2-three-common-tones","name":"Expect three common tones and one voice moving by 4th in Cycle 7 Drop 2","when":{"cycle.id":"7","voicing.drop_type":"Drop-2"},"then":{"voice_leading.common_tone_count":3,"voice_leading.moving_voice_count":1,"voice_leading.moving_voice_interval":"4th"},"preference":"required","quality_binding":["any"],"falsifier":"Cycle 7 Drop 2 position with fewer than three common tones between adjacent chords","anchor":"2 - c.t. / 7 - c.t. / 3 -> 4th / 1 - c.t.","source_page":159},
-    {"rule_id":"goodrick-v2-voice-leading-foundation-principle","name":"Ground every M-Lode voicing decision in voice-leading, not chord quality","when":{"voicing.family":["quartal","triads","seventh-chords","tbn-i","tbn-ii","spread-clusters"]},"then":{"voice_leading.constraint":"voice-leading-primary","harmonic.context":"voice-leading-derived"},"preference":"required","quality_binding":["any"],"falsifier":"An M-Lode voicing chosen by chord quality or function rather than voice-leading economy","anchor":"All of the M-Lode is based on voice-leading.","source_page":22}
+    {
+      "rule_id": "goodrick-v2-quartal-interval-inventory",
+      "name": "Restrict quartal voicing to 4ths, 5ths, 2nds, 7ths",
+      "when": {
+        "voicing.family": "quartal"
+      },
+      "then": {
+        "voicing.allowed_intervals": [
+          "2nd",
+          "4th",
+          "5th",
+          "7th"
+        ],
+        "voicing.excluded_intervals": [
+          "3rd",
+          "6th"
+        ]
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A quartal voicing containing a 3rd or 6th as primary structural interval",
+      "anchor": "Primary intervals: 4ths and 5ths",
+      "source_page": 10
+    },
+    {
+      "rule_id": "goodrick-v2-quartal-tertial-opposition",
+      "name": "Treat quartal and tertial harmony as structural opposites",
+      "when": {
+        "voicing.family": "quartal"
+      },
+      "then": {
+        "harmonic.context": "non-tertial",
+        "voicing.color_intervals": [
+          "3rd",
+          "6th"
+        ]
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Quartal voicing treated as tertial chord with added color tones",
+      "anchor": "tertial harmony and quartal harmony are pretty much exact opposites.",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v2-quartal-diminished-fourth-avoid",
+      "name": "Avoid B-Eb in quartal voicings",
+      "when": {
+        "voicing.family": "quartal",
+        "voicing.interval_pair": "B-Eb"
+      },
+      "then": {
+        "voicing.action": "exclude",
+        "voicing.reason": "enharmonic-collapse-to-major-3rd"
+      },
+      "preference": "avoid",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A B-Eb interval in quartal context that does not collapse to triadic sound",
+      "anchor": "they don't work very well in a 4th voicings context.",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v2-drop-d-pedal-dorian",
+      "name": "Use drop-D pedal for quartal cycle exploration in D Dorian",
+      "when": {
+        "voicing.family": "quartal",
+        "arrangement.style": "free-exploration"
+      },
+      "then": {
+        "scale.context": "D-Dorian",
+        "voicing.technique": "drop-D-pedal",
+        "tuning.low_string": "D"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "D Dorian containing an avoid note that obstructs free pedal exploration",
+      "anchor": "tune the low E string down a whole step to D. Use the low D string as a pedal",
+      "source_page": 10
+    },
+    {
+      "rule_id": "goodrick-v2-dorian-no-avoid-notes",
+      "name": "Prefer D Dorian as avoid-note-free quartal context",
+      "when": {
+        "voicing.family": "quartal",
+        "scale.context": "D-Dorian"
+      },
+      "then": {
+        "voicing.avoid_note_count": 0,
+        "arrangement.style": "unrestricted-cycle-traversal"
+      },
+      "preference": "preferred",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Another Dorian mode that also has zero avoid notes",
+      "anchor": "there aren't any \"avoid\" notes in Dorian",
+      "source_page": 10
+    },
+    {
+      "rule_id": "goodrick-v2-arpeggio-direction-alternation",
+      "name": "Alternate arpeggio direction on successive chord positions",
+      "when": {
+        "voicing.deployment_mode": "arpeggios",
+        "progression.type": "diatonic-cycle"
+      },
+      "then": {
+        "voicing.arpeggio_direction": "alternating-up-down",
+        "voice_leading.constraint": "ascend-odd-descend-even"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Two successive chords arpeggiated in the same direction",
+      "anchor": "Arpeggiate up the first chord, then down the second chord",
+      "source_page": 11
+    },
+    {
+      "rule_id": "goodrick-v2-five-application-modes",
+      "name": "Apply every voicing through all five M-Lode deployment modes",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voicing.deployment_modes": [
+          "melodies",
+          "arpeggios",
+          "counterpoint",
+          "3-part-chords",
+          "4-part-chords"
+        ]
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voicing family for which fewer than five deployment modes are applicable",
+      "anchor": "1. melodies 2. arpeggios 3. counterpoint (2 simultaneous voices) 4. 3-part chords 5. 4-part chords",
+      "source_page": 11
+    },
+    {
+      "rule_id": "goodrick-v2-stepwise-voice-motion",
+      "name": "Move each voice by 2nd, 3rd, or common tone across diatonic cycle positions",
+      "when": {
+        "progression.type": "diatonic-cycle",
+        "voicing.family": [
+          "quartal",
+          "seventh-chords",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voice_leading.constraint": "stepwise-or-common-tone",
+        "voice_leading.max_motion": "3rd"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voice moving by a 4th or larger between adjacent cycle positions without common-tone annotation",
+      "anchor": "All of the M-Lode is based on voice-leading.",
+      "source_page": 22
+    },
+    {
+      "rule_id": "goodrick-v2-common-tone-annotation",
+      "name": "Mark non-moving voices as c.t. in voice-leading analysis",
+      "when": {
+        "voice_leading.constraint": "stepwise-or-common-tone"
+      },
+      "then": {
+        "voice_leading.static_voice_label": "c.t.",
+        "voice_leading.c.t._is_distinct_category": true
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A static voice omitted from or merged with moving voices in the analysis grid",
+      "anchor": "1 -> c.t.",
+      "source_page": 27
+    },
+    {
+      "rule_id": "goodrick-v2-intervallic-functional-grid",
+      "name": "Analyze every voicing in paired Intervallic and Functional grids",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "spread-clusters",
+          "seventh-chords"
+        ]
+      },
+      "then": {
+        "analysis.grid_types": [
+          "intervallic",
+          "functional"
+        ],
+        "analysis.intervallic_cell": "motion-interval-per-voice",
+        "analysis.functional_cell": "scale-degree-destination-per-voice"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An analysis grid that omits either intervallic or functional dimension",
+      "anchor": "5 -> 2nd / 2 -> 2nd / 1 -> 2nd",
+      "source_page": 27
+    },
+    {
+      "rule_id": "goodrick-v2-cycles-2-7-dual-voice-leading",
+      "name": "Apply two distinct voice-leadings at Cycles 2 and 7",
+      "when": {
+        "cycle.id": [
+          "2",
+          "7"
+        ]
+      },
+      "then": {
+        "voice_leading.variant_count": 2,
+        "voice_leading.hazard": "voice-crossing-on-diatonic-5th"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Cycles 2 or 7 resolved with a single voice-leading without addressing the diatonic 5th voice-crossing",
+      "anchor": "Cycles 2 and 7 have two different voice-leadings.",
+      "source_page": 21
+    },
+    {
+      "rule_id": "goodrick-v2-octave-insertion-expansion",
+      "name": "Derive new voicing variants by inserting an octave between any two voices",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voicing.expansion_method": "octave-insertion",
+        "voicing.insertion_positions": "any-adjacent-voice-pair"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voicing expansion that adds a non-octave interval between voices",
+      "anchor": "inserting an octave between any 2 voices within a 3-part chord or a 4-part chord",
+      "source_page": 14
+    },
+    {
+      "rule_id": "goodrick-v2-octave-insertion-applies-to-quartal",
+      "name": "Apply octave insertion equally to 3-part quartal voicings",
+      "when": {
+        "voicing.family": "quartal",
+        "voicing.part_count": 3
+      },
+      "then": {
+        "voicing.expansion_method": "octave-insertion",
+        "voicing.result_families": [
+          "drop-2-drop-4",
+          "drop-3-and-4"
+        ]
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Octave insertion applied only to tertial chord families and not quartal",
+      "anchor": "Of course, all of this applies to the 3-part 4th voicings as well",
+      "source_page": 14
+    },
+    {
+      "rule_id": "goodrick-v2-drop-voicing-type-selection",
+      "name": "Select drop voicing type from canonical set",
+      "when": {
+        "voicing.density": "open"
+      },
+      "then": {
+        "voicing.drop_types": [
+          "Drop-2",
+          "Drop-3",
+          "Drop-4",
+          "Drop-2-and-3",
+          "Drop-2-and-4",
+          "Double-Drop-2-Drop-4",
+          "Drop-3-and-4"
+        ]
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A drop voicing type not derivable from the canonical close-voicing octave-insertion process",
+      "anchor": "Drop 4 is an option.",
+      "source_page": 15
+    },
+    {
+      "rule_id": "goodrick-v2-fingerstyle-drop-3-4-requirement",
+      "name": "Restrict Drop 3 and 4, Double Drop 2/Drop 4 to fingerstyle players",
+      "when": {
+        "voicing.drop_type": [
+          "Drop-3-and-4",
+          "Double-Drop-2-Drop-4"
+        ]
+      },
+      "then": {
+        "arrangement.technique": "fingerstyle-only"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Drop 3 and 4 executed comfortably with a pick",
+      "anchor": "only for finger-style guitarists] would be: Drop 3 and 4",
+      "source_page": 15
+    },
+    {
+      "rule_id": "goodrick-v2-single-voice-omission",
+      "name": "Derive 3-part subset from any 4-part chord by dropping one voice",
+      "when": {
+        "voicing.part_count": 4
+      },
+      "then": {
+        "voicing.omission_configurations": 4,
+        "voicing.result_part_count": 3,
+        "voicing.result_families": [
+          "7th-no-5th",
+          "7th-no-3rd",
+          "3-part-spread-cluster"
+        ]
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Fewer than four valid omission configurations for a 4-part diatonic chord",
+      "anchor": "it just amounts to leaving out one of the voices... There are 4 possible configurations.",
+      "source_page": 19
+    },
+    {
+      "rule_id": "goodrick-v2-passing-tone-third-fill",
+      "name": "Fill any voice motion of a 3rd with a diatonic passing tone",
+      "when": {
+        "voice_leading.interval": "3rd"
+      },
+      "then": {
+        "voicing.non_chord_tone": "passing-tone",
+        "nct.placement": "between-two-chord-tones-a-3rd-apart"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voice motion by 3rd that cannot accommodate a diatonic passing tone",
+      "anchor": "Anytime one of the voices moves a distance of a 3rd, you can fill in that interval with a melodic passing tone.",
+      "source_page": 17
+    },
+    {
+      "rule_id": "goodrick-v2-passing-tone-two-voices-in-thirds",
+      "name": "Apply passing tones to both voices when two voices simultaneously move in 3rds",
+      "when": {
+        "voice_leading.interval": "3rd",
+        "voice_leading.simultaneous_thirds_count": 2
+      },
+      "then": {
+        "voicing.non_chord_tone": "passing-tone",
+        "nct.voice_count": 2
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Two voices moving in simultaneous 3rds where only one receives a passing tone",
+      "anchor": "two voices move in 3rds",
+      "source_page": 18
+    },
+    {
+      "rule_id": "goodrick-v2-density-floor-4-way-close",
+      "name": "Begin voicing and arpeggio practice at 4-way close density",
+      "when": {
+        "arrangement.style": "practice-context",
+        "voicing.family": [
+          "quartal",
+          "seventh-chords",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voicing.density": "4-way-close",
+        "voicing.minimum_starting_density": "close"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Beginning M-Lode arpeggio practice with open or drop voicings before 4-way close",
+      "anchor": "look at all of the 4-way close options within the M-Lode",
+      "source_page": 20
+    },
+    {
+      "rule_id": "goodrick-v2-open-string-voicing-priority",
+      "name": "Seek open-string-playable versions of 4-way close voicings",
+      "when": {
+        "voicing.density": "4-way-close",
+        "arrangement.style": "guitar-idiomatic"
+      },
+      "then": {
+        "voicing.open_strings": "preferred",
+        "voicing.playability": "maximize"
+      },
+      "preference": "preferred",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-way close voicing position where no open-string variant exists on guitar",
+      "anchor": "find as many playable voicings for 4-way close as we can",
+      "source_page": 21
+    },
+    {
+      "rule_id": "goodrick-v2-harmonic-minor-preference",
+      "name": "Prefer C Harmonic Minor as scale context for M-Lode voicing exploration",
+      "when": {
+        "scale.context": [
+          "C-Major",
+          "C-Melodic-Minor",
+          "C-Harmonic-Minor"
+        ],
+        "arrangement.style": "exploratory"
+      },
+      "then": {
+        "scale.context": "C-Harmonic-Minor",
+        "scale.priority": 1
+      },
+      "preference": "preferred",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "C Major or C Melodic Minor producing equal or richer chromatic voice-leading density than C Harmonic Minor",
+      "anchor": "IT JUST SOUNDS BETTER IN HARMONIC MINOR",
+      "source_page": 20
+    },
+    {
+      "rule_id": "goodrick-v2-harmonic-minor-chromatic-density",
+      "name": "Treat C Harmonic Minor as highest chromatic density voice-leading environment",
+      "when": {
+        "scale.context": "C-Harmonic-Minor"
+      },
+      "then": {
+        "voice_leading.chromatic_density": "maximum",
+        "voicing.sonic_reward": "highest"
+      },
+      "preference": "preferred",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "C Major producing denser chromatic voice-leading than C Harmonic Minor",
+      "anchor": "ending in C Harmonic Minor, which the method identifies as the most sonically rewarding and the most chromatically dense voice-leading environment in the entire system",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-24-arpeggio-permutations",
+      "name": "Generate all 24 arpeggio orderings for any 4-part voicing",
+      "when": {
+        "voicing.part_count": 4,
+        "voicing.deployment_mode": "arpeggios"
+      },
+      "then": {
+        "voicing.arpeggio_sequence_count": 24,
+        "voicing.permutation_method": "exhaustive-voice-ordering"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-part voicing with fewer than 24 distinct arpeggio orderings",
+      "anchor": "Any [and ALL] 4-part voicings can be arpeggiated in 24 different sequences",
+      "source_page": 20
+    },
+    {
+      "rule_id": "goodrick-v2-2-voice-combination-exhaustion",
+      "name": "Practice all 6 two-voice subsets of every 4-part chord",
+      "when": {
+        "voicing.part_count": 4,
+        "voicing.deployment_mode": "counterpoint"
+      },
+      "then": {
+        "voicing.2-voice-subset-count": 6,
+        "practice.traversal": "exhaustive"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-part chord yielding more or fewer than 6 two-voice combinations",
+      "anchor": "Play all 6 possible combinations of 2 voices",
+      "source_page": 12
+    },
+    {
+      "rule_id": "goodrick-v2-3-voice-combination-exhaustion",
+      "name": "Practice all 4 three-voice subsets of every 4-part chord",
+      "when": {
+        "voicing.part_count": 4,
+        "voicing.deployment_mode": "3-part-chords"
+      },
+      "then": {
+        "voicing.3-voice-subset-count": 4,
+        "practice.traversal": "exhaustive"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-part chord yielding more or fewer than 4 three-voice combinations",
+      "anchor": "Play all 4 possible combinations of 3 voices",
+      "source_page": 13
+    },
+    {
+      "rule_id": "goodrick-v2-joe-2-plus-2-call-response",
+      "name": "Divide 4-part chord into two alternating 2-note call-and-response pairs",
+      "when": {
+        "voicing.part_count": 4,
+        "voicing.deployment_mode": "arpeggios"
+      },
+      "then": {
+        "voicing.grouping": "2+2",
+        "voicing.pair_roles": [
+          "call",
+          "response"
+        ],
+        "voicing.alternation": "pair-based"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-part chord that cannot be divided into two meaningful 2-note groupings",
+      "anchor": "divide the 4-part chord into two 2-note groupings",
+      "source_page": 16
+    },
+    {
+      "rule_id": "goodrick-v2-spread-cluster-physical-caution",
+      "name": "Approach spread cluster voicings with physical preparation",
+      "when": {
+        "voicing.family": "spread-clusters"
+      },
+      "then": {
+        "arrangement.technique": "fingerstyle-prepared",
+        "arrangement.physical_demand": "high",
+        "arrangement.caution": "required"
+      },
+      "preference": "avoid",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A spread cluster voicing that is physically undemanding on guitar",
+      "anchor": "BE VERY CAREFUL!!!",
+      "source_page": 22
+    },
+    {
+      "rule_id": "goodrick-v2-chord-names-omitted",
+      "name": "Treat voicings as unnamed harmonic objects for functional flexibility",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voicing.naming_convention": "omit",
+        "harmonic.context": "function-agnostic"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A system that names chord qualities to restrict voicing function to one harmonic role",
+      "anchor": "chords are deliberately left unnamed to preserve their harmonic flexibility across functions",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-six-cycle-traversal",
+      "name": "Traverse every voicing family through all six diatonic cycles",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "cycle.count": 6,
+        "progression.type": "diatonic-cycle",
+        "traversal.scope": "all-six-cycles"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voicing family traversed through fewer than six diatonic cycles",
+      "anchor": "voice-led through six cycles in each of the three scales",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-three-scale-contexts",
+      "name": "Realize every voicing family in all three diatonic scale contexts",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "scale.context": [
+          "C-Major",
+          "C-Melodic-Minor",
+          "C-Harmonic-Minor"
+        ]
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A voicing family realized in only one or two of the three scale systems",
+      "anchor": "every 3-part and 4-part chord voicing available within the three diatonic scales - C Major, C Melodic Minor, and C Harmonic Minor",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-4-part-family-completeness",
+      "name": "Use the five 4-part families as the complete diatonic 4-part taxonomy",
+      "when": {
+        "voicing.part_count": 4,
+        "scale.context": [
+          "C-Major",
+          "C-Melodic-Minor",
+          "C-Harmonic-Minor"
+        ]
+      },
+      "then": {
+        "voicing.families": [
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "4-part-4ths",
+          "spread-clusters"
+        ],
+        "voicing.family_count": 5,
+        "voicing.completeness": "exhaustive"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 4-part chord type within a seven-note diatonic scale not covered by these five families",
+      "anchor": "these five 4-part chord families are not merely a selection but the only 4-part families possible within seven-note diatonic scales",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-m-lode-voicing-count",
+      "name": "Target 1000+ total voicings across the complete M-Lode system",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters",
+          "3-part-spread-clusters",
+          "7th-no-5th",
+          "7th-no-3rd"
+        ]
+      },
+      "then": {
+        "voicing.total_count_floor": 1000,
+        "voicing.3-part-chord-count_floor": 20,
+        "voicing.4-part-chord-count_floor": 30
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A complete M-Lode realization producing fewer than 1000 total voicings",
+      "anchor": "20 different 3-part chords (240 voicings), 30+ different 4-part chords (800+ voicings), and 1,000+ total voicings",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-3-part-supplement-families",
+      "name": "Include 3-part Spread Clusters, 7th-no-5th, and 7th-no-3rd as M-Lode supplement families",
+      "when": {
+        "voicing.part_count": 3,
+        "voicing.derivation": "omission-from-4-part"
+      },
+      "then": {
+        "voicing.supplement_families": [
+          "3-part-spread-clusters",
+          "7th-no-5th",
+          "7th-no-3rd"
+        ],
+        "voicing.guitar_playability": "high"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 3-part omission-derived family outside these three types",
+      "anchor": "three additional 3-part chord families within the M-Lode: 3-part Spread Clusters, 7th Chord (no 5th), and 7th Chord (no 3rd)",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-3-part-4ths-interval-count",
+      "name": "Enforce exact interval count for 3-part quartal voicing",
+      "when": {
+        "voicing.family": "quartal",
+        "voicing.part_count": 3
+      },
+      "then": {
+        "voicing.interval_count": {
+          "2nd": 2,
+          "4th": 4,
+          "5th": 2,
+          "7th": 1
+        }
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 3-part quartal voicing with interval counts deviating from Two 2nds, Four 4ths, Two 5ths, One 7th",
+      "anchor": "Two 2nds, Four 4ths, Two 5ths, One 7th",
+      "source_page": 10
+    },
+    {
+      "rule_id": "goodrick-v2-msrp-memorization-drill",
+      "name": "Apply MSRP memorized note-sequence drill at 3-part 4ths level",
+      "when": {
+        "voicing.family": "quartal",
+        "voicing.part_count": 3,
+        "arrangement.style": "practice-context"
+      },
+      "then": {
+        "practice.drill": "M.S.R.P.",
+        "practice.method": "memorized-note-sequence-loop"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "M.S.R.P. drill applied before the 3-part 4ths entry level",
+      "anchor": "The M.S.R.P. (memorized note-sequence) drill loop appears at the 3-part 4ths level",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-index-card-voice-isolation",
+      "name": "Use index card strips for tactile voice isolation and reduction practice",
+      "when": {
+        "arrangement.style": "practice-context",
+        "voicing.part_count": 4
+      },
+      "then": {
+        "practice.tool": "index-card-strips",
+        "practice.strip_count": 8,
+        "practice.purpose": "voice-isolation-and-reduction"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An alternative practice aid that achieves equivalent voice isolation without physical notation strips",
+      "anchor": "eight half-inch strips cut from a 4x6 card",
+      "source_page": null
+    },
+    {
+      "rule_id": "goodrick-v2-quartal-melody-generation",
+      "name": "Generate melodies by arpeggiation of quartal voicing shapes",
+      "when": {
+        "voicing.family": "quartal",
+        "voicing.deployment_mode": "melodies"
+      },
+      "then": {
+        "voicing.melodic_source": "arpeggio-of-quartal-shape",
+        "voice_leading.constraint": "chord-tone-sequence"
+      },
+      "preference": "recommended",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A quartal arpeggiation that produces no usable melodic material",
+      "anchor": "arpeggiate quartal voicings to discover melodies",
+      "source_page": 10
+    },
+    {
+      "rule_id": "goodrick-v2-cycle-7-drop-2-three-common-tones",
+      "name": "Expect three common tones and one voice moving by 4th in Cycle 7 Drop 2",
+      "when": {
+        "cycle.id": "7",
+        "voicing.drop_type": "Drop-2"
+      },
+      "then": {
+        "voice_leading.common_tone_count": 3,
+        "voice_leading.moving_voice_count": 1,
+        "voice_leading.moving_voice_interval": "4th"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Cycle 7 Drop 2 position with fewer than three common tones between adjacent chords",
+      "anchor": "2 - c.t. / 7 - c.t. / 3 -> 4th / 1 - c.t.",
+      "source_page": 159
+    },
+    {
+      "rule_id": "goodrick-v2-voice-leading-foundation-principle",
+      "name": "Ground every M-Lode voicing decision in voice-leading, not chord quality",
+      "when": {
+        "voicing.family": [
+          "quartal",
+          "triads",
+          "seventh-chords",
+          "tbn-i",
+          "tbn-ii",
+          "spread-clusters"
+        ]
+      },
+      "then": {
+        "voice_leading.constraint": "voice-leading-primary",
+        "harmonic.context": "voice-leading-derived"
+      },
+      "preference": "required",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An M-Lode voicing chosen by chord quality or function rather than voice-leading economy",
+      "anchor": "All of the M-Lode is based on voice-leading.",
+      "source_page": 22
+    }
   ]
 }
