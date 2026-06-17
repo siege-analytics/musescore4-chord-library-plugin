@@ -1,0 +1,196 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-03T05-51-57-pass-guitar-chords",
+    "stage": "s5",
+    "source_pdf": "Pass, Joe - Guitar Chords (2005).pdf",
+    "extracted_at": "2026-06-16T13:34:16+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "joe-pass",
+  "work_id": "guitar-chords",
+  "usage_notes": [
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-resolution-target",
+      "narrative": "Cma9 appears as the tonic resolution target in the major-sounds progression. Ch.2 p.15: 'The fifth chord is G13b5 (or Db7+9b5) which resolves into Cma9.' The major-ninth voicing is the landing point, not a passing color.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "cycle-and-turnaround-engine",
+      "narrative": "G7 anchors the seventh-sounds section. Ch.2 p.15: 'The first three chords illustrate movement around G7. The next four chords illustrate a substitute turn-around back to G13, followed by a cycle seventh movement.' Dominant sevenths drive both the local turnaround and the extended cycle.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "upper-extension-voicing-symbol-order",
+      "narrative": "Pass specifies that chord-symbol qualifier order equals voice order bottom-to-top. Ch.2 p.20: 'These chord symbols are written so that the order of appearance of notes coincides with the spelling of the chord symbol. For example, D7+9+5 means D7 with the raised 9th next, and the raised 5th on top.' The altered dominant D7+9+5 exemplifies the convention.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "sustain-common-tone-across-chord-change",
+      "narrative": "Pass instructs sustaining the lead note from one dominant voicing to the next. Ch.2 p.24: 'NOTE: Try to sustain lead notes from one chord to the next. For example, C9 to F13, sustain the G on top.' The common G is held across the II\u2013V motion rather than re-attacked.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "tritone-substitution-for-dominant",
+      "narrative": "The tritone substitute Db7+9b5 is presented as interchangeable with G13b5. Ch.2 p.15: 'The fifth chord is G13b5 (or Db7+9b5) which resolves into Cma9.' The parenthetical equivalence signals the substitution as a practical re-spelling, not a separate color.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "altered-upper-structure-bottom-to-top-order",
+      "narrative": "The altered dominant D7+9+5 demonstrates the voicing-layer convention. Ch.2 p.20: 'D7+9+5 means D7 with the raised 9th next, and the raised 5th on top.' Each suffix maps directly to a voice layer ascending from the seventh-chord shell.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "interchangeable-approach-chord-multiple-resolutions",
+      "narrative": "Pass treats diminished chords as freely interchangeable approach chords that can resolve to multiple targets. Ch.2 p.15: 'Resolve the last chord in this sequence into any chord. For example: (1) Dm7 \u2014 G7 \u2014 Cma7, or (2) Em7 \u2014 Eb9 \u2014 Dm9 \u2014 Db9.' The open-resolution prescription underscores diminished's non-committed approach function.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "substitute-for-dominant-seventh-flat-nine",
+      "narrative": "Pass explicitly substitutes diminished chords for 7b9 harmony in a minor-key context. Ch.2 p.15: 'Use of diminished chords for seventh flat ninth chord movement, utilizing the basic pattern of A7 \u2014 Dm \u2014 G7 \u2014 C.' The diminished voicing replaces the A7b9 functional slot while retaining the approach-tone content.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "sustained-color-before-cycle-resolution",
+      "narrative": "Augmented chords are held as a sustained color before resolving chromatically into a cycle. Ch.2 p.15: 'The first six chords are basically G aug. Movement is used chromatically to get to the basic cycle (A7 \u2014 D7 \u2014 G).' The prescription is to sustain the augmented sound across multiple voicings rather than move through it quickly.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "resolution-target-from-half-diminished",
+      "narrative": "G aug serves as the final resolution target in the half-diminished-to-augmented passage. Ch.2 p.15: 'A7b9 to Dm7b5 resolving finally to G aug.' The augmented chord receives the cadence rather than a tonic major, functioning as an open, unresolved color endpoint.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "ii-chord-with-chromatic-approach-to-dominant",
+      "narrative": "Dm7 initiates the minor-seventh-to-seventh passage and resolves via a chromatic intermediate. Ch.2 p.15: 'First four chords illustrate movement in Dm7, resolving into Ab13 to G13.' The chromatic Ab13 is inserted as an approach dominant between the ii-chord and the diatonic V13.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "ii-chord-in-half-dim-to-dominant-cadence",
+      "narrative": "Dm7b5 appears as the ii\u00b0 chord in a ii\u00f8\u2013V7b9 minor cadence and again in a ii\u00f8\u2013V aug context. Ch.2 p.15: 'A7b9 to Dm7b5 resolving finally to G aug' and 'Dm7b5 chords to G aug. Notice the chords used to obtain these sounds.' The half-diminished functions as the ii chord in both cadential sequences.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "v7b9-in-half-dim-dominant-cadence",
+      "narrative": "A7b9 precedes Dm7b5 in the ii\u00f8\u2013V7b9 passage. Ch.2 p.15: 'A7b9 to Dm7b5 resolving finally to G aug.' The b9 dominant is the V chord in a minor-key ii\u00f8\u2013V pairing, with the cadence landing on an augmented rather than a tonic minor chord.",
+      "source_principle_ids": [],
+      "source_work_id": "guitar-chords",
+      "references": [
+        {
+          "source": "guitar-chords",
+          "citation": "Ch.2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}
