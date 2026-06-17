@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: martin-taylor\nWork id: complete-jazz-guitar-method\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-05-28T15-05-20-taylor-complete-method-compilation\nstage: s3\nsource_pdf: 883234647-Martin-Taylors-Complete-Jazz-Guitar-Method-Compilation-Master-Jazz-Guitar-ChordMelody-Walking-Basslines-SingleNote-Soloing-Play-Jazz-Guitar-Full-Downl.pdf\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:56:04+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 complete-jazz-guitar-method\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\nMartin Taylor's Complete Jazz Guitar Method Compilation (Fundamental Changes, 2015) is a 408-page omnibus combining three method volumes \u2014 Chord-Melody, Walking Basslines, and Single-Note Soloing \u2014 covering the core craft of solo jazz guitar playing in Taylor's tradition.\n\nFor this distillation run, the source PDF rendered as severely degraded OCR. The front matter that was sampled for table-of-contents extraction contained only digital-storefront marketing (product page boilerplate, unrelated catalog listings, pricing badges) and no recoverable book structure. The body OCR (~83KB across 408 pages, roughly 206 chars/page) returned almost exclusively page-end markers, separator rules, dashes and dollar signs from the underlying notation engraving, and a small number of stray heading-like strings ('BEGINNING OF THE END', 'BEGINNING OF THE BOOK', 'THEME: SUMMER NIGHT', 'TRANSLATION AND REVIEW BY A FRIEND') that do not correspond to identifiable chapter or section divisions in the actual published volume.\n\nBecause no extractable prose was recovered, this run produced one synthetic chapter spanning the full page range and zero verbatim quotes. The compilation's actual content \u2014 Taylor's chord-melody voicing system, walking-bass-with-chord-comping construction, and bebop-line vocabulary for single-note soloing \u2014 is not represented in the audit trail and would require a re-OCR with a different vision pipeline or a clean source PDF before any meaningful systems extraction can be attempted.\n\nThe scaffolding produced here (single chapter, empty quotes, this summary, downstream stub systems) is deliberately honest about the OCR failure rather than fabricated to fill schema slots. A re-OCR ticket is the appropriate follow-up; the systems and STATEMENT produced in s4 will be _pending: stubs documenting the gap, not extractions from the source.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-05-28T15-05-20-taylor-complete-method-compilation\nstage: s3\nsource_pdf: 883234647-Martin-Taylors-Complete-Jazz-Guitar-Method-Compilation-Master-Jazz-Guitar-ChordMelody-Walking-Basslines-SingleNote-Soloing-Play-Jazz-Guitar-Full-Downl.pdf\nsource_pages: 1-408\nmodel: claude-haiku\nextracted_at: 2026-05-28T23:55:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Martin Taylor's Complete Jazz Guitar Method Compilation\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 contains no load-bearing prose passages. The OCR transcript for Martin Taylor's Complete Jazz Guitar Method Compilation surfaced only storefront/marketing metadata, page-end markers, and degraded notation artifacts (dashes, dollar signs, fragmentary OCR strings like 'BEGINNING OF THE END' and 'THEME: SUMMER NIGHT'). No teaching prose, technique definitions, rules, or annotated examples were recoverable from the 408-page compilation, which is known to combine Chord-Melody, Walking Basslines, and Single-Note Soloing volumes but whose body text the OCR rendered as essentially empty. Quotes[] is intentionally empty; nothing was fabricated to fill the chapter-guideline floor.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-05-28T15-05-20-taylor-complete-method-compilation\nstage: s2\nsource_pdf: 883234647-Martin-Taylors-Complete-Jazz-Guitar-Method-Compilation-Master-Jazz-Guitar-ChordMelody-Walking-Basslines-SingleNote-Soloing-Play-Jazz-Guitar-Full-Downl.pdf\nsource_pages: 1-408\nmodel: claude-sonnet\nextracted_at: 2026-05-28T23:55:30+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Martin Taylor's Complete Jazz Guitar Method Compilation\n\n_Pages 1-408._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n_No load-bearing passages identified in this chapter._\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for martin-taylor/complete-jazz-guitar-method; use _pending: when unsure about kind."
+}

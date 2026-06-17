@@ -1,0 +1,15 @@
+---
+run_id: 2026-06-12T09-48-05-ligon-connecting-chords
+stage: s3
+source_pdf: Ligon, Bert - Connecting Chords with Linear Harmony.pdf
+source_pages: 53-68
+model: claude-haiku
+extracted_at: 2026-06-15T20:28:29+00:00
+schema_version: 0.1
+---
+
+# Chapter 5 — Outline No.2
+
+_Distillation; backed by `chapters/ch05.md`._
+
+Outline No.2 teaches the use of diatonic passing tones within an arpeggiated ii-V progression, with the core discipline being the punch line rule—reserving the target note (the third of the ii chord, which is the seventh of V7) for the V7 chord itself rather than giving it away early as a passing tone. The chapter introduces key techniques including encircling the target note to create tension, adding notes before, within, or after motives, and inverting the standard ascending arpeggio (1-3-5-7) to descend in various ways, as heard in Round Midnight variants. Charlie Parker's characteristic move of combining Outline No.2 with Outline No.1 appears throughout his solos, and the chapter demonstrates that fragmenting these outlines—omitting the root or beginning on the third instead—preserves harmonic clarity while emphasizing the target note, since the bass covers the missing root. These principles generalize to minor ii-V progressions and any root-movement-by-fifths progression, making Outline No.2 a flexible structural tool for jazz improvisation.
