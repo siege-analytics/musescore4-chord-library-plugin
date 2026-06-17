@@ -1,0 +1,905 @@
+{
+  "schema_version": "0.1",
+  "master": "bert-ligon",
+  "work": "connecting-chords-with-linear-harmony",
+  "source_pdf": "Ligon, Bert - Connecting Chords with Linear Harmony.pdf",
+  "run_id": "2026-06-12T09-48-05-ligon-connecting-chords",
+  "rule_id_prefix": "ligon-",
+  "chapters": [
+    {
+      "chapter": {
+        "n": 1,
+        "title": "Introduction",
+        "summary": "Establishes harmonic specificity as the central pedagogical goal and identifies dependency on the rhythm section as the central problem. Defines three stances toward harmony — specificity, generalization, and ignoring — and names the book's methodology as descriptive (extracted from transcriptions) and linear (rather than vertical).",
+        "key_phrases": ["harmonic specificity", "linear harmony", "descriptive methodology", "anticipation and suspension", "rhythm of harmonic changes"]
+      },
+      "sections": [
+        {
+          "title": "Pedagogical goals and stances toward harmony",
+          "page_range": [1, 2],
+          "summary": "Names rhythmic coherence and harmonic specificity as the dual aims, frames rhythm-section dependency as the failure mode, and lays out the three stances. Defines specificity in terms of proper 3rds, resolving 7ths, and respect for chord-symbol alterations.",
+          "key_phrases": ["rhythmically coherent", "harmonically specific", "dependency on the rhythm section", "three approaches", "proper thirds", "sevenths resolving appropriately"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-prefer-harmonic-specificity"},
+            {"rule_id_ref": "ligon-vagueness-is-informed-choice"}
+          ],
+          "paragraphs": [
+            {
+              "page": 1,
+              "summary": "Sets the goal: students must play rhythmically coherent and harmonically specific lines, and lays out the dependency failure mode the book addresses.",
+              "key_phrases": ["rhythmically coherent", "harmonically specific lines", "skate over the top"],
+              "verbatim_anchor": "One of the goals of teaching jazz improvisation is having the students play rhythmically coherent and harmonically specific lines.",
+              "engine_rules": [{"rule_id_ref": "ligon-prefer-harmonic-specificity"}]
+            },
+            {
+              "page": 2,
+              "summary": "Vagueness, when used by experts, is an informed choice that requires knowing exactly which tones are being avoided.",
+              "key_phrases": ["deliberately vague", "knowing the harmonic implications", "tones to avoid"],
+              "verbatim_anchor": "When an experienced jazz improviser plays deliberately vague, he does so knowing the harmonic implications, and therefore knowing just what tones to avoid.",
+              "engine_rules": [{"rule_id_ref": "ligon-vagueness-is-informed-choice"}]
+            }
+          ]
+        },
+        {
+          "title": "Linear vs vertical analysis",
+          "page_range": [4, 4],
+          "summary": "Redefines consonance/dissonance functionally (dissonance has tendency of motion), defines harmonic rhythm, and warns against vertical labeling. Linear analysis accommodates anticipation and suspension across the barline.",
+          "key_phrases": ["linear manner", "harmonic rhythm", "anticipated or suspended", "tendency of motion"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-linear-not-vertical"}
+          ],
+          "paragraphs": [
+            {
+              "page": 4,
+              "summary": "Music is heard and conceived linearly; vertical labeling distorts how anticipation and suspension function.",
+              "key_phrases": ["vertical arrangement", "linear manner", "anticipated or suspended"],
+              "verbatim_anchor": "Do not fall into the trap of labeling everything by its vertical arrangement. Music is heard and conceived in a linear manner and should be studied in the same way.",
+              "engine_rules": [{"rule_id_ref": "ligon-linear-not-vertical"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 2,
+        "title": "Linear Harmony",
+        "summary": "Defines linear harmony and the guide-tone engine. The 3rd is the most harmonically specific tone; the 7th is the restless pointer that resolves down to the next chord's 3rd. Introduces the three outlines as stepwise descent (No.1), ascending arpeggio (No.2), and descending arpeggio (No.3), and reframes them as skeletons rather than constraints.",
+        "key_phrases": ["guide tone", "third as target", "seventh as pointer", "three outlines", "voice leading", "outlines as skeletons"]
+      },
+      "sections": [
+        {
+          "title": "Bass-line counterpoint and root omission",
+          "page_range": [5, 5],
+          "summary": "Lines make sense in relation to the bass line, not assumed piano voicings. Omitting the root leaves eleven candidate pitches, opening the harmonic palette without losing clarity.",
+          "key_phrases": ["bass line", "eliminating the root", "eleven other notes", "counterpoint"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-bass-as-counterpoint-reference"},
+            {"rule_id_ref": "ligon-omit-root-from-line"}
+          ],
+          "paragraphs": [
+            {
+              "page": 5,
+              "summary": "Improviser builds lines against the bass; doubling the root produces parallel octaves and erases counterpoint.",
+              "key_phrases": ["well placed notes", "in relation to the bass line", "parallel octaves"],
+              "verbatim_anchor": "The experienced jazz improviser does not depend on a piano playing chords for his lines to make sense. The lines make sense because of well chosen and well placed notes in relation to the bass line.",
+              "engine_rules": [{"rule_id_ref": "ligon-bass-as-counterpoint-reference"}, {"rule_id_ref": "ligon-omit-root-from-line"}]
+            }
+          ]
+        },
+        {
+          "title": "Guide tones — third and seventh",
+          "page_range": [5, 6],
+          "summary": "The 3rd is the most harmonically specific tone; even alone over the bass it spells the chord quality. The 7th is restless and resolves downward to the 3rd of the next chord — this is the engine of linear harmony.",
+          "key_phrases": ["third as most specific", "seventh as pointer", "sevenths resolve to thirds", "ninths to fifths"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-third-as-primary-target"},
+            {"rule_id_ref": "ligon-seventh-resolves-to-third"},
+            {"rule_id_ref": "ligon-ninth-resolves-to-fifth"},
+            {"rule_id_ref": "ligon-third-before-seventh"}
+          ],
+          "paragraphs": [
+            {
+              "page": 5,
+              "summary": "F alone over D in the bass spells D minor; the 3rd carries quality on its own.",
+              "key_phrases": ["minor quality", "specific counterpoint", "two notes are being played"],
+              "verbatim_anchor": "F reveals the minor quality of the chord and is the best choice for harmonically specific counterpoint over the D in the bass.",
+              "engine_rules": [{"rule_id_ref": "ligon-third-as-primary-target"}]
+            },
+            {
+              "page": 5,
+              "summary": "The 7th is restless and resolves stepwise down to the 3rd of the next chord, driving voice leading.",
+              "key_phrases": ["restless", "resolve downward", "seventh is the pointer"],
+              "verbatim_anchor": "the 7th of chords in these progressions resolve downward to the third of the following chord. The seventh is the pointer.",
+              "engine_rules": [{"rule_id_ref": "ligon-seventh-resolves-to-third"}]
+            },
+            {
+              "page": 6,
+              "summary": "Linear harmony defined: smooth connection of significant tones with care for rhythmic placement and voice leading.",
+              "key_phrases": ["good voice leading", "sevenths resolve to thirds", "ninths to fifths", "thirds earlier"],
+              "verbatim_anchor": "Good voice leading is observed; sevenths resolve to thirds, ninths to fifths.",
+              "engine_rules": [{"rule_id_ref": "ligon-ninth-resolves-to-fifth"}, {"rule_id_ref": "ligon-third-before-seventh"}]
+            }
+          ]
+        },
+        {
+          "title": "The three outlines",
+          "page_range": [6, 10],
+          "summary": "Outline No.1 is stepwise descent from 3rd of ii through V7 to 3rd of I. Outline No.2 is ascending arpeggio 1-3-5-7 of ii resolving to 3rd of V7. Outline No.3 is descending arpeggio 5-3-1 of ii adding 7 below, resolving to 3rd of V7 with target on the downbeat. Outlines are enabling skeletons, not constraints.",
+          "key_phrases": ["Outline No.1", "Outline No.2", "Outline No.3", "stepwise", "ascending arpeggio", "descending arpeggio", "skeletons"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outline-1-stepwise-descent"},
+            {"rule_id_ref": "ligon-outline-2-ascending-arpeggio"},
+            {"rule_id_ref": "ligon-outline-3-descending-arpeggio"},
+            {"rule_id_ref": "ligon-outlines-not-constraints"}
+          ],
+          "paragraphs": [
+            {
+              "page": 6,
+              "summary": "Outline No.1 — third on beat one, seventh on beat four, stepwise descent through ii-V-I.",
+              "key_phrases": ["third on beat one", "beat four", "walking quarter note", "stepwise line"],
+              "verbatim_anchor": "By moving down the scale, a stepwise line is created from the third of the ii chord through the V7 chord and down to the third of the I chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-1-stepwise-descent"}]
+            },
+            {
+              "page": 8,
+              "summary": "Outline No.2 — ascending 1-3-5 arpeggio of ii with 7th added above, resolving to 3rd of V7.",
+              "key_phrases": ["ascending arpeggio", "1-3-5-7", "restless tone above"],
+              "verbatim_anchor": "Outline no.2 is an ascending arpeggio of the ii chord (1-3-5) with the added restless tone (7) above the chord, which resolves to the third of the V7 chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-2-ascending-arpeggio"}]
+            },
+            {
+              "page": 9,
+              "summary": "Outline No.3 — descending arpeggio 5-3-1 with 7 below, seventh on upbeat and target third of V7 on the downbeat.",
+              "key_phrases": ["descending arpeggio", "5-3-1", "seventh below", "upbeat", "downbeat"],
+              "verbatim_anchor": "outline no.3 begins with the descending arpeggio of the ii chord (5-3-1), adds the restless tone (7) below the chord, which resolves to the third of the V7 chord. The seventh usually occurs on the upbeat; the target third on the strong downbeat.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-3-descending-arpeggio"}]
+            },
+            {
+              "page": 6,
+              "summary": "Outlines are enabling skeletons that inspire creativity rather than constrain it.",
+              "key_phrases": ["enabling skeletons", "inspire creativity", "similar skeletons"],
+              "verbatim_anchor": "The outlines are skeletons. Our bodies all have similar skeletons yet we all look unique.",
+              "engine_rules": [{"rule_id_ref": "ligon-outlines-not-constraints"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 3,
+        "title": "Embellishing Devices",
+        "summary": "Systematic embellishment vocabulary: chromaticism is directional (flat continues down, sharp continues up); UNT is diatonic, LNT is chromatic; octave-displacement leaps occur after the guide tone from downbeat to upbeat. Introduces C.E.S.H. as the descending chromatic figure from root of ii to 3rd of V7, and borrowed tones (b9/#9/b13) from the parallel minor.",
+        "key_phrases": ["chromatic direction", "UNT diatonic", "LNT chromatic", "octave displacement", "3-to-9 leap", "C.E.S.H.", "parallel minor borrowing"]
+      },
+      "sections": [
+        {
+          "title": "Chromaticism and neighbor tones",
+          "page_range": [11, 11],
+          "summary": "Altered chromatic tones continue in their altered direction. The asymmetric convention is diatonic UNT, chromatic LNT — the common practice from Mozart to Parker.",
+          "key_phrases": ["downward tendencies", "upward tendencies", "diatonic UNT", "chromatic LNT"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-chromatic-direction-continues"},
+            {"rule_id_ref": "ligon-unt-diatonic-lnt-chromatic"}
+          ],
+          "paragraphs": [
+            {
+              "page": 11,
+              "summary": "Flatted notes pull downward, sharped notes pull upward.",
+              "key_phrases": ["chromatically altered", "flatted notes", "sharped notes"],
+              "verbatim_anchor": "Chromatically altered tones tend to continue in the direction in which they have been altered. Flatted notes are lowered and therefore have downward tendencies, sharped notes are raised and have upward tendencies.",
+              "engine_rules": [{"rule_id_ref": "ligon-chromatic-direction-continues"}]
+            },
+            {
+              "page": 11,
+              "summary": "Common-practice convention: diatonic upper neighbor, chromatic lower neighbor.",
+              "key_phrases": ["common practice", "upper neighbor tone", "lower neighbor tone"],
+              "verbatim_anchor": "The common practice (from Mozart to Charlie Parker) is to use the diatonic (from the key) upper neighbor tone (UNT) and the chromatic lower neighbor tone (LNT).",
+              "engine_rules": [{"rule_id_ref": "ligon-unt-diatonic-lnt-chromatic"}]
+            }
+          ]
+        },
+        {
+          "title": "Octave displacement",
+          "page_range": [14, 14],
+          "summary": "Leaps occur after the guide tone, from downbeat to upbeat, never over the barline. The 3-to-9 (or 3-to-b9) leap replaces a simple descending second with a dramatic seventh skip.",
+          "key_phrases": ["leap after guide-tone", "downbeat to upbeat", "never over barline", "3rd up to 9th"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-octave-displacement-placement"},
+            {"rule_id_ref": "ligon-3-up-to-9-displacement"}
+          ],
+          "paragraphs": [
+            {
+              "page": 14,
+              "summary": "Octave-displacement leaps are placed after the guide tone and never cross the barline.",
+              "key_phrases": ["after the main guide-tone", "down beat to upbeat", "never over the barline"],
+              "verbatim_anchor": "Leaps most often occur after the main guide-tone, leap from down beat to upbeat; never over the barline and rarely from a weak beat to a strong beat.",
+              "engine_rules": [{"rule_id_ref": "ligon-octave-displacement-placement"}]
+            },
+            {
+              "page": 14,
+              "summary": "The descending 3-to-2 step becomes a dramatic 3-to-9 (or 3-to-b9) leap when register is displaced.",
+              "key_phrases": ["3rd up to 9th", "flat 9", "leap of a seventh", "skipped over"],
+              "verbatim_anchor": "3rd up to the 9th or flat 9th: A simple descending scale step (3-2) becomes dramatic when a descending second is replaced with a leap of a seventh.",
+              "engine_rules": [{"rule_id_ref": "ligon-3-up-to-9-displacement"}]
+            }
+          ]
+        },
+        {
+          "title": "C.E.S.H. and parallel-minor borrowing",
+          "page_range": [15, 16],
+          "summary": "C.E.S.H. is the chromatic descent from root of ii to 3rd of V7 (in C: D-C#-C-B). Borrowed tones b9, #9, and b13 from the parallel minor enrich the dominant.",
+          "key_phrases": ["C.E.S.H.", "chromatic elaboration", "borrowed tones", "parallel minor", "flat nine", "sharp nine", "flat 13"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-cesh-descending-chromatic"},
+            {"rule_id_ref": "ligon-borrowed-parallel-minor"}
+          ],
+          "paragraphs": [
+            {
+              "page": 15,
+              "summary": "C.E.S.H. is the descending chromatic line from root of ii to 3rd of V7.",
+              "key_phrases": ["Jerry Coker", "Chromatic Elaboration of Static Harmony", "D-C#-C-B"],
+              "verbatim_anchor": "Jerry Coker's acronym for Chromatic Elaboration of Static Harmony. The most common example in a ii - V progression is the descending movement from the root of the ii chord to the third of the V7 chord, In the key of C (D minor - G7), the movement of D-C#-C-B.",
+              "engine_rules": [{"rule_id_ref": "ligon-cesh-descending-chromatic"}]
+            },
+            {
+              "page": 16,
+              "summary": "Borrowed altered extensions on V7 come from the parallel minor and carry a stronger downward pull.",
+              "key_phrases": ["A-flat", "B-flat", "E-flat", "parallel key of C minor", "downward pull"],
+              "verbatim_anchor": "Over G7, the dominant of C major, jazz musicians often use A-flat (flat 9) , B-flat (sharp 9) and E-flat (flat 13) from the parallel key of C minor.",
+              "engine_rules": [{"rule_id_ref": "ligon-borrowed-parallel-minor"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 4,
+        "title": "Outline No.1",
+        "summary": "Deep treatment of Outline No.1 (stepwise descent). Covers iteration for eighth-note motion, the generalization to any root-down-a-fifth progression, C.E.S.H. across all outlines, the encirclement effect of the chromatic leading tone, the linear (not vertical) justification of chromaticism, the principle that all 12 chromatic pitches are usable when targets land on rhythmically significant spots, scale breaks to avoid premature targets, embellishment stripping as analytical reduction, and compound melody from lower tones.",
+        "key_phrases": ["Outline No.1", "iteration", "root motion down in fifths", "C.E.S.H.", "encircling", "linear justification", "all 12 pitches", "break the scale", "stripping embellishments", "compound melody"]
+      },
+      "sections": [
+        {
+          "title": "The simple form and rhythmic devices",
+          "page_range": [18, 21],
+          "summary": "The simple form of Outline No.1 starts on the 3rd of ii, descends to the 3rd of V7, continues up the arpeggio, and rests on the 3rd of I. Borrowed b9 from parallel minor sits naturally over V7. Iteration converts the quarter-note skeleton into eighth-note motion.",
+          "key_phrases": ["simplest form", "third of ii", "third of V7", "parallel key of F minor", "iteration"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outline-1-stepwise-descent"},
+            {"rule_id_ref": "ligon-borrowed-parallel-minor"},
+            {"rule_id_ref": "ligon-iteration-for-eighth-motion"}
+          ],
+          "paragraphs": [
+            {
+              "page": 18,
+              "summary": "Simplest Outline No.1: 3rd of ii down to 3rd of V7, continue up the arpeggio, rest on 3rd of I.",
+              "key_phrases": ["simplest forms", "3rd of the ii chord", "tonic chord"],
+              "verbatim_anchor": "Here is the pattern in one of its simplest forms: beginning on the 3rd of the ii chord (G minor) down to the 3rd of the V7 chord (C7) and continuing up the arpeggio.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-1-stepwise-descent"}]
+            },
+            {
+              "page": 21,
+              "summary": "Iteration repeats notes to fill quarter-note outlines with eighth-note motion.",
+              "key_phrases": ["quarter note values", "eighth note motion", "iteration"],
+              "verbatim_anchor": "With the outline in quarter note values, an easy way to get eighth note motion is to repeat notes, sometimes called iteration.",
+              "engine_rules": [{"rule_id_ref": "ligon-iteration-for-eighth-motion"}]
+            }
+          ]
+        },
+        {
+          "title": "Generalization and C.E.S.H.",
+          "page_range": [29, 43],
+          "summary": "Outlines apply to any root-down-a-fifth progression regardless of chord quality. C.E.S.H. appears with all three outlines. The C.E.S.H. chromatic tone acts as a leading tone to the ii root, briefly reversing direction and encircling that root. Chromaticism is justified linearly: every chromatic note points to a target. With targets on strong beats, all 12 chromatic pitches can be used without losing clarity.",
+          "key_phrases": ["root movement down in fifths", "all three outlines", "encircling the root", "linear context", "all twelve chromatic pitches"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outlines-generalize-to-fifths"},
+            {"rule_id_ref": "ligon-cesh-applies-all-outlines"},
+            {"rule_id_ref": "ligon-cesh-encircles-ii-root"},
+            {"rule_id_ref": "ligon-chromatic-justified-linearly"},
+            {"rule_id_ref": "ligon-all-twelve-pitches-target-anchored"}
+          ],
+          "paragraphs": [
+            {
+              "page": 29,
+              "summary": "Outlines generalize to any progression with root motion down a fifth, regardless of chord quality.",
+              "key_phrases": ["many other progressions", "down in fifths", "regardless of the quality"],
+              "verbatim_anchor": "These outlines will work with many other progressions. Anytime the root movement is down in fifths any of theses outlines will work, regardless of the quality of the chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-outlines-generalize-to-fifths"}]
+            },
+            {
+              "page": 39,
+              "summary": "C.E.S.H. chromatic tone pulls upward as a leading tone to ii, momentarily reversing direction and encircling the root before resolving to 3rd of V.",
+              "key_phrases": ["leading tone", "pulls upwards", "encircling the root of the ii"],
+              "verbatim_anchor": "The chromatic altered tone stops the descent of the line; since it is a leading tone to the ii chord it pulls upwards. Often this momentarily changes the direction of the line, encircling the root of the ii chord before descending through the diatonic tones and finally resolving to the third of the V chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-cesh-encircles-ii-root"}, {"rule_id_ref": "ligon-cesh-applies-all-outlines"}]
+            },
+            {
+              "page": 38,
+              "summary": "Linear context, not vertical snapshot, justifies the chromatic note: it points to a target and creates and releases tension.",
+              "key_phrases": ["strictly vertical", "linear context", "point to the target", "creating and releasing tension"],
+              "verbatim_anchor": "Viewing harmony as strictly vertical, these notes would not sound good; but when viewing them in a linear context we see and hear how these notes point to the target notes and make the line more interesting by creating and releasing tension.",
+              "engine_rules": [{"rule_id_ref": "ligon-chromatic-justified-linearly"}]
+            },
+            {
+              "page": 43,
+              "summary": "All twelve pitches can be used in a single passage if targets sit on strong beats and chromatic notes resolve as expected.",
+              "key_phrases": ["twelve chromatic pitches", "harmonically clear", "rhythmically significant"],
+              "verbatim_anchor": "All twelve chromatic pitches are used in this example, yet it remains harmonically clear; it is not random chromaticism. Target notes occur in rhythmically significant spots, non-harmonic chromatic notes resolve when and where we expect them.",
+              "engine_rules": [{"rule_id_ref": "ligon-all-twelve-pitches-target-anchored"}]
+            }
+          ]
+        },
+        {
+          "title": "Scale breaks, reduction, and compound melody",
+          "page_range": [32, 45],
+          "summary": "An ascending scale should break to avoid the next chord's target note, preserving the punch line. Stripping embellishments reveals the underlying outline. Lower tones can imply a counterline, producing compound melody.",
+          "key_phrases": ["ascending scale breaks", "stripping insertions", "counterline", "compound melody"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-break-scale-to-avoid-target"},
+            {"rule_id_ref": "ligon-strip-embellishments-as-reduction"},
+            {"rule_id_ref": "ligon-compound-melody-from-lower-tones"}
+          ],
+          "paragraphs": [
+            {
+              "page": 32,
+              "summary": "The ascending scale skips the upcoming target note (e.g., A natural over the next F7).",
+              "key_phrases": ["ascending scale breaks", "skips the A natural", "target note for the F7"],
+              "verbatim_anchor": "Notice that the ascending scale breaks to avoid the upcoming target note. In ex.57, the scale that starts on beat three from C, goes to G, skips the A natural because it is the target note for the F7 chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-break-scale-to-avoid-target"}]
+            },
+            {
+              "page": 45,
+              "summary": "Taking away embellishments reveals interesting lines by realigning the outline's original notes.",
+              "key_phrases": ["taking away the insertions", "realignment", "original notes"],
+              "verbatim_anchor": "taking away the insertions, ornaments, and embellishments also reveals interesting lines by the realignment of the original notes of the outline.",
+              "engine_rules": [{"rule_id_ref": "ligon-strip-embellishments-as-reduction"}]
+            },
+            {
+              "page": 45,
+              "summary": "Lower tones of a line may imply a counterline below — compound melody.",
+              "key_phrases": ["counterline", "arrows below the staff", "compound melody"],
+              "verbatim_anchor": "There is a counterline (indicated by the arrows below the staff) implied by some of the lower tones making this a compound melody.",
+              "engine_rules": [{"rule_id_ref": "ligon-compound-melody-from-lower-tones"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 5,
+        "title": "Outline No.2",
+        "summary": "Outline No.2 is the ascending arpeggio with diatonic passing tones. The central discipline is the punch line rule: the V7 target tone (between 5 and 7 of ii) is withheld until the V7 chord arrives. The outline generalizes to minor ii-V, allows embellishment before/within/after the motive, may be encircled or inverted, and combines fluently with Outline No.1. Fragments remain clear when target tones are emphasized.",
+        "key_phrases": ["Outline No.2", "diatonic passing tones", "punch line rule", "minor ii-V", "encircling", "inverted direction", "outline combinations", "fragments"]
+      },
+      "sections": [
+        {
+          "title": "Passing tones and the punch line rule",
+          "page_range": [52, 60],
+          "summary": "Outline No.2 admits diatonic passing tones between chord tones, but the tone between 5 and 7 of ii is the V7 target — withheld until the V7 chord. Outlines also work for ii(half-dim)-V7 in minor. Embellishments may be added before, within, or after the motive. Encirclement creates tension and ambiguity.",
+          "key_phrases": ["diatonic passing tones", "punch line", "minor ii-V", "before within after", "encircle"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outline-2-diatonic-passing"},
+            {"rule_id_ref": "ligon-punch-line-rule"},
+            {"rule_id_ref": "ligon-minor-ii-V-applicability"},
+            {"rule_id_ref": "ligon-add-notes-before-within-after"},
+            {"rule_id_ref": "ligon-encircle-target"},
+            {"rule_id_ref": "ligon-outline-2-standard-direction"}
+          ],
+          "paragraphs": [
+            {
+              "page": 54,
+              "summary": "The arpeggiated structure of Outline No.2 invites diatonic passing tones.",
+              "key_phrases": ["arpeggiated outline", "diatonic passing tones"],
+              "verbatim_anchor": "Passing tones: Since outline no.2 is an arpeggiated outline, it lends itself to diatonic passing tones between the chord tones.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-2-diatonic-passing"}]
+            },
+            {
+              "page": 54,
+              "summary": "Punch line rule: the tone between 5 and 7 of ii is the V7 target and must be saved.",
+              "key_phrases": ["punch line", "denouement", "saved for the V7", "ahead of time"],
+              "verbatim_anchor": "The tone between the 5th and 7th of the ii chord is the target note of the V7 chord. This tone is usually saved for the V7 chord. It is the punch line, the denouement of the story, that is not given away by using it ahead of time as a passing tone.",
+              "engine_rules": [{"rule_id_ref": "ligon-punch-line-rule"}]
+            },
+            {
+              "page": 52,
+              "summary": "All outlines apply equally to ii(half-dim)-V7 in minor.",
+              "key_phrases": ["ii@ - V7", "minor", "down in fifths"],
+              "verbatim_anchor": "All the outlines work as well for ii@ - V7 in minor as they do in major.",
+              "engine_rules": [{"rule_id_ref": "ligon-minor-ii-V-applicability"}]
+            },
+            {
+              "page": 60,
+              "summary": "Canonical Outline No.2: start on root of ii and ascend 1-3-5-7.",
+              "key_phrases": ["root of the ii", "1-3-5-7"],
+              "verbatim_anchor": "Outline no.2 usually begins on the root of the ii chord and spells the arpeggio to the seventh: 1-3-5-7.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-2-standard-direction"}]
+            }
+          ]
+        },
+        {
+          "title": "Variations, combinations, and fragments",
+          "page_range": [58, 63],
+          "summary": "Inverted Outline No.2 descends the arpeggio. Breaking the punch line is mitigated by extending to the 9th of ii. Multi-outline combinations (No.2 then No.1) are common. Fragments retain clarity when the 3rd of ii is emphasized — even with the root omitted (bass covers it).",
+          "key_phrases": ["inverted direction", "ninth of the ii", "outline no.2 into outline no.1", "fragments", "emphasize the target"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outline-2-inverted"},
+            {"rule_id_ref": "ligon-punch-line-break-with-extension"},
+            {"rule_id_ref": "ligon-combine-outlines-2-then-1"},
+            {"rule_id_ref": "ligon-fragment-preserves-clarity"}
+          ],
+          "paragraphs": [
+            {
+              "page": 61,
+              "summary": "Inverted Outline No.2 descends the ii arpeggio.",
+              "key_phrases": ["turned upside down", "descends"],
+              "verbatim_anchor": "Instead of ascending the arpeggio of the ii chord, the arpeggio is turned upside down and descends in some way.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-2-inverted"}]
+            },
+            {
+              "page": 58,
+              "summary": "Premature use of the V7 target tone is softened by extending the line to the 9th of ii.",
+              "key_phrases": ["breaks the rule", "extension of the line", "ninth of the ii"],
+              "verbatim_anchor": "The F sharp appears as a passing tone before the D7 chord, but the negative effect is diminished by the extension of the line to the ninth of the ii chord.",
+              "engine_rules": [{"rule_id_ref": "ligon-punch-line-break-with-extension"}]
+            },
+            {
+              "page": 59,
+              "summary": "Parker combines outlines — No.2 then No.1 — in many guises.",
+              "key_phrases": ["outline no.2", "ends with outline no.1", "Parker solos"],
+              "verbatim_anchor": "Parker begins with outline no.2 and ends with outline no.1. There are many occurrences of this line in different guises throughout Parker solos.",
+              "engine_rules": [{"rule_id_ref": "ligon-combine-outlines-2-then-1"}]
+            },
+            {
+              "page": 63,
+              "summary": "Fragments preserve clarity by emphasizing the 3rd of ii while the bass covers the root.",
+              "key_phrases": ["root of the ii chord is left off", "no clarity loss", "covered by the bass"],
+              "verbatim_anchor": "These omissions take none of the clarity away from the lines. They all emphasize the target note (third of ii) even more, and the root of the chord is covered by the bass.",
+              "engine_rules": [{"rule_id_ref": "ligon-fragment-preserves-clarity"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 6,
+        "title": "Outline No.3",
+        "summary": "Outline No.3 features the descending arpeggio with 7 below and the signature 3-to-b9 leap that creates compound melody. The octave-displacement scale continuation is idiomatic. Outline No.3 has a special affinity for C.E.S.H. Lower pivot notes add angularity. Chromatic passing tones on weak beats preserve clarity. Outline-category labels matter less than harmonic clarity.",
+        "key_phrases": ["Outline No.3", "sus chords", "octave displacement variation", "3 to flat 9", "compound melody", "C.E.S.H. affinity", "lower pivot", "chromatic passing on weak beats"]
+      },
+      "sections": [
+        {
+          "title": "Sus chords and idiomatic variations",
+          "page_range": [65, 71],
+          "summary": "Dominant sus voicings are essentially ii-V together — any outline applies. Simple rhythms suffice. The octave-displacement variation continues down the scale and is common in every key. The 3-to-b9 leap creates compound melody. Outline No.3 has special affinity for C.E.S.H. A lower pivot note adds angularity.",
+          "key_phrases": ["sus chords", "octave displacement", "third to flat nine", "compound melody", "CESH affinity", "lower pivot"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-sus-equals-ii-V-for-outlines"},
+            {"rule_id_ref": "ligon-outline-3-octave-displacement-variation"},
+            {"rule_id_ref": "ligon-third-to-flat-nine-leap"},
+            {"rule_id_ref": "ligon-outline-3-cesh-affinity"},
+            {"rule_id_ref": "ligon-lower-pivot-note"}
+          ],
+          "paragraphs": [
+            {
+              "page": 65,
+              "summary": "Dominant sus voicings combine ii and V7 — outlines apply directly.",
+              "key_phrases": ["essentially ii and V7", "any of the outlines"],
+              "verbatim_anchor": "Since this sound is essentially the ii and V7 chord together, any of the outlines will work for this harmony.",
+              "engine_rules": [{"rule_id_ref": "ligon-sus-equals-ii-V-for-outlines"}]
+            },
+            {
+              "page": 66,
+              "summary": "Octave-displacement variation: continue down the scale across registers — very common.",
+              "key_phrases": ["continues down the scale", "octave displacement", "every major and minor key"],
+              "verbatim_anchor": "The second variation of outline no.3 that continues down the scale with octave displacement is very common.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-3-octave-displacement-variation"}]
+            },
+            {
+              "page": 66,
+              "summary": "The 3-to-b9 leap on the dominant creates compound melody — first/last four notes are the primary melody, the middle is a secondary answer.",
+              "key_phrases": ["leap from the third to the flat nine", "compound melody", "secondary answer"],
+              "verbatim_anchor": "The leap from the third to the flat nine on the dominant is one of its attractive elements; giving it characteristics of a compound melody.",
+              "engine_rules": [{"rule_id_ref": "ligon-third-to-flat-nine-leap"}]
+            },
+            {
+              "page": 68,
+              "summary": "Outline No.3 lends itself to C.E.S.H. more than the other outlines.",
+              "key_phrases": ["lends itself to the C.E.S.H.", "chromatic motion", "compound melody"],
+              "verbatim_anchor": "Outline no.3 seems to lend itself to the C.E.S.H. more than the other outlines, the chromatic motion often suggesting a compound melody.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-3-cesh-affinity"}]
+            },
+            {
+              "page": 71,
+              "summary": "A single note added below the outline adds angularity and rhythmic interest.",
+              "key_phrases": ["one note added below", "angularity", "rhythmic interest"],
+              "verbatim_anchor": "One note added below adds angularity and rhythmic interest to this outline.",
+              "engine_rules": [{"rule_id_ref": "ligon-lower-pivot-note"}]
+            }
+          ]
+        },
+        {
+          "title": "Chromatic passing and category blur",
+          "page_range": [73, 74],
+          "summary": "Chromatic passing tones do not blur harmonic clarity if diatonic tones land on strong beats. The taxonomic distinction between Outlines No.1 and No.3 sometimes blurs, but harmonic clarity (3rds and 7ths delineating harmony) is what matters.",
+          "key_phrases": ["chromatic passing tones", "strong beats", "function over taxonomy"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-chromatic-passing-on-weak-beats"},
+            {"rule_id_ref": "ligon-function-over-taxonomy"}
+          ],
+          "paragraphs": [
+            {
+              "page": 74,
+              "summary": "Chromatic passing tones preserve clarity when diatonic tones are on strong beats.",
+              "key_phrases": ["chromatic passing", "do not blur", "diatonic notes fall on strong beats"],
+              "verbatim_anchor": "These chromatic passing tones do not blur the distinct harmonic clarity as the diatonic notes fall on strong beats.",
+              "engine_rules": [{"rule_id_ref": "ligon-chromatic-passing-on-weak-beats"}]
+            },
+            {
+              "page": 73,
+              "summary": "Outline taxonomy may blur — what matters is the 3rds and 7ths delineating harmony.",
+              "key_phrases": ["blurs the distinction", "anybody's call", "harmonic clarity"],
+              "verbatim_anchor": "The central point is their harmonic clarity; thirds and seventh delineate the harmony.",
+              "engine_rules": [{"rule_id_ref": "ligon-function-over-taxonomy"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 7,
+        "title": "Outline Fragments",
+        "summary": "Outline fragments are partial versions that retain clarity when target tones are strategically placed. The minimal kernel is the 7th of ii resolving to the 3rd of V7. Fragments may omit the 3rd of ii if the V7 is anticipated and arpeggiated. Rhythmic placement — 7th on upbeat, target on downbeat — survives fragmentation.",
+        "key_phrases": ["outline fragments", "minimal kernel", "anticipated V7", "7 on upbeat", "target on downbeat"]
+      },
+      "sections": [
+        {
+          "title": "Fragmentation with preserved clarity",
+          "page_range": [76, 77],
+          "summary": "Parker's fragment kernel relies on 7 of ii to 3 of V7. Morgan's fragment omits the 3rd of ii but anticipates and arpeggiates V7. Harrell shows the rhythmic placement — 7th on upbeat, target on downbeat — that survives fragmentation.",
+          "key_phrases": ["7 of ii to 3 of V7", "anticipated and arpeggiated", "upbeat", "downbeat"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-fragment-minimal-kernel"},
+            {"rule_id_ref": "ligon-fragment-omit-third-of-ii"},
+            {"rule_id_ref": "ligon-target-rhythm-7-upbeat-3-downbeat"}
+          ],
+          "paragraphs": [
+            {
+              "page": 76,
+              "summary": "Parker's fragment kernel — 7 of ii resolving to 3 of V7 — anchors clarity.",
+              "key_phrases": ["seventh of ii", "third of V7", "rhythmic displacement"],
+              "verbatim_anchor": "Parker's sequence in ex.249 relies on the seventh of ii resolving to the third of V7 for clarity.",
+              "engine_rules": [{"rule_id_ref": "ligon-fragment-minimal-kernel"}]
+            },
+            {
+              "page": 77,
+              "summary": "Morgan's fragment omits the 3rd of ii but anticipates and arpeggiates V7 in Outline No.1.",
+              "key_phrases": ["only note missing", "anticipated and arpeggiated", "outline no.1"],
+              "verbatim_anchor": "The only note missing from Morgan's excerpt is the third of the iig chord. The V7 chord is anticipated and arpeggiated.",
+              "engine_rules": [{"rule_id_ref": "ligon-fragment-omit-third-of-ii"}]
+            },
+            {
+              "page": 77,
+              "summary": "Harrell places 7th on upbeat and next target on downbeat.",
+              "key_phrases": ["seventh on the upbeat", "target note on the downb"],
+              "verbatim_anchor": "The seventh on the upbeat is followed by the next target note on the downb",
+              "engine_rules": [{"rule_id_ref": "ligon-target-rhythm-7-upbeat-3-downbeat"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 8,
+        "title": "Outlines in Modal Tunes",
+        "summary": "Bebop outline vocabulary layers over modal harmonic foundations via leading-tone approach. Outline No.1 with added leading tones produces a sawtooth contour. C.E.S.H. Outline No.3 is the strategic contrast device against modal motivic playing (e.g., Cannonball Adderley on modal blues).",
+        "key_phrases": ["modal tunes", "leading tone approach", "sawtooth", "C.E.S.H. outline 3", "modal blues"]
+      },
+      "sections": [
+        {
+          "title": "Bebop vocabulary in modal contexts",
+          "page_range": [78, 78],
+          "summary": "Leading-tone approaches encircle modal chord roots. Sawtooth contour emerges from adding leading tones below targets. Cannonball Adderley deploys C.E.S.H. Outline No.3 as deliberate contrast in modal solos.",
+          "key_phrases": ["leading tone", "encircle the root", "sawtooth shape", "Cannonball Adderley", "contrast"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-modal-leading-tone-approach"},
+            {"rule_id_ref": "ligon-sawtooth-from-leading-tones"},
+            {"rule_id_ref": "ligon-cesh-outline-3-in-modal-blues"}
+          ],
+          "paragraphs": [
+            {
+              "page": 78,
+              "summary": "Modal 3rd approached by leading tone; encirclement of the root by F# and A.",
+              "key_phrases": ["leading tone", "F# and A encircle the root", "E natural implies C7"],
+              "verbatim_anchor": "the third of the G minor chord is approached by its leading tone. The F# and A encircle the root. E natural implies C7 and is approached from above and below.",
+              "engine_rules": [{"rule_id_ref": "ligon-modal-leading-tone-approach"}]
+            },
+            {
+              "page": 78,
+              "summary": "Added leading tones to Outline No.1 produce a sawtooth contour.",
+              "key_phrases": ["outline no.1", "downbeats", "sawtooth shape"],
+              "verbatim_anchor": "outline no.1 can be clearly heard on the downbeats; leading tones have been added giving the line more of a sawtooth shape.",
+              "engine_rules": [{"rule_id_ref": "ligon-sawtooth-from-leading-tones"}]
+            },
+            {
+              "page": 78,
+              "summary": "Adderley's C.E.S.H. Outline No.3 contrasts with his modal/motivic blues playing.",
+              "key_phrases": ["C.E.S.H. version of outline no.3", "modal blues", "contrast"],
+              "verbatim_anchor": "Cannonball Adderley uses this C.E.S.H. version of outline no.3 several times in the solo to contrast with his modal, motivic, and down and dirty blues playing on this modal blues tune.",
+              "engine_rules": [{"rule_id_ref": "ligon-cesh-outline-3-in-modal-blues"}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 9,
+        "title": "Get It in Your Playing",
+        "summary": "Pedagogical chapter: prerequisite for elaboration is mastery of the basic outline. Practice with jazz articulation, swing the eighths, accent upbeats, start with quarter notes. Listening and imitation are irreplaceable for what notation cannot convey. Standard tunes rarely modulate beyond one accidental, mapping to the diatonic triads.",
+        "key_phrases": ["prerequisite for elaboration", "jazz articulation", "swing eighths", "LISTEN", "one accidental modulation"]
+      },
+      "sections": [
+        {
+          "title": "Practice methodology",
+          "page_range": [80, 81],
+          "summary": "Practice cleanly with jazz articulation. Notation only carries pitches and timing; the swing, accents, and inflections are learned aurally. Standard-tune modulation rarely exceeds one accidental.",
+          "key_phrases": ["jazz articulations", "swing the eighth notes", "LISTEN", "modulate"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 80,
+              "summary": "Elaboration depends on prior mastery of the outline.",
+              "key_phrases": ["difficult or impossible to elaborate"],
+              "verbatim_anchor": "It is difficult or impossible to elaborate on anything until you know it well.",
+              "engine_rules": []
+            },
+            {
+              "page": 81,
+              "summary": "Notation cannot teach swing; listening and imitation are irreplaceable.",
+              "key_phrases": ["LISTEN", "make these lines swing", "listening and imitating"],
+              "verbatim_anchor": "LISTEN! These pages just contain pitches and timing approximations. The accents, actual placement, inflections, articulations, timbre: the elements that make these lines swing, are learned by listening and imitating the great jazz artists. There is no substitute.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 10,
+        "title": "Outline Exercises",
+        "summary": "Generative practice loop: metronome on 2 & 4, slow at first, all 12 keys, non-stop modulation goal. Internalize outlines aurally — sing them away from the instrument before playing. Limit practice to one outline at a time, then combine. Turnaround progressions are universal structural elements.",
+        "key_phrases": ["metronome 2 & 4", "12 keys", "sing the outline", "one outline at a time", "turnaround"]
+      },
+      "sections": [
+        {
+          "title": "Practice framework",
+          "page_range": [82, 102],
+          "summary": "Practice slowly with metronome on backbeats; goal is non-stop modulation through 12 keys. Internalize outlines aurally; sing them before playing. Limit to one outline at a time then combine.",
+          "key_phrases": ["accuracy at any tempo", "twelve major keys", "sing the outline", "one outline at a time"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 82,
+              "summary": "Mastery benchmark: start in any key, modulate through all 12 keys non-stop without error.",
+              "key_phrases": ["start in any key", "non-stop without error", "twelve major keys"],
+              "verbatim_anchor": "Your goal should be to start in any key, play non-stop without error or hesitation through this exercise modulating through all twelve major keys.",
+              "engine_rules": []
+            },
+            {
+              "page": 102,
+              "summary": "Sing the outline away from the instrument; hearing the changes prepares improvisation.",
+              "key_phrases": ["singing the outline", "hearing the changes", "improvise good melodies"],
+              "verbatim_anchor": "Begin by playing just the simple outline for the entire form of the piece. Try singing the outline and hearing the changes away from your instrument. If you can hear the changes and sing the actual pitches, you will be better prepared to hear and improvise good melodies over the progression.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 11,
+        "title": "What to Do Next?",
+        "summary": "Ear training is lifelong. The three-area triangle — aural / written / physical — must be unified. The instant-transcription goal: hear-and-play, see-and-imagine. Preparation begets trust in instinct.",
+        "key_phrases": ["ear training lifelong", "sound fingering written", "triangle", "instant transcription"]
+      },
+      "sections": [
+        {
+          "title": "Lifelong synthesis",
+          "page_range": [130, 130],
+          "summary": "Closing the loop between aural, written, and physical knowledge produces trust in instinct.",
+          "key_phrases": ["lifelong", "triangle", "trust your instincts"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 130,
+              "summary": "The three-area triangle of sound, fingering, and notation must be unified.",
+              "key_phrases": ["sound", "fingering", "written notes", "triangle"],
+              "verbatim_anchor": "Sound, fingering on your instrument and the written notes on the page should all be connected in your mind. These three areas form a triangle: the aural form, the written form (notes and chord symbols) and the physical experience of creating or recreating on your instrument.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 12,
+        "title": "Appendix I: Three Etudes on Standard Progressions",
+        "summary": "Three model etudes built from the outlines on standard progressions. Pedagogical intent only — no new engine territory.",
+        "key_phrases": ["etudes", "standard progressions", "all three outlines"]
+      },
+      "sections": [
+        {
+          "title": "Etude purpose",
+          "page_range": [131, 131],
+          "summary": "Models for the student to invent their own outline-based solos.",
+          "key_phrases": ["invented solos", "use all three outlines"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 131,
+              "summary": "Student is to invent solos using all three outlines.",
+              "key_phrases": ["invent your own solos", "make them sound musical"],
+              "verbatim_anchor": "These three etudes are examples of invented solos based on standard progressions from Chapter 10.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 13,
+        "title": "Appendix II: Lou Donaldson Solo",
+        "summary": "Donaldson's Birdland solo and Clifford Brown's follow-up are presented as evidence of the outlines in performance. Brown builds his solo almost exclusively from Outline No.1.",
+        "key_phrases": ["Donaldson", "Clifford Brown", "Outline No.1", "Live at Birdland"]
+      },
+      "sections": [
+        {
+          "title": "Analytical thesis",
+          "page_range": [134, 134],
+          "summary": "Outlines visible in two consecutive masters' solos — no new rule territory, evidence only.",
+          "key_phrases": ["relies heavily on the three outlines", "outline no.1"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 134,
+              "summary": "Donaldson and Brown construct solos around the three outlines.",
+              "key_phrases": ["three outlines", "outline no.1"],
+              "verbatim_anchor": "Lou Donaldson relies heavily on the three outlines in this solo from the Art Blakey recording Live at Birdland. Clifford Brown plays a solo after Donaldson and constructs it almost exclusively from outline no.1.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 14,
+        "title": "Appendix III: Tom Harrell Solo",
+        "summary": "Harrell's contemporary solo uses many other devices but returns repeatedly to the three outlines. Analytical task only — no new rule territory.",
+        "key_phrases": ["Harrell", "contemporary", "three outlines", "larger context"]
+      },
+      "sections": [
+        {
+          "title": "Analytical task",
+          "page_range": [138, 138],
+          "summary": "Find and examine outlines in a contemporary solo; pedagogical exercise without new rule content.",
+          "key_phrases": ["many other devices", "relies many times", "examine their relationship"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 138,
+              "summary": "Harrell uses many devices but the outlines remain visible.",
+              "key_phrases": ["other devices", "three outlines", "larger context"],
+              "verbatim_anchor": "Harrell uses many other devices to make this contemporary solo interesting, but relies many times on the three outlines.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 15,
+        "title": "Appendix IV: Suggestions for Using Outlines with Jazz Improvisation Classes",
+        "summary": "Classroom methodology distilled into the slogan limiting as control. The written component prepares ear and identifies modulation tones. The movable DOO syllable supports jazz articulation. Outlines are foundations for eventual exploration.",
+        "key_phrases": ["limiting as control", "movable DOO", "scat solos", "foundation for exploration"]
+      },
+      "sections": [
+        {
+          "title": "Classroom pedagogy",
+          "page_range": [144, 144],
+          "summary": "Mastering constraint builds the disciplined technique from which eventual deviation and exploration become possible.",
+          "key_phrases": ["limiting", "control", "foundation for exploration"],
+          "engine_rules": [],
+          "paragraphs": [
+            {
+              "page": 144,
+              "summary": "Limiting is the means of learning control.",
+              "key_phrases": ["limiting is a way of learning control"],
+              "verbatim_anchor": "Limiting is a way of learning control. Control is what all musicians and composers strive in any style or discipline.",
+              "engine_rules": []
+            },
+            {
+              "page": 144,
+              "summary": "Outlines provide the security from which exploration eventually becomes possible.",
+              "key_phrases": ["security", "clear harmonic ideas", "stray from that path"],
+              "verbatim_anchor": "Outlines give them security in hearing and playing clear harmonic ideas in a linear fashion. Once they can hear and understand the basic path it will be easier to stray from that path and explore, knowing and hearing where to return.",
+              "engine_rules": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": {
+        "n": 16,
+        "title": "Appendix V: Answers from Page 128",
+        "summary": "Codifies five specific devices identified in Cannonball Adderley examples: inverted direction with pick-up notes, arpeggio displacement (3-5-7-9), stop-and-go rhythms that delay resolution, sawtooth shape via leap back to chord tone, and neighbor-tone surrounding of the target.",
+        "key_phrases": ["inverted direction", "arpeggio displacement", "stop and go", "sawtooth", "neighbor-tone surrounding"]
+      },
+      "sections": [
+        {
+          "title": "Five named devices",
+          "page_range": [145, 145],
+          "summary": "Inverted Outline No.2 with pick-ups, Outline No.3 arpeggio displacement (3-5-7-9), Outline No.1 stop-and-go rhythms delaying resolution, Outline No.2 sawtooth via leap back to a chord tone with chromatic leading tone, and Outline No.3 neighbor-tone surrounding the target.",
+          "key_phrases": ["inverted direction with pick-up notes", "3-5-7-9 arpeggio with octave displacement", "stop and go rhythms", "leap back to a chord tone", "upper and lower neighbor tones"],
+          "engine_rules": [
+            {"rule_id_ref": "ligon-outline-2-inverted"},
+            {"rule_id_ref": "ligon-outline-3-octave-displacement-variation"},
+            {"rule_id_ref": "ligon-stop-and-go-delay-resolution"},
+            {"rule_id_ref": "ligon-sawtooth-leap-back-to-chord-tone"},
+            {"rule_id_ref": "ligon-neighbor-tone-surrounding"}
+          ],
+          "paragraphs": [
+            {
+              "page": 145,
+              "summary": "Outline No.2 inverted with pick-ups.",
+              "key_phrases": ["inverted direction", "pick-up notes"],
+              "verbatim_anchor": "Outline No.2: Inverted direction with pick-up notes.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-2-inverted"}]
+            },
+            {
+              "page": 145,
+              "summary": "Outline No.3 — 3-5-7-9 arpeggio with octave displacement on C7.",
+              "key_phrases": ["3-5-7-9", "octave displacement", "C7"],
+              "verbatim_anchor": "Outline No.3: 3-5-7-9 arpeggio with octave displacement on the C7.",
+              "engine_rules": [{"rule_id_ref": "ligon-outline-3-octave-displacement-variation"}]
+            },
+            {
+              "page": 145,
+              "summary": "Outline No.1 — stop-and-go rhythms delay resolution.",
+              "key_phrases": ["stop and go", "delay the resolution", "arpeggio on E7"],
+              "verbatim_anchor": "Outline No.1: Stop and go rhythms delay the resolution of E7 until beat three; arpeggio on E7 (3- 5-7-9) dela",
+              "engine_rules": [{"rule_id_ref": "ligon-stop-and-go-delay-resolution"}]
+            },
+            {
+              "page": 145,
+              "summary": "Outline No.2 — sawtooth via leap back to chord tone with chromatic leading tone.",
+              "key_phrases": ["sawtooth shape", "leap back", "chromatic leading tone"],
+              "verbatim_anchor": "Outline No.2: Leap back to a chord tone creates sawtooth shape, delays resolution of C7; chromatic leading tone (D#) precedes target note (E); leap from third to root of C7,",
+              "engine_rules": [{"rule_id_ref": "ligon-sawtooth-leap-back-to-chord-tone"}]
+            },
+            {
+              "page": 145,
+              "summary": "Outline No.3 — target tone surrounded by upper and lower neighbor.",
+              "key_phrases": ["upper and lower neighbor tones", "approached from above and below"],
+              "verbatim_anchor": "Outline No.3: arpeggiated tone is used below; target note (A) is delayed by its upper and lower neighbor tones; target note (A) is approached from above (C — Bb — A) and below (G — G# — A).",
+              "engine_rules": [{"rule_id_ref": "ligon-neighbor-tone-surrounding"}]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
