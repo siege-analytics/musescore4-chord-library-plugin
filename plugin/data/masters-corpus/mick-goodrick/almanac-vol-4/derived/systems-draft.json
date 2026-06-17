@@ -1,0 +1,405 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-48-05-goodrick-almanac-vol-4",
+    "stage": "s4",
+    "source_pdf": "Goodrick, Mick - Almanac of Guitar Voice Leading, Vol 4.pdf",
+    "extracted_at": "2026-06-15T20:29:33+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "mick-goodrick",
+  "work_id": "almanac-vol-4",
+  "systems": [
+    {
+      "id": "mick-goodrick:almanac-vol-4:voice-leading-taxonomy",
+      "name": "Voice-Leading Taxonomy System",
+      "summary": "Governs how voice-leading types are classified and applied. Establishes GDVL as the diatonic foundation, positions SCVL as the chromatic superstructure, and treats IVL and FVL as specialized instances of SCVL. Melody and harmony are held as equals throughout.",
+      "members": [
+        {
+          "id": "gdvl",
+          "name": "GDVL (Generic Diatonic Voice-Leading)",
+          "summary": "The foundational diatonic voice-leading mode covering Volumes 1 and 2."
+        },
+        {
+          "id": "scvl",
+          "name": "SCVL (Specific Chromatic Voice-Leading)",
+          "summary": "The chromatic voice-leading superstructure. IVL and FVL are specialized sub-instances of SCVL."
+        },
+        {
+          "id": "ivl",
+          "name": "IVL (Intervallic Voice-Leading)",
+          "summary": "Voice-leading defined by interval relationships; a specialized instance of SCVL."
+        },
+        {
+          "id": "fvl",
+          "name": "FVL (Functional Voice-Leading)",
+          "summary": "Voice-leading defined by harmonic function; a specialized instance of SCVL."
+        },
+        {
+          "id": "msrp",
+          "name": "M.S.R.P. (Melodic Strand Replication Procedure)",
+          "summary": "A procedural technique for replicating melodic strands across voices."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "gdvl-before-scvl",
+          "name": "Diatonic Foundation Before Chromatic Extension",
+          "summary": "GDVL must be established as the operating mode before SCVL is introduced.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "page": 161,
+              "topic": "SCVL vs GDVL distinction",
+              "quote_excerpt": "IVLs and FVLs are all examples of SCVL, as opposed to GDVL"
+            }
+          ]
+        },
+        {
+          "id": "ivl-fvl-as-scvl-instances",
+          "name": "IVL/FVL Traversed as SCVL Sub-Types",
+          "summary": "IVL or FVL passages must be classified as operating within SCVL.",
+          "engine_payload": {
+            "kind": "_pending:sub-type-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "page": 161,
+              "topic": "SCVL vs GDVL distinction",
+              "quote_excerpt": "The IVLs and the FVLs are all examples of SCVL"
+            }
+          ]
+        },
+        {
+          "id": "melody-harmony-parity",
+          "name": "Melodic and Harmonic Domains Traversed as Equals",
+          "summary": "No traversal path may privilege melody over harmony or vice versa.",
+          "engine_payload": {
+            "kind": "_pending:domain-parity"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "page": 188,
+              "topic": "Author's position: melody and harmony as equals",
+              "quote_excerpt": "excellent voice-leading treats both melody and harmony as equals"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "grip-slipping",
+          "name": "Grip-Slipping Technique Application",
+          "summary": "A named fretboard technique that modifies how a voicing is physically executed.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "page": 2,
+              "topic": "Term: grip-slipping",
+              "quote_excerpt": "grip-slipping: more on this later"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-4:event-episode-modal",
+      "name": "Event / Episode Modal Transposition System",
+      "summary": "Governs the generative transposition of Events and Episodes across diatonic and modal space. An Event diatonically transposed yields up to 6 variants (some intervallic collapses); an Episode diatonically transposed yields exactly 6 variants with one-to-one modal correspondence.",
+      "members": [
+        {
+          "id": "event",
+          "name": "Event",
+          "summary": "Discrete musical unit; diatonically transposed to yield up to 6 others, some collapsing."
+        },
+        {
+          "id": "episode",
+          "name": "Episode",
+          "summary": "Musical unit transposable to 6 others, each corresponding to a mode."
+        },
+        {
+          "id": "mode-set",
+          "name": "Seven-Mode Set",
+          "summary": "Target space for Episode transposition."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "event-diatonic-transposition",
+          "name": "Event Diatonic Transposition \u2014 Six-Step Rule",
+          "summary": "Diatonic transposition up to 6 steps; intervallically identical transpositions collapse to a single representative.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "page": 3,
+              "topic": "Event transposition property",
+              "quote_excerpt": "an event can be diatonically transposed to create 6 other events"
+            },
+            {
+              "chapter_n": 2,
+              "page": 3,
+              "topic": "Diatonic transposition of events",
+              "quote_excerpt": "but some of them will be intervallically identical"
+            }
+          ]
+        },
+        {
+          "id": "episode-modal-correspondence",
+          "name": "Episode Modal Correspondence \u2014 One-to-One Rule",
+          "summary": "Episode transposition produces 7 modal variants without collapse.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "page": 3,
+              "topic": "Episode transposition and modal correspondence",
+              "quote_excerpt": "each corresponds to a different mode"
+            },
+            {
+              "chapter_n": 2,
+              "page": 3,
+              "topic": "Diatonic transposition of episodes and modal correspondence",
+              "quote_excerpt": "an episode can be diatonically transposed to create 6 other episodes"
+            }
+          ]
+        },
+        {
+          "id": "domain-agnostic-routing",
+          "name": "Domain-Agnostic Routing of Events and Episodes",
+          "summary": "Events and Episodes are routed identically across melodic, contrapuntal, and harmonic domains.",
+          "engine_payload": {
+            "kind": "_pending:domain-agnostic-routing"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "page": 3,
+              "topic": "Events and episodes: melodic/contrapuntal/harmonic scope",
+              "quote_excerpt": "Both events and episodes can be melodic, contrapuntal, harmonic"
+            },
+            {
+              "chapter_n": 2,
+              "page": 3,
+              "topic": "Melodic/contrapuntal/harmonic scope of events and episodes",
+              "quote_excerpt": "or in any combination"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "length-not-defining",
+          "name": "Length Is Not a Defining Modifier",
+          "summary": "Event vs Episode is classified by note coverage, not by length.",
+          "engine_payload": {
+            "kind": "_pending:classification-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "page": 3,
+              "topic": "Event/Episode length caveat",
+              "quote_excerpt": "events as being shorter, while episodes are longer"
+            }
+          ]
+        },
+        {
+          "id": "sus4-naming",
+          "name": "Sus4 Chord Label Required Over C2/Add-2",
+          "summary": "Sus4 labeling enforced over shorter notations; applies to 3-part and 4-part 4ths and all inversions.",
+          "engine_payload": {
+            "kind": "_pending:label-normalization"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "page": 4,
+              "topic": "Naming rationale for sus4 chord nomenclature",
+              "quote_excerpt": "My suggestion for a suitable name for this chord would be: G [sus4]"
+            },
+            {
+              "chapter_n": 3,
+              "page": 4,
+              "topic": "Naming sus4 chords vs C2 notation",
+              "quote_excerpt": "I will grant you that C2 is shorter, but"
+            },
+            {
+              "chapter_n": 2,
+              "page": 4,
+              "topic": "Inversions note",
+              "quote_excerpt": "Of course, this applies to all of the inversions as well"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-4:chord-construction-catalog",
+      "name": "Chord Construction and Catalog System",
+      "summary": "Governs all chord derivation, density management, and catalog organization. 3-part chords derived from 4-part by single-voice omission; each type appears exactly 4 times. The catalog is organized by cycle-3/cycle-4 alternation across 24 voicings \u00d7 35 chord types = 840 voicings. 3-part chords prioritized for playability; exercises anchor in C Major before student-driven transposition.",
+      "members": [
+        {
+          "id": "four-part-chord",
+          "name": "4-Part Chord",
+          "summary": "Source voicing for 3-part derivation; the density ceiling."
+        },
+        {
+          "id": "three-part-chord",
+          "name": "3-Part Chord",
+          "summary": "Derived by removing one voice from a 4-part chord."
+        },
+        {
+          "id": "m-lode-expanded",
+          "name": "Expanded M-Lode Taxonomy",
+          "summary": "Volume 2's M-Lode plus three new 3-part types."
+        },
+        {
+          "id": "eight-forty-catalog",
+          "name": "840-Chord Catalog",
+          "summary": "24 voicings \u00d7 35 chord types across Chapters 6-9."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "three-part-before-four-part",
+          "name": "3-Part Chords Take Traversal Priority Over 4-Part",
+          "summary": "Route through 3-part chords before 4-part chords for fretboard playability.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "page": 71,
+              "topic": "Pedagogical value of 3-part chords",
+              "quote_excerpt": "3-part chords are easier to play than 4-part chords"
+            }
+          ]
+        },
+        {
+          "id": "cycle3-cycle4-alternation",
+          "name": "Cycle-3 / Cycle-4 Alternation as Master Organizing Principle",
+          "summary": "All traversal through the chord catalog follows cycle-3/cycle-4 alternation.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "page": 145,
+              "topic": "Extensibility note",
+              "quote_excerpt": "this same approach could be applied to pretty much everything"
+            }
+          ]
+        },
+        {
+          "id": "c-major-anchor",
+          "name": "C Major as Presentation Anchor; Transposition by Student",
+          "summary": "All catalog exercises presented in C Major; transposition is student responsibility.",
+          "engine_payload": {
+            "kind": "_pending:presentation-anchor"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "page": 15,
+              "topic": "Scope and scale options for the chapter material",
+              "quote_excerpt": "presented in C Major (no accidentals)"
+            },
+            {
+              "chapter_n": 5,
+              "page": 15,
+              "topic": "Transposition expectation",
+              "quote_excerpt": "developed the necessary skills to make the needed adjustments"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "voice-omission-derivation",
+          "name": "Derive 3-Part Chords by Single Voice Omission",
+          "summary": "Removing exactly one voice from a 4-part chord yields a 3-part chord; each type appears 4 times.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "page": 9,
+              "topic": "Method premise: deriving 3-part chords from 4-part chords",
+              "quote_excerpt": "arrive at different 3-part chords by leaving out one voice"
+            },
+            {
+              "chapter_n": 4,
+              "page": 9,
+              "topic": "Symmetry observation: each 3-part chord type appears four times",
+              "quote_excerpt": "Each 3-part chord appears four times"
+            }
+          ]
+        },
+        {
+          "id": "m-lode-expansion",
+          "name": "Expand M-Lode With Three New 3-Part Chord Types",
+          "summary": "Add 7th (no 3rd), 7th (no 5th), and 3-part Spread Clusters to the taxonomy.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "page": 7,
+              "topic": "The Real Compleat M-Lode \u2014 expanded structure",
+              "quote_excerpt": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters"
+            }
+          ]
+        },
+        {
+          "id": "density-ceiling-four-part",
+          "name": "4-Part Voicing Is the Density Ceiling",
+          "summary": "No chord construction exceeds 4 parts; density reduces downward via voice omission.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "page": 9,
+              "topic": "Method premise: deriving 3-part chords from 4-part chords",
+              "quote_excerpt": "leaving out one voice of a 4-part chord"
+            }
+          ]
+        },
+        {
+          "id": "passing-tone-embellishment",
+          "name": "Passing Tones and Melodic Embellishment on 3-Part Voicings",
+          "summary": "3-part chord voicings may be modified with passing tones and embellishments within the C Major anchor.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "page": 15,
+              "topic": "Scope and scale options for the chapter material",
+              "quote_excerpt": "All of the material that follows in this next section will be presented in C Major"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
