@@ -1,0 +1,363 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-45-18-roberts-chord-melody",
+    "stage": "s4",
+    "source_pdf": "Roberts, Howard - Chord Melody.pdf",
+    "extracted_at": "2026-06-15T19:45:56+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "howard-roberts",
+  "work_id": "chord-melody",
+  "systems": [
+    {
+      "id": "howard-roberts:chord-melody:voice-leading-harmony",
+      "name": "Voice-Leading Harmony System",
+      "summary": "Roberts's central system treats chord melody not as vertical chord placement but as the simultaneous management of four independent melodic lines. The taxonomy of members spans voicing density (close vs. open), motion types (parallel, contrary, counter), and textural devices (block chords, sustained backgrounds, common tones, short punctuations). Rules govern how the guitarist moves between chords (preferring voice-leading continuity, delaying finger release, sustaining common tones) and how voicings are modified (converting close to open by octave displacement, dropping tones while relying on listener harmonic memory, substituting diminished for dominant 7b9). The system's governing logic is horizontal rather than vertical: chords are the momentary convergence of lines always in motion, and every rule ultimately serves melodic continuity.",
+      "members": [
+        {
+          "id": "close-block-voicing",
+          "name": "Close Block Voicing",
+          "summary": "Notes packed tightly together; used as textural contrast against open voicings."
+        },
+        {
+          "id": "open-voicing",
+          "name": "Open Voicing",
+          "summary": "Notes spread apart by octave displacement of one or more tones."
+        },
+        {
+          "id": "parallel-motion",
+          "name": "Parallel Motion",
+          "summary": "All chordal tones moving the same number of scale steps in the same direction."
+        },
+        {
+          "id": "contrary-motion",
+          "name": "Contrary Motion",
+          "summary": "Chordal tones moving in opposite directions simultaneously."
+        },
+        {
+          "id": "counter-line",
+          "name": "Counter Line",
+          "summary": "Melodic accompaniment line, typically in the second voice from the top, most active when the main melody is static."
+        },
+        {
+          "id": "block-chords",
+          "name": "Block Chords",
+          "summary": "A full chord placed under each melody note, with voicing or inversion changed with each new note."
+        },
+        {
+          "id": "sustained-chord-background",
+          "name": "Sustained Chord Background",
+          "summary": "One chord held through two or more melody notes, with tones dropped only as fingering demands."
+        },
+        {
+          "id": "common-tone",
+          "name": "Common Tone",
+          "summary": "A single note sustained across a sequence of successive chords."
+        },
+        {
+          "id": "short-chord-punctuation",
+          "name": "Short Chord Punctuation",
+          "summary": "Brief harmonic accents placed with authority within the bar to imply harmonic flow without constant restriking."
+        },
+        {
+          "id": "two-note-dyad",
+          "name": "Two-Note Dyad",
+          "summary": "Two-note voicing implying harmony, particularly in improvisation contexts."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "four-voice-melodic-motion",
+          "name": "Four-Voice Melodic Motion",
+          "summary": "Move between chords by treating all four chordal tones as independent melody lines, connecting them through parallel, contrary, or counter motion.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Voice leading is primary connective force",
+              "quote_excerpt": "one is really dealing with four separate melody lines",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "sustain-delay-finger-movement",
+          "name": "Sustain and Delay Finger Movement",
+          "summary": "Keep fingers in place until absolutely necessary to move, maximizing chord-tone sustain to generate melodic and harmonic continuity.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Sustaining chord tones \u2014 continuity principle",
+              "quote_excerpt": "keep your fingers in place until it's absolutely necessary to move them",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "counter-line-activation",
+          "name": "Counter Line Activation on Static Melody",
+          "summary": "When the main melody has little motion, activate the counter line (second voice from top) to maintain horizontal interest.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Counter lines: placement and role",
+              "quote_excerpt": "When the main melody has little motion, the counter line can be more active",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "block-chord-voicing-change-per-note",
+          "name": "Block Chord Voicing Change Per Melody Note",
+          "summary": "Change voicing or inversion with each new melody note so all lines appear to move together, achieving the block chord effect.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Block chord effect: voicing must move with melody",
+              "quote_excerpt": "change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "counter-line-developmental-evolution",
+          "name": "Counter Line Developmental Evolution",
+          "summary": "Inner voices evolve progressively from passing tones to counter lines to fully melodic patterns across a phrase.",
+          "engine_payload": {
+            "kind": "_pending:inner-voice-development"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Counter line development into melodic pattern",
+              "quote_excerpt": "extension of the passing tones into a more melodic pattern",
+              "page": 31
+            }
+          ]
+        },
+        {
+          "id": "octave-jump-for-register",
+          "name": "Octave Jump for Register Navigation",
+          "summary": "Transpose the melody up an octave when the melody sits too low to accommodate chord voicing below it, executed with finesse to preserve melodic continuity.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Jumping octaves technique",
+              "quote_excerpt": "transpose the melody up an octave (this is called \"jumping octaves\") several times throughout the course of a solo",
+              "page": 36
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "close-to-open-octave-displacement",
+          "name": "Close-to-Open Voicing Conversion by Octave Displacement",
+          "summary": "Convert a close voicing to an open voicing by moving one or more chordal tones up or down an octave as far as reach permits.",
+          "engine_payload": {
+            "kind": "_pending:voicing-spread"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Technique: opening closed voicings",
+              "quote_excerpt": "moving one or more chordal tones up or down an octave",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "drop-tones-harmonic-memory",
+          "name": "Drop Chord Tones Relying on Listener Harmonic Memory",
+          "summary": "When sustaining a chord through a long melody sequence, drop chord tones as fingering demands, trusting listener memory to complete the harmonic outline.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Dropping chord tones while sustaining",
+              "quote_excerpt": "the listener usually remember those notes that have been dropped",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "diminished-for-dominant-7b9",
+          "name": "Diminished Chord Substitution for Dominant 7b9",
+          "summary": "Replace a dominant 7b9 chord with a diminished chord to inject chromaticism into otherwise diatonic lines.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Diminished chords as chromatic substitution for dominant",
+              "quote_excerpt": "Eo and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "id": "extensions-as-color-only",
+          "name": "Extensions as Color Without Functional Change",
+          "summary": "Add major 7th, 6th, 9th, and other extensions freely to enrich voicing color and texture without altering the chord's scale function or role in the progression.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Role of chord extensions in diatonic function",
+              "quote_excerpt": "addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord",
+              "page": 36
+            }
+          ]
+        },
+        {
+          "id": "chromatic-passing-chords",
+          "name": "Chromatic Passing Chord Harmonization",
+          "summary": "Connect diatonic progression points with chromatic passing chords (including altered forms like m7+5) as connective tissue, even when momentarily dissonant.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Passing chords connecting diatonic progression",
+              "quote_excerpt": "connected by the passing chords G#m7+5, Am7+5",
+              "page": 11
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Harmonizing chromatic melody notes",
+              "quote_excerpt": "Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant",
+              "page": 38
+            }
+          ]
+        },
+        {
+          "id": "close-voicing-as-texture-contrast",
+          "name": "Close Voicing as Textural Contrast",
+          "summary": "Deploy close voicings deliberately as textural contrast against the broader sound of open voicings.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Close voicings as texture contrast",
+              "quote_excerpt": "These can be used as texture contrast to the big sound of open voicings",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "id": "short-punctuation-harmonic-continuity",
+          "name": "Short Punctuation for Harmonic Continuity",
+          "summary": "Use brief chord accents placed with authority within the bar to imply harmonic flow, reinforced by emphasizing chord tones in the melody.",
+          "engine_payload": {
+            "kind": "_pending:implied-harmony-punctuation"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Short chord punctuations and harmonic continuity",
+              "quote_excerpt": "outline the flow of harmony by short chord punctuations... played with authority and appropriately placed within the bar",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "id": "fourth-string-density-floor",
+          "name": "Fourth String Register Floor",
+          "summary": "The fourth string is the absolute lower limit for low-register melody playing with any chord fragment beneath it.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Low-register melody limit",
+              "quote_excerpt": "play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath",
+              "page": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "howard-roberts:chord-melody:fingering-selection",
+      "name": "Fingering Selection System",
+      "summary": "Roberts's secondary system governs how the guitarist chooses between alternative fingerings for any given passage. The taxonomy spans two competing criteria \u2014 musical quality (tone and sustain) and mechanical efficiency (avoidance of unnecessary movement) \u2014 held in deliberate tension. The traversal rule for string selection prefers greater vibrating string length for sustain and singing tone. The modification rule counters over-reliance on efficiency by prescribing that radical position jumps and large intervals are legitimate and expressive techniques, not failures of economy. The paired-principle structure \u2014 stating a criterion, then immediately qualifying it with its counterweight \u2014 is the system's defining logic.",
+      "members": [
+        {
+          "id": "musical-quality-criterion",
+          "name": "Musical Quality Criterion",
+          "summary": "Evaluate fingerings by tone, sustain, and expressive result."
+        },
+        {
+          "id": "mechanical-efficiency-criterion",
+          "name": "Mechanical Efficiency Criterion",
+          "summary": "Evaluate fingerings by elimination of unnecessary or awkward hand and finger movements."
+        },
+        {
+          "id": "position-jump",
+          "name": "Position Jump / Large Interval Leap",
+          "summary": "Radical shift between fingerboard positions; a legitimate expressive technique providing contrast to smooth scalar movement."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "prefer-greater-string-length",
+          "name": "Prefer Greater Vibrating String Length",
+          "summary": "Choose the string set that maintains the greater vibrating string length, allowing notes to sing and sustain longer.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Rule: choosing strings for sustain and tone",
+              "quote_excerpt": "choosing a fingering or a set of strings in which the greater string length is maintained",
+              "page": 4
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "permit-radical-jumps-for-contrast",
+          "name": "Permit Radical Jumps for Expressive Contrast",
+          "summary": "Do not suppress large position jumps or interval leaps in pursuit of efficiency; they are frequently required techniques and supply expressive contrast to smooth scalar movement.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Principle: do not fear radical jumps or large intervals",
+              "quote_excerpt": "do not also develop a fear of radical jumps or large intervals on the fingerboard",
+              "page": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
