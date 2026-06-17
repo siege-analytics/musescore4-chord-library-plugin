@@ -1,0 +1,36 @@
+---
+run_id: 2026-06-12T09-48-05-goodrick-almanac-vol-4
+stage: s3
+source_pdf: Goodrick, Mick - Almanac of Guitar Voice Leading, Vol 4.pdf
+model: claude-sonnet
+extracted_at: 2026-06-15T20:24:28+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — almanac-vol-4
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## A Voice-Leading Method for Guitar: System, Structure, and Scope
+
+This guitar method constructs a unified theoretical vocabulary before presenting a single chord or exercise. Chapter 1 establishes the entire lexicon up front — IVL (intervallic voice-leading), FVL (functional voice-leading), GDVL (generic diatonic voice-leading), SCVL (specific chromatic voice-leading), and M.S.R.P. (melodic strand replication procedure) — so that subsequent chapters can operate within a shared analytical language rather than coining terms ad hoc. The arc of the book moves from definitional groundwork (Chapters 1–3) through systematic chord construction and cataloging (Chapters 4–9) to harmonic application and philosophical synthesis (Chapters 10–11). This progression is deliberately accumulative: no chapter stands alone, and each layer of the vocabulary is load-bearing for the layers that follow.
+
+## Events, Episodes, and Modal Correspondence
+
+The twin concepts of *Event* and *Episode* (introduced across Chapters 1 and 2) are the system's most fundamental analytical units, and they are explicitly not defined by length. Both operate interchangeably across melodic, contrapuntal, and harmonic domains. Their critical property is transposition behavior: an Event can be diatonically transposed to yield six others, though some collapse into intervallic unisons; an Episode can be transposed to yield six others that map one-to-one onto the seven modes. This modal correspondence — each transposed Episode unlocking a different modal color — is the master's characteristic theoretical move. It transforms what might otherwise be a chord-and-scale catalog into a generative system: the student who understands the transposition rules can derive an entire modal landscape from a single Episode rather than memorizing seven separate constructs.
+
+## Chord Taxonomy and the Reductive Principle
+
+Chapters 3 and 4 establish the chord naming conventions and the foundational method for chord construction. Chapter 3 advocates for sus4 labeling over shorter notations (C2, add-2), prioritizing clarity and musician legibility, and extends this convention across both 3-part and 4-part 4th structures. Three new 3-part chord types are introduced — 7th (no 3rd), 7th (no 5th), and 3-part Spread Clusters — expanding what the book calls the M-Lode into the complete taxonomy underpinning Volume III. Chapter 4 then teaches the generative reductive principle: remove one voice from a 4-part chord to derive a 3-part chord. The master's characteristic move here is systematic elimination — by omitting each voice in turn, the student discovers that each 3-part chord type appears exactly four times, revealing a symmetric structure that is not intuitive but is entirely logical.
+
+## The 840-Chord Catalog and the Cycle-3/Cycle-4 Principle
+
+Chapters 5 through 9 constitute the method's most expansive section — a systematic chord encyclopedia organized around a 24-voicing/35-chord framework extending to 840 catalogued voicings. Chapter 5 grounds the material pedagogically by anchoring all exercises in C Major (no accidentals), isolating passing tones and melodic embellishment techniques before any transposition is required. Chapter 7 explicitly notes that 3-part chords are easier to play than 4-part chords and therefore take foundational priority for building fretboard chord literacy. Chapter 9 names the cycle-3/cycle-4 alternation principle as the master organizing concept — a structural alternation that governs not just chord construction but, the author argues, virtually any musical element in the entire trilogy.
+
+## Voice-Leading Types and the Transition to Chromaticism
+
+Chapter 10 marks the method's pivot from diatonic to chromatic territory by formally distinguishing GDVL (generic diatonic voice-leading) — the foundational mode of Volumes 1 and 2 — from SCVL (specific chromatic voice-leading), which governs chord movement through non-diatonic voice paths. The key definitional move is positioning IVLs and FVLs as specialized instances of SCVL rather than independent systems. This reorganizes the entire vocabulary introduced in Chapter 1.
+
+## The Philosophical Foundation: Melody and Harmony as Equals
+
+Chapter 11, functioning as both index and coda, states the method's governing philosophical claim: excellent voice-leading treats melody and harmony as equals. Conventional music theory and conventional guitar pedagogy, the author asserts, privilege melody over harmony. This book's entire architecture — the dual currency of Events and Episodes, the insistence that both operate across melodic, contrapuntal, and harmonic domains, the reductive chord derivation that keeps harmonic structure as analytically central as melodic line — is the practical expression of that thesis.
