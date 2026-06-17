@@ -1,0 +1,1983 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-greene-single-note-soloing-vol-1",
+    "stage": "s6-multilevel",
+    "source_pdf": "Greene, Ted - Jazz Guitar Single Note Soloing, Vol 1 (1992).pdf",
+    "extracted_at": "2026-06-16T00:00:00+00:00",
+    "schema_version": "0.1",
+    "model": "claude-opus-4-7",
+    "ticket": "#527"
+  },
+  "master_id": "ted-greene",
+  "work_id": "single-note-soloing-vol-1",
+  "book": {
+    "title": "Jazz Guitar Single Note Soloing, Vol 1",
+    "year": 1992,
+    "summary": "Systematic chord-scale framework for jazz single-note soloing on guitar. Builds from the major scale as universal reference through numeric chord formulas, named chord groups (major Group 1; dominant Groups 1-4) paired with specific scales (Major, Lydian, Dominant 7th, Overtone/Lydian Dominant, Minor 7th, Altered Dominant Types 1/2/3). Method emphasizes 8th-note primacy, swing-and-straight practice, fingerboard visualization, position-based scale combining within a 5-6 fret area, hammer-on/pull-off/trill articulation constrained to scale tones, and root-based scale internalization (no relative-major shortcuts).",
+    "key_phrases": [
+      "chord-scale pairing",
+      "chord formula system",
+      "numeric scale degrees",
+      "fingerboard visualization",
+      "combining scales in one position",
+      "8th-note primacy",
+      "swing vs straight",
+      "trill as decoration",
+      "root-based thinking",
+      "Group 1-4 dominants",
+      "altered dominant types 1/2/3",
+      "package-deal learning"
+    ]
+  },
+  "chapters": [
+    {
+      "n": 1,
+      "title": "Getting Started",
+      "page_range": [
+        6,
+        10
+      ],
+      "summary": "Establishes the entire conceptual architecture of the method: the major scale as universal reference, numeric scale-degree notation, the chord formula system (every chord expressed as a numeric pattern over the major scale), the four triad types, upper partials (9/11/13), and the operational concept that a chord 'takes' a scale. Introduces the first concrete chord-scale rule: major Group 1 takes either the major scale or the Lydian scale.",
+      "key_phrases": [
+        "major scale as foundation",
+        "scale degrees as numbers",
+        "chord formula system",
+        "triad types",
+        "upper partials",
+        "chord takes a scale",
+        "major Group 1",
+        "Lydian scale"
+      ],
+      "sections": [
+        {
+          "title": "Single-Note Soloing defined & three core questions",
+          "page_range": [
+            6,
+            6
+          ],
+          "summary": "Defines single-note soloing as playing successions of single notes forming melodies, and establishes the three-question framework — what notes sound good, where they are on the instrument, how to make them sound interesting — that organizes the entire pedagogical arc.",
+          "key_phrases": [
+            "single-note soloing",
+            "three core questions",
+            "method spine"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-three-question-framework",
+              "name": "Three-question framework for soloing decisions",
+              "when": {
+                "context": "single_note_solo_construction"
+              },
+              "then": {
+                "workflow.set": [
+                  "select_scale_for_chord",
+                  "locate_notes_on_fingerboard",
+                  "shape_notes_into_interesting_lines"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A solo constructed without first identifying which scales fit the underlying chord, e.g. choosing notes by fingerboard pattern alone with no chord-scale rationale.",
+              "anchor": "WHAT NOTES OR SCALES SOUND GOOD OVER ANY\nGIVEN CHORD PROGRESSIONS?",
+              "source_page": 6
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 6,
+              "summary": "Defines single-note soloing as playing successions of single notes that form melodies.",
+              "key_phrases": [
+                "single-note soloing definition"
+              ],
+              "verbatim_anchor": "‘Single-Note Soloing’ is another way of saying",
+              "engine_rules": []
+            },
+            {
+              "page": 6,
+              "summary": "States the three organizing questions that structure the method: which notes/scales fit the chord, where they are on the instrument, and how to make them interesting.",
+              "key_phrases": [
+                "three core questions"
+              ],
+              "verbatim_anchor": "WHAT NOTES OR SCALES SOUND GOOD OVER ANY\nGIVEN CHORD PROGRESSIONS?",
+              "engine_rules": [
+                "greene-three-question-framework"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Major scale, intervals, and numeric scale degrees",
+          "page_range": [
+            7,
+            8
+          ],
+          "summary": "Defines a scale as an ascending fixed group of notes from a fixed starting note; establishes the major scale as the universal reference from which all other scales are built; defines half-step and whole-step intervals as atomic units; introduces numeric scale-degree notation (e.g., 'G is the 4th of D').",
+          "key_phrases": [
+            "scale definition",
+            "major scale as foundation",
+            "half-step",
+            "whole-step",
+            "numeric scale degrees"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-major-scale-as-reference",
+              "name": "Major scale is the universal reference system",
+              "when": {
+                "context": "scale_or_chord_specification"
+              },
+              "then": {
+                "reference.set": "major_scale_numeric_degrees"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Specifying a scale or chord by interval-stack from a non-major-scale reference (e.g., describing a Lydian scale as 'modes of itself' rather than as 'major with #4').",
+              "anchor": "the scale known as the MAJOR SCALE is used as a foundation\nfrom which we can build all other scales.",
+              "source_page": 7
+            },
+            {
+              "rule_id": "greene-numeric-degree-notation",
+              "name": "Refer to scale tones by numeric degree",
+              "when": {
+                "context": "describe_chord_or_scale_tone"
+              },
+              "then": {
+                "notation.set": "numeric_degree_relative_to_root_major_scale"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Naming chord tones by letter only (e.g., 'C, E, G, B') without giving their degree (1, 3, 5, 7) relative to the chord root.",
+              "anchor": "The different notes in a major scale are often referred to by number",
+              "source_page": 8
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 7,
+              "summary": "Defines 'scale' as a fixed group of notes built ascending from a fixed starting note.",
+              "key_phrases": [
+                "scale definition"
+              ],
+              "verbatim_anchor": "A scale is a fixed group of notes, usually built in an ascending direction from a fixed starting note.",
+              "engine_rules": []
+            },
+            {
+              "page": 7,
+              "summary": "Names the major scale as the foundation for building all other scales.",
+              "key_phrases": [
+                "major scale foundation"
+              ],
+              "verbatim_anchor": "the scale known as the MAJOR SCALE is used as a foundation\nfrom which we can build all other scales.",
+              "engine_rules": [
+                "greene-major-scale-as-reference"
+              ]
+            },
+            {
+              "page": 8,
+              "summary": "Introduces half-step and whole-step intervals as the atomic units from which all formulas derive.",
+              "key_phrases": [
+                "half-step",
+                "whole-step"
+              ],
+              "verbatim_anchor": "The most basic type of interval is known as the HALF-STEP.",
+              "engine_rules": []
+            },
+            {
+              "page": 8,
+              "summary": "Establishes numeric scale-degree notation; e.g., 'G is the 4th of D' means G is the 4th tone of D major.",
+              "key_phrases": [
+                "numeric scale degrees"
+              ],
+              "verbatim_anchor": "The different notes in a major scale are often referred to by number",
+              "engine_rules": [
+                "greene-numeric-degree-notation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Chord formula system & triad taxonomy",
+          "page_range": [
+            9,
+            9
+          ],
+          "summary": "Defines chord tones, the chord formula system (every chord expressed as a numeric pattern over the major scale), the b/# notation convention (lower/raise by a half-step), and catalogues the four basic triad types: major (1,3,5), minor (1,b3,5), diminished (1,b3,b5), augmented (1,3,#5).",
+          "key_phrases": [
+            "chord formula system",
+            "b/# notation",
+            "triad taxonomy"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-chord-formula-system",
+              "name": "Express every chord as a numeric formula over the root's major scale",
+              "when": {
+                "context": "specify_chord_tones"
+              },
+              "then": {
+                "chord.formula_basis": "numeric_degrees_of_root_major_scale_with_accidentals"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Specifying a Cm7 chord without expressing it as 1, b3, 5, b7 of C major (C, Eb, G, Bb).",
+              "anchor": "All chords\nhave a certain group of tones called a formula, that is derived from the major scale.",
+              "source_page": 9
+            },
+            {
+              "rule_id": "greene-flat-sharp-notation",
+              "name": "b/# in chord formulas means lower/raise by a half-step, not letter-name flat/sharp",
+              "when": {
+                "context": "interpret_chord_formula_accidental"
+              },
+              "then": {
+                "notation.semantics": "half_step_offset_from_major_scale_degree"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Reading 'b7 of C major' as 'B-flat by spelling' rather than 'lower the 7th degree by a half-step' (which happens to land on Bb here but on B-natural for C# major's b7, etc.).",
+              "anchor": "the symbol ”b”\nplaced before any tone in a formula means you Jower that tone by a half-step.",
+              "source_page": 9
+            },
+            {
+              "rule_id": "greene-triad-taxonomy",
+              "name": "Four basic triad types are defined by 1-3-5 formulas",
+              "when": {
+                "context": "specify_triad_quality"
+              },
+              "then": {
+                "triad.formula_set": {
+                  "major": [
+                    1,
+                    3,
+                    5
+                  ],
+                  "minor": [
+                    1,
+                    "b3",
+                    5
+                  ],
+                  "diminished": [
+                    1,
+                    "b3",
+                    "b5"
+                  ],
+                  "augmented": [
+                    1,
+                    3,
+                    "#5"
+                  ]
+                }
+              },
+              "preference": "required",
+              "quality_binding": [
+                "maj",
+                "min",
+                "dim",
+                "aug"
+              ],
+              "falsifier": "Treating an augmented triad as 1, 3, b6 (enharmonic but mis-degree-named) when the book's system requires #5.",
+              "anchor": "Major triad’s formula is 1, 3, 5; the Minor triad’s is 1, 63, 5;\nthe Diminished triad’s is 1, 63, 65; and the Augmented triad’s is 1, 3, #5.",
+              "source_page": 9
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 9,
+              "summary": "Defines chord tones and notes the interchangeable terms 'tone', 'note', 'degree'.",
+              "key_phrases": [
+                "chord tones definition",
+                "vocabulary"
+              ],
+              "verbatim_anchor": "chord\ntones are simply the notes in a chord",
+              "engine_rules": []
+            },
+            {
+              "page": 9,
+              "summary": "Introduces the chord formula system using the major 7th example: 1, 3, 5, 7 yields A, C#, E, G# for A major 7th.",
+              "key_phrases": [
+                "chord formula system",
+                "maj7 worked example"
+              ],
+              "verbatim_anchor": "All chords\nhave a certain group of tones called a formula, that is derived from the major scale.",
+              "engine_rules": [
+                "greene-chord-formula-system"
+              ]
+            },
+            {
+              "page": 9,
+              "summary": "Worked example of minor 7th formula (1, b3, 5, b7) with the b/# notation convention spelled out.",
+              "key_phrases": [
+                "m7 worked example",
+                "b/# notation"
+              ],
+              "verbatim_anchor": "the symbol ”b”\nplaced before any tone in a formula means you Jower that tone by a half-step.",
+              "engine_rules": [
+                "greene-flat-sharp-notation"
+              ]
+            },
+            {
+              "page": 9,
+              "summary": "Catalogues all four basic triad types and their numeric formulas.",
+              "key_phrases": [
+                "triad taxonomy"
+              ],
+              "verbatim_anchor": "Major triad’s formula is 1, 3, 5; the Minor triad’s is 1, 63, 5;\nthe Diminished triad’s is 1, 63, 65; and the Augmented triad’s is 1, 3, #5.",
+              "engine_rules": [
+                "greene-triad-taxonomy"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Upper partials and chord-takes-a-scale terminology",
+          "page_range": [
+            10,
+            10
+          ],
+          "summary": "Extends the formula system to upper partials: 9, 11, 13 chords; notes 11 = 4 letter-name and 13 = 6 letter-name (offset of 7). Defines the operational term 'a chord takes a scale' as 'that scale sounds good over the chord'. States the first concrete chord-scale rule: major Group 1 takes Major or Lydian. Defines Lydian as major scale with #4.",
+          "key_phrases": [
+            "upper partials",
+            "11=4 13=6",
+            "chord takes a scale",
+            "major Group 1",
+            "Lydian definition"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-chord-takes-scale",
+              "name": "'Chord takes a scale' means the scale sounds good over the chord",
+              "when": {
+                "context": "select_scale_for_chord"
+              },
+              "then": {
+                "chord_scale_pairing.rule": "scale_sounds_good_over_chord"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Pairing a Mixolydian-only scale source with a maj7 chord because 'it's the same notes from a different root' — book's pairing is sonic compatibility, not enharmonic equivalence.",
+              "anchor": "certain kind of chord “takes” a certain scale, what they mean is that that particular scale\nsounds good when played with that particular chord.",
+              "source_page": 10
+            },
+            {
+              "rule_id": "greene-major-group-1-scales",
+              "name": "Major Group 1 chords take Major or Lydian (personal preference)",
+              "when": {
+                "chord.quality": [
+                  "maj",
+                  "maj7",
+                  "maj9",
+                  "maj13"
+                ],
+                "chord.group": "major_group_1"
+              },
+              "then": {
+                "scale.options": [
+                  "major",
+                  "lydian"
+                ]
+              },
+              "preference": "either_acceptable",
+              "quality_binding": [
+                "maj",
+                "maj7",
+                "maj9",
+                "maj13"
+              ],
+              "falsifier": "Defaulting to Mixolydian over a static Cmaj7 vamp; that selection violates the Group-1 major rule.",
+              "anchor": "group 1 major chords most commonly take one of two scales, either the MAJOR\nor the LYDIAN.",
+              "source_page": 10
+            },
+            {
+              "rule_id": "greene-lydian-definition",
+              "name": "Lydian = major scale with #4",
+              "when": {
+                "scale.name": "lydian"
+              },
+              "then": {
+                "scale.formula": [
+                  1,
+                  2,
+                  3,
+                  "#4",
+                  5,
+                  6,
+                  7
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "maj",
+                "maj7"
+              ],
+              "falsifier": "Specifying Lydian with a natural 4 (which is the major scale) or with a b7 (which is Lydian-dominant).",
+              "anchor": "the Lydian’s, it is simply a Major scale\nwith a #4th instead of the regular 4th.",
+              "source_page": 10
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 10,
+              "summary": "Extends the formula system through upper partials and notes the 11=4, 13=6 letter-name correspondence.",
+              "key_phrases": [
+                "upper partials"
+              ],
+              "verbatim_anchor": "expanded to 1, 3, 5, 7, 9 and 11, you are talking about some type of eleventh\nchord.",
+              "engine_rules": []
+            },
+            {
+              "page": 10,
+              "summary": "Defines 'chord takes a scale' as 'that scale sounds good when played with that chord'.",
+              "key_phrases": [
+                "chord takes a scale"
+              ],
+              "verbatim_anchor": "certain kind of chord “takes” a certain scale, what they mean is that that particular scale\nsounds good when played with that particular chord.",
+              "engine_rules": [
+                "greene-chord-takes-scale"
+              ]
+            },
+            {
+              "page": 10,
+              "summary": "First concrete chord-scale rule: major Group 1 chords take either Major or Lydian, by personal preference.",
+              "key_phrases": [
+                "major Group 1",
+                "major/Lydian choice"
+              ],
+              "verbatim_anchor": "group 1 major chords most commonly take one of two scales, either the MAJOR\nor the LYDIAN.",
+              "engine_rules": [
+                "greene-major-group-1-scales"
+              ]
+            },
+            {
+              "page": 10,
+              "summary": "Defines Lydian as major scale with #4 — single-tone alteration.",
+              "key_phrases": [
+                "Lydian definition"
+              ],
+              "verbatim_anchor": "the Lydian’s, it is simply a Major scale\nwith a #4th instead of the regular 4th.",
+              "engine_rules": [
+                "greene-lydian-definition"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Lesson 1A: Basic Theory / Lesson 1B: Major Scale Fingerings",
+      "page_range": [
+        11,
+        17
+      ],
+      "summary": "Hands-on application chapter: drills basic theory + major-scale fingerings across positions. Predominantly notated exercises with no load-bearing prose; rules absorbed here are downstream applications of Chapter 1's framework (position practice of major scale).",
+      "key_phrases": [
+        "major scale fingerings",
+        "position practice"
+      ],
+      "skipped_reason": "Chapter contains only notated exercises (major-scale fingerings); no load-bearing prose passages were identified at stage S2. Practice rules are inherited from the chapter-1 framework and the standing position-practice convention developed across chs.4-7.",
+      "sections": []
+    },
+    {
+      "n": 3,
+      "title": "Slurring & Decoration Part 1 / Tempo: 8ths, Triplets, 16ths, Double-timing",
+      "page_range": [
+        41,
+        60
+      ],
+      "summary": "Introduces the technical and rhythmic layer of the method. Establishes 8th notes as jazz's primary rhythmic unit; defines swing feel via triplet subdivision; introduces double-timing; lays down the standing rule that every 8th-note pattern be practiced in both swing and straight feel and that clean play precedes tempo increases. Then introduces slurring articulation: hammer-ons (constrained to scale tones at this stage), pull-offs, and the trill (framed as decoration of a held note rather than substitution). Closes the chapter with the Dominant 7th scale definition (major with b7) and the standing root-based-thinking rule against the relative-major shortcut.",
+      "key_phrases": [
+        "8th-note primacy",
+        "swing 8ths via triplet",
+        "double-timing",
+        "swing-and-straight practice",
+        "clean-before-fast",
+        "hammer-on scale-tone constraint",
+        "trill as decoration",
+        "Dominant 7th scale",
+        "no relative-major shortcut"
+      ],
+      "sections": [
+        {
+          "title": "Tempo & rhythmic feels (8ths, swing, double-timing)",
+          "page_range": [
+            39,
+            40
+          ],
+          "summary": "Establishes the eighth note as jazz's normal rhythmic unit at medium and fast tempos; defines swing 8ths via triplet subdivision with the middle note tied or missing; mandates practicing every run in both swing and straight feel; names and defines double-timing; states the clean-before-fast rule.",
+          "key_phrases": [
+            "8th-note unit",
+            "swing 8ths definition",
+            "swing-and-straight rule",
+            "double-timing",
+            "clean-before-fast"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-eighth-note-primary-unit",
+              "name": "8th note is the primary rhythmic unit for jazz single-note lines at medium and fast tempos",
+              "when": {
+                "context": "construct_jazz_run",
+                "tempo.range": [
+                  "medium",
+                  "fast"
+                ]
+              },
+              "then": {
+                "line.eighth_subdivision": "primary",
+                "line.duration_default": "eighth"
+              },
+              "preference": "default",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "A medium-tempo run written predominantly in quarter notes or dotted-quarter syncopations with no 8th-note backbone.",
+              "anchor": "the normal unit of\nrhythm in jazz is the 8th note.",
+              "source_page": 39
+            },
+            {
+              "rule_id": "greene-swing-eighths-definition",
+              "name": "Swing 8ths are written-straight 8ths performed as triplet-subdivision with the middle of three tied/missing",
+              "when": {
+                "line.feel": "swing"
+              },
+              "then": {
+                "line.eighth_subdivision": "triplet_pair_long_short",
+                "line.swing_ratio": "triplet_based"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Performing 'swing 8ths' as literal even 8ths or as dotted-8th-plus-16th hard-shuffle — both diverge from the triplet-subdivision definition.",
+              "anchor": "each group of two 8th notes is actually played as if it were a group of three triplets,\n\nwith the middle one tied or missing.",
+              "source_page": 39
+            },
+            {
+              "rule_id": "greene-practice-swing-and-straight",
+              "name": "Every 8th-note pattern must be practiced in both swing and straight feel",
+              "when": {
+                "context": "practice_eighth_note_pattern"
+              },
+              "then": {
+                "practice.feels_required": [
+                  "swing",
+                  "straight"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Rehearsing a run only in swing because the chart marks 'swing' — both feels are required regardless of the tune's nominal feel.",
+              "anchor": "all the 8th notes in this book should be played as jazz 8ths and straight 8ths,\nbecause both feels are necessary to today’s music.",
+              "source_page": 39
+            },
+            {
+              "rule_id": "greene-double-timing",
+              "name": "Double-timing = 16th notes at medium-or-fast tempos as an advanced texture",
+              "when": {
+                "context": "advanced_texture_choice",
+                "tempo.range": [
+                  "medium",
+                  "fast"
+                ]
+              },
+              "then": {
+                "line.eighth_subdivision": "double_time_sixteenths"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Calling 8th notes at a fast tempo 'double-timing' — double-timing specifically requires 16th-note subdivision over the prevailing beat.",
+              "anchor": "Players who possess great technique often love to break into 16th notes at medium (or even fast!)\ntempos; this is commonly referred to as double-timing.",
+              "source_page": 40
+            },
+            {
+              "rule_id": "greene-clean-before-fast",
+              "name": "Achieve cleanliness at current tempo before increasing it",
+              "when": {
+                "context": "tempo_increase_decision"
+              },
+              "then": {
+                "practice.gate": "clean_at_current_tempo"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Pushing a run from 120 to 140 bpm while still buzzing notes or mistiming the swing subdivision at 120.",
+              "anchor": "making sure you are playing\ncleanly at any tempo before moving on to a faster one.",
+              "source_page": 40
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 39,
+              "summary": "Eighth note is jazz's normal rhythmic unit at medium/fast tempos; long streams produce fluid solos.",
+              "key_phrases": [
+                "8th-note unit"
+              ],
+              "verbatim_anchor": "the normal unit of\nrhythm in jazz is the 8th note.",
+              "engine_rules": [
+                "greene-eighth-note-primary-unit"
+              ]
+            },
+            {
+              "page": 39,
+              "summary": "Swing 8ths = triplet subdivision with the middle of three tied or missing.",
+              "key_phrases": [
+                "swing 8ths definition"
+              ],
+              "verbatim_anchor": "each group of two 8th notes is actually played as if it were a group of three triplets,\n\nwith the middle one tied or missing.",
+              "engine_rules": [
+                "greene-swing-eighths-definition"
+              ]
+            },
+            {
+              "page": 39,
+              "summary": "All 8th-note runs in the book must be played in both swing and straight feel.",
+              "key_phrases": [
+                "swing-and-straight rule"
+              ],
+              "verbatim_anchor": "all the 8th notes in this book should be played as jazz 8ths and straight 8ths,\nbecause both feels are necessary to today’s music.",
+              "engine_rules": [
+                "greene-practice-swing-and-straight"
+              ]
+            },
+            {
+              "page": 40,
+              "summary": "Defines double-timing as breaking into 16th notes at medium or fast tempos.",
+              "key_phrases": [
+                "double-timing"
+              ],
+              "verbatim_anchor": "Players who possess great technique often love to break into 16th notes at medium (or even fast!)\ntempos; this is commonly referred to as double-timing.",
+              "engine_rules": [
+                "greene-double-timing"
+              ]
+            },
+            {
+              "page": 40,
+              "summary": "Tempo increases must be gated by cleanliness at the current speed.",
+              "key_phrases": [
+                "clean-before-fast"
+              ],
+              "verbatim_anchor": "making sure you are playing\ncleanly at any tempo before moving on to a faster one.",
+              "engine_rules": [
+                "greene-clean-before-fast"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Slurring & decoration: hammer-ons, trills",
+          "page_range": [
+            41,
+            41
+          ],
+          "summary": "Constrains hammer-on targets to tones inside the active scale at this stage of study; positions isolated hammer-ons as not-yet-standard jazz devices (the grace-note exception is deferred to Vol. II) and frames them as building blocks for the trill. The trill is reframed as decoration of a held note (not substitution) and placed predominantly on the strong part of the beat.",
+          "key_phrases": [
+            "hammer-on scope",
+            "hammer-on not standalone",
+            "trill as decoration",
+            "trill on strong beat"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-hammer-on-scale-tone-only",
+              "name": "Hammer-on target notes must be in the active scale at this stage",
+              "when": {
+                "context": "hammer_on",
+                "stage": "single_note_soloing_vol_1"
+              },
+              "then": {
+                "line.articulation": "hammer_on",
+                "line.hammer_on_target_constraint": "active_scale_tone"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Hammering on to a chromatic neighbor outside the currently selected scale (e.g., hammering Ab over a Cmaj/major-scale run).",
+              "anchor": "NOTE: This higher note, for now, will be\nfound in the scale you are working with at\nthat moment.",
+              "source_page": 41
+            },
+            {
+              "rule_id": "greene-hammer-on-not-standalone",
+              "name": "Do not use isolated hammer-ons as standalone jazz melodic devices at this stage",
+              "when": {
+                "context": "articulation_choice",
+                "stage": "single_note_soloing_vol_1"
+              },
+              "then": {
+                "line.articulation_role": {
+                  "hammer_on": "component_of_trill_only"
+                }
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Building a phrase whose primary articulation is a chain of hammer-on flourishes presented as the line's main idea (rather than as trill internals).",
+              "anchor": "hammer-ons,\nby themselves, have not been commonly used by most jazz guitarists.",
+              "source_page": 41
+            },
+            {
+              "rule_id": "greene-trill-as-decoration",
+              "name": "Trill is decoration of a held note, not substitution of one note for another",
+              "when": {
+                "line.articulation": "trill"
+              },
+              "then": {
+                "line.trill_semantics": "decorate_held_note",
+                "line.trill_primary_pitch": "preserved"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Notating a trill that, when realized, lands more time on the upper auxiliary than on the principal pitch — that's substitution, not decoration.",
+              "anchor": "A is not really being\nreplaced, but instead, is just being decorated",
+              "source_page": 41
+            },
+            {
+              "rule_id": "greene-trill-strong-beat",
+              "name": "Place trills predominantly on the strong part of the beat",
+              "when": {
+                "line.articulation": "trill"
+              },
+              "then": {
+                "line.trill_placement": "strong_beat_default"
+              },
+              "preference": "default",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Defaulting trills to weak-beat positions across an entire chorus without taste-based justification.",
+              "anchor": "The trill is more commonly used on the strong part of the beat than the weak one",
+              "source_page": 41
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 41,
+              "summary": "Hammer-on higher note is constrained to a tone inside the currently active scale.",
+              "key_phrases": [
+                "hammer-on scope"
+              ],
+              "verbatim_anchor": "NOTE: This higher note, for now, will be\nfound in the scale you are working with at\nthat moment.",
+              "engine_rules": [
+                "greene-hammer-on-scale-tone-only"
+              ]
+            },
+            {
+              "page": 41,
+              "summary": "Isolated hammer-ons are not standard jazz practice; they live inside the trill at this stage.",
+              "key_phrases": [
+                "hammer-on not standalone"
+              ],
+              "verbatim_anchor": "hammer-ons,\nby themselves, have not been commonly used by most jazz guitarists.",
+              "engine_rules": [
+                "greene-hammer-on-not-standalone"
+              ]
+            },
+            {
+              "page": 41,
+              "summary": "Reframes the trill as decoration of a held note rather than substitution of one note for another.",
+              "key_phrases": [
+                "trill as decoration"
+              ],
+              "verbatim_anchor": "A is not really being\nreplaced, but instead, is just being decorated",
+              "engine_rules": [
+                "greene-trill-as-decoration"
+              ]
+            },
+            {
+              "page": 41,
+              "summary": "Trill placement defaults to the strong part of the beat.",
+              "key_phrases": [
+                "trill strong-beat"
+              ],
+              "verbatim_anchor": "The trill is more commonly used on the strong part of the beat than the weak one",
+              "engine_rules": [
+                "greene-trill-strong-beat"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Dominant 7th scale & root-based thinking",
+          "page_range": [
+            41,
+            43
+          ],
+          "summary": "Defines the Dominant 7th scale as Major with lowered 7 (b7); clarifies that 'b7' is a degree-offset notation, not a letter-name guarantee; states the scale-chord compatibility rule (any chord built only from those scale tones can take the scale); and forbids the relative-major shortcut.",
+          "key_phrases": [
+            "Dominant 7th scale",
+            "b7 notation",
+            "scale-chord compatibility",
+            "no relative-major shortcut"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-dominant-7th-scale-definition",
+              "name": "Dominant 7th scale = Major scale with lowered 7th",
+              "when": {
+                "scale.name": "dominant_7th"
+              },
+              "then": {
+                "scale.formula": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  "b7"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7",
+                "9",
+                "13"
+              ],
+              "falsifier": "Defining the dominant 7th scale as Mixolydian-with-#11 (that's Lydian Dominant) or as a major scale with #4 (that's Lydian).",
+              "anchor": "The Dominant 7th scale is simply a Major scale\nwith a lowered 7th tone",
+              "source_page": 41
+            },
+            {
+              "rule_id": "greene-dominant-7th-chord-compatibility",
+              "name": "Any chord composed only of Dominant-7th-scale tones takes the Dominant 7th scale",
+              "when": {
+                "chord.tones_subset_of_scale": "dominant_7th"
+              },
+              "then": {
+                "scale.options": [
+                  "dominant_7th"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7",
+                "9",
+                "11",
+                "13"
+              ],
+              "falsifier": "Applying the Dominant 7th scale to a dom7b9 chord (the b9 is not in the dominant 7th scale — that chord requires an altered dominant scale).",
+              "anchor": "Any chord containing some combination of any of (but only) these chord tones, can take the Dominant\n7th scale.",
+              "source_page": 41
+            },
+            {
+              "rule_id": "greene-no-relative-major-shortcut-dom7",
+              "name": "Internalize the Dominant 7th scale from its own root — do not think 'major a 4th up'",
+              "when": {
+                "scale.name": "dominant_7th",
+                "context": "internalization"
+              },
+              "then": {
+                "scale.reference_root": "chord_root",
+                "scale.reframe_as_relative_major": false
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7"
+              ],
+              "falsifier": "Thinking 'G7 = C major up a 4th' when fingering G Mixolydian; book's rule requires anchoring the scale on G.",
+              "anchor": "Don’t fall for\nthe “oh, dom. 7th scales, they're really just major scales up a 4th-trap”",
+              "source_page": 43
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 41,
+              "summary": "Dominant 7th scale defined as major with lowered 7th (b7).",
+              "key_phrases": [
+                "Dominant 7th definition"
+              ],
+              "verbatim_anchor": "The Dominant 7th scale is simply a Major scale\nwith a lowered 7th tone",
+              "engine_rules": [
+                "greene-dominant-7th-scale-definition"
+              ]
+            },
+            {
+              "page": 41,
+              "summary": "Clarifies that 'b7' means degree-offset, not a guaranteed flat letter-name.",
+              "key_phrases": [
+                "b7 notation"
+              ],
+              "verbatim_anchor": "the term ”57” means that the 7th tone is lowered one-half-step",
+              "engine_rules": []
+            },
+            {
+              "page": 41,
+              "summary": "Scale-chord compatibility rule: any chord made only of these scale tones takes the dominant 7th scale.",
+              "key_phrases": [
+                "scale-chord compatibility"
+              ],
+              "verbatim_anchor": "Any chord containing some combination of any of (but only) these chord tones, can take the Dominant\n7th scale.",
+              "engine_rules": [
+                "greene-dominant-7th-chord-compatibility"
+              ]
+            },
+            {
+              "page": 43,
+              "summary": "Forbids the relative-major reframing of the dominant 7th scale.",
+              "key_phrases": [
+                "no relative-major shortcut"
+              ],
+              "verbatim_anchor": "Don’t fall for\nthe “oh, dom. 7th scales, they're really just major scales up a 4th-trap”",
+              "engine_rules": [
+                "greene-no-relative-major-shortcut-dom7"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "title": "The Dominant 7th Scale: Group-1/Group-2 Dominants, Combining Scales in One Position",
+      "page_range": [
+        61,
+        85
+      ],
+      "summary": "Develops the dominant scale layer: subdivides dominants into Group 1 (no 11th — runs should contain the 3rd) and Group 2 (with 11th — runs should contain the 11th); teaches that register governs how extensions like b7 and 9 are perceived; introduces position-based 'combining scales in one position' for multi-chord soloing within a 5-6 fret area; reaffirms fingerboard visualization as the primary internalization technique. Introduces the Minor 7th scale (major with b3, b7), prohibits the relative-major shortcut for it, and situates m7 study within the ii-V-I progression. Closes with the Overtone Dominant scale (dominant 7th with #4) and a Jazz Waltz creative-application aside.",
+      "key_phrases": [
+        "Group 1/2 dominants",
+        "run-group sync (3rd vs 11th)",
+        "register governs extensions",
+        "combining scales in one position",
+        "fingerboard visualization",
+        "Minor 7th scale",
+        "ii-V-I context",
+        "Overtone Dominant",
+        "Jazz Waltz"
+      ],
+      "sections": [
+        {
+          "title": "Group-1 / Group-2 dominants & run-group synchronization",
+          "page_range": [
+            58,
+            59
+          ],
+          "summary": "States that register is the variable that makes b7 and 9 'come alive' as spicy lower-mid notes rather than weighty bass tones. Gives the synchronization rule: a run containing the 3rd suits Group-1 dominants; a run containing the 11th suits Group-2 dominants; runs containing both or neither work over either group (with care about lingering tones).",
+          "key_phrases": [
+            "register importance",
+            "run-group sync"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-dominant-run-group-sync",
+              "name": "Run-to-dominant-group synchronization via 3rd vs 11th",
+              "when": {
+                "chord.quality": [
+                  "dom7",
+                  "9",
+                  "11",
+                  "13"
+                ],
+                "chord.group": [
+                  "dominant_group_1",
+                  "dominant_group_2"
+                ]
+              },
+              "then": {
+                "run.tone_requirement": {
+                  "dominant_group_1": "contains_3rd",
+                  "dominant_group_2": "contains_11th",
+                  "either_group": "contains_both_or_neither"
+                }
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7",
+                "9",
+                "11",
+                "13"
+              ],
+              "falsifier": "Playing a run with a prominent natural 3 over a 7sus4 (Group-2 dominant) — the 3 collides with the suspended 4/11.",
+              "anchor": "if a run\ncontains the 3rd, use it over any of the group-1 dominants, and if it contains the 11th, use it over any of the\ngroup-2 dominants.",
+              "source_page": 59
+            },
+            {
+              "rule_id": "greene-register-governs-extensions",
+              "name": "Register determines whether b7 and 9 read as bass weights or spicy mid-range colors",
+              "when": {
+                "context": "extension_voicing_decision",
+                "chord.extension_set": [
+                  "b7",
+                  "9"
+                ]
+              },
+              "then": {
+                "voicing.register_target": "lower_mid_for_spicy_color"
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "dom7",
+                "9",
+                "13"
+              ],
+              "falsifier": "Voicing the b7 and 9 of a dom9 in the lowest bass register and expecting the spicy mid-range color the book describes.",
+              "anchor": "67 and 9 really start to come alive in this “higher” register",
+              "source_page": 58
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 58,
+              "summary": "Register is the variable that controls whether b7 and 9 sound as weighty bass or spicy lower-mid notes.",
+              "key_phrases": [
+                "register importance"
+              ],
+              "verbatim_anchor": "67 and 9 really start to come alive in this “higher” register",
+              "engine_rules": [
+                "greene-register-governs-extensions"
+              ]
+            },
+            {
+              "page": 59,
+              "summary": "Synchronization rule for runs and dominant groups via the 3rd-vs-11th content of the run.",
+              "key_phrases": [
+                "run-group sync"
+              ],
+              "verbatim_anchor": "if a run\ncontains the 3rd, use it over any of the group-1 dominants, and if it contains the 11th, use it over any of the\ngroup-2 dominants.",
+              "engine_rules": [
+                "greene-dominant-run-group-sync"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Combining scales in one position & fingerboard visualization",
+          "page_range": [
+            60,
+            67
+          ],
+          "summary": "Introduces the position-based 'combining scales in one position' technique: keep multiple chord-scale relationships inside a 5-6 fret fingerboard area rather than shifting position for each chord change. Reaffirms that actively visualizing notes on the fingerboard is the most important internalization practice.",
+          "key_phrases": [
+            "combining scales in one position",
+            "5-6 fret area",
+            "fingerboard visualization"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-combining-scales-one-position",
+              "name": "Combine multiple chord-scales within a 5-6 fret position rather than shifting per chord change",
+              "when": {
+                "context": "multi_chord_progression_solo"
+              },
+              "then": {
+                "position.set": "single_5_to_6_fret_area",
+                "position.scale_combine": "across_chord_changes"
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Shifting position with every chord change across a ii-V-I when each scale is available within the current 5-fret window.",
+              "anchor": "you will be able to stay in one little 5 or 6 fret area\nand play through the whole song",
+              "source_page": 60
+            },
+            {
+              "rule_id": "greene-fingerboard-visualization",
+              "name": "Actively visualize scale tones on the fingerboard while playing",
+              "when": {
+                "context": "scale_internalization_practice"
+              },
+              "then": {
+                "practice.mode": "visualize_fingerboard",
+                "practice.priority": "highest"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Practising a position-pattern purely by muscle memory while looking away from the neck with no mental tone-name/degree map.",
+              "anchor": "VISUALIZE the notes on the fingerboard as discussed earlier",
+              "source_page": 67
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 60,
+              "summary": "Defines the position-based combining-scales technique as the method's answer to multi-chord soloing.",
+              "key_phrases": [
+                "combining scales in one position"
+              ],
+              "verbatim_anchor": "you will be able to stay in one little 5 or 6 fret area\nand play through the whole song",
+              "engine_rules": [
+                "greene-combining-scales-one-position"
+              ]
+            },
+            {
+              "page": 67,
+              "summary": "Emphasizes fingerboard visualization as the highest-priority practice technique.",
+              "key_phrases": [
+                "fingerboard visualization"
+              ],
+              "verbatim_anchor": "VISUALIZE the notes on the fingerboard as discussed earlier",
+              "engine_rules": [
+                "greene-fingerboard-visualization"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Minor 7th scale & ii-V-I context",
+          "page_range": [
+            66,
+            69
+          ],
+          "summary": "Defines the Minor 7th scale as major with lowered 3 and lowered 7; situates m7 runs in the ii-V-I context as the practical entry point; prohibits the relative-major reframing of the m7 scale (root-based thinking is mandatory).",
+          "key_phrases": [
+            "Minor 7th scale",
+            "ii-V-I context",
+            "no relative-major shortcut for m7"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-minor-7th-scale-definition",
+              "name": "Minor 7th scale = Major scale with b3 and b7",
+              "when": {
+                "scale.name": "minor_7th"
+              },
+              "then": {
+                "scale.formula": [
+                  1,
+                  2,
+                  "b3",
+                  4,
+                  5,
+                  6,
+                  "b7"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "min7"
+              ],
+              "falsifier": "Specifying the minor 7th scale with a natural 7 (that would be Dorian b3/maj7 — not in this book's system) or with a b6 (which would shift it to Aeolian/natural minor).",
+              "anchor": "The Minor 7th scale is simply a Major Scale with\nLOWERED 3rd (63) and LOWERED 7th (67) tones.",
+              "source_page": 66
+            },
+            {
+              "rule_id": "greene-no-relative-major-shortcut-m7",
+              "name": "Do not think the Minor 7th scale as a major scale a whole step below the chord root",
+              "when": {
+                "scale.name": "minor_7th",
+                "context": "internalization"
+              },
+              "then": {
+                "scale.reference_root": "chord_root",
+                "scale.reframe_as_relative_major": false
+              },
+              "preference": "required",
+              "quality_binding": [
+                "min7"
+              ],
+              "falsifier": "Fingering Dm7 lines while thinking 'C major from D' instead of 'D-rooted minor 7th scale'.",
+              "anchor": "for your own good, don’t think of the m7 scale in\nthis way now.",
+              "source_page": 69
+            },
+            {
+              "rule_id": "greene-m7-runs-in-ii-V-I",
+              "name": "Learn m7 runs in the ii-V-I progression context",
+              "when": {
+                "chord.quality": "min7",
+                "context": "practice_context_selection"
+              },
+              "then": {
+                "practice.progression": "ii_V_I"
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "min7"
+              ],
+              "falsifier": "Practicing all m7 runs only over static one-chord vamps with no ii-V-I exposure.",
+              "anchor": "This particular series of sounds is one of the most common in jazz (it is known as “ii - V - I’",
+              "source_page": 67
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 66,
+              "summary": "Defines the Minor 7th scale as Major with lowered 3 and lowered 7.",
+              "key_phrases": [
+                "m7 scale"
+              ],
+              "verbatim_anchor": "The Minor 7th scale is simply a Major Scale with\nLOWERED 3rd (63) and LOWERED 7th (67) tones.",
+              "engine_rules": [
+                "greene-minor-7th-scale-definition"
+              ]
+            },
+            {
+              "page": 67,
+              "summary": "Frames m7 runs within the ii-V-I — the most common jazz progression — as the practical learning context.",
+              "key_phrases": [
+                "ii-V-I context"
+              ],
+              "verbatim_anchor": "This particular series of sounds is one of the most common in jazz (it is known as “ii - V - I’",
+              "engine_rules": [
+                "greene-m7-runs-in-ii-V-I"
+              ]
+            },
+            {
+              "page": 69,
+              "summary": "Prohibits relative-major reframing of the m7 scale; root-based thinking required.",
+              "key_phrases": [
+                "no relative-major shortcut for m7"
+              ],
+              "verbatim_anchor": "for your own good, don’t think of the m7 scale in\nthis way now.",
+              "engine_rules": [
+                "greene-no-relative-major-shortcut-m7"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Overtone Dominant scale & Jazz Waltz aside",
+          "page_range": [
+            71,
+            82
+          ],
+          "summary": "Introduces the Overtone Dominant scale (Dominant 7th with a #4) and notes the Jazz Waltz feel as a creative-application context for the learned scales (Major, Lydian, Dominant 7th in 3/4 time).",
+          "key_phrases": [
+            "Overtone Dominant scale",
+            "Jazz Waltz feel"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-overtone-dominant-definition",
+              "name": "Overtone Dominant scale = Dominant 7th with #4",
+              "when": {
+                "scale.name": "overtone_dominant"
+              },
+              "then": {
+                "scale.formula": [
+                  1,
+                  2,
+                  3,
+                  "#4",
+                  5,
+                  6,
+                  "b7"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7#11",
+                "9#11",
+                "13#11"
+              ],
+              "falsifier": "Defining Overtone Dominant with both a #4 AND a b9 (those altered tones would push it into altered-dominant territory).",
+              "anchor": "The Overtone Dominant scale is simply a Dominant 7th scale with a #4th tone instead of the regular 4th.",
+              "source_page": 82
+            },
+            {
+              "rule_id": "greene-jazz-waltz-application",
+              "name": "Apply learned scales in 3/4 for Jazz Waltz feel",
+              "when": {
+                "context": "rhythmic_variety_choice"
+              },
+              "then": {
+                "line.meter": "3_4",
+                "line.feel": "jazz_waltz"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Notating a 'jazz waltz' run in 4/4 — the meter is constitutive of the feel.",
+              "anchor": "3/4 time can be very attractive in jazz, creating the feel known as \"Jazz Waltz\".",
+              "source_page": 71
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 71,
+              "summary": "Introduces Jazz Waltz as a creative-application context across learned scales.",
+              "key_phrases": [
+                "Jazz Waltz"
+              ],
+              "verbatim_anchor": "3/4 time can be very attractive in jazz, creating the feel known as \"Jazz Waltz\".",
+              "engine_rules": [
+                "greene-jazz-waltz-application"
+              ]
+            },
+            {
+              "page": 82,
+              "summary": "Defines the Overtone Dominant scale as Dominant 7th with #4.",
+              "key_phrases": [
+                "Overtone Dominant scale"
+              ],
+              "verbatim_anchor": "The Overtone Dominant scale is simply a Dominant 7th scale with a #4th tone instead of the regular 4th.",
+              "engine_rules": [
+                "greene-overtone-dominant-definition"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "title": "The Minor 7th Scale & Altered Dominant Foundations",
+      "page_range": [
+        86,
+        105
+      ],
+      "summary": "Develops the minor 7th and altered dominant layers. Names the Overtone Dominant as also known as Lydian Dominant; identifies the upper-structure triad on Lydian/Lydian-Dominant scales (9, #11, 13 forming a major triad a whole step above the root) and names polytonality as the resulting device. Defines an altered dominant scale as any Dominant 7th scale containing b9, #9, b5 or #5/b13; groups all such chords as GROUP 4 DOMINANT CHORDS; explicitly excludes Overtone Dominant from the altered class (its #11 is from the overtone series, not chromatic alteration). Introduces the package-deal pedagogical method (all three altered-type scales taught side by side in one position) and the remedial rule that returning to chord forms resolves visualization difficulty.",
+      "key_phrases": [
+        "Lydian Dominant naming",
+        "upper-structure triad",
+        "polytonality",
+        "altered dominant definition",
+        "Group 4 dominants",
+        "package-deal learning",
+        "Overtone Dom not altered",
+        "remedial chord-form rule"
+      ],
+      "sections": [
+        {
+          "title": "Lydian Dominant, upper-structure triad & polytonality",
+          "page_range": [
+            83,
+            83
+          ],
+          "summary": "Names Overtone Dominant as also called Lydian Dominant. Identifies the upper-structure triad (9, #11, 13 forming a major triad rooted a whole step above the chord) as the 'hippest' polytonal device of both Lydian and Lydian Dominant scales. Names polytonality as the underlying concept (forward-referenced to a full Vol II chapter).",
+          "key_phrases": [
+            "Lydian Dominant",
+            "upper-structure triad",
+            "polytonality"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-lydian-dominant-alias",
+              "name": "Overtone Dominant is also called Lydian Dominant",
+              "when": {
+                "scale.name": "overtone_dominant"
+              },
+              "then": {
+                "scale.aliases": [
+                  "lydian_dominant"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7#11",
+                "9#11",
+                "13#11"
+              ],
+              "falsifier": "Treating 'Lydian Dominant' and 'Overtone Dominant' as different scales — they are the same scale with two names.",
+              "anchor": "the Overtone Dominant scale is also called the LYDIAN\nDominant scale.",
+              "source_page": 83
+            },
+            {
+              "rule_id": "greene-upper-structure-triad",
+              "name": "Upper-structure triad on Lydian/Lydian-Dominant = major triad on 2nd of the scale (9, #11, 13)",
+              "when": {
+                "scale.name": [
+                  "lydian",
+                  "overtone_dominant"
+                ],
+                "context": "polytonal_color_choice"
+              },
+              "then": {
+                "polytonal.upper_structure": "major_triad_root_whole_step_above_chord_root",
+                "polytonal.tones": [
+                  "9",
+                  "#11",
+                  "13"
+                ]
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "maj7",
+                "dom7#11"
+              ],
+              "falsifier": "Naming the upper structure as a minor triad or as built on the b3 — book locates it as MAJOR triad a whole step above.",
+              "anchor": "the three “hippest” notes (namely, the 9, #11 and 13) form a major triad whose root is a whole step\nabove the root of the scale.",
+              "source_page": 83
+            },
+            {
+              "rule_id": "greene-polytonality-named",
+              "name": "Polytonality is a named improvisational device built from upper-structure triads",
+              "when": {
+                "context": "advanced_color_choice"
+              },
+              "then": {
+                "line.device": "polytonality_upper_structure"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "maj7",
+                "dom7#11"
+              ],
+              "falsifier": "Labeling diatonic triadic outlining over the same chord 'polytonality' — book reserves the term for upper-structure-on-foreign-root color.",
+              "anchor": "This type of thinking and sound is commonly known as POLYTONALITY",
+              "source_page": 83
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 83,
+              "summary": "Names Overtone Dominant as also called Lydian Dominant.",
+              "key_phrases": [
+                "Lydian Dominant naming"
+              ],
+              "verbatim_anchor": "the Overtone Dominant scale is also called the LYDIAN\nDominant scale.",
+              "engine_rules": [
+                "greene-lydian-dominant-alias"
+              ]
+            },
+            {
+              "page": 83,
+              "summary": "Locates the upper-structure triad on the Lydian/Lydian-Dominant scales as a major triad a whole step above the chord root.",
+              "key_phrases": [
+                "upper-structure triad"
+              ],
+              "verbatim_anchor": "the three “hippest” notes (namely, the 9, #11 and 13) form a major triad whose root is a whole step\nabove the root of the scale.",
+              "engine_rules": [
+                "greene-upper-structure-triad"
+              ]
+            },
+            {
+              "page": 83,
+              "summary": "Names polytonality as the device generated by this upper-structure thinking.",
+              "key_phrases": [
+                "polytonality"
+              ],
+              "verbatim_anchor": "This type of thinking and sound is commonly known as POLYTONALITY",
+              "engine_rules": [
+                "greene-polytonality-named"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Altered dominant scales & Group 4 dominants",
+          "page_range": [
+            94,
+            94
+          ],
+          "summary": "Defines an altered dominant scale as any Dominant 7th scale with one or more of b9, #9, b5, or #5/b13. Establishes that any dominant chord containing one or more of these altered tones is a Group 4 dominant. Critically excludes Overtone Dominant from the altered class: its #11 reflects the overtone series, not chromatic alteration.",
+          "key_phrases": [
+            "altered dominant definition",
+            "Group 4 dominants",
+            "Overtone Dom not altered"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-altered-dominant-definition",
+              "name": "Altered dominant scale = Dominant 7th scale with one or more of b9, #9, b5, #5/b13",
+              "when": {
+                "scale.name": "altered_dominant"
+              },
+              "then": {
+                "scale.altered_tones_required_subset": [
+                  "b9",
+                  "#9",
+                  "b5",
+                  "#5_b13"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7alt",
+                "7b9",
+                "7#9",
+                "7b5",
+                "7#5"
+              ],
+              "falsifier": "Calling a scale 'altered dominant' when its only modification of the dominant 7th scale is a #11 — that's Overtone Dominant, not altered.",
+              "anchor": "What is an altered dominant scale? Simply, any dominant 7th scale with one or\nmore of the following tones: 59, #9, 65 or #5 (613).",
+              "source_page": 94
+            },
+            {
+              "rule_id": "greene-group-4-dominants",
+              "name": "Group 4 dominants = any dominant 7th type chord containing one or more altered tones",
+              "when": {
+                "chord.quality": [
+                  "dom7"
+                ],
+                "chord.altered_tones_present": [
+                  "b9",
+                  "#9",
+                  "b5",
+                  "#5_b13"
+                ]
+              },
+              "then": {
+                "chord.group": "dominant_group_4",
+                "scale.options": [
+                  "altered_dominant_type_1",
+                  "altered_dominant_type_2",
+                  "altered_dominant_type_3"
+                ]
+              },
+              "preference": "required",
+              "quality_binding": [
+                "7b9",
+                "7#9",
+                "7b5",
+                "7#5",
+                "7alt"
+              ],
+              "falsifier": "Placing a 7#11 chord (no altered b9/#9/b5/#5) into Group 4 — it belongs in Group 3 (Overtone Dominant).",
+              "anchor": "Any Dom. 7th type chord that contains any one or more of the four altered tones (69, #9, 65 and\n#5 or 613) will be considered as being part of what we call the GROUP 4 DOMINANT CHORDS.",
+              "source_page": 94
+            },
+            {
+              "rule_id": "greene-overtone-not-altered",
+              "name": "Overtone Dominant is NOT an altered dominant scale; its #11 reflects the overtone series",
+              "when": {
+                "scale.name": "overtone_dominant"
+              },
+              "then": {
+                "scale.classification": "non_altered",
+                "chord.group": "dominant_group_3"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "dom7#11"
+              ],
+              "falsifier": "Pairing a 7b9#11 chord with the Overtone Dominant scale alone — the b9 makes it altered, requiring a Group-4 altered scale.",
+              "anchor": "The Overtone Dominant scale is not considered to be an altered dominant scale",
+              "source_page": 94
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 94,
+              "summary": "Defines altered dominant scale as a Dominant 7th with one or more of b9/#9/b5/#5(b13).",
+              "key_phrases": [
+                "altered dominant definition"
+              ],
+              "verbatim_anchor": "What is an altered dominant scale? Simply, any dominant 7th scale with one or\nmore of the following tones: 59, #9, 65 or #5 (613).",
+              "engine_rules": [
+                "greene-altered-dominant-definition"
+              ]
+            },
+            {
+              "page": 94,
+              "summary": "Establishes the Group 4 taxonomy linking altered-tone-containing chords to the altered scale set.",
+              "key_phrases": [
+                "Group 4 dominants"
+              ],
+              "verbatim_anchor": "Any Dom. 7th type chord that contains any one or more of the four altered tones (69, #9, 65 and\n#5 or 613) will be considered as being part of what we call the GROUP 4 DOMINANT CHORDS.",
+              "engine_rules": [
+                "greene-group-4-dominants"
+              ]
+            },
+            {
+              "page": 94,
+              "summary": "Categorical boundary: Overtone Dominant is NOT an altered dominant — its #11 comes from the overtone series.",
+              "key_phrases": [
+                "Overtone Dom not altered"
+              ],
+              "verbatim_anchor": "The Overtone Dominant scale is not considered to be an altered dominant scale",
+              "engine_rules": [
+                "greene-overtone-not-altered"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Package-deal pedagogy & visualization remediation",
+          "page_range": [
+            96,
+            99
+          ],
+          "summary": "States the pedagogical method of presenting all three altered-type scales side by side in the same fingerboard position so subtle color differences are absorbed comparatively. Sets a remedial rule: when runs are hard to visualize, return to the position's chord forms first.",
+          "key_phrases": [
+            "package-deal learning",
+            "visualization via chord forms"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-package-deal-learning",
+              "name": "Teach related altered-dominant scales side by side in one position for comparative absorption",
+              "when": {
+                "context": "altered_dominant_pedagogy"
+              },
+              "then": {
+                "practice.layout": "all_three_types_one_position_juxtaposed"
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "7alt"
+              ],
+              "falsifier": "Drilling Type 1 in position 1, then moving to a completely different position for Type 2 — denies comparative absorption.",
+              "anchor": "the three types of A.D. scales are all so\nsimilar that your brain, while noting the differences, can absorb them all in a kind of ‘package deal’, one\nposition at a time.",
+              "source_page": 96
+            },
+            {
+              "rule_id": "greene-remediate-via-chord-forms",
+              "name": "When runs are hard to visualize, return to chord forms in that position first",
+              "when": {
+                "context": "visualization_difficulty"
+              },
+              "then": {
+                "practice.remediation": "study_chord_forms_for_position"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Drilling the same run pattern faster as a remedy for failing to visualize it — book prescribes going back to the chord forms, not increasing repetition tempo.",
+              "anchor": "If you have trouble visualizing any of these runs, then please, for your own good, go back and learn the chord forms (group 4) for this position.",
+              "source_page": 99
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 96,
+              "summary": "Names the package-deal pedagogical strategy: juxtapose all three altered types in one position.",
+              "key_phrases": [
+                "package-deal learning"
+              ],
+              "verbatim_anchor": "the three types of A.D. scales are all so\nsimilar that your brain, while noting the differences, can absorb them all in a kind of ‘package deal’, one\nposition at a time.",
+              "engine_rules": [
+                "greene-package-deal-learning"
+              ]
+            },
+            {
+              "page": 99,
+              "summary": "Remedial rule: visualization trouble means return to chord forms for that position.",
+              "key_phrases": [
+                "chord-form remediation"
+              ],
+              "verbatim_anchor": "If you have trouble visualizing any of these runs, then please, for your own good, go back and learn the chord forms (group 4) for this position.",
+              "engine_rules": [
+                "greene-remediate-via-chord-forms"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "title": "The Overtone Dominant Scale & Group-3 Dominants — application",
+      "page_range": [
+        106,
+        120
+      ],
+      "summary": "Predominantly notated exercises realizing Overtone Dominant on the fingerboard. Load-bearing prose limited to standing practice rules: try Em9 runs in the 5th position too (alternate-position practice); arpeggio notes may move to other strings (5th and 4th); left-hand reminder against tip-of-finger placement.",
+      "key_phrases": [
+        "alternate-position practice",
+        "arpeggio string flexibility",
+        "left-hand pad placement"
+      ],
+      "sections": [
+        {
+          "title": "Standing practice & technique rules",
+          "page_range": [
+            107,
+            111
+          ],
+          "summary": "Three standing application rules: practice the same Em9 runs in the 5th position too; voice arpeggio notes on alternate strings (5th & 4th) when convenient; fret with the pad of the finger, not the tip.",
+          "key_phrases": [
+            "alternate-position",
+            "string choice",
+            "left-hand pad"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-alternate-position-practice",
+              "name": "Practice runs in at least one alternate fingerboard position",
+              "when": {
+                "context": "scale_run_practice"
+              },
+              "then": {
+                "position.set": [
+                  "primary",
+                  "alternate_at_least_one"
+                ]
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Owning a run only in the position originally notated — alternate-position fluency is the rule.",
+              "anchor": "Try fingering all these Em9 runs in the Sth position too.",
+              "source_page": 109
+            },
+            {
+              "rule_id": "greene-arpeggio-string-flexibility",
+              "name": "Arpeggio notes may be voiced on alternate strings (e.g., 5th & 4th)",
+              "when": {
+                "context": "arpeggio_voicing"
+              },
+              "then": {
+                "arpeggio.string_choice": "flexible_within_position"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Refusing to revoice an arpeggio onto an adjacent string when it improves the line within the same position.",
+              "anchor": "These notes may be played on other strings too (5th & 4th strings)",
+              "source_page": 107
+            },
+            {
+              "rule_id": "greene-left-hand-pad-not-tip",
+              "name": "Fret with the pad of the finger, not the tip",
+              "when": {
+                "context": "left_hand_placement"
+              },
+              "then": {
+                "technique.left_hand_contact": "finger_pad"
+              },
+              "preference": "required",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Fretting with the extreme tip of the finger as a default — book corrects this as a common error.",
+              "anchor": "REMINDER:\nnot on tip of finger",
+              "source_page": 111
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 107,
+              "summary": "Arpeggio string flexibility: notes can move to 5th and 4th strings.",
+              "key_phrases": [
+                "string flexibility"
+              ],
+              "verbatim_anchor": "These notes may be played on other strings too (5th & 4th strings)",
+              "engine_rules": [
+                "greene-arpeggio-string-flexibility"
+              ]
+            },
+            {
+              "page": 109,
+              "summary": "Practice the same runs in an alternate position to develop positional fluency.",
+              "key_phrases": [
+                "alternate-position"
+              ],
+              "verbatim_anchor": "Try fingering all these Em9 runs in the Sth position too.",
+              "engine_rules": [
+                "greene-alternate-position-practice"
+              ]
+            },
+            {
+              "page": 111,
+              "summary": "Left-hand reminder: fret with the pad, not the tip.",
+              "key_phrases": [
+                "finger pad"
+              ],
+              "verbatim_anchor": "REMINDER:\nnot on tip of finger",
+              "engine_rules": [
+                "greene-left-hand-pad-not-tip"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "title": "Altered Dominant Scales Type 1/2/3 — application",
+      "page_range": [
+        121,
+        137
+      ],
+      "summary": "Predominantly notated exercises realizing Altered Dominant Types 1/2/3 on the fingerboard. Load-bearing prose: structural rule that there is no Type 3 - 4A on guitar (instrument boundary); substitution allowances (A7+ for A7#9+, D49 for D6/9 across Type 3 pages); standing practice rule to try every run an octave higher within the same position; higher-register arpeggio supplements provided; the altered #9 may substitute for or supplement the natural 9 in performance.",
+      "key_phrases": [
+        "Type 3 area-4A absence",
+        "A7+ for A7#9+ substitution",
+        "D49 for D6/9 substitution",
+        "octave-higher practice",
+        "higher-register arpeggios",
+        "#9 substitution rule"
+      ],
+      "sections": [
+        {
+          "title": "Standing chord-substitution allowances & practice rules",
+          "page_range": [
+            105,
+            133
+          ],
+          "summary": "Standing substitution rule for Type 3 pages: A7+ may stand in for A7#9+, and D49 may stand in for D6/9. Standing practice rule: try every run an octave higher within the same position. Performance rule: the altered #9 can substitute for or supplement the natural 9. Structural boundary: there's no Type 3 - 4A on guitar — instrument geometry forbids it. Higher-register arpeggios provided as supplements.",
+          "key_phrases": [
+            "A7+/A7#9+ substitution",
+            "D49/D6/9 substitution",
+            "octave-higher practice",
+            "#9 substitution rule",
+            "Type 3 area-4A absence",
+            "higher-register arpeggios"
+          ],
+          "engine_rules": [
+            {
+              "rule_id": "greene-altered-type3-substitutions",
+              "name": "Type 3 altered-dominant chord substitution allowances",
+              "when": {
+                "chord.quality": "alt_dom_type_3"
+              },
+              "then": {
+                "chord.substitution_allowances": {
+                  "A7#9+": "A7+",
+                  "D6/9": "D49"
+                }
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "7alt"
+              ],
+              "falsifier": "Refusing the A7+ → A7#9+ substitution in a Type 3 reading purely because the symbols don't match literally.",
+              "anchor": "As before, and on all Type 3 altered dominant pages coming up, you may wish to try A7+ for A7#9+\nand D49 for D6/9.",
+              "source_page": 105
+            },
+            {
+              "rule_id": "greene-octave-higher-same-position",
+              "name": "Try every run an octave higher within the same fingerboard position",
+              "when": {
+                "context": "scale_run_practice"
+              },
+              "then": {
+                "practice.transposition": "octave_up_same_position"
+              },
+              "preference": "preferred",
+              "quality_binding": [
+                "any"
+              ],
+              "falsifier": "Practicing a run only in its written register; never attempting the in-position octave-up transposition.",
+              "anchor": "Also try this run an octave higher in the same position.",
+              "source_page": 120
+            },
+            {
+              "rule_id": "greene-sharp9-substitutes-natural9",
+              "name": "Altered #9 may substitute for or supplement the natural 9",
+              "when": {
+                "chord.quality": [
+                  "7alt",
+                  "7#9"
+                ],
+                "context": "extension_voicing_decision"
+              },
+              "then": {
+                "chord.alteration_choice": "sharp9_in_lieu_of_or_in_addition_to_natural_9"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "7alt",
+                "7#9"
+              ],
+              "falsifier": "Treating natural 9 and #9 as mutually exclusive in altered-dominant voicings — book explicitly allows both together.",
+              "anchor": "INSTEAD OF OR IN ADDITION TO THE #9",
+              "source_page": 131
+            },
+            {
+              "rule_id": "greene-no-type3-area-4a",
+              "name": "There is no Type 3 - 4A altered-dominant on guitar (instrument geometry)",
+              "when": {
+                "scale.name": "altered_dominant_type_3",
+                "fingerboard.area": "4A"
+              },
+              "then": {
+                "scale.availability": false
+              },
+              "preference": "required",
+              "quality_binding": [
+                "7alt"
+              ],
+              "falsifier": "Filing a Type 3 fingering chart for area 4A as if it existed — book states instrument geometry forbids it.",
+              "anchor": "There won't be any Type 3 - 4A",
+              "source_page": 118
+            },
+            {
+              "rule_id": "greene-higher-register-arpeggios",
+              "name": "Supplement altered-dominant patterns with higher-register arpeggios",
+              "when": {
+                "chord.quality": "7alt",
+                "context": "register_expansion"
+              },
+              "then": {
+                "arpeggio.set_for_quality": "higher_register_supplement"
+              },
+              "preference": "optional",
+              "quality_binding": [
+                "7alt"
+              ],
+              "falsifier": "Limiting altered-dominant arpeggios to the original written register only.",
+              "anchor": "EXTRA ARPEGGIOS FOR HIGHER REGISTER",
+              "source_page": 133
+            }
+          ],
+          "paragraphs": [
+            {
+              "page": 105,
+              "summary": "Type 3 chord-substitution allowances (A7+/A7#9+, D49/D6/9).",
+              "key_phrases": [
+                "Type 3 substitutions"
+              ],
+              "verbatim_anchor": "As before, and on all Type 3 altered dominant pages coming up, you may wish to try A7+ for A7#9+\nand D49 for D6/9.",
+              "engine_rules": [
+                "greene-altered-type3-substitutions"
+              ]
+            },
+            {
+              "page": 118,
+              "summary": "Structural boundary: no Type 3 - 4A on guitar.",
+              "key_phrases": [
+                "Type 3 area-4A absence"
+              ],
+              "verbatim_anchor": "There won't be any Type 3 - 4A",
+              "engine_rules": [
+                "greene-no-type3-area-4a"
+              ]
+            },
+            {
+              "page": 120,
+              "summary": "Standing practice rule: every run also an octave higher in the same position.",
+              "key_phrases": [
+                "octave-higher practice"
+              ],
+              "verbatim_anchor": "Also try this run an octave higher in the same position.",
+              "engine_rules": [
+                "greene-octave-higher-same-position"
+              ]
+            },
+            {
+              "page": 131,
+              "summary": "Performance rule: altered #9 substitutes for or supplements the natural 9.",
+              "key_phrases": [
+                "#9 substitution"
+              ],
+              "verbatim_anchor": "INSTEAD OF OR IN ADDITION TO THE #9",
+              "engine_rules": [
+                "greene-sharp9-substitutes-natural9"
+              ]
+            },
+            {
+              "page": 133,
+              "summary": "Higher-register arpeggio supplements provided for altered dominant patterns.",
+              "key_phrases": [
+                "higher-register arpeggios"
+              ],
+              "verbatim_anchor": "EXTRA ARPEGGIOS FOR HIGHER REGISTER",
+              "engine_rules": [
+                "greene-higher-register-arpeggios"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
