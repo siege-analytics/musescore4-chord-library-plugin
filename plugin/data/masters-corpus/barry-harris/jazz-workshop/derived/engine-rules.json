@@ -1,0 +1,803 @@
+{
+  "master": "barry-harris",
+  "work": "jazz-workshop",
+  "schema_version": "0.1",
+  "count": 38,
+  "rules": [
+    {
+      "rule_id": "harris-technique-musical-context",
+      "name": "Technique requires musical context",
+      "when": {
+        "harmonic.context": "any"
+      },
+      "then": {
+        "voicing.quality": "always embed technical exercise within a musical phrase or progression"
+      },
+      "preference": "Never practice technique in isolation from musical meaning",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An exercise drill that cycles fingerings or scales with no reference to chord changes or rhythmic feel would violate this rule.",
+      "anchor": "practice your playing—not your practicing",
+      "source_page": 10,
+      "chapter": 1,
+      "section": "Technique vs. Musical Context"
+    },
+    {
+      "rule_id": "harris-recreate-rhythm-section",
+      "name": "Mental rhythm section simulation during solo practice",
+      "when": {
+        "harmonic.context": "solo_practice"
+      },
+      "then": {
+        "voicing.quality": "maintain internal awareness of drums, bass, and chord changes at tempo"
+      },
+      "preference": "Always practice in tempo with an imagined rhythm section",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Practicing scales freely with no tempo and no internal harmonic reference would violate this rule.",
+      "anchor": "it is essential to re-create the rhythm section for yourself as\nyou play. Hear the drums, the bass and the chord changes.",
+      "source_page": 10,
+      "chapter": 1,
+      "section": "Re-creating the Rhythm Section in Practice"
+    },
+    {
+      "rule_id": "harris-up-and-down-scale",
+      "name": "Up-and-down scale as 2-bar phrase unit",
+      "when": {
+        "scale.type": "any",
+        "harmonic.context": "scale_practice"
+      },
+      "then": {
+        "voicing.shape": "ascend from tonic to 7th degree, then descend straight back to tonic, producing a 2-bar phrase"
+      },
+      "preference": "The 'up and down' form is the standard scale exercise unit",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A scale exercise that ascends a full octave (tonic to octave) rather than stopping at the 7th would not be an 'up and down' in Harris's sense.",
+      "anchor": "a scale played from its tonic up to its 7th\ndegree",
+      "source_page": 11,
+      "chapter": 1,
+      "section": "'Up and Down' Scale Definition"
+    },
+    {
+      "rule_id": "harris-dom7-three-arpeggios",
+      "name": "Three important arpeggios on dominant 7th scale",
+      "when": {
+        "chord_quality": "dominant_7th",
+        "scale.type": "dominant_7th"
+      },
+      "then": {
+        "voicing.shape": "prioritize arpeggios built on scale degrees 1, 5, and 7"
+      },
+      "preference": "On a C dominant 7th, practice the arpeggios rooted on C, G, and Bb",
+      "quality_binding": [
+        "dominant_7th"
+      ],
+      "falsifier": "Treating an arpeggio built on the 2nd or 4th degree of the dominant 7th scale as equally important would contradict this rule.",
+      "anchor": "The three important arpeggios on the dominant 7th scale are found\non the tonic, the Sth and the 7th.",
+      "source_page": 13,
+      "chapter": 1,
+      "section": "Three Important Arpeggios on Dominant 7th"
+    },
+    {
+      "rule_id": "harris-pivoting-technique",
+      "name": "Pivoting creates rhythmic emphasis at new range extremes",
+      "when": {
+        "harmonic.context": "melodic_line",
+        "melody.scale_degree": "any"
+      },
+      "then": {
+        "voicing.shape": "insert pivot point to create new highest or lowest note, generating natural rhythmic accent"
+      },
+      "preference": "Use pivoting when a melodic line would otherwise exceed instrumental range or when rhythmic reaccentuation is desired",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A straight ascending or descending line with no pivot is unrelated; the rule is non-vacuous only when a pivot is inserted.",
+      "anchor": "the accentual structure of the line changes where the pivot creates new\nhighest and lowest notes, which naturally feel rhythmically stronger",
+      "source_page": 13,
+      "chapter": 1,
+      "section": "Pivoting Technique Definition"
+    },
+    {
+      "rule_id": "harris-half-step-model-master",
+      "name": "Half-steps added to descending scale form per scale-type rules",
+      "when": {
+        "scale.type": "any",
+        "harmonic.context": "descending_scale_phrase"
+      },
+      "then": {
+        "scale.insert_half_step_at": "position determined by scale-type-specific rules"
+      },
+      "preference": "Half-steps appear in the descending form only; each scale type has its own rule set",
+      "quality_binding": [
+        "dominant_7th",
+        "major",
+        "minor"
+      ],
+      "falsifier": "Adding half-steps to the ascending form of the scale, or applying dominant 7th half-step placements to the major scale, would violate this rule.",
+      "anchor": "In their basic role, they appear as notes added to the\ndescending form of the scale.",
+      "source_page": 17,
+      "chapter": 1,
+      "section": "Half-Step Practice Model Definition"
+    },
+    {
+      "rule_id": "harris-major-rule1-135-maj7",
+      "name": "Major Rule 1 (1-3-5-maj7): one half-step between 6 and 5",
+      "when": {
+        "scale.type": "major",
+        "melody.scale_degree": "1_or_3_or_5_or_major7",
+        "harmonic.context": "descending_scale_phrase"
+      },
+      "then": {
+        "scale.insert_half_step_at": "between_6_and_5"
+      },
+      "preference": null,
+      "quality_binding": [
+        "major"
+      ],
+      "falsifier": "Inserting a half-step between 2 and 1 instead of 6 and 5 when descending from scale degree 1 violates Rule 1.",
+      "anchor": "The first rule for descending from the 1-3-5 and major7 is: 1\nadded half-step between the 6-5.",
+      "source_page": 23,
+      "chapter": 1,
+      "section": "Major Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-major-rule2-35-maj7",
+      "name": "Major Rule 2 (3-5-maj7): three half-steps",
+      "when": {
+        "scale.type": "major",
+        "melody.scale_degree": "3_or_5_or_major7",
+        "harmonic.context": "descending_scale_phrase"
+      },
+      "then": {
+        "scale.insert_half_step_at": "between_3_2_and_2_1_and_6_5_or_variant_3_2_maj7_6_6_5"
+      },
+      "preference": "Two valid placements; practice both",
+      "quality_binding": [
+        "major"
+      ],
+      "falsifier": "Using only one or two half-steps when applying Rule 2 to the 3-5-maj7 group would be incomplete.",
+      "anchor": "The second rule applying to the 3-5 and major7 is: 3 added half-\nsteps between the 3-2; 2-1; 6-5.",
+      "source_page": 23,
+      "chapter": 1,
+      "section": "Major Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-major-rule1-246",
+      "name": "Major Rule 1 (2-4-6): no added half-steps",
+      "when": {
+        "scale.type": "major",
+        "melody.scale_degree": "2_or_4_or_6",
+        "harmonic.context": "descending_scale_phrase"
+      },
+      "then": {
+        "scale.insert_half_step_at": "none"
+      },
+      "preference": null,
+      "quality_binding": [
+        "major"
+      ],
+      "falsifier": "Adding any half-step when applying Rule 1 from scale degree 2, 4, or 6 violates this rule.",
+      "anchor": "The first rule for descending from the 2-4-6 is: no added half-\nsteps.",
+      "source_page": 23,
+      "chapter": 1,
+      "section": "Major Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-major-rule2-246",
+      "name": "Major Rule 2 (2-4-6): two half-steps",
+      "when": {
+        "scale.type": "major",
+        "melody.scale_degree": "2_or_4_or_6",
+        "harmonic.context": "descending_scale_phrase"
+      },
+      "then": {
+        "scale.insert_half_step_at": "between_2_1_and_6_5_or_variant_maj7_6_and_6_5"
+      },
+      "preference": "Practice both placements",
+      "quality_binding": [
+        "major"
+      ],
+      "falsifier": "Using three half-steps (as in Rule 2 for 1-3-5-maj7) when applying Rule 2 to the 2-4-6 group violates this rule.",
+      "anchor": "The second rule for the 2-4-6 is: 2 added half-steps which can\ncome between the 2-1; 6-5 or between the major7-6; 6-5.",
+      "source_page": 23,
+      "chapter": 1,
+      "section": "Major Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-minor-half-step-melodic-minor-form",
+      "name": "Minor half-step rules use ascending melodic minor",
+      "when": {
+        "scale.type": "minor",
+        "harmonic.context": "half_step_practice"
+      },
+      "then": {
+        "scale.insert_half_step_at": "same positions as major rules applied to ascending melodic minor (1-2-b3-4-5-6-maj7)"
+      },
+      "preference": "Use ascending melodic minor, never natural or harmonic minor, as the base",
+      "quality_binding": [
+        "minor"
+      ],
+      "falsifier": "Applying Harris half-step rules to a natural minor scale instead of ascending melodic minor would violate this rule.",
+      "anchor": "The minor scale that the half-steps are added to is the melodic minor in\nascending form-tonic - 2 - b3 - 4 - 5 - 6 - major7.",
+      "source_page": 25,
+      "chapter": 1,
+      "section": "Minor Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-minor-half-step-b3-exception",
+      "name": "Minor scale b3 exception: substitute any note for b3 insertion",
+      "when": {
+        "scale.type": "melodic_minor_ascending",
+        "harmonic.context": "half_step_practice",
+        "melody.scale_degree": "position_where_major_rule_would_insert_b3"
+      },
+      "then": {
+        "scale.insert_half_step_at": "any note other than b3 (already present); alternatively use interval jump or repeat the same note twice"
+      },
+      "preference": "b3 is the single exception; all other placements identical to major",
+      "quality_binding": [
+        "minor"
+      ],
+      "falsifier": "Inserting an additional b3 via the half-step rule in ascending melodic minor would be redundant and contradicts the exception.",
+      "anchor": "The one exception to this is where\nthe major scale rules add a b3rd. Because this note is already present in\nthe melodic minor scale, any other note may be used in its place.",
+      "source_page": 25,
+      "chapter": 1,
+      "section": "Minor Scale Half-Step Rules"
+    },
+    {
+      "rule_id": "harris-related-diminished-major3rd-above-dom",
+      "name": "Related diminished is built a major 3rd above the dominant 7th root",
+      "when": {
+        "chord_quality": "dominant_7th",
+        "harmonic.context": "finding_related_diminished"
+      },
+      "then": {
+        "chord_symbol.substitute": "diminished chord built on the note a major 3rd above the dominant 7th root"
+      },
+      "preference": "For any dominant 7th, go up a major 3rd from the root",
+      "quality_binding": [
+        "dominant_7th"
+      ],
+      "falsifier": "Building the related diminished a minor 3rd above the dominant root (e.g., Eb° for C7) would not yield the Harris related diminished.",
+      "anchor": "The rule of thumb for finding a related diminished chord is to\nbuild it a major 3rd above the dominant note.",
+      "source_page": 27,
+      "chapter": 1,
+      "section": "Finding the Related Diminished Chord"
+    },
+    {
+      "rule_id": "harris-scale-choice-precedes-phrase",
+      "name": "Scale selection must precede phrase generation",
+      "when": {
+        "harmonic.context": "any_chord_progression"
+      },
+      "then": {
+        "scale.type": "scale(s) that outline the chord progression"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Playing phrases that do not derive from a scale outlining the progression (e.g., lydian phrase over a plain dominant V where mixolydian is required) violates step 1.",
+      "anchor": "Choose the correct scale(s) to outline the chord\nprogression (song). Practice the scale(s) thoroughly.",
+      "source_page": 37,
+      "chapter": 2,
+      "section": "Three-Step Solo Building"
+    },
+    {
+      "rule_id": "harris-phrase-all-keys-all-tempos",
+      "name": "Practice scale-derived phrases in all keys and challenging tempos",
+      "when": {
+        "harmonic.context": "any_scale_derived_phrase"
+      },
+      "then": {
+        "voicing.quality": "transposed_across_all_keys"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Practicing a phrase only in C and never transposing violates the all-keys requirement.",
+      "anchor": "Make-up as many different phrases as possible\nbased on the scale(s) outlining the harmony, Practice\nthem in all keys, and at challenging tempos.",
+      "source_page": 37,
+      "chapter": 2,
+      "section": "Three-Step Solo Building"
+    },
+    {
+      "rule_id": "harris-transfer-phrases-same-progression",
+      "name": "Transfer phrases across tunes sharing the same progression",
+      "when": {
+        "progression.type": "same_progression_in_multiple_tunes"
+      },
+      "then": {
+        "voicing.quality": "progression_portable_phrase"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Treating a II-V-I phrase as tune-specific and never reusing it across other II-V-I tunes violates step 3.",
+      "anchor": "Find different tunes that make use of the chord\nprogression that you are working on, and try out the\nphrases in each of them.",
+      "source_page": 37,
+      "chapter": 2,
+      "section": "Three-Step Solo Building"
+    },
+    {
+      "rule_id": "harris-related-diminished-construction",
+      "name": "Build related diminished a major 3rd above the dominant",
+      "when": {
+        "harmonic.context": "dominant_in_any_key",
+        "chord_quality": "dominant_7"
+      },
+      "then": {
+        "chord_symbol.substitute": "diminished7 chord rooted a major 3rd above the dominant note"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Building the diminished a minor 3rd above (B° in key of D rather than C#°) is the standard vii°/V, not the Harris related diminished.",
+      "anchor": "The related diminished chord is built from a major 3rd above the domi-\nnant note, For instance, in the key of D the dominant note is A anda\nthird above is C#.",
+      "source_page": 42,
+      "chapter": 2,
+      "section": "Related Diminished Chord Definition"
+    },
+    {
+      "rule_id": "harris-important-minor-as-five-of-five",
+      "name": "Important Minor = minor 7 on scale degree 5 of a dominant",
+      "when": {
+        "chord_quality": "dominant_7",
+        "melody.scale_degree": "5",
+        "harmonic.context": "dominant_7th_scale"
+      },
+      "then": {
+        "chord_symbol.substitute": "minor7 chord rooted on the 5th degree of the dominant 7th scale (V/V)"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Labeling the chord on the 4th degree (IVm7) as 'important minor' violates this definition; it must be on the 5th degree.",
+      "anchor": "\"Important minor' is the term given to the chord found on the Sth\ndegree of a dominant 7th scale (5 of 5),",
+      "source_page": 46,
+      "chapter": 2,
+      "section": "Important Minor Definition"
+    },
+    {
+      "rule_id": "harris-minor6-diminished-scale-construction",
+      "name": "Minor 6 Diminished Scale = Minor 6 + Related Diminished",
+      "when": {
+        "chord_quality": "minor6",
+        "harmonic.context": "minor_tonic",
+        "scale.type": "minor_6_diminished"
+      },
+      "then": {
+        "scale.insert_half_step_at": "diminished chord tones built a major 3rd above the dominant note of the scale, merged with the minor 6 chord tones"
+      },
+      "preference": null,
+      "quality_binding": [
+        "minor_6_diminished"
+      ],
+      "falsifier": "Building with a minor 7 chord (Cm7 + B°) instead of minor 6 does not yield the Harris Minor 6 Diminished Scale.",
+      "anchor": "This scale is formed by combining a minor 6 chord with its related\ndiminished chord, The diminished chord is built from a major 3rd\nabove the dominant note of the scale.",
+      "source_page": 58,
+      "chapter": 2,
+      "section": "Minor 6 Diminished Scale Definition"
+    },
+    {
+      "rule_id": "harris-chord-assignment-to-6dim-scale",
+      "name": "Assign any chord to major-6-dim or minor-6-dim",
+      "when": {
+        "harmonic.context": "any_chord_in_jazz_progression"
+      },
+      "then": {
+        "scale.type": "major_6_diminished_or_minor_6_diminished"
+      },
+      "preference": null,
+      "quality_binding": [
+        "major_6_diminished",
+        "minor_6_diminished"
+      ],
+      "falsifier": "A chord that cannot be mapped to either 6-diminished scale would refute the universality claim (Harris asserts none exists in standard jazz vocabulary).",
+      "anchor": "a 'scale for chording,' and a method of assigning virtually any chord to one of two scales—the major 6 diminished and the minor 6 diminished.",
+      "source_page": 66,
+      "chapter": 3,
+      "section": "Scale for Chording Concept"
+    },
+    {
+      "rule_id": "harris-avoid-fixed-voicing-repetition",
+      "name": "Reject fixed-voicing repetition for a single chord change",
+      "when": {
+        "harmonic.context": "recurring_chord_symbol",
+        "voicing.quality": "same_voicing_repeated"
+      },
+      "then": {
+        "voicing.shape": "apply scale-based movement to generate alternative voicings"
+      },
+      "preference": null,
+      "quality_binding": [
+        "movable_voicing"
+      ],
+      "falsifier": "A pedal-tone ostinato that intentionally repeats a single voicing for expressive effect would not be refuted by this rule (intent matters).",
+      "anchor": "The misconception that chords are fixed points in the tune, bound by vertical harmonic movement, may be the culprit behind the tendency to play the same two or three voicings over and over for the same change.",
+      "source_page": 66,
+      "chapter": 3,
+      "section": "Harmonic Rigidity Misconception"
+    },
+    {
+      "rule_id": "harris-c6dim-scale-three-diminished-triads",
+      "name": "C6 Diminished Scale = three interlocking diminished chords",
+      "when": {
+        "scale.type": "C6_diminished",
+        "harmonic.context": "analyzing_voicing_options"
+      },
+      "then": {
+        "voicing.quality": "partition scale tones into three diminished-chord groups: {C,A}, {E,G}, and B-diminished {B,D,F,Ab}"
+      },
+      "preference": null,
+      "quality_binding": [
+        "diminished_triad",
+        "major_6_diminished"
+      ],
+      "falsifier": "If any scale tone cannot be assigned to one of the three diminished chords, the decomposition fails (all 8 tones are accounted for in Harris's claim).",
+      "anchor": "This scale is actually comprised of all 3 diminished chords. The C and A belong to one diminished, the E and G to a second, and the B diminished chord provides the other four notes of the scale.",
+      "source_page": 67,
+      "chapter": 3,
+      "section": "C6 Diminished Scale Construction"
+    },
+    {
+      "rule_id": "harris-shared-diminished-dominant-substitution",
+      "name": "Related dominant substitution via shared diminished triad",
+      "when": {
+        "chord_quality": "dominant_7",
+        "harmonic.context": "dominants_sharing_a_diminished_upper_structure"
+      },
+      "then": {
+        "chord_symbol.substitute": "any of the four dominant 7 chords sharing the same diminished triad are interchangeable"
+      },
+      "preference": null,
+      "quality_binding": [
+        "diminished_triad",
+        "dominant_7"
+      ],
+      "falsifier": "A dominant substitute that does NOT share a common diminished triad with the target (e.g., E7 substituted for D7 — different diminished families) is not licensed by this rule.",
+      "anchor": "The C and A belong to one diminished, the E and G to a second, and the B diminished chord provides the other four notes of the scale.",
+      "source_page": 67,
+      "chapter": 3,
+      "section": "C6 Diminished Scale Construction"
+    },
+    {
+      "rule_id": "harris-m7-equals-inverted-major6",
+      "name": "m7 chord is an inversion of a major 6 chord",
+      "when": {
+        "chord_quality": "minor_7"
+      },
+      "then": {
+        "chord_symbol.substitute": "major6 chord rooted a minor third above the m7 root (e.g., Dm7 = F6/D)",
+        "scale.type": "major_6_diminished"
+      },
+      "preference": null,
+      "quality_binding": [
+        "minor_7",
+        "major_6_diminished"
+      ],
+      "falsifier": "A minor 7 spelling that cannot be rewritten as an inversion of a major 6 chord would falsify the equivalence; no such spelling exists in 12-TET.",
+      "anchor": "Every minor 7 chord is an inversion of a major 6th chord, and every minor? flat5 chord is an inversion of a minor 6th chord.",
+      "source_page": 69,
+      "chapter": 3,
+      "section": "m7 and m7b5 Re-thinking"
+    },
+    {
+      "rule_id": "harris-m7b5-equals-inverted-minor6",
+      "name": "m7b5 chord is an inversion of a minor 6 chord",
+      "when": {
+        "chord_quality": "minor_7_flat5"
+      },
+      "then": {
+        "chord_symbol.substitute": "minor6 chord rooted a minor third above the m7b5 root (e.g., Bm7b5 = Dm6/B)",
+        "scale.type": "minor_6_diminished"
+      },
+      "preference": null,
+      "quality_binding": [
+        "minor_7_flat5",
+        "minor_6_diminished"
+      ],
+      "falsifier": "A half-diminished spelling that cannot be rewritten as an inversion of a minor 6 chord would falsify the equivalence; no such spelling exists in 12-TET.",
+      "anchor": "Every minor 7 chord is an inversion of a major 6th chord, and every minor? flat5 chord is an inversion of a minor 6th chord.",
+      "source_page": 69,
+      "chapter": 3,
+      "section": "m7 and m7b5 Re-thinking"
+    },
+    {
+      "rule_id": "harris-move-each-note-to-next-scale-step",
+      "name": "Move every voice to the adjacent scale degree",
+      "when": {
+        "harmonic.context": "voicing_within_6_diminished_scale",
+        "progression.type": "scale_based_chord_movement"
+      },
+      "then": {
+        "voicing.shape": "displace each chord tone to the immediately adjacent note (up or down) in the governing 6-diminished scale"
+      },
+      "preference": null,
+      "quality_binding": [
+        "major_6_diminished",
+        "minor_6_diminished"
+      ],
+      "falsifier": "A voicing movement that skips a scale degree (moves by a whole step when a scale-internal half step is available) violates this rule — e.g., C to E bypassing D in C6 diminished.",
+      "anchor": "Remember to move each note to the next note of the scale.",
+      "source_page": 71,
+      "chapter": 3,
+      "section": "Moving Voicing Rule"
+    },
+    {
+      "rule_id": "harris-related-dom7-substitution",
+      "name": "Related dominant 7 substitution at V7→I",
+      "when": {
+        "progression.type": "V7_to_I",
+        "progression.position": "cadence",
+        "harmonic.context": "dominant_resolving_to_tonic"
+      },
+      "then": {
+        "chord_symbol.substitute": "any of the four dominants sharing the same diminished triad"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "A dominant that does NOT share the same diminished triad as the V7 (e.g., E7 in place of D7→Gmaj7, since E7 derives from G#-diminished, not F#-diminished) is not a valid related-dominant substitute.",
+      "anchor": "we have illustrations of how related dominant 7th chords may be used to substitute 'for eachother' when the V7 chord moves back to the I.",
+      "source_page": 83,
+      "chapter": 4,
+      "section": "Related Dominant 7th Substitutions"
+    },
+    {
+      "rule_id": "harris-d7-fsharp-dim-family",
+      "name": "F#-diminished family: D7 / F7 / Ab7 / B7 over D bass",
+      "when": {
+        "progression.type": "V7_to_I",
+        "chord_quality": "dominant_7",
+        "harmonic.context": "D7_resolving_to_Gmaj7",
+        "target.key": "G_major"
+      },
+      "then": {
+        "chord_symbol.substitute": "any_of_D7_F7_Ab7_B7",
+        "voicing.shape": "upper_structure_of_chosen_related_dominant_over_D_in_bass"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Using E7 or Bb7 over a D bass when resolving to Gmaj7 — neither derives from F#-diminished, so neither qualifies as a related dominant in this family.",
+      "anchor": "D7 going to G major is outlined. The diminished that D7 comes from is F# (F#-A-C-Eb). Given that F7, Ab7, and B7 are also related to F# diminished, they make very interesting voicings when played against D in the bass.",
+      "source_page": 83,
+      "chapter": 4,
+      "section": "D7–Gmaj7 Substitution Example"
+    },
+    {
+      "rule_id": "harris-bass-continuity-related-dom",
+      "name": "Maintain bass root while substituting related dominant upper structure",
+      "when": {
+        "progression.type": "V7_to_I",
+        "harmonic.context": "related_dominant_substitution_active"
+      },
+      "then": {
+        "voicing.shape": "keep_original_V7_root_in_bass_while_placing_substitute_dominant_voicing_in_upper_voices"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Moving the bass to the root of the substitute (e.g., F in bass for F7 instead of D) dissolves the bass-continuity effect Harris identifies.",
+      "anchor": "they make very interesting voicings when played against D in the bass.",
+      "source_page": 83,
+      "chapter": 4,
+      "section": "D7–Gmaj7 Substitution Example"
+    },
+    {
+      "rule_id": "harris-major-minor-minor6-move",
+      "name": "Major → Minor → Minor/6 three-chord voice-leading unit",
+      "when": {
+        "progression.type": "major_to_parallel_minor_to_minor_with_6th_in_bass",
+        "harmonic.context": "inner_voice_leading"
+      },
+      "then": {
+        "voicing.quality": "minor_chord_with_6th_in_bass",
+        "voicing.shape": "Xmaj_to_Xmin_to_Xmin_over_6th"
+      },
+      "preference": null,
+      "quality_binding": [
+        "minor"
+      ],
+      "falsifier": "Placing the 5th in the bass on the third chord (Gm/D instead of Gm/E) breaks the specific bass-line formula Harris names.",
+      "anchor": "This figure shows the progression from major to minor to minor with the 6th degree in the bass:(Bb major-G minor-Gm/E).",
+      "source_page": 79,
+      "chapter": 4,
+      "section": "Major-Minor-Minor/6 Voice-Leading Move"
+    },
+    {
+      "rule_id": "harris-stella-harmonic-sequence",
+      "name": "Stella by Starlight generalized harmonic sequence",
+      "when": {
+        "progression.type": "I_III7_relativeMinor_bVIdim_Imaj5_minor6",
+        "harmonic.context": "song_derived_harmonic_template"
+      },
+      "then": {
+        "voicing.quality": "sequence_of_major_dominant7_minor_diminished_majorOver5_minorOver6",
+        "voicing.shape": "transportable_six_chord_unit_transposable_to_any_key"
+      },
+      "preference": null,
+      "quality_binding": [
+        "major",
+        "dominant_7",
+        "minor",
+        "diminished"
+      ],
+      "falsifier": "Substituting IVmaj7 for bVIdim removes the diminished-color pivot Harris identifies as structural; the bVIdim is not freely replaceable.",
+      "anchor": "The chord movements are I major- IlI7-relative minor-bVIdim-Imaj/5-minor/6.",
+      "source_page": 81,
+      "chapter": 4,
+      "section": "Stella by Starlight Harmonic Formula"
+    },
+    {
+      "rule_id": "harris-vocalist-time-independence",
+      "name": "Singer must internalize time independent of rhythm section",
+      "when": {
+        "harmonic.context": "jazz_vocal_performance",
+        "progression.type": "any"
+      },
+      "then": {
+        "voicing.quality": "internally_metered",
+        "voicing.shape": "phrase_against_not_with_rhythm_section"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A singer who locks mechanically to the drummer's pulse on every downbeat, never anticipating or displacing, violates this rule even if rhythmically accurate.",
+      "anchor": "it is essential for the singer to develop a sense of time and phrasing independent of what the rhythm section lays down.",
+      "source_page": 90,
+      "chapter": 5,
+      "section": "Vocalist's Role and Independence"
+    },
+    {
+      "rule_id": "harris-technical-mastery-gate",
+      "name": "Scalar and rhythmical mastery is prerequisite to expressive improvisation",
+      "when": {
+        "harmonic.context": "jazz_improvisation_study",
+        "progression.type": "any"
+      },
+      "then": {
+        "voicing.quality": "scalar_rhythmical_fluency_before_expression"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Jumping to expressive phrasing without drilling scales and rhythmic subdivisions — producing nuance that cannot be reproduced on demand — violates this rule.",
+      "anchor": "It is also vital for the vocalist, as it is for any instrumentalist in this music, to develop technical (scalar and rhythmical) skills in order to master the art of improvisation",
+      "source_page": 90,
+      "chapter": 5,
+      "section": "Technical Skills as Prerequisite to Improvisation"
+    },
+    {
+      "rule_id": "harris-c7-e-dim-substitution",
+      "name": "C7 in F minor: substitute E-diminished",
+      "when": {
+        "chord_quality": "dominant_7",
+        "harmonic.context": "C7_in_F_minor",
+        "target.key": "F_minor",
+        "progression.type": "dominant_to_tonic_minor"
+      },
+      "then": {
+        "chord_symbol.substitute": "E_diminished",
+        "voicing.quality": "diminished_triad_shared_with_dominant"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Using B-diminished over C7 in F minor violates this rule; B-diminished is reserved for G7 in C minor.",
+      "anchor": "C7 (in the key of F minor) uses the E-diminished chord; while G7 (in the key of C minor) uses the B diminished chord.",
+      "source_page": 93,
+      "chapter": 5,
+      "section": "Key-Specific Diminished Chord Substitution"
+    },
+    {
+      "rule_id": "harris-g7-b-dim-substitution",
+      "name": "G7 in C minor: substitute B-diminished",
+      "when": {
+        "chord_quality": "dominant_7",
+        "harmonic.context": "G7_in_C_minor",
+        "target.key": "C_minor",
+        "progression.type": "dominant_to_tonic_minor"
+      },
+      "then": {
+        "chord_symbol.substitute": "B_diminished",
+        "voicing.quality": "diminished_triad_shared_with_dominant"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Using E-diminished over G7 in C minor violates this rule; E-diminished is reserved for C7 in F minor.",
+      "anchor": "C7 (in the key of F minor) uses the E-diminished chord; while G7 (in the key of C minor) uses the B diminished chord.",
+      "source_page": 93,
+      "chapter": 5,
+      "section": "Key-Specific Diminished Chord Substitution"
+    },
+    {
+      "rule_id": "harris-related-dim-major3-above-dom-minor-key",
+      "name": "In minor-key dominants, related diminished sits a major 3rd above the dominant root",
+      "when": {
+        "chord_quality": "dominant_7",
+        "harmonic.context": "minor_key_dominant",
+        "progression.type": "dominant_to_tonic_minor"
+      },
+      "then": {
+        "chord_symbol.substitute": "diminished chord built a major 3rd above the dominant 7 root"
+      },
+      "preference": null,
+      "quality_binding": [
+        "dominant_7"
+      ],
+      "falsifier": "Choosing a diminished a tritone or minor-third away from the dominant root (rather than a major 3rd above) does not produce the Harris related-diminished substitution. (E.g., for C7, F#° instead of E°.)",
+      "anchor": "C7 (in the key of F minor) uses the E-diminished chord; while G7 (in the key of C minor) uses the B diminished chord.",
+      "source_page": 93,
+      "chapter": 5,
+      "section": "Key-Specific Diminished Chord Substitution"
+    },
+    {
+      "rule_id": "harris-augmented-arpeggio-definition",
+      "name": "Augmented arpeggio = major arpeggio with 5th raised a half-step",
+      "when": {
+        "chord_quality": "augmented",
+        "scale.type": "arpeggio"
+      },
+      "then": {
+        "voicing.shape": "major_arpeggio_with_raised_fifth",
+        "voicing.tensions": [
+          "#5"
+        ]
+      },
+      "preference": null,
+      "quality_binding": [
+        "augmented"
+      ],
+      "falsifier": "Playing a major arpeggio without raising the 5th, or raising the 4th instead, does not constitute an augmented arpeggio under Harris's definition.",
+      "anchor": "An Ab augmented arpeggio (the 5th degree is raised a half-step from the major)",
+      "source_page": 95,
+      "chapter": 5,
+      "section": "Augmented Arpeggio Definition"
+    },
+    {
+      "rule_id": "harris-whole-tone-scale-definition",
+      "name": "Whole tone scale = six-note scale built on consecutive whole-steps from the root",
+      "when": {
+        "scale.type": "whole_tone",
+        "chord_quality": "dominant_7_augmented"
+      },
+      "then": {
+        "voicing.shape": "six_note_all_whole_step_ascent_from_root",
+        "voicing.tensions": [
+          "#5",
+          "b7",
+          "9",
+          "#11"
+        ]
+      },
+      "preference": null,
+      "quality_binding": [
+        "whole_tone"
+      ],
+      "falsifier": "A seven-note scale, or one containing any half-step interval anywhere in the series, is not a whole tone scale under Harris's definition.",
+      "anchor": "The Ab whole tone scale (a six note scale built on whole-steps above the root)",
+      "source_page": 95,
+      "chapter": 5,
+      "section": "Whole Tone Scale Definition"
+    }
+  ]
+}
