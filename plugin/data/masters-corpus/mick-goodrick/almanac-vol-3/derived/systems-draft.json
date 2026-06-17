@@ -1,0 +1,460 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-45-18-goodrick-almanac-vol-3",
+    "stage": "s4",
+    "source_pdf": "Goodrick, Mick - Almanac of Guitar Voice Leading, Vol 3.pdf",
+    "extracted_at": "2026-06-15T20:30:47+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "mick-goodrick",
+  "work_id": "almanac-vol-3",
+  "systems": [
+    {
+      "id": "mick-goodrick:almanac-vol-3:m-lode-taxonomy",
+      "name": "The Real, Compleat M-Lode Taxonomy System",
+      "summary": "The M-Lode system is a closed, finite classification of all guitar chord voicings organized into families defined by interval content. It pairs 3-part and 4-part structural counterparts: Triads with 7th Chords, 7th-no-3rd with TBN I, 7th-no-5th with TBN II, 3-Part 4ths with 4-Part 4ths, and 3-Part Spread Clusters with 4-Part Spread Clusters. The system is finite because Spread Clusters supply the missing link that closes the taxonomy. Within the system, interval omissions occur only inside three specific 3-part families (triads, 3-part 4ths, spread clusters), while four families (7th no-3rd, 7th no-5th, TBN I, TBN II) exhibit the most balanced interval distribution across both 3- and 4-part voicings.",
+      "members": [
+        {
+          "id": "triads",
+          "name": "Triads (3-part)",
+          "summary": "Primarily 3rds and 6ths with some 4ths and 5ths; no 2nds or 7ths."
+        },
+        {
+          "id": "7th-chords",
+          "name": "7th Chords (4-part)",
+          "summary": "4-part counterpart of triads in the M-Lode pairing."
+        },
+        {
+          "id": "7th-no-3rd",
+          "name": "7th Chord No-3rd (3-part)",
+          "summary": "7th chord with the 3rd omitted; one of the two triadic subtypes derivable from a 4-part 7th chord."
+        },
+        {
+          "id": "tbn-i",
+          "name": "TBN I (4-part)",
+          "summary": "4-part counterpart of 7th-no-3rd; exhibits even interval distribution across both voicing densities."
+        },
+        {
+          "id": "7th-no-5th",
+          "name": "7th Chord No-5th (3-part)",
+          "summary": "7th chord with the 5th omitted; the second triadic subtype derivable from a 4-part 7th chord."
+        },
+        {
+          "id": "tbn-ii",
+          "name": "TBN II (4-part)",
+          "summary": "4-part counterpart of 7th-no-5th; exhibits even interval distribution across both voicing densities."
+        },
+        {
+          "id": "3-part-4ths",
+          "name": "3-Part 4th Voicings",
+          "summary": "Primarily 4ths and 5ths with some 2nds and 7ths; no 3rds or 6ths."
+        },
+        {
+          "id": "4-part-4ths",
+          "name": "4-Part 4th Voicings",
+          "summary": "4-part counterpart of 3-part 4ths in the M-Lode pairing."
+        },
+        {
+          "id": "3-part-spread-clusters",
+          "name": "3-Part Spread Clusters",
+          "summary": "Named by literal pitch content (e.g., C D E) rather than chord symbol."
+        },
+        {
+          "id": "4-part-spread-clusters",
+          "name": "4-Part Spread Clusters",
+          "summary": "The missing structural link that completes and closes the entire M-Lode taxonomy."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "family-pairing-navigation",
+          "name": "3-Part / 4-Part Family Pairing Navigation",
+          "summary": "Move between chord families by following the M-Lode's paired 3-part / 4-part counterpart structure: each 3-part family maps to exactly one 4-part family.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Real Compleat M-Lode Definition",
+              "quote_excerpt": "So, the REAL, COMPLEAT M-LODE depiction is: 3-Part Structures 4-Part Structures",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "symmetry-four-families",
+          "name": "Four-Family Even-Distribution Symmetry",
+          "summary": "When moving across voicing density (3-part to 4-part or vice versa), prefer the four families with even interval distribution: 7th no-3rd, 7th no-5th, TBN I, TBN II.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Interval distribution across chord families",
+              "quote_excerpt": "the four chord families with the most even distribution are found both in 3- and 4-part chords",
+              "page": 8
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "omission-restricted-families",
+          "name": "Interval Omission Restricted to Three Families",
+          "summary": "Interval omission is permitted only within triads, 3-part 4ths, and spread clusters.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Interval distribution across chord families",
+              "quote_excerpt": "the omission of interval types only occurs within particular 3-part chord families (triad; 3-part 4th; spread cluster)",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "id": "spread-cluster-naming",
+          "name": "Spread Cluster Literal-Pitch Naming Rule",
+          "summary": "Name 3-part spread clusters by their literal pitch content (e.g., 'C D E') rather than forcing them into a chord symbol.",
+          "engine_payload": {
+            "kind": "_pending:literal-pitch-naming"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "3-Part Cluster Naming Rule",
+              "quote_excerpt": "Just name it like it is! Call it C D E!",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "sus4-naming-4ths",
+          "name": "Sus4 Notation Rule for Stacked-Fourth Chords",
+          "summary": "Stacked-fourth chords (3-part and 4-part) must be labelled using sus4 notation rather than complex alterations or shorthand like C2.",
+          "engine_payload": {
+            "kind": "_pending:chord-naming-convention"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Naming 3-Part 4ths Chords",
+              "quote_excerpt": "My suggestion for a suitable name for this chord would be: G [sus4].",
+              "page": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-3:derivation-system",
+      "name": "Voice-Reduction Derivation System",
+      "summary": "The derivation system is the method's central generative procedure: smaller chord structures are produced by systematically omitting one voice from a larger parent chord. Each 4-part parent family generates a characteristic set of 3-part children via drop procedures (Drop 2, Drop 3, Drop 2&3, Drop 2&4, Double Drop 2 Drop 3) applied across root position and inversions. Every 3-part chord type appears inside exactly four different 4-part families, creating a cross-family reharmonization lattice.",
+      "members": [
+        {
+          "id": "parent-7th-chord",
+          "name": "Parent: 7th Chord (4-part)",
+          "summary": "Generates 7th-no-3rd and 7th-no-5th as 3-part children."
+        },
+        {
+          "id": "parent-tbn-i",
+          "name": "Parent: TBN I (4-part)",
+          "summary": "Source for Drop 2, Drop 3, Drop 2&3, Drop 2&4, Double Drop 2 Drop 3 derivations."
+        },
+        {
+          "id": "parent-tbn-ii",
+          "name": "Parent: TBN II (4-part)",
+          "summary": "Source for the same drop procedures across root and inversions."
+        },
+        {
+          "id": "parent-4-part-4th",
+          "name": "Parent: 4-Part 4th Chord",
+          "summary": "Generates 3-part 4ths by no-5th and no-3rd omissions."
+        },
+        {
+          "id": "parent-4-part-spread-cluster",
+          "name": "Parent: 4-Part Spread Cluster",
+          "summary": "Yields 3-part spread cluster children."
+        },
+        {
+          "id": "drop-2",
+          "name": "Drop 2 Procedure"
+        },
+        {
+          "id": "drop-3",
+          "name": "Drop 3 Procedure"
+        },
+        {
+          "id": "drop-2-3",
+          "name": "Drop 2&3 Procedure"
+        },
+        {
+          "id": "drop-2-4",
+          "name": "Drop 2&4 Procedure"
+        },
+        {
+          "id": "double-drop-2-drop-3",
+          "name": "Double Drop 2 Drop 3 Procedure"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "four-family-symmetry-reharmonization",
+          "name": "Four-Family Symmetry Reharmonization Rule",
+          "summary": "Because each 3-part chord type appears in exactly four different 4-part families, substitute any of the four parent families when harmonizing a given 3-part sonority.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Each 3-part chord appears four times",
+              "quote_excerpt": "[Each 3-part chord appears four times...]",
+              "page": 9
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "voice-omission-to-derive-3-part",
+          "name": "Voice Omission Derivation Procedure",
+          "summary": "Reduce a 4-part chord to a 3-part chord by omitting exactly one voice; the choice of omitted voice determines the resulting 3-part family.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "3-part chords from 4-part",
+              "quote_excerpt": "a brief, introductory study of how to arrive at different 3-part chords by leaving out one voice of a 4-part chord",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "density-floor-3-part",
+          "name": "Density Floor: Three-Voice Minimum",
+          "summary": "The derivation procedure produces 3-part chords as its floor; further reduction below three parts is not part of the M-Lode derivation system.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "3-part vs 4-part chords",
+              "quote_excerpt": "3-part chords are easier to play than 4-part chords. Also, they often afford more space between the voices for melodic embellishment.",
+              "page": 71
+            }
+          ]
+        },
+        {
+          "id": "grip-slipping-inversion-cycle",
+          "name": "Grip-Slipping Inversion Cycle",
+          "summary": "Cycle through all inversions of a chord type using Drop 3 voicings within a whole-tone (six tonic) system; extendable to Drop 2 and Drop 2&4.",
+          "engine_payload": {
+            "kind": "_pending:inversion-cycling"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Grip-Slipping defined",
+              "quote_excerpt": "a series of exercises...to help them learn all the inversions of different chords...The voicing type is Drop 3.",
+              "page": 161
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-3:voice-leading-application-system",
+      "name": "Diatonic and Chromatic Voice-Leading Application System",
+      "summary": "This system governs how the M-Lode voicings are moved through harmonic progressions. It operates over five parent scales (C Major, C Melodic Minor, C Harmonic Minor, C Harmonic Major, C Hungarian Minor) and distinguishes Generic Diatonic Voice-Leading (GDVL) from Specific Chromatic Voice-Leading (SCVL). Within GDVL, voice-leading patterns are analysed through abstract A-B-C labels that classify intervallic motion separately from functional motion (tracked by the M.S.R.P. sequence). Six possible generic voice-leading patterns exist; prior volumes used only three. The governing aesthetic is that melody and harmony are structural equals.",
+      "members": [
+        {
+          "id": "c-major",
+          "name": "C Major Scale"
+        },
+        {
+          "id": "c-melodic-minor",
+          "name": "C Melodic Minor Scale"
+        },
+        {
+          "id": "c-harmonic-minor",
+          "name": "C Harmonic Minor Scale"
+        },
+        {
+          "id": "c-harmonic-major",
+          "name": "C Harmonic Major Scale (Ionian b6)"
+        },
+        {
+          "id": "c-hungarian-minor",
+          "name": "C Hungarian Minor Scale (Harmonic Minor #4)"
+        },
+        {
+          "id": "gdvl",
+          "name": "Generic Diatonic Voice-Leading (GDVL)"
+        },
+        {
+          "id": "scvl",
+          "name": "Specific Chromatic Voice-Leading (SCVL)"
+        },
+        {
+          "id": "ivl",
+          "name": "Intervallic Voice-Leading (IVL)"
+        },
+        {
+          "id": "fvl",
+          "name": "Functional Voice-Leading (FVL)"
+        },
+        {
+          "id": "msrp",
+          "name": "M.S.R.P. (Melodic Strand Replication Procedure)"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "diatonic-scale-transposition",
+          "name": "Diatonic Scale Transposition Expectation",
+          "summary": "All material presented in C Major must be transposed to C Melodic Minor, C Harmonic Minor, C Harmonic Major, and C Hungarian Minor.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Scale choices for material",
+              "quote_excerpt": "The assumption is that our readers will have (by now) developed the necessary skills to make the needed adjustments to change the material to other 7-note scales.",
+              "page": 14
+            },
+            {
+              "chapter_n": 12,
+              "topic": "5-scale presentation framework",
+              "quote_excerpt": "We present it in 5 scales: 1. C Major 2. C Melodic Minor 3. C Harmonic Minor 4. C Harmonic Major 5. C Hungarian Minor",
+              "page": 145
+            }
+          ]
+        },
+        {
+          "id": "generic-vl-pattern-selection",
+          "name": "Generic Voice-Leading Pattern Selection (6-Pattern Space)",
+          "summary": "When sequencing chords through a scale, select one of six possible generic voice-leading patterns encoded as A-B-C cycles; the three new alternates introduced in this volume should also be explored.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Only 3 generic VLs used in Vols I & II",
+              "quote_excerpt": "Note: Only 3 different generic voice-leadings were used out of 6!",
+              "page": 56
+            }
+          ]
+        },
+        {
+          "id": "intervallic-vs-functional-analysis",
+          "name": "Intervallic vs. Functional Motion Analysis (M.S.R.P.)",
+          "summary": "Distinguish intervallic motion (interval size per voice) from functional motion (chord-tone strand assignment tracked by the M.S.R.P. sequence).",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Intervallic vs. functional voice-leading",
+              "quote_excerpt": "2 voices are the cycle M.S.R.P.",
+              "page": 32
+            }
+          ]
+        },
+        {
+          "id": "melody-harmony-equality",
+          "name": "Melody-Harmony Equality Aesthetic Rule",
+          "summary": "Voice-leading choices must treat melodic and harmonic motion as structural equals; subordinating either is a departure from the method's governing aesthetic.",
+          "engine_payload": {
+            "kind": "_pending:aesthetic-balance"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Melody-harmony equality rule",
+              "quote_excerpt": "excellent voice-leading treats both melody and harmony as equals.",
+              "page": 188
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "gdvl-to-scvl-mode-switch",
+          "name": "GDVL-to-SCVL Mode Switch",
+          "summary": "Switch from Generic Diatonic to Specific Chromatic voice-leading when using Drop 3 voicings in a whole-tone (Grip-Slipping) context or when crossing diatonic scale boundaries.",
+          "engine_payload": {
+            "kind": "_pending:vl-mode-switch"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "SCVL vs. GDVL distinction",
+              "quote_excerpt": "The IVLs and the FVLs are all examples of SCVL (specific chromatic voice-leading), as opposed to GDVL (generic diatonic voice-leading), which is all of Volumes 1 & 2.",
+              "page": 161
+            }
+          ]
+        },
+        {
+          "id": "duet-texture-with-passing-tones",
+          "name": "Duet Texture with Passing Tones",
+          "summary": "Split a 4-part voicing into two two-voice duets (top two / bottom two) and add passing tones; especially effective in harmonic minor.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Duet texture with passing tones instruction",
+              "quote_excerpt": "4-part; no passing tones Duet (top 2, bottom 2); add p.t.. NICE in Harmonic minor!",
+              "page": 43
+            }
+          ]
+        },
+        {
+          "id": "harmonic-major-b6-substitution",
+          "name": "Harmonic Major b6 Substitution",
+          "summary": "Modify any C Major voicing by substituting Ab for A (b6), converting the material to Harmonic Major without changing the underlying voice-leading structure.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Harmonic Major scale definition",
+              "quote_excerpt": "just play Ab (b6) instead of A (6). There are nearly 200 pages to explore!",
+              "page": 145
+            }
+          ]
+        },
+        {
+          "id": "hungarian-minor-sharp4-substitution",
+          "name": "Hungarian Minor #4 Substitution",
+          "summary": "Modify any Harmonic Minor passage by raising the 4th by a semitone (#4), converting the material to Hungarian Minor.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Hungarian Minor scale definition",
+              "quote_excerpt": "Hungarian Minor...a harmonic minor scale with #4..",
+              "page": 145
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
