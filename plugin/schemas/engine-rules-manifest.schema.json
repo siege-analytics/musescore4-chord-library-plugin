@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/siege-analytics/musescore4-chord-library-plugin/plugin/schemas/engine-rules-manifest.schema.json",
+  "title": "Engine-Rules Bundle Manifest",
+  "description": "Manifest accompanying engine-rules-bundle.tar.gz in a GitHub Release. Downstream consumers (Ellington apps.engine_rules #97, #71 comparator) validate this on ingest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_version",
+    "min_consumer_version",
+    "plugin_commit_sha",
+    "built_at",
+    "total_rules",
+    "masters"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Version of the per-rule schema (engine-rules.json shape). Bumped when the rule schema changes.",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "bundle_version": {
+      "type": "string",
+      "description": "SemVer of this bundle release. Tied to the git tag (engine-rules-vX.Y.Z).",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$"
+    },
+    "min_consumer_version": {
+      "type": "string",
+      "description": "Minimum sync_plugin_catalogs / consumer code version required to safely ingest this bundle. If consumer is older, sync aborts.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "plugin_commit_sha": {
+      "type": "string",
+      "description": "Plugin repo commit SHA the bundle was built from.",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "built_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the bundle was built."
+    },
+    "total_rules": {
+      "type": "integer",
+      "description": "Sum of engine_rules across all included books.",
+      "minimum": 0
+    },
+    "masters": {
+      "type": "array",
+      "description": "One entry per master included in the bundle.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["master_id", "work_ids", "rule_count"],
+        "properties": {
+          "master_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "work_ids": {
+            "type": "array",
+            "items": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+            "minItems": 1
+          },
+          "rule_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}
