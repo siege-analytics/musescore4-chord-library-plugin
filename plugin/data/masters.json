@@ -68998,6 +68998,886 @@
             }
           ],
           "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "upper-partials-extension-policy",
+          "narrative": "Baker prescribes treating dom7 as the floor of a range of Upper Partial alterations: 'The dominant chord can be the dominant 7th, 9th, 11th, aug. 11th or 13th. The 5th or the 9th can be Flatted, nevertheless, these are still the Upper Partials of the dominant chord.' All extended dominant forms share the resolution function of the plain dom7. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "forced-harmony-application",
+          "narrative": "Baker prescribes Forced Harmony — 'adding chords via progressions that move away from, then lead back into the tonic' — as the technique for keeping dom7 contexts active rather than static. When a passage would sit on a dominant chord as written, insert progressions that depart and return rather than sustaining the chord unchanged. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:forced-harmony-expansion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "ii-substitution-target",
+          "narrative": "Baker establishes that 'the II chord can be readily substituted for the V,' permitting the supertonic chord to replace the dominant in a cycle provided the substituted chord still ultimately resolves to tonic. This makes dom7's substitution role bidirectional: it can receive the II or be displaced by it. Chapter 10, p. 14; Chapter 9, p. 12.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ii-chord-insertion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 12"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "authentic-cadence-role",
+          "narrative": "Baker prescribes using the dominant as the structural pivot of the Authentic Cadence: introductions stop on V before approaching the song's first chord, while endings 'approach the V and move on to the I, which is the final statement.' The dom7 is thus the obligatory penultimate chord in both cadential contexts. Chapter 12, p. 20.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:dominant-to-tonic-resolution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 12, p. 20"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom9",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Baker classifies dom9 as an Upper Partial form of the dominant — one of the extensions produced by building above the 7th — with the same tonic-resolution function as plain dom7. The 9th may be natural or flatted (dom7b9); both remain members of the Upper Partials family and resolve to I. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom11",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Baker enumerates the 11th and augmented 11th as explicit members of the dominant's Upper Partials family: 'The dominant chord can be the dominant 7th, 9th, 11th, aug. 11th or 13th.' Dom11 and dom7#11 share the same resolution function and are treated as color variants, not structural departures. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom13",
+          "function_role": "harmonic-family-membership",
+          "narrative": "Baker lists the 13th as the outermost Upper Partial of the dominant chord. G13b9 appears by name in the performance solo 'Just Bobi' (Chapter 29) and as the chord played over a G pedal in C Major at the Cadence Break (Chapter 22, p. 37: 'a Dm9 and a G13b9 chord play'). It resolves to the tonic on the same functional basis as all other dominant extensions. Chapter 10, p. 14; Chapter 22, p. 37.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 22, p. 37"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "dominant-substitute-reframing",
+          "narrative": "Baker teaches that 'they aren't diminished chords at all when used in this respect — they are the Upper tones to a diminished or flatted 9th chord.' A G7b9 with root omitted is presented side-by-side with B diminished (Exercises 51a and 51b) to prove harmonic equivalence: the dom7b9 shell is the conceptual parent, and the dim7 is its rootless upper structure. Chapter 21, p. 34.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:diminished-as-dominant-substitute"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 21, p. 34"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "pedal-point-upper-voice",
+          "narrative": "Baker prescribes G13b9 as one of the specific chord variations played above a G pedal tone in the key of C Major: 'In exercise 56 … a Dm9 and a G13b9 chord play. This is the most popular form of Pedal Point.' The b9 coloring is explicitly named as the preferred upper-voice quality in this context. Chapter 22, p. 37.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:pedal-point-fifth-canonical"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 22, p. 37"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "ninth-to-sixth-voice-leading-source",
+          "narrative": "Baker prescribes the minor 9th as the starting point of the method's core modern voice-leading move: 'Each chord is moving from a minor ninth to a minor sixth chord, via passing tones.' The min9 is the departure chord; the min6 is the goal. Both the minor and major forms share this resolution structure, with mode as their only difference. Chapter 4, p. 7; Chapter 5, p. 8.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 5, p. 8"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "song-form-opening-chord",
+          "narrative": "Baker prescribes opening chord-and-song-form exercises with the minor 9th and closing with the minor 6th: 'In both cases you are starting with the major or minor 9th and closing with the major or minor 6th.' The min9 is the structural opener; students practice this motion applied to well-known standard tunes. Chapter 7, p. 10.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 7, p. 10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "pedal-point-upper-voice",
+          "narrative": "Baker names Dm9 as one of the two specific chord variations played over a G pedal in C Major: 'In exercise 56 … a Dm9 and a G13b9 chord play. This is the most popular form of Pedal Point.' The min9 thus functions as the predominant color voice above the pedal fifth. Chapter 22, p. 37.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:pedal-point-fifth-canonical"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 22, p. 37"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min6",
+          "function_role": "ninth-to-sixth-voice-leading-destination",
+          "narrative": "Baker prescribes the minor 6th as the resolution target of the minor ninth via passing tones — 'chord 1, through use of passing tones, resolves into chord 15 … moving from a minor ninth to a minor sixth chord, via passing tones.' The passing tones (marked 'P' in diagrams) are the voice-leading mechanism, and min6 is the harmonic goal of the minor-mode modern progression. Chapter 4, p. 7.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min6",
+          "function_role": "song-form-closing-chord",
+          "narrative": "Baker prescribes the minor 6th as the closing chord in song-form exercises: 'you are starting with the major or minor 9th and closing with the major or minor 6th.' The min6 provides the point of rest after the min9 departure. Chapter 7, p. 10.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 7, p. 10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "ninth-to-sixth-voice-leading-source",
+          "narrative": "Baker treats the major 9th as the parallel major-mode departure chord: 'Chords 3 and 4 are resolving into chords 16 and 17. Each chord is moving from a major ninth via passing tones, to a major sixth. The only difference in these two forms is the mode.' The maj9 opens the major-mode modern progression exactly as min9 opens its minor counterpart. Chapter 4, p. 7.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "song-form-opening-chord",
+          "narrative": "Baker prescribes the major 9th as the opening chord in major-mode song-form exercises, with the major 6th as its resolution: 'In both cases you are starting with the major or minor 9th and closing with the major or minor 6th.' Applied to standard tunes in Chapter 7, p. 10.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 7, p. 10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "ninth-to-sixth-voice-leading-destination",
+          "narrative": "Baker prescribes the major 6th as the tonic resolution of the major ninth in modern progressions. It is the harmonic goal reached via passing tones from maj9, replacing the simpler dominant-to-tonic arrival of standard progressions: 'moving from a major ninth via passing tones, to a major sixth.' Chapter 4, p. 7; Chapter 5, p. 8.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 5, p. 8"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "relative-chord-equivalence",
+          "narrative": "Baker establishes that 'the C6 chord and the Am7 chord have the same tones. They are called relatives for this reason.' The major 6th chord is thus enharmonically equivalent to the minor 7th built on its 6th degree — a relative substitution that underpins the method's chord-substitution vocabulary. Chapter 9, p. 12.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ii-chord-insertion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 12"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "relative-chord-equivalence",
+          "narrative": "Baker teaches that Am7 and C6 share identical tones — 'They are called relatives for this reason' — making min7 a direct substitute for its relative major 6th. Baker also notes that 'the three tones that form the Dm chord are the upper three tones of the G9 chord,' extending the relative-chord concept to upper-voice extraction from dominant extensions. Chapter 9, p. 12.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ii-chord-insertion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 12"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "ii-chord-function-in-ii-v-i",
+          "narrative": "Baker prescribes the minor II chord as the preparatory chord before V in the I-II-V-I cycle, the progression 'in which we are most interested.' The II chord may be inserted before any dominant-to-tonic movement: 'it is possible to use the II chord instead of the V and resolve into the V from the II.' Min7 built on the second degree is the standard color for this role. Chapter 8, p. 11; Chapter 9, p. 12.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ii-chord-insertion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 8, p. 11"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 12"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "upper-partials-ii-chord-extension-policy",
+          "narrative": "Baker prescribes that the II chord — like the dominant — carries its own Upper Partials: 'With the II chord of the scale the same principal applies, you have the 6th, 7th, 9th, 11th, and 13th. Any of these forms of the II chord can be used to resolve into the V which in turn resolves into the tonic.' The min7 is the base; min9, min11, min13, and min6 are all valid superstructures for the II-chord role. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "dominant-substitute-upper-structure",
+          "narrative": "Baker teaches that diminished 7th chords functioning as dominants 'aren't diminished chords at all … they are the Upper tones to a diminished or flatted 9th chord.' He presents G7b9 with root omitted (Ex. 51a) beside B diminished (Ex. 51b) and instructs students to 'analyze the two chords' — proving that the dim7 is a rootless dom7b9. Chapter 21, p. 34.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:diminished-as-dominant-substitute"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 21, p. 34"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "tonic-resolution-voice-leading",
+          "narrative": "Baker prescribes that the diminished chord may replace the dominant in a V-I resolution: 'notice how the diminished chord instead of the dominant, resolves into the tonic. This is another form of the Altered chord.' Exercise 52 demonstrates the move extracted from a prior exercise, and the caption in Exercise 51 labels it 'the equivalent to the V - I Resolution.' Chapter 21, p. 34-35.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:diminished-as-dominant-substitute"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 21, pp. 34-35"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "symmetric-harmony-tonic-vehicle",
+          "narrative": "Baker designates the diminished 7th as the emblematic vehicle of Symmetric Harmony: 'a diminished 7th chord which moves freely up and down the finger board in minor thirds … A diminished chord is built on a succession of minor thirds … each tone in the chord is actually the root or the tonic.' Because all four inversions share the same pitch classes, the dim7 is the purest expression of the 4-tonic symmetric division. Chapter 13, p. 21.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:minor-third-symmetric-cycle"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 13, p. 21"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "symmetric-cycle-minor-third-traversal",
+          "narrative": "Baker prescribes moving the diminished 7th chord shape up or down the fingerboard in minor thirds as the fundamental Symmetric Cycle motion: 'if you play a diminished chord on the guitar and move it up a minor third, the same tones will appear but in a different arrangement.' The T1-T4 notation system labels each position. Chapter 13, p. 21; Chapter 14, p. 22.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:minor-third-symmetric-cycle"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 13, p. 21"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 14, p. 22"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "cadence-break-symmetric-ending",
+          "narrative": "Baker prescribes the diminished chord fragment — glissandoing in minor thirds — as a viable Symmetric Cycle ending device: 'go back to lesson 11, exercise 25A. In the second bar the last two beats are diminished, notice this chord glissandos up in minor thirds.' Partial chord fragments of dim7 execute the same directional motion as full voicings. Chapter 15, p. 24.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:chord-fragment-substitution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 15, p. 24"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "non-standard-voicing-chord-melody",
+          "narrative": "Baker notes that in chord-melody arranging, non-standard diminished fingerings are legitimate: 'in the 5th bar of exercise 49, there is a D Diminished chord which is not a standard fingering. However, it does fit well into the pattern used.' Students must invent dim7 voicings that fit the melodic line even when no familiar shape is available. Chapter 20, p. 33.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:non-standard-voicing-creation"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 20, p. 33"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug7",
+          "function_role": "dominant-substitute-resolution",
+          "narrative": "Baker teaches that augmented chords 'may be used in a similar manner' to diminished 7th substitutes for the dominant: 'Augmented chords may be used in a similar manner. See Exercise 53.' Exercise 53 demonstrates the augmented chord resolving directly to the tonic as a V-I equivalent — a parallel to the dim7 substitution established earlier in Chapter 21. Chapter 21, p. 34.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:diminished-as-dominant-substitute"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 21, p. 34"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug7",
+          "function_role": "non-diatonic-color-chord-insertion",
+          "narrative": "Baker defines the aug7 by extending the augmented triad: 'By adding a 7th to the Augmented chord you get still another sound (See Exercise 43).' He prescribes its use as a color device: 'many chords are used that don't appear in the original chord structure of a song. They are used to add color and originality.' Chapter 18, p. 27.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:non-diatonic-color-chord-insertion"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 18, p. 27"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug7",
+          "function_role": "augmented-cycle-symmetric-vehicle",
+          "narrative": "Baker prescribes the augmented triad (and by extension aug7) as the vehicle for Augmented Cycles: 'Divide the 12 tone scale in three equal parts and you get three tonics, T. 1, 2, and 3. Exercise 40 demonstrates the Augmented chord in a Symetric Cycle.' Major-third transposition of aug7 reproduces the same pitch-class set, making it the 3-tonic symmetric analog to the dim7's 4-tonic cycle. Chapter 17, p. 26.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:major-third-augmented-cycle"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 17, p. 26"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "cycle-elaboration-constraint",
+          "narrative": "Baker establishes the governing rule for all substitution and elaboration work: 'no matter how many chords you add to the cycle, they should eventually reach the dominant and from there resolve into the tonic.' The dom7 (V) is the mandatory penultimate target regardless of how many chords are inserted into the cycle. Chapter 9, p. 13.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:dominant-to-tonic-resolution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 13"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "tonic-i-role",
+          "narrative": "Baker uses the major 6th as a practical tonic-I chord form throughout the method: the I-V-I skeleton has 'one bar of C, two bars of G7, and one bar of C' elaborated by substitution, and the C major tonal center typically manifests as a 6th or 9th chord in modern voice-leading rather than as a plain triad. The maj6 is the resting-point arrival after V resolves. Chapter 9, p. 12; Chapter 7, p. 10.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 9, p. 12"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 7, p. 10"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min6",
+          "function_role": "tonic-i-minor-role",
+          "narrative": "Baker treats the minor 6th as the parallel resting point for minor-mode tonic arrival — the destination after min9 resolves via passing tones. The two forms (min6 and maj6) are the modern tonic-I sonorities that replace the plain triad in upper-partial playing. Chapter 4, p. 7; Chapter 5, p. 8.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            },
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 5, p. 8"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "chord-melody-player-authority",
+          "narrative": "Baker grants the player explicit license to replace written dom7 changes with altered or extended dominant substitutes when building chord-melody solos: 'you use the ideas and musical sounds that sound best to you rather than the ideas and chord cycles that were originally written for the song.' The player's ear, not the chart, governs which dominant form is used. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:player-ear-substitution-authority"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "introduction-stopping-point",
+          "narrative": "Baker prescribes that introductions stop on the dominant without resolving: 'the introduction stops on the V (Example 29). From this point you approach the first chord of the song.' The dom7 is left hanging as a springboard into the song's first chord, while endings push through V to I. Chapter 12, p. 20.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:dominant-to-tonic-resolution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 12, p. 20"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "symmetric-cycle-application",
+          "narrative": "Baker prescribes that any chord — including min9 — can be placed into a Symmetric Cycle: 'Any chord can be played in a Symetric Cycle. Take any of your favorite chords, start them in a low position on your guitar and move them up in minor thirds.' The min9 shapes from the chord-form vocabulary are explicitly offered as candidates for symmetric transposition. Chapter 14, p. 22.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:minor-third-symmetric-cycle"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 14, p. 22"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom13",
+          "function_role": "pedal-point-upper-voice",
+          "narrative": "Baker specifies G13b9 by name as the dominant-quality chord played above the G pedal tone in C Major: 'a Dm9 and a G13b9 chord play. This is the most popular form of Pedal Point.' The dom13 with b9 alteration is the preferred dominant color above a pedal fifth in this configuration. Chapter 22, p. 37.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:pedal-point-fifth-canonical"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 22, p. 37"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj7",
+          "function_role": "chord-melody-tonic-form",
+          "narrative": "Cmaj7 appears by name in the chord symbols of the closing solo 'Just Bobi' (Chapter 29), alongside Cmaj6 and Cmaj9, as a tonic-I voicing in chord-melody performance context. Baker's use of maj7 alongside the 6th and 9th forms demonstrates that all three are interchangeable tonic colors in an Upper Partial arrangement. Chapter 29 (performance solo).",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partial-voicings"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 29 (performance solo)"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "chord-melody-tonic-form",
+          "narrative": "Cmaj9 appears by name in 'Just Bobi' (Chapter 29) as a tonic-I color alongside Cmaj7 and Cmaj6, demonstrating that the maj9 is a valid tonic arrival voicing in Baker's chord-melody vocabulary — consistent with the maj9-to-maj6 voice-leading rule taught throughout the method. Chapter 29 (performance solo).",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 29 (performance solo)"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min6",
+          "function_role": "chord-melody-color-form",
+          "narrative": "Gm6 appears by name in 'Just Bobi' (Chapter 29) as a minor-color tonic or subdominant voicing in chord-melody context. Baker's inclusion of the min6 in performance solos confirms it as a usable Upper Partial form in arrangement, not merely a resolution target in exercises. Chapter 29 (performance solo).",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partial-voicings"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 29 (performance solo)"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "chord-melody-color-form",
+          "narrative": "Fm9 appears by name in 'Just Bobi' (Chapter 29), demonstrating that the min9 is used as an active harmonic color in chord-melody performance — not only as a departure point in voice-leading exercises but as a sustained voicing in arrangement. Chapter 29 (performance solo).",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partial-voicings"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 29 (performance solo)"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "retrograde-symmetric-cycle-practice",
+          "narrative": "Baker mandates retrograde practice of all Symmetric Cycle exercises: 'Play the exercises below backwards, starting with T1 then 4, 3, 2 and back to the 1.' The dim7 symmetric cycle must be mastered in both ascending and descending directions to build complete fingerboard facility. Chapter 14, p. 23.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:retrograde-cycle-practice"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 14, p. 23"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dim7",
+          "function_role": "directional-glissando-ending-device",
+          "narrative": "Baker prescribes a concrete directional rule for dim7 glissando endings: 'If the last chord ends high on the finger board, move it down in minor thirds, if it ends low, move it up.' This direction-from-register rule applies when replacing a final chord with a Symmetric Cycle in introductions and endings. Chapter 15, p. 24.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:directional-glissando-rule"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 15, p. 24"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "cadence-break-harmonization",
+          "narrative": "Baker prescribes that the Cadence Break — 'the music relaxes for one or two bars' at phrase endings — may be filled with Symmetric Cycles, Pedal Point, or original chord progressions. Dominant-quality chords (such as G13b9 over a G pedal) are the canonical harmonization above the pedal fifth at these structural pauses. Chapter 22, pp. 36-37.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:cadence-break-harmonization"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 22, pp. 36-37"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj6",
+          "function_role": "chord-melody-omission-policy",
+          "narrative": "Baker establishes that even the tonic major 6th chord must be subordinated or omitted when it conflicts with the melody in chord-melody arranging: 'pay strict attention to how chords are forced against the melody and, at some points, even dropped for a better melodic line.' Melody priority overrides harmonic completeness for all chord qualities including the tonic. Chapter 26, p. 42.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:melody-priority-chord-omission"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 26, p. 42"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "voicing-transposition-position-rule",
+          "narrative": "Baker prescribes that when a dominant voicing is physically awkward in its notated position, the player should 'move them up to a higher chord' rather than force the fingering. This position-flexibility rule applies to all chord forms including dominant voicings and reflects the method's pragmatic fingering philosophy. Chapter 1, p. 4.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:chromatic-fingerboard-transposition"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 1, p. 4"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "passing-tone-voice-leading-mechanism",
+          "narrative": "Baker prescribes passing tones as the obligatory mechanism for moving from min9 to min6: '\"R\" is for Root, \"P\" is for Passing tone.' Chord diagrams throughout Chapters 4 and 5 mark each passing-tone note explicitly, and students are instructed to identify root vs. passing-tone status for every note in every voicing as the core analytical exercise. Chapter 4, p. 7.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:ninth-to-sixth-voice-leading"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 4, p. 7"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj9",
+          "function_role": "counterpoint-arpeggiated-bass-extraction",
+          "narrative": "Baker prescribes extracting only the first (lowest) note of each arpeggiated maj9 or similar chord to form an independent counter-melody: 'in exercise 49 all the chords are played arpeggio but the first note of each chord is the most important. It forms a melodic line at the base of the chord and gives the whole example originality.' Chapter 20, p. 33.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:arpeggiated-bass-counter-melody-extraction"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 20, p. 33"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min7",
+          "function_role": "rhythmic-chord-melody-background-role",
+          "narrative": "Baker prescribes the minor II chord (min7) as part of the rhythmic chord-and-melody background texture in small-combo settings: 'This is Rhythmic Chord and Melody Playing. It deals with background rather than melody … The guitar plays fill-ins and fragments of melody in the background.' Min7 shapes cycle through the II role while a vocalist or solo instrument carries the melody. Chapter 19, p. 28.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:pedal-point-ensemble-distribution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 19, p. 28"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7b9",
+          "function_role": "symmetric-harmony-tonic-every-chord",
+          "narrative": "Baker establishes that in Symmetric Harmony 'every chord you play is, in actuality, the tonic. There can be as many tonics as you desire.' This principle applies to dom7b9 and all other chord qualities used in symmetric contexts — none has a fixed dominant or subdominant role; each is treated as a temporary tonic. Chapter 13, p. 21.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:minor-third-symmetric-cycle"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 13, p. 21"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "aug7",
+          "function_role": "six-tonic-augmented-cycle-expansion",
+          "narrative": "Baker prescribes expanding the 3-tonic Augmented Cycle to six tonics by inserting intermediate chords: 'exercise 41 is similar to exercise 40, however, now we have six tonics, the additional tonics having been forced into the cycle.' The aug7 framework can thus accommodate up to 12 tonics via full Symmetric Harmony with parallel motion. Chapter 17, p. 26.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:symmetric-harmony:tonic-expansion-six-twelve"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 17, p. 26"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "dom7",
+          "function_role": "ensemble-pedal-point-variation-voice",
+          "narrative": "Baker prescribes that in ensemble Pedal Point settings the guitar (or piano) carries dominant-quality chord variations above the bass's sustained pedal tone: 'the bass plays the Pedal Point while the piano or guitar plays the chord variations.' The dom7/dom13 family supplies the upper chord voices in this three-layer texture. Chapter 24, p. 40.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:counterpoint-chord-melody:pedal-point-ensemble-distribution"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 24, p. 40"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "ii-chord-upper-partial-in-ii-v-i",
+          "narrative": "Baker prescribes that the minor II chord's Upper Partials — including the min9 extension — are all valid choices for resolving into V: 'you have the 6th, 7th, 9th, 11th, and 13th. Any of these forms of the II chord can be used to resolve into the V.' Min9 is the most frequently cited II-chord quality in exercises. Chapter 10, p. 14.",
+          "source_principle_ids": [
+            "mickey-baker:complete-course-vol-2:functional-diatonic-harmony:upper-partials-dominant-alteration"
+          ],
+          "source_work_id": "complete-course-in-jazz-guitar-vol-2",
+          "references": [
+            {
+              "source": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2",
+              "citation": "Ch. 10, p. 14"
+            }
+          ],
+          "provenance": "extracted"
         }
       ]
     },
