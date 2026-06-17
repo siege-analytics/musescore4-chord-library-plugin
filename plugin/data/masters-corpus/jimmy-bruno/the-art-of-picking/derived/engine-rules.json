@@ -1,0 +1,1123 @@
+{
+  "master_id": "jimmy-bruno",
+  "work_id": "the-art-of-picking",
+  "engine_rules": [
+    {
+      "rule_id": "bruno-higher-string-down",
+      "name": "Higher-string crossing demands down-stroke",
+      "when": {
+        "string.crossing": "to_higher"
+      },
+      "then": {
+        "picking.direction": "down"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A phrase that ascends to a higher string and begins on an up-stroke violates this rule",
+      "anchor": "When going to a higher string, use a down-stroke.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Core picking rules",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-lower-string-up",
+      "name": "Lower-string crossing demands up-stroke",
+      "when": {
+        "string.crossing": "to_lower"
+      },
+      "then": {
+        "picking.direction": "up"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A phrase that descends to a lower string and begins on a down-stroke violates this rule",
+      "anchor": "When going to a lower string, use an up-stroke.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Core picking rules",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-same-string-alternate",
+      "name": "Same-string playing uses alternate strokes",
+      "when": {
+        "string.crossing": "none"
+      },
+      "then": {
+        "picking.direction": "alternate"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Consecutive same-direction strokes on one string for rhythmic accent (Chapter 9) override this rule",
+      "anchor": "When playing on one string, use alternate strokes.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Core picking rules",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-economy-of-motion",
+      "name": "Directional picking minimizes pick travel distance",
+      "when": {
+        "picking.action": "string_crossing"
+      },
+      "then": {
+        "picking.economy_path": "minimum_travel"
+      },
+      "preference": "always choose the stroke direction that requires the shortest pick arc",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Strict alternate picking on a string crossing is a concrete counter-example where travel distance is not minimized",
+      "anchor": "I found one concept or rule that causes the pick to travel the least amount of distance.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Motivation for the rule",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-elbow-driven-motion",
+      "name": "Picking motion originates from elbow not wrist",
+      "when": {
+        "hand.position": "picking"
+      },
+      "then": {
+        "hand.position_rule": "elbow_drives_wrist_still"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Wrist-rotation picking is a concrete counter-example that violates this rule",
+      "anchor": "The movement should come from the elbow.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Right-hand position",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-no-finger-contact-strings",
+      "name": "Right-hand fingers must not contact strings bridge or guitar body",
+      "when": {
+        "hand.position": "picking"
+      },
+      "then": {
+        "hand.position_rule": "no_finger_anchor"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Anchoring pinky on the guitar body is a concrete counter-example",
+      "anchor": "Do not touch the strings, bridge or any other part of the guitar with the fingers of your right hand.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Right-hand position",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-wrist-relaxed-still",
+      "name": "Wrist and elbow must remain relaxed and non-tense",
+      "when": {
+        "hand.position": "picking"
+      },
+      "then": {
+        "hand.position_rule": "relaxed_no_tilt"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A tense or tilted wrist during fast passages is a concrete violation",
+      "anchor": "The right hand, wrist and elbow should always be relaxed and never tense or tight. The wrist should not move or tilt.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Right-hand position",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-both-starting-strokes",
+      "name": "Every exercise must be practiced from both down-start and up-start",
+      "when": {
+        "practice.stage": "any_exercise"
+      },
+      "then": {
+        "practice.drill_id": "both_starting_strokes"
+      },
+      "preference": "only a very slight difference in sound should exist between the two starts",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Drilling only down-start version of an exercise violates this rule",
+      "anchor": "I recommend that you practice all the exercises starting with both strokes. There should be only a very slight difference in sound.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Practice both starting strokes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-tempo-range",
+      "name": "Practice metronome range is MM 60 to 120 before increasing",
+      "when": {
+        "practice.stage": "initial_tempo"
+      },
+      "then": {
+        "practice.drill_id": "metronome_60_to_120"
+      },
+      "preference": "begin at MM 60, increase incrementally to 120 before pushing beyond",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Beginning practice above MM 120 skips the prescribed foundational tempo range",
+      "anchor": "I recommend you practice these exercise at MM 60 to 120, then increase your speed from there.",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Practice both starting strokes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-sequential-study-order",
+      "name": "Exercises must be studied in sequential order without skipping",
+      "when": {
+        "practice.stage": "curriculum_navigation"
+      },
+      "then": {
+        "practice.drill_id": "sequential_A_to_Z"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Opening the book to Chapter 5 arpeggios before completing Chapters 2-4 violates the stated sequence",
+      "anchor": "The exercises are designed to take the student from point A to Z. It is not a good idea to skip around in this book",
+      "source_chapter": 1,
+      "_provenance": {
+        "chapter_n": 1,
+        "chapter_title": "Introduction & Symbols",
+        "section_title": "Practice both starting strokes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-upstroke-equal-attack",
+      "name": "Up-stroke must sound as strong and round as down-stroke",
+      "when": {
+        "picking.action": "up_stroke"
+      },
+      "then": {
+        "picking.direction": "up",
+        "picking.economy_path": "equal_attack_to_down"
+      },
+      "preference": "accent on upstroke should equal downstroke volume and tone",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An upstroke that sounds weaker or thinner than the downstroke is a concrete violation",
+      "anchor": "The goal is to make the up-stroke sound as strong and round as the down-stroke.",
+      "source_chapter": 2,
+      "_provenance": {
+        "chapter_n": 2,
+        "chapter_title": "The Strokes",
+        "section_title": "Down-up and up-down strokes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-wrist-straight-not-stiff",
+      "name": "Wrist must be straight but not stiff during picking",
+      "when": {
+        "hand.position": "picking"
+      },
+      "then": {
+        "hand.position_rule": "wrist_straight_not_stiff_elbow_moves"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A locked stiff wrist or a bent wrist both violate this rule",
+      "anchor": "Practice keeping your wrist straight but not stiff. Remember: the movement is from the elbow.",
+      "source_chapter": 2,
+      "_provenance": {
+        "chapter_n": 2,
+        "chapter_title": "The Strokes",
+        "section_title": "Down-up and up-down strokes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-no-anchor-pickguard-no-polarity",
+      "name": "Proscription: do not anchor fingers on pick guard or strings",
+      "when": {
+        "hand.position": "picking"
+      },
+      "then": {
+        "hand.position_rule": "no_contact_pickguard_or_strings"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Resting any finger on the pick guard during an exercise is a concrete violation",
+      "anchor": "Do not touch the pick guard or strings with the fingers of the right hand.",
+      "source_chapter": 2,
+      "_provenance": {
+        "chapter_n": 2,
+        "chapter_title": "The Strokes",
+        "section_title": "Right-hand finger contact rule (no anchor)",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-in-between-no-ring",
+      "name": "In-between stroke requires complete note separation — no ringing",
+      "when": {
+        "picking.action": "in_between_stroke"
+      },
+      "then": {
+        "string.crossing_rule": "adjacent_no_sustain"
+      },
+      "preference": "take extra time mastering this stroke before moving forward",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Allowing adjacent-string notes to sustain together during the in-between stroke violates this rule",
+      "anchor": "Do not let notes ring!",
+      "source_chapter": 2,
+      "_provenance": {
+        "chapter_n": 2,
+        "chapter_title": "The Strokes",
+        "section_title": "In-between stroke",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-in-between-hardest-stroke",
+      "name": "In-between stroke is the most difficult stroke in the system requiring most practice attention",
+      "when": {
+        "picking.action": "in_between_stroke"
+      },
+      "then": {
+        "practice.drill_id": "extended_in_between_practice"
+      },
+      "preference": "take your time with this one",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": null,
+      "anchor": "This is the hardest stroke to master. It involves going between two adjacent strings.\n            This is a critical part of your right hand technique. Take your time with this one.",
+      "source_chapter": 2,
+      "_provenance": {
+        "chapter_n": 2,
+        "chapter_title": "The Strokes",
+        "section_title": "In-between stroke",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-consecutive-no-ring",
+      "name": "Consecutive same-direction strokes across adjacent strings require no ringing",
+      "when": {
+        "picking.action": "consecutive_stroke",
+        "string.crossing": "adjacent"
+      },
+      "then": {
+        "string.crossing_rule": "mute_no_sustain"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Allowing two adjacent-string notes to sustain simultaneously during a consecutive sweep is a concrete violation",
+      "anchor": "Do not let notes ring!",
+      "source_chapter": 3,
+      "_provenance": {
+        "chapter_n": 3,
+        "chapter_title": "Consecutive Strokes",
+        "section_title": "Consecutive strokes — no ringing constraint",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-precision-before-speed",
+      "name": "Rhythmic precision of eighth notes takes priority over tempo increase",
+      "when": {
+        "practice.stage": "consecutive_stroke_drill"
+      },
+      "then": {
+        "practice.drill_id": "even_eighth_notes_before_speed"
+      },
+      "preference": "evenness is the prerequisite; speed follows",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Increasing metronome tempo before achieving even note durations violates this rule",
+      "anchor": "It is necessary to play the above exercises evenly . At this stage, precision of the 8th\n   notes is more important than speed.",
+      "source_chapter": 3,
+      "_provenance": {
+        "chapter_n": 3,
+        "chapter_title": "Consecutive Strokes",
+        "section_title": "Consecutive strokes — no ringing constraint",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-triplet-exercise-three-down-three-up",
+      "name": "Repeating triplet patterns in exercises use three downs then three ups",
+      "when": {
+        "picking.action": "repeating_triplet_pattern",
+        "practice.stage": "exercise"
+      },
+      "then": {
+        "picking.direction": "three_down_then_three_up"
+      },
+      "preference": "three consecutive strokes same direction across three adjacent strings",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Using strict alternate picking for a triad triplet exercise is the counter-example this rule overrides",
+      "anchor": "use three \"down-strokes\" followed by three \"up-strokes\". Apply to any three note chord on\n     any three adjacent strings.",
+      "source_chapter": 3,
+      "_provenance": {
+        "chapter_n": 3,
+        "chapter_title": "Consecutive Strokes",
+        "section_title": "Triplet exception for repeating patterns",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-triplet-exception-exercise-only",
+      "name": "Triplet exception is exercise-only — real melodic lines adhere to the main directional rule",
+      "when": {
+        "picking.action": "repeating_triplet_pattern",
+        "line.context": "melodic_phrase"
+      },
+      "then": {
+        "picking.direction": "adhere_to_main_rule"
+      },
+      "preference": "in a real phrase context, revert to higher-string/lower-string directional rule",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Applying the three-down/three-up exercise pattern within a bebop melodic line would be the violation",
+      "anchor": "however, if I had to play a triplet phrase in the context of a line and not in an exercise,\n             I would adhere to the rule.",
+      "source_chapter": 3,
+      "_provenance": {
+        "chapter_n": 3,
+        "chapter_title": "Consecutive Strokes",
+        "section_title": "Triplet exception for repeating patterns",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-same-string-reversal",
+      "name": "Repeated notes on the same string require a pick-direction reversal",
+      "when": {
+        "picking.action": "repeated_note",
+        "string.crossing": "none"
+      },
+      "then": {
+        "picking.direction": "reverse_on_same_string"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Playing two consecutive repeated notes with the same stroke direction on one string violates this rule",
+      "anchor": "This exercise requires you to reverse direction on the same string. A common stroke that happens with",
+      "source_chapter": 3,
+      "_provenance": {
+        "chapter_n": 3,
+        "chapter_title": "Consecutive Strokes",
+        "section_title": "Same-string direction reversal",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-rule-generalizes-to-scales",
+      "name": "Directional picking rule applies uniformly to all scale fingerings and scale-type passages",
+      "when": {
+        "line.context": "scale_passage"
+      },
+      "then": {
+        "picking.economy_path": "directional_rule_applies"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Applying strict alternate picking to a scale passage ignores this generalization",
+      "anchor": "This will give you an idea how the rule works\n           on any sclae or scale type passage..",
+      "source_chapter": 4,
+      "_provenance": {
+        "chapter_n": 4,
+        "chapter_title": "The Major Scales",
+        "section_title": "Picking rule generalizes to all scales",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-double-star-higher-string-marker",
+      "name": "Double-star notation marks higher-string crossing requiring down-stroke",
+      "when": {
+        "string.crossing": "to_higher"
+      },
+      "then": {
+        "picking.direction": "down",
+        "string.crossing_rule": "marked_by_double_star"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A ** marking without a down-stroke is a notation-rule violation",
+      "anchor": "** = moving to HIGHER STRING",
+      "source_chapter": 4,
+      "_provenance": {
+        "chapter_n": 4,
+        "chapter_title": "The Major Scales",
+        "section_title": "String-crossing notation legend",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-single-star-lower-string-marker",
+      "name": "Single-star notation marks lower-string crossing requiring up-stroke",
+      "when": {
+        "string.crossing": "to_lower"
+      },
+      "then": {
+        "picking.direction": "up",
+        "string.crossing_rule": "marked_by_single_star"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A * marking without an up-stroke is a notation-rule violation",
+      "anchor": "* = moving to LOWER STRING",
+      "source_chapter": 4,
+      "_provenance": {
+        "chapter_n": 4,
+        "chapter_title": "The Major Scales",
+        "section_title": "String-crossing notation legend",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-arpeggio-articulation-priority",
+      "name": "Arpeggio articulation takes priority over tempo",
+      "when": {
+        "arpeggio.target": "any"
+      },
+      "then": {
+        "practice.drill_id": "articulation_before_speed"
+      },
+      "preference": "never increase tempo until note separation is clean",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Speeding through an arpeggio exercise with ringing notes violates this rule",
+      "anchor": "Articulatioin is more important\n    han speed.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Articulation over speed",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-sweep-rejection-unified-rule",
+      "name": "Sweep picking is not a separate technique — the directional rule unifies single-line and arpeggio picking",
+      "when": {
+        "arpeggio.target": "any"
+      },
+      "then": {
+        "picking.economy_path": "directional_rule_same_as_single_line"
+      },
+      "preference": "reject any framing that treats arpeggios as requiring a different picking system",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Treating sweep picking as a separate learned skill contradicts this rule",
+      "anchor": "I see no reason to make any distinction. Everything follows the rule:\n      Higher string = \"down stroke\" Lower string = \"up stroke\"",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Sweep picking rejection",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-minor11-sextuplet-four-strings",
+      "name": "Minor 11 fingering enables sextuplet via consecutive strokes across four strings",
+      "when": {
+        "arpeggio.target": "minor_11"
+      },
+      "then": {
+        "arpeggio.sextuplet_id": "minor11_sextuplet_four_string",
+        "picking.direction": "consecutive_down_then_up"
+      },
+      "preference": "choose the fingering that places six notes across four adjacent strings",
+      "quality_binding": [
+        "minor_11"
+      ],
+      "falsifier": "A minor 11 fingering that does not span four strings cannot produce the sextuplet pattern",
+      "anchor": "Minor 11 arpeggios: Because of the fingering it is possible to play 6 notes in one beat.(sextuplet)\n      The fingering sets up the consecutive down and up strokes to go across four strings.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Minor 11 sextuplet arpeggio",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-minor9-adjacent-string-design",
+      "name": "Minor 9 arpeggio fingering places notes on adjacent strings to enable two-octave fluid picking",
+      "when": {
+        "arpeggio.target": "minor_9"
+      },
+      "then": {
+        "picking.economy_path": "adjacent_string_directional_rule"
+      },
+      "preference": "use fingerings that keep successive arpeggio notes on adjacent strings",
+      "quality_binding": [
+        "minor_9"
+      ],
+      "falsifier": "A minor 9 fingering with string skips between every note cannot apply the adjacent-string consecutive rule",
+      "anchor": "Minor 9th arpeggios:By using fingerings that place notes on adjacent strings, either higher or lower,\n       these large two octave arpeggios become possible.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Minor 9 arpeggio — fingering enables speed",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-fingering-enables-speed",
+      "name": "Fingering choice is the primary mechanism enabling arpeggio speed",
+      "when": {
+        "arpeggio.target": "any"
+      },
+      "then": {
+        "picking.economy_path": "fingering_unlocks_velocity"
+      },
+      "preference": "optimize the left-hand fingering before trying to pick faster",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Attempting to increase arpeggio speed by picking harder without changing fingering violates this principle",
+      "anchor": "Again, the fingering makes\n      the speed possible.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Minor 9 arpeggio — fingering enables speed",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-rest-phrase-start-exception",
+      "name": "After a rest between phrases either stroke may begin the next phrase",
+      "when": {
+        "line.context": "phrase_start_after_rest"
+      },
+      "then": {
+        "picking.direction": "either_stroke_permitted"
+      },
+      "preference": "use whichever stroke feels natural after the rest",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": null,
+      "anchor": "I have found when there is a rest between phrases,\n        it is possible to break the rule and use whatever stroke you\n        please to start the phrase.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Rule exception at rests and practice symmetry",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-single-line-arpeggio-unified-picking",
+      "name": "Single-line and arpeggio picking are governed by one system not two",
+      "when": {
+        "picking.action": "any"
+      },
+      "then": {
+        "picking.economy_path": "unified_directional_rule"
+      },
+      "preference": "reject the misconception that arpeggios require a different picking approach",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Treating single-line picking and arpeggio picking as separate skills is the misconception this rule addresses",
+      "anchor": "I often run across guitarists\n     who become misled into thinking that picking for single lines is different than picking for arpeggios.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Rule exception at rests and practice symmetry",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-music-over-fretboard",
+      "name": "Musical intent governs picking choices — fretboard must not dictate the music",
+      "when": {
+        "picking.action": "any"
+      },
+      "then": {
+        "picking.economy_path": "serve_musical_intent"
+      },
+      "preference": "always subordinate mechanical efficiency to musical expression",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Choosing a musical phrase solely because it is easy to pick on the fretboard is the named anti-pattern",
+      "anchor": "You have to be careful\n     to NOT let the fingerboard make the music. The music comes from inside; the picking mechanism described in this book\n     is designed to make it easier for the music to be realized.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Music drives picking — aesthetic axiom",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-major-triad-warmup",
+      "name": "Major triad arpeggio exercise serves as foundational warm-up for note separation",
+      "when": {
+        "practice.stage": "warm_up",
+        "arpeggio.target": "major_triad"
+      },
+      "then": {
+        "practice.drill_id": "major_triad_warmup_articulation"
+      },
+      "preference": "use this exercise daily to develop note separation transferable to all arpeggio fragments",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Skipping the major triad warm-up and moving directly to complex arpeggios skips the articulation foundation",
+      "anchor": "This makes a great warm-up exercise. It is very difficult to\n     play with clean articulation.",
+      "source_chapter": 5,
+      "_provenance": {
+        "chapter_n": 5,
+        "chapter_title": "Arpeggios",
+        "section_title": "Music drives picking — aesthetic axiom",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-skip-same-rule-applies",
+      "name": "Directional picking rule applies to non-adjacent string crossings identically to adjacent crossings",
+      "when": {
+        "string.crossing": "non_adjacent_skip"
+      },
+      "then": {
+        "picking.economy_path": "directional_rule_applies"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Using strict alternate picking for a string skip because strings are non-adjacent violates this extension",
+      "anchor": "When skipping strings the same rule applies: When going to a higher string use a\n          down-stroke; when going to a lower string, use an up-stroke.",
+      "source_chapter": 6,
+      "_provenance": {
+        "chapter_n": 6,
+        "chapter_title": "String Skipping",
+        "section_title": "String skipping directional rule extension",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-skip-both-starting-strokes",
+      "name": "String-skip exercises must be started with both down and up strokes",
+      "when": {
+        "practice.stage": "string_skip_exercise"
+      },
+      "then": {
+        "practice.drill_id": "both_starting_strokes_skip"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Practicing a string-skip exercise only from a down-start violates this symmetry requirement",
+      "anchor": "START THIS EXERCISE WITH BOTH STROKES, DOWN AND UP",
+      "source_chapter": 6,
+      "_provenance": {
+        "chapter_n": 6,
+        "chapter_title": "String Skipping",
+        "section_title": "Bilateral practice for skip exercises",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-upstroke-accent-skip-alternate-preference",
+      "name": "Up-stroke accent with string skip may pragmatically use alternate picking",
+      "when": {
+        "picking.action": "in_between_stroke",
+        "string.crossing": "non_adjacent_skip"
+      },
+      "then": {
+        "picking.direction": "alternate_preferred"
+      },
+      "preference": "author finds alternating down-up easier for accented in-between skip figures",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Successfully executing the accented in-between skip with the directional rule removes the need for this preference",
+      "anchor": "I find that when playing exercises like this it is easier to play them\n     with alternating \"down\" - \"up\" strokes",
+      "source_chapter": 6,
+      "_provenance": {
+        "chapter_n": 6,
+        "chapter_title": "String Skipping",
+        "section_title": "Accent on up-stroke skip — pragmatic alternate preference",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-position-shift-changes-picking",
+      "name": "Changing fingerboard position of a phrase changes its required picking pattern",
+      "when": {
+        "line.context": "melodic_phrase",
+        "hand.position": "new_position"
+      },
+      "then": {
+        "picking.economy_path": "rederive_from_directional_rule"
+      },
+      "preference": "do not assume the same picking applies when a phrase moves positions",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Applying the same picking pattern to a phrase transposed to a new position without re-deriving it from the directional rule is the named error",
+      "anchor": "Here's the same phrase in the 7th position. This changes the picking considerably.",
+      "source_chapter": 7,
+      "_provenance": {
+        "chapter_n": 7,
+        "chapter_title": "Typical Be-Bop Phrases",
+        "section_title": "Position shift changes picking",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-slurred-triplets-horn-preference",
+      "name": "Slurred triplets are preferred over fully-picked triplets for bebop phrasing",
+      "when": {
+        "line.context": "bebop_triplet"
+      },
+      "then": {
+        "picking.direction": "slurred_preferred_over_picked"
+      },
+      "preference": "prefer the slurred example as it sounds more horn-like",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Picking every triplet note fully with no slur produces the less preferred, less horn-like sound",
+      "anchor": "I prefer the 2nd example; it sounds more horn-like",
+      "source_chapter": 7,
+      "_provenance": {
+        "chapter_n": 7,
+        "chapter_title": "Typical Be-Bop Phrases",
+        "section_title": "Slurred triplets — horn-like preference",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-slur-triplet-both-strokes",
+      "name": "Slurred triplet figures must be mastered starting from both down and up strokes",
+      "when": {
+        "line.context": "bebop_triplet",
+        "practice.stage": "slur_triplet_drill"
+      },
+      "then": {
+        "practice.drill_id": "slur_triplet_both_starting_strokes"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Mastering only the down-stroke start for slurred triplets leaves the up-stroke variant unpracticed",
+      "anchor": "Learn how to slur triplets with a \"down-stroke\" and an \"up-stroke\"",
+      "source_chapter": 7,
+      "_provenance": {
+        "chapter_n": 7,
+        "chapter_title": "Typical Be-Bop Phrases",
+        "section_title": "Slurred triplets — horn-like preference",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-slur-one-pick-two-notes",
+      "name": "Slurring is mechanically defined as one pick stroke producing two sounded notes",
+      "when": {
+        "picking.action": "slur"
+      },
+      "then": {
+        "picking.direction": "one_stroke_two_notes"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Picking both notes individually produces two attacks and is not a slur",
+      "anchor": "These inflections are accomplished\n     by slurring notes. Pick one note and play two notes.",
+      "source_chapter": 8,
+      "_provenance": {
+        "chapter_n": 8,
+        "chapter_title": "Articulations",
+        "section_title": "Articulations as inflections — slur mechanic",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-same-string-slur-constraint",
+      "name": "Slurs are physically constrained to note pairs on the same string",
+      "when": {
+        "picking.action": "slur"
+      },
+      "then": {
+        "string.crossing_rule": "same_string_required_for_slur"
+      },
+      "preference": null,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Attempting a hammer-on or pull-off between notes on different strings is not possible on guitar",
+      "anchor": "Try moving the slur over any two notes that are on the same string.",
+      "source_chapter": 8,
+      "_provenance": {
+        "chapter_n": 8,
+        "chapter_title": "Articulations",
+        "section_title": "Articulations as inflections — slur mechanic",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-slur-placement-changes-inflection",
+      "name": "Shifting slur position within a phrase changes its expressive inflection",
+      "when": {
+        "line.context": "bebop_phrase",
+        "picking.action": "slur"
+      },
+      "then": {
+        "picking.economy_path": "variable_slur_placement_for_inflection"
+      },
+      "preference": "experiment with placing slurs at different beats to discover expressive alternatives",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Fixing the slur always on the first note of every phrase eliminates this expressive resource",
+      "anchor": "Here is the phrase with the slur moved to the next beat.",
+      "source_chapter": 8,
+      "_provenance": {
+        "chapter_n": 8,
+        "chapter_title": "Articulations",
+        "section_title": "Slur placement as compositional variable",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-long-short-phrase-ending",
+      "name": "Bebop phrase endings should be played long then short",
+      "when": {
+        "line.context": "phrase_ending"
+      },
+      "then": {
+        "picking.direction": "long_short_articulation"
+      },
+      "preference": "the two final notes of a bebop phrase should be long followed by short",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Playing both final notes with equal duration omits the idiomatic long-short gesture",
+      "anchor": "make sure you play these last two notes,\n                                                             long, short.",
+      "source_chapter": 8,
+      "_provenance": {
+        "chapter_n": 8,
+        "chapter_title": "Articulations",
+        "section_title": "Slur placement as compositional variable",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-self-directed-slur-experimentation",
+      "name": "Students should actively experiment adding slurs at different phrase positions",
+      "when": {
+        "practice.stage": "articulation_development"
+      },
+      "then": {
+        "practice.drill_id": "self_directed_slur_placement"
+      },
+      "preference": "do not treat slur placement as fixed; internalize it as a creative choice",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Copying only the notated slur placements without exploring alternatives limits expressive range",
+      "anchor": "I've added a few slurs. Experiment adding your own slurs at different places",
+      "source_chapter": 8,
+      "_provenance": {
+        "chapter_n": 8,
+        "chapter_title": "Articulations",
+        "section_title": "Slur placement as compositional variable",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-consecutive-downs-bigband-emphasis",
+      "name": "Consecutive down-strokes are permitted to emphasize notes in big-band style phrases",
+      "when": {
+        "line.context": "big_band_phrase"
+      },
+      "then": {
+        "picking.direction": "consecutive_down_for_accent"
+      },
+      "preference": "use when emulating horn-section accent patterns",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Applying consecutive downs in a lyrical bebop ballad context where accent imitation is not the goal would be misapplied",
+      "anchor": "I use consecutive down strokes to emphsis certain notes. This type picking is useful when you\n    are trying to emulate a big band type phrase.",
+      "source_chapter": 9,
+      "_provenance": {
+        "chapter_n": 9,
+        "chapter_title": "Breaking the Rules",
+        "section_title": "Consecutive down-strokes for big-band emphasis",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-rhythmic-break-consecutive-downs",
+      "name": "A rhythmic break or rest between notes justifies consecutive down-strokes",
+      "when": {
+        "line.context": "phrase_with_rhythmic_break"
+      },
+      "then": {
+        "picking.direction": "consecutive_down_permitted"
+      },
+      "preference": "use two downs when a rest separates notes rather than forcing directional-rule alternation",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A continuous melodic line without rests does not provide the rhythmic gap that licenses this exception",
+      "anchor": "When there is a rhythmic break between notes, you may want to use to down strokes.",
+      "source_chapter": 9,
+      "_provenance": {
+        "chapter_n": 9,
+        "chapter_title": "Breaking the Rules",
+        "section_title": "Consecutive down-strokes for big-band emphasis",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-slurs-alternative-to-consecutive-downs",
+      "name": "Slurs are an equivalent alternative to consecutive down-strokes for big-band phrasing",
+      "when": {
+        "line.context": "big_band_phrase"
+      },
+      "then": {
+        "picking.direction": "slur_as_alternative_to_consecutive_down"
+      },
+      "preference": "slurs and consecutive downs are interchangeable expressive options for this context",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Treating consecutive downs as the only option for big-band phrases ignores the slur alternative",
+      "anchor": "Here is the same type phrase with slurs.",
+      "source_chapter": 9,
+      "_provenance": {
+        "chapter_n": 9,
+        "chapter_title": "Breaking the Rules",
+        "section_title": "Consecutive down-strokes for big-band emphasis",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-repetition-over-analysis",
+      "name": "Repetition without mid-stroke analysis is the correct practice mode for ingraining picking habits",
+      "when": {
+        "practice.stage": "habit_formation"
+      },
+      "then": {
+        "practice.drill_id": "repetition_no_overanalysis"
+      },
+      "preference": "do not stop to analyze mid-stroke; trust repetition to automate the pattern",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Pausing after every stroke to consciously verify direction interrupts the habit-formation process",
+      "anchor": "The\nkey is repetition. Do not overanalyze your right hand movements. After a short\ntime, these strokes will become second nature.",
+      "source_chapter": 10,
+      "_provenance": {
+        "chapter_n": 10,
+        "chapter_title": "Conclusion",
+        "section_title": "Picking as habit — repetition over analysis",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "bruno-established-players-expect-more-difficulty",
+      "name": "Players with longer alternate-picking histories face greater difficulty adopting the system",
+      "when": {
+        "practice.stage": "habit_replacement"
+      },
+      "then": {
+        "practice.drill_id": "extended_patience_for_experienced_players"
+      },
+      "preference": "set expectations that the habit change will take more time for advanced players",
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": null,
+      "anchor": "The\nlonger you have been playing, the harder it will be to change.",
+      "source_chapter": 10,
+      "_provenance": {
+        "chapter_n": 10,
+        "chapter_title": "Conclusion",
+        "section_title": "Picking as habit — repetition over analysis",
+        "level": "section"
+      }
+    }
+  ]
+}
