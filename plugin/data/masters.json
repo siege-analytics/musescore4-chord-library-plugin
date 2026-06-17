@@ -62797,7 +62797,532 @@
           ]
         }
       ],
-      "status": "promoted"
+      "status": "promoted",
+      "usage_notes": [
+        {
+          "chord_quality": "any",
+          "function_role": "directional-picking-core-rule",
+          "narrative": "Bruno prescribes a three-rule directional picking system applicable to any chord quality or melodic context: use a down-stroke when crossing to a higher string, an up-stroke when crossing to a lower string, and alternate strokes when staying on one string. As stated in Chapter 1 (p. 4): \"When going to a higher string, use a down-stroke. When going to a lower string, use an up-stroke. When playing on one string, use alternate strokes.\"",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.4"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "economy-of-motion-justification",
+          "narrative": "Bruno justifies the directional picking system on economy-of-motion grounds applicable across all chord qualities and melodic lines: \"I found one concept or rule that causes the pick to travel the least amount of distance\" (Chapter 1, p. 4). The pick is always positioned where it next needs to be, eliminating wasted reverse travel.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.4"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "right-hand-no-anchor-requirement",
+          "narrative": "Bruno prescribes a free-floating right hand for all picking contexts regardless of chord quality: \"Do not touch the strings, bridge or any other part of the guitar with the fingers of your right hand\" (Chapter 1, p. 5). This no-anchor posture — reinforced in Chapter 2 (p. 8–9) to include the pick guard — is a physical precondition for the directional system to work across any texture.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:right-hand-mechanics"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.5"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 2 p.8"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 2 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "elbow-driven-motion-requirement",
+          "narrative": "Bruno prescribes elbow-driven picking motion as a mechanical requirement for all strokes: \"The right hand, wrist and elbow should always be relaxed and never tense or tight. The wrist should not move or tilt. The movement should come from the elbow\" (Chapter 1, p. 5). Chapter 2 (p. 7) reinforces: \"Practice keeping your wrist straight but not stiff. Remember: the movement is from the elbow.\"",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:right-hand-mechanics"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.5"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 2 p.7"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "bidirectional-start-practice-rule",
+          "narrative": "Bruno prescribes practicing every exercise starting with both a down-stroke and an up-stroke, regardless of chord quality or texture: \"I recommend that you practice all the exercises starting with both strokes. There should be only a very slight difference in sound\" (Chapter 1, p. 6). This is restated for arpeggios (Chapter 5, p. 24) and string skipping (Chapter 6, p. 28).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.6"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.24"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 6 p.28"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "tempo-prescription-practice-rule",
+          "narrative": "Bruno prescribes a tempo range of MM 60–120 as the starting bracket for all exercises regardless of chord quality: \"I recommend you practice these exercise at MM 60 to 120, then increase your speed from there\" (Chapter 1, p. 6).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.6"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "sequential-study-order-proscription",
+          "narrative": "Bruno prohibits skipping around the book: \"The exercises are designed to take the student from point A to Z. It is not a good idea to skip around in this book\" (Chapter 1, p. 6). This applies globally regardless of the chord quality or technique the student wants to target.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 1 p.6"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "in-between-stroke-no-ringing",
+          "narrative": "Bruno prescribes strict muting for the in-between stroke across any adjacent-string double-stop: \"This stroke is difficult to master. It involves going between two adjacent strings... Apply to any two adjacent strings using the double-stop of your choice. Do not let notes ring!\" (Chapter 2, p. 10). The no-ringing requirement is equally in force for consecutive strokes (Chapter 3, p. 5).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 2 p.10"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 3 p.5"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "precision-over-speed-practice-rule",
+          "narrative": "Bruno prescribes rhythmic evenness as a prerequisite to tempo for consecutive-stroke drills: \"It is necessary to play the above exercises evenly. At this stage, precision of the 8th notes is more important than speed\" (Chapter 3, p. 5).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 3 p.5"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "triad",
+          "function_role": "triplet-drill-three-down-three-up",
+          "narrative": "For repeating triplet arpeggio patterns across three adjacent strings (drill context only), Bruno prescribes breaking the alternation rule in favor of three consecutive down-strokes followed by three consecutive up-strokes: \"use three 'down-strokes' followed by three 'up-strokes'. Apply to any three note chord on any three adjacent strings\" (Chapter 3, p. 6). Bruno explicitly states: \"when playing triplets with a repeating pattern such as a triad or some other pattern, it is better to break the rule.\"",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 3 p.6"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "triad",
+          "function_role": "triplet-drill-exception-confined-to-exercise",
+          "narrative": "The three-down / three-up triplet exception is scoped to drill technique only; in real melodic lines, strict alternation returns. Bruno states: \"however, if I had to play a triplet phrase in the context of a line and not in an exercise, I would adhere to the rule\" (Chapter 3, p. 6). Do not carry the consecutive-down triplet pattern into actual bebop phrase playing.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 3 p.6"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive",
+          "cross_ref": [
+            "triad/triplet-drill-three-down-three-up"
+          ]
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "scale-picking-rule-uniform-across-fingerings",
+          "narrative": "Bruno prescribes uniform application of the directional rule across all six major-scale fingerings (6V2, 5V2, 6V4, 5V4, 6H2, 5H2): \"Below are the six basic fingerings for the major scales. This will give you an idea how the rule works on any scale or scale type passage\" (Chapter 4, p. 9). String-crossing notation (asterisks) makes the higher/lower-string rule visible at every transition.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking",
+            "jimmy-bruno:the-art-of-picking:major-scale-fingerings"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 4 p.9"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "arpeggio-articulation-over-speed",
+          "narrative": "For arpeggio playing across any chord quality, Bruno prescribes articulation (note separation) as the primary challenge, not speed: \"The difficulty with any arpeggio exercise, is keeping the notes from ringing. Articulatioin is more important han speed\" (Chapter 5, p. 15).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.15"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "maj",
+          "function_role": "triad-arpeggio-warm-up",
+          "narrative": "Bruno designates the major triad arpeggio exercise as a foundational warm-up for developing note separation across all arpeggio work: \"Major triad exercises: This makes a great warm-up exercise. It is very difficult to play with clean articulation. The result is well worth the time. This exercie alone will facilitate the separtion of notes with any phrase that contains an arpeggio or arpeggio fragment\" (Chapter 5, p. 19).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.19"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "sweep-picking-proscription",
+          "narrative": "Bruno proscribes treating sweep picking as a separate technique distinct from directional picking: \"I have seen this referred to as sweep picking. I see no reason to make any distinction. Everything follows the rule: Higher string = 'down stroke' Lower string = 'up stroke'\" (Chapter 5, p. 21). The directional rule subsumes what others call sweep picking.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.21"
+            }
+          ],
+          "provenance": "extracted",
+          "polarity": "proscriptive"
+        },
+        {
+          "chord_quality": "min11",
+          "function_role": "sextuplet-fingering-enables-speed",
+          "narrative": "For minor 11 arpeggios, Bruno prescribes a fingering that places notes on adjacent strings to enable consecutive same-direction strokes and thereby unlock sextuplet velocity: \"Minor 11 arpeggios: Because of the fingering it is possible to play 6 notes in one beat (sextuplet). The fingering sets up the consecutive down and up strokes to go across four strings\" (Chapter 5, p. 22). Saxophone players and pianists use phrases like this.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.22"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "min9",
+          "function_role": "adjacent-string-fingering-enables-two-octave-arpeggios",
+          "narrative": "For minor 9th arpeggios, Bruno prescribes adjacent-string fingerings as the design principle that makes two-octave spans playable: \"By using fingerings that place notes on adjacent strings, either higher or lower, these large two octave arpeggios become possible\" (Chapter 5, p. 25). The fingering—not picking aggression—makes the speed possible (Chapter 5, p. 24).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.24"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.25"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "rest-start-stroke-freedom",
+          "narrative": "When a rest separates phrases, Bruno licenses breaking the directional rule for the phrase start: \"I have found when there is a rest between phrases, it is possible to break the rule and use whatever stroke you please to start the phrase\" (Chapter 5, p. 24). This is the one codified exception to starting-stroke determination.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.24"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "music-drives-picking-not-fretboard",
+          "narrative": "Bruno prescribes a hierarchy in which musical intent governs fingering and picking choices — the reverse is proscribed: \"You have to be careful to NOT let the fingerboard make the music. The music comes from inside; the picking mechanism described in this book is designed to make it easier for the music to be realized\" (Chapter 5, p. 25). This aesthetic axiom governs arpeggio vocabulary and melodic line construction equally.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 5 p.25"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "string-skip-directional-rule",
+          "narrative": "Bruno prescribes applying the same directional rule to non-adjacent string skips: \"When skipping strings the same rule applies: When going to a higher string use a down-stroke; when going to a lower string, use an up-stroke\" (Chapter 6, p. 26). Applied across string pairs (4 and 2), (5 and 3), (6 and 4).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 6 p.26"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "hard-skip-accent-override-to-alternate",
+          "narrative": "For the specific combination of up-stroke accent, in-between stroke, and string skip, Bruno pragmatically overrides his own directional rule and prescribes standard alternate picking: \"I find that when playing exercises like this it is easier to play them with alternating 'down' - 'up' strokes\" (Chapter 6, p. 30). This is the master's sanctioned personal exception for the hardest combined technique.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 6 p.30"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "position-dictates-picking-pattern",
+          "narrative": "Bruno prescribes re-working picking patterns when a phrase is relocated to a different fingerboard position: \"Here's the same phrase in the 7th position. This changes the picking considerably\" (Chapter 7, p. 34). The same melodic idea in a different position may require a completely different stroke sequence.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 7 p.34"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "slurred-triplet-bebop-preference",
+          "narrative": "In bebop phrase contexts, Bruno prescribes slurred triplets over fully picked triplets for horn-like articulation: \"I prefer the 2nd example; it sounds more horn-like\" (Chapter 7, p. 36). Slurred triplets must be mastered starting from both a down-stroke and an up-stroke (Chapter 7, p. 36).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 7 p.36"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "articulation-as-inflection-slur-mechanic",
+          "narrative": "Bruno prescribes thinking of articulations as inflections analogous to speech accent, realized by slurring: \"These inflections are accomplished by slurring notes. Pick one note and play two notes\" (Chapter 8, p. 38). Shifting the slur placement to a different beat within an identical phrase changes its inflection (Chapter 8, p. 40).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 8 p.38"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 8 p.40"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "long-short-cadence-phrase-ending",
+          "narrative": "Bruno prescribes a long-short rhythmic gesture for bebop phrase endings: \"make sure you play these last two notes, long, short\" (Chapter 8, p. 39). This is a recurring cadential articulation applied in bebop phrase contexts.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 8 p.39"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "same-string-slur-physical-constraint",
+          "narrative": "Bruno prescribes that hammer-on and pull-off slurs must be placed on notes sharing a single string: \"Try moving the slur over any two notes that are on the same string\" (Chapter 8, p. 41). This is not a stylistic preference but a physical constraint of the technique.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 8 p.41"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "slur-placement-creative-internalization",
+          "narrative": "Bruno prescribes treating slur placement as a creative decision the player must internalize, not a fixed score: \"I've added a few slurs. Experiment adding your own slurs at different places\" (Chapter 8, p. 42). The method provides exemplars but requires the student to self-direct slur experimentation.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 8 p.42"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "big-band-consecutive-downs-for-accent",
+          "narrative": "Bruno licenses consecutive down-strokes as a sanctioned rule-break to emulate big-band horn-section accent emphasis: \"I use consecutive down strokes to emphsis certain notes. This type picking is useful when you are trying to emulate a big band type phrase\" (Chapter 9, p. 49). Slurs are presented as an equivalent alternative for the same phrase (Chapter 9, p. 50).",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 9 p.49"
+            },
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 9 p.50"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "rhythmic-break-licenses-consecutive-downs",
+          "narrative": "Bruno prescribes consecutive down-strokes as preferable to strict alternation when a rhythmic break separates notes: \"When there is a rhythmic break between notes, you may want to use to down strokes\" (Chapter 9, p. 50). This is the second codified exception to the alternation rule.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 9 p.50"
+            }
+          ],
+          "provenance": "extracted"
+        },
+        {
+          "chord_quality": "any",
+          "function_role": "habit-formation-repetition-over-analysis",
+          "narrative": "Bruno prescribes repetition over analysis as the meta-practice rule for internalizing the picking system: \"The key is repetition. Do not overanalyze your right hand movements. After a short time, these strokes will become second nature\" (Chapter 10, p. 51). Advanced players who have long-established habits will struggle most and must be patient with the process.",
+          "source_principle_ids": [
+            "jimmy-bruno:the-art-of-picking:directional-picking"
+          ],
+          "source_work_id": "the-art-of-picking",
+          "references": [
+            {
+              "source": "the-art-of-picking",
+              "citation": "chapter 10 p.51"
+            }
+          ],
+          "provenance": "extracted"
+        }
+      ]
     },
     {
       "id": "peter-bernstein",
