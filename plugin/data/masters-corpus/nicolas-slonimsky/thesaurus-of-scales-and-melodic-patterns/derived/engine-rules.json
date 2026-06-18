@@ -1,0 +1,357 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-18T17-20-00-slonimsky-melodic-rules-v01",
+    "stage": "s6-engine-rules",
+    "source_pdf": "Nicolas Slonimsky - Thesaurus OfScales And Melodic Patterns.pdf",
+    "extracted_at": "2026-06-18T17:20:00+00:00",
+    "schema_version": "0.2",
+    "model": "claude-sonnet+human-curated",
+    "ticket": "#554"
+  },
+  "master_id": "nicolas-slonimsky",
+  "work_id": "thesaurus-of-scales-and-melodic-patterns",
+  "engine_rules": [
+    {
+      "rule_id": "slonimsky-equal-division-octave-2-tritone",
+      "name": "Equal division of octave by tritone yields 2-part progression",
+      "when": {
+        "harmonic.context": ["dominant_function", "tension"],
+        "scale.equal_division_parts": 2
+      },
+      "then": {
+        "melodic.progression_family": "tritone-progression",
+        "melodic.principal_tones": "octave-divided-in-2-equal-parts",
+        "melodic.interval_semitones": 6
+      },
+      "preference": 1,
+      "quality_binding": ["dom7", "dom7b5", "alt7"],
+      "applicability_reasons": ["symmetric_division", "tritone_substitution_root"],
+      "falsifier": "Slice has no harmonic tension permitting tritone-symmetric melodic motion",
+      "anchor": "The Tritone divides one octave into two equal parts.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-equal-division-octave-3-ditone",
+      "name": "Equal division of octave into 3 parts = augmented triad / Coltrane Giant Steps cycle",
+      "when": {
+        "harmonic.context": ["modal", "tonic", "cycle"],
+        "scale.equal_division_parts": 3
+      },
+      "then": {
+        "melodic.progression_family": "ditone-progression",
+        "melodic.principal_tones": "augmented-triad",
+        "melodic.interval_semitones": 4
+      },
+      "preference": 2,
+      "quality_binding": ["aug", "aug7", "maj7", "maj7#5"],
+      "applicability_reasons": ["coltrane_cycle", "symmetric_division", "augmented_triad_principal"],
+      "falsifier": "Underlying harmony explicitly forbids augmented-triad principal tones (e.g. naturally-tuned diatonic ii-V-I with no symmetry context)",
+      "anchor": "The Ditone Progression is identical with the augmented triad. ... [via Coltrane's Giant Steps]",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-equal-division-octave-4-sesquitone",
+      "name": "Equal division of octave into 4 parts = diminished-7 chord",
+      "when": {
+        "harmonic.context": ["dominant_function", "passing"],
+        "scale.equal_division_parts": 4
+      },
+      "then": {
+        "melodic.progression_family": "sesquitone-progression",
+        "melodic.principal_tones": "diminished-seventh-chord",
+        "melodic.interval_semitones": 3
+      },
+      "preference": 2,
+      "quality_binding": ["dim7", "dom7b9", "dom7#9"],
+      "applicability_reasons": ["symmetric_division", "diminished_seventh_principal", "dom7b9_substitute"],
+      "falsifier": "Diatonic context where diminished symmetry would obscure rather than illuminate the underlying chord function",
+      "anchor": "The Sesquitone Progression is identical with the diminished-seventh chord.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-equal-division-octave-6-whole-tone",
+      "name": "Equal division of octave into 6 parts = whole-tone scale",
+      "when": {
+        "harmonic.context": ["dominant_function", "tension"],
+        "scale.equal_division_parts": 6
+      },
+      "then": {
+        "melodic.progression_family": "whole-tone-progression",
+        "melodic.principal_tones": "whole-tone-scale",
+        "melodic.interval_semitones": 2
+      },
+      "preference": 1,
+      "quality_binding": ["dom7b5", "dom7#5", "alt7", "aug7"],
+      "applicability_reasons": ["whole_tone_color", "symmetric_division", "altered_dominant"],
+      "falsifier": "Strict diatonic context where whole-tone color would clash unambiguously",
+      "anchor": "The Whole-Tone scale divides the octave into 6 equal parts.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-polation-interpolation-scale-preserving",
+      "name": "Interpolation preserves direction; result is still a Scale",
+      "when": {
+        "melodic.operation": "polation",
+        "melodic.polation_type": "interpolation"
+      },
+      "then": {
+        "melodic.produces_taxonomy_class": "scale",
+        "melodic.preserves_direction": true,
+        "voice_leading.constraint": "no_direction_reversal_before_terminal"
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["taxonomic_invariant", "voice_leading_economy"],
+      "falsifier": "The interpolated note creates an audible direction reversal mid-progression",
+      "anchor": "All interpolated progressions are Scales.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-polation-infrapolation-pattern-producing",
+      "name": "Infrapolation reverses direction; result is a Pattern",
+      "when": {
+        "melodic.operation": "polation",
+        "melodic.polation_type": "infrapolation"
+      },
+      "then": {
+        "melodic.produces_taxonomy_class": "pattern",
+        "melodic.preserves_direction": false,
+        "voice_leading.constraint": "direction_reversal_at_each_principal_tone"
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["taxonomic_invariant", "ornament", "below-principal-decoration"],
+      "falsifier": "The infrapolated note does not produce a direction reversal (e.g. notation error)",
+      "anchor": "All infrapolated progressions are Patterns.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-polation-ultrapolation-pattern-producing",
+      "name": "Ultrapolation reverses direction; result is a Pattern",
+      "when": {
+        "melodic.operation": "polation",
+        "melodic.polation_type": "ultrapolation"
+      },
+      "then": {
+        "melodic.produces_taxonomy_class": "pattern",
+        "melodic.preserves_direction": false,
+        "voice_leading.constraint": "direction_reversal_at_each_principal_tone"
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["taxonomic_invariant", "ornament", "above-principal-decoration"],
+      "falsifier": "The ultrapolated note does not produce a direction reversal",
+      "anchor": "All ultrapolated progressions are Patterns. Pattern No. 53 inserts G above F#.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-symmetric-interpolation-invertible",
+      "name": "Symmetric interpolation produces palindromic interval structure",
+      "when": {
+        "melodic.operation": "polation",
+        "melodic.polation_type": "symmetric-interpolation"
+      },
+      "then": {
+        "melodic.produces_taxonomy_class": "scale",
+        "melodic.interval_symmetry": "palindromic",
+        "melodic.invertible_around_axis": true
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["symmetric_division", "invertible_design"],
+      "falsifier": "Author intends an asymmetric interpolation; symmetric guarantee inappropriate",
+      "anchor": "Symmetric interpolation results in invertible progressions. Scale No. 37 (C, D, F, F#, G, Bb, C).",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-compound-polation-infra-inter-ultra",
+      "name": "Infra-inter-ultrapolation: maximally compound decoration of a single figure",
+      "when": {
+        "melodic.operation": "polation",
+        "melodic.polation_type": "infra-inter-ultrapolation"
+      },
+      "then": {
+        "melodic.produces_taxonomy_class": "pattern",
+        "melodic.polation_complexity": "compound-maximum",
+        "melodic.decoration_layers": ["below", "between", "above"]
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["maximum_polation_density", "advanced_decoration"],
+      "falsifier": "Decoration density exceeds slice's rhythmic carrying capacity",
+      "anchor": "Pattern formed by insertion of notes below, between, and above the principal tones. Pattern No. 341.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-coltrane-giant-steps-cycle",
+      "name": "Coltrane Giant Steps cycle: deploy ditone-progression as cadential ladder",
+      "when": {
+        "harmonic.context": "modal_transition",
+        "progression.type": "non_diatonic_modulation",
+        "arrangement.style": ["modern_jazz", "post_bop", "coltrane_lineage"]
+      },
+      "then": {
+        "melodic.progression_family": "ditone-progression",
+        "melodic.deployment": "modulating_three_keys_a_major_third_apart",
+        "voice_leading.constraint": "augmented_triad_as_modulation_axis"
+      },
+      "preference": 2,
+      "quality_binding": ["maj7", "maj7#5", "aug7"],
+      "applicability_reasons": ["coltrane_giant_steps", "modulation_strategy", "post_bop_idiom"],
+      "falsifier": "Player is working in a tradition (bebop, swing, fusion) that doesn't deploy Coltrane-cycle vocabulary",
+      "anchor": "Equal Division of Octave into Three Parts (Ditone Progression) is the Giant Steps cycle.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-pat-martino-symmetric-pivot",
+      "name": "Pat Martino-style: pivot lines through equal-division axes",
+      "when": {
+        "arrangement.style": ["modern_jazz", "linear_concept", "martino_lineage"],
+        "harmonic.context": ["modal", "passing", "tension"]
+      },
+      "then": {
+        "melodic.progression_family": ["sesquitone-progression", "ditone-progression"],
+        "melodic.deployment": "symmetric_pivot_through_axis_tone",
+        "voice_leading.constraint": "diminished_or_augmented_pivot"
+      },
+      "preference": 1,
+      "quality_binding": ["min7", "dom7", "dim7", "alt7"],
+      "applicability_reasons": ["martino_linear_concept", "symmetric_pivot"],
+      "falsifier": "Player explicitly working in a non-Martino tradition",
+      "anchor": "[Martino's] linear concept uses Slonimsky-style equal-division pivots extensively; diminished and augmented symmetric divisions central to his vocabulary.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-mclaughlin-symmetric-diminished",
+      "name": "McLaughlin-style: symmetric-diminished scale on altered dominants",
+      "when": {
+        "arrangement.style": ["fusion", "mclaughlin_lineage", "modern_jazz"],
+        "harmonic.context": ["dominant_function", "tension"]
+      },
+      "then": {
+        "melodic.progression_family": "sesquitone-progression",
+        "melodic.scale_overlay": "half-whole-diminished",
+        "melodic.deployment": "altered_dominant_with_b9_#9_b5_#5_color"
+      },
+      "preference": 1,
+      "quality_binding": ["dom7b9", "dom7#9", "alt7", "dim7"],
+      "applicability_reasons": ["mclaughlin_lineage", "fusion_vocabulary", "altered_dominant_color"],
+      "falsifier": "Style is traditional-bebop where diminished color would feel anachronistic",
+      "anchor": "Symmetric-diminished scales and polation patterns visible across [McLaughlin's] Mahavishnu Orchestra and acoustic output.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-master-chord-omit-fifth",
+      "name": "Master Chord: dom7 with 5th omitted, transposable a tritone",
+      "when": {
+        "chord_quality": "dom7",
+        "arrangement.style": ["any"]
+      },
+      "then": {
+        "voicing.construction": "dom7-omit-5th",
+        "voicing.tensions": "open_for_extension_or_alteration",
+        "voicing.tritone_transposition_valid": true
+      },
+      "preference": 1,
+      "quality_binding": ["dom7", "dom9", "dom13"],
+      "applicability_reasons": ["master_chord_principle", "voicing_economy", "tritone_substitution_compatible"],
+      "falsifier": "Bass line requires the 5th to clarify root function",
+      "anchor": "Master chords ... dominant-seventh chords with the fifth omitted ... transposable a tritone with satisfactory results.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-mutually-exclusive-triads-12-tone-coverage",
+      "name": "Four mutually exclusive triads exhaust the chromatic aggregate",
+      "when": {
+        "arrangement.style": "twelve_tone_or_post_tonal",
+        "harmonic.context": "polytonal"
+      },
+      "then": {
+        "melodic.progression_family": "quadritonal-arpeggios",
+        "melodic.coverage_strategy": "four_triads_disjoint_pitch_sets",
+        "voicing.partition_count": 4
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["chromatic_aggregate_coverage", "polytonal_strategy"],
+      "falsifier": "Strict modal or tonal context that resists polytonal coverage",
+      "anchor": "Four triads (major, minor, diminished, or augmented) comprising all 12 different tones. Example: C major, F# major, D minor, G# minor.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-pandiatonic-counterpoint-no-doubling",
+      "name": "Pandiatonic counterpoint: each voice uses all 7 diatonic tones with no vertical doubling",
+      "when": {
+        "scale.context": "diatonic",
+        "arrangement.style": ["pandiatonic", "modern_arrangement"]
+      },
+      "then": {
+        "voice_leading.constraint": "no_vertical_pitch_class_doubling",
+        "voicing.distribution": "each_voice_uses_all_7_diatonic_tones",
+        "harmonic.context": "diatonic_aggregate"
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["pandiatonic_technique", "voice_independence"],
+      "falsifier": "Voicing has fewer voices than would distribute the 7 diatonic tones meaningfully",
+      "anchor": "In strict Pandiatonic Counterpoint each voice uses all 7 different diatonic notes with no vertical duplication.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-melody-scale-vs-pattern-discriminator",
+      "name": "Direction-reversal test discriminates Scale from Pattern",
+      "when": {
+        "melodic.unit": "melodic_figure",
+        "melodic.direction_reversals_before_terminal": "any"
+      },
+      "then": {
+        "melodic.taxonomic_class": "scale_if_zero_reversals_else_pattern",
+        "melodic.classification_method": "count_direction_reversals_before_terminal_point"
+      },
+      "preference": 1,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["taxonomic_invariant", "classification"],
+      "falsifier": "Direction reversal happens at terminal point only (still a Scale)",
+      "anchor": "A scale changes direction only at terminal points. A pattern changes direction before arriving at the terminal point.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-prometheus-scale-6-tone-color",
+      "name": "Prometheus scale (C-D-E-F#-A-Bb): 6-tone alternative to whole-tone for tension color",
+      "when": {
+        "harmonic.context": ["dominant_function", "tension", "modal"],
+        "arrangement.style": ["impressionist", "post_romantic", "modern_jazz"]
+      },
+      "then": {
+        "melodic.scale_overlay": "prometheus-six-tone",
+        "melodic.principal_tones": "C-D-E-F#-A-Bb",
+        "melodic.deployment": "tension_color_distinct_from_whole_tone"
+      },
+      "preference": 0,
+      "quality_binding": ["dom7", "dom7b5", "dom7#11", "alt7"],
+      "applicability_reasons": ["scriabin_prometheus", "alternative_to_whole_tone"],
+      "falsifier": "Style is bebop or earlier; Prometheus color reads as anachronistic",
+      "anchor": "The Prometheus scale: 6-tone scale C, D, E, F#, A, Bb used by Scriabin in his symphonic poem Prometheus.",
+      "source_page": null
+    },
+    {
+      "rule_id": "slonimsky-twelve-tone-permutation-as-semitone-progression",
+      "name": "12-tone technique = permutation case of the semitone progression",
+      "when": {
+        "arrangement.style": ["twelve_tone", "post_tonal"],
+        "melodic.operation": "row_permutation"
+      },
+      "then": {
+        "melodic.progression_family": "semitone-progression",
+        "melodic.classification": "permutation_of_chromatic_aggregate",
+        "voice_leading.constraint": "no_pitch_class_repetition_until_aggregate_complete"
+      },
+      "preference": 0,
+      "quality_binding": ["any"],
+      "applicability_reasons": ["schoenberg_twelve_tone", "post_tonal_idiom"],
+      "falsifier": "Style is tonal; chromatic-aggregate exhaustion is the wrong idiom",
+      "anchor": "12-Tone Technique, treated here as a special case of permutations of the Semitone Progression.",
+      "source_page": null
+    }
+  ]
+}
