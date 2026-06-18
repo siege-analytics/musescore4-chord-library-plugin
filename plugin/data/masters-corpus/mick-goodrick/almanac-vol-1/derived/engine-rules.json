@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:58-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -39,12 +39,9 @@
         "voicing.cycle_index": "read entry at (cycle.id × scale.context) cell",
         "voicing.scale_context": "constrain all voice-leading analysis to the parent scale of the cell"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "triad",
-        "seventh",
-        "tbn-i",
-        "tbn-ii"
+        "dom7"
       ],
       "falsifier": "A voicing entry that produces valid output when cycle.id or scale.context is unspecified",
       "anchor": "six cycles (2-7) within three parent scales: C Major, C Melodic Minor, and C Harmonic Minor",
@@ -53,7 +50,12 @@
         "chapter_n": 1,
         "section_title": "Cycle × Scale Grid — 18 Environments",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "triad",
+        "tbn-i",
+        "tbn-ii"
+      ]
     },
     {
       "rule_id": "goodrick-cycle-defines-root-motion",
@@ -71,8 +73,10 @@
       "then": {
         "voicing.cycle_index": "root moves by interval N where N equals cycle number"
       },
-      "preference": "required",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A cycle labeled cycle-4 that produces root motion by an interval other than a fourth",
       "anchor": "cycles (cycles 2 through 7, representing the interval of motion between successive diatonic chords)",
       "source_page": 12,
@@ -93,8 +97,10 @@
         "voicing.cycle_index": "cycle axis may be varied independently of scale axis",
         "voicing.scale_context": "scale axis may be varied independently of cycle axis"
       },
-      "preference": "design invariant",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "Any (cycle, scale) cell found to be empty",
       "anchor": "six cycles × 3 parent scales produces 18 distinct voice-leading environments",
       "source_page": 12,
@@ -117,8 +123,10 @@
       "then": {
         "voicing.shape": "select the voice-leading table specific to voicing.position"
       },
-      "preference": "mandatory",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A case where Close and Spread entries produce identical intervallic voice-leading profiles",
       "anchor": "Each voicing is displayed in both close and spread positions",
       "source_page": 12,
@@ -141,8 +149,10 @@
         "voicing.shape": "toggle between close and spread to modify contrapuntal texture; harmonic content preserved",
         "voicing.functional_class": "unchanged by position toggle"
       },
-      "preference": "preferred",
-      "quality_binding": [],
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A position toggle that changes the pitch-class set",
       "anchor": "the guitarist can trace how register choice reshapes the contrapuntal texture without changing the harmonic content",
       "source_page": 12,
@@ -161,8 +171,10 @@
       "then": {
         "voicing.cycle_index": "identify common tone, step voices, leap voices"
       },
-      "preference": "required first step",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A voicing selection that contradicts the intervallic profile listed",
       "anchor": "intervallic voice-leading relationships",
       "source_page": 12,
@@ -181,8 +193,10 @@
       "then": {
         "voicing.functional_class": "assign each voice a scale-degree function and track which function moves to which"
       },
-      "preference": "required second step",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "An entry where two voices carry the same scale-degree function within the same chord",
       "anchor": "functional voice-leading information",
       "source_page": 12,
@@ -201,8 +215,10 @@
       "then": {
         "voicing.msrp": "prefer voicing sequence whose top voice matches M.S.R.P. encoding"
       },
-      "preference": "tie-breaker",
-      "quality_binding": [],
+      "preference": 0,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A voicing path preferred over M.S.R.P. despite producing less stepwise top-voice",
       "anchor": "Most Stepwise Resolution Pattern (M.S.R.P.) strings",
       "source_page": 12,
@@ -221,8 +237,10 @@
       "then": {
         "voicing.cycle_index": "hold or minimally displace common-tone voice across cycle step"
       },
-      "preference": "strong preference",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A cycle environment where no voice carries interval 0",
       "anchor": "intervallic voice-leading relationships, functional voice-leading information",
       "source_page": 12,
@@ -241,8 +259,10 @@
       "then": {
         "voicing.functional_class": "treat entries as interchangeable substitutes"
       },
-      "preference": "available",
-      "quality_binding": [],
+      "preference": 0,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "Two entries with identical functional profiles that produce non-substitutable results",
       "anchor": "functional voice-leading information",
       "source_page": 12,
@@ -266,9 +286,9 @@
         "voicing.shape": "apply 3-voice intervallic/functional tables",
         "voicing.functional_class": "assign root, 3rd, 5th"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "triad"
+        "any"
       ],
       "falsifier": "A triad entry with fewer than 3 or more than 3 distinct voices",
       "anchor": "triads, seventh chords, and Goodrick's TBN (Two-Note Base) constructs — in both Close and Spread voicings",
@@ -277,7 +297,10 @@
         "chapter_n": 1,
         "section_title": "Tertian Voicing Families — Triads and Seventh Chords",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "triad"
+      ]
     },
     {
       "rule_id": "goodrick-seventh-4voice-close-spread",
@@ -293,9 +316,9 @@
         "voicing.shape": "apply 4-voice intervallic/functional tables",
         "voicing.functional_class": "assign root, 3rd, 5th, 7th"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "seventh"
+        "dom7"
       ],
       "falsifier": "A seventh-chord entry with fewer than 4 or more than 4 distinct voices",
       "anchor": "triads, seventh chords, and Goodrick's TBN (Two-Note Base) constructs — in both Close and Spread voicings",
@@ -323,10 +346,9 @@
         "voicing.cycle_index": "expect one or more common tones per cycle step",
         "voicing.msrp": "M.S.R.P. reflects predominantly stepwise or common-tone top-voice motion"
       },
-      "preference": "descriptive",
+      "preference": 0,
       "quality_binding": [
-        "triad",
-        "seventh"
+        "dom7"
       ],
       "falsifier": "A cycle-4 or cycle-5 cell where no voice carries interval 0",
       "anchor": "some cycles (particularly cycles producing common-tone-rich motion) yield smooth voice-leading almost automatically",
@@ -335,7 +357,10 @@
         "chapter_n": 1,
         "section_title": "Tertian Voicing Families — Triads and Seventh Chords",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "triad"
+      ]
     },
     {
       "rule_id": "goodrick-tbn-same-analytical-layers",
@@ -355,10 +380,9 @@
         "voicing.functional_class": "assign functional labels to TBN voices",
         "voicing.msrp": "read M.S.R.P. string identically to tertian procedure"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "tbn-i",
-        "tbn-ii"
+        "any"
       ],
       "falsifier": "A TBN entry that omits one of the three analytical layers",
       "anchor": "triads, seventh chords, and Goodrick's TBN (Two-Note Base) constructs",
@@ -367,7 +391,11 @@
         "chapter_n": 1,
         "section_title": "TBN (Two-Note Base) Constructs",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "tbn-i",
+        "tbn-ii"
+      ]
     },
     {
       "rule_id": "goodrick-quartal-same-18-env-grid",
@@ -396,11 +424,9 @@
         "voicing.cycle_index": "locate entry at (cycle.id × scale.context) cell",
         "voicing.scale_context": "constrain analysis to parent scale"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "3part-quartal",
-        "4part-quartal",
-        "spread-cluster"
+        "any"
       ],
       "falsifier": "A quartal or cluster entry outside the 18-environment grid",
       "anchor": "six cycles (cycles 2-7) and three parent scales (C Major, C Melodic Minor, and C Harmonic Minor)",
@@ -409,7 +435,12 @@
         "chapter_n": 2,
         "section_title": "Quartal / Cluster Catalog — Same Grid, Different Primitives",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "3part-quartal",
+        "4part-quartal",
+        "spread-cluster"
+      ]
     },
     {
       "rule_id": "goodrick-quartal-three-analytical-layers",
@@ -426,11 +457,9 @@
         "voicing.functional_class": "apply functional layer",
         "voicing.msrp": "read M.S.R.P. string"
       },
-      "preference": "mandatory",
+      "preference": 2,
       "quality_binding": [
-        "3part-quartal",
-        "4part-quartal",
-        "spread-cluster"
+        "any"
       ],
       "falsifier": "A quartal or cluster entry that lacks one of the three layers",
       "anchor": "Intervallic Voice-Leading (pitch relationships), Functional Voice-Leading (harmonic context)",
@@ -439,7 +468,12 @@
         "chapter_n": 2,
         "section_title": "Quartal / Cluster Catalog — Same Grid, Different Primitives",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "3part-quartal",
+        "4part-quartal",
+        "spread-cluster"
+      ]
     },
     {
       "rule_id": "goodrick-quartal-nct-resist-naming",
@@ -456,8 +490,10 @@
         "voicing.functional_class": "do not force a tertian chord-quality label",
         "voicing.shape": "select using (cycle, scale, position) tuple"
       },
-      "preference": "required when chord_quality cannot be resolved",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A quartal or cluster entry defined only in relation to an underlying tertian chord name",
       "anchor": "the volume's strategic shift away from tertian harmony toward quartal and cluster sonorities that resist conventional chord naming",
       "source_page": 190,
@@ -476,9 +512,9 @@
       "then": {
         "voicing.shape": "select one of six 4-part quartal voicing types"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "4part-quartal"
+        "any"
       ],
       "falsifier": "Fewer than or more than six distinct 4-part quartal voicing types",
       "anchor": "4-part quartal voicings across six distinct voicing types",
@@ -487,7 +523,10 @@
         "chapter_n": 2,
         "section_title": "Quartal / Cluster Catalog — Same Grid, Different Primitives",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "4part-quartal"
+      ]
     },
     {
       "rule_id": "goodrick-spread-cluster-six-types",
@@ -498,9 +537,9 @@
       "then": {
         "voicing.shape": "select one of six Spread Cluster voicing types"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "spread-cluster"
+        "any"
       ],
       "falsifier": "Fewer than or more than six distinct Spread Cluster voicing types",
       "anchor": "Spread Cluster voicings across six further types",
@@ -509,7 +548,10 @@
         "chapter_n": 2,
         "section_title": "Quartal / Cluster Catalog — Same Grid, Different Primitives",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "spread-cluster"
+      ]
     },
     {
       "rule_id": "goodrick-family-agnostic-vl-discipline",
@@ -529,8 +571,10 @@
         "voicing.cycle_index": "apply same motion-budget analysis regardless of family",
         "voicing.functional_class": "track scale-degree or quartal-equivalent function using same logic"
       },
-      "preference": "invariant",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A voicing family requiring a fourth analytical layer or different grid",
       "anchor": "quartal and cluster harmony is not a special case requiring special treatment. It obeys the same voice-leading discipline as tertian harmony",
       "source_page": 190,
@@ -549,8 +593,10 @@
       "then": {
         "voicing.cycle_index": "read intervallic layer using same procedure regardless of family"
       },
-      "preference": "required",
-      "quality_binding": [],
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
       "falsifier": "A quartal or cluster entry where interval 0 cannot be identified using the same procedure",
       "anchor": "By running 4-part fourths and spread cluster voicings through the same 18-environment grid, with the same three analytical layers, Goodrick enforces the insight that the guitarist's contrapuntal obligation does not change when the harmonic language does",
       "source_page": 190,
@@ -574,11 +620,9 @@
         "voicing.cycle_index": "expect larger or more frequent intervallic leaps",
         "voicing.msrp": "M.S.R.P. reflects wider top-voice range"
       },
-      "preference": "descriptive",
+      "preference": 0,
       "quality_binding": [
-        "3part-quartal",
-        "4part-quartal",
-        "spread-cluster"
+        "any"
       ],
       "falsifier": null,
       "anchor": "What changes across families is which voice carries the common tone, which voice steps by a second or third, and how large the remaining leaps must be",
@@ -587,7 +631,12 @@
         "chapter_n": 2,
         "section_title": "Unity of Voice-Leading Across Families",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "3part-quartal",
+        "4part-quartal",
+        "spread-cluster"
+      ]
     },
     {
       "rule_id": "goodrick-msrp-quartal-top-voice-benchmark",
@@ -602,11 +651,9 @@
       "then": {
         "voicing.msrp": "use M.S.R.P. string as compact melodic handle on multi-voice contrapuntal event"
       },
-      "preference": "tie-breaker",
+      "preference": 0,
       "quality_binding": [
-        "3part-quartal",
-        "4part-quartal",
-        "spread-cluster"
+        "any"
       ],
       "falsifier": "A quartal or cluster entry where M.S.R.P. string is absent while equivalent tertian entry at same address has valid M.S.R.P.",
       "anchor": "M.S.R.P. string indicating the Most Stepwise Resolution Pattern",
@@ -615,7 +662,12 @@
         "chapter_n": 2,
         "section_title": "Unity of Voice-Leading Across Families",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "3part-quartal",
+        "4part-quartal",
+        "spread-cluster"
+      ]
     }
   ]
 }

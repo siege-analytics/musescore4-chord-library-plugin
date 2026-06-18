@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": "Greene, Ted - Jazz Guitar Single Note Soloing, Vol 1 (1992).pdf",
     "extracted_at": "2026-06-16T00:00:00+00:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -24,7 +24,7 @@
           "shape_notes_into_interesting_lines"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -43,7 +43,7 @@
       "then": {
         "reference.set": "major_scale_numeric_degrees"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -62,7 +62,7 @@
       "then": {
         "notation.set": "numeric_degree_relative_to_root_major_scale"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -81,7 +81,7 @@
       "then": {
         "chord.formula_basis": "numeric_degrees_of_root_major_scale_with_accidentals"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -100,7 +100,7 @@
       "then": {
         "notation.semantics": "half_step_offset_from_major_scale_degree"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -140,7 +140,7 @@
           ]
         }
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -162,7 +162,7 @@
       "then": {
         "chord_scale_pairing.rule": "scale_sounds_good_over_chord"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -190,7 +190,7 @@
           "lydian"
         ]
       },
-      "preference": "either_acceptable",
+      "preference": 0,
       "quality_binding": [
         "maj",
         "maj7",
@@ -220,7 +220,7 @@
           7
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "maj7"
@@ -245,7 +245,7 @@
         "line.eighth_subdivision": "primary",
         "line.duration_default": "eighth"
       },
-      "preference": "default",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -265,7 +265,7 @@
         "line.eighth_subdivision": "triplet_pair_long_short",
         "line.swing_ratio": "triplet_based"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -287,7 +287,7 @@
           "straight"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -310,7 +310,7 @@
       "then": {
         "line.eighth_subdivision": "double_time_sixteenths"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -329,7 +329,7 @@
       "then": {
         "practice.gate": "clean_at_current_tempo"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -350,7 +350,7 @@
         "line.articulation": "hammer_on",
         "line.hammer_on_target_constraint": "active_scale_tone"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -372,7 +372,7 @@
           "hammer_on": "component_of_trill_only"
         }
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -392,7 +392,7 @@
         "line.trill_semantics": "decorate_held_note",
         "line.trill_primary_pitch": "preserved"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -411,7 +411,7 @@
       "then": {
         "line.trill_placement": "strong_beat_default"
       },
-      "preference": "default",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -438,11 +438,11 @@
           "b7"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
-        "9",
-        "13"
+        "dom9",
+        "dom13"
       ],
       "falsifier": "Defining the dominant 7th scale as Mixolydian-with-#11 (that's Lydian Dominant) or as a major scale with #4 (that's Lydian).",
       "anchor": "The Dominant 7th scale is simply a Major scale\nwith a lowered 7th tone",
@@ -461,12 +461,12 @@
           "dominant_7th"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
-        "9",
-        "11",
-        "13"
+        "dom9",
+        "dom11",
+        "dom13"
       ],
       "falsifier": "Applying the Dominant 7th scale to a dom7b9 chord (the b9 is not in the dominant 7th scale — that chord requires an altered dominant scale).",
       "anchor": "Any chord containing some combination of any of (but only) these chord tones, can take the Dominant\n7th scale.",
@@ -485,7 +485,7 @@
         "scale.reference_root": "chord_root",
         "scale.reframe_as_relative_major": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -517,12 +517,12 @@
           "either_group": "contains_both_or_neither"
         }
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
-        "9",
-        "11",
-        "13"
+        "dom9",
+        "dom11",
+        "dom13"
       ],
       "falsifier": "Playing a run with a prominent natural 3 over a 7sus4 (Group-2 dominant) — the 3 collides with the suspended 4/11.",
       "anchor": "if a run\ncontains the 3rd, use it over any of the group-1 dominants, and if it contains the 11th, use it over any of the\ngroup-2 dominants.",
@@ -543,11 +543,11 @@
       "then": {
         "voicing.register_target": "lower_mid_for_spicy_color"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "dom7",
-        "9",
-        "13"
+        "dom9",
+        "dom13"
       ],
       "falsifier": "Voicing the b7 and 9 of a dom9 in the lowest bass register and expecting the spicy mid-range color the book describes.",
       "anchor": "67 and 9 really start to come alive in this “higher” register",
@@ -565,7 +565,7 @@
         "position.set": "single_5_to_6_fret_area",
         "position.scale_combine": "across_chord_changes"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -585,7 +585,7 @@
         "practice.mode": "visualize_fingerboard",
         "practice.priority": "highest"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -612,7 +612,7 @@
           "b7"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "min7"
       ],
@@ -633,7 +633,7 @@
         "scale.reference_root": "chord_root",
         "scale.reframe_as_relative_major": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "min7"
       ],
@@ -653,7 +653,7 @@
       "then": {
         "practice.progression": "ii_V_I"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "min7"
       ],
@@ -680,17 +680,19 @@
           "b7"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "dom7#11",
-        "9#11",
-        "13#11"
+        "dom7#11"
       ],
       "falsifier": "Defining Overtone Dominant with both a #4 AND a b9 (those altered tones would push it into altered-dominant territory).",
       "anchor": "The Overtone Dominant scale is simply a Dominant 7th scale with a #4th tone instead of the regular 4th.",
       "source_page": 82,
       "chapter_n": 4,
-      "section_title": "Overtone Dominant scale & Jazz Waltz aside"
+      "section_title": "Overtone Dominant scale & Jazz Waltz aside",
+      "applicability_reasons": [
+        "9#11",
+        "13#11"
+      ]
     },
     {
       "rule_id": "greene-jazz-waltz-application",
@@ -702,7 +704,7 @@
         "line.meter": "3_4",
         "line.feel": "jazz_waltz"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -723,17 +725,19 @@
           "lydian_dominant"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "dom7#11",
-        "9#11",
-        "13#11"
+        "dom7#11"
       ],
       "falsifier": "Treating 'Lydian Dominant' and 'Overtone Dominant' as different scales — they are the same scale with two names.",
       "anchor": "the Overtone Dominant scale is also called the LYDIAN\nDominant scale.",
       "source_page": 83,
       "chapter_n": 5,
-      "section_title": "Lydian Dominant, upper-structure triad & polytonality"
+      "section_title": "Lydian Dominant, upper-structure triad & polytonality",
+      "applicability_reasons": [
+        "9#11",
+        "13#11"
+      ]
     },
     {
       "rule_id": "greene-upper-structure-triad",
@@ -753,7 +757,7 @@
           "13"
         ]
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "maj7",
         "dom7#11"
@@ -773,7 +777,7 @@
       "then": {
         "line.device": "polytonality_upper_structure"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
         "maj7",
         "dom7#11"
@@ -798,19 +802,21 @@
           "#5_b13"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "dom7alt",
-        "7b9",
-        "7#9",
-        "7b5",
-        "7#5"
+        "dom7b9"
       ],
       "falsifier": "Calling a scale 'altered dominant' when its only modification of the dominant 7th scale is a #11 — that's Overtone Dominant, not altered.",
       "anchor": "What is an altered dominant scale? Simply, any dominant 7th scale with one or\nmore of the following tones: 59, #9, 65 or #5 (613).",
       "source_page": 94,
       "chapter_n": 5,
-      "section_title": "Altered dominant scales & Group 4 dominants"
+      "section_title": "Altered dominant scales & Group 4 dominants",
+      "applicability_reasons": [
+        "dom7alt",
+        "7#9",
+        "7b5",
+        "7#5"
+      ]
     },
     {
       "rule_id": "greene-group-4-dominants",
@@ -834,19 +840,21 @@
           "altered_dominant_type_3"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "7b9",
-        "7#9",
-        "7b5",
-        "7#5",
-        "7alt"
+        "dom7b9",
+        "alt7"
       ],
       "falsifier": "Placing a 7#11 chord (no altered b9/#9/b5/#5) into Group 4 — it belongs in Group 3 (Overtone Dominant).",
       "anchor": "Any Dom. 7th type chord that contains any one or more of the four altered tones (69, #9, 65 and\n#5 or 613) will be considered as being part of what we call the GROUP 4 DOMINANT CHORDS.",
       "source_page": 94,
       "chapter_n": 5,
-      "section_title": "Altered dominant scales & Group 4 dominants"
+      "section_title": "Altered dominant scales & Group 4 dominants",
+      "applicability_reasons": [
+        "7#9",
+        "7b5",
+        "7#5"
+      ]
     },
     {
       "rule_id": "greene-overtone-not-altered",
@@ -858,7 +866,7 @@
         "scale.classification": "non_altered",
         "chord.group": "dominant_group_3"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7#11"
       ],
@@ -877,9 +885,9 @@
       "then": {
         "practice.layout": "all_three_types_one_position_juxtaposed"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
-        "7alt"
+        "alt7"
       ],
       "falsifier": "Drilling Type 1 in position 1, then moving to a completely different position for Type 2 — denies comparative absorption.",
       "anchor": "the three types of A.D. scales are all so\nsimilar that your brain, while noting the differences, can absorb them all in a kind of ‘package deal’, one\nposition at a time.",
@@ -896,7 +904,7 @@
       "then": {
         "practice.remediation": "study_chord_forms_for_position"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -918,7 +926,7 @@
           "alternate_at_least_one"
         ]
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -937,7 +945,7 @@
       "then": {
         "arpeggio.string_choice": "flexible_within_position"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -956,7 +964,7 @@
       "then": {
         "technique.left_hand_contact": "finger_pad"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -978,9 +986,9 @@
           "D6/9": "D49"
         }
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
-        "7alt"
+        "alt7"
       ],
       "falsifier": "Refusing the A7+ → A7#9+ substitution in a Type 3 reading purely because the symbols don't match literally.",
       "anchor": "As before, and on all Type 3 altered dominant pages coming up, you may wish to try A7+ for A7#9+\nand D49 for D6/9.",
@@ -997,7 +1005,7 @@
       "then": {
         "practice.transposition": "octave_up_same_position"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -1020,16 +1028,18 @@
       "then": {
         "chord.alteration_choice": "sharp9_in_lieu_of_or_in_addition_to_natural_9"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
-        "7alt",
-        "7#9"
+        "alt7"
       ],
       "falsifier": "Treating natural 9 and #9 as mutually exclusive in altered-dominant voicings — book explicitly allows both together.",
       "anchor": "INSTEAD OF OR IN ADDITION TO THE #9",
       "source_page": 131,
       "chapter_n": 7,
-      "section_title": "Standing chord-substitution allowances & practice rules"
+      "section_title": "Standing chord-substitution allowances & practice rules",
+      "applicability_reasons": [
+        "7#9"
+      ]
     },
     {
       "rule_id": "greene-no-type3-area-4a",
@@ -1041,9 +1051,9 @@
       "then": {
         "scale.availability": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
-        "7alt"
+        "alt7"
       ],
       "falsifier": "Filing a Type 3 fingering chart for area 4A as if it existed — book states instrument geometry forbids it.",
       "anchor": "There won't be any Type 3 - 4A",
@@ -1061,9 +1071,9 @@
       "then": {
         "arpeggio.set_for_quality": "higher_register_supplement"
       },
-      "preference": "optional",
+      "preference": 0,
       "quality_binding": [
-        "7alt"
+        "alt7"
       ],
       "falsifier": "Limiting altered-dominant arpeggios to the original written register only.",
       "anchor": "EXTRA ARPEGGIOS FOR HIGHER REGISTER",

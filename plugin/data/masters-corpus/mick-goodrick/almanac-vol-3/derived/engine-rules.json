@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-17T09:44:43-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -22,15 +22,18 @@
         "voicing.naming_convention": "sus4_over_triad_root",
         "voicing.label_form": "<root> [sus4]"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "clarity",
-        "convention"
+        "any"
       ],
       "falsifier": "A 3-part stacked-fourth chord is labelled with cumbersome alterations (e.g., 'B Diminished triad [no b3rd] add b9') or C2 shorthand instead of the sus4 form.",
       "anchor": "My suggestion for a suitable name for this chord would be: G [sus4]. That means a G Major triad with 4 suspended for 3.",
       "source_page": 4,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "clarity",
+        "convention"
+      ]
     },
     {
       "rule_id": "goodrick-sus4-naming-4part",
@@ -42,15 +45,18 @@
       "then": {
         "voicing.naming_convention": "sus4_over_triad_root"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "clarity",
-        "convention"
+        "any"
       ],
       "falsifier": "A 4-part 4ths voicing is labelled as 'C Major 7th [no 5] substitute 4 for the missing 5th' rather than as a sus4 chord.",
       "anchor": "NAMES FOR 4-PART 4THS This is fairly simple: Sus 4 Chords...[I think it's the best way to go...]",
       "source_page": 4,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "clarity",
+        "convention"
+      ]
     },
     {
       "rule_id": "goodrick-event-vs-episode",
@@ -63,14 +69,17 @@
         "passage.category": "event_if_2to6_notes_else_episode",
         "passage.length_independence": true
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "A passage is classified as event vs. episode based on its temporal length rather than the count of distinct diatonic notes it contains.",
       "anchor": "EVENT involves 2-6 diatonic scale notes at least once each. EPISODE involves all 7 diatonic scale notes at least once each.",
       "source_page": 3,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-event-diatonic-transposition",
@@ -83,14 +92,17 @@
         "passage.transposition_yields": "up_to_6_other_events",
         "passage.intervallic_identity": "possible_collapse"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "Two diatonic transpositions of an event are treated as distinct sonorities when their interval structures are identical.",
       "anchor": "an event can be diatonically transposed to create 6 other events, but some of them will be intervallically identical.",
       "source_page": 3,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-episode-diatonic-transposition",
@@ -102,14 +114,17 @@
       "then": {
         "passage.transposition_yields": "6_other_episodes_each_a_mode"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "An episode's transpositions are claimed to share the same mode rather than mapping one-to-one onto the seven diatonic modes.",
       "anchor": "an episode can be diatonically transposed to create 6 other episodes, where each corresponds to a different mode.",
       "source_page": 3,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-spread-cluster-literal-pitch-naming",
@@ -122,15 +137,18 @@
         "voicing.naming_convention": "literal_pitch_list",
         "voicing.label_form": "<P1> <P2> <P3>"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "clarity",
-        "convention"
+        "any"
       ],
       "falsifier": "A 3-part spread cluster (e.g., the set C D E) is forced into a chord symbol like 'C Major 9 (no 5, no 7)' rather than written as 'C D E'.",
       "anchor": "Here’s what I think...Just name it like itis! CallitC DE\"! [Daa!!!]",
       "source_page": 6,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "clarity",
+        "convention"
+      ]
     },
     {
       "rule_id": "goodrick-real-compleat-m-lode-pairing",
@@ -148,15 +166,18 @@
           "3-part-spread-clusters": "4-part-spread-clusters"
         }
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "family_coherence",
-        "completeness"
+        "any"
       ],
       "falsifier": "A 3-part family is mapped to a 4-part counterpart outside of the five canonical pairings (e.g., triads paired with TBN I).",
       "anchor": "So, the REAL, COMPLEAT M-LODE depiction is: 3-Part Structures 4-Part Structures Triads (VolumelI) — 7th Chords 7th (no 3rd) TBNI 7th (no 5th) TBN IE 3-Part 4ths (Volume II) 4-Part 4ths 3-part Spread Clusters| Spread Clusters",
       "source_page": 7,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "family_coherence",
+        "completeness"
+      ]
     },
     {
       "rule_id": "goodrick-triad-interval-content",
@@ -169,14 +190,17 @@
         "voicing.family": "triads",
         "voicing.interval_profile": "mostly_3rds_6ths_some_4ths_5ths_no_2nds_no_7ths"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "family_coherence"
+        "any"
       ],
       "falsifier": "A 3-part chord containing a 2nd or a 7th between any voice pair is classified as a triad in the M-Lode sense.",
       "anchor": "The triads primarily consist of 3rds and 6ths with some 4ths and 5ths, but contain no 2nds or 7ths.",
       "source_page": 8,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "family_coherence"
+      ]
     },
     {
       "rule_id": "goodrick-3part-4ths-interval-content",
@@ -189,14 +213,17 @@
         "voicing.family": "3-part-4ths",
         "voicing.interval_profile": "mostly_4ths_5ths_some_2nds_7ths_no_3rds_no_6ths"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "family_coherence"
+        "any"
       ],
       "falsifier": "A 3-part chord containing a 3rd or a 6th between any voice pair is classified as a 3-part 4ths voicing.",
       "anchor": "While the 3-part 4ths primar- ily consist of 4ths and 5ths with some 2nds and 7ths, but contain no 3rds or 6ths.",
       "source_page": 8,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "family_coherence"
+      ]
     },
     {
       "rule_id": "goodrick-omission-allowed-families",
@@ -212,14 +239,17 @@
           "3-part-spread-clusters"
         ]
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "family_coherence"
+        "any"
       ],
       "falsifier": "Interval omission is treated as defining a member of the 7th-no-3rd, 7th-no-5th, TBN I, or TBN II family rather than as a structural property of triads / 3-part 4ths / spread clusters.",
       "anchor": "the omission of interval types only occurs within particular 3-part chord families (triad; 3-part 4th; spread cluster).",
       "source_page": 8,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "family_coherence"
+      ]
     },
     {
       "rule_id": "goodrick-four-family-even-distribution",
@@ -237,14 +267,17 @@
         ],
         "voicing.symmetry_basis": "even_interval_distribution"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "symmetry"
+        "any"
       ],
       "falsifier": "When the goal is consistent interval distribution across 3- and 4-part voicings, a non-even-distribution family (triad, 3-part 4ths, or spread cluster) is selected over the four even-distribution families.",
       "anchor": "the four chord families with the most even distribution are found both in 3- and 4-part chords (7th, no3rd; 7th, no5th; TBN I; TBN ID).",
       "source_page": 8,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "symmetry"
+      ]
     },
     {
       "rule_id": "goodrick-derive-3part-from-4part-voice-omission",
@@ -258,14 +291,17 @@
         "voicing.derivation_path": "omit_one_voice_from_4part_parent",
         "voicing.family": "determined_by_omitted_voice"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "derivation"
+        "any"
       ],
       "falsifier": "A 3-part voicing in the M-Lode framework is generated by omitting two voices, by adding a voice to a 2-part structure, or by any method other than single-voice omission from a 4-part parent.",
       "anchor": "What follows is a brief, introductory study of how to arrive at different 3-part chords by leaving out one voice of a 4-part chord.",
       "source_page": 9,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "derivation"
+      ]
     },
     {
       "rule_id": "goodrick-7th-chord-generates-two-triads",
@@ -281,14 +317,17 @@
         ],
         "voicing.family": "one_of_the_two_products"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "derivation"
+        "any"
       ],
       "falsifier": "A 4-part 7th chord is claimed to derive a 3-part voicing other than 7th-no-3rd or 7th-no-5th by single-voice omission.",
       "anchor": "7th chord generates _ two different triads, 7th (no 3rd), 7th (no 5th)",
       "source_page": 9,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "derivation"
+      ]
     },
     {
       "rule_id": "goodrick-each-3part-in-four-4part-families",
@@ -301,15 +340,18 @@
         "voicing.parent_4part_candidates_count": 4,
         "voicing.reharmonization_lattice": "four_family_substitution"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "symmetry",
-        "reharmonization"
+        "any"
       ],
       "falsifier": "A 3-part chord is treated as embeddable in only one 4-part parent family, or in a number of parents other than four.",
       "anchor": "[Each 3-part chord appears four times...]",
       "source_page": 9,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "symmetry",
+        "reharmonization"
+      ]
     },
     {
       "rule_id": "goodrick-35-structure-roadmap",
@@ -330,14 +372,17 @@
         ],
         "voicing.remaining_to_explore": 30
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "completeness"
+        "any"
       ],
       "falsifier": "The five worked CMaj7 examples are claimed to exhaust the derivation taxonomy rather than to sample positions 1, 8, 15, 22, 29 of 35.",
       "anchor": "the five examples used in the present chapter (CMaj7, C, C, C, C ) correspond to numbers 1, 8, 15, 22 and 29. That means that there are only thirty more 4-part structures to explore in the present fashion!",
       "source_page": 9,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "completeness"
+      ]
     },
     {
       "rule_id": "goodrick-drop-toolkit-tbn",
@@ -356,14 +401,17 @@
           "Double Drop 2 Drop 3"
         ]
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "derivation"
+        "any"
       ],
       "falsifier": "A TBN I or TBN II parent is derived to 3-part children using a procedure outside the named drop toolkit (e.g., random voice transposition) without justification.",
       "anchor": "3-Part Chords Derived From a TBN I",
       "source_page": 10,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "derivation"
+      ]
     },
     {
       "rule_id": "goodrick-c-major-default-with-transposition-expectation",
@@ -379,14 +427,17 @@
         ],
         "voicing.student_obligation": "adjust_to_other_7_note_scales"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "coverage"
+        "any"
       ],
       "falsifier": "Material is treated as valid only in C Major, with no expectation that the student extend it to melodic or harmonic minor.",
       "anchor": "All of the material that follows in this next section will be presented in C Major (no accidentals). The assumption is that our readers will have (by now) developed the necessary skills to make the needed adjustments to change the material to other 7-note scales.",
       "source_page": 14,
-      "source_chapter": 10
+      "source_chapter": 10,
+      "applicability_reasons": [
+        "coverage"
+      ]
     },
     {
       "rule_id": "goodrick-generic-vl-six-pattern-space",
@@ -401,15 +452,18 @@
         "voicing.previously_used_in_vols_1_2": 3,
         "voicing.alternates_to_explore": 3
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "coverage",
-        "innovation"
+        "any"
       ],
       "falsifier": "Voice-leading exploration is restricted to the three patterns used in Volumes I and II without ever considering the three new alternates.",
       "anchor": "Note: Only 3 different generic voice-leadings were used out of 6!",
       "source_page": 56,
-      "source_chapter": 10
+      "source_chapter": 10,
+      "applicability_reasons": [
+        "coverage",
+        "innovation"
+      ]
     },
     {
       "rule_id": "goodrick-abc-label-key",
@@ -426,14 +480,17 @@
         },
         "voicing.analysis_mode": "cycle_independent"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "Generic voice-leading formulas are analyzed using scale-degree numbers rather than the abstract A/B/C strand labels, collapsing cycle independence.",
       "anchor": "Key: A= Ist note B = 2nd note C = 3rd note",
       "source_page": 55,
-      "source_chapter": 10
+      "source_chapter": 10,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-intervallic-vs-functional-msrp",
@@ -449,14 +506,17 @@
         "voicing.functional_anchor": "M.S.R.P.",
         "voicing.cycle_voices_count": 2
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "Voice-leading is described only by interval distance per voice, without identifying which voices form the M.S.R.P. cycle and which carry the chord-tone strands.",
       "anchor": "Functional Voice-Leading 1 7 3 5 Ascends 2 different voicing alternate (drop 3; drop 2 & 4) 2 voices are the cycle M.S.R.P.",
       "source_page": 32,
-      "source_chapter": 10
+      "source_chapter": 10,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-duet-texture-passing-tones",
@@ -473,15 +533,18 @@
         "voicing.embellishment": "add_passing_tones",
         "voicing.stylistic_preference": "harmonic_minor"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading",
-        "texture"
+        "any"
       ],
       "falsifier": "A 4-part voicing is elaborated by adding passing tones across all four voices simultaneously rather than via the top-2 / bottom-2 duet split.",
       "anchor": "4-part; no passing tones Duet (top 2, bottom 2); add p.t.. ¢ NICE in Harmonic minor!",
       "source_page": 43,
-      "source_chapter": 10
+      "source_chapter": 10,
+      "applicability_reasons": [
+        "voice_leading",
+        "texture"
+      ]
     },
     {
       "rule_id": "goodrick-twenty-3part-from-three-scales",
@@ -499,14 +562,17 @@
         ],
         "voicing.distinct_voicings_with_inversions": 120
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "completeness"
+        "any"
       ],
       "falsifier": "The twenty foundational 3-part chord types are sourced from any scale outside Major / Melodic Minor / Harmonic Minor, or the close+spread inversion expansion is reported as a count other than 120.",
       "anchor": "All of the following 3-part chords are derived from the Major scale, the Melodic Minor and the Harmonic Minor scales, but they are transposed to the root of C. (Twenty 3-part chords is perhaps misleading...3 close inversions plus 3 spread inversions for each gives us one hundred twenty 3-part chords you should know...)",
       "source_page": 71,
-      "source_chapter": 11
+      "source_chapter": 11,
+      "applicability_reasons": [
+        "completeness"
+      ]
     },
     {
       "rule_id": "goodrick-prefer-3part-on-guitar",
@@ -522,15 +588,18 @@
           "melodic_embellishment_space"
         ]
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "playability",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "On guitar, 4-part voicings are recommended over 3-part voicings without acknowledging the reduced embellishment space and increased fingering difficulty.",
       "anchor": "As guitarists, we can see that 3-part chords are easier to play than 4-part chords. Also, they often afford more space between the voices for melodic embellishment.",
       "source_page": 71,
-      "source_chapter": 11
+      "source_chapter": 11,
+      "applicability_reasons": [
+        "playability",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "goodrick-grip-slipping-inversion-cycle",
@@ -547,15 +616,18 @@
           "Drop 2&4"
         ]
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "coverage",
-        "fluency"
+        "any"
       ],
       "falsifier": "Grip-Slipping is presented as using a voicing type other than Drop 3 by default, or it omits the six-tonic / whole-tone organizing system.",
       "anchor": "\"Grip-Slipping\" is a term I use to describe a series of exercises that I sometimes give to my guitar students to help them learn all the inversions of different chords. Without giving away too many \"secrets,\" I've included six examples incorporating seventh chords in a six tonic system (whole tone scale). The voicing type is Drop 3. (You might try Drop 2 and Drop 2 & 4 as well...)",
       "source_page": 161,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "coverage",
+        "fluency"
+      ]
     },
     {
       "rule_id": "goodrick-gdvl-vs-scvl-mode-switch",
@@ -571,14 +643,17 @@
           "FVL"
         ]
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "analytic_precision"
+        "any"
       ],
       "falsifier": "Volumes I and II are described as using SCVL, or Grip-Slipping IVL/FVL exercises are classified as GDVL.",
       "anchor": "P.S. The IVLs and the FVLs are all examples of SCVL (specific chromatic voice-leading), as opposed to GDVL (generic diatonic voice-leading), which is all of Volumes 1 & 2.",
       "source_page": 161,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "analytic_precision"
+      ]
     },
     {
       "rule_id": "goodrick-harmonic-major-b6-substitution",
@@ -591,14 +666,17 @@
         "voicing.scale_target": "C_harmonic_major_Ionian_b6",
         "voicing.pitch_substitution": "Ab_for_A"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "coverage"
+        "any"
       ],
       "falsifier": "Conversion from C Major to Harmonic Major is performed by altering a degree other than the 6th (e.g., flatting the 3rd).",
       "anchor": "Harmonic Major...a major scale with b6...(sometimes named Ionian b6.) Ail of the “red pages” in Volumes 1 & 2 can be used with this very interesting variation: just play Ab (b6) instead of A (6).",
       "source_page": 145,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "coverage"
+      ]
     },
     {
       "rule_id": "goodrick-hungarian-minor-sharp4-substitution",
@@ -611,14 +689,17 @@
         "voicing.scale_target": "C_hungarian_minor",
         "voicing.pitch_substitution": "F#_for_F"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "coverage"
+        "any"
       ],
       "falsifier": "Conversion from Harmonic Minor to Hungarian Minor is performed without raising the 4th, or by altering a different degree.",
       "anchor": "Hungarian Minor...a harmonic minor scale with #4..|C D E}FEG AbBC |.",
       "source_page": 145,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "coverage"
+      ]
     },
     {
       "rule_id": "goodrick-five-scale-framework",
@@ -636,14 +717,17 @@
           "C hungarian minor (harmonic minor #4)"
         ]
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "coverage"
+        "any"
       ],
       "falsifier": "Advanced M-Lode material is restricted to three scales (Major, Melodic Minor, Harmonic Minor) and never extended to Harmonic Major or Hungarian Minor.",
       "anchor": "We present it in 5 scales: 1. C Major 2. C Melodic Minor 3. C Harmonic Minor 4. C Harmonic Major (C Ionian b6) 5. C Hungarian Minor (C Harmonic Minor #4)",
       "source_page": 145,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "coverage"
+      ]
     },
     {
       "rule_id": "goodrick-melody-harmony-equality",
@@ -655,15 +739,18 @@
         "voicing.aesthetic_principle": "melody_and_harmony_equal",
         "voicing.subordination": "neither"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "aesthetic",
-        "voice_leading"
+        "any"
       ],
       "falsifier": null,
       "anchor": "I feel that excellent voice-leading treats both melody and harmony as equals.",
       "source_page": 188,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "aesthetic",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "goodrick-spread-clusters-close-the-taxonomy",
@@ -676,14 +763,17 @@
         "voicing.closing_family": "4-part-spread-clusters",
         "voicing.taxonomy_status": "finite_and_complete"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "completeness"
+        "any"
       ],
       "falsifier": "The 4-part chord taxonomy is treated as open-ended without recognizing 4-Part Spread Clusters as the closing family.",
       "anchor": "I had completely overlooked SPREAD CLUSTERS! I did some more musical math and real- ized that this was the missing link! It not only completed the set of 4-part chords, but it helped me to realize that this WORK was not only finite, but do-able!",
       "source_page": 189,
-      "source_chapter": 12
+      "source_chapter": 12,
+      "applicability_reasons": [
+        "completeness"
+      ]
     }
   ]
 }

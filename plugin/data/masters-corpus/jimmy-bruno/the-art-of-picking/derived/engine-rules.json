@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:44-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -20,7 +20,7 @@
       "then": {
         "picking.direction": "down"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -43,7 +43,7 @@
       "then": {
         "picking.direction": "up"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -66,7 +66,7 @@
       "then": {
         "picking.direction": "alternate"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -89,7 +89,7 @@
       "then": {
         "picking.economy_path": "minimum_travel"
       },
-      "preference": "always choose the stroke direction that requires the shortest pick arc",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -112,7 +112,7 @@
       "then": {
         "hand.position_rule": "elbow_drives_wrist_still"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -135,7 +135,7 @@
       "then": {
         "hand.position_rule": "no_finger_anchor"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -158,7 +158,7 @@
       "then": {
         "hand.position_rule": "relaxed_no_tilt"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -181,7 +181,7 @@
       "then": {
         "practice.drill_id": "both_starting_strokes"
       },
-      "preference": "only a very slight difference in sound should exist between the two starts",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -204,7 +204,7 @@
       "then": {
         "practice.drill_id": "metronome_60_to_120"
       },
-      "preference": "begin at MM 60, increase incrementally to 120 before pushing beyond",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -227,7 +227,7 @@
       "then": {
         "practice.drill_id": "sequential_A_to_Z"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -251,7 +251,7 @@
         "picking.direction": "up",
         "picking.economy_path": "equal_attack_to_down"
       },
-      "preference": "accent on upstroke should equal downstroke volume and tone",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -274,7 +274,7 @@
       "then": {
         "hand.position_rule": "wrist_straight_not_stiff_elbow_moves"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -297,7 +297,7 @@
       "then": {
         "hand.position_rule": "no_contact_pickguard_or_strings"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -320,7 +320,7 @@
       "then": {
         "string.crossing_rule": "adjacent_no_sustain"
       },
-      "preference": "take extra time mastering this stroke before moving forward",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -343,7 +343,7 @@
       "then": {
         "practice.drill_id": "extended_in_between_practice"
       },
-      "preference": "take your time with this one",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -367,7 +367,7 @@
       "then": {
         "string.crossing_rule": "mute_no_sustain"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -390,7 +390,7 @@
       "then": {
         "practice.drill_id": "even_eighth_notes_before_speed"
       },
-      "preference": "evenness is the prerequisite; speed follows",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -414,7 +414,7 @@
       "then": {
         "picking.direction": "three_down_then_three_up"
       },
-      "preference": "three consecutive strokes same direction across three adjacent strings",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -438,7 +438,7 @@
       "then": {
         "picking.direction": "adhere_to_main_rule"
       },
-      "preference": "in a real phrase context, revert to higher-string/lower-string directional rule",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -462,7 +462,7 @@
       "then": {
         "picking.direction": "reverse_on_same_string"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -485,7 +485,7 @@
       "then": {
         "picking.economy_path": "directional_rule_applies"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -509,7 +509,7 @@
         "picking.direction": "down",
         "string.crossing_rule": "marked_by_double_star"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -533,7 +533,7 @@
         "picking.direction": "up",
         "string.crossing_rule": "marked_by_single_star"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -556,7 +556,7 @@
       "then": {
         "practice.drill_id": "articulation_before_speed"
       },
-      "preference": "never increase tempo until note separation is clean",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -579,7 +579,7 @@
       "then": {
         "picking.economy_path": "directional_rule_same_as_single_line"
       },
-      "preference": "reject any framing that treats arpeggios as requiring a different picking system",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -603,9 +603,9 @@
         "arpeggio.sextuplet_id": "minor11_sextuplet_four_string",
         "picking.direction": "consecutive_down_then_up"
       },
-      "preference": "choose the fingering that places six notes across four adjacent strings",
+      "preference": 1,
       "quality_binding": [
-        "minor_11"
+        "any"
       ],
       "falsifier": "A minor 11 fingering that does not span four strings cannot produce the sextuplet pattern",
       "anchor": "Minor 11 arpeggios: Because of the fingering it is possible to play 6 notes in one beat.(sextuplet)\n      The fingering sets up the consecutive down and up strokes to go across four strings.",
@@ -615,7 +615,10 @@
         "chapter_title": "Arpeggios",
         "section_title": "Minor 11 sextuplet arpeggio",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "minor_11"
+      ]
     },
     {
       "rule_id": "bruno-minor9-adjacent-string-design",
@@ -626,9 +629,9 @@
       "then": {
         "picking.economy_path": "adjacent_string_directional_rule"
       },
-      "preference": "use fingerings that keep successive arpeggio notes on adjacent strings",
+      "preference": 1,
       "quality_binding": [
-        "minor_9"
+        "any"
       ],
       "falsifier": "A minor 9 fingering with string skips between every note cannot apply the adjacent-string consecutive rule",
       "anchor": "Minor 9th arpeggios:By using fingerings that place notes on adjacent strings, either higher or lower,\n       these large two octave arpeggios become possible.",
@@ -638,7 +641,10 @@
         "chapter_title": "Arpeggios",
         "section_title": "Minor 9 arpeggio — fingering enables speed",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "minor_9"
+      ]
     },
     {
       "rule_id": "bruno-fingering-enables-speed",
@@ -649,7 +655,7 @@
       "then": {
         "picking.economy_path": "fingering_unlocks_velocity"
       },
-      "preference": "optimize the left-hand fingering before trying to pick faster",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -672,7 +678,7 @@
       "then": {
         "picking.direction": "either_stroke_permitted"
       },
-      "preference": "use whichever stroke feels natural after the rest",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -695,7 +701,7 @@
       "then": {
         "picking.economy_path": "unified_directional_rule"
       },
-      "preference": "reject the misconception that arpeggios require a different picking approach",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -718,7 +724,7 @@
       "then": {
         "picking.economy_path": "serve_musical_intent"
       },
-      "preference": "always subordinate mechanical efficiency to musical expression",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -742,7 +748,7 @@
       "then": {
         "practice.drill_id": "major_triad_warmup_articulation"
       },
-      "preference": "use this exercise daily to develop note separation transferable to all arpeggio fragments",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -765,7 +771,7 @@
       "then": {
         "picking.economy_path": "directional_rule_applies"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -788,7 +794,7 @@
       "then": {
         "practice.drill_id": "both_starting_strokes_skip"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -812,7 +818,7 @@
       "then": {
         "picking.direction": "alternate_preferred"
       },
-      "preference": "author finds alternating down-up easier for accented in-between skip figures",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -836,7 +842,7 @@
       "then": {
         "picking.economy_path": "rederive_from_directional_rule"
       },
-      "preference": "do not assume the same picking applies when a phrase moves positions",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -859,7 +865,7 @@
       "then": {
         "picking.direction": "slurred_preferred_over_picked"
       },
-      "preference": "prefer the slurred example as it sounds more horn-like",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -883,7 +889,7 @@
       "then": {
         "practice.drill_id": "slur_triplet_both_starting_strokes"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -906,7 +912,7 @@
       "then": {
         "picking.direction": "one_stroke_two_notes"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -929,7 +935,7 @@
       "then": {
         "string.crossing_rule": "same_string_required_for_slur"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -953,7 +959,7 @@
       "then": {
         "picking.economy_path": "variable_slur_placement_for_inflection"
       },
-      "preference": "experiment with placing slurs at different beats to discover expressive alternatives",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -976,7 +982,7 @@
       "then": {
         "picking.direction": "long_short_articulation"
       },
-      "preference": "the two final notes of a bebop phrase should be long followed by short",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -999,7 +1005,7 @@
       "then": {
         "practice.drill_id": "self_directed_slur_placement"
       },
-      "preference": "do not treat slur placement as fixed; internalize it as a creative choice",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -1022,7 +1028,7 @@
       "then": {
         "picking.direction": "consecutive_down_for_accent"
       },
-      "preference": "use when emulating horn-section accent patterns",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -1045,7 +1051,7 @@
       "then": {
         "picking.direction": "consecutive_down_permitted"
       },
-      "preference": "use two downs when a rest separates notes rather than forcing directional-rule alternation",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -1068,7 +1074,7 @@
       "then": {
         "picking.direction": "slur_as_alternative_to_consecutive_down"
       },
-      "preference": "slurs and consecutive downs are interchangeable expressive options for this context",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -1091,7 +1097,7 @@
       "then": {
         "practice.drill_id": "repetition_no_overanalysis"
       },
-      "preference": "do not stop to analyze mid-stroke; trust repetition to automate the pattern",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -1114,7 +1120,7 @@
       "then": {
         "practice.drill_id": "extended_patience_for_experienced_players"
       },
-      "preference": "set expectations that the habit change will take more time for advanced players",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],

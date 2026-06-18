@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:55-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -22,7 +22,7 @@
         "voicing.shape": "adaptable_voicing_with_motion",
         "progression.cycle_id": "baker-numbered-catalog"
       },
-      "preference": "mandatory_replacement",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -50,7 +50,7 @@
         "voicing.shape": "baker_catalog_number",
         "progression.cycle_id": "baker-numbered-catalog"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -88,7 +88,7 @@
         "chord_symbol.substitute": "G_major_or_C_major_position",
         "progression.cycle_id": "baker-seed-key-gc"
       },
-      "preference": "required_for_beginners",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "maj7",
@@ -114,7 +114,7 @@
         "voicing.shape": "position_shifted_identical_fingering",
         "progression.cycle_id": "baker-transposition-mandate"
       },
-      "preference": "non_negotiable",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -152,7 +152,7 @@
         "voicing.shape": "same_fingering_position_shifted_chromatically",
         "progression.cycle_id": "baker-chromatic-drill"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -182,7 +182,7 @@
         "voicing.shape": "baker_catalog_number_1_to_6",
         "progression.cycle_id": "baker-rhythm-palette"
       },
-      "preference": "required_for_comping",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -211,7 +211,7 @@
         "progression.cycle_id": "baker-two-line-format",
         "chord_symbol.substitute": "new_changes_displayed_below_standard"
       },
-      "preference": "canonical_display",
+      "preference": 0,
       "quality_binding": [
         "dom7",
         "maj",
@@ -242,7 +242,7 @@
         "voicing.shape": "same_intro_fingering_shifted_chromatically",
         "progression.cycle_id": "baker-chromatic-drill"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "maj7",
@@ -271,7 +271,7 @@
         "voicing.shape": "root_then_chord_or_arpeggiated",
         "progression.cycle_id": "baker-intro-rhythmic-displacement"
       },
-      "preference": "primary_invention_method",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "maj7",
@@ -300,7 +300,7 @@
         "voicing.shape": "arpeggio_or_walking_stringbass",
         "progression.cycle_id": "baker-texture-elevation"
       },
-      "preference": "preferred_over_strum",
+      "preference": 1,
       "quality_binding": [
         "maj",
         "min",
@@ -338,7 +338,7 @@
         "chord_symbol.substitute": "Cma7_or_Cma6_or_Cma9",
         "progression.cycle_id": "baker-triad-expansion"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj"
       ],
@@ -362,7 +362,7 @@
         "voicing.shape": "adaptable_progression_voicings",
         "progression.cycle_id": "baker-color-motion"
       },
-      "preference": "mandatory_aesthetic",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -394,7 +394,7 @@
         "chord_symbol.substitute": "Dmi6_or_Dmi7_or_Dmi9",
         "progression.cycle_id": "baker-triad-expansion"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "min"
       ],
@@ -428,7 +428,7 @@
         "chord_symbol.substitute": "G13_G9_G7#5+9_G13#5+9_G7b5_G11_G13b9",
         "progression.cycle_id": "baker-dominant-extension-menu"
       },
-      "preference": "expanded_palette",
+      "preference": 0,
       "quality_binding": [
         "dom7",
         "dom9",
@@ -457,7 +457,7 @@
         "progression.cycle_id": "baker-voice-leading-gate",
         "chord_symbol.substitute": "contextually_justified_voicing"
       },
-      "preference": "constraint",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",
@@ -494,7 +494,7 @@
         "voicing.shape": "baker_two_position_sets",
         "progression.cycle_id": "baker-two-positions-per-key"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -527,7 +527,7 @@
         "voicing.shape": "baker_relative_minor_sub",
         "progression.cycle_id": "baker-dom-relative-minor"
       },
-      "preference": "primary_substitution_move",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -551,7 +551,7 @@
         "progression.cycle_id": "baker-dom-relative-minor-chart",
         "chord_symbol.substitute": "twelve_row_dom_to_mi_chart"
       },
-      "preference": "required_reference_artifact",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -575,7 +575,7 @@
         "progression.cycle_id": "baker-vamp-seven-key",
         "chord_symbol.substitute": "identical_shape_in_Db_Eb_F_G_A_Bb"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -603,7 +603,7 @@
         "voicing.shape": "baker_catalog_27_to_30_open_string_root",
         "progression.cycle_id": "baker-horn-backing-vamps"
       },
-      "preference": "required_for_horn_backing",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "dom9",
@@ -631,7 +631,7 @@
         "progression.cycle_id": "baker-key-scoped-shape-exception",
         "chord_symbol.substitute": "key_specific_open_string_selection"
       },
-      "preference": "exception_to_transposition_mandate",
+      "preference": 0,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -658,7 +658,7 @@
         "chord_symbol.substitute": "inserted_dominant_leading_chord",
         "progression.cycle_id": "baker-dominant-as-leading"
       },
-      "preference": "universal_connector",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "dom9",
@@ -687,7 +687,7 @@
         "progression.cycle_id": "baker-three-connection-taxonomy",
         "chord_symbol.substitute": "dom_to_dom_OR_dom_to_min_OR_dom_to_maj"
       },
-      "preference": "required_classification",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "dom9",
@@ -716,7 +716,7 @@
         "progression.cycle_id": "baker-real-repertoire-loop",
         "chord_symbol.substitute": "new_changes_applied_over_standard_song"
       },
-      "preference": "required_after_drill",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -746,7 +746,7 @@
         "progression.cycle_id": "baker-intro-ending-six-key",
         "chord_symbol.substitute": "same_shape_in_Db_Eb_F_G_Ab_Bb"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -774,7 +774,7 @@
       "then": {
         "progression.cycle_id": "baker-listen-and-fit-loop"
       },
-      "preference": "complementary_required_practice",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -805,7 +805,7 @@
         "voicing.shape": "same_voicing_two_names",
         "progression.cycle_id": "baker-two-names-principle"
       },
-      "preference": "primary_dual_function",
+      "preference": 2,
       "quality_binding": [
         "maj6",
         "min7"
@@ -836,7 +836,7 @@
         "chord_symbol.substitute": "Db9b5_for_G7#5_or_vice_versa",
         "progression.cycle_id": "baker-tritone-equiv"
       },
-      "preference": "required_for_b5_sub",
+      "preference": 2,
       "quality_binding": [
         "aug7",
         "dom7b9"
@@ -861,7 +861,7 @@
         "progression.cycle_id": "baker_canonical_cycle_matched",
         "chord_symbol.substitute": "baker_new_changes_for_cycle"
       },
-      "preference": "primary_repertoire_framework",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -894,7 +894,7 @@
         "voicing.shape": "baker_catalog_min7_min6_pair",
         "progression.cycle_id": "baker_cycle_1"
       },
-      "preference": "primary_cycle1_substitution",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -924,7 +924,7 @@
         ],
         "progression.cycle_id": "baker_cycle_1"
       },
-      "preference": "primary_cycle1_substitution",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "dom13"
@@ -949,7 +949,7 @@
         "progression.cycle_id": "baker_sequence_seven_key_transpose",
         "chord_symbol.substitute": "cycle_pattern_in_F_G_Ab_Bb_C_Db_Eb"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -978,7 +978,7 @@
       "then": {
         "progression.cycle_id": "baker-alternate-picking-foundation"
       },
-      "preference": "non_negotiable",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1015,7 +1015,7 @@
       "then": {
         "progression.cycle_id": "baker-relaxed-slow-first"
       },
-      "preference": "technique_acquisition_rule",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1052,7 +1052,7 @@
       "then": {
         "progression.cycle_id": "baker-hum-then-play-loop"
       },
-      "preference": "required_companion_practice",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1082,7 +1082,7 @@
         "voicing.shape": "same_fingering_position_shifted",
         "progression.cycle_id": "baker-invariant-fingering"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1115,7 +1115,7 @@
         "progression.cycle_id": "baker-blues-five-key",
         "chord_symbol.substitute": "transposed_to_F_G_Ab_Bb_C"
       },
-      "preference": "required_contraction_of_mandate",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1145,7 +1145,7 @@
         "progression.cycle_id": "baker-exercise-as-performance",
         "chord_symbol.substitute": "named_run_from_lessons_27_to_30"
       },
-      "preference": "primary_construction_method",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1174,7 +1174,7 @@
         "chord_symbol.substitute": "relative_min7_run",
         "progression.cycle_id": "baker-relative-run-substitution"
       },
-      "preference": "primary_improvisational_license",
+      "preference": 1,
       "quality_binding": [
         "maj",
         "maj6",
@@ -1201,7 +1201,7 @@
         "chord_symbol.substitute": "Ami7_for_D7_Gmi7_for_C7",
         "progression.cycle_id": "baker-blues-ii-for-v-bars-9-10"
       },
-      "preference": "workhorse_blues_ii_for_v",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -1233,7 +1233,7 @@
         "chord_symbol.substitute": "G7#5+9_or_G13b5+9",
         "progression.cycle_id": "baker-always-alter-v"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "aug7",
@@ -1261,7 +1261,7 @@
         "chord_symbol.substitute": "Ami7_run_then_Cmi7_run_then_Gmaj_run",
         "progression.cycle_id": "baker-ami7-cmi7-gmaj-recipe"
       },
-      "preference": "primary_v_to_i_run_template",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -1284,7 +1284,7 @@
       "then": {
         "progression.cycle_id": "baker-strum-hum-drill"
       },
-      "preference": "required_internalization_step",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1314,7 +1314,7 @@
         "progression.cycle_id": "baker-fill-in-run-type-dispatch",
         "chord_symbol.substitute": "run_matching_labeled_type"
       },
-      "preference": "primary_improvisation_scaffold",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1341,7 +1341,7 @@
       "then": {
         "progression.cycle_id": "baker-line-blending"
       },
-      "preference": "phrasing_aesthetic_required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1371,7 +1371,7 @@
         "progression.cycle_id": "baker-forced-riff",
         "chord_symbol.substitute": "riff_forced_non_diatonic_ok"
       },
-      "preference": "primary_vamp_melodic_unit",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1401,7 +1401,7 @@
         "progression.cycle_id": "baker-forced-riff",
         "chord_symbol.substitute": "riff_over_fast_vamp_changes"
       },
-      "preference": "required_for_fast_vamps",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1428,7 +1428,7 @@
       "then": {
         "progression.cycle_id": "baker-position-by-first-finger"
       },
-      "preference": "terminology_required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1465,7 +1465,7 @@
       "then": {
         "progression.cycle_id": "baker-solo-two-positions"
       },
-      "preference": "required_position_framework",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1496,7 +1496,7 @@
         "voicing.shape": "baker_8th_position_C_major",
         "progression.cycle_id": "baker-c-major-single-position"
       },
-      "preference": "exception_to_two_position_rule",
+      "preference": 0,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1523,7 +1523,7 @@
       "then": {
         "progression.cycle_id": "baker-sing-before-play"
       },
-      "preference": "required_internalization",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1551,7 +1551,7 @@
         "chord_symbol.substitute": "vamp_voicings_in_Bb_major",
         "progression.cycle_id": "baker-rhythm-changes"
       },
-      "preference": "convention_required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1580,7 +1580,7 @@
         "voicing.shape": "baker_additional_third_position_frets_3_to_6",
         "progression.cycle_id": "baker-additional-third-position"
       },
-      "preference": "key_scoped_position",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1608,7 +1608,7 @@
         "progression.cycle_id": "baker-groove-riff",
         "chord_symbol.substitute": "first_last_course_matching_riff"
       },
-      "preference": "required_groove_riff_structure",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1635,7 +1635,7 @@
       "then": {
         "progression.cycle_id": "baker-groove-riff-placement"
       },
-      "preference": "placement_and_scope_rule",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1661,7 +1661,7 @@
         "voicing.shape": "baker_third_position_frets_3_to_6_locked",
         "progression.cycle_id": "baker-groove-riff-position-lock"
       },
-      "preference": "non_negotiable_position_discipline",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1687,7 +1687,7 @@
       "then": {
         "progression.cycle_id": "baker-sing-against-chord-verification"
       },
-      "preference": "required_verification_step",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1713,7 +1713,7 @@
       "then": {
         "progression.cycle_id": "baker-implied-melody"
       },
-      "preference": "primary_aesthetic_goal",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -1740,7 +1740,7 @@
       "then": {
         "progression.cycle_id": "baker-chord-runs-around-melody"
       },
-      "preference": "primary_construction_method",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -1769,7 +1769,7 @@
         "voicing.shape": "baker_7th_position_frets_7_to_11_locked",
         "progression.cycle_id": "baker-melody-solo-7th-position-lock"
       },
-      "preference": "non_negotiable_position_discipline",
+      "preference": 2,
       "quality_binding": [
         "maj",
         "min",
@@ -1796,7 +1796,7 @@
       "then": {
         "progression.cycle_id": "baker-solo-pattern-rhythmic-frame"
       },
-      "preference": "primary_solo_construction_method",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1825,7 +1825,7 @@
       "then": {
         "progression.cycle_id": "baker-solo-pattern-same-timing"
       },
-      "preference": "required_pattern_discipline",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1852,7 +1852,7 @@
       "then": {
         "progression.cycle_id": "baker-groove-riff-sing-invention"
       },
-      "preference": "primary_invention_procedure",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj",
@@ -1878,7 +1878,7 @@
       "then": {
         "progression.cycle_id": "baker-review-loop"
       },
-      "preference": "meta_study_rule",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj",

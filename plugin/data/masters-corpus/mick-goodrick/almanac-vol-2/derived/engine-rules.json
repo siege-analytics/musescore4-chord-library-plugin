@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-17T09:44:55-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -29,7 +29,7 @@
           "6th"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -50,7 +50,7 @@
           "6th"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -69,7 +69,7 @@
         "voicing.action": "exclude",
         "voicing.reason": "enharmonic-collapse-to-major-3rd"
       },
-      "preference": "avoid",
+      "preference": -1,
       "quality_binding": [
         "any"
       ],
@@ -89,7 +89,7 @@
         "voicing.technique": "drop-D-pedal",
         "tuning.low_string": "D"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -108,7 +108,7 @@
         "voicing.avoid_note_count": 0,
         "arrangement.style": "unrestricted-cycle-traversal"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -127,7 +127,7 @@
         "voicing.arpeggio_direction": "alternating-up-down",
         "voice_leading.constraint": "ascend-odd-descend-even"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -157,7 +157,7 @@
           "4-part-chords"
         ]
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -180,7 +180,7 @@
         "voice_leading.constraint": "stepwise-or-common-tone",
         "voice_leading.max_motion": "3rd"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -198,7 +198,7 @@
         "voice_leading.static_voice_label": "c.t.",
         "voice_leading.c.t._is_distinct_category": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -224,7 +224,7 @@
         "analysis.intervallic_cell": "motion-interval-per-voice",
         "analysis.functional_cell": "scale-degree-destination-per-voice"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -245,7 +245,7 @@
         "voice_leading.variant_count": 2,
         "voice_leading.hazard": "voice-crossing-on-diatonic-5th"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -268,7 +268,7 @@
         "voicing.expansion_method": "octave-insertion",
         "voicing.insertion_positions": "any-adjacent-voice-pair"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -290,7 +290,7 @@
           "drop-3-and-4"
         ]
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -315,7 +315,7 @@
           "Drop-3-and-4"
         ]
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -335,7 +335,7 @@
       "then": {
         "arrangement.technique": "fingerstyle-only"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -358,7 +358,7 @@
           "3-part-spread-cluster"
         ]
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -376,7 +376,7 @@
         "voicing.non_chord_tone": "passing-tone",
         "nct.placement": "between-two-chord-tones-a-3rd-apart"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -395,7 +395,7 @@
         "voicing.non_chord_tone": "passing-tone",
         "nct.voice_count": 2
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -418,7 +418,7 @@
         "voicing.density": "4-way-close",
         "voicing.minimum_starting_density": "close"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -437,7 +437,7 @@
         "voicing.open_strings": "preferred",
         "voicing.playability": "maximize"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -460,7 +460,7 @@
         "scale.context": "C-Harmonic-Minor",
         "scale.priority": 1
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -478,7 +478,7 @@
         "voice_leading.chromatic_density": "maximum",
         "voicing.sonic_reward": "highest"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -497,7 +497,7 @@
         "voicing.arpeggio_sequence_count": 24,
         "voicing.permutation_method": "exhaustive-voice-ordering"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -516,7 +516,7 @@
         "voicing.2-voice-subset-count": 6,
         "practice.traversal": "exhaustive"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -535,7 +535,7 @@
         "voicing.3-voice-subset-count": 4,
         "practice.traversal": "exhaustive"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -558,7 +558,7 @@
         ],
         "voicing.alternation": "pair-based"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -577,7 +577,7 @@
         "arrangement.physical_demand": "high",
         "arrangement.caution": "required"
       },
-      "preference": "avoid",
+      "preference": -1,
       "quality_binding": [
         "any"
       ],
@@ -601,7 +601,7 @@
         "voicing.naming_convention": "omit",
         "harmonic.context": "function-agnostic"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -627,7 +627,7 @@
         "progression.type": "diatonic-cycle",
         "traversal.scope": "all-six-cycles"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -655,7 +655,7 @@
           "C-Harmonic-Minor"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -685,7 +685,7 @@
         "voicing.family_count": 5,
         "voicing.completeness": "exhaustive"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -714,7 +714,7 @@
         "voicing.3-part-chord-count_floor": 20,
         "voicing.4-part-chord-count_floor": 30
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -737,7 +737,7 @@
         ],
         "voicing.guitar_playability": "high"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -760,7 +760,7 @@
           "7th": 1
         }
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -780,7 +780,7 @@
         "practice.drill": "M.S.R.P.",
         "practice.method": "memorized-note-sequence-loop"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -800,7 +800,7 @@
         "practice.strip_count": 8,
         "practice.purpose": "voice-isolation-and-reduction"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -819,7 +819,7 @@
         "voicing.melodic_source": "arpeggio-of-quartal-shape",
         "voice_leading.constraint": "chord-tone-sequence"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -839,7 +839,7 @@
         "voice_leading.moving_voice_count": 1,
         "voice_leading.moving_voice_interval": "4th"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -864,7 +864,7 @@
         "voice_leading.constraint": "voice-leading-primary",
         "harmonic.context": "voice-leading-derived"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
