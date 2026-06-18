@@ -55397,7 +55397,33 @@
       ],
       "instrument": "compositional theorist",
       "biography": "Russian-American composer, conductor, lexicographer, and music theorist. Best known to jazz musicians for the Thesaurus of Scales and Melodic Patterns (1947), a systematic enumeration of melodic possibility space via equal divisions of the octave plus polation operations (infrapolation, interpolation, ultrapolation). The Thesaurus became foundational source material for John Coltrane (whose Giant Steps cycle is the equal-division-of-octave-by-three pattern from this book), Pat Martino, and many post-bop and modern jazz innovators. Slonimsky himself was not a jazz player; his contribution is taxonomic — the catalog of every melodic move that fits any given scale context.",
-      "principles": [],
+      "principles": [
+        {
+          "id": "equal-division-of-octave",
+          "name": "Equal Division of Octave as Generative Framework",
+          "summary": "Every interval is recuperated as a rational fraction of one or more octaves; iterating that interval yields a progression whose principal tones structurally define the scale. Tritone progression = 2 parts, ditone = 3 (Coltrane Giant Steps), sesquitone = 4 (dim7), whole-tone = 6, semitone = 12 (chromatic)."
+        },
+        {
+          "id": "polation-operations",
+          "name": "Polation: Three Operations on Principal Tones",
+          "summary": "Insert notes BETWEEN principal tones (interpolation, preserves direction → Scale), BELOW (infrapolation, reverses direction → Pattern), or ABOVE (ultrapolation, reverses direction → Pattern). Compounds: inter-ultrapolation, infra-inter-ultrapolation."
+        },
+        {
+          "id": "scale-vs-pattern-taxonomy",
+          "name": "Scale vs Pattern via Direction Reversal",
+          "summary": "Scales change direction only at terminal points. Patterns change direction before terminal point. The polation operation determines which: interpolation preserves direction; infrapolation/ultrapolation reverse it."
+        },
+        {
+          "id": "master-chord-tritone-symmetry",
+          "name": "Master Chord (dom7 omit 5th) is Tritone-Transposable",
+          "summary": "Dominant-seventh chord with the fifth omitted, tabulated chromatically in 12 keys. Any Master Chord transposes a tritone with satisfactory results — exploiting the tritone-symmetry that motivates the entire Thesaurus framework."
+        },
+        {
+          "id": "mutually-exclusive-triads",
+          "name": "Four Mutually Exclusive Triads Exhaust the 12-Tone Aggregate",
+          "summary": "Four triads (any combination of major/minor/dim/aug) can be selected so that together they comprise all 12 different tones with zero overlap. Foundation for polytonal arpeggiation strategies (Nos. 1251-1291)."
+        }
+      ],
       "works": [
         {
           "id": "thesaurus-of-scales-and-melodic-patterns",
@@ -55415,7 +55441,7 @@
           }
         }
       ],
-      "status": "corpus_only",
+      "status": "published",
       "usage_notes": [],
       "studied_with": [],
       "influenced": []
