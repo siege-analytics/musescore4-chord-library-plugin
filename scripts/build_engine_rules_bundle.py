@@ -31,8 +31,14 @@ MASTERS_CORPUS = REPO_ROOT / "plugin" / "data" / "masters-corpus"
 SCHEMA_PATH = REPO_ROOT / "plugin" / "schemas" / "engine-rules-manifest.schema.json"
 
 REQUIRED_PROVENANCE_FIELDS = ["schema_version", "extracted_at"]
-SUPPORTED_SCHEMA_VERSIONS = {"0.1"}
-MIN_CONSUMER_VERSION_DEFAULT = "0.1.0"
+SUPPORTED_SCHEMA_VERSIONS = {"0.1", "0.2"}
+# v0.2 introduces family-hierarchical matching (spec #549 §2.2) that
+# consumers running v0.1 do NOT understand; force them to upgrade
+# before ingesting v0.2 bundles.
+MIN_CONSUMER_VERSION_BY_SCHEMA = {
+    "0.1": "0.1.0",
+    "0.2": "0.2.0",
+}
 REQUIRED_TOP_LEVEL_FIELDS = ["_provenance", "master_id", "work_id", "engine_rules"]
 
 
@@ -99,7 +105,7 @@ def build_manifest(
         [
             ("schema_version", schema_version),
             ("bundle_version", bundle_version),
-            ("min_consumer_version", MIN_CONSUMER_VERSION_DEFAULT),
+            ("min_consumer_version", MIN_CONSUMER_VERSION_BY_SCHEMA[schema_version]),
             ("plugin_commit_sha", git_head_sha()),
             (
                 "built_at",
