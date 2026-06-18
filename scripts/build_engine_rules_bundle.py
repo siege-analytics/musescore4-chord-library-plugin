@@ -129,10 +129,21 @@ def validate_manifest_against_schema(manifest: dict) -> None:
     jsonschema.validate(instance=manifest, schema=schema)
 
 
+def bundle_arcname(f: Path) -> str:
+    """Map a repo-internal engine-rules.json path to its bundle-canonical arcname.
+
+    The bundle layout (per #558) is ``masters/<master_id>/<work_id>/derived/engine-rules.json``.
+    This avoids leaking the plugin's internal ``plugin/data/masters-corpus/`` directory
+    structure to downstream consumers. Matches the fixture tarball's layout.
+    """
+    rel = f.relative_to(MASTERS_CORPUS)
+    return "masters/" + str(rel)
+
+
 def write_bundle_tarball(out_path: Path, files: list[Path]) -> None:
     with tarfile.open(out_path, "w:gz") as tar:
         for f in files:
-            tar.add(f, arcname=str(f.relative_to(REPO_ROOT)))
+            tar.add(f, arcname=bundle_arcname(f))
 
 
 def write_fixture_tarball(
