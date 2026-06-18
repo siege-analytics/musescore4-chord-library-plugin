@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:48-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -21,7 +21,7 @@
       "then": {
         "phrase.cell_id": "density_awareness_check"
       },
-      "preference": "Prefer rhythmic awareness and variety over maximizing note count per bar",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -49,7 +49,7 @@
       "then": {
         "phrase.cell_id": "rhythm_position_tracking"
       },
-      "preference": "Track which rhythms are in use and bar-position at all times",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -77,7 +77,7 @@
         "line.metric_placement": "independent_of_bar_line",
         "displacement.step": "within_over_or_through"
       },
-      "preference": "Play fixed-count groupings without anchoring start or end to bar lines",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -105,7 +105,7 @@
       "then": {
         "phrase.cell_id": "articulation_shaped_by_grouping"
       },
-      "preference": "Conceive notes in explicit groupings even when groupings overlap or are invisible to listeners",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -133,7 +133,7 @@
         "polyrhythm.ratio": "5:variable",
         "phrase.cell_id": "polyrhythm_awareness_onset"
       },
-      "preference": "Use five-note eighth-note groupings to begin hearing polyrhythmic cross-rhythms",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -161,7 +161,7 @@
         "displacement.step": "any_beat_span",
         "time_zone.gear": "variable"
       },
-      "preference": "Play five consecutive notes occupying 1, 1.5, 2, 3, or 4 beats",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -192,7 +192,7 @@
       "then": {
         "phrase.cell_id": "exclusion_enforced"
       },
-      "preference": "Use only quarter notes and eighth notes in the 22 one-bar rhythms; defer sixteenth notes and triplets",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -218,7 +218,7 @@
       "then": {
         "phrase.cell_id": "body_internalization"
       },
-      "preference": "Feel each rhythm inside the body as a rhythm instrument would",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -250,7 +250,7 @@
         ],
         "line.metric_placement": "displaced_from_original"
       },
-      "preference": "Systematically play each of the 22 rhythms one beat early, two beats early, and one beat late",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -281,7 +281,7 @@
       "then": {
         "line.metric_placement": "perceptually_distinct_rhythm"
       },
-      "preference": "Use half-beat offsets (1/2, 1 1/2, 2 1/2 beats) to generate new rhythmic identities from existing patterns",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -309,7 +309,7 @@
         "displacement.step": "all_eight_entry_points",
         "line.metric_placement": "systematic_position_traversal"
       },
-      "preference": "Begin with beat 1 entry, then systematically start on each of the eight eighth-note positions in the bar",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -342,7 +342,7 @@
         "line.metric_placement": "next_chord_anticipated",
         "phrase.cell_id": "approach_or_direct_next_chord"
       },
-      "preference": "At positions 6, 7, 8, approach the next chord or state it directly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -370,7 +370,7 @@
       "then": {
         "phrase.cell_id": "final_note_is_next_chord_tone"
       },
-      "preference": "At displacement position 5, let the final eighth note sound a tone of the next chord",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -402,7 +402,7 @@
           "4_bars"
         ]
       },
-      "preference": "Combine two, three, and four one-bar rhythms and play through a tune",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -431,7 +431,7 @@
         "polyrhythm.ratio": "3:4",
         "displacement.cycle": "3_bars_of_4/4_to_resolve"
       },
-      "preference": "Play a four-note grouping continuously to create felt 3/4 over 4/4; note the three-bar resolution cycle",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -458,7 +458,7 @@
         "displacement.step": "random",
         "line.metric_placement": "free_improvisation"
       },
-      "preference": "After completing all eight ordered positions, mix starting beats randomly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -486,7 +486,7 @@
         "displacement.step": "all_eight_entry_points",
         "line.metric_placement": "systematic_position_traversal"
       },
-      "preference": "Drill five consecutive eighth notes starting on each of the eight eighth-note positions in the bar using Tunes 1, 2, 3",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -519,7 +519,7 @@
         "line.metric_placement": "next_chord_anticipated",
         "phrase.cell_id": "approach_or_direct_next_chord"
       },
-      "preference": "When five-note groups cross the bar line at positions 5-7, anticipate the next chord",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -547,7 +547,7 @@
         "displacement.step": "random",
         "line.metric_placement": "free_improvisation"
       },
-      "preference": "After mastering steps 1-8 in order, mix starting points freely and randomly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -573,7 +573,7 @@
       "then": {
         "phrase.cell_id": "large_scale_form_perception"
       },
-      "preference": "Practice systematic entry-point displacement as means to internalize perception of larger time spans and form",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -601,7 +601,7 @@
         "polyrhythm.ratio": "3:4",
         "line.metric_placement": "upbeat_initiated_superimposition"
       },
-      "preference": "Initiate 3/4 superimposition on the 'and' of beat rather than on beat 1 for additional textural variety",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -629,7 +629,7 @@
         "polyrhythm.ratio": "7:4",
         "displacement.cycle": "8_bars_of_4/4_to_resolve"
       },
-      "preference": "Sustain a seven-beat phrase pattern over 4/4 for the full eight-bar resolution cycle",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -656,7 +656,7 @@
       "then": {
         "polyrhythm.ratio": "9:4"
       },
-      "preference": "Sustain a nine-beat phrase pattern over 4/4",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -685,7 +685,7 @@
         "polyrhythm.ratio": "5:4",
         "displacement.cycle": "aligns_beat_1_on_bar_6"
       },
-      "preference": "Play five-beat pattern over 4/4 for full cycle; note that the pattern returns to beat 1 on the sixth bar",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -716,7 +716,7 @@
       "then": {
         "phrase.cell_id": "next_chord_anticipate_or_approach_or_current"
       },
-      "preference": "At late entry positions (beat 3 through and-of-4), choose from: anticipate next chord, approach it via passing tones, or sound current chord",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -743,7 +743,7 @@
         "displacement.step": "random_with_metric_superimposition",
         "line.metric_placement": "free_with_time_signature_devices"
       },
-      "preference": "After drilling polymetric patterns 10-14, return to exercise 9 (random starts) and apply the superimposition techniques within it",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -771,7 +771,7 @@
         "displacement.step": "random",
         "line.metric_placement": "free_improvisation"
       },
-      "preference": "After mastering all ordered entry points for seven-note groups, mix starting beats randomly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -807,7 +807,7 @@
           "and_of_4"
         ]
       },
-      "preference": "Define eight starting positions as the complete set of metrical entry points for all consecutive-note displacement work",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -834,7 +834,7 @@
       "then": {
         "polyrhythm.ratio": "11:4"
       },
-      "preference": "Sustain an eleven-beat pattern over 4/4 as an advanced cross-rhythm device",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -861,7 +861,7 @@
       "then": {
         "polyrhythm.ratio": "6:4"
       },
-      "preference": "Sustain a six-beat pattern over 4/4",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -887,7 +887,7 @@
       "then": {
         "displacement.step": "random_with_metric_superimposition"
       },
-      "preference": "After exercises 10-14, return to random-start exercise 9 deploying time-signature devices spontaneously",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -915,7 +915,7 @@
         "displacement.step": "all_eight_entry_points",
         "line.metric_placement": "systematic_position_traversal"
       },
-      "preference": "Practice three consecutive eighth-note triplets starting from different positions within the bar using the same eight-position grid",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -943,7 +943,7 @@
         "polyrhythm.ratio": "variable_odd_over_4",
         "line.metric_placement": "superimposed_over_4_4"
       },
-      "preference": "Notate in odd time signatures but always feel and play as superimposition over 4/4",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -968,7 +968,7 @@
       "then": {
         "phrase.cell_id": "four_of_six_notes_sounded"
       },
-      "preference": "Across two consecutive triplet groups (six total subdivisions), sound only four; let two remain silent",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -996,7 +996,7 @@
         "displacement.step": "melodic_starting_point_variation",
         "phrase.cell_id": "same_melody_different_beats"
       },
-      "preference": "Play the same short melody starting on each entry point to get used to the feel of triplet displacement",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -1023,7 +1023,7 @@
       "then": {
         "displacement.step": "random"
       },
-      "preference": "After completing all ordered positions for triplet groupings, mix them randomly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -1051,7 +1051,7 @@
         "polyrhythm.ratio": "7:4",
         "time_zone.gear": "triplet"
       },
-      "preference": "Sustain a seven-unit triplet phrase over 4/4 for the full resolution cycle",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -1078,7 +1078,7 @@
         "displacement.step": "random",
         "line.metric_placement": "free_improvisation"
       },
-      "preference": "After ordered drilling, practice six consecutive triplets starting randomly",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -1107,7 +1107,7 @@
         "displacement.step": "random",
         "line.metric_placement": "free_improvisation"
       },
-      "preference": "After mastering ordered positions for seven triplets, mix starts freely",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -1135,7 +1135,7 @@
         "polyrhythm.ratio": "5:4",
         "time_zone.gear": "triplet"
       },
-      "preference": "Sustain a five-unit triplet phrase over 4/4 for full resolution cycle",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],

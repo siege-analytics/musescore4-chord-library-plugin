@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:34-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -25,15 +25,18 @@
         "line.preference": "harmonic_specificity",
         "line.target_tone": "chord_third_or_seventh"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "specificity",
-        "clarity"
+        "any"
       ],
       "falsifier": "Line outlines the chord with non-chord-tones on strong beats while skipping 3rd/7th entirely.",
       "anchor": "Harmonic Specificity: Careful attention to the implications of harmony. Reliance on proper thirds, sevenths resolving appropriately.",
       "source_page": 1,
-      "source_chapter": 1
+      "source_chapter": 1,
+      "applicability_reasons": [
+        "specificity",
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-vagueness-is-informed-choice",
@@ -46,14 +49,17 @@
         "line.preference": "informed_avoidance",
         "line.target_tone": "non_harmonic_chosen_with_awareness"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "intentionality"
+        "any"
       ],
       "falsifier": "Player avoids chord tones without being able to name the 3rd/7th they are avoiding.",
       "anchor": "When an experienced jazz improviser plays deliberately vague, he does so knowing the harmonic implications, and therefore knowing just what tones to avoid.",
       "source_page": 2,
-      "source_chapter": 1
+      "source_chapter": 1,
+      "applicability_reasons": [
+        "intentionality"
+      ]
     },
     {
       "rule_id": "ligon-linear-not-vertical",
@@ -66,14 +72,17 @@
         "line.analysis_mode": "linear_across_time",
         "line.metric_placement": "honor_anticipation_and_suspension"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Note over barline is judged dissonant by vertical snapshot without considering anticipation or suspension.",
       "anchor": "Do not fall into the trap of labeling everything by its vertical arrangement. Music is heard and conceived in a linear manner and should be studied in the same way.",
       "source_page": 4,
-      "source_chapter": 1
+      "source_chapter": 1,
+      "applicability_reasons": [
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-bass-as-counterpoint-reference",
@@ -86,15 +95,18 @@
         "line.reference": "bass_line",
         "line.target_tone": "counterpoint_against_bass"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "independence",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Note selection assumes a particular piano voicing rather than the bass pitch.",
       "anchor": "The experienced jazz improviser does not depend on a piano playing chords for his lines to make sense. The lines make sense because of well chosen and well placed notes in relation to the bass line.",
       "source_page": 5,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "independence",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-omit-root-from-line",
@@ -107,15 +119,18 @@
         "line.exclude_pitch_class": "chord_root",
         "line.candidate_pool": "remaining_11_pitches"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "counterpoint",
-        "specificity"
+        "any"
       ],
       "falsifier": "Root is played in the line on a strong beat solely because it is the chord root.",
       "anchor": "if the roots are sounding in the bass and the melody there is no counter point, just parallel octaves, Eliminating the root leaves eleven other notes to choose from",
       "source_page": 5,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "counterpoint",
+        "specificity"
+      ]
     },
     {
       "rule_id": "ligon-third-as-primary-target",
@@ -128,15 +143,18 @@
         "line.target_tone": "chord_third",
         "line.metric_placement": "downbeat"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "specificity",
-        "clarity"
+        "any"
       ],
       "falsifier": "Strong beat over a chord lands on a non-3rd/7th and no other guide tone is voice-led in.",
       "anchor": "F reveals the minor quality of the chord and is the best choice for harmonically specific counterpoint over the D in the bass.",
       "source_page": 5,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "specificity",
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-seventh-resolves-to-third",
@@ -151,15 +169,18 @@
         "line.approach_method": "stepwise_down",
         "line.metric_placement": "next_downbeat"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "voice_leading",
-        "specificity"
+        "any"
       ],
       "falsifier": "7th leaps up or jumps to a non-3rd on the next chord while a stepwise resolution to the 3rd was available.",
       "anchor": "the 7th of chords in these progressions resolve downward to the third of the following chord. The seventh is the pointer.",
       "source_page": 5,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "voice_leading",
+        "specificity"
+      ]
     },
     {
       "rule_id": "ligon-ninth-resolves-to-fifth",
@@ -172,14 +193,17 @@
         "line.target_tone": "fifth_of_same_or_next_chord",
         "line.approach_method": "stepwise_down"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading"
+        "any"
       ],
       "falsifier": "9th leaps away with no resolution to the 5th anywhere in the phrase.",
       "anchor": "Good voice leading is observed; sevenths resolve to thirds, ninths to fifths.",
       "source_page": 6,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-third-before-seventh",
@@ -191,14 +215,17 @@
         "line.metric_placement": "third_on_beat_one_seventh_on_beat_four",
         "line.approach_method": "stepwise"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Phrase opens on the 7th with the 3rd appearing only after the chord changes.",
       "anchor": "Thirds are more consonant and usually occur earlier in a melody line before the more dissonant sevenths.",
       "source_page": 6,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-outline-1-stepwise-descent",
@@ -214,15 +241,18 @@
         "line.approach_method": "stepwise_descending_scale",
         "line.metric_placement": "third_on_beat_one_seventh_on_beat_four"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "voice_leading",
-        "outline_integrity"
+        "any"
       ],
       "falsifier": "Line claims Outline No.1 but ascends or skips the stepwise connective scale.",
       "anchor": "By moving down the scale, a stepwise line is created from the third of the ii chord through the V7 chord and down to the third of the I chord.",
       "source_page": 6,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "voice_leading",
+        "outline_integrity"
+      ]
     },
     {
       "rule_id": "ligon-outline-2-ascending-arpeggio",
@@ -237,14 +267,17 @@
         "line.approach_method": "arpeggio_ascending_1_3_5_7",
         "line.target_tone": "third_of_V7"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "outline_integrity"
+        "any"
       ],
       "falsifier": "Ascending arpeggio omits the 7th before resolving, or starts on the 5th rather than the root.",
       "anchor": "Outline no.2 is an ascending arpeggio of the ii chord (1-3-5) with the added restless tone (7) above the chord, which resolves to the third of the V7 chord.",
       "source_page": 8,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "outline_integrity"
+      ]
     },
     {
       "rule_id": "ligon-outline-3-descending-arpeggio",
@@ -260,15 +293,18 @@
         "line.target_tone": "third_of_V7",
         "line.metric_placement": "seventh_on_upbeat_third_on_downbeat"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "outline_integrity",
-        "metric_alignment"
+        "any"
       ],
       "falsifier": "Target 3rd of V7 lands on an upbeat or the 7th lands on a strong downbeat.",
       "anchor": "outline no.3 begins with the descending arpeggio of the ii chord (5-3-1), adds the restless tone (7) below the chord, which resolves to the third of the V7 chord. The seventh usually occurs on the upbeat; the target third on the strong downbeat.",
       "source_page": 9,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "outline_integrity",
+        "metric_alignment"
+      ]
     },
     {
       "rule_id": "ligon-outlines-not-constraints",
@@ -281,14 +317,17 @@
         "line.outline_id": "selected_outline",
         "line.preference": "skeleton_then_personalize"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "creativity"
+        "any"
       ],
       "falsifier": null,
       "anchor": "The outlines are skeletons. Our bodies all have similar skeletons yet we all look unique.",
       "source_page": 6,
-      "source_chapter": 2
+      "source_chapter": 2,
+      "applicability_reasons": [
+        "creativity"
+      ]
     },
     {
       "rule_id": "ligon-chromatic-direction-continues",
@@ -301,14 +340,17 @@
         "line.chromatic_insertion": "continue_in_altered_direction",
         "line.approach_method": "flat_descends_sharp_ascends"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Flatted note ascends or sharped note descends without an intervening enclosure.",
       "anchor": "Chromatically altered tones tend to continue in the direction in which they have been altered. Flatted notes are lowered and therefore have downward tendencies, sharped notes are raised and have upward tendencies.",
       "source_page": 11,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-unt-diatonic-lnt-chromatic",
@@ -320,15 +362,18 @@
         "line.chromatic_insertion": "lnt_chromatic_unt_diatonic",
         "line.approach_method": "neighbor_tone"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "idiom",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Chromatic upper neighbor used without functional pull, or diatonic lower neighbor used where chromatic LNT is idiomatic.",
       "anchor": "The common practice (from Mozart to Charlie Parker) is to use the diatonic (from the key) upper neighbor tone (UNT) and the chromatic lower neighbor tone (LNT).",
       "source_page": 11,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "idiom",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-octave-displacement-placement",
@@ -341,15 +386,18 @@
         "line.approach_method": "leap_after_guide_tone",
         "line.metric_placement": "downbeat_to_upbeat_never_over_barline"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "metric_alignment",
-        "phrasing"
+        "any"
       ],
       "falsifier": "Octave-displacement leap occurs across the barline or from a weak beat to a strong beat.",
       "anchor": "Leaps most often occur after the main guide-tone, leap from down beat to upbeat; never over the barline and rarely from a weak beat to a strong beat.",
       "source_page": 14,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "metric_alignment",
+        "phrasing"
+      ]
     },
     {
       "rule_id": "ligon-3-up-to-9-displacement",
@@ -363,15 +411,18 @@
         "line.approach_method": "leap_up_seventh_to_ninth_or_flat_ninth",
         "line.chromatic_insertion": "flat_nine_optional"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "idiom",
-        "drama"
+        "any"
       ],
       "falsifier": null,
       "anchor": "3rd up to the 9th or flat 9th: A simple descending scale step (3-2) becomes dramatic when a descending second is replaced with a leap of a seventh.",
       "source_page": 14,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "idiom",
+        "drama"
+      ]
     },
     {
       "rule_id": "ligon-cesh-descending-chromatic",
@@ -384,15 +435,18 @@
         "line.chromatic_insertion": "cesh_descent_root_to_third_of_V7",
         "line.approach_method": "stepwise_chromatic_descent"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "idiom",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Chromatic descent skips the chromatic passing tone or fails to land the target 3rd of V7.",
       "anchor": "Jerry Coker's acronym for Chromatic Elaboration of Static Harmony. The most common example in a ii - V progression is the descending movement from the root of the ii chord to the third of the V7 chord, In the key of C (D minor - G7), the movement of D-C#-C-B.",
       "source_page": 15,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "idiom",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-borrowed-parallel-minor",
@@ -405,15 +459,18 @@
         "line.chromatic_insertion": "borrowed_b9_sharp9_b13_from_parallel_minor",
         "line.target_tone": "altered_extension"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "color",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Altered extensions are used over a non-dominant chord with no functional justification.",
       "anchor": "Over G7, the dominant of C major, jazz musicians often use A-flat (flat 9) , B-flat (sharp 9) and E-flat (flat 13) from the parallel key of C minor.",
       "source_page": 16,
-      "source_chapter": 3
+      "source_chapter": 3,
+      "applicability_reasons": [
+        "color",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-iteration-for-eighth-motion",
@@ -426,14 +483,17 @@
         "line.approach_method": "repeat_target_tones_as_iteration",
         "line.metric_placement": "eighth_note_grid"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "rhythm"
+        "any"
       ],
       "falsifier": null,
       "anchor": "With the outline in quarter note values, an easy way to get eighth note motion is to repeat notes, sometimes called iteration.",
       "source_page": 21,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "rhythm"
+      ]
     },
     {
       "rule_id": "ligon-outlines-generalize-to-fifths",
@@ -446,14 +506,17 @@
         "line.outline_id": "any_of_three",
         "line.preference": "outline_application_generalizes"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "generalization"
+        "any"
       ],
       "falsifier": "Outline assumed to work despite root motion not being down a fifth.",
       "anchor": "These outlines will work with many other progressions. Anytime the root movement is down in fifths any of theses outlines will work, regardless of the quality of the chord.",
       "source_page": 29,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "generalization"
+      ]
     },
     {
       "rule_id": "ligon-cesh-applies-all-outlines",
@@ -466,14 +529,17 @@
         "line.chromatic_insertion": "cesh_layer",
         "line.outline_id": "selected_outline"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "idiom"
+        "any"
       ],
       "falsifier": null,
       "anchor": "This type of chromatic elaboration is found with all three outlines.",
       "source_page": 39,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "idiom"
+      ]
     },
     {
       "rule_id": "ligon-cesh-encircles-ii-root",
@@ -486,15 +552,18 @@
         "line.approach_method": "encircle_root_of_ii_before_descent",
         "line.target_tone": "third_of_V7"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading",
-        "idiom"
+        "any"
       ],
       "falsifier": "C.E.S.H. line treats the chromatic note as a passing tone with no upward pull or encirclement.",
       "anchor": "The chromatic altered tone stops the descent of the line; since it is a leading tone to the ii chord it pulls upwards. Often this momentarily changes the direction of the line, encircling the root of the ii chord before descending through the diatonic tones and finally resolving to the third of the V chord.",
       "source_page": 39,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "voice_leading",
+        "idiom"
+      ]
     },
     {
       "rule_id": "ligon-chromatic-justified-linearly",
@@ -507,14 +576,17 @@
         "line.analysis_mode": "linear_targeting",
         "line.chromatic_insertion": "point_to_target_tone"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Chromatic tone is rejected solely because it is dissonant against the vertical chord, without considering its linear target.",
       "anchor": "Viewing harmony as strictly vertical, these notes would not sound good; but when viewing them in a linear context we see and hear how these notes point to the target notes and make the line more interesting by creating and releasing tension.",
       "source_page": 38,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-all-twelve-pitches-target-anchored",
@@ -528,15 +600,18 @@
         "line.metric_placement": "target_tones_on_strong_beats",
         "line.target_tone": "resolved_chord_tone"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "clarity",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "Chromatic notes land on strong beats while chord tones land on weak beats with no resolution.",
       "anchor": "All twelve chromatic pitches are used in this example, yet it remains harmonically clear; it is not random chromaticism. Target notes occur in rhythmically significant spots, non-harmonic chromatic notes resolve when and where we expect them.",
       "source_page": 43,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "clarity",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-break-scale-to-avoid-target",
@@ -549,14 +624,17 @@
         "line.approach_method": "skip_target_note_in_scale_run",
         "line.metric_placement": "reserve_target_for_target_chord"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "punch_line_integrity"
+        "any"
       ],
       "falsifier": "Ascending scale runs through the next chord's target note before that chord arrives.",
       "anchor": "Notice that the ascending scale breaks to avoid the upcoming target note. In ex.57, the scale that starts on beat three from C, goes to G, skips the A natural because it is the target note for the F7 chord.",
       "source_page": 32,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "punch_line_integrity"
+      ]
     },
     {
       "rule_id": "ligon-strip-embellishments-as-reduction",
@@ -569,14 +647,17 @@
         "line.analysis_mode": "reduce_to_outline",
         "line.outline_id": "underlying_outline"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "analytical_clarity"
+        "any"
       ],
       "falsifier": null,
       "anchor": "taking away the insertions, ornaments, and embellishments also reveals interesting lines by the realignment of the original notes of the outline.",
       "source_page": 45,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "analytical_clarity"
+      ]
     },
     {
       "rule_id": "ligon-compound-melody-from-lower-tones",
@@ -589,14 +670,17 @@
         "line.approach_method": "imply_counterline_via_lower_tones",
         "line.outline_id": "any_of_three"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "texture"
+        "any"
       ],
       "falsifier": null,
       "anchor": "There is a counterline (indicated by the arrows below the staff) implied by some of the lower tones making this a compound melody.",
       "source_page": 45,
-      "source_chapter": 4
+      "source_chapter": 4,
+      "applicability_reasons": [
+        "texture"
+      ]
     },
     {
       "rule_id": "ligon-outline-2-diatonic-passing",
@@ -608,14 +692,17 @@
         "line.outline_id": "ligon_outline_2",
         "line.chromatic_insertion": "diatonic_passing_only_between_chord_tones"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "outline_integrity"
+        "any"
       ],
       "falsifier": "Chromatic passing tones are used between chord tones of Outline No.2 without functional purpose.",
       "anchor": "Passing tones: Since outline no.2 is an arpeggiated outline, it lends itself to diatonic passing tones between the chord tones.",
       "source_page": 54,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "outline_integrity"
+      ]
     },
     {
       "rule_id": "ligon-punch-line-rule",
@@ -629,15 +716,18 @@
         "line.metric_placement": "delay_target_to_V7_arrival",
         "line.target_tone": "third_of_V7_on_V7_downbeat"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "punch_line_integrity",
-        "narrative"
+        "any"
       ],
       "falsifier": "Tone between 5th and 7th of ii is played as a passing tone before V7 arrives, giving away the punch line.",
       "anchor": "The tone between the 5th and 7th of the ii chord is the target note of the V7 chord. This tone is usually saved for the V7 chord. It is the punch line, the denouement of the story, that is not given away by using it ahead of time as a passing tone.",
       "source_page": 54,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "punch_line_integrity",
+        "narrative"
+      ]
     },
     {
       "rule_id": "ligon-minor-ii-V-applicability",
@@ -650,14 +740,17 @@
         "line.outline_id": "any_of_three",
         "line.preference": "outlines_generalize_to_minor"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "generalization"
+        "any"
       ],
       "falsifier": "Outline avoided in minor ii-V context despite root motion down a fifth.",
       "anchor": "All the outlines work as well for ii@ - V7 in minor as they do in major.",
       "source_page": 52,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "generalization"
+      ]
     },
     {
       "rule_id": "ligon-add-notes-before-within-after",
@@ -669,14 +762,17 @@
         "line.approach_method": "insert_before_within_or_after",
         "line.outline_id": "selected_outline"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "elaboration_taxonomy"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Any musical motive can be embellished by adding notes. Notes can be added before, within, and after the motive.",
       "source_page": 52,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "elaboration_taxonomy"
+      ]
     },
     {
       "rule_id": "ligon-encircle-target",
@@ -688,15 +784,18 @@
         "line.approach_method": "encircle_target_from_above_and_below",
         "line.target_tone": "delayed_chord_tone"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading",
-        "tension"
+        "any"
       ],
       "falsifier": "Target tone is approached only from one side and labeled as encirclement.",
       "anchor": "He chooses to encircle the target note, creating a slight tension and ambiguity.",
       "source_page": 52,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "voice_leading",
+        "tension"
+      ]
     },
     {
       "rule_id": "ligon-outline-2-standard-direction",
@@ -708,14 +807,17 @@
         "line.outline_id": "ligon_outline_2",
         "line.approach_method": "ascend_root_third_fifth_seventh"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "outline_integrity"
+        "any"
       ],
       "falsifier": "Outline No.2 invoked but starts on a non-root chord tone without explicit inversion.",
       "anchor": "Outline no.2 usually begins on the root of the ii chord and spells the arpeggio to the seventh: 1-3-5-7.",
       "source_page": 60,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "outline_integrity"
+      ]
     },
     {
       "rule_id": "ligon-outline-2-inverted",
@@ -727,14 +829,17 @@
         "line.outline_id": "ligon_outline_2",
         "line.approach_method": "arpeggio_descending_inverted"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "variation"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Instead of ascending the arpeggio of the ii chord, the arpeggio is turned upside down and descends in some way.",
       "source_page": 61,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "variation"
+      ]
     },
     {
       "rule_id": "ligon-punch-line-break-with-extension",
@@ -747,14 +852,17 @@
         "line.approach_method": "extend_line_to_ninth_of_ii",
         "line.preference": "mitigate_negative_effect"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "punch_line_integrity"
+        "any"
       ],
       "falsifier": null,
       "anchor": "The F sharp appears as a passing tone before the D7 chord, but the negative effect is diminished by the extension of the line to the ninth of the ii chord.",
       "source_page": 58,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "punch_line_integrity"
+      ]
     },
     {
       "rule_id": "ligon-combine-outlines-2-then-1",
@@ -767,14 +875,17 @@
         "line.outline_id": "combination_outline_2_then_1",
         "line.approach_method": "join_outlines_at_target_tone"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "vocabulary"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Parker begins with outline no.2 and ends with outline no.1. There are many occurrences of this line in different guises throughout Parker solos.",
       "source_page": 59,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "vocabulary"
+      ]
     },
     {
       "rule_id": "ligon-fragment-preserves-clarity",
@@ -787,14 +898,17 @@
         "line.outline_id": "outline_fragment",
         "line.target_tone": "third_of_ii_emphasized"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "clarity"
+        "any"
       ],
       "falsifier": "Fragment omits both the root and the target third, leaving no anchor.",
       "anchor": "These omissions take none of the clarity away from the lines. They all emphasize the target note (third of ii) even more, and the root of the chord is covered by the bass.",
       "source_page": 63,
-      "source_chapter": 5
+      "source_chapter": 5,
+      "applicability_reasons": [
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-sus-equals-ii-V-for-outlines",
@@ -807,14 +921,17 @@
         "line.outline_id": "any_of_three",
         "line.preference": "treat_sus_as_ii_V"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "generalization"
+        "any"
       ],
       "falsifier": "Player avoids outlines over sus chord despite the chord functioning as ii-V composite.",
       "anchor": "Since this sound is essentially the ii and V7 chord together, any of the outlines will work for this harmony.",
       "source_page": 65,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "generalization"
+      ]
     },
     {
       "rule_id": "ligon-outline-3-octave-displacement-variation",
@@ -826,14 +943,17 @@
         "line.outline_id": "ligon_outline_3",
         "line.approach_method": "continue_down_scale_with_octave_displacement"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "idiom"
+        "any"
       ],
       "falsifier": null,
       "anchor": "The second variation of outline no.3 that continues down the scale with octave displacement is very common.",
       "source_page": 66,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "idiom"
+      ]
     },
     {
       "rule_id": "ligon-third-to-flat-nine-leap",
@@ -848,15 +968,18 @@
         "line.approach_method": "leap_third_to_flat_nine",
         "line.chromatic_insertion": "flat_nine_over_V7"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "compound_melody",
-        "idiom"
+        "any"
       ],
       "falsifier": "Leap from 3rd lands on natural 9 without functional justification.",
       "anchor": "The leap from the third to the flat nine on the dominant is one of its attractive elements; giving it characteristics of a compound melody.",
       "source_page": 66,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "compound_melody",
+        "idiom"
+      ]
     },
     {
       "rule_id": "ligon-outline-3-cesh-affinity",
@@ -868,14 +991,17 @@
         "line.outline_id": "ligon_outline_3",
         "line.chromatic_insertion": "cesh_preferred"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "idiom"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Outline no.3 seems to lend itself to the C.E.S.H. more than the other outlines, the chromatic motion often suggesting a compound melody.",
       "source_page": 68,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "idiom"
+      ]
     },
     {
       "rule_id": "ligon-lower-pivot-note",
@@ -887,14 +1013,17 @@
         "line.approach_method": "add_single_lower_pivot_note",
         "line.outline_id": "selected_outline"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "contour"
+        "any"
       ],
       "falsifier": null,
       "anchor": "One note added below adds angularity and rhythmic interest to this outline.",
       "source_page": 71,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "contour"
+      ]
     },
     {
       "rule_id": "ligon-chromatic-passing-on-weak-beats",
@@ -906,15 +1035,18 @@
         "line.chromatic_insertion": "chromatic_on_weak_beats",
         "line.metric_placement": "diatonic_on_strong_beats"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "clarity",
-        "metric_alignment"
+        "any"
       ],
       "falsifier": "Chromatic passing tone lands on a strong beat while a diatonic chord tone lands on a weak beat without resolution.",
       "anchor": "These chromatic passing tones do not blur the distinct harmonic clarity as the diatonic notes fall on strong beats.",
       "source_page": 74,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "clarity",
+        "metric_alignment"
+      ]
     },
     {
       "rule_id": "ligon-function-over-taxonomy",
@@ -927,14 +1059,17 @@
         "line.analysis_mode": "judge_by_target_tone_clarity",
         "line.outline_id": "any_or_hybrid"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "clarity"
+        "any"
       ],
       "falsifier": null,
       "anchor": "The central point is their harmonic clarity; thirds and seventh delineate the harmony.",
       "source_page": 73,
-      "source_chapter": 6
+      "source_chapter": 6,
+      "applicability_reasons": [
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-fragment-minimal-kernel",
@@ -946,14 +1081,17 @@
         "line.outline_id": "fragment_kernel_7ii_to_3V7",
         "line.target_tone": "third_of_V7"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "clarity"
+        "any"
       ],
       "falsifier": "Claimed fragment lacks both the 7 of ii and the 3 of V7.",
       "anchor": "Parker's sequence in ex.249 relies on the seventh of ii resolving to the third of V7 for clarity.",
       "source_page": 76,
-      "source_chapter": 7
+      "source_chapter": 7,
+      "applicability_reasons": [
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-fragment-omit-third-of-ii",
@@ -966,14 +1104,17 @@
         "line.outline_id": "ligon_outline_1_fragment",
         "line.approach_method": "anticipate_V7_arpeggio"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "clarity"
+        "any"
       ],
       "falsifier": null,
       "anchor": "The only note missing from Morgan's excerpt is the third of the iig chord. The V7 chord is anticipated and arpeggiated.",
       "source_page": 77,
-      "source_chapter": 7
+      "source_chapter": 7,
+      "applicability_reasons": [
+        "clarity"
+      ]
     },
     {
       "rule_id": "ligon-target-rhythm-7-upbeat-3-downbeat",
@@ -985,15 +1126,18 @@
         "line.metric_placement": "seventh_on_upbeat_target_on_downbeat",
         "line.target_tone": "next_chord_third"
       },
-      "preference": "strong",
+      "preference": 2,
       "quality_binding": [
-        "metric_alignment",
-        "voice_leading"
+        "any"
       ],
       "falsifier": "7th lands on the downbeat with target tone on the upbeat in a fragment context.",
       "anchor": "The seventh on the upbeat is followed by the next target note on the downb",
       "source_page": 77,
-      "source_chapter": 7
+      "source_chapter": 7,
+      "applicability_reasons": [
+        "metric_alignment",
+        "voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-modal-leading-tone-approach",
@@ -1005,14 +1149,17 @@
         "line.approach_method": "leading_tone_approach_to_modal_third",
         "line.target_tone": "third_of_modal_chord"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "modal_voice_leading"
+        "any"
       ],
       "falsifier": "Modal chord third approached only diatonically with no leading-tone color over an entire chorus.",
       "anchor": "the third of the G minor chord is approached by its leading tone. The F# and A encircle the root. E natural implies C7 and is approached from above and below.",
       "source_page": 78,
-      "source_chapter": 8
+      "source_chapter": 8,
+      "applicability_reasons": [
+        "modal_voice_leading"
+      ]
     },
     {
       "rule_id": "ligon-sawtooth-from-leading-tones",
@@ -1024,14 +1171,17 @@
         "line.approach_method": "add_leading_tones_below_targets",
         "line.outline_id": "ligon_outline_1"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "contour"
+        "any"
       ],
       "falsifier": null,
       "anchor": "outline no.1 can be clearly heard on the downbeats; leading tones have been added giving the line more of a sawtooth shape.",
       "source_page": 78,
-      "source_chapter": 8
+      "source_chapter": 8,
+      "applicability_reasons": [
+        "contour"
+      ]
     },
     {
       "rule_id": "ligon-cesh-outline-3-in-modal-blues",
@@ -1045,14 +1195,17 @@
         "line.chromatic_insertion": "cesh",
         "line.preference": "deploy_for_contrast"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "narrative_contrast"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Cannonball Adderley uses this C.E.S.H. version of outline no.3 several times in the solo to contrast with his modal, motivic, and down and dirty blues playing on this modal blues tune.",
       "source_page": 78,
-      "source_chapter": 8
+      "source_chapter": 8,
+      "applicability_reasons": [
+        "narrative_contrast"
+      ]
     },
     {
       "rule_id": "ligon-stop-and-go-delay-resolution",
@@ -1064,15 +1217,18 @@
         "line.metric_placement": "delay_resolution_to_beat_three",
         "line.outline_id": "ligon_outline_1"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "rhythm",
-        "drama"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Outline No.1: Stop and go rhythms delay the resolution of E7 until beat three; arpeggio on E7 (3- 5-7-9) dela",
       "source_page": 145,
-      "source_chapter": 16
+      "source_chapter": 16,
+      "applicability_reasons": [
+        "rhythm",
+        "drama"
+      ]
     },
     {
       "rule_id": "ligon-sawtooth-leap-back-to-chord-tone",
@@ -1085,14 +1241,17 @@
         "line.metric_placement": "delay_resolution",
         "line.chromatic_insertion": "chromatic_leading_tone_precedes_target"
       },
-      "preference": "advisory",
+      "preference": 1,
       "quality_binding": [
-        "contour"
+        "any"
       ],
       "falsifier": null,
       "anchor": "Outline No.2: Leap back to a chord tone creates sawtooth shape, delays resolution of C7; chromatic leading tone (D#) precedes target note (E); leap from third to root of C7,",
       "source_page": 145,
-      "source_chapter": 16
+      "source_chapter": 16,
+      "applicability_reasons": [
+        "contour"
+      ]
     },
     {
       "rule_id": "ligon-neighbor-tone-surrounding",
@@ -1104,15 +1263,18 @@
         "line.approach_method": "surround_target_with_upper_then_lower_neighbor",
         "line.target_tone": "delayed_chord_tone"
       },
-      "preference": "moderate",
+      "preference": 1,
       "quality_binding": [
-        "voice_leading",
-        "tension"
+        "any"
       ],
       "falsifier": "Single neighbor used and labeled as surrounding.",
       "anchor": "Outline No.3: arpeggiated tone is used below; target note (A) is delayed by its upper and lower neighbor tones; target note (A) is approached from above (C — Bb — A) and below (G — G# — A).",
       "source_page": 145,
-      "source_chapter": 16
+      "source_chapter": 16,
+      "applicability_reasons": [
+        "voice_leading",
+        "tension"
+      ]
     }
   ]
 }

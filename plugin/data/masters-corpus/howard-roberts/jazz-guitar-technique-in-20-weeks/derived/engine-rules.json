@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-17T09:44:51-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -22,7 +22,7 @@
         "stroke.dynamic_equality": true,
         "stroke.direction": "strict-alternate"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -44,7 +44,7 @@
         "hammer_ons": false,
         "pull_offs": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -64,7 +64,7 @@
         "glissandi": true,
         "notes_per_stroke": ">=2"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -83,7 +83,7 @@
         "scale.type": "whole-tone",
         "scale.interval_pattern": "W-W-W-W-W-W"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "dom7"
       ],
@@ -102,7 +102,7 @@
         "scale.type": "diminished",
         "scale.interval_pattern": "W-H-W-H-W-H-W-H"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "dom7",
         "dim"
@@ -126,13 +126,16 @@
         ],
         "gravitational_pull": "low"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
-        "maj6/9"
+        "any"
       ],
       "falsifier": "Scale includes the 4th or 7th degree",
       "anchor": "The Major Pentatonic Scale (same as diatonic major with the active tones 3rd and 7th left out). When harmonized creates inversions of a Major 6/9 chord",
-      "source_page": 13
+      "source_page": 13,
+      "applicability_reasons": [
+        "maj6/9"
+      ]
     },
     {
       "rule_id": "roberts-20w-key-center-nav",
@@ -145,7 +148,7 @@
         "navigation.unit": "key-center",
         "pattern.selection": "one-of-five-movable"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -164,7 +167,7 @@
         "harmonic.key_center": "parent-major-of-V",
         "analysis.confidence": "high"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7"
       ],
@@ -184,7 +187,7 @@
         "pattern.type": "finger-per-fret-movable",
         "fingerboard.coverage": "full"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -205,7 +208,7 @@
           "slide-on-half-step"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -224,7 +227,7 @@
         "arpeggio.placement": "within-key-center-pattern",
         "arpeggio.isolation": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -242,7 +245,7 @@
       "then": {
         "line.consecutive_scale_tones.max": 4
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -262,7 +265,7 @@
         "interval.parallel": false,
         "interval.mixed_major_minor": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -281,7 +284,7 @@
         "melody.device": "common-tone-sustain",
         "line.flattening": true
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -301,7 +304,7 @@
         "line.angle": "steep",
         "line.texture": "rolling"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -320,7 +323,7 @@
         "melody.device": "large-interval-skip",
         "line.scalar_monotony": false
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -339,7 +342,7 @@
         "scale.modification": "raise-degree-5",
         "scale.new_type": "harmonic-minor"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "min",
         "minMaj7"
@@ -359,7 +362,7 @@
         "scale.ascending_descending_rule": "optional",
         "scale.priority": "bar-harmony"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "min",
         "min7"
@@ -379,7 +382,7 @@
         "substitution.validity": "ear-determined",
         "analysis.override": "allowed"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -398,7 +401,7 @@
         "analysis.exclusivity": false,
         "substitution.allowed": true
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -419,7 +422,7 @@
         ],
         "fingering.flexibility": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -438,7 +441,7 @@
         "tempo.increase": false,
         "accuracy.priority": "absolute"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -456,7 +459,7 @@
         "metronome.mode": "record-only",
         "tempo.preset_target": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -475,7 +478,7 @@
         "skill.imprint": "permanent",
         "retention.after_layoff": "restorable-2-3-weeks"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -493,7 +496,7 @@
         "right_hand.anchor": "none",
         "right_hand.adaptability": "required"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -511,7 +514,7 @@
         "technique.right_hand": "free",
         "speed_ceiling": "removed"
       },
-      "preference": "avoid",
+      "preference": -1,
       "quality_binding": [
         "any"
       ],
@@ -530,7 +533,7 @@
         "attack.simultaneity": true,
         "flam.tolerance": 0
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -553,7 +556,7 @@
           "high"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -571,7 +574,7 @@
         "finger.angle": "perpendicular",
         "finger.axis": "right-angle-to-board"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -588,7 +591,7 @@
       "then": {
         "finger.lift_height": "minimum-to-avoid-noise"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -606,7 +609,7 @@
         "wrist.posture": "flat",
         "wrist.arch": "minimal"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -624,7 +627,7 @@
         "string.gauge_first": ">=.012",
         "string.set": "medium-heavy"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -644,7 +647,7 @@
         "pick.material": "celluloid",
         "pick.shape": "standard"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -663,7 +666,7 @@
         "tools.recorder": true,
         "tools.timer": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -682,7 +685,7 @@
         "line.form": "question-answer",
         "line.repetition_unit": "sequence"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -700,7 +703,7 @@
         "workflow.step": "sing-first",
         "ear_to_hand.priority": "high"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -722,7 +725,7 @@
         ],
         "line.form": "fills-around-melody"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -741,7 +744,7 @@
         "practice.priority": "memorize-changes-first",
         "reading.from_page": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -761,7 +764,7 @@
         "session.days_per_week": 6,
         "rest.days_per_week": 1
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -783,7 +786,7 @@
         ],
         "phase.skip": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -801,7 +804,7 @@
         "session.skip": false,
         "regularity": "daily-non-negotiable"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -821,7 +824,7 @@
         "fingering.patterns": "new",
         "melodic.ideas": "fresh"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -840,7 +843,7 @@
         "practice.format": "ensemble-exchange",
         "acceleration.factor": "superior-to-solo"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -858,7 +861,7 @@
         "output.goal": "spontaneous-invention",
         "model_solos.status": "reference-only"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -877,7 +880,7 @@
         "response.action": "play-different-next-pass",
         "response.stop": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -897,7 +900,7 @@
         "rush": false,
         "drag": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],

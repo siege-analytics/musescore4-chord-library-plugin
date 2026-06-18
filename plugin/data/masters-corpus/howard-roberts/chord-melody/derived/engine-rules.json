@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-16T23:00:31-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -22,7 +22,7 @@
       "then": {
         "voicing.strings": "string_set_with_greatest_vibrating_length"
       },
-      "preference": "soft — yields to mechanical necessity when sustain gain is negligible",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -49,7 +49,7 @@
       "then": {
         "voicing.shape": "fingering_with_fewest_unnecessary_or_awkward_movements"
       },
-      "preference": "soft — large interval jumps are permitted when musically required",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -79,7 +79,7 @@
         "octave.shift": "move one or more chordal tones up or down one octave",
         "voicing.selection_order": "as far as reach permits"
       },
-      "preference": "expand spread as far as hand reach allows",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -107,7 +107,7 @@
       "then": {
         "voicing.strings": "second voice from top"
       },
-      "preference": "place counter line in second voice from top on guitar",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -134,7 +134,7 @@
       "then": {
         "voicing.shape": "activate counter line with more motion"
       },
-      "preference": "increase counter line activity when melody rests or sustains",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -163,7 +163,7 @@
         "voicing.shape": "change voicing or inversion",
         "voicing.strings": "move chordal tones in same direction as melody where possible"
       },
-      "preference": "chordal tones move with melody and preferably in the same direction",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -191,7 +191,7 @@
       "then": {
         "voicing.quality": "Gm7"
       },
-      "preference": null,
+      "preference": 0,
       "quality_binding": [
         "maj9"
       ],
@@ -219,7 +219,7 @@
         "voicing.shape": "drop one or more chordal tones as needed",
         "voicing.selection_order": "sustain each chordal tone for as long as possible before dropping"
       },
-      "preference": "listener's harmonic memory compensates for dropped tones if each tone was sustained maximally before release",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -248,7 +248,7 @@
         "voicing.shape": "short chord punctuation played with authority",
         "voicing.selection_order": "prefer voicings that emphasize chordal tones in melody"
       },
-      "preference": "reinforce harmonic continuity by choosing melodies that emphasize chordal tones",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -277,7 +277,7 @@
         "voicing.density": "close",
         "voicing.selection_order": "prefer-close-interval-stack"
       },
-      "preference": "deploy close voicings sparingly for contrast rather than as default texture",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -307,7 +307,7 @@
         "voicing.tensions": "b9",
         "voicing.shape": "retain-maj6-fingering"
       },
-      "preference": "interpret maj6 voicing as dom7b9 substitute when surrounding harmonic context implies dominant function a tritone away",
+      "preference": 0,
       "quality_binding": [
         "maj6"
       ],
@@ -337,7 +337,7 @@
         "voicing.shape": "diminished-seventh-built-on-chord-third",
         "voicing.tensions": "b9"
       },
-      "preference": "prefer dim7 substitute when diatonic context risks monotony; the dim7 built on the 3rd of any dom7b9 contains the full upper structure",
+      "preference": 1,
       "quality_binding": [
         "dom7b9"
       ],
@@ -365,7 +365,7 @@
         "voicing.selection_order": "hold-all-fretted-notes-until-physically-forced-to-move",
         "voicing.shape": "delay-finger-movement-to-last-necessary-moment"
       },
-      "preference": "always default to sustaining; movement is the exception, not the rule",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -395,7 +395,7 @@
         "voicing.density": "implied",
         "voicing.quality": "dyad-suggestive-of-parent-chord"
       },
-      "preference": "prefer dyads when full voicings would interrupt melodic momentum; the listener's ear completes the harmony",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -426,9 +426,9 @@
         "voicing.fret_offset": "half-step-below-target-diatonic-chord-root",
         "voicing.shape": "minor-seventh-sharp-five"
       },
-      "preference": "prefer m7+5 passing chord a half-step below each diatonic target to create smooth chromatic approach",
+      "preference": 1,
       "quality_binding": [
-        "m7+5"
+        "any"
       ],
       "falsifier": "If the diatonic chords are a whole step apart and a half-step passing chord would land on another diatonic chord, the chromatic passing function is absorbed and a different passing quality may be required.",
       "anchor": "Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj 7 (one chord per bart being connected by the passing chords G#m7+5, Am7+5, et",
@@ -442,7 +442,10 @@
           31
         ],
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "m7+5"
+      ]
     },
     {
       "rule_id": "roberts-passing-tone-to-counter-line-development",
@@ -455,7 +458,7 @@
         "voicing.selection_order": "extend-passing-tone-to-continuous-counter-line-then-to-melodic-pattern",
         "voicing.shape": "sustain-and-connect-inner-voice-movement"
       },
-      "preference": "prefer to develop isolated inner-voice passing tones into sustained counter lines before elevating them to foreground melodic patterns",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -483,7 +486,7 @@
       "then": {
         "voicing.density": "reduced-or-fragment"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -511,7 +514,7 @@
         "octave.shift": "+1",
         "voicing.selection_order": "restart-with-transposed-melody"
       },
-      "preference": "invariant",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -540,7 +543,7 @@
         "octave.shift": "+1",
         "voicing.strings": "recalculate-from-transposed-melody-position"
       },
-      "preference": "strong — apply whenever low register prevents satisfactory voicing",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -569,7 +572,7 @@
         "voicing.tensions": "add-maj7-6-or-9-freely",
         "voicing.quality": "enriched-color-same-function"
       },
-      "preference": "permissive — extensions never alter scale function or progression role",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -598,7 +601,7 @@
         "voicing.shape": "any-reachable-form-of-given-chord",
         "voicing.tensions": "accept-dissonance"
       },
-      "preference": "permissive — no chromatic note within finger range is unharmonizable",
+      "preference": 0,
       "quality_binding": [
         "any"
       ],
@@ -626,7 +629,7 @@
         "voicing.tensions": "accept-emergent-extensions",
         "voicing.quality": "coloristically-enriched-by-independence"
       },
-      "preference": "compositional principle — let melody and harmony move with their own force",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],

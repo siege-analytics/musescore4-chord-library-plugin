@@ -4,7 +4,7 @@
     "stage": "s6-engine-rules",
     "source_pdf": null,
     "extracted_at": "2026-06-17T09:44:47-05:00",
-    "schema_version": "0.1",
+    "schema_version": "0.2",
     "model": "claude-opus-4-7",
     "ticket": "#527"
   },
@@ -20,7 +20,7 @@
       "then": {
         "chord.label_format": "sus4"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -42,7 +42,7 @@
       "then": {
         "chord.label_format": "sus4"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -60,7 +60,7 @@
         "voicing.density": "3-part",
         "voicing.density_priority": "prefer-lower"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -77,7 +77,7 @@
       "then": {
         "voicing.voice_count_max": 4
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -96,7 +96,7 @@
         "voicing.voices_removed": 1,
         "voicing.source_density": "4-part"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -114,7 +114,7 @@
       "then": {
         "voicing.occurrence_count": 4
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -135,7 +135,7 @@
         "chord.taxonomy_family": "m-lode-expanded",
         "chord.collapse_to_other": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -160,7 +160,7 @@
         "chord.taxonomy_family": "m-lode-expanded",
         "chord.collapse_to_other": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -183,7 +183,7 @@
         "chord.taxonomy_family": "m-lode-expanded",
         "chord.subordinate_to": null
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -204,7 +204,7 @@
           "3-part Spread Clusters"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -224,7 +224,7 @@
           "SCVL"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -244,7 +244,7 @@
       "then": {
         "voice_leading.parent_type": "SCVL"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -262,7 +262,7 @@
         "voice_leading.domain_weight.melody": 1.0,
         "voice_leading.domain_weight.harmony": 1.0
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -281,7 +281,7 @@
         "transposition.step_max": 6,
         "transposition.collapse_identical_intervals": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -301,7 +301,7 @@
         "transposition.retain_count": 1,
         "transposition.duplicates_discarded": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -321,7 +321,7 @@
         "transposition.modal_variants": 6,
         "transposition.collapse_identical_intervals": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -340,7 +340,7 @@
         "transposition.modal_mapping": "one-to-one",
         "transposition.shared_mode_assignments": 0
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -365,7 +365,7 @@
           "combination"
         ]
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -382,7 +382,7 @@
       "then": {
         "unit.classification_criterion": "note_coverage"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -404,7 +404,7 @@
         "scale.context": "C_major",
         "scale.accidentals": 0
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -426,7 +426,7 @@
         "transposition.agent": "student",
         "transposition.target_scales": "all-7-note-scales"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -443,7 +443,7 @@
       "then": {
         "catalog.traversal_pattern": "cycle3-cycle4-alternation"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -462,7 +462,7 @@
         "catalog.chord_type_count": 35,
         "catalog.total_entries": 840
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -480,7 +480,7 @@
       "then": {
         "catalog.3pt_chapters_precede_4pt": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -498,7 +498,7 @@
         "voice_leading.replication_source": "melodic_strand",
         "voice_leading.replication_target": "all_voices"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -516,7 +516,7 @@
         "voicing.position_shift": "minimal",
         "voicing.continuity_constraint": "same-position-preferred"
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -534,7 +534,7 @@
         "voice_leading.scope": "chromatic",
         "voice_leading.prerequisite": "GDVL"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -554,7 +554,7 @@
       "then": {
         "voice_leading.type": "GDVL"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -575,7 +575,7 @@
       "then": {
         "chord.label_format": "sus4"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -594,7 +594,7 @@
         "voicing.voice_removed": "5th",
         "voicing.source_quality": "7th-4-part"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "dom7",
         "maj7",
@@ -621,7 +621,7 @@
         ],
         "voicing.symmetry_verified": true
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -640,7 +640,7 @@
       "then": {
         "transposition.total_modal_forms": 7
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -661,7 +661,7 @@
       "then": {
         "unit.multi_domain_allowed": true
       },
-      "preference": "preferred",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -678,7 +678,7 @@
       "then": {
         "catalog.traversal_pattern": "cycle3-cycle4-alternation"
       },
-      "preference": "recommended",
+      "preference": 1,
       "quality_binding": [
         "any"
       ],
@@ -695,7 +695,7 @@
       "then": {
         "voicing.valid": false
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -714,7 +714,7 @@
         "chord.taxonomy_rank": "coordinate",
         "chord.taxonomy_parent": "m-lode-expanded"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -733,7 +733,7 @@
         "scale.context": "C_major",
         "exercise.next_stage": "student-transposed-7-note-scales"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -751,7 +751,7 @@
         "voice_leading.motion_criterion": "interval",
         "voice_leading.parent_type": "SCVL"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
@@ -769,7 +769,7 @@
         "voice_leading.motion_criterion": "harmonic_function",
         "voice_leading.parent_type": "SCVL"
       },
-      "preference": "required",
+      "preference": 2,
       "quality_binding": [
         "any"
       ],
