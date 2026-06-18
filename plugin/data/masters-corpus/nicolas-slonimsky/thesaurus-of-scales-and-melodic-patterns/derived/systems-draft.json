@@ -1,0 +1,212 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-18T15-45-00-slonimsky-thesaurus-s3",
+    "stage": "s3-systems-draft",
+    "source_pdf": "Nicolas Slonimsky - Thesaurus OfScales And Melodic Patterns.pdf",
+    "extracted_at": "2026-06-18T15:45:00+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet+human-curated",
+    "ticket": "#554"
+  },
+  "master_id": "nicolas-slonimsky",
+  "work_id": "thesaurus-of-scales-and-melodic-patterns",
+  "systems": {
+    "polation_operations": {
+      "_description": "Three coined operations Slonimsky applies to principal tones of an equal-division progression. Each yields a different decorated shape, and they compose freely. Categorical primitives for the melodic engine's then-action vocabulary.",
+      "operations": [
+        {
+          "id": "interpolation",
+          "definition": "Insertion of one or more notes BETWEEN principal tones.",
+          "preserves_direction": true,
+          "produces_taxonomy_class": "scale",
+          "example_pattern_number": 21
+        },
+        {
+          "id": "infrapolation",
+          "definition": "Insertion of a note BELOW a principal tone.",
+          "preserves_direction": false,
+          "produces_taxonomy_class": "pattern",
+          "example_pattern_number": 231
+        },
+        {
+          "id": "ultrapolation",
+          "definition": "Insertion of a note ABOVE the next principal tone.",
+          "preserves_direction": false,
+          "produces_taxonomy_class": "pattern",
+          "example_pattern_number": 53
+        },
+        {
+          "id": "inter-ultrapolation",
+          "definition": "Compound: interpolation + ultrapolation in the same figure.",
+          "preserves_direction": false,
+          "produces_taxonomy_class": "pattern",
+          "example_pattern_number": 123
+        },
+        {
+          "id": "infra-inter-ultrapolation",
+          "definition": "Compound: all three operations in the same figure.",
+          "preserves_direction": false,
+          "produces_taxonomy_class": "pattern",
+          "example_pattern_number": 341
+        },
+        {
+          "id": "symmetric-interpolation",
+          "definition": "Interpolation at equal intervals from pivotal points; produces palindromic interval structure.",
+          "preserves_direction": true,
+          "produces_taxonomy_class": "scale",
+          "example_pattern_number": 37
+        },
+        {
+          "id": "non-symmetric-interpolation",
+          "definition": "Free interpolation (no equal-interval constraint).",
+          "preserves_direction": true,
+          "produces_taxonomy_class": "scale",
+          "example_pattern_number": null
+        }
+      ]
+    },
+    "equal_division_progressions": {
+      "_description": "The structural backbone of the Thesaurus. Each progression divides one or more octaves into equal parts; principal tones of that division are then decorated via polation operations.",
+      "progressions": [
+        {"id": "tritone", "interval_name": "tritone", "interval_semitones": 6, "octaves_divided": 1, "parts": 2, "alias": "augmented fourth iterated", "first_indexed_scale_number": null},
+        {"id": "ditone", "interval_name": "ditone", "interval_semitones": 4, "octaves_divided": 1, "parts": 3, "alias": "augmented triad", "first_indexed_scale_number": null},
+        {"id": "sesquitone", "interval_name": "sesquitone", "interval_semitones": 3, "octaves_divided": 1, "parts": 4, "alias": "diminished-seventh chord", "first_indexed_scale_number": null},
+        {"id": "whole-tone", "interval_name": "whole tone", "interval_semitones": 2, "octaves_divided": 1, "parts": 6, "alias": "whole-tone scale", "first_indexed_scale_number": null},
+        {"id": "semitone", "interval_name": "semitone", "interval_semitones": 1, "octaves_divided": 1, "parts": 12, "alias": "chromatic scale; 12-tone technique source", "first_indexed_scale_number": null},
+        {"id": "quadritone", "interval_name": "quadritone", "interval_semitones": 8, "octaves_divided": 2, "parts": 3, "alias": "minor sixth; spread-out augmented triad", "first_indexed_scale_number": null},
+        {"id": "sesquiquadritone", "interval_name": "sesquiquadritone", "interval_semitones": 9, "octaves_divided": 3, "parts": 4, "alias": "major sixth; unfolded sesquitone", "first_indexed_scale_number": null},
+        {"id": "diatessaron", "interval_name": "diatessaron", "interval_semitones": 5, "octaves_divided": 5, "parts": 12, "alias": "perfect fourth", "first_indexed_scale_number": null},
+        {"id": "diapente", "interval_name": "diapente", "interval_semitones": 7, "octaves_divided": 7, "parts": 12, "alias": "perfect fifth", "first_indexed_scale_number": null},
+        {"id": "sesquiquinquetone", "interval_name": "sesquiquinquetone", "interval_semitones": 11, "octaves_divided": 11, "parts": 12, "alias": "major seventh", "first_indexed_scale_number": null},
+        {"id": "septitone", "interval_name": "septitone", "interval_semitones": 14, "octaves_divided": 7, "parts": 6, "alias": "major ninth", "first_indexed_scale_number": null}
+      ]
+    },
+    "interval_taxonomy": {
+      "_description": "Slonimsky's tone-distance vocabulary. The 'sesqui-' prefix uniformly adds a semitone. Coined names for intervals where common practice uses tonal-functional labels.",
+      "intervals": [
+        {"name": "semitone", "tones": 0.5, "semitones": 1, "common_name": "minor second"},
+        {"name": "whole tone", "tones": 1.0, "semitones": 2, "common_name": "major second"},
+        {"name": "sesquitone", "tones": 1.5, "semitones": 3, "common_name": "minor third"},
+        {"name": "ditone", "tones": 2.0, "semitones": 4, "common_name": "major third"},
+        {"name": "diatessaron", "tones": 2.5, "semitones": 5, "common_name": "perfect fourth"},
+        {"name": "tritone", "tones": 3.0, "semitones": 6, "common_name": "augmented fourth / diminished fifth"},
+        {"name": "diapente", "tones": 3.5, "semitones": 7, "common_name": "perfect fifth"},
+        {"name": "quadritone", "tones": 4.0, "semitones": 8, "common_name": "minor sixth"},
+        {"name": "sesquiquadritone", "tones": 4.5, "semitones": 9, "common_name": "major sixth"},
+        {"name": "quinquetone", "tones": 5.0, "semitones": 10, "common_name": "minor seventh"},
+        {"name": "sesquiquinquetone", "tones": 5.5, "semitones": 11, "common_name": "major seventh"},
+        {"name": "septitone", "tones": 7.0, "semitones": 14, "common_name": "major ninth"}
+      ]
+    },
+    "progression_taxonomy": {
+      "_description": "Slonimsky's structural categories for distinguishing types of melodic lines. The Scale-vs-Pattern distinction is fundamental: it determines whether polation operations preserve or reverse direction.",
+      "categories": [
+        {"id": "scale", "definition": "A progression that changes direction only at terminal points. All interpolated progressions are Scales."},
+        {"id": "pattern", "definition": "A melodic figure in which direction changes before terminal point. All infrapolated and ultrapolated progressions are Patterns."},
+        {"id": "progression", "definition": "Umbrella term for any scale or pattern."},
+        {"id": "permutation", "definition": "Reordering of an existing pattern's notes."},
+        {"id": "complementary-scales", "definition": "Two-octave progressions whose pitch content together exhausts the chromatic aggregate."},
+        {"id": "plural-scales", "definition": "Disjunct scales concatenated (e.g., C major + C# major + D major + Eb major)."},
+        {"id": "polytonal-scales", "definition": "Scales in different tonalities played simultaneously."},
+        {"id": "polyrhythmic-scales", "definition": "Simultaneous progressions in different rhythms."},
+        {"id": "polytonal-polyrhythmic-scales", "definition": "Simultaneous progressions in different keys AND different rhythms."},
+        {"id": "spiral-patterns", "definition": "Progressions converging toward a central tone."},
+        {"id": "pandiatonic-progressions", "definition": "Rows composed of all 7 different diatonic tones."},
+        {"id": "twelve-tone-progressions", "definition": "Melodic figures using all 12 different tones."}
+      ]
+    },
+    "named_chord_constructs": {
+      "_description": "Specific chord constructs Slonimsky names. Some are his own coinages; some are attributed to other theorists (Klein, Cowell, Scriabin).",
+      "constructs": [
+        {"id": "master-chord", "definition": "Dominant-seventh with fifth omitted; chromatically tabulated in 12 keys.", "attribution": "Slonimsky"},
+        {"id": "grandmother-chord", "definition": "12-tone chord, intervals symmetrically invertible around the tritone axis; odd-indexed intervals form a decreasing arithmetic sequence, even-indexed an increasing one.", "attribution": "Slonimsky 1938-02-13"},
+        {"id": "mother-chord", "definition": "12-tone chord with all 11 different intervals.", "attribution": "Fritz Klein 1921"},
+        {"id": "pyramid-chord", "definition": "Series of diminishing intervals from octave to semitone.", "attribution": "Fritz Klein 1921"},
+        {"id": "chord-of-the-minor-23rd", "definition": "12 different notes arranged in thirds, forming 4 mutually exclusive triads.", "attribution": "Slonimsky"},
+        {"id": "quartal-chord", "definition": "12-tone chord arranged in perfect fourths.", "attribution": "Slonimsky"},
+        {"id": "major-bitonal-chord", "definition": "Two major triads, usually at tritone distance.", "attribution": "Slonimsky"},
+        {"id": "minor-bitonal-chord", "definition": "Two minor triads, usually at tritone distance.", "attribution": "Slonimsky"},
+        {"id": "mutually-exclusive-triads", "definition": "Four triads (major/minor/dim/aug) comprising all 12 tones.", "attribution": "Slonimsky"},
+        {"id": "whole-tone-chords", "definition": "Chords composed of intervals of whole tones each.", "attribution": "Slonimsky"},
+        {"id": "tone-cluster", "definition": "Complex of adjacent notes filling one or more octaves.", "attribution": "Henry Cowell"},
+        {"id": "prometheus-scale", "definition": "6-tone scale C-D-E-F#-A-Bb used by Scriabin in Prometheus.", "attribution": "Scriabin (cataloged by Slonimsky)"}
+      ]
+    },
+    "harmonization_methods": {
+      "_description": "Methods Slonimsky catalogs for harmonizing a given scale or pattern.",
+      "methods": [
+        {"id": "autochordal", "definition": "Harmonize using only chords derivable from the scale's own pitch content.", "example": "Scale No. 12 (C, D#, F, F#, A, B, C) harmonized in F major + B major triads."},
+        {"id": "common-triads-positional", "definition": "Cycle Octave → Tertian → Quintan → Octave bass position as melody ascends (reverse on descent); produces parallel major triads across tonalities.", "example": "Tosca Act II whole-tone bass under parallel majors."},
+        {"id": "master-chord", "definition": "Apply Master Chords (dom7 minus 5th); transposable a tritone with satisfactory results.", "example": null},
+        {"id": "pandiatonic-counterpoint", "definition": "Each voice uses all 7 diatonic notes with no vertical duplication.", "example": null}
+      ]
+    },
+    "arpeggiation_systems": {
+      "_description": "Specific arpeggiation pattern families with their catalog ranges.",
+      "families": [
+        {"id": "heptatonic-arpeggios", "scale_number_range": [1088, 1141], "definition": "Arpeggiation by thirds from heptatonic scales."},
+        {"id": "bitonal-arpeggios", "scale_number_range": [1191, 1213], "definition": "Alternating arpeggios in 2 different keys."},
+        {"id": "quadritonal-arpeggios", "scale_number_range": [1251, 1291], "definition": "Arpeggios cycling 4 mutually exclusive triads (e.g., C major, D minor, F# major, G# minor)."},
+        {"id": "crossing-intervals", "scale_number_range": [1243, 1250], "definition": "Two overlapping 6-tone rows comprising all 12 different tones."}
+      ]
+    },
+    "canon_types": {
+      "_description": "Self-referential melodic structures.",
+      "types": [
+        {"id": "palindromic-canon", "definition": "Reads the same backward or forward."},
+        {"id": "bitonal-palindromic-canon", "definition": "Palindromic canon producing 6-tone chords composed of 2 triads.", "example": "Scale No. 7 canonically developed → C major + F# major bitonal chord."}
+      ]
+    },
+    "tetrachord_systems": {
+      "_description": "12-tetrachord chains covering all 12 keys.",
+      "systems": [
+        {"id": "phrygian-conjunct", "scale_number": 830, "definition": "Phrygian tetrachords, terminal-to-initial connected."},
+        {"id": "minor-conjunct", "scale_number": 832, "definition": "Minor tetrachords, terminal-to-initial connected."},
+        {"id": "major-conjunct", "scale_number": 833, "definition": "Major tetrachords, terminal-to-initial connected."},
+        {"id": "phrygian-disjunct", "scale_number": 951, "definition": "Phrygian tetrachords with diatonic-step gap."},
+        {"id": "minor-disjunct", "scale_number": 956, "definition": "Minor tetrachords with diatonic-step gap."},
+        {"id": "major-disjunct", "scale_number": 958, "definition": "Major tetrachords with diatonic-step gap. Has 48 functionally different notes."},
+        {"id": "lydian-disjunct", "scale_number": 959, "definition": "Lydian tetrachords with diatonic-step gap."}
+      ]
+    },
+    "voice_leading_positions": {
+      "_description": "Slonimsky's named soprano-voice positions in four-part triad writing.",
+      "positions": [
+        {"id": "octave-position", "definition": "Root in both melody and bass."},
+        {"id": "tertian-position", "definition": "Root in bass, third in melody."},
+        {"id": "quintan-position", "definition": "Root in bass, fifth in melody."}
+      ]
+    }
+  },
+  "theoretical_lineage_cited": [
+    {"name": "Domenico Alaleona", "year": 1911, "contribution": "Early proposal of new scales by equal division of octave."},
+    {"name": "Alois Hába", "work": "Neue Harmonielehre", "year": 1927, "contribution": "Classified equal-interval scales with proposed harmonizations."},
+    {"name": "Joseph Schillinger", "work": "Schillinger System of Musical Composition", "contribution": "Classified new tonal progressions in Theory of Pitch-Scales chapter."},
+    {"name": "Ferruccio Busoni", "work": "Entwurf einer neuen Aesthetik der Tonkunst", "contribution": "Identified 113 distinct 7-note scales; Thesaurus #1035 attributed."},
+    {"name": "Fritz Klein", "year": 1921, "contribution": "Introduced n-interval technique; coined Mother Chord and Pyramid Chord in Die Maschine (under pseudonym Heautontimorumenus)."},
+    {"name": "Rimsky-Korsakov", "contribution": "Deliberate use of 8-tone scale alternating major/minor seconds (Scale No. 393)."},
+    {"name": "Debussy", "contribution": "First deliberate use of whole-tone scale as a device; Voiles combines whole-tone with pentatonic."},
+    {"name": "Henry Cowell", "contribution": "Coined tone-cluster."},
+    {"name": "Schoenberg", "contribution": "12-tone technique, treated by Slonimsky as a permutation case of the semitone progression."},
+    {"name": "Scriabin", "contribution": "Prometheus scale (C-D-E-F#-A-Bb) used in his symphonic poem."}
+  ],
+  "applications_to_jazz_lineage": {
+    "_description": "How the Thesaurus connects to the jazz masters distilled elsewhere in this corpus. For the eventual melodic engine: these are the rule_id prefixes downstream consumers will key off when classifying patterns by playing tradition.",
+    "connections": [
+      {"player": "John Coltrane", "thesaurus_application": "Equal Division of Octave into Three Parts (Ditone Progression) is the Giant Steps cycle. Multiple Coltrane practice routines documented as Thesaurus-derived."},
+      {"player": "Pat Martino", "thesaurus_application": "Linear concept uses Slonimsky-style equal-division pivots extensively; diminished and augmented symmetric divisions central to his vocabulary."},
+      {"player": "John McLaughlin", "thesaurus_application": "Symmetric-diminished scales and polation patterns visible across his Mahavishnu Orchestra and acoustic output."},
+      {"player": "Allan Holdsworth", "thesaurus_application": "Wide-interval polations and chromatic infra-inter-ultrapolation shape his improvisational vocabulary."}
+    ],
+    "_distillation_note": "These connections are MAINTAINER-attested per session memory + general jazz scholarship. Codifying them as engine rules requires a separate Phase 7 pass that maps Coltrane/Martino/McLaughlin documented practice routines onto specific Thesaurus patterns. v0.1 systems-draft establishes the taxonomy only; the player-to-pattern bindings come in v0.2."
+  },
+  "v01_distillation_completeness": {
+    "front_matter_distilled": true,
+    "operational_vocabulary_distilled": true,
+    "theoretical_lineage_captured": true,
+    "specific_pattern_catalog_distilled": false,
+    "scale_pattern_count_distilled": 0,
+    "scale_pattern_count_target": 1500,
+    "next_phase": "Pattern catalog distillation requires notation-OCR (Audiveris) or manual transcription. v0.1 melodic_rules can fire on TAXONOMY (polation operation + equal-division family + progression category) without specific pattern bindings. v0.2 adds the 1500+ pattern catalog."
+  }
+}
