@@ -3,6 +3,7 @@ import "ChordSelector.js" as ChordSelector
 import "MelodyEngine.js" as MelodyEngine
 import "Transposer.js" as Transposer
 import "FingeringEngine.js" as FingeringEngine
+import "DebugLog.js" as DebugLog
 
 // InlineTools.qml — Score analysis tools (pure QML, no Python).
 // Extracted from ChordLibrary.qml (B2, #101).
@@ -219,7 +220,7 @@ Item {
             }
             return computeFingeringString(pseudoVoicing)
         } catch (e) {
-            console.log("[InlineTools] Could not read diagram: " + e)
+            DebugLog.warn("[InlineTools] Could not read diagram: " + e)
             return null
         }
     }

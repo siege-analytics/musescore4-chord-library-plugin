@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import "DebugLog.js" as DebugLog
 
 QtObject {
     id: libraryModel
@@ -36,7 +37,7 @@ QtObject {
                         var data = JSON.parse(xhr.responseText)
                         voicings = data.voicings || []
                         applyFilters()
-                        console.log("Loaded " + voicings.length + " voicings")
+                        DebugLog.log("Loaded " + voicings.length + " voicings")
                     } catch (e) {
                         error = "Failed to parse voicings JSON: " + e
                         console.error(error)
