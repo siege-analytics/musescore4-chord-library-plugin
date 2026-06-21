@@ -302,6 +302,11 @@ class TestExports:
                  "--root", "C", "-o", tmpdir],
                 capture_output=True, text=True,
             )
+            # #574: skip if pyguitarpro is not installed (matches the
+            # macOS-pasteboard graceful-skip pattern elsewhere in the suite).
+            if result.returncode != 0 and "Missing dependency" in (result.stderr or ""):
+                import pytest
+                pytest.skip("pyguitarpro not installed; GP5 export unavailable")
             assert result.returncode == 0, f"GP5 export failed:\n{result.stderr}"
             files = list(Path(tmpdir).glob("*.gp5"))
             assert len(files) == 1
