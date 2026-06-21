@@ -2,7 +2,7 @@
 
 A MuseScore Studio 4 plugin that gives jazz guitarists a searchable, mode-aware chord-voicing library with physically-validated fingerings. 820+ curated voicings for standard tuning, runtime voicing calculator for any tuning, and a scoring engine that adapts to what you're playing.
 
-> **Current release: v2.2.0** — see [CHANGELOG-style notes](#whats-new-in-v22) at the bottom.
+> **Current release: v2.3.0** plugin + **engine-rules-v0.3.0** bundle (the master-distillation layer described below). See [CHANGELOG-style notes](#whats-new) at the bottom.
 
 ---
 
@@ -36,6 +36,46 @@ Each is independently selectable, and they stack: "Baritone A + Solo Guitar + Bo
 ### Sections
 
 For arrangements where different parts call for different modes (intro as Solo Guitar, head as Chord Melody, solos as Comping, out-chorus back to Chord Melody), the walkthrough has a **Sections editor**. Click "▸ Sections" → "Split here" at any chord to define a section boundary; pick the mode for that section from a dropdown.
+
+---
+
+## Master distillation layer (engine-rules)
+
+Beyond the 820-voicing curated library, the repository carries a **master-method distillation corpus** — formal rules extracted from the published method books and teaching materials of guitarists, theorists, and composers that shaped the idiom. These rules are what let "Style" and "Mode" do more than reshuffle voicings.
+
+| Metric | Count |
+|---|---|
+| Masters catalogued in `masters.json` | **34** |
+| Distilled works (book / method) | **15** |
+| Formal `engine_rules` (harmonic + melodic) | **768** |
+| Curated voicings | **820** |
+
+**Featured masters with distilled rules:** Ted Greene, Howard Roberts, Mick Goodrick, Barry Harris, Bert Ligon, Jerry Bergonzi, Jerry Coker, Jimmy Bruno, Jens Larsen, Gene Bertoncini, Greg O'Rourke, Martin Taylor, Peter Bernstein, Mark Levine, plus Nicolas Slonimsky's *Thesaurus of Scales and Melodic Patterns* (taxonomy-level melodic rules, v0.1).
+
+### Firing-semantics spec
+
+Rules are not free prose — every `engine_rules.json` file is validated against a **versioned firing-semantics spec** (current: `v0.2`) that defines:
+
+- A `when` conjunctive predicate (chord-context conditions)
+- A `quality_binding` hard prefilter over a canonical 36-token quality set (with **family-hierarchical matching** across Greene's MAJOR/MINOR/DOMINANT/DIMINISHED/AUGMENTED/SUS taxonomy)
+- A `then` action / suggestion
+- A `falsifier` — the condition under which the rule **would not fire**, so downstream consumers can reason about coverage gaps
+- Required provenance: `source_page`, `chapter_n`, `section_title` — every rule traces back to a printed page
+- `schema_version` + `min_consumer_version` for forward-compatibility (Hyrum's-law guard)
+
+Falsifiability built into the data model is rare for music-theory artifacts and is what makes this corpus consumable by other tools.
+
+### Lineage DAG
+
+`masters.json` carries a lineage graph (`studied_with`, `influenced` edges) across the 34 masters — the studied-under and stylistic-influence relationships that survive into the playing. Currently sparse (only edges the biographies make explicit), but conservative-by-design and intended to grow with each new master added.
+
+### Distribution
+
+Bundled releases are tagged independently from the plugin: `engine-rules-v0.1.0` → `engine-rules-v0.3.0` (current). Each release is a tarball of validated `engine-rules.json` files plus a manifest, suitable for downstream tools (notably the [Ellington practice-feedback web app](https://github.com/siege-analytics/ellington-systems), which ingests the bundle directly). The per-file schema (`plugin/schemas/engine-rules.schema.json`) is enforced in CI.
+
+### Why this matters for the plugin
+
+Style and Mode scoring will increasingly *consume* engine-rules instead of carrying hand-tuned weights. The corpus is the rigorous, source-traceable replacement for "master profiles" — Pass-style comping, Bergonzi-style melodic-rhythms, Goodrick-mvmt voicing flow — all expressible as queries over the same firing contract.
 
 ---
 
@@ -190,7 +230,26 @@ Dots are colour-coded by chord interval:
 
 ---
 
-## What's new in v2.2
+## What's new
+
+### Post-v2.3 — Master distillation layer
+
+- **34 masters / 15 distilled works / 768 engine_rules** — see [Master distillation layer](#master-distillation-layer-engine-rules) above.
+- **Firing-semantics spec v0.2** — versioned matching contract with family-hierarchical `quality_binding`, `falsifier` clauses, and provenance-required anchors.
+- **Per-file schema gate** (`plugin/schemas/engine-rules.schema.json`) — CI validates every distilled rules file, not just the manifest tarball.
+- **Lineage DAG** — `studied_with` / `influenced` edges across masters in `masters.json`.
+- **Slonimsky melodic_rules v0.1** — 18 taxonomy-level rules from the *Thesaurus*; harmonic and melodic rules now coexist under one firing contract.
+- **engine-rules-v0.3.0 bundle release** — distributable tarball + manifest for downstream consumers (e.g. Ellington).
+
+### v2.3
+
+- **Memoized difficulty + precomputed sort scores** — Walkthrough/Library snappier under large libraries (#178).
+- **Backup archive version-migration on restore** — older backups migrate forward on import (#179).
+- **VoicingCalculator covers all 38 non-quartal qualities** — runtime generation parity with the curated library (#180).
+- **Pure-helper lifting + QML-glue grouping** — model layer easier to reason about and unit-test (#181).
+- **Refreshed DEVELOPMENT.md** for v2.2 architecture (#183).
+
+### v2.2
 
 - **Three-axis configuration** — Tuning + Mode + Style replace v2.0's `context` field. Mode (`chord-melody` / `comping` / `solo-guitar` / `duo`) drives playing-role scoring; Style drives genre vocabulary.
 - **Style composition** — blend multiple styles with weight sliders and user-selectable blend rules (numeric: weighted-sum / max / average; scale: union-priority / intersect / first-only; resolution: re-resolve / freeze).
@@ -253,6 +312,14 @@ plugin/                            # Self-contained plugin (this is what end use
   data/
     voicings.json                  # 820 curated voicings (Standard tuning, key of C)
     progressions/                  # Built-in chord progressions
+    masters.json                   # 34 masters catalogue (works, principles, lineage edges)
+    masters-corpus/                # Per-master distilled engine-rules + provenance
+      {master-id}/{work-id}/derived/engine-rules.json
+  schemas/
+    engine-rules-manifest.schema.json  # Release tarball manifest schema
+    engine-rules.schema.json       # Per-file gate for the 768-rule corpus (firing-spec v0.2, #575)
+  docs/
+    engine-rules-firing-spec.md    # Versioned rule-matching contract (currently v0.2)
   tunings/                         # 6 built-in tuning definitions + any user-created ones
   model/                           # Pure JS modules (no UI)
     ChordSelector.js               # Chord parsing + voicing selection

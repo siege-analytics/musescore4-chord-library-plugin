@@ -35,7 +35,7 @@ Always plan first, never jump to implementation:
 
 ## Project Overview
 
-A MuseScore Studio 4 plugin for jazz guitar chord voicing management. 820+ curated voicings, runtime calculator for alternate tunings, physically-aware fingering engine with barre detection and difficulty scoring.
+A MuseScore Studio 4 plugin for jazz guitar arrangement. 820+ curated voicings, runtime calculator for alternate tunings, physically-aware fingering engine with barre detection and difficulty scoring, **plus a master-method distillation corpus (34 masters / 15 distilled works / 768 `engine_rules`) governed by a versioned firing-semantics spec** — the corpus is what makes Style and Mode source-traceable rather than hand-tuned.
 
 **Owner**: Dheeraj Chand (Siege Analytics). Jazz guitarist, 7-string player. Will spot impossible fingerings.
 **License**: CC BY 4.0
@@ -241,4 +241,40 @@ Preferences: `preferencesFor(store, masterId)` (walks works), `findPreferenceByI
 
 ---
 
-*Last updated: 2026-05-23*
+## Master distillation layer (engine-rules)
+
+The corpus lives at `plugin/data/masters-corpus/<master>/<work>/derived/engine-rules.json` and is the highest-value artifact in the repo by volume of formal, source-traceable knowledge.
+
+**Current state (2026-06):** 34 masters in `masters.json`, 15 distilled works, **768 `engine_rules`** (750 harmonic + 18 Slonimsky melodic taxonomy-level v0.1). Bundle releases tagged independently: `engine-rules-v0.1.0` → `engine-rules-v0.3.0` (current). Downstream consumer: [ellington-systems](https://github.com/siege-analytics/ellington-systems) (practice-feedback web app) ingests the bundle directly.
+
+### Firing-semantics spec (v0.2)
+
+Authoritative file: `plugin/docs/engine-rules-firing-spec.md`. Defines the contract every `engine_rules.json` must satisfy:
+
+- `when` — conjunctive predicate over chord-context value-shapes
+- `quality_binding` — canonical 36-token set + family-hierarchical matching across Greene's MAJOR/MINOR/DOMINANT/DIMINISHED/AUGMENTED/SUS taxonomy (parent-family fallback)
+- `then` — action / suggestion payload
+- `preference` — signed Likert `[-2,2]` (preference_int), with derived polarity ∈ `{positive, avoid}` from sign
+- `falsifier` — when the rule **would not fire**; required to make coverage gaps reasonable
+- `anchor`, `source_page`, `chapter_n`, `section_title` — provenance required on every rule
+- Top-level `_provenance.schema_version` ∈ `{"0.1","0.2"}` and `min_consumer_version` (Hyrum's-law forward-compat guard)
+
+### Per-file schema gate (#575)
+
+`plugin/schemas/engine-rules.schema.json` validates every `engine-rules.json` file in CI (`tests/test_engine_rules_schema.py`). This is the gate the external-review caught us missing — without it, 768 rules drifted unenforced. Same review caught the masters.json null-year drift (#573) which the CI workflow also wasn't running `test_masters_schema.py` against; both are now gated in `.github/workflows/test.yml`.
+
+### Polarity canonicalization
+
+Spec permits only `polarity ∈ {positive, avoid}`. If a master's source uses different vocabulary (e.g. Bergonzi's `prescriptive`/`proscriptive`), map faithfully to canonical from preference sign and preserve the original tag in `applicability_reasons` — don't relax the schema. Bergonzi's 40 rules were normalized this way in #575.
+
+### Lineage DAG
+
+`masters.json` carries `studied_with` / `influenced` edges across masters. Currently sparse (conservative: only edges biographies make explicit — see #563 draft); grows monotonically as new masters are added with biography prose.
+
+### Bundle release pipeline
+
+`engine-rules-v{X.Y.Z}` git tag → GitHub Actions workflow → Release with `bundle.tar.gz` + `manifest.json` (validated against `plugin/schemas/engine-rules-manifest.schema.json`) + `fixture.json`. The manifest declares `schema_version` and `min_consumer_version` so downstream consumers can refuse mismatched bundles.
+
+---
+
+*Last updated: 2026-06-21*
