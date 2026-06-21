@@ -20,7 +20,7 @@ DATA_PATH = REPO_ROOT / "plugin" / "data" / "masters.json"
 
 @pytest.fixture(scope="module")
 def schema():
-    return json.loads(SCHEMA_PATH.read_text())
+    return json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 
 
 @pytest.fixture(scope="module")
@@ -52,7 +52,7 @@ def _doc(masters):
 # === Positive cases ===
 
 def test_existing_masters_json_validates(validator):
-    data = json.loads(DATA_PATH.read_text())
+    data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
     errors = list(validator.iter_errors(data))
     assert errors == [], [e.message for e in errors]
 

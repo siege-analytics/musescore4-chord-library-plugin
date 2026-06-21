@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/siege-analytics/musescore4-chord-library-plugin/plugin/schemas/engine-rules.schema.json",
+  "title": "Per-file Engine-Rules Schema",
+  "description": "Schema for plugin/data/masters-corpus/<master>/<work>/derived/engine-rules.json files. Derived from firing-semantics spec v0.2 (plugin/docs/engine-rules-firing-spec.md). Per-file gate at PR time; complements the bundle-time validation in scripts/build_engine_rules_bundle.py. Ticket: #575.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["_provenance", "master_id", "work_id", "engine_rules"],
+  "properties": {
+    "_provenance": {
+      "type": "object",
+      "required": ["schema_version"],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "enum": ["0.1", "0.2"],
+          "description": "Spec schema version. v0.2 is current; v0.1 still accepted because every v0.1 rule fires identically under v0.2 per spec."
+        },
+        "run_id": {"type": "string"},
+        "stage": {"type": "string"},
+        "source_pdf": {"type": ["string", "null"]},
+        "extracted_at": {"type": "string"},
+        "model": {"type": "string"},
+        "ticket": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "master_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Master slug, must match a master.id in masters.json."
+    },
+    "work_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Work slug, must match a works[].id under the corresponding master."
+    },
+    "engine_rules": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/EngineRule"}
+    }
+  },
+  "$defs": {
+    "EngineRule": {
+      "type": "object",
+      "required": ["rule_id", "name", "when", "then", "preference", "quality_binding", "anchor"],
+      "properties": {
+        "rule_id": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Unique identifier within this file; convention: <master-or-author>-<short-slug>."
+        },
+        "name": {"type": "string", "minLength": 1},
+        "when": {
+          "type": "object",
+          "description": "Conjunctive (AND) predicate per spec §1. Each value is literal, array (OR), or the string 'any'.",
+          "additionalProperties": {
+            "anyOf": [
+              {"type": "string"},
+              {"type": "number"},
+              {"type": "boolean"},
+              {"type": "array", "items": {"type": ["string", "number", "boolean"]}}
+            ]
+          }
+        },
+        "then": {
+          "type": "object",
+          "description": "Action map; passthrough in v0.1+v0.2 per spec §5. Downstream consumers realize concretely.",
+          "additionalProperties": true
+        },
+        "preference": {
+          "description": "Signed Likert int per spec §4. v0.1/v0.2 ratified after corpus migration #555.",
+          "oneOf": [
+            {"type": "integer", "minimum": -2, "maximum": 2},
+            {"type": "string", "description": "Pre-migration freeform prose; tolerated through transition window."},
+            {"type": "null", "description": "Pre-migration null tolerated; coerces to 0 (neutral) at firing time."}
+          ]
+        },
+        "polarity": {
+          "type": "string",
+          "enum": ["positive", "avoid"],
+          "description": "Derived from preference sign; optional in stored rules (engine computes if absent)."
+        },
+        "quality_binding": {
+          "type": "array",
+          "description": "Hard prefilter per spec §2. Canonical chord-quality tokens (family parents + specific qualities). Non-canonical values should move to applicability_reasons per spec §2.4 / #555 migration; tolerated here for legacy entries.",
+          "items": {"type": "string"}
+        },
+        "applicability_reasons": {
+          "type": "array",
+          "description": "Authorial annotations on WHY the rule applies (e.g. voice_leading, clarity, playability). Distinct from quality_binding which gates WHEN.",
+          "items": {"type": "string"}
+        },
+        "falsifier": {
+          "type": ["string", "null"],
+          "description": "Prose-only in v0.1/v0.2 per spec §7. Surface in review UI; engine does not machine-evaluate."
+        },
+        "anchor": {
+          "type": "string",
+          "description": "Verbatim short quote from source supporting the rule."
+        },
+        "source_page": {
+          "type": ["integer", "null"],
+          "description": "Page number in the source PDF; null for sources without paginable page references."
+        },
+        "chapter_n": {"type": ["integer", "null"]},
+        "section_title": {"type": ["string", "null"]},
+        "_provenance": {"type": "object", "description": "Per-rule provenance (optional override of file-level)."}
+      },
+      "additionalProperties": true
+    }
+  }
+}
