@@ -28,7 +28,7 @@
         "min7",
         "sus4"
       ],
-      "polarity": "proscriptive",
+      "polarity": "positive",
       "falsifier": "A passage that equates denser note-filling with superior improvisation",
       "anchor": "More notes per bar is not better than a few, just different.",
       "source_chapter": 1,
@@ -37,7 +37,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "rhythmic variety vs. density",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-proscriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-rhythmic-awareness-primary",
@@ -55,7 +58,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Improvisation that ignores bar position",
       "anchor": "your awareness of where you are in the bar",
       "source_chapter": 1,
@@ -64,7 +67,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "rhythmic variety vs. density",
         "level": "paragraph"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-bar-line-independence",
@@ -84,7 +90,7 @@
         "min7",
         "sus4"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "A grouping that always begins and ends on beat one",
       "anchor": "play them independent of bar lines",
       "source_chapter": 1,
@@ -93,7 +99,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "playing over bar lines",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-mental-grouping-articulation",
@@ -111,7 +120,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Playing without internal grouping conception that produces undifferentiated articulation",
       "anchor": "How I'm thinking about these groupings of notes will effect the articulation of the lines.",
       "source_chapter": 1,
@@ -120,7 +129,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "disconnected note groupings",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-five-note-polyrhythm-gateway",
@@ -139,7 +151,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Five-note groupings used only without polyrhythmic awareness",
       "anchor": "begin hearing polyrhythms. For example, take a five-note grouping",
       "source_chapter": 1,
@@ -148,7 +160,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "polyrhythm via note groupings",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-five-note-duration-flex",
@@ -168,7 +183,7 @@
         "min7",
         "sus4"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Five-note group always played at one fixed duration",
       "anchor": "The five notes can be played as 1 beat or 1 1/2 beats. 2 beats, 3 beats, or + beats, etc.",
       "source_chapter": 1,
@@ -177,7 +192,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "five-note grouping duration flexibility",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-22-rhythms-no-sixteenth",
@@ -198,7 +216,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "proscriptive",
+      "polarity": "positive",
       "falsifier": "Sixteenth note or triplet used within the 22-rhythm chapter exercise set",
       "anchor": "Sixteenth notes and triplets have been purposely omitted at this point.",
       "source_chapter": 1,
@@ -207,7 +225,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "22 one-bar rhythms exercise",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-proscriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-22-rhythms-embodied",
@@ -224,7 +245,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Rhythm practiced purely intellectually without physical internalization",
       "anchor": "feel the rhythm inside your body",
       "source_chapter": 1,
@@ -233,7 +254,10 @@
         "chapter_title": "Notes Per Bar",
         "section_title": "22 one-bar rhythms exercise",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-rhythm-displacement-early-late",
@@ -256,7 +280,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Rhythm always played at its notated position without displacement",
       "anchor": "you can play each rhythm one beat early, or two beats early, or one beat late",
       "source_chapter": 2,
@@ -265,7 +289,10 @@
         "chapter_title": "22 Rhythms",
         "section_title": "Rhythm displacement concept",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-half-beat-displacement-distinct",
@@ -287,7 +314,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Half-beat displacement treated as a mere timing shift without perceptual effect",
       "anchor": "displacing a rhythm 1/2 of a beat, or 1 1/2 beats, or 2 1/2 beats, you create entirely different sounding rhythms at times.",
       "source_chapter": 2,
@@ -296,7 +323,10 @@
         "chapter_title": "22 Rhythms",
         "section_title": "Half-beat displacement effect",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-4-eighth-displacement-8-positions",
@@ -315,7 +345,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Skipping any of the eight entry points before randomization",
       "anchor": "displace the grouping by starting on eight different place#in the bar.",
       "source_chapter": 3,
@@ -324,7 +354,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "Eighth-note displacement method",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-harmony-anticipation-late-entry",
@@ -348,7 +381,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Late entry positions that resolve only to the current chord",
       "anchor": "For #6, #7, and #8, the harmony can be anticipated.",
       "source_chapter": 3,
@@ -357,7 +390,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "Harmony anticipation rule",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-last-eighth-next-chord",
@@ -376,7 +412,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Position 5 ending on current-chord tone rather than next-chord tone",
       "anchor": "On this rhythm the last eighth note would sound the next chord.",
       "source_chapter": 3,
@@ -385,7 +421,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "Chord anticipation on beat 5 grouping",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-combine-multi-bar-rhythms",
@@ -408,7 +447,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Practicing only isolated one-bar patterns after mastering individual displacement",
       "anchor": "Combine two of the one-bar rhythms. Create a two-bar rhythm and play it through a tune.",
       "source_chapter": 3,
@@ -417,7 +456,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "Combining one-bar rhythms",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-3-over-4-superimposition",
@@ -435,7 +477,7 @@
       "quality_binding": [
         "dom7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Three-note grouping assumed to be 3/4 superimposition without tracking resolution cycle",
       "anchor": "This is a 3/4 pattern which takes three bars of 4/4 to work out.",
       "source_chapter": 3,
@@ -444,7 +486,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "3/4 over 4/4 superimposition",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-random-entry-after-drill",
@@ -464,7 +509,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Randomization used before completing ordered position drilling",
       "anchor": "Try playing four consecutive eighth notes on different beats randomly",
       "source_chapter": 3,
@@ -473,7 +518,10 @@
         "chapter_title": "Eighth-note rhythms",
         "section_title": "Random beat placement exercise",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-5-eighth-all-entry-points",
@@ -492,7 +540,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Skipping any entry point before moving to randomization",
       "anchor": "practice playing five consecutive eighth notes beginning on these eight",
       "source_chapter": 4,
@@ -501,7 +549,10 @@
         "chapter_title": "Playing five consecutive eighth notes",
         "section_title": "Five Consecutive Eighth Notes",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-5-note-bar-cross-anticipation",
@@ -525,7 +576,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Bar-crossing five-note group at position 5-7 that ignores next-chord anticipation",
       "anchor": "For #5, #6, and #7, the eighth notes before crossing the bar line can either anticipate the next",
       "source_chapter": 4,
@@ -534,7 +585,10 @@
         "chapter_title": "Playing five consecutive eighth notes",
         "section_title": "Eighth Notes Crossing Bar Line",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-5-note-randomize-after-drill",
@@ -553,7 +607,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Random practice before completing all eight ordered positions",
       "anchor": "Start five consecutive eighth notes on different beats randomly",
       "source_chapter": 4,
@@ -562,7 +616,10 @@
         "chapter_title": "Playing five consecutive eighth notes",
         "section_title": "Mixing Entry Points",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-window-in-mind-form",
@@ -579,7 +636,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Displacement practice treated as purely mechanical with no perceptual goal",
       "anchor": "Practicing with these devices opens up a window in the part of the mind that hears bigger",
       "source_chapter": 4,
@@ -588,7 +645,10 @@
         "chapter_title": "Playing five consecutive eighth notes",
         "section_title": "Polyrhythm and Form Awareness",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-3-over-4-upbeat-variant",
@@ -607,7 +667,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "3/4 superimposition always anchored to beat 1",
       "anchor": "another 3/4 pattern over 4/4 which starts on the \"and\" of beat",
       "source_chapter": 5,
@@ -616,7 +676,10 @@
         "chapter_title": "Playing six consecutive eighth notes",
         "section_title": "Polyrhythm: 3/4 over 4/4 (off-beat)",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-7-over-4-superimposition",
@@ -635,7 +698,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Seven-beat grouping abandoned before the eight-bar resolution point",
       "anchor": "Here is a 7/4 pattern over 4/4.",
       "source_chapter": 5,
@@ -644,7 +707,10 @@
         "chapter_title": "Playing six consecutive eighth notes",
         "section_title": "Polyrhythm: 7/4 over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-9-over-4-superimposition",
@@ -662,7 +728,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": null,
       "anchor": "Here is a 9/4 pattern over 4/4,",
       "source_chapter": 5,
@@ -671,7 +737,10 @@
         "chapter_title": "Playing six consecutive eighth notes",
         "section_title": "Polyrhythm: 9/4 over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-5-over-4-superimposition",
@@ -689,7 +758,7 @@
       "quality_binding": [
         "dom7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "5/4 pattern abandoned before six-bar resolution cycle completes",
       "anchor": "This is a 5/4 pattern over 4/4.",
       "source_chapter": 5,
@@ -698,7 +767,10 @@
         "chapter_title": "Playing six consecutive eighth notes",
         "section_title": "Polyrhythm: 5/4 over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-7-note-three-harmonic-roles",
@@ -722,7 +794,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Late entry positions restricted to only one harmonic role",
       "anchor": "these eighth notes can anticipate the next chord, or they can be approach notes to the next chord, or they can sound the chord of the moment.",
       "source_chapter": 6,
@@ -731,7 +803,10 @@
         "chapter_title": "Playing seven consecutive eighth notes",
         "section_title": "Eighth notes anticipating next chord",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-integrate-superimposition-random-starts",
@@ -749,7 +824,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Superimposition exercises never integrated back into free random-start playing",
       "anchor": "After practicing #10-14 go back and try #9 again using\n\nsome of these time signature devices.",
       "source_chapter": 6,
@@ -758,7 +833,10 @@
         "chapter_title": "Playing seven consecutive eighth notes",
         "section_title": "Applying time-signature devices",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-7-note-randomize-entry",
@@ -777,7 +855,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Random starts before completing all eight ordered positions",
       "anchor": "Try starting six consecutive eighth notes form different beats randomly, for example:",
       "source_chapter": 6,
@@ -786,7 +864,10 @@
         "chapter_title": "Playing seven consecutive eighth notes",
         "section_title": "Random starting-beat practice",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-eight-position-grid-definition",
@@ -813,7 +894,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Fewer than eight positions treated as the full set",
       "anchor": "1. Starting on beat one.\n\n2. Starting on the \"and\" of beat one.\n\n3. Starting on beat two.\n\n4. Starting on the \"and\" of beat two.",
       "source_chapter": 8,
@@ -822,7 +903,10 @@
         "chapter_title": "Playing two consecutive eighth notes",
         "section_title": "Starting Points",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-11-over-4-superimposition",
@@ -840,7 +924,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": null,
       "anchor": "This is an 11/4 pattern over 4/4.",
       "source_chapter": 8,
@@ -849,7 +933,10 @@
         "chapter_title": "Playing two consecutive eighth notes",
         "section_title": "11/4 Pattern over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-6-over-4-superimposition",
@@ -867,7 +954,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": null,
       "anchor": "This is a 6/4 pattern over 4/4.",
       "source_chapter": 8,
@@ -876,7 +963,10 @@
         "chapter_title": "Playing two consecutive eighth notes",
         "section_title": "6/4 Pattern over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-polyrhythm-loop-close-integration",
@@ -893,7 +983,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Polyrhythm exercises never fed back into free-start context",
       "anchor": "After practicing #10-14 go back and try #9 again using some of these time signature devices,",
       "source_chapter": 8,
@@ -902,7 +992,10 @@
         "chapter_title": "Playing two consecutive eighth notes",
         "section_title": "Applying Polyrhythms to Random Starts",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-triplet-3-displacement",
@@ -921,7 +1014,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Triplet displacement restricted to downbeat starts",
       "anchor": "practice playing groupings of three consecutive eighth notes starting on\ndifferent places within the bar.",
       "source_chapter": 9,
@@ -930,7 +1023,10 @@
         "chapter_title": "Triplet groupings",
         "section_title": "Consecutive eighth note groupings",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-odd-meter-over-4-4-triplet",
@@ -947,7 +1043,7 @@
       "quality_binding": [
         "dom7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Odd-meter exercises played by actually changing felt meter rather than superimposing",
       "anchor": "The following exercises, 10-13, are written out in varying time signatures but should be played\nsuperimposed over",
       "source_chapter": 9,
@@ -956,7 +1052,10 @@
         "chapter_title": "Triplet groupings",
         "section_title": "Odd meters over 4/4",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-triplet-selective-silencing",
@@ -974,7 +1073,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "All six triplet subdivisions sounded, eliminating the rhythmic texture of selective silencing",
       "anchor": "only four of the six notes are sounded.",
       "source_chapter": 9,
@@ -983,7 +1082,10 @@
         "chapter_title": "Triplet groupings",
         "section_title": "Triplet groupings",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-melodic-displacement-triplet-internalization",
@@ -1002,7 +1104,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Melodic displacement skipped in favor of only abstract rhythmic drilling",
       "anchor": "try playing the same four-note melody starting on the differ-\n\nent beats",
       "source_chapter": 10,
@@ -1011,7 +1113,10 @@
         "chapter_title": "Five consecutive eighth-note triplets",
         "section_title": "Melodic displacement exercise",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-triplet-randomize-after-drill",
@@ -1029,7 +1134,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Random triplet groupings used before completing ordered position drilling",
       "anchor": "16, Practice plaving these preceding triplet groupings randomly.",
       "source_chapter": 10,
@@ -1038,7 +1143,10 @@
         "chapter_title": "Five consecutive eighth-note triplets",
         "section_title": "Randomized triplet groupings",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-7-over-4-triplet-superimposition",
@@ -1055,7 +1163,7 @@
       "quality_binding": [
         "dom7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": null,
       "anchor": "Try this 7/4 rhythm over 4/4.",
       "source_chapter": 11,
@@ -1064,7 +1172,10 @@
         "chapter_title": "Six consecutive eighth-note triplets",
         "section_title": "7/4 over 4/4 rhythm",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-6-triplet-random-free",
@@ -1084,7 +1195,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Random triplet starts used before completing the ordered drill",
       "anchor": "Practice playing six consecutive eighth-note triplets randomly.",
       "source_chapter": 11,
@@ -1093,7 +1204,10 @@
         "chapter_title": "Six consecutive eighth-note triplets",
         "section_title": "Random triplet practice",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-7-triplet-randomize",
@@ -1113,7 +1227,7 @@
         "maj7",
         "min7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": "Random starts used before completing ordered triplet drilling",
       "anchor": "15. Practice playing seven consecutive eighth-note triplets randomly.",
       "source_chapter": 12,
@@ -1122,7 +1236,10 @@
         "chapter_title": "Seven consecutive eighth-note triplets",
         "section_title": "Random Triplet Practice",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     },
     {
       "rule_id": "bergonzi-5-over-4-triplet-superimposition",
@@ -1139,7 +1256,7 @@
       "quality_binding": [
         "dom7"
       ],
-      "polarity": "prescriptive",
+      "polarity": "positive",
       "falsifier": null,
       "anchor": "1+. Try this 5/4 rhythm over 4/4.",
       "source_chapter": 12,
@@ -1148,7 +1265,10 @@
         "chapter_title": "Seven consecutive eighth-note triplets",
         "section_title": "5/4 Over 4/4 Rhythm",
         "level": "section"
-      }
+      },
+      "applicability_reasons": [
+        "bergonzi-prescriptive"
+      ]
     }
   ]
 }
