@@ -61,7 +61,7 @@
           "description": "Master-local kebab id (e.g. '1939-method', 'harmonic-mechanisms'). '_placeholder:' prefix marks a work whose interior is pending research; its systems[] may be empty or absent."
         },
         "title": { "type": "string", "minLength": 1 },
-        "year": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+        "year": { "anyOf": [{ "type": "string" }, { "type": "number" }, { "type": "null" }] },
         "instrument_scope": { "type": "string" },
         "summary": { "type": "string" },
         "systems": {
