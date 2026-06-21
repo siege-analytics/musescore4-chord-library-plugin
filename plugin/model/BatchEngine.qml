@@ -5,6 +5,7 @@ import "Transposer.js" as Transposer
 import "DiagramEngine.js" as DiagramEngine
 import "ChordScales.js" as ChordScales
 import "FingeringEngine.js" as FingeringEngine
+import "DebugLog.js" as DebugLog
 
 // BatchEngine.qml — Walkthrough/batch voicing state machine.
 // Extracted from ChordLibrary.qml (B1, #100).
@@ -672,7 +673,7 @@ Item {
         }
 
         if (!cursor.segment || cursor.tick !== targetTick) {
-            console.log("Voice2 export: could not find tick " + targetTick)
+            DebugLog.warn("Voice2 export: could not find tick " + targetTick)
             return false
         }
 

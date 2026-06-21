@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import "Transposer.js" as Transposer
+import "DebugLog.js" as DebugLog
 
 QtObject {
     id: inserter
@@ -20,12 +21,12 @@ QtObject {
             var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
             _hasSetDot = (typeof fd.setDot === "function")
             if (_hasSetDot) {
-                console.log("setDot() API detected — using direct insertion")
+                DebugLog.log("setDot() API detected — using direct insertion")
             } else {
-                console.log("setDot() not available — using clipboard workaround")
+                DebugLog.log("setDot() not available — using clipboard workaround")
             }
         } catch (e) {
-            console.log("Could not probe setDot(): " + e)
+            DebugLog.warn("Could not probe setDot(): " + e)
             _hasSetDot = false
         }
         return _hasSetDot
@@ -191,7 +192,7 @@ QtObject {
             }
         }
 
-        console.log("No chord symbol found — inserting in original key (" + voicing.root + ")")
+        DebugLog.warn("No chord symbol found — inserting in original key (" + voicing.root + ")")
         return voicing.root
     }
 
@@ -216,8 +217,8 @@ QtObject {
 
         var targetRoot = resolveTargetRoot(voicing, score)
         var xml = generateMscxSnippet(voicing, targetRoot)
-        console.log("Generated .mscx snippet for " + voicing.name + " → " + targetRoot + ":")
-        console.log(xml)
+        DebugLog.log("Generated .mscx snippet for " + voicing.name + " → " + targetRoot + ":")
+        DebugLog.log(xml)
 
         // Create FretDiagram element via the plugin root's newElement
         try {
