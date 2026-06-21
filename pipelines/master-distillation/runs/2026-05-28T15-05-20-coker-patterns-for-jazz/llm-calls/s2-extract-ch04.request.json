@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Major Scales\nPages 16-22 of the book.\n\n<<<CHAPTER TEXT\n\n13\nd=160-208\nCM6\nDbM6\nDm6\nNote: Each chord lasts two measures.\nEBM6\nEM6\nFM6\nGbM6\nGM6\n(continue in same manner)\nAbM6\nAm6\nBbM6\nBm6\nCm6\n14\nd=152-208\nCM6\nDM6\nEM6\nGbM6\nAbM6\nBbM6\nCm6\nDbM6\n(continue in same manner)\nEbM6\nFm6\nGm6\nAm6\nBm6\nDbM6\n10\n\n\u2669=138-192\n15\nCM6\nF#M6\nBbM6\nEbM6 AbM6 DbM6 GbM6 Bm6 Em6 Am6 Dm6 Gm6 Cm6\n(continue in same manner)\n\n\u2669=138-192\n16\nCM6\nEbM6 G#M6 Am6\nF#M6 AbM6 Bm6 Dm6 BbM6 DbM6 Em6 Gm6\n(continue in same manner)\n\n\u2669=100-144 Note: Each chord lasts two beats.\n17\nCM6 DbM6 Dm6 EbM6 Em6 F#M6\nGbM6 Gm6 AbM6 Am6 BbM6 Bm6 Cm6\n(continue in same manner)\n11\n\n=160-208\nNote: Each chord lasts two measures.\n18\nCm7\nEbm7\nGbm7\nAM7\nFM7\nAbM7\nBM7\nDM7\n(continue in same manner)\nBm7\nDbm7\nEm7\nGm7\n=138-192\n19\nCm7\nFM7\nBbM7\nEbM7\nAbM7\nDbM7\nGbM7\nBm7\nEm7\nAm7\nDm7\nGm7\nCm7\n(continue in same manner)\n12\n\nd=88-120\nNote: Each chord lasts three beats.\n20\nCM7\nDM7\nEM7\nGbm7\nAbm7\nBbm7\nCm7\n(continue in same manner)\nDbm7\nEbM7\nFM7\nGm7\nAm7\nBm7\nDm7\n(continue in same manner)\n21\nCM7\nDbm7\nDM7\nEbM7\nEM7\nFM7\nGbm7\nGm7\nAm7\nBbm7\nBm7\nCm7\n(continue in same manner)\nd=80-120\nNote: Each chord lasts two beats.\n22\nCM7\nDbm7\nDM7\nEbM7\nEM7\nFM7\n(ascending)\n(descending)\n(continue in same manner)\nGbM7\nGm7\nAbM7\nAm7\nBbm7\nBm7\nCm7\nApply the same principle of alternating the ascending and descending forms to the chords in patterns No. 18, 19 and 20.\n(Be sure to group chords so that two will be in each measure, giving each chord two beats\u2014as in pattern No. 22.)\n13\n\nae 80-120 Note: Each chord lasts two beats.\n\nUhm M7\n\nCM\n\nSs\n\nebm\nZG\n\nJ TF Taz\n23 om +\u2014\u20144, +g 0 ae iT\n(descending) * (ascending) (continue in same manner}\n\nCM\n\nfmt GM AMT AMI\n\na a\n\nBIM7 BM\n\nvA \u2014.\n\n{\u2014\n\nfof\n\nLL\n\nvi\ni 7\n\ni awe\n\nApply the same principle of alternating the descending and ascending forms to the chords in patterns\n\nNo. 18, 19 and 20.\n\n(Be sure to group chords so that there are two in each measure, giving each chord two beats, as in\n\npattern No. 23.)\n\nje 106+ (82 Note: Two measures per chord, ending on \u201cthird\u201d of chord.\n\nm9\n\naot\n\nEIMa\n\n\u201cos\n\nA\n\n4\n\ni=\n\nnl {_ +\niN Ly git\n7 f T\n\nMOF re\n\nAM\n\nm4\n\nGina\n\nLif]\n\n(tt\n\n7m\nZ\n\nL\nZ\n\nif\nTT\n\na ae ae |\n\n(continue in same manner)\n\nomg\n\nDbm4\n\nvu\n\nLy fT fT\n\nL\nra\n\nL.\n\nEE\n\nvA\nt\n\nLiv\u2018?\n\n14\n\n\nd=BB-120\nNote: Five beats per measure.\n25\nCM9\nDbM9\nDm9\nEbM9\n(continue in same manner)\nEM9\nFM9\nGbM9\nGm9\nAbM9\nAm9\nBbM9\nBm9\nCm9\nd=100-144\nNote: Each chord lasts two measures.\n26\nCM9\nFm9\nBbM9\n(continue in same manner)\nEbM9\nAbM9\nDbM9\nGbM9\nBbM9\nEM9\nAm9\nDm9\nGm9\nCm9\nd=BB-120\nNote: Three beats per measure.\n27\nCM9\nDm9\nEm9\nGbM9\nAbM9\nBbM9\nCm9\nDbM9\nEbM9\nFm9\nGm9\nAm9\nBm9\nDbM9\n15\n\n4288-120\n\nMa a Fmq\n.f SSS j\n\n4\n\nre _\u2014\nse eee ta Dre ee IaT\n\n~ F\n, | 5 5558 757 470 753 |\n\nEbma Ama\nWii 7 oo a1 FETT\n\nvan T\n7 FA |S A SY 7 A OT Pe RY | Fa | A a |\na a a) a a 1 ye A A a | a a oA /\n\nUp to this point, our main concern has been the exercising of the four related rypes of major chords,\nformed by extracting their respective tones from the major scale of the chord root. Now we will\nconcern ourselves with various patterns on the scale (major) itself. You will notice that the chord\n\nsymbols for the following patterns will be those of the major triad. However, the student must bear\nin mind that the major triad, M6, M7, and M9 chords all use the same basic scale: the major scale\n\nof the chord root. For example, a C, CM6, CM7, and CM9 will all share the C major scale. The use\nof the triad symbol in the following patterns is merely for convenience, since it would be impossible\nto determine exactly which chord is being used when the scale is common to all the chords mentioned.\n\n5David Baker, \u201cStrarusphunk,\u201d on Stratusphunk (Riverside 341), George Russell Sextet. Baker\u2019s trombone solo\nillustrates not only pattern No. 28, but some of its permutations (remakings) as well. For example, this\nPattern may be ditered to fit other types of chords, so that it would be possible to reconstruct the pattern on each\nnote of a given scale (see Figure 24, p. 81) staying within the key signature throughout. Ir would also be pos-\nsible, as Baker illustrates, to move the pattern chromatically, progressing up or down in half-steps, if the music\nis free enough to permit such movement.\n\n16\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

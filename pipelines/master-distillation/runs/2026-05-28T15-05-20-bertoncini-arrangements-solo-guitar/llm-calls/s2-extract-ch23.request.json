@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch23",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 23: Waltz For Debbie/Very Early\nPages 70-73 of the book.\n\n<<<CHAPTER TEXT\n\n59\n63\n67\n71\n75\n80\n84\n66\n(contrarily)\n\nVery Early\n\nB\u2019sus\n1\n\nK\nw |D) Cma\u2019\n\nbe Be\n\nka\n\nComp, Bill Evans\nArr. Gene Bertoncini\n\navi) we,\n\nT\n-o\n\n\u2014 \u2014- 7]\n\nae \u2014\u2014\u2014\u20144\n\nrh 7\n\n\u2014 >\n| i\n\n-\n\n\u2014\u2014\u2014\n\nBei\n\naris\"\n\ny\n\nDerma\u2019\nMy ba. \u201c\n= 4\n\u2019\n\nFemi!\nvi\n\nfh\n\nee,\n\nI\n\nBn)\ntds\n\nEmi!\n\nre\n\nbs\n\n67\n\n\nis Dbma\u2122 = Gu) at Arai? ay) yh\n= =\nOm 3 ' Fe\nii Dm Emi\u2019 Fina? Ga Cima\u2019 gris\n\u201cae 1 bere we\na 5 = ra \u2014 + 7 +\ni ; 3s fF 5\nDS. al Coda\n(Improvise on changes until E)\n\na\n127 vit = 1.0\n\u2014 < | =\n= a\nee BE\nty\n68\n\n\n\nTheme From \"Bang the Drum Slowly\"\n\nComp. Steven Lawrence\nand Bruce Hart\nArr, Gene Bertoneini\n\n[A (Intro- \"Streets of Loredo\")\n\n\u00ae=D Pensively = = 5 = =e sd\n5 | | A Ee fa = =\nes ee\n\u201cpip J dd dt\nij\n\u2014\u2014\u2014 A 3\n= = = \u2014\u2014\u2014\u2014|\n\u2014\u2014\u2014f re\n\n= Pr , \" Z = i | =\n4!\n\u2014\u2014\u2014 a\nc co a a a aa Fe\nP |\n\" : q | z = =\na\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 23 extraction"
+}

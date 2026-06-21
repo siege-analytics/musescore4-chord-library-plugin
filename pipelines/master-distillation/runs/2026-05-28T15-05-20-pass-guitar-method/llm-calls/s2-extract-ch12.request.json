@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: GRETE\nPages 32-34 of the book.\n\n<<<CHAPTER TEXT\n\nAlison\nJOE PASS\n\nsimile\nTo Coda\n\nA7\n\nAb13\n\nG13\n\nF13\nD.S. al Coda\n\nCoda\n(Bb7)\n\nCopyright \u00a9 1976 by Pablito Publishing Company\n\u00a9 1977 under U.C.C. by Pablito Publishing Company\nChappell & Co., Inc., administrator for the world\nInternational Copyright Secured/ALL RIGHTS RESERVED\n\nEXAMPLE CHANGES FOR IMPROVISING\nBb7 G13 Cm7 F7 D7 G7 C7 F7 Bb Bb7 E\u266d Edim | Dm7 G7 Cm7 F7 | Cm7 F7 Bb\n\nJOE PASS\n\nsimile\n\nEm7\n\nneh\n\nphe\n\nFine Fast 4\n\nC/A\n\n=\n\na\n\nEb/D\n\nE/D 3\n\u2014\nFtm7\n\nAT\n\nre\n\nae\n\nD\n\n3\n\nGm7\n\nG\n\nST\n\n3\n\n8V0-- = ee ee re ee ee re ee ee ee ee eee eerie\n\nat\n\nFm7\n\no-\n\nBVA = - ee er ee rr ny\n\nSlow 4\n\nhe\nf+\n\u2014y en\na)\nZe\nhe\n\n4\n\nGrete\n\nyamine:\n\n32|\n\nA\n\nD. C. al Fine\n\na he\n\nz\n\nas\nvam a\n2s:\n\nfs\n+4\nWV eo\n\nInternational Copyright Secured/ALL RIGHTS RESERVED\n\n\u00a91977 under U.C.C. by Pablito Publishing Company\n\nCopyright \u00a9 1976 by Pablito Publishing Company\nChappell & Co., Inc., administrator for the world\n\n\nchappell music company\nA POLYGRAM\nCOMPANY\nDistributed by\nHAL LEONARD PUBLISHING CORPORATION\nU.S. $4.95\nHLOC 734\n1347\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

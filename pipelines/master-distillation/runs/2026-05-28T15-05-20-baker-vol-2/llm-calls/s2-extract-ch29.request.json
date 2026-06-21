@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch29",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 29: Just Bobi\nPages 49-49 of the book.\n\n<<<CHAPTER TEXT\n\nJUST BOBI \u201c\n\nMICKEY BAKER\n\nG13b9 Cmaj7 Cmaj6 HHt\nNot too Slowly _ Cmaja | gd dd cmaj7 cmaje\n2 gb 8 be = Z \u2014o\nT | 2 =\ned a\nGm6 7b9 Fm9 Fm Db Eb7b9 Abmaj9\n7: a\note \u00a7 +6 be be 5 4\n5 = op Pee z\nG = | j- |\nf f f\nC3\nAbmaj6 Gil G7>5. EL? Abmaj? G7 G+T 3\nh\u2014 , <p 2 Q\nSa << \u00b0 =o Z\n*\u201d rru Ht Key +\nDv Rey\neT ft b 5\n\u00e9 .\n2g 2 4 2 bg \u00a2 2 bE p3\u2014\u2014\u2014&\n# Ley i Ley rs + p pp\ne -\u2014\noe = = t\nG13>9 Cmaj\u00e96\n2 e | \u2014| |_|\n\" ri. Med Le if G\n: : a5 =z \u00a2\nor r s oT\nEm9 Am6 Dmaj9 Dm6 Dm9 Dm6\n2 oe \u2018oa rg a = =\n$$ or if <= =F\n6 t z Hz ee\nT 1\nT\n\nx] | | \u2014\u2014\npas? g24 , ge fe 6 es\n\u20ac ;\n\n-\nHH\nWa\nx\n\u00b0\nQt\nCoulee\n\nJ\n$146\n\nT1T2 T3 T4 Til\n\n\u00a9 Copyright 1959 Lunik Music (BMI) Used by Permission\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 29 extraction"
+}

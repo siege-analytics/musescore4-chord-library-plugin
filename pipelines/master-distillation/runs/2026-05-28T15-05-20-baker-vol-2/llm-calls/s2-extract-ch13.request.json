@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch13",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 13: Symetric Harmony\nPages 21-21 of the book.\n\n<<<CHAPTER TEXT\n\n19\n\nENDINGS\nEx. 30\n$e = - SS SS\ns G ri. --------- eee ee\nv I\nb G7 Dm Dm9 G13b9  Cmaj69\n7a SS BS\nESS =\nrit, - - - Em ------\nVv I\n. Dm Fm Cmaj7 Cmaj6\n9 \u2014+\u2014ts_'e $f _f\nott f f } a \u2014\u2014\u2014\u2014\ni f\nvit, -------+--+--\nVv I\n\nLESSON 13\n\nSymetric Harmony\n\nSymetric Harmony differs greatly from Diatonic Harmony. There is no key sig-\nnature involved in Symetric Harmony and chords progress freely in this system of music.\n\nWe are not interested in the extreme ends of Symetric Harmony, however, there area\nfew things that can be done on the guitar that create \"tremendous\" effects. This harmony\nis introduced into the picture at the \"Cadence\". With endings you use the Symetric Har-\nmony at the tonic chord. In eight and sixteen bar sequences it is used at the \"Cadence\u2122\n\nbreaks.\n\nIn this lesson we have a diminished 7th chord which moves freely up and down the finger\nboard in minorthirds. Exercise 31 illustrates the chord in its proper position all the way\nup the finger board. Simply follow the diagram and read the musical examples directly\nbelow it. See Exercise 31. Notice that below each chord of the musical example there is\na small \"T\"' and a number. The \"T\" represents the word, Tonic\"; thenumber represents\nthe tonic chord being employed.\n\nAs I mentioned before, there is no key in Symetric Harmony, therefore, every chord you\nplay is, in actuality, the tonic. There can be as many tonics as you desire in Symetric\nHarmony. In order to avoid confusion, in this example and the examples to follow, we\nwill use only 4 tonics; starting with \u201cT1\" and ending with \"T1\u201d anoctave higher. This di-\nvides the 12 tone scale into 4 equal parts.\n\nA diminished chord is built on a succession of minor thirds. If you play a diminished\nchord on the guitar and move it up a minor third, the same tones will appear but in a dif-\nferent arrangement, which means, each tone in the chord is actually the root or the tonic\n(See Exercise 31b).\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 13 extraction"
+}

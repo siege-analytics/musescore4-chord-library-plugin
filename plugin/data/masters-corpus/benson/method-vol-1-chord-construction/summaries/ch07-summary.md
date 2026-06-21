@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-22T21-15-00-benson-vol-1
+stage: s3
+source_pdf: THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf
+source_pages: 242-311
+model: qwen2.5:72b
+extracted_at: 2026-05-22T21:27:39+00:00
+schema_version: 0.1
+---
+
+# Chapter 7 — Leading Tone & How Other Scales Appeared
+
+_Distillation; backed by `chapters/ch07.md`._
+
+Chapter 7 builds its entire framework on the functional definition of the leading tone as the VII degree of the Natural Major Scale, the half-step tension that the Natural Minor lacked and that historically motivated raising its VII to produce the Harmonic Minor Scale, followed by the Melodic Minor Scale (originally ascending-only, now treated per the Bach Scale as one symmetric form) and Rimsky-Korsakov's mid-twentieth-century Harmonic Major Scale. These three new families each generate seven scale modes (deliberately called scale modes rather than harmonic fields), and the chapter is emphatic that their derived chord families are not progression-guiding structures but coloristic devices that add tension on top of existing chords. Load-bearing interval spellings are given for each parent mode (Im Harmonic Minor with min 3rd/min 6th/maj 7th, Im Melodic Minor with min 3rd/maj 6th/maj 7th, I Harmonic Major as major scale with b6) and for the signature derived modes the families produce: the VII Altered Scale, bIII Lydian Augmented, and IV Lydian Dominant from Melodic Minor, plus Harmonic Major's bVI Lydian Augmented (#2/#5) and VIIm Locrian (bb7), the latter sourcing o7(b13) and (11) colors. Each mode is specified by avoid notes and characteristic notes (e.g., Am(maj7) avoids the minor 6th and features the major 7th), and a recurring VERY IMPORTANT rule clarifies that extended notes need not sit in the voicing - many belong only as passing tones in the melody over the chord. The master's characteristic moves are pedagogical: a universal fretboard-visualization rule restated for each family (locate the chord's bass-note root on the 5th and 6th strings only, with 4th-string chords deferred until comfort), plus the study devices of practicing harmonic fields in the same key, always with a rhythmic feel (funk, swing), and choosing chords close to one another for proximity. The terminology this chapter makes load-bearing is leading tone, scale modes, derived chord families as color, avoid/characteristic notes, Bach Scale, Altered, Lydian Augmented, Lydian Dominant, and Locrian bb7.

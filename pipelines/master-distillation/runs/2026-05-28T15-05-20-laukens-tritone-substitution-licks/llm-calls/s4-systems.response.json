@@ -1,0 +1,104 @@
+{
+  "master_id": "dirk-laukens",
+  "work_id": "tritone-substitution-licks",
+  "systems": [
+    {
+      "id": "dirk-laukens:tritone-substitution-licks:tritone-sub-soloing-framework",
+      "name": "Tritone Substitution Soloing Framework",
+      "summary": "This is the book's single central system. It operates over the II V I progression by substituting the V7 chord with a dominant 7th chord whose root lies a tritone away (subV7), then prescribing four reusable soloing options — dom7 arpeggio, dom9 arpeggio, major pentatonic, and Mixolydian mode — each applied over the substitute chord. The system's defining move is tone-mapping: every scale degree of each soloing option is analytically traced back to its altered-extension function (b9, #11, b13) on the original V7. Avoidance and approach-note rules govern specific tones within each option to ensure idiomatic phrasing, and chromaticism is sanctioned as a voice-leading device to connect the substituted bar to the tonic resolution. The entire framework is explicitly designed to be transposed intact to any key, making transposition a first-class traversal rule rather than an afterthought.",
+      "members": [
+        {"id": "ii-chord", "name": "ii chord (minor 7)", "summary": "The Dm7 chord occupying bar 1 of the canonical II V I; soloed over with Dorian, Dorian bebop, or a matching arpeggio."},
+        {"id": "original-v7", "name": "Original V7 chord (G7)", "summary": "The unsubstituted dominant 7th in bar 2; serves as the harmonic reference against which all altered-tone labels (b9, #11, b13) are calculated."},
+        {"id": "sub-v7", "name": "Substitute V7 / subV7 (Db7)", "summary": "The tritone-substituted dominant, root a tritone away from G7; the chord the guitarist actually solos over using the four prescribed options."},
+        {"id": "i-maj7", "name": "I chord (CM7)", "summary": "The tonic major-7 resolution chord in bar 3; target of chromatic voice-leading approach from the subV7 bar."},
+        {"id": "dom7-arpeggio-option", "name": "Soloing Option 1 — dom7 Arpeggio", "summary": "1-3-5-b7 arpeggio built on the subV7 root (Db7); each tone mapped to an altered extension of the original G7."},
+        {"id": "dom9-arpeggio-option", "name": "Soloing Option 2 — dom9 Arpeggio", "summary": "1-3-5-b7-9 arpeggio; extends option 1 by adding the ninth, introducing the b13 color against G7."},
+        {"id": "major-pentatonic-option", "name": "Soloing Option 3 — Major Pentatonic Scale", "summary": "1-2-3-5-6 pentatonic built on the subV7 root; provides #11, b13, b9 colors against G7 with the sixth treated as an approach note only."},
+        {"id": "mixolydian-option", "name": "Soloing Option 4 — Mixolydian Mode", "summary": "1-2-3-4-5-6-b7 mode built on the subV7 root; a superset of the pentatonic adding the 4th (11) and b7; specific degrees (Gb, B) governed by avoidance rules."},
+        {"id": "dorian-bebop-option", "name": "ii-chord Option — Dorian Bebop Scale", "summary": "Dorian mode with an added chromatic passing tone (F#); used to solo over the ii chord (Dm7), extending the harmonic vocabulary beyond the dominant substitution."}
+      ],
+      "traversal_rules": [
+        {
+          "id": "measure-slot-assignment",
+          "name": "Measure-Slot Assignment",
+          "summary": "Each bar of the three-bar II V I receives a specific soloing-option assignment (e.g., Dm7 arpeggio in bar 1, descending Db7 arpeggio in bar 2, CM7 arpeggio in bar 3), governing how the player moves through the progression chord-by-chord.",
+          "engine_payload": {"kind": "_pending:measure-slot-assignment"},
+          "references": [
+            {"chapter_n": 1, "topic": "Lick #1 bar-by-bar construction", "quote_excerpt": "Bar 1: Dm7 arpeggio Bar 2: Descending Db7 arpeggio Bar 3: CM7 arpeggio", "page": 2}
+          ]
+        },
+        {
+          "id": "key-transposition-portability",
+          "name": "Key-Transposition Portability",
+          "summary": "The entire substitution framework — substitution rule, four options, tone mappings, avoidance rules — is explicitly designed to be transposed intact to any key, making key-shift a primary traversal operation rather than a secondary adaptation.",
+          "engine_payload": {"kind": "_pending:key-transposition-portability"},
+          "references": [
+            {"chapter_n": 1, "topic": "Tritone sub over II V I", "quote_excerpt": "play scales and arpeggios starting from the b5 of the V7 chord", "page": 1},
+            {"chapter_n": 1, "topic": "II V I tritone sub example", "quote_excerpt": "The idea behind is to play Db over G7", "page": 1}
+          ]
+        },
+        {
+          "id": "chromatic-resolution-approach",
+          "name": "Chromatic Resolution Approach",
+          "summary": "Chromaticism is prescribed as the preferred voice-leading device to connect the subV7 soloing bar to the tonic CM7 chord, giving the resolution a smooth stepwise arrival.",
+          "engine_payload": {"kind": "VoiceMotion"},
+          "references": [
+            {"chapter_n": 1, "topic": "Lick #5: chromaticism to resolve", "quote_excerpt": "chromaticism to approach the root of CM7", "page": 4}
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tritone-sub-replace-v7",
+          "name": "Tritone Substitution — Replace V7 with subV7",
+          "summary": "The core substitution rule: any V7 chord in a II V I may be replaced by a dom7 chord whose root lies a tritone (b5) away, enabling the four prescribed soloing options to generate altered-extension colors against the original dominant.",
+          "engine_payload": {"kind": "SubstitutionExpand", "from": "V7", "to": "subV7", "interval": "tritone"},
+          "references": [
+            {"chapter_n": 1, "topic": "Tritone substitution definition", "quote_excerpt": "play another 7th chord that has its root a tritone away from the original", "page": 1},
+            {"chapter_n": 1, "topic": "II V I tritone sub example", "quote_excerpt": "After applying a tritone substitution to the V7 chord we get Dm7 | Db7 | CM7", "page": 1}
+          ]
+        },
+        {
+          "id": "altered-tone-color-map",
+          "name": "Altered-Tone Color Mapping",
+          "summary": "Every scale degree of each soloing option over the subV7 must be analytically labelled as its altered-extension function on the original V7 (b9, #11, b13, or chord tone), making color-tone tracing a required step before any option is deployed in a lick.",
+          "engine_payload": {"kind": "ColorToneRequire", "target_extensions": ["b9", "#11", "b13"]},
+          "references": [
+            {"chapter_n": 1, "topic": "Dominant 7 arpeggio tone mapping", "quote_excerpt": "The root of Db7 highlights the #11/b5 of G7", "page": 1},
+            {"chapter_n": 1, "topic": "Lick #2: Db pentatonic tone analysis", "quote_excerpt": "Db is the #11 of the G7 chord. Eb is the b13 of G7. Ab is the b9 of G7", "page": 3},
+            {"chapter_n": 1, "topic": "Lick #3: Db9 arpeggio tone analysis", "quote_excerpt": "Db is the #11 of the G7 chord. Ab is the b9 of G7. Eb is the b13 of G7", "page": 3}
+          ]
+        },
+        {
+          "id": "approach-note-avoidance",
+          "name": "Approach-Note Avoidance Rule",
+          "summary": "Specific scale degrees within a soloing option that do not map cleanly to altered extensions or chord tones of the original V7 must be treated as approach notes — used in passing to target a chord tone — and must never be sustained as resting tones.",
+          "engine_payload": {"kind": "_pending:approach-tone-avoidance", "example_tone": "Bb (sixth of Db major pentatonic)", "treatment": "approach note only, not a resting tone"},
+          "references": [
+            {"chapter_n": 1, "topic": "Bb as approach note rule", "quote_excerpt": "The sixth (Bb) of Db7 should be used as an approach note in order to target a chord tone", "page": 1},
+            {"chapter_n": 1, "topic": "Gb and B treatment rules (Mixolydian)", "quote_excerpt": "The seventh of Db7 (B) is the third of G7", "page": 2}
+          ]
+        },
+        {
+          "id": "dorian-bebop-chromatic-passing-tone",
+          "name": "Dorian Bebop Chromatic Passing Tone Addition",
+          "summary": "The Dorian mode over the ii chord is modified by inserting a chromatic passing tone (F# between F and G in D Dorian) to produce the Dorian bebop scale, smoothing voice-leading across the bar and connecting more fluidly to the subV7.",
+          "engine_payload": {"kind": "_pending:chromatic-passing-tone-insert", "base_mode": "Dorian", "added_tone": "chromatic passing tone (F# in D Dorian)", "formula": "D-E-F-F#-G-A-B-C"},
+          "references": [
+            {"chapter_n": 1, "topic": "Dorian bebop scale definition", "quote_excerpt": "D Dorian bebop (D-E-F-F#-G-A-B-C). The Dorian bebop scale is the Dorian mode with a passing tone", "page": 5}
+          ]
+        },
+        {
+          "id": "dom7-to-dom9-arpeggio-extension",
+          "name": "dom7 to dom9 Arpeggio Extension",
+          "summary": "The dom7 arpeggio option (option 1) may be extended to the dom9 arpeggio (option 2) by adding the ninth, introducing the b13 color against the original V7 — a tone-set expansion of a soloing option, not a voicing-density change.",
+          "engine_payload": {"kind": "_pending:arpeggio-extension-add-color", "from_arpeggio": "dom7 (1-3-5-b7)", "to_arpeggio": "dom9 (1-3-5-b7-9)", "added_color": "b13 against original V7"},
+          "references": [
+            {"chapter_n": 1, "topic": "Dominant 9 arpeggio option", "quote_excerpt": "add the ninth to the previous dom7 arpeggio", "page": 1},
+            {"chapter_n": 1, "topic": "Dominant 7 arpeggio tone mapping", "quote_excerpt": "The root of Db7 highlights the #11/b5 of G7", "page": 1}
+          ]
+        }
+      ]
+    }
+  ]
+}

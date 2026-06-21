@@ -1,0 +1,36 @@
+---
+run_id: 2026-05-28T15-05-20-benson-vol-3-technique-arpeggios
+stage: s3
+source_pdf: Benson, George - The George Benson Method, Vol 3 (Technique, Arpeggios & The Secret of the Two Chords).pdf
+model: claude-sonnet
+extracted_at: 2026-06-02T05:15:24+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — method-vol-3-technique-arpeggios
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## Overall Arc and Pedagogical Structure
+
+This method book teaches George Benson's complete improvisational system across seven chapters that progress from foundational mechanics to harmonic superimposition. The arc moves deliberately from the physical (picking and hand coordination in Chapter 1) through scale and chord organization (Chapters 2-4) into lick vocabulary and blues application (Chapters 5-6) and finally into advanced harmonic language (Chapter 7). Throughout, the book insists that technique and musicality are inseparable: fingering and picking choices are never arbitrary but are always in service of hand coordination and musical internalization. The pedagogy is explicitly sequential and cross-referential — Chapter 7 states outright that parallel study of volumes 1-2 is required for rhythmic vocabulary essential to tasteful variation — positioning the book as one installment in a larger integrated curriculum.
+
+## Foundational Mechanics: The Two-Hand Coordination Principle
+
+Chapter 1 establishes the book's governing physical law: neither hand can succeed in isolation, and coordinated left-hand and right-hand work is the non-negotiable foundation. From this principle flows a four-type picking taxonomy — Sweep Picking, Bee Picking, Rest Stroke Picking, and Jumping Strings — and the rule that the number of notes per string determines picking direction, necessitating upstrokes when changing strings. Benson's characteristic physical moves include an angled pick (without fixed-angle prescriptions), three-finger playing that avoids the fourth finger, and left-hand isolation drills such as drumstick-fingers and staccato muting via partial string depression. The method prescribes picking every note before introducing legato techniques, and mandates exaggeration during early practice to force the fingers to learn synchronization. The load-bearing term *digital memory* names the muscle-pattern goal toward which all early drill is aimed.
+
+## Structural Organization of the Fretboard: Zones, Shapes, and Transposition
+
+The book's signature navigational framework is the **five-zone vertical system**, introduced for pentatonic scales in Chapter 3 and formalized for the natural major and minor scales in Chapter 6. Zones are anchored visually by chord shapes — Cmaj7 and Am7 serve as fretboard landmarks — embodying the master's stated principle: "we visualize vertically but play horizontally." Chapter 3 establishes the rule that zones must be skipped to preserve hand synchronization, requires the non-standard 4-1-4-1 finger alternation for zone transitions, and flags the zone-connection picking problem at 1st and 6th string changes as a specific technical hazard. Chapter 2 applies a parallel two-group structural logic to chord arpeggios, organizing all triad and tetrad fingering options by whether the root sits on the 5th or 6th string (three shapes per group), and introduces the transposition principle that the first finger can replace open strings when shifting keys. Across both chapters, the *guide-root* and *guide-chord* concepts serve as navigational anchors enabling fretboard adaptation rather than fixed-position reliance.
+
+## Scale Systems, Relative Relationships, and Avoid Notes
+
+Chapters 3, 4, and 6 together constitute the book's scale pedagogy. Chapter 3 establishes that the major and minor pentatonic scales are relative to each other (C6 and Am7 share notes) but must be visualized separately to function within the five-zone system. Chapter 4 adds the blues scale — minor pentatonic plus a *blue note* — and introduces the major blues scale as derived from the 3rd degree of the minor blues scale; the central rule is that when mixing scales, chord harmony must be followed chord-by-chord rather than summarized into a single scale across all changes. Chapter 6 formalizes the Ionian (natural major) and Aeolian (natural minor) modes as the *mother scale* and *relative scale* that subsume all seven modes of the harmonic field, but issues explicit warnings against relying on pattern exercises mechanically. The book prescribes specific avoid notes — the perfect 4th in Ionian and the flat 6th in Aeolian — while acknowledging these rules have contextual exceptions depending on musical situation.
+
+## Licks, Language, and the Internalization Method
+
+Chapters 5 and 7 articulate the book's explicit methodology for building improvisational vocabulary, framed consistently as a language-learning analogy. Chapter 5 introduces *licks* as pre-set melodic ideas that must be internalized through singing before application, because ear and body precede theory in the master's system. Fingering and picking choices within licks are presented as non-negotiable for hand coordination — the lick and its physical execution are treated as a single unit. Chapter 5 establishes *minor blues substitution tricks* as required knowledge (to be memorized before their theory is understood) because minor blues mixes minor and dominant chord contexts that pentatonic lines do not cleanly summarize. Chapter 7 extends this framework to harmonic superimposition, defining *superimposition* as the melodic and harmonic joining of two or more chords, and explaining that guitar's inability to voice stacked chords simultaneously (unlike piano) necessitates arpeggiation. The prescribed learning loop in Chapter 7 is: listen to and sing great solos, transcribe them, then extract the underlying harmonic concept to generate new lines — transcending copying toward system fluency.
+
+## Characteristic Systems and Rules
+
+Across all seven chapters, several recurring prescriptions constitute the book's explicit rule set. (1) Consistent fingering must be established before speed is pursued; exaggerate during early drill. (2) Pick every note before introducing legato. (3) Skip zones to maintain hand connection; use 4-1-4-1 fingering for zone transitions. (4) Note order in melodic patterns is fixed; rhythm alone may vary. (5) Mixed scales must follow chord-by-chord harmony, not summarize all changes. (6) Avoid the perfect 4th over Imaj7 and the flat 6th over VIm7 as default positions, with situational exceptions. (7) Memorize substitutions and licks before their theoretical explanation. (8) Sing every lick before playing it. (9) Use *rhythmic displacement* — offsetting intervallic patterns with rhythmic motifs — to prevent mechanical predictability in arpeggio-based lines (Chapter 7). (10) Improvisation must combine multiple melodic ideas rather than relying on any single technique or scale. Chapter 4 names the failure mode explicitly: overreliance on a single blues scale produces *lazy* improvisation. The book's master principle, restated across chapters, is that great improvisation is a language built from internalized sound, body memory, harmonic concept extraction, and deliberate multi-idea combination — not pattern execution.

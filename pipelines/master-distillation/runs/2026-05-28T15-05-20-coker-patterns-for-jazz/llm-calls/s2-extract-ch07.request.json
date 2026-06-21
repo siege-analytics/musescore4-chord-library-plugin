@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Patterns with Embellishing (non-harmonic) tones\nPages 32-35 of the book.\n\n<<<CHAPTER TEXT\n\n52\n\u2669=168-208\nC F Bb Eb Ab Db\n| 3 5 3 | 3 5 3 | (continue in same manner)\nNote: This pattern utilizes the chord scale fragment 1-3-5-3.\n\nGb B E A D G C\n| | | | | | |\n\n53\n\u2669=116-160\nGb A F Ab B D Bb D' E G\n(continue in same manner)\n\nApply the fragment 1-3-5-3 to the chords in patterns No. 46 and 47.\n\n54\n\u2669=168-208\nC F Bb Eb Ab Db\n5 3 | 3 5 3 | 3 | Note: This pattern utilizes the chord scale fragment 5-3-1-3.\n\nGb B E A D G C\n| | | | | | |\n\n55\n\u2669=116-160\nGb A F Ab B D Bb D' E G\n5 3 | 3 5 3 | 3 | (continue in same manner)\n\nApply the fragment 5-3-1-3 to the chords in patterns No. 46 and 47.\n26\n\nd=160-208\nF Bb Eb Ab Db\n56\nG B E A D G C\n(continue in same manner)\nNote: This pattern utilizes the chord scale fragment 3-5-2-1.\nGb B E A D G C\nd=76-112\n57\nApply the fragment 3-5-2-1 to the chords in patterns No. 46 and 47.\nd=132-208\nNote: Each chord lasts two measures.\n58\nGb A F Ab B\n(continue in same manner)\nThis pattern utilizes two fragments (5-8-6-4 and 2-5-3-1) from the chord scale, which when played simultaneously will sound any of the major forms of the chords expressed (Triad, M6, M7 and M9).\nD Bb Db E G\n27\n\n296-160 Note: Each chord lasts one measure.\n\n! 4 === PM ae v gp\n59 3 t Lo \u00a5 rs - # 7- \u00a2- ra w ws Z 7\n\n,\n0 $6464 283 | $604 246831\n\nApply the chord scale fragments shown in Pattern No. 66 to the chords in Patterns No. 34 and 35,\n\nEe F @w G4 A\u00bb A ww 8\n\nye ae a | ay a ae A a ae a | a ae A JL Lif\nL ra i TT Ul ae 2\n\nae i fff 7 Ei TT\nLa YT A a\n\nft ami\n) a Ya A A a OY a\n\nfot\n\nPatterns Nos. 60-67 project the practicing of scales by specific intervals, such as thirds, fourths,\nand fifths. Not all of the intervals will be exactly the same size. For example, No. 60 is made up\nof pairs of notes which form third intervals (i.e., C-E, D-F, etc.), yet C-E measures four semitones\nand D-F measures only three semitones. Each is a third interval, but C-E is a major third interval\nand D-F is a minor third interval. In order to eliminate confusion as to which third, fourth, or fifth\ninterval is to be used, simply use ow/y pitches from the major scale of the first note (chord root). In\nother words, when the patterns on thirds, fourths, and fifths are practiced in, say, the key of E-flat,\nno tones will appear which are not in the E-flat scale.\n\nls 1/Z=/~@0 Note: To be used for C, CM6, CM7 or CM9.\n\u2014_\n<= \u2014\u2014\u2014 \u2014-\u2014== =\n\n===.\n\n=\n\nTranspose Pattern No. 60 in remaining eleven keys.\n\n\u2018Archie Shepp, on Four For Trane (Impulse S-71), Archic Shepp Group. Shepp makes use of this pattern\nthroughout this recording.\n\n28\n\n\n\nle 100 164 Note: To be used for C, CM6, CM7 or CM9.\n\ni\n\n61s i\n\n1\n\n=.\n\nOe\n\n+\n\n6\n\n=\n\u2014 \u2014\u00a2\n\n4\n\nTranspose Pattern No. 61 in remaining eleven keys.\n\nae |00= 144 Nose: To be used for C, CM6, CM7 or CM9.\n\neo\n6274 SS =\n4 + |\n4 \u2018 1\nae ae 4 =\nheme .\nTranspose Pattern No. 62 in remaining eleven keys. +\n$272\" 104 Nore: To be used with C.'CM6, CM7 or CMO. a\na al f 1\n= o \u00a2 t\n\u2018t z + 7m re = f\nps 3 >\n\nTranspose Pattern No. 63 in remaining eleven keys.\n\n29\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

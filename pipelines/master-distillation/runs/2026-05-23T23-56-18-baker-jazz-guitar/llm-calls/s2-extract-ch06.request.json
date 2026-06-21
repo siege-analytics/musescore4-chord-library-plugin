@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Applying Chords, Introductions and Endings (Lessons 17-18)\nPages 17-19 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 16\n\nNow for the last lesson in chord progressions.\n\nIf you are still a little shaky on your chords, and feel that you don't know them too well up to this point, review these lessons two or three times a week, and you will find that everything will come to you as you keep studying.\n\nThis Lesson is the key to all of the other lessons. Here I have written out the best possible way to connect one chord to another using the dominant as leading chord for each example.\n\nFirst we have dominant to dominant connections, second, we have dominant to minor connections and third, dominant to major connections. With these few chord connections you can build progressions around any song. All you have to do is keep working with them until you find the one that fits best. As you work with these chords you will begin to develop an ear for them. Then as soon as you hear a song you will know just what chord connections to use.\n\nAfter you have worked each of these examples out, make up charts similar to this one in the keys of Db, Eb, F, G, Ab and Bb (See lesson No. 12)\n\nStandard\n\nG7 | C7 | G7 | Cmi | G7 | Cma\n---|---|---|---|---|---\nNew | 18 | 23 | 4 | 5 | Gmi7 Gmi6\n     | Dmi7 G13 | 18 | 23 | 18 | 19\n     | Dmi7 G13 | 18 | 23 | 18 | 19\n     | Dmi7 G7b5 | 13 | 14 | 18 | 24\n     | C11 C7b5 | Dmi7 G7b5 | Cmi7 Cmi6 | 18 | 24\n     | Dmi7 G7b5 | Cmi7 Cmi6 | 18 | 24\n     | G13 | 5 | 18 | 21\n     | Dmi7 Dmi6 | 4 | 5 | 4 | 5\n     | Dmi7 C13 | Dmi7 Dmi6 | 4 | 5 | 4 | 5 | 2 | 3\n     | G11 G7b5 | 13 | 14 | 18 | 24\n     | Cmi7 C7b5 | Dmi7 Ddim | 4 | 26\n     | Dmi7 G13b5b9 | Cmi7 Cmi6 | 4 | 6\n     | Dmi7 G13b5b9 | Cma7 Cma6\n     | Dmi6 | 23 | C13 | 13 | 14\n     | G11 G7b5 | Cmi7 Cmi6 | 13 | 14\n     | Cma7 Cma6\n\na MICKEY BAKER\u2019S JAZZ GUITAR ee 17\n\nLESSON 17\n\nNow we are at the point where you are to put your knowledge of chords to work. Until now you have studied\nhow to use chords. Now I want you to use them.\n\nGet four or five popular tunes ( sheet music ) or any kind of song that you like. Study the chord connections, then\ntake your new chords and apply them to these songs. You may not be so successful at first, but keep working with\nyour chord charts, and using every trick you can think of until you get it.\n\nEvery day you should take a couple of songs, and make up chord patterns for them until it becomes natural.\n\nLESSON 18\n\nIn your next few lessons I have written introductions, endings, and a lot of chord tricks that modern guitarists use.\nAfter you learn all of the material, you should put it to work right away. This material can be used with most any\n\nmelody, so what you should do first, is to listen to the melody of a song, then try different introductions on them,\ndo the same with endings.\n\nWith these chords there are a world of things that can be done. A lot can be done toward developing your ear by\nconstantly listening to songs and working out progressions for them.\n\nSo keep reviewing these lessons, and try to make up new ideas from those that you have. Another thing is to get\nstandard chord books, which carry the chords to all of the old tunes. They will be very helpful to you in working\nout chord progressions. You can get them at your local music store.\n\nYou are also to transpose each introduction to as many keys as possible, and the same with the endings, and the\nother material.\n\na rs \u00a5 I\nrH ras . HH\nACO} arise\nDmi7 Cdim Cma6 Cdim Dmi7 61369 Gma6 GTH5b9\nf- S- f- f- f- f- f- f- vd f- f- - f f- f f- f- f- ws f- f- f- f-\nHt t+ +t ttt r+t aa\n3-1 Lgi oa: oe U3 u3H LL. 3-1 34\n\n\n\nMICKEY BAKER\u2019S JAZZ GUITAR\n\n~\n\nG13b9\n\nDmi9\n\nFma6\n\nGma6\n\nG13_9\n\nDmi9\n\nFma6\n\nGma6\n\no\nPe ee\nasl NN\n\n} LC ss\noO\na\n\u2014(hN\nSANT\nSIN\n=]\n3|N\nTSI INN\n\nt \u2014<\n\n} o\nPale\n\nT Oo\nNN\njel 2a,\nod | te\nPett &\\N\nREPT & |My\nNN\n~r iN\nPett \u00aba || N\nHettt E 1K\nfet Bay\nNN\nre | NN\n\u201cot | fe\n1 r EN\n\nres)\n\nL\n\nNN\nPTS | IN\nT elk\nfH |\nNN\nFein\nret | [N\na N\npee & |\n\nG13b9\n\nI\nDmiT\n\nEmi? Ebmi7\n\naf\na\n\nNe)\ng\n+t oO bee\nHH\nN\n\u2018al a ~\ntt\nmauled\nes N+\npe\noifs+\nes\nserra s (Wt\nea!\nrt Nt\ni\u2018\nas\nang\nPs,\nat 3 |S\nNN\ni Ne) in\nei Nt +\ni SINE I\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

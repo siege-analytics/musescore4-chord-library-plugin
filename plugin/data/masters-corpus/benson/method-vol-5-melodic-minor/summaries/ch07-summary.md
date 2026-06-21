@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-benson-vol-5-melodic-minor
+stage: s3
+source_pdf: Benson, George - The George Benson Method, Vol 5 (Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts).pdf
+source_pages: 27-37
+model: claude-haiku
+extracted_at: 2026-06-02T04:58:02+00:00
+schema_version: 0.1
+---
+
+# Chapter 7 — Giant Lines – Going Deeper into the Flux & Reflux over D7(9)
+
+_Distillation; backed by `chapters/ch07.md`._
+
+Chapter 7 teaches extended melodic minor scale lines over D7(9) and related chords by establishing a foundational constraint: extended scale options require at least two guide chords for proper fretboard visualization. The chapter's core theoretical contribution is the melodic minor scale's defining property — it has no avoid notes — which enables a richer palette of scale arpeggios and harmonic substitutions than modes built on other scales. The master's characteristic move is pedagogical: relating every melodic idea directly to its associated chord shape, using Cm as a reference key to visualize the crucial Eb/E substitution, and anchoring all melodic minor tetrads to two master guide chords (Cmaj7(#5) and Am(maj7)). The chapter introduces load-bearing terminology including the melodic minor chord family (the seven diatonic chords from A melodic minor), the critical rule that D7(#11) has dual identity as both a melodic minor IV and a dominant diminished voicing (which constrains usable scales), and the distinction between voicing practice and theoretical knowledge — not all tensions must be sounded, but all must be known to avoid mistakes in harmonization and improvisation.

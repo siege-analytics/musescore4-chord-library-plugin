@@ -1,6 +1,8 @@
 # musescore4-chord-library-plugin
 
-> **SESSION START**: Read this file and `REFERENCES.md` before making any changes.
+> **SESSION START**: Read this file, `REFERENCES.md`, and `docs/design-philosophy.md` before making any changes.
+>
+> Note: as of 2026-05-22 (session 260521-aware-nebula) the project's identity has evolved from "chord voicing management" to a **jazz arrangement system**. The framing in this file is partially historical; `docs/design-philosophy.md` is the operative scope and design contract. When the two conflict, the design-philosophy doc wins. See also `.agents/skills/jazz-system/SKILL.md`.
 
 ## Working Guidelines for AI Assistants
 
@@ -33,7 +35,7 @@ Always plan first, never jump to implementation:
 
 ## Project Overview
 
-A MuseScore Studio 4 plugin for jazz guitar chord voicing management. 820+ curated voicings, runtime calculator for alternate tunings, physically-aware fingering engine with barre detection and difficulty scoring.
+A MuseScore Studio 4 plugin for jazz guitar arrangement. 820+ curated voicings, runtime calculator for alternate tunings, physically-aware fingering engine with barre detection and difficulty scoring, **plus a master-method distillation corpus (34 masters / 15 distilled works / 768 `engine_rules`) governed by a versioned firing-semantics spec** — the corpus is what makes Style and Mode source-traceable rather than hand-tuned.
 
 **Owner**: Dheeraj Chand (Siege Analytics). Jazz guitarist, 7-string player. Will spot impossible fingerings.
 **License**: CC BY 4.0
@@ -185,6 +187,94 @@ CI runs on every push to main/develop and on all PRs (`.github/workflows/test.ym
 - **Signal handler scoping trap**: Inside `ChildComponent { onSignal: { propName = val } }`, `propName` resolves to the child's property if it declares one, NOT the parent's. Always qualify: `chordLibrary.propName = val`. This caused #154 — context/tuning switching silently wrote to LibraryPanel copies instead of ChordLibrary's canonical state.
 - **Duplicate function names**: QML does not allow two functions with the same name in a component — even if they have different parameter counts. The plugin will fail to load with "Duplicate method name" in the log. Always check `grep -n "function " plugin/ChordLibrary.qml | sed 's/(.*//; s/.*function //' | sort | uniq -d` before committing.
 
+## Masters schema (#220 / #276 Stage A / #293 Stage A.1)
+
+`plugin/data/masters.json` is governed by `schema/masters.schema.json`. The schema declares a **multi-shape window**: each master may carry any of the legacy `principles[]` array, the new `systems[]` array (systems-with-three-layers per `docs/design-philosophy.md`), or the `works[]` layer (multi-method masters). At least one is required. Per-master migrations land in #277-#285; Stage C will drop `principles`.
+
+### Works (multi-method masters)
+
+Masters whose body of method content spans multiple books or eras place each one in `works[]`. Each work has `id` (kebab, master-local), `title` (required), and may carry `year`, `instrument_scope`, `summary`, `references`, and its own `systems[]`. Use this for Van Eps (1939 Method vs Harmonic Mechanisms 1980-82), Martin Taylor (multiple contradictory books), or any master where one prescription doesn't speak for the whole oeuvre. Single-method masters (Berklee codified consensus) put systems directly on `master.systems[]` and do NOT need `works[]`.
+
+Cross-work systems are NOT modeled — the same idea appearing in three books with three prescriptions becomes three separate systems, one per work. The engine consults one work at a time.
+
+A work id may be prefixed `_placeholder:` (e.g. `_placeholder:harmonic-mechanisms`) for an entry whose content is pending research; its `systems[]` may be empty or absent.
+
+### System IDs
+
+- On `master.systems[]`: **2 segments** — `<master>:<slug>` (e.g. `berklee:guide-tone-tracking`).
+- On `master.works[*].systems[]`: **3 segments** — `<master>:<work>:<slug>` (e.g. `van-eps:1939-method:harmonized-scale`).
+- Either form may be prefixed `_placeholder:` for an intentionally-empty system whose interior is pending design.
+
+### Engine payload `kind`
+
+Either one of 12 named kinds defined in [`docs/payload-kinds.md`](docs/payload-kinds.md) — `PositionContinuity`, `VoiceMotion`, `StringSetTransition`, `SymmetryMovement`, `FamilyCoherence`, `SubstitutionExpand`, `DensityFloor`, `DensityCeiling`, `OmissionAllow`, `ColorToneRequire`, `NCTHarmonization`, `TextureCycle` — or a `_pending:<kebab-slug>` placeholder for rules that don't fit any named kind. The glossary (per-kind semantics, required/optional fields, worked examples drawn from predecessor session's rebuild docs, boundary notes that flag adjacent kinds) is the load-bearing artifact for picking the right kind. **Stretching a name to fit is the failure mode the glossary exists to prevent — when in doubt, `_pending:`.** (Provenance: traced to predecessor session 260521-aware-nebula's `plans/schema-systems-model.md`; PR #290 originally shipped 9 invented names; #295 rolled them back to the predecessor-designed set; #298 defined them.)
+
+### Validate
+
+```
+python scripts/validate.py --target masters
+```
+
+Runs schema validation plus consistency checks: duplicate ids (master/principle/system/work), system-id prefix-matches-enclosing-master, work-scoped system-id work-segment-matches-enclosing-work, and 2-vs-3-segment placement rules.
+
+### MastersStore.js accessors
+
+Systems (walk both master.systems and master.works[*].systems): `allSystems(store)`, `findSystem(store, masterId, systemId)`.
+
+Works: `allWorks(store)`, `findWork(store, masterId, workId)`, `systemsForWork(store, masterId, workId)`.
+
+Preferences: `preferencesFor(store, masterId)` (walks works), `findPreferenceById(store, prefId)`.
+
+`counts(store)` reports `{ masters, principles, systems, works }`. `systems` includes work-scoped systems.
+
+### Provenance at promotion (#303 resolution)
+
+**The audit chain breaks at masters.json promotion.** The schema does NOT grow a `derived_from` field on `master.systems[].rules[]`. Reasoning:
+
+- The pipeline (`pipelines/master-distillation/`) writes a full audit chain under `plugin/data/masters-corpus/<master>/<work>/`: chapter files with verbatim quotes, summaries, derived/systems-draft.json with `references[]` per rule, derived/STATEMENT.md weaving systems with citations.
+- The Stage B per-master PR (Benson #304, Van Eps #305, Pass #306, and the rest of #277-#285) is the load-bearing **human quality gate**: the maintainer reads the draft, verifies it against source, and commits a curated subset into masters.json. Once committed, the maintainer's review IS the trail.
+- Reconstructing the trail to the source quote is always possible by traversing back to `masters-corpus/<master_id>/<work_id>/` for masters that used the pipeline. For masters whose systems came from a manually-authored rebuild doc (Van Eps, Pass, Greene, etc.), the audit trail lives in the predecessor session's `plans/*-system-rebuild.md`.
+
+**`references[]` on `master.systems[].rules[]` is informal, not schema-required.** Where they appear (Benson's rules, Pass's rules, Van Eps's rules), they happen to encode provenance because the source pipeline/rebuild had it. The schema's `$defs/rule` permits the field via `additionalProperties: true` but does not require it. A future Stage B PR may or may not carry references[] forward — both are valid.
+
+**Why not formalize?** Adding `derived_from` would force every Stage B PR to maintain the field manually after the human-review pass (the engine doesn't consume it; the maintainer becomes the source of truth on what's committed). The cost is real and the value is recoverable by traversing back to the audit dir. The schema stays minimal.
+
 ---
 
-*Last updated: 2026-04-16*
+## Master distillation layer (engine-rules)
+
+The corpus lives at `plugin/data/masters-corpus/<master>/<work>/derived/engine-rules.json` and is the highest-value artifact in the repo by volume of formal, source-traceable knowledge.
+
+**Current state (2026-06):** 34 masters in `masters.json`, 15 distilled works, **768 `engine_rules`** (750 harmonic + 18 Slonimsky melodic taxonomy-level v0.1). Bundle releases tagged independently: `engine-rules-v0.1.0` → `engine-rules-v0.3.0` (current). Downstream consumer: [ellington-systems](https://github.com/siege-analytics/ellington-systems) (practice-feedback web app) ingests the bundle directly.
+
+### Firing-semantics spec (v0.2)
+
+Authoritative file: `plugin/docs/engine-rules-firing-spec.md`. Defines the contract every `engine_rules.json` must satisfy:
+
+- `when` — conjunctive predicate over chord-context value-shapes
+- `quality_binding` — canonical 36-token set + family-hierarchical matching across Greene's MAJOR/MINOR/DOMINANT/DIMINISHED/AUGMENTED/SUS taxonomy (parent-family fallback)
+- `then` — action / suggestion payload
+- `preference` — signed Likert `[-2,2]` (preference_int), with derived polarity ∈ `{positive, avoid}` from sign
+- `falsifier` — when the rule **would not fire**; required to make coverage gaps reasonable
+- `anchor`, `source_page`, `chapter_n`, `section_title` — provenance required on every rule
+- Top-level `_provenance.schema_version` ∈ `{"0.1","0.2"}` and `min_consumer_version` (Hyrum's-law forward-compat guard)
+
+### Per-file schema gate (#575)
+
+`plugin/schemas/engine-rules.schema.json` validates every `engine-rules.json` file in CI (`tests/test_engine_rules_schema.py`). This is the gate the external-review caught us missing — without it, 768 rules drifted unenforced. Same review caught the masters.json null-year drift (#573) which the CI workflow also wasn't running `test_masters_schema.py` against; both are now gated in `.github/workflows/test.yml`.
+
+### Polarity canonicalization
+
+Spec permits only `polarity ∈ {positive, avoid}`. If a master's source uses different vocabulary (e.g. Bergonzi's `prescriptive`/`proscriptive`), map faithfully to canonical from preference sign and preserve the original tag in `applicability_reasons` — don't relax the schema. Bergonzi's 40 rules were normalized this way in #575.
+
+### Lineage DAG
+
+`masters.json` carries `studied_with` / `influenced` edges across masters. Currently sparse (conservative: only edges biographies make explicit — see #563 draft); grows monotonically as new masters are added with biography prose.
+
+### Bundle release pipeline
+
+`engine-rules-v{X.Y.Z}` git tag → GitHub Actions workflow → Release with `bundle.tar.gz` + `manifest.json` (validated against `plugin/schemas/engine-rules-manifest.schema.json`) + `fixture.json`. The manifest declares `schema_version` and `min_consumer_version` so downstream consumers can refuse mismatched bundles.
+
+---
+
+*Last updated: 2026-06-21*

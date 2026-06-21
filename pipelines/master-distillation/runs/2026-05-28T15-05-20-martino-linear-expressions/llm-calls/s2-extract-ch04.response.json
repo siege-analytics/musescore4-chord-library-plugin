@@ -1,0 +1,76 @@
+{
+  "quotes": [
+    {
+      "topic": "m7b5 to minor substitution rule",
+      "verbatim_quote": "RULE: From the root ofa minor seventh flat five (m7b5) chord, go up a minor third and play\nminor. i.e.: Bm7b5. . . upam3 = Dmé.",
+      "why_load_bearing": "This is the core substitution rule that unlocks the entire m7b5-to-minor conversion system used throughout the piece.",
+      "page": 55
+    },
+    {
+      "topic": "m7b5 as incomplete dominant ninth",
+      "verbatim_quote": "OBSERVATION: Minor seventh flat five (m7b5) chords are incomplete dominant ninth\nchords.",
+      "why_load_bearing": "This conceptual definition reframes m7b5 chords as partial dominant structures, explaining why the substitution chain (m7b5 → m6 → dominant 9th) is harmonically coherent.",
+      "page": 55
+    },
+    {
+      "topic": "dominant ninth to minor conversion rule",
+      "verbatim_quote": "RULE: To convert a dominant ninth chord to a minor form, go up a perfect fifth from the\nroot of the 9th chord and play minor. i.e.: G9... upa P5 = Dm6.",
+      "why_load_bearing": "This rule closes the three-way substitution loop, giving the player a bidirectional navigation tool across m7b5, m6, and dominant 9th chord types.",
+      "page": 55
+    },
+    {
+      "topic": "augmented triad inversion equivalence",
+      "verbatim_quote": "I. The augmented triad, much like the diminished 7th chord, inverts to form two other au-\ngmented triads.\n\nEXAMPLE: F, A, C# = F augmented\nA, C#, E#, (F) = A augmented\n(C#) Db, F, A, = Db (C#) augmented\n\nNOTE: Each note of the triad can be called the root and can name the triad.",
+      "why_load_bearing": "Establishing that every augmented triad has three enharmonic root names is the prerequisite for deriving three distinct minor-major-7th substitutions from one chord.",
+      "page": 55
+    },
+    {
+      "topic": "augmented triad as incomplete minor maj7",
+      "verbatim_quote": "I. Observe now that the augmented triad is an incomplete mmor (Ma7) chord.\n\nF, A, C# =D, F, A, C# Dm maiz)\nA, C#, E# = F#, A, C#, E#, (F#m maj7)\nDb, F, A = Bb, Db, F, A, (Bbm maj7)",
+      "why_load_bearing": "This reveals the structural basis for substituting melodic/harmonic minor over an augmented chord, giving three distinct minor-maj7 options per augmented triad.",
+      "page": 56
+    },
+    {
+      "topic": "augmented triad substitution summary rule",
+      "verbatim_quote": "TO SUMMARIZE: Over an augmented triad, go up a major 6th from the root and play either melodic or",
+      "why_load_bearing": "This is the actionable rule condensing all augmented-triad substitution logic into one interval formula the player can apply in real time.",
+      "page": 56
+    },
+    {
+      "topic": "relative minor substitution for major triad with bass note",
+      "verbatim_quote": "Inbar 10, the harmony is a C major triad with an “F#” note in the bass. Convert the C major to A\nminor (Am) being the relative minor of C major and treat the F# bass note as the 6th of A minor.",
+      "why_load_bearing": "This example demonstrates the relative-minor substitution method applied to a slash chord, showing how a dissonant bass note is reinterpreted as a scale degree rather than avoided.",
+      "page": 56
+    },
+    {
+      "topic": "secondary relative minor substitution",
+      "verbatim_quote": "EXPLANATION: _ If we view the Db major triad alone, the most obvious substitution would be\nits relative minor (Bb minor). However, the “E” note in the bass would not go very well with Bb\nminor (creating a b5th in the bass). Therefore, we go to the secondary relative minor of Db\nmajor (which is the III chord of Db), namely, F minor.",
+      "why_load_bearing": "This passage defines and applies the concept of the secondary relative minor as a fallback when the primary relative minor creates an undesirable clash with the bass note.",
+      "page": 56
+    },
+    {
+      "topic": "F harmonic minor over Db/E chord",
+      "verbatim_quote": "Also notice that all of the notes in the P®/g chord can be found in an F harmonic minor scale\n(F, G, Ab, Bb, C, Db, E).",
+      "why_load_bearing": "This validates the F minor substitution by showing the entire slash-chord's pitch content is contained within F harmonic minor, grounding the choice in scale-chord unity.",
+      "page": 56
+    },
+    {
+      "topic": "altered dominant: step-up minor substitution",
+      "verbatim_quote": "EXPLANATION: One way to create the sound of an altered dominant chord is to go up\nstep from the root of the dominant chord and play minor.\n\nEXAMPLE: For Gb7 altered, go up 2 step and play G minor.",
+      "why_load_bearing": "This is the method's primary rule for handling altered dominant chords, reducing a complex chord type to a single interval-direction instruction.",
+      "page": 57
+    },
+    {
+      "topic": "melodic vs harmonic minor over altered dominant",
+      "verbatim_quote": "EXAMPLE: G harmonic minor G A Bb C D Eb F#\nRelation to Gb7 b9 #9 3rd bd #5 6 root\nG melodic minor G A Bb C D E F#\nRelation to Gb7 b9 #9 3rd b5 #5 b7 root\n\nIt is clear to see from the examples that although both minor scales yield the altered 9ths and\n5ths (b9, #9, b5, #5), only the melodic minor contains the b7, which is the “hot” note of a do-\nminant 7th chord.",
+      "why_load_bearing": "This comparative analysis teaches the player to prefer melodic minor over harmonic minor when the dominant b7 must be expressed, establishing a hierarchy between the two scale choices.",
+      "page": 57
+    },
+    {
+      "topic": "Bm7b5 as Dm6 third inversion",
+      "verbatim_quote": "ERGO: _Inrelations to D minor, the Bm7b5 chord is a Dm6 chord init’s third inversion. Con-\nversely, a Dm6 chord is a Bm7b5 chord in it’s first inversion.",
+      "why_load_bearing": "This establishes the inversional equivalence between m7b5 and m6 chords that underlies all subsequent substitution reasoning in the chapter.",
+      "page": 55
+    }
+  ]
+}

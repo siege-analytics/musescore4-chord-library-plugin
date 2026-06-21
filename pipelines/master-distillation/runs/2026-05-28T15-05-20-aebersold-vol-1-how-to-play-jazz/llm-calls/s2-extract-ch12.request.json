@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: Seventh Chords & Time And Feeling\nPages 41-42 of the book.\n\n<<<CHAPTER TEXT\n\nTHE BLUES SCALE AND ITS USE\n\nThe blues scale consists of the following: Root, b3rd, 4th, #4th, Sth and b7th.\nEXAMPLE: F blues Scale F, Ab, Bb, B, C, Eb, F\n\nWhen playing a twelve bar blues in the key of Bb, use the Bb blues scale:\nBb, Db, Eb, E, F, Ab, Bb\n\nThe blues scale can also be used over minor chords when the minor chord is sounded for 2, 4, 8,\nor 16 measures or longer. EXAMPLE: If D minor is sounded for eight measures, you may use the\nD blues scale: D, F, G, Ab, A, C, D\n\nWhen playing in minor tonalities you may choose to alternate between the dorian minor and the\nblues scale, both having the same root tone. EXAMPLE: D minor is sounded for eight measures -\nplay D minor (dorian) or play D blues scale or alternate between the two scale sounds.\n\nExperiment alternating between dorian minor and the corresponding blues scale over any of\nthe first four recorded tracks.\n\nThe blues scale is used to convey a \"Funky\", \"Down-Home\", \"Earthy\" or \"Blusey\" sound/feel.\nDon't run it in the ground by overuse! Rhythm and blues players use this scale extensively.\nExperiment with the blues scales listed below and apply them to the recorded tracks on the play-a-\nlong recordings.\n\nTHE TWELVE BLUES SCALES (Treble & Bass Clef)\n\ne THE TWELVE BLUES SCALES (Treble & Bass Clef)\nrc Db _ _D Eb 4\n1 apt Pat n boat\nro bo i Po And 1 a= n 1 a -y-14.4\n\u00a3 1 na P-tAnd 7 te O36 n belaa\u2122\nXV bho 2 Oo\u201c [ wis tf] [>v-a4 \u201cI\nio\" * po\u2122 g ou\nh E F \u2014 Gb \\ be G 6 2\np\u2014e. n rn pa = Re 27 1 4 oO\nm1 pound T bo ho | PoE / Bnd be 2 bd =\n2 ts = pave 4S bo 7 = PUA bu\nGs oot - ! bo o\nAb so (A > Bb bebo B > 2.\n2 ee eae jot rm beter? soho\nAS pr OT 17] po o\nNY\nPy\n\nCc Db D Eb be-\n\u00a9 ba & 4 Ar po et Lokebo bo Xt\n= Bim? aut? [No 17 ca a\n\u00b0 hol bul pz Ll\n| be one bo He o\nE > F be 2 Gb G\nofe2 7 \u2014 Lp bake 3 \u2014 \u2014 _ |\n= ever * 1 ez au\noFe 7 u - ho 1 m1 Oo\nZL 1 PaWe 7 Band hyo 2 Ue =\npo \u2014 et\nBb B\nAb 1 1, 4 \u00b0 Lobe 92\n+-}= byzgp $y er he aI Oo\nF- ata el ZOHO boven eu? ,\nApe ot 7] f ac o\n\n\n\nAfter you become familiar with the blues scale as I have it listed, you may want to add tones to\nthe scale which give the scale sound more variety. Added tones are underlined.\nEXAMPLE: F blues scale...F, G, Ab, A, Bb, B, C, D, Eb, F\n\nThis scale sounds strange when played straight up or down. Jazz players usually play bits and\npieces of the scale or make up licks utilizing certain notes of the scale. You will eventually want to\ntranspose this scale to all twelve keys for practice. For now, learn it in Bb and F concert.\n\nI've listed 5 blues heads (melodies) that you should memorize (pages 72, 77, 87, or 97).\n\nSEVENTH CHORDS\n\nA triad is 3 notes stacked on top of each other; the bottom note being the root, the second note the\n3rd and the top note being the Sth.. A seventh chord is like a triad, in that it contains intervals of\nvarying widths stacked on top of each other. If you add an interval of a third (either a major third or\na minor third) [major third = 4 half-steps and a minor third = 3 half-steps] to the top of a triad, the\nresult is a seventh chord. There are four types of seventh chords within the minor scale. The four\ntypes are: Major 7th, Minor 7th, Dominant 7th, and Half-Diminished 7th. The difference in the\nconstruction of these chords is shown below.\n\nFA F7 F-7 FO\n| i _ ee\n=% bg Pg Pg\n4 zi 2 a\na) F Major 7th F Dominant 7th F Minor 7th F Half-Dim. 7th\n\nEach tone of a scale can be the root of a triad or of a seventh chord. When building seventh chords\nupon each scale degree of a dorian minor scale, starting with the lowest tone, the type of chords built\nfollow this sequence: minor, minor, major, dominant, minor, half-diminished, and major. For\nexample, as we build seventh chords on each scale degree of the F minor scale, it looks and sounds\nlike this:\n\n7th CHORDS BUILT UPON SCALE TONES-HORIZONTALLY\n\n. a\nA F Minor Loo i _6 Lo __ be be are _ abe S oho Ly\neva\" \u00a2 @ A) e\n\nBasic Scale F Minor 7th Ab Major 7th C Minor 7th Eb Major 7th\nG Minor 7th Bb Dom. 7th D Half-Dim. 7th\n\nAs we build these seventh chords using a vertical structure, it looks like this:\n\nF Minor\nhp \u2014~ 6 Le be Pg. bg Hg to)\nCe Le PS be PB @ Da \u201c\nts Dg LAA pa Um.\nCp 7] e\n2 F Minor 7th Ab Major 7th C Minor 7th Eb Major 7th\nG Minor 7th Bb Dom. 7th D Half-Dim. 7th\n\nEach tone in a seventh chord has a name. The lowest tone is the root, the second tone from the\nbottom is the third, the third note from the bottom is the fifth, and the top tone is the seventh. Since\nall of the seventh chords found inside a minor scale contain tones of the basic scale, any of these\nseventh chords can be used in improvisation when the tonic minor chord is being sounded. Thus,\nevery chord listed can be played horizontally or vertically over the F minor scale.\n\n41\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

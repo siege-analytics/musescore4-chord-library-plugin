@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: How to Memorize Chords\nPages 10-11 of the book.\n\n<<<CHAPTER TEXT\n\nThe symboi (1 indicates a note to be played afteran x. Example: 7\n\n3 fp\n7 __ aoa\n\nAs with x\u2019s, if more than one O appears, play them together (after the x\u2019s).\n\nAny progressions which contain melodies that are more complicated than what has been discussed so far, will be\nindicated in musical notation only (no diagrams). This situation will not arise in Volume 1. If left hand fingerings are\nindicated in a diagrarm which contains x\u2019s or 01\u2019s, these fingerings indicate the initial chord sound only unless otherwise\nindicated.\n\nThe naming of chords with x\u2019s is really debatable. For instance:\n\nkom? kemTfl\non\n\npie ora\n\nBoth approaches are fine and you will see both of them used, so don\u2019t expect\nconsistency here. Why? Because as you will see, there are times when one\napproach would be ridiculous, and vice versa.\n\nExample:\nPOOR BETTER\ngE? A x v4 \\\nAt ffee+ Dis Emel Am? D3\n5 - 4 5 & ers\nPs\n\n\u00e9 scrubtd & we?\n\n+x it WAME pe x w ; wer ee |\nNAME 0 aoe iw ax of MAME\n\nMost situations are toss-ups though as far as the naming goes, so be flexible.\nIf you are ever wnting your own examples, it\u2019s not worth splitting hairs over.\n\n\n\nJ\n:\n|\n|\n\n12. You won't have much trouble understanding the names of chords, but a few points should be mentioned:\na) a slash through a number means major (Example: #= Major 7th); b) + means sharped 5th unless it comes before 11\n(+11) in which case it means sharped 11th; c) sus.is an abbreviation for the word suspended which means that the 3rd\n\nhas been replaced with the 4th (it also has another meaning but you needn\u2019t worry about it in this book).\n\nHOW TO MEMORIZE CHORDS\n\nDuring the course of this book you will probably encounter quite a few chords that you have never played before,\nand you might wonder if there is a quick way lo memorize them. Yes and no. While the learning process never seems\n\nto go as quickly as we would like it to, there are a few things that might speed it up a bit for you:\n1. Many guitar players learn new chords quickly by relating them visually to chords they already know. Example:\nSuppose you encounter the following chord for the first time and after playing it, you\na\n\ndecide that you like the sound enough to want to memorize it. Suggestion: try relating it visually to:\n\nC# CH 8 86\u2014C#\nof z 7 7\nCiF you Wvow \u2014\u2014> m of\n\nYou can probably see that this type of operation will work well if you already know quite a few chords. Now\nlet\u2019s suppose you don\u2019t; here is a simplified version of the same thing (quite a few players also use this approach):\n\n2. Divide the neck up into five main areas for any major or minor chord and use these areas as reference points for\nany chord that you learn. For instance, using the A major chord as a model, the five areas would be:\n\nA A A\nf\n\nA\n\n10\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

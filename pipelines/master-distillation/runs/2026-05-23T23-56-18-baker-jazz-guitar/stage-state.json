@@ -1,0 +1,73 @@
+{
+  "run_id": "2026-05-23T23-56-18-baker-jazz-guitar",
+  "config": "pipelines/master-distillation/configs/baker-jazz-guitar.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-23T23:56:18+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-23T23-56-18-baker-jazz-guitar/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-23T23-56-18-baker-jazz-guitar/pages.json",
+        "re-ingested: 65 pages, 78,489 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-26T18:05:04+00:00",
+      "ended_at": "2026-05-26T18:05:04+00:00",
+      "outputs": [
+        "detected 13 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-23T23-56-18-baker-jazz-guitar/chapter-bounds.json",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch01.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch02.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch03.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch04.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch05.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch06.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch07.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch08.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch09.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch10.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch11.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch12.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/chapters/ch13.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-26T18:08:54+00:00",
+      "ended_at": "2026-05-26T18:08:54+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/complete-course-in-jazz-guitar-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-26T18:17:20+00:00",
+      "ended_at": "2026-05-26T18:17:20+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/derived/systems-draft.json",
+        "plugin/data/masters-corpus/mickey-baker/complete-course-in-jazz-guitar/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}

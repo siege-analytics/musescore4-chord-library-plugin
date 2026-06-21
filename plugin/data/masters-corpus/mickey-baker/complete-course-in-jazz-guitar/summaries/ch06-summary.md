@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s3
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+source_pages: 17-19
+model: claude-haiku
+extracted_at: 2026-05-26T18:07:03+00:00
+schema_version: 0.1
+---
+
+# Chapter 6 — Applying Chords, Introductions and Endings (Lessons 17-18)
+
+_Distillation; backed by `chapters/ch06.md`._
+
+This chapter (Lessons 17-18) teaches how to apply the previously-learned chord voicings to real tunes, with the dominant functioning as the universal lead-in chord that governs every voice-leading choice (Dominant as leading chord). Baker reduces all comping situations to three substitution categories — dominant-to-dominant, dominant-to-minor, and dominant-to-major (Three connection categories) — and insists each pattern be written out and worked through Db, Eb, F, G, Ab, and Bb (Transpose to all keys). The characteristic working-guitarist move surfaced here is treating intros and endings as transposable harmonic templates that get layered onto any melody (Intros and endings approach), with the explicit practice loop of pulling sheet music for four or five popular tunes and substituting the new voicings into them (Applying chords to songs). Load-bearing rules introduced: the all-keys mandate extends to intros and endings (Transpose intros and endings); ear is developed by constant listening-and-fitting against songs (Ear development by progression-building); and standard chord books are the prescribed external source for changes (Standard chord books resource).

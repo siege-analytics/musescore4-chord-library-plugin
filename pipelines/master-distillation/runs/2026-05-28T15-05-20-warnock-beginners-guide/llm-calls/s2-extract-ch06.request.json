@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Chapter 5 \u2014 134 Pattern\nPages 17-21 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 5 \u2014 134 Pattern\n\nOne of the roadblocks many guitarists face when learning jazz is that you fall for\nthe trap that scale A over chord B equals jazz.\n\nWhile it\u2019s essential to play the correct melodic devices like scales over chords,\nthat\u2019s the beginning of your journey, not the end.\n\nThe next step beyond playing scales is the most essential to bring a jazz sound to\n\nyour solos, and that\u2019s adding chromatic ornaments.\n\nChromatic ornaments bring a tension and release sound to your playing by\nintroducing organized chromaticism and resolution in the shape of patterns.\n\nIn this chapter you learn your first chromatic ornament, the 134 pattern.\n\nThis pattern is used whenever you have a 134 fingering on any string, any key,\nand in any scale.\n\nWhenever you find a 134 fingering, you can apply the 134 pattern below.\n\nHave fun exploring this ornament, working it over scales, and adding it to your\nsolos when ready.\n\n17\n\n\n134 Pattern\n\nHere\u2019s the 134 pattern written out over the notes A-B-C, 3 notes that appear in\nthe C major scale.\n\nNotice that you can play this pattern in any rhythm, as you see in bars 2-4 below.\n\nThe rhythms you use aren\u2019t that important, meaning you have a lot of freedom to\nexperiment with rhythms when using the 134 pattern.\n\nThe essential item is that you resolve the pattern to the 3\" finger.\n\nIf you leave things hanging and don\u2019t resolve the pattern by playing all 4 notes,\nyou sound like you made a mistake.\n\nBut, you can use any rhythm you like, resolve the pattern, and it\u2019ll work out great.\n\nPlay through these examples, then move on to applying the 134 pattern to the\nmajor scale and to your solos below.\n\nff \u2014 === \u2014\u2014\u2014\u2014\n| if if t {\ne) l ' I I l\n1 3 4 4 1 2 3 4 1 2 3 4 12 3\nIE 2\u20144\u2014 5 \u2014_}5\u2014 2\u2014_ 3452-34 [-5-2-3-4\nB\n\n18\n\n\n134 Patten Through Scale Shapes\n\nNow that you know what the 134 pattern is, you\u2019re ready to add it to the major\nscale shapes you learned earlier.\n\nHere, you play up the 6\" string shape as is, then you add in the 134 pattern on the\nway down on strings 3 and 4, where the 134 fingerings lie in this shape.\n\nGo slow, no tempo at first, then add a metronome when ready.\n\nAfter you can play this pattern from memory, not perfect just under your fingers,\nput on the backing track and add this 134 pattern to your solos.\n\nIt can take time to get this new chromatic ornament into your ears, so overplay it\nin the beginning.\n\nWhen your ears get used to this sound, you can pull back and add the 134 pattern\nhere and there in a more musical way in your solos.\n\nBut, to begin, no holds barred, eye of the tiger, all that jazz, and go for it!\n\n19\n\n\n9\nTp\n\n\u201c/ er eo ff\nA+ i T t | = rs e \u2014\u2014=\n2 4 | 2 4 | 3 4 \u00ab++ 3 4 2 4 1 2 4\nry\nT 7\u20149\u201410\nA 7\u20149\u201410\n7\u20148\u201410\nu 8\u201410\neo\nrp {\u2014 f = \u2014\u2014\u2014\u2014a 2 t \u2014 \u2014 \u2014\n& ===: os\nTy) eo\n214 2 4 123 4 123 42 21 4 \u00ab2\neT 08\nI 10\u20147\u20148\u20149\nA 10\u20147\u20148\u20149\n10\u20148\u20147\n10-8\n\nHere\u2019s the 134 pattern added to the 5'-string scale position.\n\nWork this position with a metronome, then combine it in your technical studies\nwith the 6\"-string shape.\n\nWhen ready, solo over the backing track with the 5'-string shape, then the 6*-\nstring shape, then both combined.\n\nHave fun exploring this chromatic ornament as you bring a jazzy feel to your\nmajor scale soloing over ii V | chords.\n\n20\n\n\n21\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

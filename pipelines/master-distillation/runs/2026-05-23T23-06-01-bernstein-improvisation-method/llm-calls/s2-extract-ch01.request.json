@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Introduction and Recurrent Themes\nPages 3-3 of the book.\n\n<<<CHAPTER TEXT\n\nThis paper aims to document and organize Peter Bernstein's approach to jazz\nimprovisation.\n\nI have been studying with Peter Bernstein for about a year at New York University, and all the\ninformation presented in this document is derived from the knowledge and insights he shared\nduring our sessions.\n\nTo ensure an accurate record of our discussions, I have obtained Bernstein's consent to record the\naudio from our lessons. This has proven to be an invaluable tool in comprehending Bernstein's\nunique approach to music. The availability of these recordings has allowed me to carefully\nconsider and explore the intricacies of his ideas. While my focus during the lessons is often\nconcentrated on specific areas, revisiting the recordings allows me to connect Bernstein's\nteachings with different concepts and perspectives.\n\nBernstein is widely recognized as one of the most accomplished practitioners of jazz guitar and\njazz as a whole. My recordings serve as the primary resource for this research project, as I\nbelieve Bernstein embodies a living repository of jazz tradition while also pushing the\nboundaries of jazz guitar as a revolutionary exponent. This paper endeavors to capture some of\nhis profound ideas and insights.\n\nRecurrent themes during lessons\n\nThroughout my lessons, I observed recurring themes that Bernstein addressed, which may be\nexplored from various perspectives during different sessions.\n\nBernstein himself acknowledges that his teaching approach lacks a strict methodical structure.\nInstead, he emphasizes the importance of contextualizing ideas within specific musical pieces.\nRarely does he explain a concept without relating it to a musical context. This is why he\nrecommended organizing his teachings into a document. He has a distinct approach to working\nwith musical ideas, and his manner of discussing them is informal. This informal approach\nreflects his own learning journey, which involved attending music school for a period but\nprimarily gaining knowledge through playing and touring with revered figures in the jazz\ntradition, rather than in an academic setting. Therefore, the purpose of this paper is twofold: to\norganize the recurring themes discussed by Bernstein and to present musical examples through\ndiagrams and notation. This approach will provide the reader with a more structured\nunderstanding of Bernstein's perspectives on improvisation.\n\n\n\n\n                                                                                                     3\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

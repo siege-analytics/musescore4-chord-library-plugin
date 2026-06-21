@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch29",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 29: Conceptual Practice and Rhythmic Grammar\nPages 116-116 of the book.\n\n<<<CHAPTER TEXT\n\n2 Conceptual Practice and Rhythmic Grammar\n\nMost of the material presented in the last few chapters is of a conceptual nature. These approaches\ncan alter your playing profoundly. Here are some other conceptual ideag to consider which can also\ngreatly impact your playing.\n\n* Never start on beat one.\n\n\u00a2 Never end on beat one.\n\n* Play predominantly eighth notes.\n\n\u00a2 Play without using eighth notes.\n\n* Anticipate chords by 1/2 beat, by 1 beat, by 1 1/2 beats, by 2 beats, by 2 1/2 beats, by 3 beats.\n\n* Resolve late by 1 beat, 2 beats, 3 beats, or + beats.\n\nLearning to pace one\u2019s self and to tell a story takes experience. Sometimes players make the mis-\ntake of trying to play everything that they have ever learned in one solo. The next solo sounds like\na repeat of their last. It takes experience and patience to tell a story and to develop a few ideas.\n\nLeave periods at the ends of sentences and paragraphs. Know when to end your solo. Listen to the\n\nrests. The listener will invite your next idea.\n\nIn exploring the concepts of this book you can enter the consciousness of discovery where we are\nall eternal students.\n\nmy\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 29 extraction"
+}

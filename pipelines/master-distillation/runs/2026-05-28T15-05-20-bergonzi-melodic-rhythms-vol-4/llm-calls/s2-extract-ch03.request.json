@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: Eighth-note rhythms\nPages 23-27 of the book.\n\n<<<CHAPTER TEXT\n\nMELODIC RHYTRMS\ni 22 Rhythms anticipated by 2 1/2 beats:\n\u2014 = 2 C \u00a5 +\n| _ .\ni \u20ac \u00a5 % \u20ac % 7-72\n1 y Y Yo LY yp\nT ? -\ni ie \u00a5 G 7 T 7\n7 Y V Lo\n\u20ac s \u00a3 a ee a\n| y i CE\n| \u20ac 7 \u20ac \u00a5 \u00a5 \u00a5\n1\u2018 Y Y\n| \u20ac == ==: Cf ct\nj y Vo\ni rr} C7 ye a {2 f\ni a a ae = \u20ac i z\n| py Lo Y YL\nI ok : ,\nfe i\u2014t \u20ac a a a eo\nLL Lu\n\u20ac 7 % \u20ac a ee\n| 7 = 7\ni | |\nre t f \u2014- Zz \u20ac f Z :\n' j ! ;\n| pop Ft \u2014 \u2014 ar a a a oe\n=\n\n.\n\n\n\n~ in 7 mn \u2122 _ aan (\naH \u2122 Sp | a4 N | i\naH 7 On sl +\n~ \u2122 | \u2122 i\u2122 Nae {| KIN hr ~\n! a m~ Naa a m\u2122 at |\noo N\u2014 NL, om | hij Nip Le .\nz 7 | aa a a4 On +. yo |\no NE. ime ime Nine \u2122 \u2018 XU m x\n2 bid tt =\nA m\u2122 mom yo =\n~ i\n|\n\u00ab we ee ee oO we oO q we Ne we uy\n~\n2\na]\na\n~ a\n\u00a9 \u2014 _\nrs | i i |\na a a4 ae KLIN i\n:\n> Z\u2122 | | Nil J N\n7) al i re\n\u2014 w rh ~ yt ia\n= NaRN | | im SLE\n\u201d \"| Sine\n2 } o-& NI\nw al Se On \u2018il a\nN +t | na a \u2122 \u2122 une\nN Lu\nne m\u2122 oe\nwy wo ss S| Ss we kK wD I\n\n\n\nMELODIC RUVTHNS\n\nNote that many of the eighth-note downbeats might have been written as guarter notes. In these\npreceding pages they were written as eighth notes to keep clear the connection to the original 22\nthythms.\n\nHaving played through these various displacements of each rhythm you can now combine two of\nthe one-bar rhythms. Create a two-bar rhythm and play it through a tune. Combine three one-bar\nrhythms and create a three-bar rhythm and play it through a tune. Combine four one-bar rhythms\nand create a four-bar rhythm and play it through\u2019a tune.\n\n%\n\nThis is an example of combining rhythm 1 and 4, to make a two-bar rhythm:\n\nani\nLie\n\nDe\n\n\n\nFighth-Note Rhythms\n\nTo begin exploring eighth-note rhythms start by playing 4 consecutive eighth notes as a one-bar\n\nrhythm. Next, displace the grouping by starting on eight different place#in the bar.\nUse Tunes 1, 2, and 3 to practice the following rhythmic groupings:\n\n1. Starting on one.\n\n\u00a9\n\nC\nxt\n\nhe\n\n~~\n\n2. Starting on the \u201cand\u201d of beat one.\n\n1\u00ae\n\nic mek\u201d) Ze. \u00a3\nAU \u00a3 L\ns\n3. Starting on beat two.\n{2 \u20ac. \u00a3\n_w7 e e\n\n4. Starting on the \u201cand\u201d of beat two.\n\n2\n\n7\nvi\n\nne\n\n7\n\n5. On this rhythm the last eighth note would sound the next chord.\n\n@\n\nae\n\ncy #.\nWw Py\n\n\n\nMELODIC RAY TINS\n\nFor #6, #7, and #8, the harmony can be anticipated. That is, starting on the \u201cand\u201d of three, beat four\nor the \u201cand\u201d of four, you can anticipate the next chord by either approaching notes of the next\nchord or by simply sounding the next chord.\n\n6. Starting on the \u201cand\u201d of beat three.\n\n2 \u00ae\n\nm . +\n\ne\u2014\u00a3 \u20ac an on ioe \u2014* \u00a3 ~s |\n7. Starting on beat four.\n\n= &. \u00a3 -\nay \u00a9.\n8. Starting on the \u201cand\u201d of beat four.\n4\u00ae\n\n\u2014 \u00a3 t z 4 = =\n\n9. Try playing four consecutive eighth notes on different beats randomly, for example:\n\n]\nOE Ee Ee =\nCes \u2014p Fo 7\n10. Next, try the following four-note grouping which will result in the superimposition of one time\nsignature over another. This is a 3/4 pattern which takes three bars of 4/4 to work out.\nce ra &. vi \u00a3\nXx = f \u00a3 ra\ni i\" ; 7 i\u2019 it\n| t\nTS\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}

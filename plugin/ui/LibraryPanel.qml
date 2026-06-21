@@ -68,6 +68,11 @@ Item {
     property var modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
     property string activeMode: "chord-melody"
 
+    // --- Master style (#222 Track 3) ---
+    property var masterIdList: []         // ["", "van-eps", "ted-greene", ...]
+    property var masterDisplayList: []    // ["(no master)", "George Van Eps", ...]
+    property string activeMasterId: ""
+
     // --- Output signals ---
     signal searchChanged(string text)
     signal contextFilterChanged(string code)
@@ -86,9 +91,17 @@ Item {
     signal playVoicingRequested(var voicing, string mode)
     signal compareRequested(var voicing)
     signal clearComparisonRequested()
+    signal removeFromComparisonRequested(int index)
+    // #210 Stage 2 — hidden voicing overrides
+    signal includeVoicingRequested(string signatureKey)
+    signal clearVoicingOverridesRequested()
+
+    // #210 Stage 2 — list of voicings hidden by exclusion engine
+    property var hiddenVoicings: []
     signal scaleFilterChanged(string scaleName)
     signal profileChanged(string profileId)
     signal modeChanged(string modeId)
+    signal masterChanged(string masterId)  // #222 Track 3
 
     // --- Save to Library signals (moved from Settings, #144) ---
     signal captureRequested()
@@ -254,6 +267,48 @@ Item {
                         libraryPanel.modeChanged(libraryPanel.modeIdList[currentIndex])
                     }
                 }
+            }
+        }
+
+        // Master selector (#222 Track 3) — boost voicings tagged with the
+        // selected master's voicingStyleTags + apply principle tolerance hints
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+            visible: libraryPanel.masterDisplayList.length > 1  // only show if any masters loaded
+
+            Label {
+                text: "Master:"
+                font.pixelSize: 10
+                font.italic: true
+                color: theme.textSecondary
+            }
+
+            ComboBox {
+                id: masterCombo
+                model: libraryPanel.masterDisplayList
+                Layout.fillWidth: true
+                font.pixelSize: 10
+                function syncIndex() {
+                    var ml = libraryPanel.masterIdList
+                    if (!ml || !ml.length) return
+                    var idx = ml.indexOf(libraryPanel.activeMasterId || "")
+                    currentIndex = (idx >= 0) ? idx : 0
+                }
+                onModelChanged: syncIndex()
+                Component.onCompleted: syncIndex()
+                onActivated: {
+                    if (currentIndex >= 0 && currentIndex < libraryPanel.masterIdList.length) {
+                        libraryPanel.masterChanged(libraryPanel.masterIdList[currentIndex])
+                    }
+                }
+            }
+
+            Label {
+                visible: libraryPanel.activeMasterId.length > 0
+                text: "(active)"
+                font.pixelSize: 9
+                color: theme.successText || theme.textSecondary
             }
         }
 
@@ -682,78 +737,21 @@ Item {
             }
         }
 
-        // Comparison panel
-        Rectangle {
-            visible: libraryPanel.showComparison
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            color: theme.consoleBg
-            radius: 4
-            border.color: theme.divider
+        // Comparison tray (#196) — extracted to shared component so the
+        // same tray renders in both Library tab and Walkthrough.
+        ComparisonTrayPanel {
+            compareVoicings: libraryPanel.compareVoicings
+            suggestFingeringFn: libraryPanel.suggestFingeringFn
+            onRemoveRequested: function(index) { libraryPanel.removeFromComparisonRequested(index) }
+            onClearRequested: libraryPanel.clearComparisonRequested()
+        }
 
-            RowLayout {
-                anchors.fill: parent
-                anchors.margins: 6
-                spacing: 6
-
-                Repeater {
-                    model: libraryPanel.compareVoicings.length
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        radius: 4
-                        color: theme.cardBackground
-                        border.color: theme.cardBorder
-
-                        property var cv: libraryPanel.compareVoicings[index] || {}
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            spacing: 2
-
-                            Label {
-                                text: cv.name || ""
-                                font.pixelSize: 10
-                                font.bold: true
-                                elide: Text.ElideRight
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: (cv.intervals || []).join(" ")
-                                font.pixelSize: 9
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: "Fret " + (cv.fret_number || "?") + "  |  " + (cv.notes || []).join(" ")
-                                font.pixelSize: 9
-                                color: theme.textMuted
-                                Layout.fillWidth: true
-                            }
-                            Label {
-                                text: {
-                                    var f = libraryPanel.suggestFingeringFn(cv)
-                                    if (f.length === 0) return ""
-                                    var parts = []
-                                    for (var i = 0; i < f.length; i++) parts.push("S" + f[i].string + ":" + f[i].finger)
-                                    return "Fingering: " + parts.join(" ")
-                                }
-                                font.pixelSize: 8
-                                color: theme.textFaint
-                                Layout.fillWidth: true
-                            }
-                        }
-                    }
-                }
-
-                Button {
-                    text: "Clear"
-                    font.pixelSize: 9
-                    implicitWidth: 40
-                    onClicked: libraryPanel.clearComparisonRequested()
-                }
-            }
+        // Hidden voicings disclosure (#210 Stage 2)
+        HiddenVoicingsPanel {
+            hiddenVoicings: libraryPanel.hiddenVoicings
+            titlePrefix: "Show hidden"
+            onIncludeRequested: function(sig) { libraryPanel.includeVoicingRequested(sig) }
+            onClearAllOverridesRequested: libraryPanel.clearVoicingOverridesRequested()
         }
 
         // ─────────────────────────────────────────────

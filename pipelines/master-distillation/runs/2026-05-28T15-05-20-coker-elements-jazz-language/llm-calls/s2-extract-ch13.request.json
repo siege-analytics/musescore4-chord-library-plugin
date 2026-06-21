@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch13",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 13: \"GONE BUT NOT FORGOTTEN\" LICK\nPages 77-79 of the book.\n\n<<<CHAPTER TEXT\n\nTom Harrell, trumpet (\u201cAdjustment\u201d)\n\nBy\u2019 (\u00a2-\") evs\nthy t 4 . on\n260, & E ==\n\nFreddie Hubbard, trumpet (\u201cIt\u2019s You Or No One\u201d)\n\n7 ait (\") Wwe\n261 & Gi ete \u2014\n; 7 z\n\nLee Morgan, trumpet (\u201cSidewinder\u201d)\n\nWipe\nee) 4 b b\n> =\n262. 7 eter ee\na\n\nFats Navarro, trumpet (\u201cBarry\u2019s Bop\u201d)\n\n(A\")\ngn\" 1 bY 6\n@ (4 | yt) PT os\n13, ot = SS\nJ.J. Johnson, trombone (\u201cT\u2019ll Remember April\u201d)\nQ~\" | (Dr)\n+ { 4 bY 6\n; -\n: si\n\nPaul Chambers, bass (\u201cThis Can\u2019t Be Love\u201d)\nCNG\")\n4\n\na a 6\n265, Se\n\na a\n\n\n\nPaul Chambers, bass (\u201cThe Theme\u201d)\nH (pol\nC ( 14 bn 6\n\u2014_ Pe e\n26, Pare ie\n\nJohn Scofield, guitar (\u201cFresh Out\u201d)\n\nc=\n\u00a3 \" by\n\n| oer Siar\n\n(F\")\n6\n\n==\n\nWays To Practice/Ingrain\n\nCESH is a harmonic element and therefore has no specific way to be realized\nmelodically. Studying the examples from solos will show that there are some specific\nmelodic tendencies that are shared by various improvisers, and those should be learned.\nHowever, there is also quite a variety of ways to express a CESH device included in the\nexamples, and those should suffice to stimulate the reader\u2019s imagination as to the endless\npossibilities. A starter list of CESH patterns to be practiced in all keys with play-along\nexercises and tunes follows.\n\nExercises\n\u00a2*\nP \u201cby eo\u201d \u2122 Pz continue - Use Tracks OQ (chrom),\n268. Ts ==e ve vo then P\u00e9R (cycle) for\n~ = : | , Exercises 268 - 2\u00b074\nC~\nnt 4 b7 6 continue\n269, o= ofp e ma\nee bemmeheemnenbemenet\na 6 continue\nE 210. & - e OF} 7\nCr, 4 by 6\n,_2\u00a3 ft. be obs #78. continue\n\n67\n\n\n68\n\nCHAPTER 11\nQUOTES\n\nDefinition\n\nQuote is a term used to label a phrase which comes from a known tune. It can take\nplace at any moment when the chord or progression cell of the tune being improvised\nagrees with the harmonic setting in which the phrase originally occurred. Most often a\nquote is a humorous interjection in an improvised solo, bordering on the ridiculous, but\nnonetheless very communicative, as the hearer usually knows the tune being quoted and\nthe humorous implications are appreciated. At other times the quote happens somewhat\nby accident, when in the middle of an improvised solo the player plays several successive\nnotes which coincide with the notes of a familiar melody. The improviser\u2019s mind/ear is\nthen reminded of the familiar tune that uses the same notes and proceeds to complete\nthe melody as a quote. Nearly all improvisers use quotes in their solos, but some players\nuse them to an exaggerated degree. One such player is Horace Silver, who not only uses\nquotes in his solos, but even works them into his compositions.\n\nIllustration\n\nComposed melody of \u201cQuicksilver\u201d (Horace Silver) in the 13th measure (quote comes\nfrom the old standard tune, \u201cOh You Beautiful Doll\u201d)\n\nAp ght (er)\na \u2014 se\n\nWhen analyzing solos, one can also expect to encounter a number of partial or implied\nquotes, in which the analyzer cannot be entirely certain that the improviser intended or\nstumbled into a quote. Even if we were to have the rare opportunity to interview the\nplayer to confirm or deny a possible quote, it is doubtful that the moment in time could\nbe recreated substantially enough for the player to render the answer.\n\nExamples From Recorded Solos\n\nThe examples given here will focus on quotes which come from other known melodies.\nHowever, the reader should be advised that there are two other varieties of quotes\nextant in recorded improvised solos; (1) quotes from the melody of the tune being played\nat the moment; and (2) quotes from well-known solos by influential jazz artists.\n\nHorace Silver, piano (\u201cSilver\u2019s Serenade\u201d)\nquote from: \u201cI Love You\u201d\n\nCT A\u201d\nns a So = \u2014 Tas\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 13 extraction"
+}

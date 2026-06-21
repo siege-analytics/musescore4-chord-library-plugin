@@ -1,0 +1,94 @@
+{
+  "run_id": "2026-05-28T15-05-20-greene-chord-chemistry",
+  "config": "pipelines/master-distillation/configs/greene-chord-chemistry.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-chord-chemistry/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-chord-chemistry/pages.json",
+        "re-ingested: 110 pages, 165,609 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:44:12+00:00",
+      "ended_at": "2026-05-29T05:44:12+00:00",
+      "outputs": [
+        "detected 20 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greene-chord-chemistry/chapter-bounds.json",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch01.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch02.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch03.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch04.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch05.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch06.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch07.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch08.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch09.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch10.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch11.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch12.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch13.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch14.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch15.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch16.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch17.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch18.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch19.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chapters/ch20.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-29T05:50:05+00:00",
+      "ended_at": "2026-05-29T05:50:05+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch15-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch16-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch17-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch18-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch19-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/summaries/ch20-summary.md",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/chord-chemistry-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-29T06:01:00+00:00",
+      "ended_at": "2026-05-29T06:01:00+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/derived/systems-draft.json",
+        "plugin/data/masters-corpus/ted-greene/chord-chemistry/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

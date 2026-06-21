@@ -1,0 +1,61 @@
+name: Engine-Rules Release
+
+on:
+  push:
+    tags:
+      - 'engine-rules-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish engine-rules bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install jsonschema for manifest validation
+        run: pip install jsonschema
+
+      - name: Derive bundle version from tag
+        id: version
+        run: |
+          BUNDLE_VERSION="${GITHUB_REF_NAME#engine-rules-v}"
+          echo "bundle_version=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
+          echo "Building engine-rules bundle v$BUNDLE_VERSION"
+
+      - name: Build bundle
+        run: |
+          python3 scripts/build_engine_rules_bundle.py \
+            --bundle-version "${{ steps.version.outputs.bundle_version }}" \
+            --out-dir dist/
+
+      - name: Show manifest
+        run: cat dist/manifest.json
+
+      - name: Create GitHub Release with bundle assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Engine-rules ${{ steps.version.outputs.bundle_version }}" \
+            --notes "Engine-rules bundle release.
+
+          - \`manifest.json\` — manifest, schema-validated
+          - \`engine-rules-bundle.tar.gz\` — full per-book engine-rules.json tree
+          - \`engine-rules-fixture.tar.gz\` — Joe Pass + sample slices + expected-fires.json placeholder
+
+          Conforms to firing semantics spec v0.1 (\`plugin/docs/engine-rules-firing-spec.md\`).
+          " \
+            dist/manifest.json \
+            dist/engine-rules-bundle.tar.gz \
+            dist/engine-rules-fixture.tar.gz

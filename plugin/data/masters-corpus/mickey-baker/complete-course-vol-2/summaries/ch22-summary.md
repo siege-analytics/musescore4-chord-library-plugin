@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-baker-vol-2
+stage: s3
+source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
+source_pages: 36-37
+model: claude-haiku
+extracted_at: 2026-05-29T00:13:22+00:00
+schema_version: 0.1
+---
+
+# Chapter 22 — The Cadence Break
+
+_Distillation; backed by `chapters/ch22.md`._
+
+The Cadence Break is a structural pause occurring at the end of musical thoughts where the music relaxes for one to two bars before repeating or progressing to new material, and it can be filled with Symmetric Cycles, Pedal Point, or original chord progressions to add color and originality. Pedal Point, the chapter's cornerstone technique, sustains a single note—typically the fifth of the scale—across multiple measures while varying chords play overhead, with the most popular form in C Major using a G pedal supporting Dm9 and G13b9 chords. The master demonstrates characteristic resourcefulness by showing how to adapt Pedal Point across keys through strategic retuning: lowering the 6th string a whole tone to D for G Major, lowering the 5th string a whole tone to G for C Major in half-note rhythm, and raising the 5th string a half tone to Bb for Eb Major. The chapter introduces flexibility in rhythm by specifying that the pedal note can be articulated as whole notes, half notes, quarter notes, or eighth notes, giving players multiple interpretive choices within the same harmonic framework. Load-bearing terms include "Cadence Break" (the structural pause), "Pedal Point" (the sustained-note technique), and "half-note Pedal Point" (a rhythmic variant), which together form the vocabulary for understanding how to create introductions and transitions with harmonic sophistication.

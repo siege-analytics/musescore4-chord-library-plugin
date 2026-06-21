@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch16",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 16: The Music Student's Plea & Tune Learning\nPages 55-56 of the book.\n\n<<<CHAPTER TEXT\n\nE DOMINANT 7th TREE of SCALE CHOICES\n\nThe two most important notes in any scale are the 3rd and 7th. They tell the listener what the quality is and\nindicate the harmonic motion. The 3rd tells us if it's major or minor. The 7th tells whether the sound is stable\n(doesn't want to move to another chord) or if it wants to move on to a chord of resolution. Dominants typically\nwant to resolve to a chord up a perfect 4th (C7 wants to resolve to F, F-, F7 etc.). The root or tonic is taken for\ngranted. If it wasn't there we wouldn't be able to identify the sound.\n\nAny of these scales (qualities/sounds/sonorities) may be played when a dominant 7th chord/scale RESOLVES\nto a chord/scale whose ROOT lies a perfect 4th (5 half-steps) above the root of the dominant 7th chord.\n\nEXAMPLE: ||C7 | C7 | F | F | Ab7 | Ab7 | Db- | Db- ||\nEmbellish these measures: C7 and Ab7\n\nThe altered tones are in bold type. Those tones usually resolve by half-step to a scale or chord tone. This\namounts to tension then release. It's a natural occurence in music. The 3rds's and 7th's are underlined.\n\nScales\n\n1. DOM.7th = C7 = CDEFGABbC This is the basic dominant 7th sound. Be careful how you treat\nthe 4th tone. Use it as a passing tone.\n\n2. BEBOP = C7 = CDEFGABbBC Play B natural as a passing tone. It should always appear on\nan upbeat, never on the downbeat.\n\n3. LYDIAN DOM. = C7#4 = CDEF#GABbC The #4 was/is a favorite note. It used to be called a b5.\n\n4. WHOLE-TONE = C7+ = CDE F# G#BbC This scale only has 6 tones. It is a symetrical scale used\noften in cartoon music and by DeBussy and Ravel.\n\n5. DIMINISHED =C7b9 = CDbEbE F#GABbC This scale has 8 different tones.It is symetrical\nand is also used in cartoon music.\nMichael Brecker is a master of this scale sound.\n\n6. DIM. WHOLE-TONE = C7+9 = CDbEbEF#G#BbC This scale has four altered tones which\nhelp create tension.\n\n7. SPANISH or JEWISH SCALE = C7(b9) = CDbEFGAbBbC This scale is used often when\nplaying in a minor key. It's the same as F harmonic minor.\n\n8. CHROMATIC SCALE = C7=C DbD EbEF F#G G#A Bb BC\n(the Musical Alphabet)\n\nExperiment with these scales over the Cycle of Dominant 7th Chords track on the recording. The proper use\nof these various scales is part of what makes jazz so appealing. Endless variety in the hands of a master makes\nbeautiful music. Don't be afraid to try these sounds. It may take some time for your ears to become accustomed\nto the sound and the fingerings. Patterns for Jazz lists jazz phrases based on many of the scales above.\n\n54\n\n\nTHE MUSIC STUDENT'S PLEA\n\n1. stow meow io RINGER MY INSTRUMENT\n\n2. Show me how to get a beautiful SOUND\n\n3 \u00ab Show me how to READ music\n\n4. Show me how to PLAY IN TUNE\n\n5. Show me how to HEAR music and how to DISCERN\n\n6. Show me how to PRACTICE\n\n7. Show me how to LISTEN and how to APPRECIATE music\n\n8. Show me how to PLAY WITH OTHERS\n\n9. Show me THEORY, HARMONY and COMPOSITION\n\n10. Show me how to use my IMAGINATION and\nhow to develop my CREATIVITY\n\nBut most of all, don't forget to show me how to\n\nMAKE MY OWN MUSIC.\n\nMusic will then be a part of me.\n\nreativity to music programs. This is true for public school music education as well as private\n\nIt's time music education and educators in general realized the need to add imagination and\nc\nmusic teaching. The time's up! We've short-changed the music student long enough.\n\n55\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 16 extraction"
+}

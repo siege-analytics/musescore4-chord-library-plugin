@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch22",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 22: Parallel Progressions\nPages 116-118 of the book.\n\n<<<CHAPTER TEXT\n\n\u2669=138-208\n160\nC7 D7 E7 Gb7 Ab7 Bb7 C7\nBb7 Ab7 Gb7 E7 D7 C7 Db7 Eb7 E7\nC7 D7 E7 Gb7 Ab7 Bb7 C7\nBb7 Ab7 Gb7 E7 D7 C7 Db7 Eb7 E7\nC7 D7 E7 Gb7 Ab7 Bb7 C7\nBb7 Ab7 Gb7 E7 D7 C7 Db7 Eb7 E7\n\u2669=112-184\n161\nC7 D7 E7 Gb7 E7 F7 Gb7 G7\nD7 E7 F7 Gb7 Bb7 B7 C7\nD7 G7 Gb7 F7 E7 D7 Db7 C7\nF7 G7 Gb7 F7 E7 D7 Db7 C7\n\n16274\n\nWe have been practicing patterns on the two types of diminished chords, which were formed by ex-\ntracting their respective tones from the diminished scale on the chord root. Now we will concern\nourselves with various patterns on the diminished scale of the chord. Note that the chord symbols\nfor the following patterns will be those of the diminished Triad. However, the student must bear\nin mind that the Diminished Triad and the Diminished Seventh Chord use the same scale: a dimin-\nished scale on the chord root. The use of the Diminished Triad symbol in the following patterns is\nmerely for convenience, since it would be impossible to determine exactly which chord is being\nused when the scale is common to both of the chords mentioned.\n\n, =/e0-Z08B\nCP\n\n \u2014\u2014\u2014\u2014\n\nf\n\nThis pattern is based on the tones of the C Diminished Scale. Be sure to practice it using EVERY\nstarting note illustrated on the chart in fig. 32.\n\nA : \u2014 \u2014 i =\nA saan de zizt ie ae\n\u00a5 poe WE -\n=MB-(3BS\n\n2 (\niC ee  _e\na ee ta th pa be le tate # rae oe\nype WS: 3) 2\u2019 <e x} om t\n\n(ae \u2014:\n\nThis pattern is based on the tones of the C Diminished Scale. Be sure to practice it using EVERY\nstarting tone illustrated on the chart in fig. 32.\n\n\u201cq\n\n\n\nNb _ aA\n=.\n\n=\n164 t a :\n\nC Diminished Scale ascending and descending.\n\nPractice Pattern No. 164 using EVERY starting tone illustrated on the chart in figure 32.\n\nJaia-/ad\nVa\nYu\n\na |\n\n+\nT\n\n16. Gas\na TA A tf SS tS\n4 > 5 7 v\n\nThis pattern is based on the C chromatic scale. The arabic numbers indicate the tones of the C\u00b07\nchord. Note that the chord tones fall on the first tone of each eighth note triplet. In this manner the\nsonority produced is that of a diminished seventh chord (or even a diminished triad) having the\nroot of the starting tone of the chromatic scale (in this case the C\u2019 or C\u20197).\n\nPractice Pattern No. 165 using EVERY starting tone illustrated on the chart in figure 32.\n\nj= Ahm |Gbo\n166 SS ee\nYj i \u2014\u2014 \u2014\u2014\u2014\u2014\n\n4 3 5 7\n\nThis pattern is based on the C Diminished Scale. The arabic numbers show that a chord tonc is pro-\nduced as the first tone of each group of four notes occurs. Note that the pattern starts on tone No.\n1 and gradually ascends three more tones in the C Diminished Scale before turning back to the\nthird tone, and so on.\n\nPractice Pattern No. 166 using EVERY starting tone illustrated on the chart in figure 32.\n\n28David Baker, \u201cHonesty,\u201d on Ezz-Thetics (Riverside 375), George Russell Sextet.\n?\u00b0Charlie Mariano, \u201cDeep River,\u201d on Toshiko Mariano Quartet, (Candid 8012), Toshiko Mariano Quartet.\n\nDavid Young, \u201cKentucky Oysters,\u201d on Strutusphunk (Riverside 341), George Russell Sextet.\n\n114\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 22 extraction"
+}

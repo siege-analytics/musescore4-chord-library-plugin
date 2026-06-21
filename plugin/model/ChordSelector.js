@@ -83,6 +83,98 @@ function parseChordSymbol(text) {
     return result
 }
 
+// Compute a voicing's root-relative fingering signature (#194).
+// Matches the shape produced by scripts/derive_curated_shapes.py so the
+// curated-shapes.json lookup at scoring time is symmetric.
+//
+// Returns a string key suitable for object lookup. Format:
+//   "<strings>|m:<sorted-mutes>|o:<sorted-opens>|p:<sorted (string,interval) pairs>"
+//
+// Two voicings with the same root-relative shape produce the same key
+// regardless of which root they're transposed to.
+function signatureKey(voicing) {
+    if (!voicing) return ""
+    var strings = voicing.strings || 6
+    var mutes = (voicing.mutes || []).slice().sort(function(a, b) { return a - b })
+    var opens = (voicing.open || []).slice().sort(function(a, b) { return a - b })
+    var dots = voicing.dots || []
+    var intervals = voicing.intervals || []
+    var pairs = []
+    for (var i = 0; i < dots.length; i++) {
+        if (i >= intervals.length) continue
+        pairs.push([dots[i].string, intervals[i]])
+    }
+    pairs.sort(function(a, b) {
+        if (a[0] !== b[0]) return a[0] - b[0]
+        if (a[1] < b[1]) return -1
+        if (a[1] > b[1]) return 1
+        return 0
+    })
+    var pairStr = ""
+    for (var pi = 0; pi < pairs.length; pi++) {
+        if (pi > 0) pairStr += ","
+        pairStr += pairs[pi][0] + ":" + pairs[pi][1]
+    }
+    return strings + "|m:" + mutes.join(",") + "|o:" + opens.join(",") + "|p:" + pairStr
+}
+
+// Build a lookup map from a curated-shapes.json payload (#194).
+// Returns { signatureKey -> { boost, name, traditions, … } }.
+function buildCuratedLookup(curatedPayload) {
+    var lookup = {}
+    if (!curatedPayload || !curatedPayload.shapes) return lookup
+    for (var i = 0; i < curatedPayload.shapes.length; i++) {
+        var shape = curatedPayload.shapes[i]
+        var sig = shape.signature || {}
+        // Reconstruct the same key format signatureKey() produces.
+        var strings = sig.strings || 6
+        var mutes = (sig.mutes || []).slice().sort(function(a, b) { return a - b })
+        var opens = (sig.opens || []).slice().sort(function(a, b) { return a - b })
+        var pairs = (sig.pairs || []).slice()
+        pairs.sort(function(a, b) {
+            if (a[0] !== b[0]) return a[0] - b[0]
+            if (a[1] < b[1]) return -1
+            if (a[1] > b[1]) return 1
+            return 0
+        })
+        var pairStr = ""
+        for (var pi = 0; pi < pairs.length; pi++) {
+            if (pi > 0) pairStr += ","
+            pairStr += pairs[pi][0] + ":" + pairs[pi][1]
+        }
+        var key = strings + "|m:" + mutes.join(",") + "|o:" + opens.join(",") + "|p:" + pairStr
+        lookup[key] = shape
+    }
+    return lookup
+}
+
+// Union two voicing arrays, deduping by (signatureKey, chord_quality) (#209).
+// Curated entries (the first array) win on collision so their hand-curated
+// metadata (name, category, traditions, voicingStyle, playStyle) is preserved
+// over the calculator's generic equivalents.
+//
+// Both arrays may contain voicings normalized to C-root (the convention for
+// both `voicings.json` and `VoicingCalculator.generateAll` output), so the
+// signatureKey is comparable across sources.
+function unionVoicings(curated, calculated) {
+    var seen = {}
+    var out = []
+    function addAll(arr) {
+        if (!arr) return
+        for (var i = 0; i < arr.length; i++) {
+            var v = arr[i]
+            if (!v) continue
+            var key = signatureKey(v) + "|" + (v.chord_quality || "")
+            if (seen[key]) continue
+            seen[key] = true
+            out.push(v)
+        }
+    }
+    addAll(curated)    // first wins on collision — curated metadata preserved
+    addAll(calculated)
+    return out
+}
+
 // Compute a scoring delta from the active mode config (#161).
 // Mode config shape (from plugin/config/modes.json):
 //   { categoryDeltas, rangeFretMin, rangeFretMax, rangeFretBonus,
@@ -189,6 +281,25 @@ function _scoreCandidate(v, targetRoot, quality, melodyTarget, bassTarget, ref, 
     if (opts.profileCategoryWeightFn) score += opts.profileCategoryWeightFn(v.category)
     if (opts.profileQualityBoostFn) score += opts.profileQualityBoostFn(v.chord_quality)
     if (opts.modeConfig) score += computeModeDelta(v, opts.modeConfig, opts.modeId)
+    // Curated shape boost (#194 Phase 2a). When a candidate's root-relative
+    // fingering signature matches a curated entry, apply the entry's boost.
+    // Lookup is built once at startup from curated-shapes.json.
+    if (opts.curatedLookup) {
+        var entry = opts.curatedLookup[signatureKey(v)]
+        if (entry && entry.boost) score += entry.boost
+    }
+    // Master style boost (#222 Track 3). When an active master is selected
+    // and the voicing's voicingStyle tags intersect with the master's,
+    // apply a capped bonus. +30 per matching tag, max +60. Voicings with
+    // no voicingStyle field are no-ops (no boost, no penalty).
+    if (opts.masterVoicingStyleTags && opts.masterVoicingStyleTags.length > 0
+            && v.voicingStyle && v.voicingStyle.length > 0) {
+        var hits = 0
+        for (var msi = 0; msi < v.voicingStyle.length; msi++) {
+            if (opts.masterVoicingStyleTags.indexOf(v.voicingStyle[msi]) >= 0) hits++
+        }
+        if (hits > 0) score += Math.min(hits, 2) * 30
+    }
     return score
 }
 
@@ -213,6 +324,9 @@ function findBestVoicing(voicingsData, targetRoot, quality, opts) {
     var quartalCandidates = []
     for (var i = 0; i < voicingsData.length; i++) {
         var v = voicingsData[i]
+        // #210 Stage 2: excluded voicings are not eligible for best-pick.
+        // They remain in findAllVoicings so the user can see + override.
+        if (v._excludedReason) continue
         if ((v.strings || 6) > maxStrings) continue
         if (v.root !== "C" && v.root !== targetRoot) continue
         if (v.chord_quality === quality) {

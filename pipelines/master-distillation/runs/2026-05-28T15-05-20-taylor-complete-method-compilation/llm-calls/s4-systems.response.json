@@ -1,0 +1,11 @@
+{
+  "master_id": "martin-taylor",
+  "work_id": "complete-jazz-guitar-method",
+  "systems": [
+    {
+      "id": "martin-taylor:complete-jazz-guitar-method:_pending-ocr-recovery",
+      "name": "Pending: OCR recovery required",
+      "summary": "Source PDF for the Martin Taylor Complete Jazz Guitar Method Compilation rendered as severely degraded OCR (storefront metadata in front matter; body text reduced to page-end markers, dashes, and dollar signs at ~206 chars/page across 408 pages). Zero load-bearing prose passages were extractable in s2, so no traversal or modification rules can be cited back to real chapter quotes. This system is a placeholder documenting the gap; actual systems extraction is blocked until the book is re-OCR'd with a different vision pipeline or a cleaner source PDF is obtained. Per worker spec, references[] for any traversal/modification rule must point at a real chapter quote — none exist, so the rules arrays are intentionally omitted rather than fabricated."
+    }
+  ]
+}

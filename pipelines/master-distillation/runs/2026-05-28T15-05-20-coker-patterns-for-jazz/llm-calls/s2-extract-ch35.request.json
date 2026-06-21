@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch35",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 35: Chromatic Scale\nPages 165-172 of the book.\n\n<<<CHAPTER TEXT\n\n(ascending)\n\n~\"H uhole\n1_~ \"Tong\nSeple\n(descending )\na\n+t ptt y\nCoty\n7 a WT.\nSeale\n(ascending } (descending )\n5 \"i 5 5\ntT imal dd toe\nig eee SSE\nir 7 f WT B WT\n; 1 Scale\n{ascending )\n2064S a a\noe +\u2014\u2014 oa\nTs PT\nL\nME Cale\n(descending )\ni]\nOL ny thy |\n; =e T =I A :\ntT Te\nMa\n\nSale\n\n\n(descending )\n\n{ \u00a34 \u00a3 + Dt. , {\n\n{ascending )\n\n; SS a\n291 ae eee : aw)\nre Pat \\ L_ Baw Scale\nty m i ! Seale ma\nq i\n(ascending) > a\n! _ _ a\n298 i; \u2014 \u2014\u2014 ae re\n; . i T ala, |\nr Lat ae i An\na a Ao Seaie\n(descending)\npe PH Thy spl 1!\nke uaa = i\n\u00a5 \u2014 i\nl | 4 f \\ L 1 t Bs\nWE mE ete. Sele\n\nPractice the same pattern except start on B-natural and follow the whole-tone scale of B (instead\nof B-flat).\n\n(descending )\n(ascending)\nmeet be pylht t+ \u2014\n29 i \u2014\u2014\u2014a Cs rT\nire 7\" wt _ BP We\neaie Seale\n(ascending)\nan and ms ang mB din7n\n\u2018 7 T T T J\ny\n30074 = = >\ni See\niF 1 iy i | i dim. 7#h\n\nane poe nuk ae.\n\n\n(descending )\n\nL I i Z i i \u2014 dim, 7th\none poe ete.\n\nAlso start on B-natural and C and practice all of the pattern.\n\n+\n\n30144\u2014\n\n(ascending )\n\nmB m3 ete. dim. 7th\n\n302/45 35 oe =\nk 4 ; Vv a \u2018 It - r\nT | a | dim 7\nans ms ae\n(descending)\nb \u2019 nnd i an 3 i ete. T J T din, Tth\n\u2014 ! f ty Bite\nLe ! i \\ l f dim, qh\nanes po Be ae.\nAlso practice pattern starting on E-natural (B-natural to E-natural) and F (C to F).\n(ascending )\n\u2014\u2014\u2014\u2014\u2014\u2014 = = f =\n303 4 f \u2014> \u2014 5 2 te # mnvivien |\nD a 5 6\nr i 1 { L | | { Bain\n; mB wm gS ace,\n(descending )\nbet + , |\nSS St\n/ teeanaad\n\n163\n\n\n(ascending)\n304\n(descending)\nPractice this pattern starting on B-natural and C (B7 and C7).\n(ascending)\n305\n(descending)\nAlso practice this pattern starting on B-natural, C, and D-flat (B augmented, C augmented, and D-flat augmented).\n(ascending)\n306\n(descending)\nAlso practice this pattern starting on E-natural (B-natural, E-natural); F (C-F); F-sharp (C-sharp, F-sharp)\n164\n\n(ascending )\n\n{ oo\n307 \u2014\u2014 a # = eae 2179\n/ ia \u00a2\nM3 MB MZ MB ate,\n(descending )\nhy ll\nf pt z ae cy) f \u2014\u2014 i\n* i tt \u2014 fH ae T 2\n} = ea\nM3 M3 M3 i M3 ) MZ io,\n(descending )\n(ascending )\n1 i L tf 2 : ee\n308 \u2014 aa ae ip ot: : t if ain\ni a FO a al\n\nAlso practice this pattern starting on B-natural, C, and D-flat.\n\nThe student should now review Pattern No. 290-308, adding an additional fourth interval to each\npair. playing them in triplets. For example, No. 290 would now read: B-flat, E-flat, A-flat; B, E, A;\nC, F, B-flat: etc. Many interesting. useful combinations will result.\n\nCHROMATIC SCALE\n\n(ascending) - ee.\n= = , : et\n3097 A oe oe q i\n\nyy jy |\n\n\u2018ts poy\nas i ani Ti Fe\n\n(descending)\n\n\\ i t l ! N ! \u201cOW Gcale\n\n\n\n(ascending )\n\n| !\n\u2014\u2014\u2014 te\n\n3104 ier ES\nar re na SS\n\u201c+\nt ! it | i {\n(descending ) HUT Sale\nioe\npee ple 4 pb obo, b rete _\njo ae T i { i fi taper\n= eee SE. 1 \u201ct\nHut ale\n(ascending)\n3 i\n311f8 => pip ee ae\n\n7 + 5?\n\n4)\noy\n\n4 Lb rl\n\n(descending)\n\nic\nHt pp \u00bb Dt te oy , Do riley be Gt.\n\nca nt = i\n(ascending )\nQt =! 1__| |\nST \u2014\u2014\u2014\u2014\u2014 a a\n7 t+ + \u2014\n| (descending)\nt : \u2014 = tt =\u2014\u2014 pets t :\n\n\n\n(ascending }\n\n4 + ot 7 \u2014\n313 n 3 G f an peed Ae a\n7 a a Se\nit J i _|\n77 ms ms it\n4 or +4 Y Lyte \u00a7 ele\nthi\u2014 ; A \u2014 ae t \u2014\u2014\n; ! i _ Cain 7\nAS \"7% ma 7%\n(descending )\n14 di\n+ i+ + bd. f 1 .\ni at \u2018 + rf | i\n7 haved \u2014 U ; +\u2014\nLawn 76h\naa m3 ee) + ne \u201c\nAlso practice this pattern starting on D-flat and D-natural.\n(ascending )\n| ee ele.\n_ eae, |\n314 \u2014\u2014\u2014\nrma a i\n7. +Fir roe \u2014\u2014,\na 1 M3 L_. Mg Ms ! Cdim\n(descending )\n\n{\npbole bt ere,\nat |\n\nA f + T \u2014 i iu rat He\n7 | mee | Te mee) OT AS Tf\nLdime\n\nAlso practice this pattern starting on D-flat and D-natural.\n\n167\n\n\n\n(ascending)\n315\n+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 35 extraction"
+}

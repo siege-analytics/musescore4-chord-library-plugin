@@ -1,0 +1,104 @@
+{
+  "run_id": "2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar",
+  "config": "pipelines/master-distillation/configs/bertoncini-arrangements-solo-guitar.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar/pages.json",
+        "re-ingested: 81 pages, 15,137 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:07:07+00:00",
+      "ended_at": "2026-05-31T03:07:07+00:00",
+      "outputs": [
+        "detected 25 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar/chapter-bounds.json",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch01.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch02.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch03.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch04.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch05.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch06.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch07.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch08.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch09.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch10.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch11.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch12.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch13.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch14.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch15.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch16.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch17.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch18.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch19.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch20.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch21.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch22.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch23.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch24.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/chapters/ch25.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:09:44+00:00",
+      "ended_at": "2026-05-31T03:09:44+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch15-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch16-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch17-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch18-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch19-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch20-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch21-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch22-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch23-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch24-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/summaries/ch25-summary.md",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/arrangements-for-solo-guitar-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:11:34+00:00",
+      "ended_at": "2026-05-31T03:11:34+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/derived/systems-draft.json",
+        "plugin/data/masters-corpus/gene-bertoncini/arrangements-for-solo-guitar/derived/STATEMENT.md",
+        "derived 2 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

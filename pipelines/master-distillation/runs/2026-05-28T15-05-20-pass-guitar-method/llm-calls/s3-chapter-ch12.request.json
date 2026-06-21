@@ -1,0 +1,9 @@
+{
+  "stage": "s3",
+  "scope": "chapter-ch12",
+  "model": "claude-haiku",
+  "system_prompt": "You are distilling one chapter of a guitar method book into a short summary.\n\nThe user will give you a chapter file with topic-organized verbatim quotes\nplus the human-rationale notes for each. Write a one-paragraph summary (4-7\nsentences) that captures:\n\n  - what this chapter teaches (the techniques, concepts, rules, examples)\n  - the master's characteristic moves visible in this chapter (if any)\n  - the load-bearing terminology this chapter introduces\n\nReference the topic labels from the chapter file when useful. Do not invent\ninformation not present in the chapter. If the chapter is biographical or\nintroductory rather than instructional, say so explicitly.\n\nOutput just the paragraph \u2014 no preamble, no JSON, no markdown formatting.\n",
+  "user_prompt": "Chapter 12: GRETE\n\n<<<CHAPTER FILE\n# Chapter 12 \u2014 GRETE\n\n_Pages 32-34._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Example Changes for Improvising\n\n> EXAMPLE CHANGES FOR IMPROVISING\n> Bb7 G13 Cm7 F7 D7 G7 C7 F7 Bb Bb7 E\u266d Edim | Dm7 G7 Cm7 F7 | Cm7 F7 Bb\n\n**Significance (p. 32).** Chord-change sequence as backing framework for improvisation.\n\nCHAPTER FILE>>>",
+  "response_schema": null,
+  "notes": "per-chapter distillation for ch12"
+}

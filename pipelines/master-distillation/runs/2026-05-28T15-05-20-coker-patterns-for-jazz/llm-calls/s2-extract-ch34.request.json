@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch34",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 34: Interval Studies\nPages 155-165 of the book.\n\n<<<CHAPTER TEXT\n\nC lydian augmented scale\n\n{ascending )\n\u2014\u2014o\u2014 : = | A\n264 = i :\n4 + \u2014?\na a =\n(descending )\ni tty 44 Le |\nea = = es eo ee re\nC lydian augmented scale\n(ascending ) = eS nt\n\u201cail n . \u2014o 4\n265 SS\n7-7. \u00ab7 * lI a\n(descending )\ni\ntt + Hp dt |\nic Foi Fete\n(descending )\nC lydian augmented scale\n\n(ascending ) '\n\na a 4\nC lydian augmented scale\n\n(ascending )\n\n\u2014, |\nft a\n(descending )\n\n! = \u201c| |\na Eel \u2014\na Ll\n\n151\n\n\nC lydian augmented scale\n\n(ascending)\n|\n\\\n268 | iT sj => e+ i\u2014 ss ra\n; rd vi we\n7? * i \u2014F T\n(descending)\nLi 4 i d i\nral im \u2014 \u201c cao\n: v2 L eh z\n\u2014- ies\nC lydian augmented scale\n(ascending )\n\u2014 aif /\n26916 t La 4a ee oe\n= | e117\nTr $e o i =\n(descending)\n|\nhy i \u2014# 2 A \u00a2 =>\nina { #- \u2014\u2014\u2014\u2014 on\n(ascending ) (descending)\n4\n8. {\nm ae Fa fttaet\n| of i +\n\n152\n\n\nC lydian augmented scale\n\na\n\n(ascending )\noa 4+ did\n27h <5 e + a a i mi oT\nT+ 7 1 \u2014\n(descending)\n42 42 : |\nif t TO } anit ; \u2014<\u2014 aA\ni +7 i 4\n= tit\n\u2014 i\nC lydian augmented scale\n(ascending)\n: r\n272 fh t + + 5 H+ z i Lt fi\n(descending )\n| =e \u00a3 \u00a3 {\n\u2014 + ry z 4 \u2014\u2014 a oor\n\nC iydian augmented\n(ascending )\n\n273 \u2014y tt = t # i pra\n+1 Sta; i\n(descending )\n1 = n +\ni t\u2014\u2014\n\n153\n\n L\n\n\nC Iydian augmented scale\n\n(ascending )\n\n(descending)\n\n:\n\n-_\n\n74h\n\n~SY\n\nC lydian augmented\n\nre\n\nbead\n\n\\\n}\n\n\u00a3\u00a3 do, \u00bb\na\n\n+ \u2014 t it + \u2014\n2750 =\u2014 \u2014, $ = 7 \u2014\u2014}\nia = an 7%\n\nC lydian augmented\n\n4 \u00a3 nf \u2019 i \u2014\u2014\n27618 aj aA\ny f \u00a2\nC lydian augmented\n\nEi sa\n\n27\n\nTT\n\naa\n\nme\n\nben\n\n154\n\n\n\nINTERVAL STUDIES\n\nMinor seconds (half steps), progressing upward in pairs by minor seconds.\n\nmo me\n=,\n\nete\n\nAL z+ \u2014 ae pe\n\n[\n\nwot\nLx\n+\nC\n\ne\n3\n\u2018\n\nMinor seconds (half steps), progressing downward in pairs by minor seconds.\n\n\u2014 os : | _~\n7 Y a\n\u00a7 be p , ef { i \u2014\nE = Ho} ote \u201d =\nin] H if {_ yew\nme me =\n56\nThe resulting sonority is a chromatic scale.\nMinor seconds progressing upward by major seconds.\nMe AL\n\u2014_ | Hi fi }\nmn re\n279 tr rt : = 3 ota\n7g ttt = \" =\ntome 8,\nSY cy\nMinor seconds progressing downward by major seconds.\nBE be t bebe te !\nral i sa La i 4 +\n\nWe \u2014\u2014 \u2014_\n\nTranspose the above patterns so that the ascending form starts on C and the descending form starts\non B.\n\nThe resulting sonority is a chromatic scale.\n\nS6Miles Davis, \u201cFootprints,\u201d on Miles Smiles (Columbia 9401) Miles Davis Quintet.\n\n155\n\n\nMinor seconds progressing by minor thirds.\n\nme\n\n12nd LE ty,\n\n_\u2014\u2014pommeenn\n\nAT\n\n280\n\n=\n\nfee a\n\nV4 7\n\n7 a bound\nma me\n\n4\n\n\u2014L\n\nTranspose pattern to start on C-sharp and then again on D.\n\nThe resulting sonority is a diminished scale.\nC, E-flat, G-flat, and A diminished scale.\n\ng ee\n+ re | (a, - \u201cMZ \u201cwa MZ mma\na ll\n\nMinor seconds progressing by major thirds.\n\n== ht. and: LZ, f)\n\nsh me\n\nTranspose this pattern to start on C-sharp (D-flat), D, and E-flat.\n\nThe resulting sonority is an augmented scale.\n\nC, E, and G-sharp (A-flat) augmented scale.\n\nMajor seconds progressing by minor seconds.\n\nms\n\n4\nA\n\nh\n\nThe resulting sonority is a chromatic scale.\n\n#4\n\naid af\n\nima\n\nram i }\n\n282 t\n\n_aans\n\n\n\nMajor seconds progressing by major seconds.\n\nTranspose this pattern to start on E-flat (D-sharp).\n\nda:\n\nde,\n\ntLiet bebe\n\nT\n\non ee\n\n28345 i \u2014\n\ntee!\nM2\n\nThe resulting sonority is a whole tone scale.\n\nC, D, E, F-sharp, and B-flat whole tone scale.\n\nq\n\nRl ih. +H Oh.\nA. Ye\n* fe] G - \u2014T% \u2014\nLS \u2014 = rv} ane) Me\n\nMajor seconds progressing by minor thirds.\n\nTranspose this pattern to start on E-flat, then E.\n\n()\n\n284 44 pg tte =\not a\n57 M2\n\nThe resulting sonority is a diminished scale.\n\nMajor seconds progressing by major thirds.\n\nTranspose this pattern up a half step.\n\nbth L by bet a\n\nthy ni\n\n285 t\n\nTIVE To\n\u201cOCOMe\n\nThe resulting sonority is a whole-tone scale.\n\nS*David Baker, \u201cHonesty,\u201d on Ezz-Thetics (Riverside 375), George Russell Sextet.\n38David Young, \u201cStratusphunk,\u201d on Stratusphunk (Riverside 341), George Russell Sextet.\n\n157\n\n\n\n287\n\n$9\n\n288\n\nMinor thirds progressing by minor seconds.\n\non, ee, and: + t+\n\na t T\n\n\u00a3\nar\nTh\n=\nili\na aa\ncl\n>\n\n|\n|\n\nThe resulting sonority is a chromatic scale.\n\nMinor thirds progressing by major seconds.\n\n\u2018\nCt TT T yt\nv t Lf {\nae H ae\nrd i i I 1\ni .\nTranspose this pattern up a half step. The resulting sonority is a chromatic scale.\nMinor thirds progressing by minor thirds. Transpose this pattern to start on E-natural and F.\n\n_ 3. === it, and: VOLt py 4 ia t\u2014 aa\n\nheft\neh\n\nWo ina + ri \u00a2 t ie\neee \u2014\nms me\n\nThe resulting sonority is a diminished seventh chord.\nC, E-flat, G-flat, and B-double flat (A) diminished seventh chord.\n\nit fog\nme\n\nWE adie Hubbard, \u201cChaos,\u201d on All Seeing Eye (Blue Note 84219), Wayne Shorter Group. This pattern occurs\nin the opening phrase of Freddie Hubbard's trumpet solo. It is likely that Hubbard was attracted to the perfect\nfourth intervals that appear berween each pair above, as becween C-F, D-G, E-natural-A, etc.\n\n\u201cBill Evans, \u201cOleo,\u201d on Everybody Digs Bill Evans (Riverside RLP 12-291), Bill Evans Trio. Listen to the trill\non the cop note.\n\na\n\n\u201c'The spellings of each of these chords (C, E-flat, G-flat,. B-double flat) will differ slightly, but only enharmoni-\ncally i.e., A instead of B-double flat. :\n\n158\n\n\nMinor thirds progressing by major thirds.\n\nae,\n\n294 Fg \u2018 et\nas pS = ?:\nmM,\n\nov\nms\nTranspose this pattern to start on E-natural, F, and G-flat.\n\nThe resulting sonority is an augmented scale. C, E, and G-sharp (A-flat) augmented scale.\n\ng\n\n$\n~d\nsy\nky\n\nPerfect fourths progressing by minor seconds.\n\n(ascending )\n\n| _- es a f\n\nEe pet ee\n\nss\nae a\n\nar\n\n(descending )\n\nF-\npet pt pple be p bt tL, bey Db\n+ D+ 4 = \u2014\n\n159\n\n\n(ascending )\n\na a te fx aa\nia an, a a te <TH\n(descending )\n\u00a3 + Ey F: byt 4, tty + bt they. b- ;\n(ascending }\n| ae\n29274 = 3 : | , rc\narn en re\n(descending )\nL\nty pelt Ly the, be bey\nvis\n(descending)\n(ascending )\nF \u00a3 bey, ain |\n293 f= Serna =\naU ha\n\n- 160\n\n\n(ascending)\n\n~\"H uhole\n1_~ \"Tong\nSeple\n(descending )\na\n+t ptt y\nCoty\n7 a WT.\nSeale\n(ascending } (descending )\n5 \"i 5 5\ntT imal dd toe\nig eee SSE\nir 7 f WT B WT\n; 1 Scale\n{ascending )\n2064S a a\noe +\u2014\u2014 oa\nTs PT\nL\nME Cale\n(descending )\ni]\nOL ny thy |\n; =e T =I A :\ntT Te\nMa\n\nSale\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 34 extraction"
+}

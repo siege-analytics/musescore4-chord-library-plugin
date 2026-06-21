@@ -162,12 +162,23 @@ def audit(data: dict, tuning: dict[int, int]) -> dict:
                 })
 
     # 3. Cross-context: same shape in different contexts
+    # The legacy 'context' field was replaced by 'modes' (see
+    # schema/voicings.schema.json). Derive a comparable single label from
+    # modes[0] when 'context' is absent so the cross-context analysis still
+    # runs on current data. Voicings with neither field fall back to
+    # "unknown" — they group together but won't masquerade as a real bucket.
+    def _context_of(v: dict) -> str:
+        if "context" in v:
+            return v["context"]
+        modes = v.get("modes") or []
+        return modes[0] if modes else "unknown"
+
     by_shape_context: dict[tuple, list] = defaultdict(list)
     for v in voicings:
         shape = shape_fingerprint(v)
         by_shape_context[shape].append({
             "id": v["id"],
-            "context": v["context"],
+            "context": _context_of(v),
             "category": v["category"],
         })
 
@@ -186,7 +197,7 @@ def audit(data: dict, tuning: dict[int, int]) -> dict:
         by_shape_type[shape].append({
             "id": v["id"],
             "category": v["category"],
-            "context": v["context"],
+            "context": _context_of(v),
         })
 
     for shape, group in by_shape_type.items():

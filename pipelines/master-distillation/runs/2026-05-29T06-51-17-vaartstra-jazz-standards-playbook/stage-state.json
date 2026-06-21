@@ -1,0 +1,78 @@
+{
+  "run_id": "2026-05-29T06-51-17-vaartstra-jazz-standards-playbook",
+  "config": "pipelines/master-distillation/configs/vaartstra-jazz-standards-playbook.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-29T06:51:17+00:00",
+      "ended_at": "2026-05-29T06:51:18+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-29T06-51-17-vaartstra-jazz-standards-playbook/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-29T06-51-17-vaartstra-jazz-standards-playbook/pages.json",
+        "re-keyed from 2026-05-28T15-05-20-greenan-jazz-standards-playbook (#360 salvage)"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-29T07:17:27+00:00",
+      "ended_at": "2026-05-29T07:17:27+00:00",
+      "outputs": [
+        "detected 12 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-29T06-51-17-vaartstra-jazz-standards-playbook/chapter-bounds.json",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch01.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch02.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch03.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch04.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch05.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch06.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch07.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch08.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch09.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch10.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch11.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/chapters/ch12.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-29T07:23:08+00:00",
+      "ended_at": "2026-05-29T07:23:08+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/jazz-standards-playbook-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-31T01:10:26+00:00",
+      "ended_at": "2026-05-31T01:10:26+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/derived/systems-draft.json",
+        "plugin/data/masters-corpus/brent-vaartstra/jazz-standards-playbook/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: NOBS\nPages 30-30 of the book.\n\n<<<CHAPTER TEXT\n\nBlues for Nina\n\nBlues for Nina, Nobs, Alison, and Grete are simple\nmelodies used as bases for improvisation. They are re-\ncorded on the Montreux Solo Album (Pablo) 1975.\nThroughout ,+9/b9/13/9(6)/11/-+5/b5 may be substituted for\nsimple Dominants. All changes should be reduced to three-\nor four-note chords. And for better movement, voicings\nshould lead into one another or have a common tone con-\nnecting them. Nobs contains several examples of this\ntechnique.\n\nJOE PASS\nIntro\n8va----------------------------------- +--+ eee eee ee\nOt. i = \u2014\u2014 i\u201d t {\nCyt pee ri \u2014 so\naNers tT ra ~o tT i tT T\nCy) T . . T Ltd\n3 3\nrubato\nSyq-- 2 oe eee eee eee eee eee ee ee eee eee Fast 4\n@ ; 7 Gm7\nOe, : = A \u2014 \u2014\n\u2014\u2014 se | n \u2014\n5} = Fe oO oe 7 tT I\nin tempo\nFim7\nft os cw \u2014 att be A\n2 > Er t \u2014_- \u00a2\nt t os iu 1 t a c\nT tt\nFm7 Em7\nh4 A | =\n\u2014\u2014. = 3 \u2014\u2014\u2014\u2014 5\n- { \u2014 \u20ac i \u2014\n$ | + \u2014\u2014 T ~ a\n8va--------------------------------- eee ee eee eee\n3 3\nfh #4 A 4\nSS ere $=.\nLava t est \u2014t = = t = ~o.\nOD) | 53 T \u2014\n3\nrubato\n8a ---- ~~~ ------ 2-2 e eee ee eee eee ee eee eee eee eee eee eee 1\n3\nf)-8 t T t \u2014 oS\nmt be I | Tt ma\nGe \u2014\u2014\u2014 a =\nAY T t T | r-2 =\n@e 3 T \u2014\u2014 he o\n3\n\nCopyright \u00a9 1976 by Pablito Publishing Company\n\n\u00a91977 under U.C.C. by Pablito Publishing Company\nChappell & Co., Inc., administrator for the world\n\nInternational Copyright Secured/ALL RIGHTS RESERVED\n\n\\29\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

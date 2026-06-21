@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
+stage: s3
+source_pdf: complete_chord_melody.pdf
+source_pages: 32-88
+model: claude-haiku
+extracted_at: 2026-05-23T23:30:33+00:00
+schema_version: 0.1
+---
+
+# Chapter 2 — Module 2 - Chord Vocabulary
+
+_Distillation; backed by `chapters/ch02.md`._
+
+Chapter 2 builds the chord vocabulary that the rest of the method indexes against, beginning with O'Rourke's three-family taxonomy — every chord belongs to Major, Minor, or Dominant (Three Harmonic Families) — then refining minor into m7 and m7b5 sub-families and dominant into natural ('7') and altered ('7alt') sub-families that drive major-vs-minor ii-V-i voicing choice (Minor and dominant sub-families). The central organizing unit is the chord collection, defined as a group of chords covering every diatonic interval as the top note so the dictionary becomes indexable by melody note (Chord collection definition), and the dictionary is structured around ii-V-I because that single progression covers all three harmonic families (Why ii V I for collections). Collections are duplicated into 1st-string and 2nd-string variants to match the top-2-string melody constraint from Module 1 (2nd-string collection rationale). On the theory side the chapter defines a chord symbol as an attempt to describe a sound (Chord symbol definition), establishes stacking thirds as the core construction principle (Stacking thirds), and explains 9/11/13 extensions as continuing to stack thirds past the 7th (Second-octave structures). The load-bearing pedagogical rule is the gap between the theoretically correct chord and the playable guitar voicing (Theoretical vs playable), filled by an explicit omittable-notes list — 5th, root, 11th, and 9th, with 3rd and 7th sometimes omittable in complex chords (Omittable notes list). Final terminology: the diatonic-vs-altered distinction that drives chord-symbol notation (Extensions vs altered tensions), and the rule that surrounding chords define a chord's name as much as its notes do (Context defines chord name).

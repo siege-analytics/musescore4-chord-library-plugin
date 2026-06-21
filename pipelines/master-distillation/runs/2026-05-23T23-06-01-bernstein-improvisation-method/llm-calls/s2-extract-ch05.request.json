@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Comping and Supporting the Melody\nPages 9-11 of the book.\n\n<<<CHAPTER TEXT\n\nComping and supporting the melody\n\nBernstein is renowned for his comping style, and one of the highlights of my lessons with him is\nplaying alongside him. His comping is incredibly supportive and inspiring, and it makes me\nsound much better than my actual level of playing.\n\nDuring one lesson, while teaching me Horace Silver's \"Strollin',\" I attempted to play extended\nchords while he played the melody. However, he stopped me and advised me to start with basic\nchords first\u2014just the root, third, and seventh of each chord. He encouraged me to focus on\nlistening to the melody and understanding the relationship between the basic chords and the\nmelody before making more informed decisions about incorporating chord extensions.\n\nThis example showcases his approach to comping and playing in general. Bernstein ensures that\nhe can create something tasteful using the fundamental elements before exploring new ideas. It's\nakin to working with layers, where he prioritizes building a solid foundation with the basic layers\nbefore progressing to new techniques or embellishments.\n\n\nDressing the notes\n\nDuring a session while playing \"How Deep Is the Ocean,\" I inquired about Bernstein's approach\nto practicing comping. He shared with me the concept of ensuring that the chords played always\nenhance the melody, likening it to \"dressing the notes.\" According to Bernstein, you can make\neach note feel good by giving it the right \"outfit\" and making it feel important.\n\nTo illustrate this idea, he focused on the ending of \"How Deep Is the Ocean,\" where the melody\nresolves to an F while the chord is an Fm7. Bernstein explained that if the bass were to play the\nsame melody note, it could make the melody feel weak. Instead, he prefers to play a B7#11\nchord, where the F becomes the #11, allowing the melody note to have a different \"outfit\" that\nenhances its impact and makes it feel good.\n\n\nExample:\n\n\n\n\n                 Example 1:\u201ddressing the f note\u201d on \u201cHow Deep Is The Ocean\u201d\n\n\n\n                                                                                                    9\n\n\nThen, he proceeded to explain how one can create their own guide tones for each chord, aiming\nto establish a strong and captivating melodic line. Afterwards, you have the freedom to\ndetermine how to fill in the remaining notes of the chord.\n\nFirst he played these guide tones, with the bass:\n\n\n\n\n          Example 2: bass and guide notes for first chords of \u201cHow deep is the ocean\u201d\n\n\nFurthermore, he elaborated that once you have established a solid structure with strong guide\nnotes and bass notes, you have the flexibility to incorporate any notes in between. The idea is to\nconsider notes that would \"dress better\" the guide tones, enhancing their impact and making\nthem feel pleasing.\n\nSo he played this by applying that principle:\n\n\n\n\n   Example n 3: \u201cDressing the notes\u201d for own guide tones on first chords of \u201cHow deep is the\n                                           ocean\u201d\n\n\n\n\nAnother aspect that Bernstein enjoys doing is reharmonizing sections of the melody when he\nanticipates the notes I'm going to play in the song's heads. This creates intriguing harmonic\nmovements, \"dressing the notes,\" and enhancing their sound while still respecting the essential\nharmonic narrative of the song.\n\n\n                                                                                                  10\n\n\nMoreover, he had a remarkable understanding of whatever I played during my solos. When my\nharmonic ideas were clear, he would follow along, making the notes I played sound even better.\nHe expressed that it was highly engaging for him to play with musicians who could grasp and\nrespond to his ideas, and he believed that the greatest musicians were those who could pick up on\nthe ideas of their fellow bandmates and create a profound musical conversation.\n\n\nSpend time comping\n\nDuring another lesson, Bernstein shared with me his practice of recording himself while comping\nfor extended periods of time. He would then listen back to the recordings and play over them.\nAccording to him, this practice was highly valuable for two reasons. Firstly, it allowed him to\ndedicate a significant amount of time to practicing comping. Secondly, it provided an\nopportunity to experience how it feels to play over his own comping, enabling him to assess the\ninterest and effectiveness of his comping ideas based on his own playing experience.\n\nHe also recounted his experiences of playing in sessions when he was younger, where they\nwould perform a single tune, chorus after chorus, for extended durations. In these situations, he\nhad to constantly come up with new ideas on the bandstand to keep the music moving forward.\nThis challenge proved to be beneficial in developing his improvisational ideas and expanding his\ncomping repertoire.\n\n\nRhythm of the comping\n\nBernstein emphasized the importance of rhythm in his comping, considering it to be equally vital\nas the chords he played. He believed that finding captivating rhythms that propelled the music\nforward was a key aspect. In one lesson, he showcased this idea by incorporating the iconic\nintro's rhythm from \"Star Eyes\" by Charlie Parker into his comping over the soloist. This\nrhythmic figure not only added a pleasing feel to the music but also served as a motif for\nvariation and development.\n\nWhile playing alongside Bernstein, I noticed his exceptional rhythmic support in his comping\nand his keen understanding of my playing. Even when I made occasional mistakes or\nunintentionally affected the timing, he would gracefully adjust and slow down or speed up with\nme, ensuring that the music continued to feel good. His deep sense of groove allowed him to\nflexibly adapt and mold the groove to suit the nuances of my playing, showcasing both his deep\nunderstanding of groove and his ability to respond and connect as a musician.\n\n\n\n\n                                                                                               11\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

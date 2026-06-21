@@ -1,0 +1,487 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-benson-vol-7-blues-ideas",
+    "stage": "s4",
+    "source_pdf": "Benson, George - The George Benson Method, Vol 7 (Ultimate Advanced Blues Ideas).pdf",
+    "extracted_at": "2026-06-03T05:35:57+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "benson",
+  "work_id": "method-vol-7-blues-ideas",
+  "systems": [
+    {
+      "id": "benson:method-vol-7-blues-ideas:harmonic-regions-substitution",
+      "name": "Harmonic Regions and Substitution System",
+      "summary": "The central system of the book organizes chords into Harmonic Regions \u2014 Major Subdominant, Minor Subdominant, and their relative/tritone-linked equivalents \u2014 and derives all substitution choices from regional membership rather than chord-by-chord analysis. Members are the harmonic regions themselves plus chord types that inhabit them. Traversal rules govern movement between regions: tritone substitution, leading-tone / diminished-as-V7, minor-subdominant derivation, relative-chord linkage, and consecutive minor-7th chains. Modification rules govern how a chord within a region may be altered or replaced: the regional interchangeability principle, scale-visualization context-assignment (Dorian for non-diatonic minor, Lydian for non-diatonic major, Lydian Dominant or Dominant Diminished for altered dominant contexts), the V-degree stripping rule under superimposition, the color-note dual-function rule, the tritone-substitution exception scale expansion, the Dorian/hybrid preference for non-diatonic minors, and the major-7th-arpeggio superimposition over dominant chords.",
+      "members": [
+        {
+          "id": "major-subdominant-region",
+          "name": "Major Subdominant Region",
+          "summary": "Chords built on the IV degree of the home key functioning as subdominant (e.g., Bb7 in F major)."
+        },
+        {
+          "id": "minor-subdominant-region",
+          "name": "Minor Subdominant Region",
+          "summary": "Chords derived from the parallel minor of the home key's subdominant (e.g., Bbm area yielding Gbmaj7, Ebm7, Ab7 as replacements for Bb7)."
+        },
+        {
+          "id": "dominant-region",
+          "name": "Dominant Region",
+          "summary": "Chords functioning on the V degree, including tritone substitutes (e.g., C7 = F#7/Gb7)."
+        },
+        {
+          "id": "tonic-region",
+          "name": "Tonic Region",
+          "summary": "Resolution chords on the I degree, including relative major/minor chords (e.g., Fmaj7, Dm7, Am7 in F major)."
+        },
+        {
+          "id": "dominant-7th",
+          "name": "Dominant 7th Chord",
+          "summary": "Core blues chord type (e.g., D7, F7, Bb7) that is the primary target of substitution operations."
+        },
+        {
+          "id": "minor-7th",
+          "name": "Minor 7th Chord",
+          "summary": "Used both as diatonic chord (IIm7) and as non-diatonic substitution tool; treated with Dorian or hybrid scale identity."
+        },
+        {
+          "id": "major-7th",
+          "name": "Major 7th Chord",
+          "summary": "Used as superimposed arpeggio over dominant chords, or as regional substitute (e.g., Gbmaj7, Emaj7, Bmaj7) treated with Lydian identity."
+        },
+        {
+          "id": "diminished",
+          "name": "Diminished Chord",
+          "summary": "Functions as V7 substitute by leading-tone content (e.g., F\u00b0 = E7 leading to F7)."
+        },
+        {
+          "id": "half-diminished",
+          "name": "Half-Diminished Chord",
+          "summary": "Replaceable by Dorian minor-7th cadence (e.g., Cm7/F7 replacing A\u2205) via harmonic equivalence."
+        },
+        {
+          "id": "consecutive-minor-7th-chain",
+          "name": "Consecutive Minor 7th Chain",
+          "summary": "A sequence of consecutive minor-7th chords (e.g., Gm7\u2013Abm7\u2013Am7) used as a structural substitution device over a single dominant target."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tritone-substitution-traversal",
+          "name": "Tritone Substitution Region Traversal",
+          "summary": "Move from a dominant chord to its tritone substitute (a chord a tritone away) to cross into an adjacent dominant region.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Tritone Substitution of IV degree",
+              "quote_excerpt": "replacing the IV degree by the V degree using Tritone Substitution (C7= F#7 or Gb7)",
+              "page": 44
+            }
+          ]
+        },
+        {
+          "id": "leading-tone-diminished-traversal",
+          "name": "Leading-Tone Diminished-as-Dominant Traversal",
+          "summary": "Move from a diminished chord into a dominant region by exploiting its leading-tone content (all notes a half-step from the target dominant), with a whole-step leading-note exception.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Diminished chord as V7 substitute",
+              "quote_excerpt": "F\u00b0 = E7 which contains all the notes half step above from F7 thus creating many leading tones at once to F7",
+              "page": 49
+            },
+            {
+              "chapter_n": 10,
+              "topic": "B\u00b0 as C7 substitute leading to Fmaj7",
+              "quote_excerpt": "a leading note sometimes can be a whole step, not exactly a half step as usual",
+              "page": 63
+            }
+          ]
+        },
+        {
+          "id": "minor-subdominant-region-traversal",
+          "name": "Minor Subdominant Region Traversal",
+          "summary": "Move from a Major Subdominant chord to a chord derived from the parallel minor's subdominant region as a functional regional substitution.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Gbmaj7 replacing Bb7 \u2014 Subdominant Minor derivation",
+              "quote_excerpt": "replacing Bb7 (Subdominant Region chord) by Gbmaj7, which is a chord derived from the Subdominant Minor (Bm) of the tonality (F)",
+              "page": 46
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Subdominant substitution via minor region",
+              "quote_excerpt": "we can replace a Major Subdominant Region chord (Bb) by one of the chords derived from the Minor Subdominant Region (Bbm)",
+              "page": 95
+            }
+          ]
+        },
+        {
+          "id": "relative-chord-traversal",
+          "name": "Relative Chord Regional Traversal",
+          "summary": "Move between a chord and its relative major/minor as additional color sources within the same harmonic region.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Superimposition color options for IIm7/I cadence",
+              "quote_excerpt": "Dm7, Fmaj7 (relative of Dm7) Cmaj7 and Am7 (relative of Cmaj7)",
+              "page": 53
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Ebm7/Ab7 cadence replacing D7",
+              "quote_excerpt": "we can also use ideas derived from Gbmaj7 which is the relative from Ebm7",
+              "page": 72
+            }
+          ]
+        },
+        {
+          "id": "consecutive-minor7-chain-traversal",
+          "name": "Consecutive Minor-7th Chain Traversal",
+          "summary": "Move through a stepwise chain of consecutive minor-7th chords (e.g., Bbm7\u2013Am7\u2013G#m7) as a sequential substitution pathway toward a single dominant target.",
+          "engine_payload": {
+            "kind": "_pending:chain-minor7-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "G#m7 chain substitution over D7",
+              "quote_excerpt": "chain of consecutive minor 7th chords (Bbm7, Am7, G#m7). We should play hybrid or Dorian ideas over each one",
+              "page": 70
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Abm7/Db7 replacing C7 \u2014 characteristic color notes",
+              "quote_excerpt": "Abm7 is part of a minor 7th consecutive 'chord chain': Gm7, Abm7, Am7, which sounds very interesting",
+              "page": 120
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "regional-interchangeability",
+          "name": "Harmonic Region Interchangeability Rule",
+          "summary": "Any chord within a given harmonic region may substitute for any other chord in that region; selection among options may be conditioned on tempo.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Harmonic Regions: Interchangeable Chord Tricks",
+              "quote_excerpt": "4) Harmonic Regions Interchangeable Chord Tricks",
+              "page": 40
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Tempo consideration for substitution",
+              "quote_excerpt": "Note: This option might sound better with faster tempos.",
+              "page": 38
+            }
+          ]
+        },
+        {
+          "id": "scale-visualization-context-assignment",
+          "name": "Scale Visualization Context-Assignment Rule",
+          "summary": "Assign a distinct scale identity to each substitution chord based on its harmonic context: Dorian for non-diatonic minor replacements, Lydian for non-diatonic major substitutions, Lydian Dominant or Dominant Diminished for altered dominant and tritone contexts.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Scale visualization rule",
+              "quote_excerpt": "depending on the situation you must visualize one of them or maybe both at the same time",
+              "page": 17
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Bm7 Dorian substitution for F7",
+              "quote_excerpt": "Bm7 should be considered Dorian because it is a minor chord not derived from the chord family of the tonality",
+              "page": 62
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Bmaj7 replacing F7",
+              "quote_excerpt": "Bmaj7 chord must be treated as a Lydian chord, however we can also use hybrid ideas over it",
+              "page": 60
+            }
+          ]
+        },
+        {
+          "id": "superimposition-v-degree-strip",
+          "name": "Superimposed Cadence V-Degree Stripping Rule",
+          "summary": "When superimposing a IIm7\u2013V7\u2013I cadence, strip the V degree so only the IIm7 and Imaj7 remain active; the V loses tension-bearing capacity and merges into the IIm7 Dorian.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Superimposed cadences losing V degree",
+              "quote_excerpt": "superimposed IIm7, V7, I cadences lose the V degree and stay only with the IIm7 and the Imaj7",
+              "page": 53
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Superimposed IIm7/V7/I \u2014 V degree rule",
+              "quote_excerpt": "the V7 degree cannot have tensions anymore thus becoming part of the IIm7 degree dorian",
+              "page": 69
+            }
+          ]
+        },
+        {
+          "id": "color-note-dual-function",
+          "name": "Color Note Dual-Function Assignment Rule",
+          "summary": "Identify 'color notes' \u2014 pitches that simultaneously function at two different interval roles across the substituted and target chords \u2014 and treat them as primary flavor generators for hybrid sounds.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Abm7/Db7 replacing C7 \u2014 characteristic color notes",
+              "quote_excerpt": "two specific notes: 'Cb (B)' and 'F' (minor 3rd & major 6th from 'Abm7', and major 7th of & perfect 4th from 'C')",
+              "page": 120
+            },
+            {
+              "chapter_n": 12,
+              "topic": "C#m7/F#7 replacing C7 \u2014 altered tensions",
+              "quote_excerpt": "note 'B'(minor 7th from 'C#m' and major 7th from 'C')",
+              "page": 110
+            }
+          ]
+        },
+        {
+          "id": "tritone-sub-exception-scale-expand",
+          "name": "Tritone Substitution Scale-Expansion Exception",
+          "summary": "When the V degree of a superimposed cadence is itself a tritone substitute of a real dominant, expand available scale colors to include Lydian Dominant or Dominant Diminished.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Tritone sub exception: Lydian Dominant or Dom-Dim",
+              "quote_excerpt": "exception which is when the V degree of the superimposed cadence is the Tritone Substitution from a real dominant chord",
+              "page": 53
+            },
+            {
+              "chapter_n": 12,
+              "topic": "F#m7/B7 replacing C7 \u2014 scale and sound description",
+              "quote_excerpt": "F#m7 Dorian or F#m7 hybrid when played over C7, will sound a combination between C7 Dominant Diminished with C7alt",
+              "page": 115
+            }
+          ]
+        },
+        {
+          "id": "minor7-dorian-hybrid-preference",
+          "name": "Dorian/Hybrid Preference for Non-Diatonic Minor Substitutions",
+          "summary": "Over any non-diatonic minor-7th substitution chord, prefer Dorian or hybrid (Dorian + altered) ideas rather than strict diatonic modal application; hybrid tends to sound better.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Hybrid ideas preferred",
+              "quote_excerpt": "Usually hybrid ideas tend to sound better.",
+              "page": 53
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Ebm7/Ab7 cadence replacing D7",
+              "quote_excerpt": "consider this cadence as being a single Ebm7 Dorian or Ebm7 hybrid, which brings to D7 an interesting flavor",
+              "page": 72
+            }
+          ]
+        },
+        {
+          "id": "maj7-superimposition-over-dominant",
+          "name": "Major 7th Arpeggio Superimposition Over Dominant Chord",
+          "summary": "Layer major-7th arpeggios over a dominant-7th chord context, combining Blues Scale, Mixolydian, and Lydian Dominant scale ideas simultaneously with the superimposed maj7 structure.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Section 3: Superimposed Major 7th Chord Tricks",
+              "quote_excerpt": "combine dominant 7th ideas (Blues Scale, Mixolydian and Lydian Dominant Scales) with superimposition of major 7th arpeggios over dominant 7th chords",
+              "page": 35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "benson:method-vol-7-blues-ideas:rhythmic-positioning-practice",
+      "name": "Rhythmic Positioning and Practice Architecture System",
+      "summary": "A smaller but structurally distinct system governing how the student approaches learning and performing over the blues form. Members are tempo categories and rhythmic feel types; traversal rules govern movement between tempo categories (slow-medium 110 bpm as default start; fast as consequence not goal); modification rules govern how a practice unit is altered (section isolation before full form, pre-set chorus combination expansion, line-to-concept internalization, turnaround rest phrasing). The jazz-pulse anchor on beats 1 and 3 and the 'dance of the elephant' body movement are the physical foundations under the whole system.",
+      "members": [
+        {
+          "id": "fast-tempo",
+          "name": "Fast Tempo Category",
+          "summary": "Builds right/left-hand technique fluency and scale-connection speed."
+        },
+        {
+          "id": "medium-tempo",
+          "name": "Medium Tempo Category",
+          "summary": "Deploys inverted/reverse hammer technique and breathing between melodies."
+        },
+        {
+          "id": "slow-medium-tempo",
+          "name": "Slow-Medium Tempo (110 bpm)",
+          "summary": "Prescribed starting tempo for any new concept; default entry point."
+        },
+        {
+          "id": "slow-blues-vibe",
+          "name": "Slow Blues Vibe",
+          "summary": "Triplet-feel groove referencing Wes Montgomery's 'Bumpin'' as canonical example."
+        },
+        {
+          "id": "free-slow-blues-vibe",
+          "name": "Free Slow Blues Vibe",
+          "summary": "Rhythmic liberation variant allowing departure from the common rhythmic cell."
+        },
+        {
+          "id": "rhythmic-positioning",
+          "name": "Rhythmic Positioning",
+          "summary": "The method's term for combining all types of time feel and rhythmic cells; hardest tempo category to master."
+        },
+        {
+          "id": "preset-chorus-combination",
+          "name": "Pre-Set Chorus Combination",
+          "summary": "Notated unit for mixing chorus sections (1,1,1 = full chorus; 1,2,3 = mixed sections) including fingering, picking, and line combinations."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tempo-sequence-traversal",
+          "name": "New-Concept Tempo Sequence Traversal",
+          "summary": "Begin any new concept at slow-medium (110 bpm), then expand to faster and slower tempos only after initial mastery; fast is a consequence not a goal.",
+          "engine_payload": {
+            "kind": "_pending:tempo-sequence-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Tempo for new concept practice",
+              "quote_excerpt": "slow medium tempo backing track (110 bpm works fine). After getting used to some new possibilities, we should do the same process using faster tempos and slower tempos",
+              "page": 21
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Fast tempos as consequence, not goal",
+              "quote_excerpt": "playing fast is a consequence, not a goal",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "id": "section-isolation-before-full-form",
+          "name": "Section-Isolation-Before-Full-Form Practice Traversal",
+          "summary": "Study each blues section separately and master each possibility before assembling the full form.",
+          "engine_payload": {
+            "kind": "_pending:section-isolation-traversal"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Studying each blues section separately",
+              "quote_excerpt": "we should not study the whole form at once. If we really want to master it, we must study each part and each possibility separately",
+              "page": 21
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "preset-chorus-combination-expansion",
+          "name": "Pre-Set Chorus Combination Expansion Rule",
+          "summary": "Modify a practice unit by combining chorus sections using the pre-set notation system (1,1,1 / 2,2,2 / 1,2,3) to create varied melodic, fingering, and picking combinations.",
+          "engine_payload": {
+            "kind": "_pending:chorus-combination-expansion"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Pre-set chorus combination method",
+              "quote_excerpt": "1, 2, 3 (means that we are combining the first part of chorus 1 with the second part of chorus 2 and the resolution of chorus 3)",
+              "page": 16
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Fingering and picking in pre-set choruses",
+              "quote_excerpt": "memorize and combine some pre-set choruses, not only melodically speaking but in terms of fingering, picking and line combinations",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "id": "line-to-concept-internalization",
+          "name": "Line-to-Harmonic-Concept Internalization Rule",
+          "summary": "Treat a memorized line as a vehicle for the harmonic concept it embodies; modify practice by improvising from the concept rather than reciting the line.",
+          "engine_payload": {
+            "kind": "_pending:concept-internalization"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Lines vs. harmonic concept",
+              "quote_excerpt": "the idea is not to become a 'parrot' but a wise improviser that creates new combinations derived from a single line",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "id": "turnaround-rest-phrasing",
+          "name": "Turnaround Rest Phrasing Rule",
+          "summary": "Rest during the turnaround bars (last two bars of the blues form) to phrase-separate choruses and create breathing space between melodic 'stories'; treat silence as structural punctuation.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Turnaround \u2014 breathing between stories",
+              "quote_excerpt": "we must remember that usually we should breathe in this part in order to give space",
+              "page": 98
+            }
+          ]
+        },
+        {
+          "id": "jazz-pulse-beats-1-and-3",
+          "name": "Jazz Pulse Anchor: Beats 1 and 3",
+          "summary": "Anchor the jazz pulse feel on beats 1 and 3 (not 2 and 4); stronger 1-and-3 feel enables rather than suppresses the perceived 2-and-4 pulse.",
+          "engine_payload": {
+            "kind": "_pending:pulse-anchor"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Jazz pulse: beats 1 and 3",
+              "quote_excerpt": "The real Jazz feeling has its pillar in 1 and 3. But what about the 2 and the 4? Guess what, the stronger we feel the 1 and 3, the easier we can feel the pulse in 2 and 4",
+              "page": 18
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

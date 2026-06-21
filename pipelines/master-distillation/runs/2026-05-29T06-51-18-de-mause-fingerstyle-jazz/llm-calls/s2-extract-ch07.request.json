@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Section Two/Part 7: Harmonizing with Tenths\nPages 94-100 of the book.\n\n<<<CHAPTER TEXT\n\nSECTION TWO/PART 6: HARMONIZING A MELODY WITH A THIRD BELOW\n\nRhythm Changes in thirds plus bass\n\ndt oo | {\n\nRee\n\nbt\n\n8 6\n\naa 74 3 7 3 3\n\nt } : 3 +4 3 3\n\n| 2-4 o_o > 3\n\n\u00a7\u20142_~ 2-4 ~ 6\u20142\u2014 2\u20144 4\n\n2 3 6 2 3.0\n3 0 5 3 @ 5\nB83 @ 5 = 3 a 5 = =\n3 3\nThird this blues\n\nTry putting thirds below each melody note. Follow the chord symbols to check for the correct\nthird, and/or look at the TABLE OF THIRDS on the next page. Adjust according to your ear. Add a\nsimple bass.\n\nE7\npy it (es f oe\n;_- 1\n0) 3 i C \u2014<\u2014<\u2014\nF 3\u20143\u20143\u20143--3--3--3--3-_|-2-0 0 0-6 3-3 -3\u201433-3--3-3-_| 2-9-0--0--8\nA\nry\ni>]\n\u2014~\nA7 E7\n\nrcpt oJ 2d} = \u2014 |\n\n+ t t | 1\noe [ I 1 I\n= 3\u20149-\u20143\u20143_3_3_3_3_ 2 9-099 4#\u2014 0-3 5\n*k 2\u20144\ni=\ni=]\n=\n\nB7 A7 E7\n/ | | (en oes\nt\ns + E i Hi\n6 3-2 6\n\n+ 2\u2014\u2014 2 2 33333 3 33-| 2 9 9-0-6\nLA\niat\nL-}\n\u2122\n\n93\n\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\n\nHere is one possible arrangement of the blues with the melody harmonized in thirds and simple\nbass added. Examine each melody and harmony note below to see how it fits into the scheme of\nthings. Would you have changed any of the notes to be more in harmony with the chord symbols,\nor would you let all or at least some stand as is?\n\nThird this blues (completed)\n\nA+ tt\n\nE7\n\n{| {| | | | |] |\n\n|\n\npiteead aes\n\nDO)\n\nqT\n\nTI\n\n7\n\n|\n\n4o| \u2014]|\n\nTABLE OF THIRDS\n\nNow that you have some experience in arranging with thirds, you may not need further help.\nThe following twelve major scales are harmonized in thirds. You can use them simply as look-up\ntables, but | encourage you to make scales in thirds as part of your daily practice routine. You want\nnot only to write arrangements using thirds, but to play them with facility, too. To keep yourself from\ngetting into a rut, make up little variations, such as playing the top note twice and the bottom note\nonce, or staggering the notes, or changing the rhythm.\n\nThe first six keys have been fully fingered. You should be able to finger the rest yourself.\n\n94\n\nT 3-3 3-3 3-3 3] 9 999 33 3 3 3-3-3 95 19 9 99\ni a es eo a a\n44444449444 4444444 4-2 44 +4\n3 > rt 2\n2 2 2. 2\nB 2\n0 Q rn\n@ 6- 8 8 8\na, 1 2 a\u00a2 o| 3 a\nwe tT +\nrat 2\n[/.. Wan = a\n- 4. \u2014. PA\nOy) = ue = \u2014 = f= = T\n59 9 9 9 3 9\n= 3\u20143 3333-332 9-9-9 4\u20148-\nBe EF \u00a9 fF EF S 8 5 9 9 5 5 E59 0\nT 5\u20145\u2014_5\u2014_5\u2014_5\u2014_5 55 3\u20142\u20142\u20142\u20142. 5\u2014_2\u2014_3 6\n4 + 04\n2 2 5 i 4 2 2\n2 2 4\u2014_2\u2014\u2014-2.\np 6 9 . 65\nB 8 0 =) a a 7\n0 8. 0.\na ee |\ncz\nr\n= 8 3-32-29 9\n> 9 3 z 0 _0_0\nt 2 2 2 5 \u20145 33222 3\u20143\u20143\u20143_3-_3\u2014_3\u2014-3, 2\u20148\u2014_0\u20140\n5 5 5 3-43-44 4-4 4-4 -| 5 4 4-4\nA 2 2 2 4\u20144\u2014_4\u2014_4\u2014 4444 2\u2014_1\u2014_+\u2014_4\n2\nlat 5 5 fy ry\n8B 2 2 0 8\n0\n~~ -8 ar r\n\n\n\nSECTION TWO/PART 6: HARMONIZING A MELODY WITH A THIRD BELOW\n\nC major\n\nG major\n\nD major\n\nA major\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\n\n+H he +N\nrN\nNs TT ns\nOr Td +O\n4\nin h +N\n+ Te Cd\non \u201cTT or\n~T cep\nqs\nCN\n+h Ty\nCg Id \u201cep\non or\nTY pr\ntT Hy\nTy +N\nqn\n1 +2\nor Id\nx. ITT ns\nus S A\nE\nrT] TH\nTN a tT)\nRa\na\na\nRag\n=a\nreecal Nin Htco\n\nContinue fingering as above.\n\nper\n\nBb major\n\nz\n\n$\n\ncpio\n\nor\n\nwo\n\na5\n\ncp\n\nwep\n\n96\n\n\nSECTION TWO/PART 6: HARMONIZING A MELODY WITH A THIRD BELOW\n\nEb major\n\nAb major\n\nDb major\n\nGb major\n\nAnd now, here's\u2014you! Write a solo guitar arrangement primarily using a third paralleling the melody. Include bass accompaniment with a rhythm independent of the melody and using the bass devices presented so far. Cook, stir, season, and present to your guests.\n\n97\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\n\nSECTION TWO/PART 7\nHarmonizing with tenths\n\nTenths: the dropped third\nIn Section Two/Part 6 you worked with harmonizing the melody with a third below the melody\nfollowing like a shadow. You could do the same with the third dropped an octave lower. An octave\nplus a major or minor third ten scale steps below (or above) the melody note is a tenth. Without\nspecifically identifying them as such, you've already used them to mark major or minor sounds in\nrecent parts of Section Two.\nThirds Tenths\n\nStems can be pointed up or\ndown.\n\neg\n\u2014\nom)\n\n+o\n\u00a2\n\u00a2\n\nOSH\n\nao\na\n\nYou might use tenths the same way you've used thirds, paralleling the melody. Play the example\nbelow to hear the effect.\n\nRhythm Changes with parallel tenths in the bass | he\nAm Dm G7. Cc Am Dm7 G7\n| dtd) | =\nfz. \u00a3 oi =< \u2014+- z= \u2014F =\npo UerT TO TS TT UTTT\n\ns\n\n5 Pr\n2 2\n\nc--)\nLs)\n\n9-3. 2\n2\u2014s 2\n\nnm 9.\n8 o\n\no\nLY)\no\no\n\n4\n+\n\na\n\nYou probably would not use parallel tenths throughout the arrangement. For one thing, the\nmelody would then have the same rhythm as the bass rhythm, as shown in the four measures\nabove. The tenth does often function as a bass note, but only infrequently does it move parallel\nto the melodic rhythm. More often it has its own independent rhythm. Check for tenths in the\nexample below.\n\nRhythm Changes with mixed intervals\n\nC Am Dm G7 Cc Am Dm G7\nf t nal } 2 al wh td~2) ul om | 1 4e@\n\nom IT\n\na\n\n\u2019\nOo\n\nTet Tete TF\n\n4\neo\n1\n\n2\n2\n\nLed\nwD\n\nLs\n\n0 0\n8 6 \u20ac-\n\n9. 9 2 6 2\n\u20ac- 2 3 6 2\n4\n\noD.\nCt\n2\nPy\nan\no\nd\n\nQo\n\n98\n\n\n\nSECTION TWO/PART 7: HARMONIZING WITH TENTHS\n\nImprovisation on Rhythm Changes\nThe melody below has been turned into a bebop improvisation based on the harmony of Rhythm\nChanges. Half note duration tenths are used in the bass.\n\nCc A7(b9) Dm G7 CG Am Dm7 , G7\n\neee eg eels Flea ela t,\nT 8 ni a,\n\nf 7 ad\n\n3-6 6 4 14 0-543 6-4-2\n3-0 0 1 +43 \u2014\u20140--\u00a7 6 \u2014\n2. 2. 5-9 hd\na Se. = e8 3\n2 @\nB\u20143 8 3 0\n4+ \u20143-\n\n4.\nal\ni\n\no R11 ru\nDS\nom\ni)\nTi\noS\n\u2014\"\n\u00b0\n\u2014~\nom\nwo\nFI\n\na a I @\u2014_2-4 24\nT nd . 5 a = a\nTA tT = ws\n= 3\ni=] 4 0 3 3 4 6 2 hd\n\n4 8 2 3 4\na\n\nCim F#7 B7 E\n\n\\N\n\u2014_\n)\n\n9 0 4 2 \u2014p\n8 0 4 2 0\n+ 2\nA 4 2\nim\u2019 4 4 2 a 2.\n8 4 4 3 2 2 x\n4 2.\n4 2 &\n\n99\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

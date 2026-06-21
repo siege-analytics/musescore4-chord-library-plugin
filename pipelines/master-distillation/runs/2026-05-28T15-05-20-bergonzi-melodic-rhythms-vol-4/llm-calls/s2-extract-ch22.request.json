@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch22",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 22: Time zones (polyrhythms)\nPages 91-93 of the book.\n\n<<<CHAPTER TEXT\n\nMore\n\nlime Zones\n\nThis chapter is basically an extension of Chapter 22 as it considers some more advanced time gears\nbased on 5, 7, and 9 notes per bar. Let\u2019s take the same melody we've been using and adapt it to the\nfollowing time zones. Here\u2019s the melody:\n\nwT\n\n=j\n\n9\ney\n\nVE NOTES PER BAR\n\n9\n\nPlay this line or a line of your choice over and over again until you can feel the 5 against 4. Try\nusing different articulations to enhance the sound of the line.\n\n5\ns \u2014\n5 r=] \u2014\u2014\u2014\n. \u00b0\n| F \u2014- [ rd @ FE 2 @\nA. TRIPLETS (SIX NOTES PER BAR)\n-\u2014\u20143\u2014\u2014 3 i |\n4 3 { f 1\nGeb. SSS SSS\nXD t t t \u2014\u2014\u2014 \u2014 a e kd | f .\n| 3) I t | I\n| This line could also be offset by an eighth-note triplet like so:\nto 3 \u201cOE 3 7\n3-4 mer ee\nf : 5 \u2014\u2014\npoh i 20 Yt o..9 te ; ! oo # ee. t OF\nYr nm | oe e t \u00b0\n\nEN NOTES PER BAR\n\n=\n\n|\n\n\n\nMORE TIME LOWES\n\nEIGHTH NOTES (EIGUT NOTES PER BAR}\n\na\nST\na\na.\n<a\na\n\n+\n\nAdd one note to each bar of eighth notes or simply add two notes at the end of the original line to\n\nmake nine notes per bar.\n\n\u2018INE NOTES PER BAR\n\n9 9\n\nI = ||\n\neae Sa\nwe \u2014e o o \u2014\u2014\n\nG = the\n\n9\n9\ny) z\n; 7\n\nPet be a2 =a *\n~~ o* ove\nSubtract six notes from the original line to make the ten notes.\n\nQUINTUPLETS (TEN NOTES PER BAR)\n5 5\n\n4 @i=- = 1 t\n\n(ana pe =a | eo\n\nXf): ~\u00ab @\n\n)\nSubtract four notes from the original line.\n\nTRIPLETS (12 NOTES PER BAR)\np - :\n4 4 if \u2014 -\nCE BD ; : io 3\n\nit\n%\n\n:\n\ne\n\n\u201cPe\n\n\n\n| oe Rav LAS\n\n1 Subtract two notes from the original line.\n\nSEVEN NOTES PER TWO BEATS (14 NOTES PER BAR}\n\nS\n| |\n\nTEENTH NOTES (16 NOTES PER BAR)\n\ni\n& bd\n\nE NOTES PER TWO BEATS (18 NOTES PER BAR)\n\n\u2014 a a\n\n, GH:\n\nor\n\nCE ee ee\n\nNOTES FOR EVERY BEAT (20 NOTES PER BAR)\n\n\u00e9a\n\ne\n\nsay\n\nUPLETS (24 NOTES PER BAR}\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 22 extraction"
+}

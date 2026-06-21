@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Scale-Chord mixed Convergence Examples\nPages 62-65 of the book.\n\n<<<CHAPTER TEXT\n\nScale #23\ntritone\nRESOLUTION\nGb7b5, C7b5, C7b9, C7b9b5\nAdditional Scale Sounds\nScale #24\ntritone\nD-\u03947, C7+5, Gb13\nD-\u03947\nFA79\n\nScale Examples of Convergence\n50\n\nSCALES EXAMPLE OF CONVERGENCE\n\nScale, #1\n\u201ce \u201cf be PENTATONIC FA7\np a \u201cwr\nLi ofl a\n=\n\nt t b\n\u2014_\u2014\u2014\n\nEo\n\nScale #2 PENTATONIC\nFa\n: -- 2\nn + i e ra rom\n=\u2014 t\n\nSeale # PENTATONIC\na pe ba ~~~ _@ FA?\n\nDIMINISH Fi7\n\nFA7\n\n51\n\nNOt MISIPACK 12 STAVE\n\n\nJAZZ MELODIC MINOR\n\n4 Scale #6\n3 \u20143\u2014. oss 3\u20141 n \u2014_\nP fam 1 i 4 =,\n: i bet E i\n| SS See SS\n\u2014\u2014\u2014* \u00a9\nb-g- \u2014-0=_-o\nFA7\nScale #7 35 MAJOR (#4 &\n\u2014 et # Pie dtp 14 :\n\u2014 \u2014 Fags rer -\u00a2\nScale #8 MAJOR (#4_& #5) Fd?\nf >t\n7 ye bee ME\na rg\nSeale #9 MAJOR (#4 ) \u2014\nbe ee ee\naot 22 T | aE\n{ \u00a5 = < Ss\n1 1 WHOLE TONE\nScale # iv Bs FA9\n; \u201c= =\n: yee eo\n$4 ' \u2014-\n\n\u2014\n\nRO | MUSIPACK 12 STAVE\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

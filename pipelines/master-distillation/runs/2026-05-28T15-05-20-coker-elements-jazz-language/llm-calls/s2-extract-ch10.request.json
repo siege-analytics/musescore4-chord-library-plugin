@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: CESH\nPages 61-67 of the book.\n\n<<<CHAPTER TEXT\n\n50\n\nCHAPTER 8\nENCLOSURE\nDefinition\nAn enclosure is a linear or melodic device in which an object note is approached by\nboth the upper and lower leading tones. The object note is the eventual note aimed for\n\nby the improviser. An upper leading tone is one-half step above that object note and the\nlower leading tone is one-half step below the object note. An enclosure is, then:\n\nUPPER LEADING TONE \u2014 LOWER LEADING TONE \u2014 OBJECT TONE\n\nIllustrations\nIn notation, the classic enclosure would be:\n\n\u2018ere lower|t. object nate (note of chord)\n\nv t\nfat 6 2\n\nIn the strictest sense, the following are close to being an enclosure, but are not, though\nthe person who analyzes solos will frequently encounter them:\n\n\u2014\u2014\u2014 \u2014 poo\n\nEnclosures, however, are often decorated/embellished, causing the device to be of a\nlength greater than three notes, especially the following example:\n\n\\t. .\nani lpwer \\4. obj erfnate\nj j + ra\n\nIt was mentioned earlier in the book that sometimes elements of the jazz language\ncarry the potential for being quickly successive, overlapping, and/or interlocking. The\nfollowing example combines six elements in one 2-measure phrase! (The element\n\u201cCESH\u201d will be taken up a little later in the book.)\n\nge\"\n\nB\u00b0 CESH \u2014___\nbebop scale /rick | p\u00e9nclosure '\n\u2014 , if\n= 1 i\n\u2014 7-3 5\n\npcenrinungenitints eminem enenanee\n\nPOET MA NO NI RAI PY EE EEN\n\nGi\n\nK\n:\n\n19\n\nOL\n\n\nExamples From Recorded Solos\n\nGeorge Benson, guitar (\u201cBillie\u2019s Bounce\u201d)\n\n# \u00ab4\n\nsR\n~ PS\na\n>|\nde\n\u00a7\n\nLouis Armstrong, trumpet (\u201cHotter Than That\u201d)\nFle : Ny\n\n4 i\non alr re\n\nDizzy Gillespie, trumpet (\u201cHot House\u201d)\n+4\n\nMe z- +e\n\n198.\n\nTom Harrell, trumpet (\u201cAdjustment\u201d)\n\nrN\nRe\" eV _\n\n199. toe PO Te\n\nBooker Little, trumpet (\u201cYou Stepped Out of a Dream\u201d)\n\nGg\" \u2014\u2014a ch\n\n200. \u2014\u2014\u2014\u2014 @\n: a a\n\n51\n\n\n52\n\nLee Morgan, trumpet (\u201cSidewinder\u201d) ;\n@-\" \u00a2\"\n\n201. f- = |\n= \u2014 ea + |\n\nFats Navarro, trumpet (\u201cLadybird\u201d)\nnb ehh yp\n\na f 1 5\n202. eyo\n=e o \u201cnibs ae | =\n\nWayne Shorter, tenor saxophone (\u201cGingerbread Boy\u201d)\n\nQ\" ()\n\n: \u201cJ\nfe i\nns ER :\n\na\n\nHank Mobley, tenor saxophone (\u201cThis I Dig Of You\u201d)\nQj\nse MeL, \u2014-\n204. : :\n\nSonny Rollins, tenor saxophone (\u201cAiregin\u2019\u201d)\n205. % \u2014\n\nStanley Turrentine, tenor saxophone (\u201cSugar\u201d)\n\nef\na~ |\n206. :\n\nem UREN CTI SNE NCEE ONES ST MO\n\n\n\nOscar Pettiford, bass (\u201cTricotism\u201d)\ner\nif |\nhere rbehe be,\noon, DE 3 =a\n\nPaul Chambers, bass (\u201cBlue Spring\u201d)\ne7\n\u2014\u2014\u2014\n7 \u2014.\n208. & \u201cPe\n\nChick Corea, piano (\u201cMatrix\u201d)\nCc\"\n_\u2014\u2014\u2014\n\ntee , tr\n209. >\n\nBill Evans, piano (\u201cI Love You\u201d)\n\n\u00a24\n\nCo\n\n0. =\n\nCharles Parker, alto saxophone (\u201cConfirmation\u201d)\n\nal mY 6\"\n\naaa\n\nj !\n241. eae\n3 ae a\n\nCharles Parker, alto saxophone (\u201cYardbird Suite\u201d)\n\ner\" e\" AS\n\n_@ )\n\n042. and {2 bars later:\n\n\u2014 ij\u2014\n\n\n\n54\n\nTo give the reader a better notion, with respect to the frequency of enclosures, Sonny\nRollins used the example shown here (205) a total of five times in his solo on \u201cAiregin\u201d.\nClifford Brown used thirty-five enclosures in his four-chorus solo on \u201cConfirmation\u201d, and\nClark Terry used seventeen enclosures in his seven blues choruses on \u201cStraight, No\nChaser\u201d, four of them transpiring in the first chorus.\n\nWays to Practice/Ingrain |\nAs was the case with the bebop scale, the best way to learn the enclosure would be to\nstudy Baker\u2019s HOW TO PLAY BEBOP, which has many examples and suggestions for\n\npractice.\nExercises )\n| c4 } L D\u00b0 continue Tack \u20ac\n214. aie : : A f\u2014 Zs= \u00e9\nC\u201d (or 0\") For A = # (0 Atacks F488 |\n\n= == Sasa Ss = 7 |\n=. 3-6 @ ;\n\nThen convert 213 to minor chords, practicing with Tracks G & I. Convert 214 to minor\nand practice with Tracks H & J.\n\nc (or C7) 1\u00b0 (or DY) Continue Araeks M4 U |\n\n245. ii \u2014F = 2 3\n+e \u201ceS = in an a\n\nC8 (or CH) \u20ac* (ae conticue \u201caks NEV |\n\n216. i= : 7 = 4 om\n+e ae ~~\n\nCO ar ct) Dor DY continue. tusks M#L\na, Scenes _\u2014- Ses bo\n\nC8 (on Per) __catiaut Ars\n\n= =|\n218. - ah s 2 }\n\nNow convert 217 to minor and practice with Tracks O & Q. Convert 218 to minor and\npractice with Tracks P & R.\n\n\n\n\u00bb =\n\nCHAPTER 9\nSEQUENCE\n\nDefinition\n\nA sequence occurs when a melodic fragment is immediately followed by one or more\nvariations on that same fragment. The practice of using sequences in music, be it written\nor improvised, is both natural and learned. It is natural in the sense that once the ear has\nexperienced a new motive, we tend to want to hear it again, either in a precise repetition\nor in a variation. Improvisers, songwriters, and classical composers study the\nmultifarious techniques of variation, which generally leads to sequences, as a means of\nproviding cohesion to their creative outpourings. Even if they don\u2019t study those\ntechniques, however, sequences are a natural tendency.\n\nPerhaps more than any other element taken up in this book, the sequence is\nappropriate to the definition of the jazz language. Items such as digital patterns, 7-3\nresolutions, 3-b9, enclosures, etc., are like letters and words of the language, whereas\nsequences are more like complete thoughts, sentences, and chains of thought. And\nsequences consume more space in music, as some sort of repetition is employed. It is\nthe practice of using sequences that also lends much-needed communication with the\nlistener, who perceives, even predicts, such occurrences.\n\nThe motives used for sequences may be long or short, and they may be melodic,\nrhythmic, harmonic, or based on a provocative interval. Sometimes the sequential\noccurrence of the motive is simple and transparent. Other times it may be heavily-\ndecorated and disguised, perhaps escaping the conscious awareness of the listener, but it\nis nevertheless sensed in some subtle way. 7\n\nExamples From Recorded Solos\n\nJ.J. Johnson, trombone (\u201cOut Of Nowhere\u201d)\n\nth\nis:\nbei\n\ny |\n+ | eo +, #\u00a3:\n\"2 |\n\nfe\n\nabe\" ey\"\n\nbe - bp GS \u00a3\u00a3 ee\n\na at = ee ==\n\n55\n\n\n56\n\nJ.J. Johnson, trombone (\u201cI'll Remember April\u201d)\n\n+\n\norale om a or @\n\nTe\n\nSlide Hampton, trombone (\u201cMoontrane\u201d)\nEb-\"\n\nD\" # a\n\ncy\n\nttt:\n\n\u2014\u2014!\n\n2, SF\n\n=f\n\nJimmy Blanton, bass (\u201cBody and Soul\u201d)\n\ncn Bh\n\n+f ote :\n22, See\n\nSlam Stewart, bass (\u201cJust You, Just Me\u201d)\n\na ae cn\n-\u2014f-\n\nbee\n28, SE vt. ==\n\nScott LaFaro, bass (\u201cNardis\u201d)\n\nry\n\n>\nrtt}\n\nos, SEE ==: =\n\nPre\nais\n\ni a a\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

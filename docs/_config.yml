@@ -1,0 +1,17 @@
+title: MuseScore 4 Chord Library Plugin
+description: >-
+  A MuseScore 4 plugin that recommends guitar voicings against the
+  vocabularies of 29 master guitarists. This site explains the project
+  for anyone — guitarist, engineer, or just curious — who wants to
+  understand how it works before downloading or contributing.
+theme: jekyll-theme-cayman
+show_downloads: false
+markdown: kramdown
+permalink: pretty
+plugins:
+  - jekyll-relative-links
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

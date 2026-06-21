@@ -1,0 +1,53 @@
+{
+  "stage": "s2",
+  "scope": "toc",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting the structural outline of a guitar method book from its front matter.\n\nThe user will give you the verbatim text of the first ~20 pages of a book.\nIdentify the chapters or major sections of the book (whichever the book uses\n\u2014 some method books use \"Lesson\", \"Chapter\", \"Part\", \"Section\", \"Unit\").\n\nOutput a JSON object with this shape:\n\n  { \"chapters\": [\n      { \"n\": 1, \"title\": \"...\", \"start_page\": <int>, \"end_page\": <int> },\n      ...\n  ] }\n\nRules:\n- `n` is the 1-indexed chapter number you assign (independent of the book's\n  own numbering \u2014 book may start at 0 or use Roman numerals).\n- `title` is the chapter's title as it appears in the book.\n- `start_page` is the first page of the chapter; `end_page` is the last.\n- If the front matter doesn't list page numbers, infer from the chapter\n  headings you see \u2014 start_page is where the chapter HEADING appears, and\n  end_page is one less than the next chapter's start_page (or the book's\n  last page for the final chapter).\n- Skip the table of contents itself, the title page, the copyright page,\n  the author bio \u2014 they are not \"chapters\" in this sense.\n- If the book is short and not subdivided, output a single chapter covering\n  the entire content.",
+  "user_prompt": "Total pages in the book: 65.\nFirst 20 pages follow. Identify chapters.\n\n<<<TEXT\n42 Chord Melody\nAtrangements\n\nFor Solo Guitar\n\nBy Barry Galbraith\n\n\nThe quick brown fox jumps over the lazy dog.\n\nContents\nA Certain Smile.......................................................5\nAlone Together.........................................................6\nAs Time Goes By......................................................12\nAutumn in New York...............................................8\nBad and the Beautiful/Love is for the Very Young........10\nBlues...........................................................................13\nBorn to be Blue.........................................................14\nThe Christmas Song..................................................15\nDancing on the Ceiling.............................................16\nDarn that Dream.......................................................17\nDolphin Dance.........................................................18\nThe Duke..................................................................22\nEmbraceable You.....................................................20\nFor All We Know......................................................23\nGood Morning Heartache........................................24\nHave You Met Miss Jones?.......................................27\nHere's that Rainy Day.............................................32\nHow About You.......................................................28\nI Cover the Waterfront...........................................30\nI Should Care.........................................................33\nI'll Be Around.........................................................34\nImagination.............................................................38\nIn a Sentimental Mood...........................................36\nLament...................................................................39\n\nLast Night When We Were Young...................40\nLove Me Tomorrow..................................41\nLove Walked In....................................42\nMy Old Flame......................................44\nMy Romance........................................50\nOur Love is Here to Stay.......................46\n'Round Midnight..................................48\nRuby My Dear....................................51\nSatin Doll.........................................52\nShe's Funny That Way..........................53\nSomebody Loves Me.............................56\nWait Till You See Her..........................54\nWe'll Be Together Again.......................57\nWhen Sunny Gets Blue..........................58\nWhere is Love?...................................59\nWhy Did I Choose You?.........................60\nYesterdays........................................62\nYou Go to My Head.............................64\n\nA CE2TAIN SMILE\n\nAge. Bacey GaLseairH\nMEOIOM SWING\n\n_~ gd _\u2014 .\nGuitae Ait a ae 5 ABE a\n\n\u201coD\n\n\u201cWD\n\nAB\nwee} |] ROL\n~<\n|\nMig\nLa se\nN\ne\niv)\nTE\nte\n1p\nNg |S\n~<\n\na3\n\n\u00bb\n)\n\nhi\n\n4\n))\na\n\nvi ? oF :\n2 \u00a5 a = rad\n\nml\n\n\ng ((\n5 \u2014\nso\nES a a a\n= ig\ni~ =)\n3 ox\nbY\n\u2014 Te\netal\nMr AL\n= ms\nSi wah,\nx ;\n= is\ne .\nwl\nz |\nar 3\n\u2014\n<<\nmak)\nz Cie\na @!\n=\na Ir [\u2014 @ a\n= x \u201cOrly BH rm H1I9 A.\npmauvuaca o Te in\nou oi won = ~ Ne on Fs R\nSIOIGIOLOIS) so\n\n\n\nALone Togernee\n\n|\n\n=\n\n(\nAll oN\nby-|\nIS\nThick. | Dre\nih\na flyes '\nme.\ni, een\nea\nIS\nQ iol\n[ ih\nnb aie\n\u201c3 | wile\nle\neet\n1 le wile\nres sud\nfis\nat\nmu =\n\u201cys\nty\no 4a\n\nwi\n0\n\n1 at\n\nry iwi\ni\u201d 2\nF\n\neb\naa.\n\ni_}\u2014\n\n\n\nAUTOMN IN New Yer\n\nAge. Breer GaLeeairy\n\nSiow\n_ ooo i ti \u00a2 P\nGuirke ae = ; i if =\na P E\n\u2014 \u00ae \u00b0 e2\n| 4 =\niz fears \u2014\u2014\u2014\u2014 mere\noe \u201cshe eo\nig ie Pa Li a og\n\u2018 2 ry art = aa\nC) \u00b0 :\nah \u201ctk Ld ts a\u2014\n\u2018aide yo ee Preece!\nLf be P is \u00b0 \u2019\n\u00ae \u00a9 \u00ae\n! au oy =\n& c f = fo 7 * -\n\u00ae co\n3 ey ea iter g\n7] id i ia : 7 i C\na 9 200\nd. yt shels \u00a2 i re jabato be\n> and + oy tbe a a a \u201cys\n\n\n\n1p\n\u2014\nTe\n\nAUTUMN IN New Yoon\n\nLeieebeel is opPeDipded bee es porett\na ae ai =\nann ; TA ped\n=u by be = , }\n\ni] i)\n\nia aie\n\n\u201c9\n\nwT sped\n\n\nBAO ANO THE BEAUTIFUL\n(laove 16 Fe THE Vee YOUNG)\n\nAge. Bacay GALBeairH\n\na. he\n: : \u00aeOO\u00ae ope\n\nto\n\n@\n[=\n2\nac\n.\nIT?\np\naT\naalwl\n.)\n\no \u00a9 o 69 @ 4\nar \u2018ao - == -4 a on =| al\nlee ie ee a\n\n\u00ae @ _\u00ae \u00b0\n\n\u00ae\nr a r r i vals\nfat 7 Hg y oe 2\nit pe Ae a an\nthen 2\" Wye do te jp\nid\n\na Pet \u2014\n\ni)\n\naay\nai)\n\nt+. | bee | \"and \u00ae eo\nWe ian: as tL ae\n\n10\n\n\nBAO AN THE BEAUTIFUL\n\n\u00ae @ \u00ae \u00ae\npeer eee ae\ns = i id : id = rt id =\n7? P 5 s ~F\nTalge_eilp tei? oS. 72\" ag\ni a ean i?\nasf they wesm =\nPi Tre ia P _ Pp\n4 \u00b0 a b, | er\n- ae te po\nWA i nem oe\n/ tal st oe a\nghee era? > aaiac\n\ntt\n\n\nAs Time Goes By\n\nAge. Bacay GALBeairH\n\nyao}\nGuirae t\nY\n\n~~\nFl\n\n14 Td\ndd \u2014 ig ba 1 :\nPee ee is nn\nre eyo H\n\u201cos Circe r\n\nMt\n\n\nBLUES\nA22. BARRY GALBEAITH\nMEDIUM-UP\nGUITAR\n\nBoen 70 86 BLUE\n\nAge. Bacey GaLseairH\n\n| bebe | glad. _ .\nGuirae =f te ] f is ce =\n\nMECIUM SWING\n\n*\nils\n|\n\n14\n\n\nTHE CHRISTMAS SONG\n(CHESTNUTS ROASTING ON AN OPEN FIRE)\nARR. BARRY GALBEAITH\n\nSLOW\nC7 F7 E7 D11\nC7 G#7 G7 C7 F7 D7 B7 E7(b5) A7 F#7(b5) F7\n\nGUITAR\n[Music notation follows]\n\nA7 F6 C7 F#11 B13 E7 Bb13 Eb7 D11 G13\n[Music notation follows]\n\nE7 F7(#5) G7 C6\n[Music notation follows]\n\nG7 Gb6 C7 F9 G7 F6\n[Music notation follows]\n\nF7 Bb7 Eb7 F7 Eb\n[Music notation follows]\n\nA11 D7(b5) G7 (D.C. AL CODA)\n[Music notation follows]\n\n[Music notation follows]\n\nG7 G6\n[Music notation follows]\n\n15\n\nOANCING ON THE CEILING\n\nAge. Brace GaLseairH\n\n@ @ \u00ae \u00ae\n| | 4 a | | be\nbreasts Se ae eras:\naoe Oe Be bp ee\n\nrom\n4 | ts 4\nt ps\n4\u00a2e\n\nS) Roe\n\n_ fr\n\nALTEGNATIVE Foe\nLast Measuee\n\nSI9/08\n\n\nOven THat Oeeam\n\nAge. Bree GaLeeaity\n\nd\npig\n\n= 2 fe\n, Y=\nia\n4 $4134 e \u2018i | | | | if 2. oa\nAt e\u2014 we\n5 eo cd rd aha ze\" Pe be\n\nbe \u00a7 c \u00ae mz r\na\n- , i 4\neS barber \u2014F ge tog 4 k if\n8 ye 2 ve \"5.\n\nal | o\n=\u2014\u2014\nBb a id @ F o\n\n{1\n\n\nOOLPHIN OANGE\n\nAge. Bree GaLeeaita\n\nMeolum\n\nbab\n\n\u2014\u2014\n\nbob\n\nvA\nL\n\nGuirae\n\n\u201co\n\noOo\n\noO\n\u2014\n\nvi\nvi\n{7\n\nv\n\n[8\n\n4)\n\n18\n\n\nCOLPHIN DANCE\n\nNIT\u00ae\n\naa\nNI\nNe\n\neB: pH: : ee E a\nPe = a jana\ny) c f\ni |\u2018\ngist _ bd | \u2014 _\n: == ra ~ sts a aa is\n\n19\n\n\nEMBQACEASLE YOU\n\nAee. Bacay GaLseaith\nMeoium\n\nG27 6\u00b078 gb re 8-197 Act\na sy | ON\nGuirae \u2018 = s s nist 2 3 a\nP PF t\u2014f\ng 75) ert 6/A\n4 am\na ae\nrp =P CEP ree\n4\" ef-7 g 7s) \u00e9-\n\u00ae\n\u00ae iD 4\u00b0\n8 fr a e ia\n\u00a2 -7bs) re\n\u00ae \u00ae\n% 1) 85 =\nGa care\nP\nAL , apr g\u201d\n: :\npa eye =ere\n4 P rer Pr rerr pep othe em\n49 a7\n8 abs) eft 6/A 4 /\u00a2) 0% 6g\n_ i i Pl a e y ins PE i\nva eee * prereeel 7 OTP\n\n10\n\n\nTEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "chapters"
+    ],
+    "properties": {
+      "chapters": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "n",
+            "title",
+            "start_page",
+            "end_page"
+          ],
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "end_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "book has 65 pages; using first 20 as front matter."
+}

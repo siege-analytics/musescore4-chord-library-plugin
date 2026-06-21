@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch26",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 26: Summary\nPages 42-46 of the book.\n\n<<<CHAPTER TEXT\n\n40\n\nEx. 62\nCantus Dm9 Dm6\nFirmus\n\u2014s =\nT 4 \u2014\u2014\u2014\u2014\n\nCounter Point\n\nEx. 63 Melody \u201cs, 4 etc\nrx Z4 \u2014\u2014\u2014\u2014\u2014\nam t 1\n\nCounter\nMelody\nEx. 64\n. C.P. a J a etc.\n. 5 { \u2014\u2014_\u2014\u2014 =\n= \u2014\u2014\nEx. 65\nMelody\na === | \u2014\u2014\u2014\"\n$y \u2014= \u2014\u2014it\nev | f |\nCounter\nMelody - -\nj Cee aaa SNR\nard ae + me 1 1 t T Tt t 4\n+ | if +\n5 JF \u2014\u2014 ; ene \u2014e ty\n\na \u2014\u2014\u2014\u2014\u2014 eee | \u2014,\na aa\n\nLESSON 26\n\nSUMMARY\n\nIf you analyze all the exercises in this book, past and future, you will note that ev-\nery passage is well conceived musically. Nothing is left to chance, nothing will misguide\nyou. Many of the exercises are the result of years of study and application.\n\nSymetric Harmony and Counterpoint offer a wealth of ideas to a Jazz musician; I have only\nopened the door to these subjects. You would do well to study further these musical\n\"Giants\".\n\nThe exercises to follow put into actual play everything you have studied. Study and analyze\nthem carefully. Pay strict attention to how chords are forced against the melody and, at\nsome points, even dropped for a better melodic line.\n\nWith a well rounded musical knowledge and a genuine feeling for Jazz there is no limit to\nwhat you can create and play on your guitar.\n\n\n41\n\nI THINK OF YOU\n\nJACK ELLIOT\nDON MARCOTTE\nStandard\nj Bb Dte7 D7\n1\n} + - \u2014 \u2018a\nf +\n\noe iN\n\nt\nTt\n+t\n\nBb Bb\u00e9 Bbmaj9 D+7 D7b9\n\na1 Bb Bbdim Bb Bbdim Gbm  Ab7 Bb\n1 j\nt 1 t I 1\nvA t \u2014 = f- oH va Le}\nv T T 7 ed\n3 q\nHf Hit TH\nBbmaj9 Bbmaj6 Bbmaj7 Cm9 F759 F7#9\npp pt |\nTt \u2014p- x T zs \u2014\nT | = > rn\nA Fdim Cm7 FT? F7 Bb Cm F7\nty 1 at aa\n> Baw) T 1 {\u2014 Whey I T T yw\nv rT se T t \u2014 oo + o T \u2014_ -\n@ \u2014 \u2014 _j|\u2014 \u00e9 x a \u2014~ LL\nf } 7\n4 ]\nFdim Fll F755 Fill F759 Bbmaj9\n\u2014~ rg ig\nwa #1 i \u00a5 a 1\n\noO V \u20183 \u2018ia oP qe T + TT + + t t t\n\u00a9 Copyright 1941 Embassy Music Corporation\n\nUsed by Permission\n\n(*) See Lesson 22, The Cadence Break\n\n\nI SHOULD CARE\n\nSAMMY CAHN\nSlowly AXEL STORDAHL\nEx. 67 PAUL WESTON\nStandard\n4 Dm7 G9 Cc Cm\nee = =\nCS) t i\n4 q r\nac 89 ec Herr} HH\nOE a\nNew Dm7 Gdim 3 Cmaj7 Cmaj79 Cmaj7\nb \u00a3 a be h\nt - \u2014\u00a7\nt\nec if r\u2014 T\nDm7 G9 c Gm\nm | 3 1 n\nt T t pT 4 ~ =\n+ an = f=\n\u00a9 y t |\nTe? 7 \u00b0\nH sa suace\nDm G9  G7b9 Dm7 G7b9 G9 Cmaj9 Cmaj79 Gm7 A+T\nroa Z ra ba:\nf= =f \u2014\niJ v |\nA7+ AT  D\u00a7dimA7 Dm \u20143\u2014 Fm\n\u2014 E \u2014\u2014\u2014\n\u2018 {4 \u2014-o\u00a7 \u2014\nre os ss La\nAH\nFm6\nPp r\u2014 3 ee | ~_~\nSS es\n\u2014 t t po\n3\n\n\u00a9 Copyright 1944 Dorsey Brothers' Music, Inc.\n\nUsed by Permission\n\n\nNEVADA\n\n43\n\nWALTER DONALDSON\nEx. 68 MART GREENE\nStandard Ab6 Eb6\n7 Zs 3 b 3 Gm7 Eb\n+f 4 = \u2018\n= SSS SSS SS SS 5\nHS H Here [7a sec os\nEbmaj7 Ebmaj9Ebm\u00e9 Gm Ebmaj6\nNew 3 ee nee f ore 3\nSS \u00a3\n.\u2014\u2014\u2014\u2014 - \u2014\u2014_\u2014\n| Tt | I t 1 | |\n9 A\npy * + t P 3\noS a \u2014 = J \u2014\u2014\u2014\n\u00a2 an\n7 - ve\nHeth\ncm9 cCm6 cm9 Abmaj\u00e9 3 Abmaj9\n; }\neet ae \u201c4 =\nt\nig 1 T ura\nis \u2014\u2014 SH } |\nAbm E6 Ebdim\nhi! \u2014 3\u2014\n\u00a2, \" 3 =5 t ;\n\u00b0 CI.)\ni i\ni \u2018\nrH Het (*)\nBdim 3 Abmg Fm7\n[re |\n4\u2014 |__|\nx t | im\np 4 a\n\n\u00a9 Copyright 1943 Dorsey Brothers' Music, Inc.\n\n(*) Symetric cycle\n\nr\n\nUsed by Permission\n\n\nTHE NIGHT WE CALLED IT A DAY\n\nEx. 69\n\nTOM ADAIR\nMATT DENNIS\n\nAa \u2014\u20143\u2014\u2014 D7 p79 D7b9 Gmaj7 Gmaj6\nre \u2014\u2014\u2014\u2014- \u2014_\na oe y ; f a\nfee El) Ge 7\nT TT HH\nDll D7b5 D9 D7b9 Gmaj7 Gmaj9\np-4 | | \u00a2Z rr 3\u2014\nRd + s\ng ; = =:\ny b \u00a7 |\nQUA ere teens\nD7 | D7b9 Em c ATb9\nhe 3 1 rc\u2014 3 \u2014I co 3 een | jl \u2014 3 \u2014_\nT | y t T T\nae \u2014f + =n if\n\u2014\u2014\u2014 a = a a oe\nHet ac i\n| HH\nD13b9 D7b9 3 Em7 c A7b9\nr\u20143\u2014 =~! u *)-\u20143\u2014 > \u2014 OF\nei: t\nBt\n| a F | +\nBm Bdim D7 D7b9 Gmaj7 Gmaj6\n= / t \u2014 t { } f\na \u2014 a a a a ae\nHate \u20ac\nBm Bdim Pll D7b9 +49 D1l D7b5\n= => > =a car |\nLo | | | | | | |\n@ oe o; ae\nTy Z ry be | f 4\nP PP\n\n\u00a9 Copyright 1941 Embassy Music Corporation\n\n(*)See Lesson 26, third paragraph.\n\nUsed by Permission\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 26 extraction"
+}

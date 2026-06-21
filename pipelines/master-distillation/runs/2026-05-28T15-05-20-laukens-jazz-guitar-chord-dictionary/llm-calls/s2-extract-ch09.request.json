@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: More Jazz Guitar Chord Lessons\nPages 61-63 of the book.\n\n<<<CHAPTER TEXT\n\nMore Jazz Guitar Chord Lessons\n\nGl) Jazz Guitar Lessons\n\n2 ] Jazz Guitar Chord Lessons\n\n3) Jazz Chord Progressions\n\n4 | 17 Basic Jazz Guitar Chords for Beginners\n\n5 | Jazz Blues Chord Progressions\n\n6) Gypsy Jazz Chords\n\nG) Jazz Guitar Rhythms\n\n8 | Jazz Guitar Chord Theory\n\n9) 20 Ways to Play II VI Chord Progressions\n10) Essential Jazz Guitar Chord Exercises\nHow to Play 6 Chords\n\nMajor Jazz Guitar Chords\n\nMinor Jazz Guitar Chords\n\nDominant Jazz Guitar Chords\n\n6eo0e6 6\n\nDiminished Jazz Guitar Chords\n\n\n16) Minor/Major 7 Chords\n@ Augmented Major 7 Chords\n\n18) How to Read Jazz Chords\n\nTo learn more about jazz guitar chords, check out The Easy Guide to Jazz Guitar Chords\nand The Easy Guide to Chord Melody, or buy them in The Easy Guide 3 eBook Bundle.\n\n:\n<\n3\n=\n5\n8\n8\n3\n\nThis 3-eBook package has everything you need to play chords,\nimprovise solos and play chord melodies, even if you've never\nplayed jazz before.\n\nClick Here to download...\n\n\nYou Tube Click & subscribe here to get new video updates via Youtube\n\n@ Click & like here to get updates via Facebook\n\n\u00a9 Click & follow here to get news via Twitter\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

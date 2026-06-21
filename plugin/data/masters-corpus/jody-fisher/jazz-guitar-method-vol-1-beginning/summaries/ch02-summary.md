@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-1
+stage: s3
+source_pdf: Fisher, Jody - Jazz Guitar Method, Vol 1 (Beginning).pdf
+source_pages: 11-29
+model: claude-haiku
+extracted_at: 2026-05-29T05:59:58+00:00
+schema_version: 0.1
+---
+
+# Chapter 2 — Chapter 2
+
+_Distillation; backed by `chapters/ch02.md`._
+
+Chapter 2 establishes the foundational theory and fretboard vocabulary essential to the entire method. It begins by defining the chromatic scale's twelve tones and their half-step intervals, then introduces the major scale as the generative model—built on the W-W-H-W-W-W-H formula—and mandates that students memorize all twelve major scales away from the guitar before proceeding, emphasizing that "nearly every theoretical concept will be based on this information." The chapter defines key signatures, interval naming (inclusive counting from the bottom note), and the cycle of 4ths/5ths as the organizational framework for chord movement in rock, pop, country, and jazz. It introduces the characteristic naming system for major scale fingerings (e.g., 6/1, 5/1) based on root string and finger position, and establishes triads as R-3-5 constructions in root position, first inversion, and second inversion across four three-string sets—creating the structural grid for all subsequent fretboard work. The master's approach is methodical and accumulative: define the rule in abstract (the W-W-H formula, inversion voicing orders, the cycle's directional logic), model it once (C major scale construction), then prescribe systematic drill combining all variants (play all fingerings with every melodic pattern, forwards and backwards, in all octaves).

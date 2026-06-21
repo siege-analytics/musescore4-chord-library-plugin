@@ -1,0 +1,137 @@
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s4
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-05-26T18:17:20+00:00
+schema_version: 0.1
+---
+
+---
+run_id: 2026-05-23T23-56-18-baker-jazz-guitar
+stage: s4
+source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-05-26T18:08:54+00:00
+schema_version: 0.1
+---
+
+# Mickey Baker's Complete Course in Jazz Guitar Vol. 1 — Statement of Outputs
+
+## Overview
+
+Mickey Baker's *Complete Course in Jazz Guitar* Vol. 1 (1955) is built on a single architectural polemic: rhythm strumming is obsolete and must be replaced by a curated, numerically referenced chord vocabulary that powers comping, intros, fills, and ultimately solo lines (Chapter 1; Chapter 3). The book opens by pruning the guitar's chord universe down to 26 essential shapes (extended later to 30), dismissing the rest as "meaningless," and installing the load-bearing mandate that defines mastery for everything that follows: every voicing, intro, vamp, run, and solo must be physically transposed — by hand, into a manuscript notebook — into every key (Chapter 1; Chapter 2). The method is unapologetically practical over theoretical: chords are catalogued by number rather than by Roman-numeral function, substitutions are taught as recipes attached to specific progressions, and ear training is operationalized through jam sessions, record-stealing, and singing-against-the-chord rather than through abstract analysis (Chapters 1, 3, 8, 10). The book's spine is the two-line standard-vs-new substitution format introduced in Lesson 1 — the original changes printed above, Baker's reharmonization printed below — and that format carries the entire pedagogy from rhythm comping in Part One through single-note improvisation in Part Two.
+
+The pedagogical arc moves in a deliberate two-part sequence from chord vocabulary to single-note improvisation, each part gated on mastery of the previous. Chapter 1 (Lessons 1–5) installs the 26-chord catalog and the rhythm palette (Chords No. 1–6) restricted to F, G, Ab, Bb. Chapter 2 (Lessons 6–8) pivots into melody-chord playing, intros, and the two textures that displace strumming — arpeggio and walking string-bass — while operationalizing the transposition mandate as a literal hand-rewriting of Lesson 4. Chapter 3 (Lessons 9–12) opens the C/Db/Eb cluster and installs the substitution menu: any plain major triad replaceable by ma7/6/9, any minor by mi6/7/9, any dominant by 13, 9, 7#5+9, 13#5+9, 7b5, 11, or 13b9 — with the load-bearing caveat that substitutions must serve voice-leading, never be "thrown in." Chapter 4 (Lessons 13–14) introduces vamps, fill-ins, the two-positions-per-key rule, and the dominant-to-relative-minor chart from C7 through B7. Chapter 5 (Lessons 15–16) adds the open-string-root horn-backing voicings (Chords 27–30) and Lesson 16, which Baker flags as "the key to all of the other lessons" — the dominant-as-leading-chord principle in its three-category taxonomy (dominant-to-dominant, dominant-to-minor, dominant-to-major). Chapter 6 (Lessons 17–18) applies the lattice to real tunes via standard chord books. Chapter 7 (Lessons 19–23) is the harmonic spine: the two-names principle (Gma6 = Emi7), root-omitted tritone-equivalent voicings (G7#5 = Db9b5), the bop blues template, and eleven canonical progression sequences. Part Two opens at Chapter 8 (Lessons 24–26) with alternate picking and the 28-exercise mechanical foundation. Chapters 9–10 (Lessons 27–37) drill scale/minor/dominant/diminished runs, narrow the blues to five horn-friendly keys (F/G/Ab/Bb/C), and extend the relative-substitution principle from chords into runs (Ami7 run over D7, Gmi7 run over C7). Chapter 11 (Lessons 38–43) introduces the riff as "ideas put together and forced against the chord" — structurally justified for vamp changes that move too fast for chord-tone runs. Chapter 12 (Lessons 44–48) introduces the additional 3rd position and the groove riff (first and last courses matching, repeated, executed without leaving 3rd position). Chapter 13 (Lessons 49–52) closes with two solo-construction methods: chords run around the implied melody under a 7th–11th-fret position lock, and the solo pattern as a per-course rhythmic frame in which the first measure sets the timing for everything that follows.
+
+Taken together, Vol. 1 records an integrated working-guitarist method with four interlocking commitments. First, vocabulary is numbered, finite, and load-bearing — 30 chord shapes, a two-position-per-key system, 28 run exercises, eleven canonical progression sequences. Second, transposition is the mechanical definition of mastery, mandatory in principle, contracted to practical key-lists in practice, and operationalized as physical re-writing into a manuscript notebook. Third, substitution is the harmonic engine, organized into a small number of named principles — relative-minor for dominant, two-names, root-omitted tritone-equivalents, dominant-as-leading-chord, always-alter-the-V — that drive every reharmonization in the book and license the relative-run substitutions that unify chord study with solo study in Part Two. Fourth, single-note improvisation is built directly out of the exercise vocabulary, so practice and performance share a single substrate. The whole sits inside an explicit practical-over-theoretical, sound-over-formula stance: chords are numbered rather than function-labeled, ear is developed at jam sessions and against records rather than through analysis, and the load-bearing artifacts are the 26-to-30 catalog, the chromatic up-the-neck drill, the standard-vs-new two-line format, and the student's own hand re-writing every lesson into every key.
+
+## Systems
+
+### Numbered Chord Vocabulary System (the 26-to-30 Catalog)
+
+Baker's load-bearing taxonomic system: the guitar's chord universe is pruned to 26 essential shapes (Chapter 1), later extended to 30 by the addition of open-string-root horn-backing voicings (Chapter 5, Chords 27–30). Chord shapes are referenced by number (No. 1 through No. 30) rather than by Roman-numeral function, drilled chromatically up and down the neck so the same shape is internalized in every key, and cross-referenced via circled-number annotations over every progression diagram from Lesson 1 onward. The first six chords (No. 1–6) are restricted to the four foundational keys (F, G, Ab, Bb) and form the rhythm palette of Part One; the 9–12 group opens the second three-key cluster (C, Db, Eb) and installs the substitution menu (ma7/6/9, mi6/7/9, 13, 9, 7#5+9, 13#5+9, 7b5, 11, 13b9); Chords 27–30 are open-string-root vamp shapes flagged as key-specific exceptions to the otherwise-universal transposition mandate. The system's operating principle is transposition-as-mastery: every voicing must be physically rewritten into the student's manuscript notebook in every key, with practical target lists (seven keys for vamps, six for intros, five horn-friendly keys for blues runs) contracting the universal mandate to working-guitarist reality.
+
+Members: Chords No. 1–6 (Rhythm Palette); Chords No. 9–12 (Substitution Menu Voicings); Chords No. 27–30 (Open-String-Root Vamp Voicings); Extended Dominant Voicings (13, 9, 7#5+9, 13#5+9, 7b5, 11, 13b9); Position Set (Two Per Key); Additional 3rd-Fret Position (Frets 3–6).
+
+Traversal rules:
+- Chromatic Up-and-Down-the-Neck Drill — `SymmetryMovement` (Chapter 1 summary; Chapter 9 summary; references: ch01 "drilled chromatically up the neck", ch09 "sliding the same shape chromatically along the neck").
+- Two Positions Per Key — `PositionContinuity` (Chapter 4 summary; Chapter 11 summary; references: ch04 "each key has only two position sets", ch11 "each key has exactly two governing positions (C major excepted)").
+- Transpose Every Voicing to Every Key — `_pending:transposition-mandate` (Chapter 1 summary; Chapter 2 summary; references: ch01 "every voicing, intro, vamp, run, and solo must be transposed to every key", ch02 "literal hand-rewriting of Lesson 4").
+- Reference Chords by Number, Not Function — `_pending:numbered-vocabulary` (Chapter 1 summary; Chapter 3 summary; references: ch01 "chords are catalogued by number rather than by Roman-numeral function", ch03 "cross-referenced via circled-number annotations over every progression diagram").
+
+Modification rules:
+- Open-String-Root Voicings Are Key-Specific — `_pending:key-scoped-shape` (Chapter 5 summary; reference: ch05 "open-string-root vamp shapes are key-specific and cannot be uniformly transposed").
+- Additional 3rd Position Is Key-Scoped — `_pending:position-key-scope` (Chapter 12 summary; reference: ch12 "usable in Ab/Bb/C/Db/Eb major, only marginally usable in F and G").
+- Contract Universal Transposition to Working-Key Lists — `_pending:practical-key-list` (Chapter 4 summary; Chapter 9 summary; references: ch04 "narrowed from all keys to seven", ch09 "the five horn-friendly keys F/G/Ab/Bb/C").
+
+### Harmonic Substitution Lattice (Two-Names, Relative-Minor, Tritone, Dominant-as-Connector)
+
+Baker's harmonic engine: a small set of named substitution principles that drive every reharmonization in the book and license the relative-run substitutions that unify chord study with solo study in Part Two. Four principles co-operate as a lattice. The two-names principle: one shape carries two functional identities (Gma6 = Emi7, Ama6 = Fmi7), internalized under both names in all keys (Chapter 7). The dominant-to-relative-minor substitution: any dominant-7 can be replaced by the minor a fifth above it (G7 by Dmi7, D7 by Ami), drilled as a twelve-row written chart from C7 through B7 (Chapter 4). The root-omitted tritone-equivalent voicing: G7#5 and Db9b5 are the same shape with different roots — the structural mechanism behind Baker's b5 substitutions (Chapter 7). The dominant-as-leading-chord principle: every chord-to-chord connection can be built by inserting the appropriate dominant between them, organized into the three categories dominant-to-dominant, dominant-to-minor, and dominant-to-major (Chapters 5, 6); Lesson 16 is flagged by Baker as "the key to all of the other lessons." The lattice carries a load-bearing constraint — substitutions must serve voice-leading and an actual progression, never be "thrown in" for color (Chapter 3) — and a load-bearing aesthetic: static two-bar strumming is "corny" and motion through adaptable voicings is what makes the music jazz.
+
+Members: Two-Names Shape (Gma6 = Emi7); Relative Minor of a Dominant; Root-Omitted Tritone-Equivalent Voicing; Leading Dominant (Inserted Between Any Two Chords); Cycle No. 1 / ii–V Replacement Pair; Ami7-to-Cmi7-to-G-major V-to-I Template.
+
+Traversal rules:
+- Insert a Dominant Between Any Two Chords — `SubstitutionExpand` (Chapter 5 summary; Chapter 6 summary; references: ch05 "the key to all of the other lessons", ch06 "dominant-to-dominant, dominant-to-minor, dominant-to-major").
+- Two-Line Standard-vs-New Substitution Format — `_pending:standard-vs-new-format` (Chapter 1 summary; reference: ch01 "the original changes printed above, Baker's reharmonization printed below").
+
+Modification rules:
+- Replace a Dominant With Its Relative Minor (Fifth Above) — `SubstitutionExpand` (Chapter 4 summary; reference: ch04 "any dominant-7 can be replaced by the minor a fifth above it").
+- One Shape, Two Names — `FamilyCoherence` (Chapter 7 summary; reference: ch07 "one shape carries two functional identities").
+- Root-Omitted Tritone-Equivalent Voicings — `_pending:tritone-equivalent-shape` (Chapter 7 summary; reference: ch07 "G7#5 = Db9b5 are the same shape with different roots").
+- Cycle No. 1 ii–V Replacement Recipe — `SubstitutionExpand` (Chapter 7 summary; reference: ch07 "Gmi7-Gmi6 for C7, Dmi7-G13b9 for G7").
+- Always Alter the V on the Way to I — `SubstitutionExpand` (Chapter 10 summary; reference: ch10 "the V chord on the way to I is always altered").
+- Substitutions Must Serve Voice-Leading, Not Be Thrown In — `VoiceMotion` (Chapter 3 summary; reference: ch03 "substitutions must serve voice-leading, not be 'thrown in'").
+- Expand Plain Triads via the Substitution Menu — `ColorToneRequire` (Chapter 3 summary; reference: ch03 "any plain major triad can be replaced by Cma7/6/9, any minor by Dmi6/7/9").
+
+### Comping and Vamp Texture System (Arpeggio, Walking Bass, Fill, Intro)
+
+Baker's accompaniment system: rhythm strumming is obsolete and "corny," and must be replaced by motion through adaptable voicings (Chapter 3). Two characteristic textures are elevated above strumming — arpeggio and walking string-bass (Chapter 2) — and three short-form units are codified as the working accompaniment library: intros, vamps, and fill-ins. The system's operating principle is combinatorial creativity: a small fixed chord set generates unlimited intros if the student varies rhythm (root-then-chord, arpeggiated, recombined). Vamps use the open-string-root horn-backing voicings (Chords 27–30) and key-shift the practical study from C to G. Fill-ins are dispatched on labeled run-types so the student scaffolds improvisation by selecting from the named run vocabulary. The texture system is the rhythmic engine that lets the substitution lattice actually move on the instrument.
+
+Members: Arpeggio Comping Texture; Walking String-Bass Texture; Intro Unit; Vamp Unit (Open-String-Root); Fill-In Unit; Rhythmic Variation Menu (Root-then-Chord, Arpeggiated, Recombined).
+
+Traversal rules:
+- Replace Static Strumming With Motion Through Voicings — `TextureCycle` (Chapter 1 summary; Chapter 3 summary; references: ch01 "rhythm strumming is obsolete and must be replaced", ch03 "static two-bar strumming is 'corny' and lacks color").
+- Elevate Arpeggio and Walking-Bass Above Strumming — `TextureCycle` (Chapter 2 summary; reference: ch02 "arpeggio and walking string-bass").
+- Generate Unlimited Intros From a Small Fixed Chord Set — `_pending:combinatorial-intro` (Chapter 2 summary; reference: ch02 "a small fixed chord set generates unlimited intros if the student varies rhythm").
+- Dispatch Fill-Ins By Labeled Run-Type — `_pending:run-type-dispatch` (Chapter 10 summary; reference: ch10 "blank bars carry a labeled run-type so the student scaffolds improvisation").
+
+Modification rules:
+- Shift Vamp Study From C to G for Open-String-Root Voicings — `_pending:vamp-key-shift` (Chapter 5 summary; reference: ch05 "the new vamp study abandons C major for G").
+
+### Single-Note Line and Riff System (Position-Locked Runs, Relative-Run Substitution, Forced Riff)
+
+Baker's improvisational system: single-note technique is built directly out of the exercise vocabulary, so practice and performance share a single substrate. Chapter 8 installs alternate picking and a 28-exercise mechanical foundation; Chapters 9–10 drill scale, minor, dominant, and diminished runs and narrow the blues to five horn-friendly keys (F/G/Ab/Bb/C). The system carries a load-bearing improvisational license — the relative-run substitution: a minor-7 run substitutes freely for its relative major chord because the same relative rule that applies to chords applies to runs (Ami7 run over D7, Gmi7 run over C7). Chapter 11 introduces a parallel melodic unit, the riff, defined as "ideas put together and forced against the chord" — structurally justified for fast-moving vamp changes where chord-tone runs cannot keep up. Chapter 12 codifies the groove riff: same riff repeated, first and last courses matching, executed without leaving 3rd position. Chapter 13 closes with two solo-construction methods — the implied-melody method (run chords around the melody under a 7th–11th-fret position lock so the listener still hears the tune even when it is not literally present) and the solo pattern (a per-course rhythmic frame where the first measure sets the timing for everything that follows). Internalization is operationalized through the sing-against-the-chord rule: riffs and runs are sung until they are heard before they are played.
+
+Members: Scale Run; Minor Run; Dominant Run; Diminished Run; Riff (Forced Against Foreign Changes); Groove Riff; Implied-Melody Solo Line; Solo Pattern (Per-Course Rhythmic Frame).
+
+Traversal rules:
+- Alternate-Pick the 28-Exercise Foundation — `_pending:alternate-picking-foundation` (Chapter 8 summary; reference: ch08 "alternate picking, and the 28-exercise mechanical foundation").
+- Lock Implied-Melody Solos Between 7th and 11th Frets — `PositionContinuity` (Chapter 13 summary; references: ch13 "under a 7th-11th-fret position lock", ch13 "the listener still hears the tune even when it is not literally present").
+- Execute Groove Riffs Without Leaving 3rd Position — `PositionContinuity` (Chapter 12 summary; reference: ch12 "executed without leaving 3rd position").
+- Hold the First Measure's Rhythm as the Solo Pattern — `_pending:rhythmic-frame-lock` (Chapter 13 summary; reference: ch13 "the first measure sets the timing for everything that follows").
+- Sing Riffs and Runs Against the Chord Until Heard — `_pending:sing-before-play` (Chapter 10 summary; Chapter 11 summary; references: ch10 "sung against the chords until internalized, then executed", ch11 "ideas are heard before they are played").
+- Blend Runs Into Connected Lines — `_pending:line-blending` (Chapter 10 summary; reference: ch10 "runs are joined into connected lines, not stacked atop each other").
+
+Modification rules:
+- Substitute a Minor-7 Run for Its Relative Major Chord — `SubstitutionExpand` (Chapter 10 summary; reference: ch10 "a minor-7 run substitutes freely for its relative major chord").
+- Force Riffs Against the Chord (Vamp License) — `NCTHarmonization` (Chapter 11 summary; Chapter 12 summary; references: ch11 "ideas put together and forced against the chord", ch12 "vamp changes move too fast for chord-tone runs").
+- License Minor Material Over Dominants in Riff Work — `SubstitutionExpand` (Chapter 11 summary; reference: ch11 "the minor-for-dominant substitution licenses minor material over dominants").
+- Thin and Slow Dense Runs Rather Than Abandon Them — `OmissionAllow` (Chapter 11 summary; reference: ch11 "dense runs are sanctioned to be thinned and slowed rather than abandoned").
+- Match First and Last Courses of a Groove Riff — `_pending:course-symmetry` (Chapter 12 summary; reference: ch12 "first and last courses matching, repeated consecutively").
+- Use Exercise Runs Verbatim as Solo Material — `_pending:exercise-as-performance` (Chapter 9 summary; reference: ch09 "blues solos are built from the exact runs of Lessons 27-30 with no modification").
+
+## Pending Work
+
+The systems-draft carries a substantial number of `_pending:` engine_payload kinds, reflecting that Baker's method — though more voicing-shaped than Bernstein's or Bruno's — introduces a numbered-catalog discipline, a notebook-rewriting mandate, vamp-and-riff units, and a sing-before-play internalization rule that the existing engine vocabulary (`VoiceMotion`, `FamilyCoherence`, `ColorToneRequire`, `OmissionAllow`, `SubstitutionExpand`, `PositionContinuity`, `SymmetryMovement`, `TextureCycle`, `NCTHarmonization`) does not yet cover. Each needs an engine-layer kind defined before promotion into masters.json:
+
+- `_pending:transposition-mandate` — the mechanical definition of mastery as physical hand-rewriting of every voicing into every key; no existing kind expresses the across-all-keys notebook discipline.
+- `_pending:numbered-vocabulary` — referring to chord shapes by catalog number (No. 1–30) rather than by Roman-numeral function, with circled-number annotations on every diagram.
+- `_pending:key-scoped-shape` — the open-string-root exception: certain shapes (Chords 27–30) cannot be uniformly transposed and remain key-specific.
+- `_pending:position-key-scope` — the additional 3rd position's restricted scope (Ab/Bb/C/Db/Eb usable, F/G marginal).
+- `_pending:practical-key-list` — the contraction of the universal transposition mandate to working target lists (seven keys for vamps, six for intros, five horn-friendly keys for blues runs).
+- `_pending:standard-vs-new-format` — the two-line standard-vs-new substitution layout that carries the entire pedagogy.
+- `_pending:tritone-equivalent-shape` — the root-omitted shape that spells both G7#5 and Db9b5; structural basis of b5 substitution.
+- `_pending:combinatorial-intro` — generating unlimited intros from a small fixed chord set by varying rhythm (root-then-chord, arpeggiated, recombined).
+- `_pending:run-type-dispatch` — fill-in bars labeled by run-type so the student scaffolds improvisation by selecting from the named run vocabulary.
+- `_pending:vamp-key-shift` — the vamp study's abandonment of C major for G because the open-string-root voicings require it.
+- `_pending:alternate-picking-foundation` — the 28-exercise alternate-picking substrate beneath all single-note work.
+- `_pending:rhythmic-frame-lock` — the per-course rhythmic pattern set in the first measure and held constant throughout the solo.
+- `_pending:sing-before-play` — riffs and runs sung against the chord until they are heard before they are played; imagination precedes fingers.
+- `_pending:line-blending` — runs joined into connected lines rather than stacked, the aesthetic that distinguishes a musical solo from a lick parade.
+- `_pending:course-symmetry` — the groove riff's first-and-last-course matching constraint.
+- `_pending:exercise-as-performance` — using exercise runs verbatim as solo material; practice and performance share a single substrate.
+
+A larger number of rules map cleanly to existing engine kinds: `SubstitutionExpand` (dominant-to-relative-minor, dominant-as-leading-chord, Cycle No. 1 ii–V recipe, always-alter-the-V, relative-run substitution, minor-for-dominant in riffs), `FamilyCoherence` (two-names principle), `VoiceMotion` (substitutions serve voice-leading), `ColorToneRequire` (plain-triad substitution menu), `SymmetryMovement` (chromatic up-the-neck drill), `PositionContinuity` (two positions per key; 7th–11th-fret implied-melody lock; 3rd-position groove-riff lock), `TextureCycle` (replace strumming with motion; elevate arpeggio and walking-bass), `NCTHarmonization` (forced riff against foreign changes), and `OmissionAllow` (thin-and-slow dense runs).
+
+## Provenance Notes
+
+All system blocks and rules are drawn from the book-level distillation and the thirteen per-chapter summaries (ch01–ch13.md). Each rule carries `references[]` pointing back to the specific chapter and topic in the chapter summaries.
+
+The four systems map cleanly to the document's pedagogical arc. The Numbered Chord Vocabulary System captures the taxonomic spine and transposition mandate that govern Part One (Chapters 1, 2, 4, 5, 9, 11, 12). The Harmonic Substitution Lattice captures the named substitution principles (Chapters 3, 4, 5, 6, 7, 10) and the two-line standard-vs-new format introduced in Lesson 1. The Comping and Vamp Texture System captures the rhythm-strumming-is-obsolete polemic and the arpeggio/walking-bass/intro/vamp/fill-in working library (Chapters 1, 2, 3, 5, 10). The Single-Note Line and Riff System captures the Part Two improvisational apparatus — alternate picking, the run families, the relative-run substitution, the forced riff, the groove riff, and the implied-melody and solo-pattern solo-construction methods (Chapters 8, 9, 10, 11, 12, 13).
+
+No chapter failed to yield a system contribution. Chapter 1 grounds the catalog, the chromatic drill, the transposition mandate, the manuscript-notebook discipline, and the two-line standard-vs-new format. Chapter 2 supplies the arpeggio and walking-bass textures, intros, and the literal hand-rewriting practice rule. Chapter 3 supplies the substitution menu, the voice-leading constraint, and the "corny strumming" aesthetic. Chapter 4 supplies the two-positions-per-key rule, the dominant-to-relative-minor chart, and the practical seven-key target. Chapter 5 supplies Chords 27–30 (the open-string-root exception), the vamp key shift from C to G, and Lesson 16's dominant-as-leading-chord principle. Chapter 6 supplies the three-category taxonomy of dominant connection and the six-key intro/ending target. Chapter 7 supplies the two-names principle, the root-omitted tritone-equivalent voicing, the Cycle No. 1 ii–V recipe, and the eleven canonical progression sequences. Chapter 8 supplies the alternate-picking and 28-exercise foundation and the jam-session and record-stealing ear-training rules. Chapter 9 supplies the run families, the five horn-friendly blues keys, and the exercise-vocabulary-is-solo-material claim. Chapter 10 supplies the relative-run substitution, the always-alter-the-V principle, the fill-in solo method, the sing-against-the-chord rule, and the blending aesthetic. Chapter 11 supplies the riff definition, the minor-for-dominant licensing, and the thin-and-slow dense-run rule. Chapter 12 supplies the additional 3rd position with its key scope, and the groove riff with its first-and-last-course-matching and position-lock constraints. Chapter 13 supplies the implied-melody method, the 7th–11th-fret position lock, the solo pattern, and the meta-axiom that repeated review of earlier lessons is itself a learning mechanism.
+
+## Scope and Source Caveats
+
+Two caveats are load-bearing for any reader of this statement. First, *Complete Course in Jazz Guitar* Vol. 1 is a 1955 method by a working New York rhythm-and-blues / jazz guitarist, written for the working-guitarist market of its day; its terminology ("corny" strumming, "hip" voicings, horn-section vamp backings), its key choices (the horn-friendly F/G/Ab/Bb/C cluster), and its pedagogical assumptions (the student keeps a physical manuscript notebook and a scrap book, attends jam sessions, learns by stealing from records) are of that era. The method is unapologetically practical-over-theoretical and sound-driven-over-formula-driven — chords are catalogued by number rather than by Roman-numeral function precisely so the student internalizes shapes by sound and finger memory rather than by harmonic analysis. Second, this distillation is derived from an OCR-sourced transcript of a 70-year-old print volume that mixes prose, chord-diagram graphics, and standard-notation engravings. The book-level distillation and the systems-draft were assembled from the per-chapter summaries that re-encode the verbal content; the chord-diagram and music-notation graphics are not directly captured by the OCR text channel, and any specific voicing claims in this statement (Chord No. 1–6 in F/G/Ab/Bb; Chords 27–30 as open-string-root vamp shapes; Gma6 = Emi7; G7#5 = Db9b5; the Ami7-Cmi7-G-major V-to-I template; the Gmi7-Gmi6 / Dmi7-G13b9 Cycle No. 1 recipe) trace through the chapter-summary prose rather than through a separate verification against the original engraved diagrams. Readers consuming this statement as a basis for engine-layer promotion should treat the verbal claims as authoritative and the specific voicing spellings as subject to confirmation against the printed plates.

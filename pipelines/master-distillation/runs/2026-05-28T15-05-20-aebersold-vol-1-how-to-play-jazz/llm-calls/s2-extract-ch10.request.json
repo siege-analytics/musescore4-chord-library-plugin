@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch10",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 10: Chromaticism\nPages 32-35 of the book.\n\n<<<CHAPTER TEXT\n\nBlues heads (melodies) are often made up of a single pentatonic scale, usually a minor pentatonic\nscale superimposed over a dominant 7th chord/scale. See example below.\n\nBb7 (Bb Minor Pent.) Bb7\n2 \u201cA AA = Toh\n\u2018 Kt = Hie \u2014s\nZ T ea i\n/ Oe Oe bar THz\n___\n\nTry improvising over the Bb blues (concert key), using just the Bb minor pentatonic scale\nthroughout. The notes in concert key are: Bb, Db, Eb, F, Ab, Bb.\n\nYou may want to alternate back and forth between the Bb minor pentatonic scale and the Bb\nblues scale. Next, try improvising over the F blues, using the F minor pentatonic scale and the F\nblues scale. The F minor pentatonic scale is comprised of these notes: F, Ab, Bb, C, Eb, F.\n\nOf course, the minor pentatonic scale can be played over a minor scale. Use the pentatonic scale\n(minor pentatonic) that corresponds to the root of the minor scale/chord. The first choice pentatonic\nscale for eight measures of F minor would be the F minor pentatonic scale. Remember, there are\nseveral pentatonic scales within each minor, major, and dominant 7th scale. Experiment with the\nvarious pentatonic scales and get the sound of each in your head. You may want to write these out\non paper so you can see how they relate to one another. For further pentatonic study, I highly\nrecommend Pentatonic Scales for Jazz Improvisation by Ray Ricker.\n\nPlay with recorded Tracks 1, 2, 3, and 4, and apply the pentatonic scales in a melodic fashion.\nOccasionally, throw in a phrase using the blues scale that corresponds to the key you are in (over the\neight bars of F minor use the F blues, F pentatonic, or F minor scale).\n\nBy now we can see we have several scales that we can incorporate in our solo...minor, blues, and\npentatonic. These can all be played over the first several recorded tracks. This should allow you\nmore variety in your solo construction and is a start at enabling you to produce on your instrument\nthe sounds that are swimming around in your head. Your mind already sings many of these scale\nsounds but you just don't know how to label them. Keep studying and you will.\n\nDon't overlook listening to records of jazz greats and try locating phrases that use the scales you\nhave been learning. Dan Haerle's book, Scales for Jazz Improvisaton lists nineteen different scales\nwritten in all keys in treble and bass clef. It is an excellent book.\n\nTam listing three pentatonic scales found within the C major scale. Their inversions are found to\nthe right of the basic scale. Each of them represents a pentatonic scale. Experiment by improvising\nfor four or eight bars using one of the inversion scales. They definitely have a different sound and\nwarrant your attention. The scale on the third line contains a raised 4th (#4 = F#). This scale is the\nfirst cousin to a major scale and is called lydian; CD E F# G A BC. It's a beautiful sound and much\n\nused. ora aoe - Inversion 1\u00a5\n(C Major Pent.) Inversion i Inversion\u2019 I] Inversion Hy - Pe\no- vw ol am au\nre ne yous cee\nfiom soe\" pee? Zee ee\n\u00a2\n(Gc insor Pent.) Inversion | Inversion II Inversion II] a Inversion \u2018ge\n: at aoe Qe k= og a EE\nZz oO. oe. vos om i:\nae ou oF \u00a2 es | 4\nyo Ml we 4 |\n\u00a5 eee eee ee\ncA j Inversion III Inversion 1V\n5 Ma 4 version { : ems vor\n2 (OU Major Pent.) Inversion I In a , - otk\n7) rw yoW or 6a = rf\na4 y.a\u20144 a. T \u2014_.' r\n\u2014 ee er a a0! peor\nvx <4 Ao to\noer oH 4\n\n31\n\n\nNOTE: Memorize the keyboards black & white notes.\nHave them on the \"tip of your mind\" for use at any time in figuring out intervals,\nscale qualities, licks, etc. It's a marvelous tool. It's visual and you can SEE so much all at once.\n\nC \"No one can hurt you in your imagination.\" - Amnesty International _)\n\nCHROMATICISM\n\nChromaticism means using half-step intervals. When listening to jazz solos or analyzing\ntranscribed solos you will undoubtedly come across notes that are not in the scale or chord being\nsounded. This is not unusual. I used to marvel at how a player could be so far from the scale or\nchord and still sound good. In the examples below, I will show you how notes outside the basic\nscale can be incorporated in your melodies. The proper use of chromaticism can instantly make you\n\nsound more mature.\n\nroperly released...tension and release. See page 43.\n\n( Keep in mind that any note can be played against any chord symbol if it is properly led into ant)\nP\n\nHere is an example of how the entire chromatic scale can be used in a typical jazz phrase.\n\nc- D- G7 c Cc\n\u2014 \u2014_ 4 if\neo os =\nAY bebe eae:\non Oo\nq NMMUL_>\u2014\u201d\nA good beginning exercise is to approach each chord tone (root, 3rd, 5th, and 7th) from a half\nstep below.\n- F-\nF bog | to o ~\npo | .\nb = iG if } { it \u00a2 =\n7 7 7 * 7 7 _ 3\n9TH CHORD E\nF- \u2014\nfoe \u2014\n{Ty iy = oo f ote | _\n7 3 Ka 7 ~~ ST 3 @ 7\nCA 9th CHORD CA\nJ on 7 \u2014\n7. a ae | O i o- _|\n4 @\nCo. _\na os 7 . 3 F 7 ; 7 3 y\n\n\n\nBy using the scale tone above each chord tone, and using the half step leading tone from below,\nwe get sounds like this:\n\nrt J i r 2 o\nT {\n7 7 3 t \u2014\u2014 y\nee\ncA 2\nVi = \u201cI + ete @ =\nH 1 i f* | ===\need 4 3 7 > 3 x y\npy =\nZ fot tt : } ami f |\n{ay y i a\nvs t a it T ke.\nt 3 5 7 q 7 & 3 '\n\nBy starting a whole step above the chord tone and descending in half steps we get a sound like\nthis:\n\nF- 7th CHORD ee ae\n\n\u2014-\nVe) a | ele\u00bb *\n7 7 fo. 7 rn C +\n\n== Sag eae\n4 o& Ss 7 7 \u2014\n\n5 7 q\nF- a be\nf+ t Poa ct = ip a\nisa aa =\n/ 3 s 7 / 5 3 /\n\n1\n\n/ 3 5 4 1 a 749 ! -\nee\n\nFee are\n\n> > 2 7 >\n\na ae ee a oe . cab. ebe gk Robe> ; t\u2014t\n\n= jot pe Fate\n\n7 TT 3 3 3\n\nHere is an example using the half step from below and the descending half steps from above.\n\nF- ~\u2014- = Half-steps\n\nt t } @ be.\n\n= Yo tb fa\n. _ \u201c5 \u2014_F \u2014/ 3 a 7\n\n33\n\n\n\nNeighboring chromaticism using each scale tone as the basic note sounds like this:\n\nF- reversed OR\n: =e eee b 7, tere * wis\nlel ejhoz\u2014 ce = | ns | 1\n4 ae ORS ze 3 3 _ L\nreversed reversed\na!\nPei L\nate oi 1\np i L f 4 {\n+ i {\nPs Y \u00a3 Ss \u00e9 pa 7 7 / /\nCA (this sounds strange)\n7 f Tt\ny s3 | 7 t i 1 Ty im\nWAS 5 + ma\nthesia pte tong SS +\nreversed\ni | t\n| t Otabe te C The chromatic scale is your musical alphabet. D)\nz rs 7 - 7\nMUSICAL EXAMPLE\nFo eae\n\u2014 at tk n \u2014 b ts\nmay | tehaie aw tbe gta ene { f\na a 3 3 rr s 7 7 9\n\nThe following examples are other ways of incorporating chromaticism into your playing.\nChromaticism can be used over any type scale or chord, not just major or minor.\n\npp = \u00a2 !\nmm = {4\n6\n4 te\n\u2014\u2014\ncA (Eb minor 70h) pe cA (F-7)\nte : \u2014 f\u2014+\u2014t t\u00a2 -\ntt |-d_# \u00a2 -\u2122\n[4\nF- ap De\natt + ~ <y \u00a3 se,\nf i) + t ae + ->\u2014r\n{ aa 1 ig tt\n#\nee D-\n- a \u2014\nq WV 4 71\nhal if\n\n34\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 10 extraction"
+}

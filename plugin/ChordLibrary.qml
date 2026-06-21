@@ -16,8 +16,13 @@ import "model/DataCache.js" as DataCache
 import "model/HygieneEngine.js" as HygieneEngine
 import "model/FingeringEngine.js" as FingeringEngine
 import "model/BackupManager.js" as BackupManager
+import "model/StyleComposer.js" as StyleComposer
 import "model/DiagramEngine.js" as DiagramEngine
 import "model/IRealParser.js" as IRealParser
+import "model/RevoiceMemory.js" as RevoiceMemory
+import "model/ComparisonTray.js" as ComparisonTray
+import "model/ExclusionEngine.js" as ExclusionEngine
+import "model/MastersStore.js" as MastersStore
 
 MuseScore {
     id: chordLibrary
@@ -109,10 +114,9 @@ MuseScore {
         source: Qt.resolvedUrl("settings.json")
     }
 
-    FileIO {
-        id: localCacheFile
-        source: Qt.resolvedUrl("data/voicings.json")
-    }
+    // #211 Stage 3 — localCacheFile removed; voicings.json is no longer a
+    // runtime load target. The calculator generates the standard pool;
+    // user imports persist to user-voicings.json (see userVoicingsFile below).
 
     FileIO {
         id: exportFile
@@ -139,6 +143,46 @@ MuseScore {
     FileIO {
         id: modesConfigFile
         source: Qt.resolvedUrl("config/modes.json")
+    }
+
+    FileIO {
+        id: curatedShapesFile  // #194 Phase 2a — root-relative shape boost lookup
+        source: Qt.resolvedUrl("data/curated-shapes.json")
+    }
+
+    FileIO {
+        id: revoiceMemoryFile  // #197 — per-chord voicing choice persistence
+        source: Qt.resolvedUrl("revoice-memory.json")
+    }
+
+    FileIO {
+        id: standardCalculatedFile  // #209 Stage 1 — cached calculator output for standard tuning
+        source: Qt.resolvedUrl("data/standard-calculated.json")
+    }
+
+    FileIO {
+        id: userVoicingsFile  // #211 Stage 3 — user-imported voicings (replaces voicings.json runtime role)
+        source: Qt.resolvedUrl("data/user-voicings.json")
+    }
+
+    FileIO {
+        id: voicingsJsonForMigration  // #211 Stage 3 — read ONCE if revoice memory is v1, then never again
+        source: Qt.resolvedUrl("data/voicings.json")
+    }
+
+    FileIO {
+        id: toleranceConfigFile  // #210 Stage 2 — per-tuning-per-mode exclusion thresholds (defaults)
+        source: Qt.resolvedUrl("config/tuning-mode-tolerances.json")
+    }
+
+    FileIO {
+        id: userTolerancesFile  // #216 — user-edited tolerance overrides
+        source: Qt.resolvedUrl("data/user-tolerances.json")
+    }
+
+    FileIO {
+        id: mastersFile  // #220 — masters' lessons bookshelf
+        source: Qt.resolvedUrl("data/masters.json")
     }
 
     FileIO {
@@ -205,8 +249,8 @@ MuseScore {
     property alias calcMaxMuted: calcState.maxMuted
     property alias calcMaxPerQuality: calcState.maxPerQuality
 
-    // Default settings
-    property string jsonUrl: "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
+    // Default settings (#217 — jsonUrl removed; voicings come from the
+    // calculator and user-voicings.json, not from a remote URL).
     property string diagramPlacement: "above"  // "above" or "below"
     property var filteredTuningList: []
     property var filteredTuningDisplayList: []
@@ -228,6 +272,40 @@ MuseScore {
     property var voicingsData: []
     property var filteredData: []
     property bool dataLoaded: false
+    // Curated shape boost lookup (#194 Phase 2a). Loaded from
+    // plugin/data/curated-shapes.json on startup; passed to BatchEngine which
+    // forwards it through to ChordSelector._scoreCandidate.
+    property var curatedShapeLookup: ({})
+
+    // Calculator output for standard tuning (#209 Stage 1). When non-empty,
+    // unioned with voicingsData by signatureKey to expand the candidate pool.
+    // Cached to data/standard-calculated.json; invalidated by constraints hash.
+    property var calculatedStandardVoicings: []
+
+    // User-imported voicings (#211 Stage 3). Replaces the previous role of
+    // voicings.json as the user-import store. Persisted to data/user-voicings.json.
+    property var userVoicings: []
+
+    // Exclusion engine (#210 Stage 2 + #216). voicingToleranceMap is the
+    // EFFECTIVE map: defaults from tuning-mode-tolerances.json overlaid with
+    // user edits from user-tolerances.json. Tracked separately so we can
+    // re-merge after edits without re-reading the defaults file.
+    property var voicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var defaultVoicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var userVoicingToleranceMap: ({ modes: {}, tunings: {} })
+    // Per-signature include/exclude decisions persisted to settings.json (#210).
+    property var userVoicingOverrides: ({})  // signatureKey -> "include" | "exclude"
+
+    // Masters' lessons bookshelf (#220). Loaded from data/masters.json.
+    property var mastersStore: ({ version: "v1", masters: [] })
+    // #222 Track 3 — active master selection. "" = no master applied.
+    property string activeMasterId: ""
+
+    // Per-chord re-voice memory (#197). Persisted to revoice-memory.json;
+    // see RevoiceMemory.js for the on-disk shape. The "current scope" is
+    // derived from (curScore.path, activeMode, activeStyle, selectedTuning).
+    property var revoiceMemory: ({ version: "v1", scopes: {} })
+    readonly property int revoiceMemoryMaxBytes: 100000  // 100KB cap (AC #4)
     property var standardVoicingsData: []  // backup of the standard library for tuning switches
     property bool usingTuningVoicings: false  // true when tuning-specific voicings are loaded
     // Tab navigation: 0=Library, 1=ScoreTools, 2=Export, 3=Import, 4=Practice, 5=Settings
@@ -415,6 +493,465 @@ MuseScore {
         }
     }
 
+    function loadCuratedShapes() {
+        // #194 Phase 2a — parse curated-shapes.json into the runtime lookup.
+        // ChordSelector.buildCuratedLookup keys each entry by its root-relative
+        // signature; _scoreCandidate consults the lookup to apply each shape's
+        // boost when a candidate matches.
+        try {
+            var raw = curatedShapesFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                curatedShapeLookup = ChordSelector.buildCuratedLookup(data)
+                var n = Object.keys(curatedShapeLookup).length
+                console.log("Loaded " + n + " curated shapes")
+            }
+        } catch (e) {
+            console.log("Error loading curated shapes: " + e)
+        }
+    }
+
+    // === Calculator output for standard tuning (#209 Stage 1) ===
+
+    // Standard tuning's MIDI map. Used by VoicingCalculator.generateAll when
+    // running on standard from a non-standard active tuning. Mirrors plugin/
+    // tunings/standard.json so we don't need to round-trip through FileIO.
+    readonly property var standardTuningMidi: ({
+        "1": 64, "2": 59, "3": 55, "4": 50, "5": 45, "6": 40
+    })
+
+    function loadCalculatedStandard() {
+        // Try cache; regenerate if missing or constraints-hash mismatch.
+        var hash = _tuningCacheKey()
+        try {
+            var raw = standardCalculatedFile.read()
+            if (raw && raw.length > 2) {
+                var cached = JSON.parse(raw)
+                if (cached && cached.cacheKey === hash
+                        && cached.voicings && cached.voicings.length > 0) {
+                    calculatedStandardVoicings = cached.voicings
+                    console.log("Loaded " + cached.voicings.length
+                        + " calculated standard voicings (cache hit)")
+                    return
+                }
+            }
+        } catch (e) {
+            // No cache or stale — fall through to regenerate.
+        }
+        // Regenerate.
+        try {
+            console.log("Regenerating calculator output for standard tuning...")
+            var constraints = calcConstraints()
+            var generated = VoicingCalculator.generateAll(standardTuningMidi, constraints)
+            calculatedStandardVoicings = generated || []
+            console.log("Generated " + calculatedStandardVoicings.length
+                + " calculator voicings for standard tuning")
+            // Persist for next startup.
+            if (calculatedStandardVoicings.length > 0) {
+                try {
+                    standardCalculatedFile.write(JSON.stringify({
+                        cacheKey: hash,
+                        tuning: "standard",
+                        count: calculatedStandardVoicings.length,
+                        voicings: calculatedStandardVoicings
+                    }))
+                    console.log("Saved standard-calculated.json cache")
+                } catch (e2) {
+                    console.log("Failed to write standard-calculated.json: " + e2)
+                }
+            }
+        } catch (e) {
+            console.log("Calculator failed on standard: " + e
+                + " (union will fall back to voicings.json only)")
+            calculatedStandardVoicings = []
+        }
+    }
+
+    // Apply the union to voicingsData. Called after both halves are loaded.
+    // No-op when calculatedStandardVoicings is empty (graceful degradation).
+    function applyStandardUnion() {
+        if (!voicingsData || voicingsData.length === 0) return
+        if (!calculatedStandardVoicings || calculatedStandardVoicings.length === 0) return
+        var before = voicingsData.length
+        voicingsData = ChordSelector.unionVoicings(voicingsData, calculatedStandardVoicings)
+        var after = voicingsData.length
+        console.log("Unioned standard pool: " + before + " curated + "
+            + calculatedStandardVoicings.length + " calculator -> "
+            + after + " unique")
+    }
+
+    // #211 Stage 3 — assemble the runtime pool from calculator + user imports.
+    // Replaces the previous voicings.json-driven flow. Standard tuning's pool
+    // = union(calculatedStandardVoicings, userVoicings), deduped by signature.
+    function rebuildStandardPool() {
+        var pool = ChordSelector.unionVoicings(calculatedStandardVoicings, userVoicings)
+        voicingsData = pool
+        dataLoaded = true
+        console.log("Rebuilt standard pool: " + (calculatedStandardVoicings || []).length
+            + " calculator + " + (userVoicings || []).length + " user -> "
+            + pool.length + " unique")
+    }
+
+    function loadUserVoicings() {
+        try {
+            var raw = userVoicingsFile.read()
+            if (raw && raw.length > 2) {
+                var data = JSON.parse(raw)
+                userVoicings = (data && data.voicings) || []
+                console.log("Loaded " + userVoicings.length + " user voicings")
+            }
+        } catch (e) {
+            // No file or empty — start clean.
+            userVoicings = []
+        }
+    }
+
+    function saveUserVoicings() {
+        try {
+            userVoicingsFile.write(JSON.stringify({
+                version: "v1",
+                count: userVoicings.length,
+                voicings: userVoicings
+            }))
+        } catch (e) {
+            console.log("Failed to write user-voicings.json: " + e)
+        }
+    }
+
+    // === Exclusion engine (#210 Stage 2) ===
+
+    function loadVoicingTolerances() {
+        // Defaults from config (read-only).
+        try {
+            var raw = toleranceConfigFile.read()
+            if (raw && raw.length > 2) {
+                defaultVoicingToleranceMap = JSON.parse(raw) || { modes: {}, tunings: {} }
+                console.log("Loaded voicing tolerance defaults: "
+                    + Object.keys(defaultVoicingToleranceMap.modes || {}).length + " mode default(s), "
+                    + Object.keys(defaultVoicingToleranceMap.tunings || {}).length + " tuning override(s)")
+            }
+        } catch (e) {
+            console.log("Error loading voicing tolerance defaults: " + e)
+            defaultVoicingToleranceMap = { modes: {}, tunings: {} }
+        }
+        // User edits (sparse, written by Settings UI).
+        try {
+            var rawUser = userTolerancesFile.read()
+            if (rawUser && rawUser.length > 2) {
+                var data = JSON.parse(rawUser)
+                userVoicingToleranceMap = {
+                    modes: (data && data.modes) || {},
+                    tunings: (data && data.tunings) || {}
+                }
+                console.log("Loaded user tolerance edits: "
+                    + Object.keys(userVoicingToleranceMap.modes).length + " mode(s), "
+                    + Object.keys(userVoicingToleranceMap.tunings).length + " tuning override(s)")
+            }
+        } catch (e) {
+            // No user-tolerances.json — fresh install, stick with defaults.
+            userVoicingToleranceMap = { modes: {}, tunings: {} }
+        }
+        // Effective map = defaults ⊕ user ⊕ active-master tightening (#222).
+        voicingToleranceMap = _computeEffectiveToleranceMap()
+    }
+
+    function saveUserTolerances() {
+        try {
+            userTolerancesFile.write(JSON.stringify({
+                version: "v1",
+                modes: userVoicingToleranceMap.modes || {},
+                tunings: userVoicingToleranceMap.tunings || {}
+            }))
+        } catch (e) {
+            console.log("Failed to write user-tolerances.json: " + e)
+        }
+    }
+
+    // Set a single dimension override for (tuning, mode). Pass tuning=""
+    // to edit the mode-level default (applies to all tunings). Value is
+    // the new value; pass null to clear the user override and revert
+    // to the file default for that dimension.
+    function setVoicingTolerance(tuning, mode, dimension, value) {
+        if (!mode || !dimension) return
+        // Build a mutable clone to drop into the user map.
+        var next = {
+            modes: {},
+            tunings: {}
+        }
+        // Copy current user-edit shape.
+        for (var m in (userVoicingToleranceMap.modes || {})) {
+            next.modes[m] = {}
+            var src = userVoicingToleranceMap.modes[m]
+            for (var k in src) next.modes[m][k] = src[k]
+        }
+        for (var t in (userVoicingToleranceMap.tunings || {})) {
+            next.tunings[t] = {}
+            for (var tm in userVoicingToleranceMap.tunings[t]) {
+                next.tunings[t][tm] = {}
+                var src2 = userVoicingToleranceMap.tunings[t][tm]
+                for (var k2 in src2) next.tunings[t][tm][k2] = src2[k2]
+            }
+        }
+        // Place the edit.
+        var target
+        if (tuning && tuning.length > 0) {
+            if (!next.tunings[tuning]) next.tunings[tuning] = {}
+            if (!next.tunings[tuning][mode]) next.tunings[tuning][mode] = {}
+            target = next.tunings[tuning][mode]
+        } else {
+            if (!next.modes[mode]) next.modes[mode] = {}
+            target = next.modes[mode]
+        }
+        if (value === null || value === undefined) {
+            delete target[dimension]
+        } else {
+            target[dimension] = value
+        }
+        userVoicingToleranceMap = next
+        voicingToleranceMap = _computeEffectiveToleranceMap()  // #222 includes master layer
+        saveUserTolerances()
+        applyExclusionPass()
+    }
+
+    // Reset all user edits for a single (tuning, mode) combo back to the
+    // file defaults. Pass tuning="" to reset the mode-level entry.
+    function resetVoicingTolerances(tuning, mode) {
+        var next = {
+            modes: {},
+            tunings: {}
+        }
+        for (var m in (userVoicingToleranceMap.modes || {})) {
+            if (!tuning && m === mode) continue  // skip the one being reset
+            next.modes[m] = userVoicingToleranceMap.modes[m]
+        }
+        for (var t in (userVoicingToleranceMap.tunings || {})) {
+            next.tunings[t] = {}
+            for (var tm in userVoicingToleranceMap.tunings[t]) {
+                if (tuning && t === tuning && tm === mode) continue  // skip
+                next.tunings[t][tm] = userVoicingToleranceMap.tunings[t][tm]
+            }
+            if (Object.keys(next.tunings[t]).length === 0) delete next.tunings[t]
+        }
+        userVoicingToleranceMap = next
+        voicingToleranceMap = _computeEffectiveToleranceMap()  // #222 includes master layer
+        saveUserTolerances()
+        applyExclusionPass()
+    }
+
+    // Apply the exclusion engine in-place: attach _excludedReason to each
+    // voicing (null when visible, {dimension, message} when hidden).
+    // findBestVoicing/findAllVoicings consult this via BatchEngine.
+    function applyExclusionPass() {
+        if (!voicingsData || voicingsData.length === 0) return
+        var tolerances = ExclusionEngine.resolveTolerances(
+            voicingToleranceMap, selectedTuning, activeMode)
+        var opts = {
+            signatureKeyFn: function(v) { return ChordSelector.signatureKey(v) },
+            difficultyFn: function(v) { return FingeringEngine.computeDifficulty(v) }
+        }
+        var hidden = 0
+        var updated = []
+        for (var i = 0; i < voicingsData.length; i++) {
+            var v = voicingsData[i]
+            // Don't mutate cached objects in place — copy then attach.
+            var clone = {}
+            for (var k in v) clone[k] = v[k]
+            // Cache signature on the clone so UI override actions can
+            // identify the voicing without re-computing.
+            clone._signatureKey = ChordSelector.signatureKey(v)
+            // #211 Stage 3 — calculator voicings that match a curated
+            // signature inherit the curated name/category for display.
+            // (User imports already carry their own name/category and
+            // typically won't match a curated signature; if they do,
+            // curated wins — same precedence as Stage 1's union.)
+            var curatedHit = curatedShapeLookup[clone._signatureKey]
+            if (curatedHit) {
+                if (curatedHit.name) clone.name = curatedHit.name
+                if (curatedHit.category) clone.category = curatedHit.category
+            }
+            clone._excludedReason = ExclusionEngine.evaluateExclusion(
+                v, tolerances, userVoicingOverrides, opts)
+            if (clone._excludedReason) hidden++
+            updated.push(clone)
+        }
+        voicingsData = updated
+        console.log("Exclusion pass: " + (voicingsData.length - hidden)
+            + " visible, " + hidden + " hidden")
+        // Re-partition for UI surfaces.
+        applyFilters()
+    }
+
+    function setVoicingOverride(signatureKey, decision) {
+        // decision: "include" | "exclude" | null (clear)
+        if (!signatureKey) return
+        var next = {}
+        for (var k in userVoicingOverrides) next[k] = userVoicingOverrides[k]
+        if (decision === null || decision === undefined) {
+            delete next[signatureKey]
+        } else {
+            next[signatureKey] = decision
+        }
+        userVoicingOverrides = next
+        saveSettings()
+        applyExclusionPass()
+    }
+
+    function clearAllVoicingOverrides() {
+        userVoicingOverrides = ({})
+        saveSettings()
+        applyExclusionPass()
+    }
+
+    // === Masters' Lessons (#220) ===
+
+    function loadMasters() {
+        try {
+            var raw = mastersFile.read()
+            mastersStore = MastersStore.parseStore(raw)
+            var c = MastersStore.counts(mastersStore)
+            console.log("Loaded masters: " + c.masters + " masters, " + c.principles + " principles")
+        } catch (e) {
+            console.log("Error loading masters: " + e)
+            mastersStore = { version: "v1", masters: [] }
+        }
+    }
+
+    // === #222 Track 3 — active master integration ===
+
+    function setActiveMaster(masterId) {
+        activeMasterId = masterId || ""
+        saveSettings()
+        // Re-merge tolerances and re-decorate the pool.
+        voicingToleranceMap = _computeEffectiveToleranceMap()
+        applyExclusionPass()
+    }
+
+    // The active master's voicing style tags (union across principles).
+    // Returns [] when no master is active or the master is unknown.
+    function activeMasterVoicingTags() {
+        if (!activeMasterId) return []
+        var m = MastersStore.findMaster(mastersStore, activeMasterId)
+        if (!m) return []
+        return MastersStore.collectVoicingStyleTags(m)
+    }
+
+    // The active master's combined tolerance hints, or null when no master
+    // is active or no principle declared hints.
+    function activeMasterToleranceHints() {
+        if (!activeMasterId) return null
+        var m = MastersStore.findMaster(mastersStore, activeMasterId)
+        if (!m) return null
+        return MastersStore.deriveTolerancesFromMaster(m, ExclusionEngine.tightenTolerances)
+    }
+
+    // Effective tolerance map = defaults ⊕ user-edits ⊕ master-tightening.
+    // Replaces the inline merge in loadVoicingTolerances + setVoicingTolerance
+    // so the master layer is composed in one place.
+    function _computeEffectiveToleranceMap() {
+        var merged = ExclusionEngine.mergeTolerances(
+            defaultVoicingToleranceMap, userVoicingToleranceMap)
+        var hints = activeMasterToleranceHints()
+        if (!hints) return merged
+        // Apply the master's hints across every (mode, tuning) combo in
+        // the merged map. The semantic is "the master tightens whatever
+        // is configured for the active session" — so we tighten every
+        // mode default and every tuning override.
+        var out = { modes: {}, tunings: {} }
+        for (var m in (merged.modes || {})) {
+            out.modes[m] = ExclusionEngine.tightenTolerances(merged.modes[m], hints)
+        }
+        for (var t in (merged.tunings || {})) {
+            out.tunings[t] = {}
+            for (var tm in merged.tunings[t]) {
+                out.tunings[t][tm] = ExclusionEngine.tightenTolerances(
+                    merged.tunings[t][tm], hints)
+            }
+        }
+        return out
+    }
+
+    // === Per-chord re-voice memory (#197) ===
+
+    function loadRevoiceMemory() {
+        try {
+            var raw = revoiceMemoryFile.read()
+            revoiceMemory = RevoiceMemory.parseMemory(raw)
+            // #211 Stage 3 — migrate v1 (id-keyed) to v2 (signature-keyed).
+            // Reads voicings.json ONE last time to build {id -> signatureKey}.
+            // After this point, runtime never reads voicings.json again.
+            if (revoiceMemory.version === "v1") {
+                console.log("Migrating revoice memory v1 -> v2")
+                var idToSig = _buildIdToSignatureLookup()
+                RevoiceMemory.migrateFromV1(revoiceMemory, idToSig)
+                if (revoiceMemory._droppedIds && revoiceMemory._droppedIds.length > 0) {
+                    console.log("Dropped " + revoiceMemory._droppedIds.length
+                        + " unresolvable choice(s) during v1->v2 migration")
+                }
+                saveRevoiceMemory()
+            }
+            console.log("Loaded revoice memory ("
+                + revoiceMemory.version + "): "
+                + Object.keys(revoiceMemory.scopes).length + " scope(s)")
+        } catch (e) {
+            console.log("No revoice memory; starting fresh")
+            revoiceMemory = { version: "v2", scopes: {} }
+        }
+    }
+
+    // #211 Stage 3 — one-time helper for v1->v2 migration. Reads voicings.json
+    // (the source-of-truth-at-time-of-migration), maps each id to its
+    // signature key. Empty map on file-missing (memory's unresolvable
+    // entries are dropped with diagnostics).
+    function _buildIdToSignatureLookup() {
+        var lookup = {}
+        try {
+            var raw = voicingsJsonForMigration.read()
+            if (!raw || raw.length < 2) return lookup
+            var data = JSON.parse(raw)
+            var arr = (data && data.voicings) || (Array.isArray(data) ? data : [])
+            for (var i = 0; i < arr.length; i++) {
+                var v = arr[i]
+                if (v && v.id) lookup[v.id] = ChordSelector.signatureKey(v)
+            }
+        } catch (e) {
+            console.log("Migration lookup: voicings.json unreadable: " + e)
+        }
+        return lookup
+    }
+
+    function saveRevoiceMemory() {
+        try {
+            RevoiceMemory.pruneToSize(revoiceMemory, revoiceMemoryMaxBytes)
+            revoiceMemoryFile.write(JSON.stringify(revoiceMemory))
+        } catch (e) {
+            console.log("Error saving revoice memory: " + e)
+        }
+    }
+
+    function currentRevoiceScopeKey() {
+        // Score path may be empty for unsaved scores; RevoiceMemory uses
+        // "<no-path>" in that case — saved choices share a scope across all
+        // unsaved scores under the same axes. Acceptable per ticket Assumptions.
+        var scorePath = (curScore && curScore.path) ? curScore.path : ""
+        return RevoiceMemory.buildScopeKey(scorePath, activeMode, _activeProfileId, selectedTuning)
+    }
+
+    function revoiceMemoryGet(chordSymbol) {
+        return RevoiceMemory.getChoice(revoiceMemory, currentRevoiceScopeKey(), chordSymbol)
+    }
+
+    function revoiceMemoryRecord(chordSymbol, voicingId) {
+        RevoiceMemory.recordChoice(revoiceMemory, currentRevoiceScopeKey(), chordSymbol, voicingId)
+        saveRevoiceMemory()
+    }
+
+    function clearRevoiceMemoryForCurrentScope() {
+        RevoiceMemory.clearScope(revoiceMemory, currentRevoiceScopeKey())
+        saveRevoiceMemory()
+        statusMsg.text = "Cleared saved voicing choices for this score"
+        statusMsg.color = theme.successText
+    }
+
     function setActiveMode(modeId) {
         if (!modeId || !_modesById[modeId]) {
             console.log("setActiveMode: unknown id " + modeId + " — defaulting to chord-melody")
@@ -423,6 +960,9 @@ MuseScore {
         activeMode = modeId
         console.log("Mode: " + (_modesById[modeId] ? _modesById[modeId].name : modeId))
         saveSettings()
+        // #210 Stage 2: tolerances are mode-specific, so the exclusion pass
+        // must rerun after mode changes.
+        applyExclusionPass()
     }
 
     // Resolve current mode to its config object (or null if not loaded yet).
@@ -509,7 +1049,7 @@ MuseScore {
                 if (builtInTunings.indexOf(tuningList[i]) < 0) customTuningSlugs.push(tuningList[i])
             }
             var settings = {
-                voicingUrl: jsonUrl, diagramPlacement: diagramPlacement,
+                diagramPlacement: diagramPlacement,
                 tuning: selectedTuning, customTunings: DataCache.getCustomTuningsList(
                     tuningList, builtInTunings, tuningLabels, tuningStringCounts),
                 tuningOrder: tuningList.slice(),
@@ -780,6 +1320,14 @@ MuseScore {
         // Mode axis (#164) — activeMode drives mode-aware scoring in ChordSelector
         activeMode: chordLibrary.activeMode
         modeConfig: chordLibrary.currentModeConfig()
+        // Curated shape boost (#194 Phase 2a)
+        curatedLookup: chordLibrary.curatedShapeLookup
+        // Master style boost (#222 Track 3) — bound dynamically so the
+        // scorer reflects the live activeMasterId.
+        masterVoicingStyleTags: chordLibrary.activeMasterVoicingTags()
+        // Per-chord re-voice memory (#197)
+        revoiceMemoryGetFn: function(chordSymbol) { return chordLibrary.revoiceMemoryGet(chordSymbol) }
+        revoiceMemoryRecordFn: function(chordSymbol, voicingId) { chordLibrary.revoiceMemoryRecord(chordSymbol, voicingId) }
         // Section-aware mode resolution (#167)
         modeIdResolverFn: function(chordIdx) { return chordLibrary.modeForChord(chordIdx) }
         modeConfigResolverFn: function(chordIdx) { return chordLibrary.modeConfigForChord(chordIdx) }
@@ -845,14 +1393,19 @@ MuseScore {
         loadScalesConfig()
         loadProfiles()
         loadModes()
+        loadCuratedShapes()
+        loadVoicingTolerances()
+        loadMasters()
+        loadRevoiceMemory()
         loadSettings()
         loadTuningStringCount()
-        if (!dataLoaded) {
-            // Try local cache first (contains imports), fall back to URL
-            if (!loadFromCache()) {
-                fetchVoicings()
-            }
-        }
+        // #211 Stage 3 — voicings.json no longer loaded at runtime. The
+        // standard-tuning pool is built from calculator output + user
+        // imports. Non-standard tunings still flow through loadTuningVoicings.
+        loadCalculatedStandard()
+        loadUserVoicings()
+        rebuildStandardPool()
+        applyExclusionPass()
         // Auto-select CM context if none saved
         if (!filterContext) {
             var strCount = tuningStringCounts[selectedTuning] || 6
@@ -864,31 +1417,11 @@ MuseScore {
         startupTuningTimer.start()
     }
 
-    function loadFromCache() {
-        try {
-            var raw = localCacheFile.read()
-            var cached = DataCache.parseCache(raw)
-            if (cached) {
-                voicingsData = cached
-                dataLoaded = true
-                rebuildFilterLists()
-                refreshFilteredTunings()
-                applyFilters()
-                statusMsg.text = "Loaded " + voicingsData.length + " voicings (cached)"
-                statusMsg.color = theme.successText
-                console.log("Loaded " + cached.length + " voicings from local cache")
-                return true
-            }
-        } catch (e) {
-            console.log("No local cache, fetching from URL")
-        }
-        return false
-    }
-
-    function saveToCache() {
-        localCacheFile.write(DataCache.serializeCache(voicingsData))
-        console.log("Saved " + voicingsData.length + " voicings to local cache")
-    }
+    // #217 — loadFromCache / saveToCache / fetchVoicings removed.
+    // voicings.json is no longer a runtime source; the candidate pool is
+    // calculator output ∪ user-voicings.json. Imports go through
+    // saveUserVoicings(); pool regeneration goes through
+    // loadCalculatedStandard() + rebuildStandardPool().
 
     // === Settings persistence ===
 
@@ -896,7 +1429,7 @@ MuseScore {
         try {
             var raw = settingsFile.read()
             var s = DataCache.parseSettings(raw)
-            if (s.voicingUrl) jsonUrl = s.voicingUrl
+            // #217 — s.voicingUrl ignored (jsonUrl property removed)
             if (s.diagramPlacement) diagramPlacement = s.diagramPlacement
             if (s.tuning) selectedTuning = s.tuning
             if (s.defaultContext) filterContext = s.defaultContext
@@ -954,8 +1487,17 @@ MuseScore {
             if (s.activeMode) setActiveMode(s.activeMode)
             // Restore score sections (#167). Array of {startIdx, mode, name}.
             if (s.scoreSections && Array.isArray(s.scoreSections)) scoreSections = s.scoreSections
+            // #210 Stage 2 — restore user voicing overrides
+            if (s.userVoicingOverrides && typeof s.userVoicingOverrides === "object") {
+                userVoicingOverrides = s.userVoicingOverrides
+            }
+            // #222 Track 3 — restore active master (engine consumption recomputed
+            // when applyExclusionPass runs after loadSettings completes).
+            if (typeof s.activeMasterId === "string") {
+                activeMasterId = s.activeMasterId
+            }
             refreshFilteredTunings()
-            console.log("Settings loaded: url=" + jsonUrl + ", placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
+            console.log("Settings loaded: placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
             console.log("No saved settings found, using defaults")
         }
@@ -963,7 +1505,7 @@ MuseScore {
 
     function saveSettings() {
         var s = {
-            voicingUrl: jsonUrl,
+            // #217 — voicingUrl removed (jsonUrl property gone).
             diagramPlacement: diagramPlacement,
             tuning: selectedTuning,
             defaultContext: filterContext,
@@ -979,6 +1521,8 @@ MuseScore {
             activeProfile: _activeProfileId,
             activeMode: activeMode,
             scoreSections: scoreSections,
+            userVoicingOverrides: userVoicingOverrides,  // #210 Stage 2
+            activeMasterId: activeMasterId,              // #222 Track 3
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -1216,14 +1760,17 @@ MuseScore {
             tags: ["custom", category]
         }
 
-        // Add to library and save
-        var merged = voicingsData.slice()
-        merged.push(voicing)
-        voicingsData = merged
+        // #211 Stage 3 — user imports go to user-voicings.json, NOT
+        // back to voicings.json. The pool rebuilds from calculator output
+        // unioned with userVoicings, then the exclusion pass runs.
+        var nextUser = userVoicings.slice()
+        nextUser.push(voicing)
+        userVoicings = nextUser
+        saveUserVoicings()
+        rebuildStandardPool()
         rebuildFilterLists()
         refreshFilteredTunings()
-        applyFilters()
-        saveToCache()
+        applyExclusionPass()  // re-runs applyFilters internally
 
         var keyNote = targetRoot === "C" ? "" : " (reprojected from " + targetRoot + ")"
         settingsPanel.saveStatus = "Saved: " + voicing.name + keyNote
@@ -1308,7 +1855,10 @@ MuseScore {
             rebuildFilterLists()
             refreshFilteredTunings()
             applyFilters()
-            saveToCache()
+            // #217 — saveToCache removed; voicingsData is a derived union of
+            // calculator output + userVoicings, so this filter is in-memory only.
+            // A future ticket could route the removed entries to a userVoicings
+            // delete if they came from there.
             settingsPanel.hygieneStatus = "Removed " + result.removed + " duplicates. " + voicingsData.length + " voicings remain."
             settingsPanel.hygieneStatusColor = theme.successText
         } else {
@@ -1363,48 +1913,6 @@ MuseScore {
             settingsPanel.saveStatus = "Selected element is not a fretboard diagram.\nSelect a diagram in the score, then click Capture."
             settingsPanel.saveStatusColor = theme.errorText
         }
-    }
-
-    // === Data fetching ===
-
-    function fetchVoicings() {
-        statusMsg.text = "Loading voicings..."
-        statusMsg.color = theme.textSecondary
-        var xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    try {
-                        var data = JSON.parse(xhr.responseText)
-                        voicingsData = data.voicings || []
-                        dataLoaded = true
-                        rebuildFilterLists()
-                        refreshFilteredTunings()
-                        applyFilters()
-                        saveToCache()
-                        // T-001: trigger tuning-specific voicings now that data is loaded.
-                        // loadTuningVoicings() in onRun ran before this async callback,
-                        // so non-standard tunings need a second call here.
-                        if (selectedTuning !== "standard") {
-                            loadTuningVoicings()
-                        }
-                        statusMsg.text = "Loaded " + voicingsData.length + " voicings"
-                        statusMsg.color = theme.successText
-                    } catch (e) {
-                        statusMsg.text = "Failed to parse voicings: " + e
-                        statusMsg.color = theme.errorText
-                    }
-                } else if (xhr.status === 0) {
-                    statusMsg.text = "Could not reach URL. Check connection or URL."
-                    statusMsg.color = theme.errorText
-                } else {
-                    statusMsg.text = "Failed to fetch: HTTP " + xhr.status
-                    statusMsg.color = theme.errorText
-                }
-            }
-        }
-        xhr.open("GET", jsonUrl)
-        xhr.send()
     }
 
     // === Filtering ===
@@ -1558,6 +2066,7 @@ MuseScore {
                 console.log("Restored standard voicing library (" + voicingsData.length + " voicings)")
                 statusMsg.text = "Loaded " + voicingsData.length + " voicings (standard library)"
                 statusMsg.color = theme.successText
+                applyExclusionPass()  // #210 Stage 2
             }
             _loadingTuningVoicings = false;
             return
@@ -1659,6 +2168,9 @@ MuseScore {
                 applyFilters()
             }
         }
+        // #210 Stage 2: rerun the exclusion pass against the new pool's
+        // tuning-mode tolerances.
+        applyExclusionPass()
         _loadingTuningVoicings = false
     }
 
@@ -1698,8 +2210,21 @@ MuseScore {
         return MelodyEngine.voicingDistance(a, b)
     }
 
+    // #210 Stage 2 — voicings hidden by the exclusion engine. Exposed
+    // so LibraryPanel/WalkthroughPanel can render the disclosure list.
+    property var hiddenVoicingsData: []
+
     function applyFilters() {
-        filteredData = FilterEngine.applyFilters(voicingsData, {
+        // Partition voicingsData into visible (no _excludedReason) and hidden.
+        var visible = []
+        var hidden = []
+        for (var pi = 0; pi < voicingsData.length; pi++) {
+            var pv = voicingsData[pi]
+            if (pv && pv._excludedReason) hidden.push(pv)
+            else visible.push(pv)
+        }
+        hiddenVoicingsData = hidden
+        filteredData = FilterEngine.applyFilters(visible, {
             filterContext: filterContext,
             filterCategory: filterCategory,
             filterQuality: filterQuality,
@@ -2197,11 +2722,30 @@ MuseScore {
                 }
             }
 
-            voicingsData = merged
+            // #217 — Import/Merge: route the newly-added voicings to
+            // userVoicings (persisted to user-voicings.json) so they survive
+            // a pool rebuild. Dedupe against the existing union pool by
+            // (signature, chord_quality) so we don't shadow calculator
+            // output or duplicate prior user imports.
+            var existingSigs = {}
+            for (var ei = 0; ei < voicingsData.length; ei++) {
+                var ev = voicingsData[ei]
+                existingSigs[ChordSelector.signatureKey(ev) + "|" + (ev.chord_quality || "")] = true
+            }
+            var nextUser = userVoicings.slice()
+            for (var ui = 0; ui < imported.length; ui++) {
+                var iv = imported[ui]
+                var key = ChordSelector.signatureKey(iv) + "|" + (iv.chord_quality || "")
+                if (existingSigs[key]) continue  // already in pool
+                nextUser.push(iv)
+                existingSigs[key] = true
+            }
+            userVoicings = nextUser
+            saveUserVoicings()
+            rebuildStandardPool()
             rebuildFilterLists()
             refreshFilteredTunings()
-            applyFilters()
-            saveToCache()
+            applyExclusionPass()
 
             if (added > 0) {
                 importPanel.importMergeStatus = "SUCCESS: " + added + " voicings added"
@@ -2418,35 +2962,37 @@ MuseScore {
         statusMsg.color = theme.successText
     }
 
-    // === T-015: Voicing Comparison ===
+    // === Voicing Comparison Tray (#196) ===
 
     property var compareVoicings: []  // up to 3 voicings for side-by-side comparison
     property bool showComparison: false
 
     function addToComparison(voicing) {
-        if (compareVoicings.length >= 3) {
-            statusMsg.text = "Comparison full (max 3) — clear first"
+        if (!voicing) return
+        if (ComparisonTray.contains(compareVoicings, voicing)) {
+            statusMsg.text = "Already in comparison"
             statusMsg.color = theme.textMuted
             return
         }
-        // Check for duplicates
-        for (var i = 0; i < compareVoicings.length; i++) {
-            if (compareVoicings[i].id === voicing.id) {
-                statusMsg.text = "Already in comparison"
-                statusMsg.color = theme.textMuted
-                return
-            }
+        var prev = compareVoicings
+        compareVoicings = ComparisonTray.add(compareVoicings, voicing)
+        showComparison = compareVoicings.length > 0
+        // FIFO eviction hint when at capacity (AC: "visual hint")
+        if (prev.length === 3) {
+            statusMsg.text = "Added to comparison (3/3) — oldest dropped"
+        } else {
+            statusMsg.text = "Added to comparison (" + compareVoicings.length + "/3)"
         }
-        var updated = compareVoicings.slice()
-        updated.push(voicing)
-        compareVoicings = updated
-        showComparison = true
-        statusMsg.text = "Added to comparison (" + compareVoicings.length + "/3)"
         statusMsg.color = theme.successText
     }
 
+    function removeFromComparison(index) {
+        compareVoicings = ComparisonTray.removeAt(compareVoicings, index)
+        showComparison = compareVoicings.length > 0
+    }
+
     function clearComparison() {
-        compareVoicings = []
+        compareVoicings = ComparisonTray.clear()
         showComparison = false
     }
 
@@ -2481,6 +3027,7 @@ MuseScore {
             TabButton { text: "Import"; font.pixelSize: 10 }
             TabButton { text: "Practice"; font.pixelSize: 10 }
             TabButton { text: "Settings"; font.pixelSize: 10 }
+            TabButton { text: "Masters"; font.pixelSize: 10 }  // #220 — Tab 6
         }
 
         // === Tab 1: Score Tools (extracted to ui/ScoreToolsPanel.qml, #97) ===
@@ -2538,7 +3085,6 @@ MuseScore {
             theme: theme
 
             // Scalar properties
-            jsonUrl: chordLibrary.jsonUrl
             hasBatchChords: _batchChords.length > 0
 
             // Signal handlers
@@ -2557,34 +3103,24 @@ MuseScore {
                 importPanel._rebuildInProgress = false
             }
 
+            // #217 — Reset All Data now busts the calculator cache and
+            // regenerates the pool from scratch (calculator + user voicings).
+            // URL Apply/Reset/Refresh handlers removed along with their signals.
             onResetRequested: {
                 _tuningVoicingCache = {}
                 standardVoicingsData = []
                 usingTuningVoicings = false
                 dataLoaded = false
-                if (loadFromCache()) {
-                    loadTuningVoicings()
-                }
-                importPanel.rebuildStatus = "Data reset. Loaded " + voicingsData.length + " voicings."
+                // Bust the standard-calculated cache so it regenerates fresh.
+                try { standardCalculatedFile.write("") } catch(e) {}
+                loadCalculatedStandard()
+                loadUserVoicings()
+                rebuildStandardPool()
+                applyExclusionPass()
+                if (selectedTuning !== "standard") loadTuningVoicings()
+                importPanel.rebuildStatus = "Pool regenerated. "
+                    + voicingsData.length + " voicings."
                 importPanel.rebuildStatusColor = theme.successText
-            }
-
-            onUrlApplyRequested: function(url) {
-                jsonUrl = url
-                dataLoaded = false
-                saveSettings()
-                fetchVoicings()
-            }
-            onUrlResetRequested: {
-                var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
-                jsonUrl = defaultUrl
-                dataLoaded = false
-                saveSettings()
-                fetchVoicings()
-            }
-            onRefreshRequested: {
-                dataLoaded = false
-                fetchVoicings()
             }
 
             onImportMergeRequested: function(path) { doImport(path) }
@@ -2658,6 +3194,14 @@ MuseScore {
         }
 
         // === Tab 5: Settings (extracted to ui/SettingsPanel.qml, #98) ===
+        // === Tab 6: Masters (#220) ===
+        MastersPanel {
+            visible: currentTab === 6 && !showToolResults
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            mastersStore: chordLibrary.mastersStore
+        }
+
         SettingsPanel {
             id: settingsPanel
             visible: currentTab === 5 && !showToolResults
@@ -2668,6 +3212,35 @@ MuseScore {
             tuningListModel: tuningList.slice()
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
+            // #210 Stage 2 — voicing exclusion engine surface
+            effectiveVoicingTolerances: ExclusionEngine.resolveTolerances(
+                chordLibrary.voicingToleranceMap,
+                chordLibrary.selectedTuning,
+                chordLibrary.activeMode
+            )
+            voicingOverrideCount: Object.keys(chordLibrary.userVoicingOverrides || {}).length
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
+            // #216 — per-dimension tolerance editor
+            voicingToleranceMap: chordLibrary.voicingToleranceMap
+            tuningIdList: chordLibrary.tuningList
+            tuningDisplayList: {
+                var labels = []
+                for (var i = 0; i < chordLibrary.tuningList.length; i++) {
+                    var slug = chordLibrary.tuningList[i]
+                    labels.push(chordLibrary.tuningLabels[slug] || slug)
+                }
+                return labels
+            }
+            modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
+            modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+            tolEditMode: chordLibrary.activeMode
+            tolEditTuning: ""
+            onVoicingToleranceChanged: function(tuning, mode, dimension, value) {
+                chordLibrary.setVoicingTolerance(tuning, mode, dimension, value)
+            }
+            onVoicingTolerancesResetRequested: function(tuning, mode) {
+                chordLibrary.resetVoicingTolerances(tuning, mode)
+            }
             builtInTunings: chordLibrary.builtInTunings
             saveTuningFn: function(name, pitches, numStrings, originalSlug) {
                 try {
@@ -2777,6 +3350,11 @@ MuseScore {
                 // If the dialog wasn't supported, openFileBrowser sets statusMsg and returns.
                 // User can also drop a backup at ~/Desktop/chordlibrary-backup-restore.json
                 // and click Restore again if the dialog didn't appear.
+            }
+            // Active style readout callback (#195) — SettingsPanel uses this
+            // to live-preview what its composition-form draft resolves to.
+            resolveCompositionFn: function(composition, allStyles) {
+                return StyleComposer.resolve(composition, allStyles)
             }
             // Save a new composition to styles.json and reload (#170)
             onCompositionSaveRequested: function(composition) {
@@ -3037,6 +3615,16 @@ MuseScore {
             onReharmSelected: function(newRoot, newQuality) {
                 batchEngine.applyReharm(newRoot, newQuality)
             }
+            onClearSavedChoicesClicked: chordLibrary.clearRevoiceMemoryForCurrentScope()
+            // #196 — comparison tray inside the walkthrough
+            compareVoicings: chordLibrary.compareVoicings
+            suggestFingeringFn: function(v) { return suggestFingering(v) }
+            onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
+            onClearComparisonRequested: chordLibrary.clearComparison()
+            // #210 Stage 2 — hidden alts inside the walkthrough
+            hiddenAltVoicings: batchEngine.hiddenAltVoicings
+            onIncludeVoicingRequested: function(sig) { chordLibrary.setVoicingOverride(sig, "include") }
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
         }
 
         // === Tab 0: Library (extracted to ui/LibraryPanel.qml, #99) ===
@@ -3096,6 +3684,21 @@ MuseScore {
             onProfileChanged: function(profileId) { chordLibrary.setProfile(profileId) }
             activeMode: chordLibrary.activeMode
             onModeChanged: function(modeId) { chordLibrary.setActiveMode(modeId) }
+            // #222 Track 3 — Master selector
+            masterIdList: {
+                var ids = [""]
+                var ms = (chordLibrary.mastersStore && chordLibrary.mastersStore.masters) || []
+                for (var mi = 0; mi < ms.length; mi++) ids.push(ms[mi].id)
+                return ids
+            }
+            masterDisplayList: {
+                var names = ["(no master)"]
+                var ms = (chordLibrary.mastersStore && chordLibrary.mastersStore.masters) || []
+                for (var mi = 0; mi < ms.length; mi++) names.push(ms[mi].name)
+                return names
+            }
+            activeMasterId: chordLibrary.activeMasterId
+            onMasterChanged: function(masterId) { chordLibrary.setActiveMaster(masterId) }
             onSearchChanged: function(text) { chordLibrary.searchText = text; chordLibrary.applyFilters() }
             onContextFilterChanged: function(code) {
                 // Context dropdown is hidden as of #174 Stage 2; the signal is
@@ -3158,6 +3761,11 @@ MuseScore {
             onPlayVoicingRequested: function(voicing, mode) { chordLibrary.playVoicing(voicing, mode) }
             onCompareRequested: function(voicing) { chordLibrary.addToComparison(voicing) }
             onClearComparisonRequested: chordLibrary.clearComparison()
+            onRemoveFromComparisonRequested: function(index) { chordLibrary.removeFromComparison(index) }
+            // #210 Stage 2 — hidden voicing surface
+            hiddenVoicings: chordLibrary.hiddenVoicingsData
+            onIncludeVoicingRequested: function(sig) { chordLibrary.setVoicingOverride(sig, "include") }
+            onClearVoicingOverridesRequested: chordLibrary.clearAllVoicingOverrides()
 
             // --- Save to Library + Library Health (moved from Settings, #144) ---
             homePath: chordLibrary.homePath()

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch15",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 15: Constant Structure Patterns\nPages 155-162 of the book.\n\n<<<CHAPTER TEXT\n\nCONSTANT STRUCTURE PATTERNS\n\nConstant structure chord progressions that lack key-related analyses offen have a\nconsistent pattern of motion in the bass. Below, the bass motion moves up and down\n\nin half steps.\nD-7 Eb-7 E-7 Eb-7\nh\nSf :\nI f..\u00a5 =\nSYS a\nFig. 15.4. Chords of consistent minor seventh quality with no clear tonal, key-related analysis\nC7sus4 Eb7sus4 F7sus4 _ Eb7sus4\nA :\n3\n< z\nRoot motion up Root motion up Root motion down\nby minor 3rd \u2014*\u201d by whole step \u2014\u2122 by whole step\nD7sus4 F7sus4 G7sus4 F7sus4\n4\nAf.\n[es\no\nRoot motion up Root motion up Root motion down\nby minor 3rd \u2014\u201d by whole step \u2014\u201d by whole step \u201ca\n\nFig. 15.5. Other structured patterns of bass motion\n\nUse of structured patterns in the bass (consistent motion up or down by half steps,\nwhole steps, or major or minor thirds) helps to organize the sound of constant structure\nprogressions. Patterned, consistent root motion usually has a positive effect on the sound\nof constant structure progressions, but is not required. The consistent textural sound of\nconstant structures and melody/harmony relationships form the primary organizational\n\nelements of this technique.\n\nFMaj7 E- FMaj7\nA \u20143-\u2014\u2014\no } z\nLNA 4 2\nIMaj7 Vil- IMaj7\n(Lydian cadence}\nFig. 15.6. \u201cThe Ten Worlds\u201d (R. Felts), original form\nFMaj7 CMaj7 FMaj7 BbMaiZ\nA 3-\n- -\nIVMaj7 IMaj7 IVMaj7 bVlIMaj7\n\nFig. 15.7. \u201cThe Ten Worlds,\u201d reharmonized using constant structures\n\n156\n\n\nThe constant structure dominant seventh sus4 chords in fig. 15.8 loosely outline I, IV, and\nV in the key of A, but are not clearly tonal.\n\n. A7sus4 D7sus4 E7sus4\n\u2014\u20143\u2014\u2014\n$B =\u2014 :\nry)\nFig. 15.8. \u201cThe Ten Worlds,\u201d reharmonized using constant structures\nThe roots of the constant structure major seventh chords in the example below outline an\nF# diminished triad (F#, A, C). This progression is organized by the root motion but is not\nclearly tonal.\nF#7sus4 A7sus4 C7sus4\nA \u20143-\nGr = :\ne\n\nFig. 15.9. \u201cThe Ten Worlds,\u201d reharmonized using constant structures\n\nThe roots of the constant structure chords in the example below outline a D triad:\n\nD, FR, A.\nA ;\n\n[ay [e}\n\nASA 3\n\nD7sus4 A7sus4 F#7sus4 D7sus4\noe\nof L- \u201d a S- f- f- f- =\na 1 mt my 1 im\n\n| V \u00a5 | Vv\n\nFig. 15.10. Constant structure chords spell out D major triad\n\n\n\nCONSTANT STRUCTURE PATTERNS\n\nThe roots of the constant structure chords in fig. 15.11 outline an Fmaj7 played in\n\nreverse order from the 13 (D} down fo the root (F). These pitches, viewed as a chord,\nspell out FMaj7 (9, #11, 13). This overall structure gives coherence fo the constant\nstructure pattern. The lead in most of the chords is a tension; melodic tensions are a\n\ncommon part of this vocabulary.\n\nFMaj7 = target chord\nFig. 15.11. Constant structure chords spell out FMaj7 chord with tensions\n\nf FA my my\nft ay t\n\nor =e # ta K\n\n\u00e9 + wvls \\s\n\nFMaj7 DMaj7 BMaj7|GMaj7 EMaj7 CMaj7 AMaj7 FMaj7\n\nepi % vA f. -. -- f. -- - -- > >\n\na ff ff\ny | | |\n\nAT AbMaj7 GMai7 CMaj7\nA | 4 3 |\nT\n\u00a365 ams] \u201d \u00a3 a = oe\nCy)\nIL-7 bliMaj7 IMaj7 iVMaj7\nD-7(b5) G7(b9) .FH-7 \u2014-B7 Bb-7  A7sus4. ~\u2014AbMaj7\ni\npre \u2014\u2014 he 7 t & re) ray\ne 7\nExtended dominanis with related II-7 chords I-7 SubV7/I IMaj7\n\nFig. 15.12. \u201cIn Her Memory\u201d (R. Felts), original form\n\nThe constant structure pattern in this reharmonization moves down stepwise from G to C,\nand then rises stepwise from C to Ab.\n\nG7sus4 F7sus4 E7sus4 D7sus4\nAt 3\ni a a rd 4 ra n\nt= z A rs = a\noy)\n- C7sus4 Eb7susd E7sus4 F#7sus4 G7sus4  A7sus4. \u2014 AbMaj7\n\nA | 4\n\ni\n\u2014\u2014\u2014 : = =\ne 7\n\nFig. 15.13. \u201cIn Her Memory,\u201d reharmonized using constant structures\n\n158\n\n\n\nEXERCESES\n\nReharmonize the melodic examples below using constant structure progressions.\n\nEXERCISE 15.1\n\n\u201cThe Ten Worlds,\u201d original form\n\nFMaj7 E-7 FMaj7\nfh\n\nPie\n\nOS)\n\nYour reharmonization 1:\n\n4 \u2014 3\n\nPai\n\n\u2014- 2\n\nOS)\n\nYour reharmonization 2:\n\nab\n\n159\n\n\n\nCONSTANT STRUCTURE PATTERNS\n\nEXERCISE 15.2\n\n\u201cIn Her Memory,\u201d original form\nf\n\nAT AbMai7 GMaj7 CMaj7\nA | 3\nra Ae. \u2014 rJ\n{> 172 F rs rs\nCS)\nD-7(b5) G7(b9) FH-7 BZ ~\u2014sBb-7_\u2014\u2014s\u00abAT/sus AbMai7\n\nf\npore = KB x\n\nSaas 4\n\nYour reharmonization 1:\n\nAi 3\n\n>\n\n1>\n\nYour reharmonization 2:\n\niy\n|\n\na\n>it\n\n160\n\n\n\nEXERCISE 15.3\n\n\u201cIF You Knew,\u201d original form\n\nA- F A-\ni) Oy Ki\n\nOe r wa = f : r\n3) el \u201c= \u2014\u2014\n\nYour reharmonization 1:\n\nf\n\na z Ff + \u2018al ra\nT&. rs L x\noe \u2014 *\n\nas\nYour reharmonization 2:\nfy \u2014\n\n\u2014# ri C7 + i r J\n\u00a365 rs L @ > \u00a3\nry)\n\n\u2014_\u2014\u2014 er\nYour reharmonization 3:\nA \\ =\nri cya i it ra\nSS + vi o- 7 \u00a3\nas\n\n161\n\n\n\nCONSTANT STRUCTURE PATTERNS\n\n162\n\nEXERCISE 15.4\n\n\u201cHabitual\u201d (R. Felts), original form\n\nC7 F-7\nf___| : o~\nFae e =e a Sv\ni\n3)\nD-7(b5) G7 C7\na: et f2.\u00b0 a\n{7 is]\nry)\nYour reharmonization 1:\nfay | on\n5 sf \u2014s z p=\"\ni\neo\nA ee fa\"\naa } TZ \u00a5\nieee \u201c\n3)\nYour reharmonization 2:\nA o\u2014e a 4%\ni . + \u00a5-\nry)\nA! a fe: ia\n\u2014\u2014\u2014$ |\nOF\n\n\n\nComMBINING Mopat PatTerns,\nHYBRID CHorD VorcINGs,\nAND CoNSTANT STRUCTURES\n\nOnce you understand the basics, you may combine modal patterns, hybrid chord\nvoicings, and constant structures.\n\nFMaj7 E-7 FMaj7\nA \u2014\u20143-\u2014\u20141\n\n$n \u2014 =\n\n{>\n\nOo)\n\nFig. 16.1. \u201cThe Ten Worlds,\u201d original form\n\nSince its melody is completely diatonic, \u201cThe Ten Worlds\u201d may be reharmonized by\nthe various modes of the C major scale. | have chosen to reharmonize the original\nprogression with a chord patiern taken from E Phrygian. The E~7 is placed in\nrhythmically strong measures 1 and 3 to create a tonal emphasis on E.\n\nE7 FMai7 EV\n\u2014\u20143-\u2014\n\u2014\u2014\u2014 } rs\nG :\nL7 bliMaj7 L7\n\nFig. 16.2. Phrygian reharmonization\n\nE-7 . FMaj7 E-7\nA \u20143-\u2014\n\u2014\u2014\u2014 t zd &\n5) :\n7 y bliMaj7 7\nE pedal ____- Woe\n\nFig. 16.3. Use of an E pedal tone strengthens the E Phrygian sound\n\n163\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 15 extraction"
+}

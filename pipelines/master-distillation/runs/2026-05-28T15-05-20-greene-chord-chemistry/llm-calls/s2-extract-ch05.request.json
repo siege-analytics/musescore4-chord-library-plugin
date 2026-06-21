@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chord Formulas and Families\nPages 10-11 of the book.\n\n<<<CHAPTER TEXT\n\nSection 5\n\nChord Formulas,\n& Families,\n\nEvery chord has a certain combination of tones that distinguishes it from every other chord. These\ntones may be derived from the major scale with the same root as the chord name. For instance, any\nminor chord always has the root, 3rd and 5th tones of the major scale with the same letter name.\nTherefore, an A minor chord has the notes A, C, and E since they are the root, 03rd and 5th of the A\nmajor scale (remember that the regular 3rd of the A major scale is C# so the b3rd is C), The\nparticular group of tones that is used for the construction of a particular kind of chord is called the\nFORMULA of that chord; any chord that has 3 tones in the formula is called a TRIAD.\n\nOn page 11 is a list of formulas of the most commonly used chords. They are divided into 3\ncategories or FAMILIES. The MAJOR, MINOR, and DOMINANT 7TH chords are the \u201cfathers\u201d of the\n3 families, and all the other chords, with a few exceptions, are derived from them. When tones are\nADDED to any of the 3 basic chords, the resulting chords are called EXTENSIONS. For example:\nCm7 is an extension of Cm because the bath (BD) is added to the basic Cm chord to make the Cm7. In\nother words, 1, 63, 5, becomes 1, 63, 5,67, Any chord that has a STH, #5TH, DTH or #9TH in the\nformula is called an ALTERED chord; any chord that has the 3RD replaced by a 4TH is called a\nSUSPENDED chord.\n\nAny chord may be played with different arrangements of the tones in the formulas; these different\nways to play the same chord are called INVERSIONS or VOICINGS.\n\nThe terms 9th, 11th, and 13th (they are the same letter names as 2nd, 4th and 6th) are a carry\nover from piano theory. These higher notes were to be played in the right hand or in the higher\noctaves. On the guitar, they are usually played near the top of a chord, but sometimes the 9th\nand ] 1th are even played in the bass.So, it is just due to tradition that they are still called 9, 11,\n13, as opposed to 2, 4, 6. For example in a 13th chord, you may refer to the 13th tone as the 6th\ntone instead \u2014 it doesn\u2019t really matter. However, when using the #9, it is usually put above the\n3rd in a chord, not below (such as in chords like 7 #9, 7#94#5, etc.), and the +11 is usually put\nabove the 5th in a chord (assuming there is a Sth being played) as in chords like the +11, 13411,\netc, Likewise, the 6th (13th) is hardly ever put below a 57. When you get to Section 7, you will\nbe able to observe these things clearly if you have learned your major scales.\n\nSince there are so many inversions on the guitar, a systematic way of remembering them would\nseem to be practical. The way suggested in this book is according to the STRINGS being used in the\nchord. This works best with chords whose formulas contain 3 or 4 tones, and can be explained as\nfollows: starting with a 3 or 4 note chord, RAISE each tone in the chord ON THE SAME STRING up\nto the next higher tone IN THE CHORD. Example: Em.\n\naq mT\n\nCONTINUED\ncare\n\nRS\n\n\n\nThe bass note (G) is the 3rd of the chord, so STAYING ON THE 6TH STRING,\nyou would move it up to the 5TH (B) of the chord. The ROOT (E) on the 4th string\nwould move up to the b3rd (G) ON THE SAME STRING, and finally the Sth (B)\n\nwould move up to the root (E) ON THE SAME STRING. You would then have thes\u00bb\n\n5\n\nfollowing chord: -\u2014~ 7 BR\nIf you followed the same logic with this chord,\nyou would get the following chord: 4\nI\nR53\n\nFollowing the same logic still once more, you would get the Ist form again, but 12\nfrets or | octave higher: Em\n\n\u201cTet\n\n7\n43 So a rule can be derived from this exercise; that is, that any\n\n3 note chord (triad) has only 3 different FORMS on the same set of strings. Try\ndoing the above exercise with some of the triads listed in the chord reference charts.\nHowever, notice that if you start with a chord high on the neck, you will have to\nwork in reverse, that is, LOWERING each tone ON THE SAME STRING to the next\ntone in the chord. Likewise, if you start with a chord in the middle of the neck, you\nwill have to both lower and raise the notes of the chord, again staying on the same\nset of strings. But regardless of where you start, you will still get 3 forms from a\n\ntriad on the same set of strings.\n\nUsing the same logic for a 4 note chord, you will find there are 4 forms of any 4\nnote chord on the same set of strings. Example: A dominant 7th chord is a 4 note\nchord (there are 4 tones in the formula \u2014 1, 3, 5, 7), So starting arbitrarily with an\n\nE7 you could build the following chords on the same set of strings:\n\n\u00a31 E7 &7 E7\n2 q \u20187 1p \u2018J\n3 3 R557 \u00ab= OT SRS OR \u00abTBE\n\nSo for each set'of strings (like 6,5,4,3; 6,3,2,1; 5,3,2,1 etc.) you could memorize 4\ninversions. However, some inversions on certain sets of strings are not practical, so\nthe good inversions have already been worked out for you and listed in the chord\nreference charts. This holds true for all of the 3 and 4 note chords. The chords with\n\u00a7 and 6 tones in the formulae are not very well suited to this logic because too many\nof the inversions are not pleasing to the ears or the hands. But certain 5 note chords\nsuch as the 9th can be used when you leave out the root.\n\nThis is acceptable because actually in any chord with 5\ntones in the formula, the root OR Sth is often omitted and\n\npossibly one of the remaining tones DOUBLED, although Panel ~\nthis is not necessary. By doubled, it is meant repeated, and FORMULAS)\nthis is done most often in 3 and 4 note chords, Examples: TONES\n\nMINOR \u2014 3 {IN\nTHE FORMULAS)\nTONES\n\nEm\n\n43, & 2M0TS\n\n2, RooTs\na Sts\n\nIn chords with 6 tones in the formula, BOTH the root AND Sth may be omitted, and as with other\nchords, any of the remaining tones may be doubled. However, (in either a 5 or 6 note chord), if the\nSth is altered, that is, sharped or flatted, you may not leave it out as it is essential to the chord. You\ncould still leave out the root though. Example: ina 76965 chord you could leave out the root, but not\n\nthe 65,\n\nSometimes, the 5th can even be left out of 4 note chords; you must experiment with this to get\n\nideas where it might be appropriate. Very rarely, the root is left out of 4 note chords.\n\nIn chords that have the 11th tone, the 3rd is often omitted, particularly in the 11th chord itself.\nAlso you may try leaving out the 3rd in ANY CHORD (and possibly replace it with a 2nd or 4th)\n\n10\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

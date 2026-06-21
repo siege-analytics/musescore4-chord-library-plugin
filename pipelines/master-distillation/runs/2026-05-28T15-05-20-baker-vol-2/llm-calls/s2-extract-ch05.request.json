@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chords and Passing Tones\nPages 8-8 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 5\n\nChords and Passing Tones\n\nI know that at this stage these chord progressions are still exercises to you, how-\never, I'd like to give you an insight as to their application in modern harmony.\n\nBelow you have two exercises putting into play the eight chords you have been practicing.\n\nThey are written as I always write exercises, with the standard chord progressions on\n\nthe first line and the modern progressions on the second line.\n\nIn exercises 10 and 11 you are moving from a minor ninth to a minor sixth and from a\nmajor ninth to a major sixth, although the standard chord structures only move from\n\ndominant to tonic.\n\nAnalyze the examples thoroughly, practice them chromatically, moving up and down the\n\nfinger board, moving from minor to major, just as they are written.\n\nEx. 10\nStandard Chords\n\nDm G7 Cc\n= Zz vA yA Z. y Z ya ys\nZz yi Zz ws Zz y Zz wa\n\nModern Chords\n\nc\n=\ns\n@\n\nDm9 Dm6 Cmaj9 Cmaj\u00e96 Cmaj\u00e9\n4 3 1 4 3 4 a4 2 2 4 2 3 .\nLe\n=< 5 pe ee ee me\nT as tT t 4 T T\nEx. 11\nStandard Chords\nAm D7 G G\nfey\napt y a v4 ya vd ym \u2019 a vy a vd P= a\nw 4 \u2014z \u2019 a va y a z zx ya ty\npoy\nLed\nModern Chords\n*\n@ \u00a9)\nAm9 Am6 Gmaj3 Gmaj6\u00e9 Gmaj6\nles 3 1 4 3 4 1o4 3 2 4 3 2 a\n7t Ie\nom ra\ni a I | Clo .\nW3-\n\n*The circled numbers over each chord indicates which chords are to be used from the chart in\n\nLesson One.\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

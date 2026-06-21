@@ -1,0 +1,178 @@
+{
+  "master_id": "dirk-laukens",
+  "work_id": "jazz-guitar-chord-dictionary",
+  "systems": [
+    {
+      "id": "dirk-laukens:jazz-guitar-chord-dictionary:movable-shape-voicing",
+      "name": "Movable Shape Voicing System",
+      "summary": "The book's central architecture is the movable chord shape: every non-open voicing is a transposable template that can be slid up or down the neck to any root, with a two-fret shift equaling a whole-step transposition. This principle multiplies the dictionary's utility across all twelve keys from a single learned fingering. The system operates over a taxonomy of voicing categories (drop 2, drop 3, shell, extended, altered, inversion, open, quartal), each governed by rules about how to select, move, and modify shapes in a comping context.",
+      "members": [
+        {"id": "drop-2-root-position", "name": "Drop 2 Chord (Root Position)", "summary": "Four-note voicing built by dropping the second-highest note of a closed-position chord down an octave; introduced as a foundational jazz guitar voicing."},
+        {"id": "drop-3-root-position", "name": "Drop 3 Chord (Root Position)", "summary": "Four-note voicing built by dropping the third-highest note of a closed-position chord down an octave; paired with drop 2 as a foundational shape."},
+        {"id": "shell-chord", "name": "Shell Chord (Guide Tone Chord)", "summary": "Three-note voicing containing root, 3rd, and 7th (or 6th); captures essential harmonic identity with minimal note count on lower string sets."},
+        {"id": "extended-chord", "name": "Extended Chord", "summary": "Chord incorporating intervals beyond the root, 3rd, 5th, and 7th (e.g., 9, 11, 13), requiring deliberate omission choices on guitar."},
+        {"id": "major-6-chord", "name": "Major 6 Chord", "summary": "Extended chord where the 6 replaces the 7; does not contain the 7th."},
+        {"id": "major-13-chord", "name": "Major 13 Chord", "summary": "Extended chord containing both the 7 and the 6 (=13), distinguished from major 6 by the presence of the 7th."},
+        {"id": "altered-dominant-9sharp11", "name": "Altered Dominant 9#11 (Lydian Dominant)", "summary": "Dominant chord with #11 extension derived from the Lydian dominant scale; characteristically functions as bVII7 resolving to Imaj7."},
+        {"id": "altered-dominant-7b5", "name": "Altered Dominant 7b5 (Altered Scale)", "summary": "Dominant chord with b5 (and b9 or #9) derived from the altered scale; characteristically functions as V7alt resolving to Im7 or Imaj7."},
+        {"id": "chord-inversion-root", "name": "Root-Position Inversion", "summary": "Chord voicing with the root in the bass voice."},
+        {"id": "chord-inversion-3rd", "name": "First Inversion (3rd in Bass)", "summary": "Chord voicing with the 3rd in the bass voice."},
+        {"id": "chord-inversion-5th", "name": "Second Inversion (5th in Bass)", "summary": "Chord voicing with the 5th in the bass voice."},
+        {"id": "chord-inversion-7th", "name": "Third Inversion (7th in Bass)", "summary": "Chord voicing with the 7th in the bass voice."},
+        {"id": "open-chord", "name": "Open Chord", "summary": "Voicing that incorporates open strings; limited to guitar-friendly key centers but delivers unique resonant sonority."},
+        {"id": "quartal-chord", "name": "Quartal Chord (4th Chord)", "summary": "Chord built by stacking 4th intervals above the lowest note rather than thirds; sounds open and modern, applicable over any jazz standard."},
+        {"id": "quartal-string-set-2345", "name": "Quartal Chord — String Set 2-3-4-5", "summary": "Quartal voicings derived from the C Dorian scale positioned on string set 2-3-4-5."},
+        {"id": "quartal-string-set-1234", "name": "Quartal Chord — String Set 1-2-3-4", "summary": "Quartal voicings derived from the C Dorian scale transposed to string set 1-2-3-4."}
+      ],
+      "traversal_rules": [
+        {
+          "id": "movable-shape-transposition",
+          "name": "Movable Shape Transposition Rule",
+          "summary": "Any non-open chord shape can be transposed to a new root by sliding it up or down the neck; a two-fret shift equals a whole-step transposition.",
+          "engine_payload": {"kind": "PositionContinuity"},
+          "references": [
+            {"chapter_n": 1, "topic": "movable chord shapes", "quote_excerpt": "By moving the chord shapes up or down the guitar neck, you get other chords of the same chord type", "page": 7},
+            {"chapter_n": 1, "topic": "movable shape transposition example", "quote_excerpt": "move the chord shape of a Cmaj7 voicing 2 frets higher and it becomes a Dmaj7 voicing", "page": 7}
+          ]
+        },
+        {
+          "id": "inversion-comping-substitution",
+          "name": "Inversion Comping Substitution Rule",
+          "summary": "Any inversion of a chord symbol (root, 3rd, 5th, or 7th in bass) may be freely substituted for that symbol in comping.",
+          "engine_payload": {"kind": "SubstitutionExpand"},
+          "references": [
+            {"chapter_n": 6, "topic": "Applying inversions in comping", "quote_excerpt": "Each of these chord inversions can be applied to that chord in your comping", "page": 45}
+          ]
+        },
+        {
+          "id": "inversion-ear-selection",
+          "name": "Ear-Based Inversion Selection",
+          "summary": "Among available inversions of a chord symbol, ear-based judgment determines which voicing fits the musical context, as each inversion produces a different timbral flavor.",
+          "engine_payload": {"kind": "_pending:ear-based-selection"},
+          "references": [
+            {"chapter_n": 6, "topic": "Voicing choice and sound quality", "quote_excerpt": "each inversion will have a slightly different sound and some voicings will work better than others", "page": 45},
+            {"chapter_n": 6, "topic": "Bass note affects chord flavor", "quote_excerpt": "putting the root or the 3rd in the bass causes the chord to have a slightly different flavor", "page": 45}
+          ]
+        },
+        {
+          "id": "quartal-string-set-transition",
+          "name": "Quartal String Set Position Transfer",
+          "summary": "Quartal voicings built on string set 2-3-4-5 can be transferred to string set 1-2-3-4 to access the same harmonic material in a higher register.",
+          "engine_payload": {"kind": "StringSetTransition"},
+          "references": [
+            {"chapter_n": 8, "topic": "String set fingering: set 2-3-4-5", "quote_excerpt": "Quartal Chords Based on the C Dorian Scale (String Set 2-3-4-5)", "page": 59},
+            {"chapter_n": 8, "topic": "String set fingering: set 1-2-3-4", "quote_excerpt": "Quartal Chords Based on the C Dorian Scale (String Set 1-2-3-4)", "page": 60}
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "shell-chord-density-floor",
+          "name": "Shell Chord Minimum Density (Root + 3rd + 7th)",
+          "summary": "A shell chord must contain at minimum the root, 3rd, and 7th (or 6th) to preserve harmonic identity; this three-note floor is sufficient without the 5th.",
+          "engine_payload": {"kind": "DensityFloor"},
+          "references": [
+            {"chapter_n": 3, "topic": "Shell chord definition", "quote_excerpt": "These three-note chords contain the root, 3rd, 7th (or the 6th) of each chord", "page": 14}
+          ]
+        },
+        {
+          "id": "major-6-omit-7",
+          "name": "Major 6 Chord: 6 Replaces 7 (Omit 7th)",
+          "summary": "In a major 6 chord, the 6th replaces the 7th; the 7th must be omitted. This distinguishes the major 6 from all other extended chords, which retain the 7th.",
+          "engine_payload": {"kind": "OmissionAllow"},
+          "references": [
+            {"chapter_n": 4, "topic": "major 6 chord: 6 replaces 7", "quote_excerpt": "In a major 6 chord, the 6 replaces the 7", "page": 19},
+            {"chapter_n": 4, "topic": "major 6 vs. major 7 distinction", "quote_excerpt": "they don't contain a 7. All the other extended chords (such as maj9), contain the 7th", "page": 19}
+          ]
+        },
+        {
+          "id": "major-13-retain-7-and-6",
+          "name": "Major 13 Chord: Retain Both 7th and 6th",
+          "summary": "A major 13 chord must contain both the 7th and the 6 (=13); if the 7th is absent, the chord is a major 6, not a major 13.",
+          "engine_payload": {"kind": "_pending:interval-presence-constraint"},
+          "references": [
+            {"chapter_n": 4, "topic": "major 13 vs. major 6: 7 present", "quote_excerpt": "When a 6 and a 7 are both present in a major chord, it becomes a major 13 chord", "page": 19}
+          ]
+        },
+        {
+          "id": "guitar-voicing-omission",
+          "name": "Guitar Voicing Omission Policy",
+          "summary": "Because guitar has fewer available simultaneous notes than piano, extended chords require deliberate note omissions; the player must observe which intervals are replaced in each voicing.",
+          "engine_payload": {"kind": "OmissionAllow"},
+          "references": [
+            {"chapter_n": 4, "topic": "guitarists omit notes", "quote_excerpt": "guitarists have to leave some notes out when adding extended notes to their chord shapes", "page": 19}
+          ]
+        },
+        {
+          "id": "altered-dominant-scale-origin",
+          "name": "Altered Dominant Extension: Scale-Origin Assignment",
+          "summary": "The #11 extension is assigned to the Lydian dominant scale (bVII7 function) while the b5 extension is assigned to the altered scale (V7alt function); enharmonically identical pitches receive different names and harmonic roles based on parent scale.",
+          "engine_payload": {"kind": "_pending:scale-origin-assignment"},
+          "references": [
+            {"chapter_n": 5, "topic": "#11 vs b5 distinction", "quote_excerpt": "Both are the same note, an f# (=gb) in C7", "page": 36},
+            {"chapter_n": 5, "topic": "C9#11 — Lydian dominant derivation", "quote_excerpt": "this chord is derived from the Lydian dominant scale (4th mode of the melodic minor scale)", "page": 36},
+            {"chapter_n": 5, "topic": "C7b5 — altered scale derivation", "quote_excerpt": "this chord is derived from the altered scale (7th mode of the melodic minor scale)", "page": 36}
+          ]
+        },
+        {
+          "id": "shell-chord-tone-control",
+          "name": "Shell Chord Ensemble Tone Constraint (Soft Tone)",
+          "summary": "Shell chords placed on lower string sets must be played with soft tone to avoid frequency clashing with the bass player in ensemble contexts.",
+          "engine_payload": {"kind": "_pending:ensemble-register-constraint"},
+          "references": [
+            {"chapter_n": 3, "topic": "Tone awareness / bass register", "quote_excerpt": "you need to keep your tone in mind so you don't clash with the bass player", "page": 14},
+            {"chapter_n": 3, "topic": "Shell chords in ensemble comping", "quote_excerpt": "With a soft tone, these chords are highly effective when comping in a duo, trio, or larger ensembles", "page": 14}
+          ]
+        },
+        {
+          "id": "open-chord-key-limitation",
+          "name": "Open Chord Key-Center Restriction",
+          "summary": "Open chord voicings are restricted to guitar-friendly key centers due to their reliance on open strings; they are not transposable like movable shapes.",
+          "engine_payload": {"kind": "_pending:key-center-constraint"},
+          "references": [
+            {"chapter_n": 7, "topic": "Open chords — key limitations and comping use", "quote_excerpt": "Though they are limited to a few keys, these shapes add new flavor to your comping in particular key centers", "page": 54}
+          ]
+        },
+        {
+          "id": "quartal-universal-applicability",
+          "name": "Quartal Chord Universal Applicability",
+          "summary": "Quartal chords are not restricted to specific harmonic contexts; they can be applied over any jazz standard in both comping and soloing.",
+          "engine_payload": {"kind": "_pending:context-universality"},
+          "references": [
+            {"chapter_n": 8, "topic": "Quartal chords: musical context", "quote_excerpt": "can be used over any jazz standard in your comping and solos", "page": 59}
+          ]
+        }
+      ],
+      "preferences": [
+        {
+          "id": "four-note-shapes-first",
+          "name": "Prefer Four-Note Voicings for Ear Training",
+          "summary": "Four-note drop 2 and drop 3 shapes should be learned before smaller shapes because they train the jazz sound in the ear more effectively despite being technically harder.",
+          "engine_payload": {"kind": "_pending:learning-sequence-preference"},
+          "references": [
+            {"chapter_n": 2, "topic": "Four-note shapes vs. smaller shapes", "quote_excerpt": "these four-note shapes drill the sound of jazz into your ears better than the smaller shapes", "page": 8}
+          ]
+        },
+        {
+          "id": "shape-then-tune-sequence",
+          "name": "Learn One Shape Then Apply to a Tune",
+          "summary": "After learning one shape per chord type in isolation, immediately apply it to a real jazz tune to integrate systematic vocabulary with musical ear training.",
+          "engine_payload": {"kind": "_pending:practice-sequence-preference"},
+          "references": [
+            {"chapter_n": 2, "topic": "Learning sequence rule", "quote_excerpt": "Start by learning one shape for each chord type then take those changes to a jazz tune you know", "page": 8}
+          ]
+        },
+        {
+          "id": "altered-extensions-minor-keys-first",
+          "name": "Introduce Altered Extensions in Minor Keys First",
+          "summary": "Players new to altered dominant extensions should begin using them in minor key progressions (minor ii-V-I) before applying them broadly over any dominant 7th chord.",
+          "engine_payload": {"kind": "_pending:deployment-sequence-preference"},
+          "references": [
+            {"chapter_n": 5, "topic": "altered extensions usage rule", "quote_excerpt": "if you're new to these sounds start with using them in minor keys", "page": 35},
+            {"chapter_n": 5, "topic": "altered extensions in minor ii-V-I", "quote_excerpt": "if you have a minor ii V | chord progression (DM7b5-G7-Cm7), you can use altered extensions over the G7 chord", "page": 35}
+          ]
+        }
+      ]
+    }
+  ]
+}

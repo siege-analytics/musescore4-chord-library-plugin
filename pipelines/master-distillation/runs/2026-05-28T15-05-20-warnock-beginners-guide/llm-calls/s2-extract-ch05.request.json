@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chapter 4 \u2014 Major Scale Patterns\nPages 14-16 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 4 \u2014 Major Scale Patterns\n\nMoving on, you now solo over the major ii V | progression as you explore major\nscales, ornaments, and mixing chords and single notes together.\n\nThis chapter introduces you to major scale fingerings and shows you how to solo\nwith this scale over the ii V | progression.\n\nBecause all 3 chords ina ii V | are in the parent key, so Dm7-G7-Cmaj7 are all in C\nmajor, you can use the tonic major scale to solo over all of those chords.\n\nStart by learning these scale shapes one at a time, add them to your soloing\nworkout, then combine them to cover the fretboard in your solos.\n\nHave fun exploring these shapes as you build your foundation to explore\nchromatic ornaments in the next chapter.\n\nMajor Scale Shape 1\n\nTo begin, here\u2019s the 6*-string C major scale to memorize and add to your solos\nover the backing track.\n\nStart by memorizing the scale shape, then working it with a metronome.\n\nAs soon as you\u2019re ready, you know the scale but it\u2019s not perfect, throw on the\nbacking track and solo with this scale over the C major ii V I.\n\nHave fun exploring this scale from a technical and soloing perspective in your\nplaying as you build your improvisational foundation over the ii V |.\n\n14\n\n\nC Major Scale\n\nMajor Scale Shape 2\n\nHere\u2019s the second major scale shape from the 5\" string to learn, memorize, work\nwith a metronome and solo with over the backing tracks when ready.\n\nStart by playing this new scale shape with a metronome until it\u2019s memorized.\n\nFrom there, solo over the backing track with this scale shape, then with the 6-\nstring shape only, then mix both together.\n\nWhen that\u2019s comfortable, you\u2019re ready to move on to the next chapter and\ncontinue your study of soloing over the ii V | progression.\n\n15\n\n\nC Major Scale\n2\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

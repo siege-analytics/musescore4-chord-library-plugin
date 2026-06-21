@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Chapter 8\nPages 88-91 of the book.\n\n<<<CHAPTER TEXT\n\nLesson 1B: Soloing Over Turnarounds\n\nObviously, if turnarounds are common, you will need to know how to improvise your way through them. Create licks that you know will work over various turnarounds. This will help you make melodically smoother transitions back to the beginnings of your tunes. Study the following turnarounds going to C. Memorize and transpose the ones you like.\n\nA. Cmaj7 A7#5 Dmin7 G7 B. Emin7 A7#5 Dmin7 G7\nTrack 47\n146\nT 5 7 5 4 5 6 5 8 6 5 6 7 5 4 5 (5)\nA 5 7 5 4 5 6 5 8 6 5 6 7 5 4 5 (5)\nB 5 7 5 4 5 6 5 8 6 5 6 7 5 4 5 (5)\n\nC. Cmaj7 C#dim7 Dmin7 G13 D. Emin7 E9 Dmin7 D9\nT 5 8 5 5 6 5 8 6 8 6 4 3 6 7 8 9 7 6 8 6 5 6 5 7 8 9 10\nA 5 8 5 5 6 5 8 6 8 6 4 3 6 7 8 9 7 6 8 6 5 6 5 7 8 9 10\nB 5 8 5 5 6 5 8 6 8 6 4 3 6 7 8 9 7 6 8 6 5 6 5 7 8 9 10\n\nE. A7#9 E13 D7 D13 F. Cmaj7 E9maj7 A9maj7 G7#5\nT 5 5 7 8 5 8 5 7 5 7 5 6 8 6 8 5 7 5 4 5 8 8 6 10 11 8 9 7 8 8\nA 5 5 7 8 5 8 5 7 5 7 5 6 8 6 8 5 7 5 4 5 8 8 6 10 11 8 9 7 8 8\nB 5 5 7 8 5 8 5 7 5 7 5 6 8 6 8 5 7 5 4 5 8 8 6 10 11 8 9 7 8 8\n\nG. E7 A7 D7 G7 Emin7 E9min7 Dmin7 D9\nT 6 2 4 (4) 3 4 5 7 6 3 4 5 4 3\nA 3 4 5 7 5 4 6 5 3 2\nB\n\nA\nCHAPTER 8\nLesson 1A: Chord Solo\nHere is a chord solo loosely based on the changes of the song Misty. This arrangement incorporates many of the concepts that have been covered in the \"A\" lessons of this book. Use it to reinforce your understanding of what you have learned. Have fun, and see you in Mastering Jazz Guitar Chord/Melody!\nFOGGY\nTrack\n48\nE\u266dMaj7 E\u266d6 B\u266dmin7 E\u266d9 A\u266d6 A\u266dMaj7 A\u266dmin7 D\u266d9\nT 3 4 6 8 9 11 9 8 10 8 8 10 8 6 6 4 4 4 6 4 6\nA 6 10 13 10 11 10 5 4 4 3 9\nB 8 10 9 11 11 4 4 4 9\nE\u266dMaj7 Cmin7 Fmin7 B\u266d13 Bmin7\u266d5 Gmin7 C7\u266d5\u266d9 Fmin9 B\u266d7\u266d5\u266d9\nT 8 8 9 11 5 3 4 8 6 11 12 8 11 8 8 9 7 7 8\nA 8 8 8 8 6 6 6 7 10 8 8 6 6 7 8\nB 8 8 4 4 4 6\nE\u266dMaj9 E\u266d6 B\u266dmin7 E\u266d7\u266d9 A\u266dMaj7 A\u266dmin7 D\u266d9 Bmin7\u266d5\nT 6 7 5 7 8 6 8 9 5 5 6 8 8 7 5 3 4 6 4 3 4 6\nA 6 8 4 4 4 6\nB 6 8 4\n\nE\u266dMaj9\nCmin7 Cmin9 Fmin7 Fmin9 B\u266d11 B\u266d13\u266d9 E\u266d6 A\u266dmin6 E\u266dMaj7\nT 3 4 3 1 3 4 8 4 3 4 6 4 3 4 6 4 3 4 6\nA 3 1 3 4 6 6 5 5 4 6 4 6\nB 6 3 4 8 6 5 6 4 4 6\nB\u266dmin7\nE\u266d13 E\u266d7\u266d9 A\u266d6 A\u266dMaj7 A\u266dMaj9\nT 3 8 11 6 6 4 8 2 4 1 1 2 4 6 8 8 9 11 9\nA 10 6 11 3 1 4 3 6 8 10 11\nB 6 11 3 1 4 6\nAmin9 Amin11 D 13 D7\u266d9 Gmin7 C7\u266d9 C7\u266d5\u266d9 Fmin9 B\u266d13\u266d9\nT 7 5 8 5 8 7 5 7 8 10 13 11 8 10 11 8 6 8 4 7 6 8\nA 5 5 4 10 8 10 9 8 6 8 6\nB 5 4 10 8 10 9 8 6\nE\u266dadd9 E\u266dMaj7 B\u266dmin9 B\u266dmin7 E\u266d9 A\u266dMaj7 A\u266dmin7 A\u266dmin6\nT 6 6 8 6 6 8 6 6 8 6 4 3 4 7 6 4 4 6\nA 10 8 10 8 6 5 4 7 6 4 4 6\nB 6 10 8 6 5 4 4 7\nE\u266dMaj7 Cmin7 Fmin9 B\u266d7\u266d5\u266d9 B\u266d7\u266d5 E\u266d6 A\u266dmin6 E\u266d6/9\nT 7 7 7 3 8 8 8 11 12 13 12\nA 2 3 3 8 3 7 11 10 12 11 9\nB 6 8 6 11\nChapter 5\nT.A. Chord Solo\n8\n\nLesson 1B: Single-Note Solo\n\nHere is a single note solo also loosely based on the chord changes of Misty. This solo incorporates many of the concepts that have been covered in the \"B\" lessons of this book. Use it to solidify what you have learned. Enjoy this and see you in Mastering Jazz Guitar Improvisation!\n\nSINGLE NOTES IN THE MIST\nTrack\n49\n\nE\u266dMaj7\nB\u266dmin7\nE\u266d9\nA\u266dMaj7\nA\u266dmin7\nD\u266d9\n\nE\u266dMaj7\nCmin7\nFmin7\nB\u266d9\nGmin7\nC9\nFmin7\nB\u266d7\n\nE\u266dMaj7\nB\u266dmin7\nE\u266d9\nA\u266dMaj7\nA\u266dmin7\nD\u266d9\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

@@ -1,0 +1,26 @@
+---
+run_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-3
+stage: s3
+source_pdf: Fisher, Jody - Jazz Guitar Method, Vol 3 (Mastering Chord Melody).pdf
+model: claude-sonnet
+extracted_at: 2026-05-29T05:59:49+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — jazz-guitar-method-vol-3-mastering-chord-melody
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## Book Distillation: A Systems-Based Approach to Fingerstyle Guitar Arrangement
+
+This is a guitar pedagogy book that systematically teaches the art of fingerstyle arrangement and voicing on classical and jazz guitar. The core progression moves from foundational technique (Chapter 1) through increasingly sophisticated harmonic arrangement (Chapters 2–6), with each chapter building on prior knowledge to develop a flexible, adaptable musical voice.
+
+The book establishes three master systems: (1) **right-hand technique options**—pure fingerstyle, hybrid pick-with-fingers, and single-note alternating patterns—each suited to different musical situations; (2) **harmonic arrangement methodology**—a layered approach beginning with melody analysis and key selection, proceeding through chord voicing, passing-chord enrichment, and bass-line composition; and (3) **voice-leading principles**—emphasizing stepwise motion, smooth transitions, and the selective use of non-chord tones and alterations to enhance but not obscure harmonic function.
+
+The book's organizing philosophy prizes **flexibility over specialization**. Chapter 1 establishes this foundational principle: mastering all right-hand techniques rather than relying on one or two prepares the player for any musical situation. This principle recurs throughout: Chapter 2 advocates learning voicings in multiple keys and treating arrangements as skeletal frameworks rather than fixed compositions; Chapter 5 systematizes voicing and bass-line approaches across all twelve keys to enable real-time improvisation; Chapter 6 emphasizes discovering new possibilities within known shapes through octave transposition and symmetrical movement.
+
+The book teaches a distinctive **grammar of harmonic enrichment**. Chapter 2 introduces chord families and distinguishes enhancement (extending a chord's quality) from substitution (changing the root). Chapter 3 layers in techniques for harmonizing both chord tones and non-chord tones through diads, passing chords, and the use of diminished chords positioned a half step below target chords. Chapter 4 systematizes these moves into passing-chord approaches, secondary dominants, and tritone substitution, each presented as generalizations of foundational principles (the ii-V7-I progression, V7-I function) rather than isolated tricks. Throughout, the load-bearing principle is that **the 3rd and 7th are the most important chord tones for defining quality**, making them the anchors of effective voicing.
+
+The book's core methodology is **systematic learning in all keys, then artistic application**. Chapters 2 and 5 emphasize that voicings must be learned systematically across all twelve keys—first in minimal-finger forms to preserve freedom for melody and improvisation, then applied as bass-line and harmonic frameworks. Chapter 4 stresses learning songs in skeletal form to enable improvised harmonization in real time. This scaffolding enables the practical outcome the book seeks: the ability to arrange melodies with harmonic backing that sounds like separate instruments (bass and guitar) playing together, not a single player executing a fixed score.
+
+The book's final characteristic move, stated explicitly in Chapter 6, redirects attention from accumulation to artistry: **"artistic voice and expressive musicianship matter far more than accumulating theoretical knowledge."** While mastery of many voicings and techniques brings flexibility, it is how you use what you know—not how much you know—that ultimately counts as a musician. This frames all preceding chapters not as a catalog of tricks to master but as tools to develop a personal, responsive approach to arrangement and harmonic expression.

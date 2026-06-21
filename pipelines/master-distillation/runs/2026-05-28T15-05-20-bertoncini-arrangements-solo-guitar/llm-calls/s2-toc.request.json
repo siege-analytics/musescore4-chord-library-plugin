@@ -1,0 +1,53 @@
+{
+  "stage": "s2",
+  "scope": "toc",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting the structural outline of a guitar method book from its front matter.\n\nThe user will give you the verbatim text of the first ~20 pages of a book.\nIdentify the chapters or major sections of the book (whichever the book uses\n\u2014 some method books use \"Lesson\", \"Chapter\", \"Part\", \"Section\", \"Unit\").\n\nOutput a JSON object with this shape:\n\n  { \"chapters\": [\n      { \"n\": 1, \"title\": \"...\", \"start_page\": <int>, \"end_page\": <int> },\n      ...\n  ] }\n\nRules:\n- `n` is the 1-indexed chapter number you assign (independent of the book's\n  own numbering \u2014 book may start at 0 or use Roman numerals).\n- `title` is the chapter's title as it appears in the book.\n- `start_page` is the first page of the chapter; `end_page` is the last.\n- If the front matter doesn't list page numbers, infer from the chapter\n  headings you see \u2014 start_page is where the chapter HEADING appears, and\n  end_page is one less than the next chapter's start_page (or the book's\n  last page for the final chapter).\n- Skip the table of contents itself, the title page, the copyright page,\n  the author bio \u2014 they are not \"chapters\" in this sense.\n- If the book is short and not subdivided, output a single chapter covering\n  the entire content.",
+  "user_prompt": "Total pages in the book: 81.\nFirst 20 pages follow. Identify chapters.\n\n<<<TEXT\nArrangements for\nSolo Guitar\n\nFrom the Ambient Records\u00ae CDs:\nBody and Soul\n\nand\nQuiet Now\n\nBy\n\nGene Bertoncini\n\nCopied, Transcribed, and Edited by\n\nJason Ennis, Chris Ullrich and Gene Bertoncini\n\n\nPreface\n\nHector Berlioz called the guitar a \u201clittle orchestra.\u201d It is in the spirit of the phrase\nthat these arrangements Were conceived.\n\nAnything that Is written can find Its way to the guitar, from a simple folksong, to a\noperatic aria, to a big band sounding shout chorus, to an orchestral excerpt. The magic\nreally starts when a song calls an arranger into action and when a piece of manuscript\npaper is there to work with. This starts the process of allowing an idea to take form and\nto take the arranger on a journey.\n\nSome journeys start with the melody being stated in the soprano, though some-\ntimes the mood or message Is better served with the melody being given to the bass\nvoice or even nestled within the voicing. In some contexts these melodies stand alone\nor are supported with spare harmonies. In other contexts, they can be given new mean-\ning through the use of the wide range of techniques available to the guitarist/arranger.\nCounterpoint, cluster voicings, open-string Voicings, the special color of each string, and\nmany more techniques can be used to enhance the arrangement if the arranger keeps\nin mind the spirit of the music. Each idea creates the impetus for the next phrase and\nthe journey continues.\n\nThe following arrangements were created with a loving spirit and the desire ta\nbring something special to the listener.\nSpecial thanks to Chris Ullrich, who was the major inspiration for this project and\n\nwho got the process of engraving this music started.\n\nTo Jason Ennis, who tirelessly worked to ensure the accuracy and clarity of these\nmanuscripts.\n\nTo Jeff Davison and to Michael Gassman who have been supportive friends and\npartners in this project.\n\nTo all my friends, whose love of the quitar and whose constant encouragement\nhelped keep us on track,\n\n-Gene Bertoncini, New York, March 2011\n\n\n\n\u2014Ts = WT\n\nNotes about the Transcriptions and Notation:\n\nThis book falls somewhere in between a transcription book and a book of ar-\nrangements. The process always began by copying Gene's original hand-written manu-\nscripts. The pieces were then fleshed out by transcribing the missing material from the\nrecordings on Body and Soul and Quiet Now. At times, improvised solos or sections\nwere included in the notated arrangements. When there was a discrepancy between\nthe original conception of an arranged section and the recording, Gene made the call\nwhich to include. Where possible, notes left out of a voicing or a counterpoint line on\nthe recorded version were included and marked with parenthesis.\n\nSpecial care was taken to included a great number of Gene\u2019s fingerings. With a\nfew exceptions, the fingerings have been placed to the lower right of the notes to which\n\nthey correspond.\n\nOne unique technique that Gene employs very effectively is the creative and un-\northodox use of open sirings in his voicings. We have extracted a number of interesting\nvoicings and compiled them in a Glossary of Open-String Voicings included at the end\n\nof the book.\n\n-Jason Ennis, New York, April 2011\n\n\nContents\n\nFrom Body and Soul\nThe Shadow Of Your Smile\nMy Funny Valentine\nHow Are Things In Glocca Morra\nBody And Soul\nEdelweiss\n'Round Midnight\nStardust\nBut Beautiful\nI Remember You\nGreensleeves\nCavatina\nSophisticated Lady\nSnowfall\n\nFrom Quiet Now\nLush Life\nMy One And Only Love\nGiant Steps\nOn A Misty Night\nTraumerei\nSo In Love/The More I SeeYou\nOlha Maria\nQuiet Now\nNessun Dorma\nWaltz For Debbie/Very Early\nTheme From Bang The Drum Slowly\n\nGlossary of Open-String Voicings\n77\n\nThe Shadow of Your Smile\n\nComp. Johnny Mandel\nArr Gene Bertoncint\n\nIntro\na \u00ab> Bo ee\nace a= = \u2014_\nve Jreely and expressively\n# fz a\nt 1 hes : \u2014\u2014\u2014\n\u2014 \u2014\u2014 \u2014\u2014\u2014-\ncy ' = :\n9 2\nS45 = 4\n0 > we\n2 w ;\n& = 2\n\u2014 Pr a =\nis rit. ke\nTay \u2014\u2014 od a * x iad = = ae = = 3\noS\" fr =\" ra.\n18 i 4 (melody) ft\nze + = t \u2014 \u2014\n= \"Tes 1 Bl Woe = \u00ae @OOO\u00ae Ey\nP ee | F ?\nA\nA ee, ee eee ee\ncar tore ae\n\n\n\n26\nIV\n28\n30\n33\n37\n41\n44\n47\n\nhe ll,\n\nIP\n\n3.\n\n@\n\nTI Is\n\n50\nev\n\n|p\n\nip\n\nA le\na\n\u2014\u2014TRITP\nLe |\n2\" We\n=\n4\n2\nqa\n= ul\n& ytfil\u00e9\ns ee\n\nZ = d pi\n\n60\n\n63\nOy\na=\n\n\n\n73\n(2)\n76\n(Arp. freely)\n81\n84\n87\n90\n93\nA II. 8va\nlet ring\n4\n\nMy Funny Valentine\n\nComp, Richard Rodgers\nand Lorenz Hart\n\nArr Gene Bi\n(lotro: Excerpt trom Bach Prelude BWV 999) i ene Bertone\n\nAdugio\n\nGe aie ELEN A SETI\n\nFreely i a F =i\nWWeaclhsrs\neho ipl Fh Ny\n\n\u201co I t \u2014#- P \u2014_ P -\u2014\n\n\n\n23\n27\n32\na Tempo\n37\n40\n45\nB\n49\na Tempo\n53\n\na Tempo\n57\n61\n64\n68\n71\n74\n79\n84\n\nHow Are Things in Glocca Morra?\nComp. Yip Harburg\n\n, and Burton Lane\nIntro (Bird-Like Effects) Art. Gene Bertoncini\n\u2019\n\nPte te wtet eteete ts -\u2014. of\n\nit),\n\n\u00a9 @=D Jreely\nte like fill) \u2014\u2014_________,\nQ ee A ah tJ ys \u2014\u2014\u2014\u2014 Pree Sere Jed\n; 2\n(Bird-like fill) A\u201d\nJ ore pee fil STi See\n\nr re\n\n2 gg AIT eg\n\n: = 2h PEF\n@\n\n3 ' oe\n~ + = fr Pr fr 3 - CP)\n\n6 4 a Tempo\n\u2014 === S==s=\n2 a ig\n\nsy a ee\n\u2014- = \u201ca = (Melody Begins)\n\nat {_\u2014_\u20144.\n= f eS ie = =\nZe\n\nae\n\n\n\n23\n27\n31\n35\n39\n43\n47\n\n\n(Cadenza)\n51\n55\n37\npensive\n61 a Tempo\n65\n68\n71\n73\nlet ring-----|\n\nBody and Soul\nComp. Heyman, Sour,\nEyton & Green\nArr. Gene Bertoncini\nA\nfreely\nB\n\n)\n\n7\n-\nm oe\n\nie\n\nVill\nS\n\nIv V_VIs VII\n\u00a9)\n\n3I\n\nrt\n=\n\nvil\n\nIv\n\nrtm\n\na\n\noe,\nI\n\n=\n\nVI\n\n=v\n\n12\n\n\n40\n(4)\n12\nE\n45\n48\n\n\nEdelweiss\nComp. Richard Rodgers and\nOscar Hammerstein II\nArr. Gene Bertoncini\nA\nfreely\n5\n9\n13\n17\n21\n\n\ns:\nee B. \u2014=\n= ba\nTt t S\n\u201c0\nI Vi\n= a> . : 1\niC \u2014 $e Hy\naT\n| : &\n\nHy\n\na\n\n15\n\n\n53\n57\n61\nFine\n\nTEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "chapters"
+    ],
+    "properties": {
+      "chapters": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "n",
+            "title",
+            "start_page",
+            "end_page"
+          ],
+          "properties": {
+            "n": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "end_page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "book has 81 pages; using first 20 as front matter."
+}

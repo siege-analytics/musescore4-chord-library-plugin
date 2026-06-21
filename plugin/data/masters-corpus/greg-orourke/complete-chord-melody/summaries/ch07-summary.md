@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
+stage: s3
+source_pdf: complete_chord_melody.pdf
+source_pages: 213-263
+model: claude-haiku
+extracted_at: 2026-05-23T23:30:33+00:00
+schema_version: 0.1
+---
+
+# Chapter 7 — Module 5 - More Advanced Arranging Techniques
+
+_Distillation; backed by `chapters/ch07.md`._
+
+Chapter 7 is the substitution-and-reharmonization core of the method, opening with the foundational definition that a substitution simply means replacing one chord with another (Substitution defined) and then codifying five distinct substitution approaches as explicit rules. Tritone substitution is introduced as the most useful jazz substitution (Tritone substitution defined), justified theoretically by the shared 3rd/7th guide tones that swap places between the two chords (Guide tones explain tritone sub, Common-tones enable substitution), and formalized as the canonical Tritone Substitution Rule that any chord can be replaced by one whose root is a tritone away (Tritone Substitution Rule). Relative-key thinking grounds the next pair: the I-to-vi rule and the I-to-iii rule that license major-to-minor reharmonization via shared key signature (Relative key definition, I to vi substitution rule, I to iii substitution rule), framed under the umbrella concept of chord addition (Chord addition defined). O'Rourke then borrows Pat Martino's minor conversion concept to license minor-for-anything substitution (Minor conversion concept) and codifies a concrete Minor for Dominant Substitution Rule using the iim7 from the dominant's 5th (Minor for Dominant Substitution Rule), followed by back cycling as movement through the circle of fourths—the most common root movement in Western music (Back cycling root movement, Back cycling substitution rule)—and finally the melodic common tone substitution rule that drives modern Rosenwinkel/Kreisberg-style colors (Melodic common tone substitution rule). The master's characteristic pedagogical move is the explicit restraint rule that subtlety beats density: keep things simple and use substitutions occasionally for color (Don't overuse substitutions), paired with two concrete practice prescriptions—the metronome on beats 2 and 4 as the jazz-preferred form (Practice with metronome on 2 and 4) and the load-bearing per-session quantum of just one or two bars worked slowly (Practice 1-2 bars per session).

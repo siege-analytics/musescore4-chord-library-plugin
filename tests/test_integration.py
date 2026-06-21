@@ -242,7 +242,8 @@ class TestGP5Integration:
 
     def test_gp5_roundtrip(self):
         """Export to GP5 and read it back with PyGuitarPro."""
-        import guitarpro as gp
+        import pytest
+        gp = pytest.importorskip("guitarpro")  # #574: skip when optional dep absent
 
         with tempfile.TemporaryDirectory() as tmpdir:
             result = subprocess.run(
@@ -272,7 +273,8 @@ class TestGP5Integration:
 
     def test_gp5_chord_names_correct(self):
         """Verify chord names in GP5 match our voicing names."""
-        import guitarpro as gp
+        import pytest
+        gp = pytest.importorskip("guitarpro")  # #574: skip when optional dep absent
 
         with tempfile.TemporaryDirectory() as tmpdir:
             subprocess.run(

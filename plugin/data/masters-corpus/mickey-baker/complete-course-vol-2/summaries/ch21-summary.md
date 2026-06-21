@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-baker-vol-2
+stage: s3
+source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
+source_pages: 34-35
+model: claude-haiku
+extracted_at: 2026-05-29T00:13:22+00:00
+schema_version: 0.1
+---
+
+# Chapter 21 — Diminished and Augmented Resolutions
+
+_Distillation; backed by `chapters/ch21.md`._
+
+Chapter 21 teaches that diminished 7th chords and augmented chords function as substitutes for dominant chords in V-I resolutions, with the diminished 7th reframed not as a chord in itself but as the upper structure tones of a flattened 9th dominant chord. The master demonstrates that a root-omitted G7b9 voicing is harmonically equivalent to a B diminished chord, establishing a practical equivalence between the two sonorities. The characteristic move illustrated throughout is the direct resolution of either diminished or augmented chords into the tonic, which the chapter explicitly identifies as a V-I resolution equivalent despite the absence of a traditional dominant. This principle extends the family of "altered chords" introduced earlier in the method, allowing students to substitute these colorful voicings wherever a dominant chord would normally resolve to tonic. The load-bearing terminology here centers on the concept of "upper tones" of a flat-9 chord structure and the principle of harmonic substitution, which permit these non-diatonic sonorities to function as tension-and-release devices within the tonal framework.

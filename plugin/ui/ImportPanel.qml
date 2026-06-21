@@ -6,11 +6,13 @@ import QtQuick.Layouts 1.15
 // Extracted from ChordLibrary.qml (A2, #95).
 //
 // Input state groups: library, tuning, theme
-// Input properties: jsonUrl, hasBatchChords
-// Signals: rebuildRequested, resetRequested, urlApplyRequested(url),
-//          urlResetRequested, refreshRequested, importMergeRequested(path),
+// Input properties: hasBatchChords
+// Signals: rebuildRequested, resetRequested, importMergeRequested(path),
 //          browseImportRequested(targetField), importIRealRequested(text),
 //          presetSaveRequested(path), presetLoadRequested(path)
+//
+// #217 — URL Apply/Reset/Refresh removed; voicings.json is no longer a
+// runtime source. The pool is calculator output + user-voicings.json.
 
 Flickable {
     id: importPanel
@@ -21,7 +23,6 @@ Flickable {
     property var theme      // colors
 
     // --- Input properties (scalar) ---
-    property string jsonUrl: ""
     property bool hasBatchChords: false
 
     // --- Status feedback from parent (set after signal handling) ---
@@ -33,9 +34,6 @@ Flickable {
     // --- Output signals ---
     signal rebuildRequested()
     signal resetRequested()
-    signal urlApplyRequested(string url)
-    signal urlResetRequested()
-    signal refreshRequested()
     signal importMergeRequested(string path)
     signal browseImportRequested(var targetField)
     signal importIRealRequested(string text)
@@ -140,48 +138,6 @@ Flickable {
             font.pixelSize: 10
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-        }
-
-        // --- Divider ---
-        Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
-
-        // --- Voicing Source URL ---
-        Label {
-            text: "VOICING SOURCE URL"
-            font.pixelSize: 11
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        TextField {
-            id: urlField
-            Layout.fillWidth: true
-            text: importPanel.jsonUrl
-            font.pixelSize: 11
-            selectByMouse: true
-        }
-
-        RowLayout {
-            spacing: 6
-
-            Button {
-                text: "Apply URL"
-                onClicked: importPanel.urlApplyRequested(urlField.text)
-            }
-
-            Button {
-                text: "Reset Default"
-                onClicked: {
-                    var defaultUrl = "https://raw.githubusercontent.com/siege-analytics/musescore4-chord-library-plugin/main/plugin/data/voicings.json"
-                    urlField.text = defaultUrl
-                    importPanel.urlResetRequested()
-                }
-            }
-
-            Button {
-                text: "Refresh"
-                onClicked: importPanel.refreshRequested()
-            }
         }
 
         // --- Divider ---

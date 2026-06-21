@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch13",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 13: Minor Seventh and Ninth Chords\nPages 68-74 of the book.\n\n<<<CHAPTER TEXT\n\nFig. 22\n\nCHORD PARENT KEY SCALE OF CHORD\nCm7 BD Major Dorian Mode starting on C\nFm7 E b Major Dorian Mode starting on F\nB? m7? AD Major Dorian Mode starting on B D\nE>Dm7 Db Major Dorian Mode starting on E 0\nAD m7 GP Major Dorian Mode starting on AD\nDb m7 cb Major Dorian Mode starting on D?\nce m7 B Major Dorian Mode starting on Ce\nF 4 m7 E Major Dorian Mode starting on F Pa\nBm7 A Major Dorian Mode starting on B\nEm7 D Major Dorian Mode starting on E\nAm7 G Major Dorian Mode starting on A\nDm7 C Major Dorian Mode starting on D\nGm7 F Major Dorian Mode starting on G\nFig. 23\n\nFigure.23 is a chord tone chart based on the dorian modes of chord roots.\n\nth A|D|G/C|FE | B>l D#| GH! CH FE BLE\nlth F | Bo| ED} Ab] DD] Gh} B|} E/A!]D|G/C\nOth D/|G{|C/}F/ B>| Eb] G3] ct! F#} B!| EJ A\n7th Bo| E>| AP} Db} Gb} Ch} E} A|D|GiC|F\nsh || G | C | F | Bb| ED| AP} C#| F#} B| E | A|D\n3rd E?| ab| po| Gb} chb| Fb} A} D| G| C| F | BE\na\n-(Roor) C | F | B>| E>] A>] Do} FR) B| E| A/] D|G\n\n\n\nThis chord tone chart organizes the tones of all Dorian Modes in the order needed for the construc-\ntion of the four types of Minor Chords. Reading up from the chord root C (also indicated as tone No.\n1), we see the tones C, E-Flat, G, B-Flat, D, F, A, which are all the notes in the C Dorian Mode. Note\nthat the ninth, eleventh, and thirteenth are also the second, fourth and sixth tones respectively, as\nthey are the same letter names.\n\nIn preparation for the subsequent patterns, be able to recite, write and play the following chords as\nthey are extracted from every Dorian Mode: Minor Triads, Minor Sixth Chords, Minor Seventh\nChords and Minor Ninth Chords. Use the illustrated routine form for playing the chord tones. It\ndoes not require any specific rhythm or tempo.\n\nROUTINE FORM\n\nn Bm Boma o Ban 7\n\n= =\n\nA \u2014 -$- n wi n ~ Lt\n\nere ;\n\nThis note added to fil! out the chord.\nIt does not change the sound of the\nchord.\n\n65\n\n\nThe following patterns begin with Minor Triads. Note the alphabetical symbols and the metronome markings.\n\n101\n\u2669=100-132\nCm\nDm\nEm\nF#m\nAbm\nBbm\nCm\nBbm\nF#m\nEm\nDm\nCm\nG#m\nBbm\nF#m\nEm\nDm\nCm\nF#m\nG#m\nBbm\nF#m\nEm\nDm\nC#m\nBbm\nF#m\nEm\nDm\nC#m\n\n102\nCm\nC#m Dm Ebm Em Fm\nF#m Gm Abm Am BbM Bm\nCm\nF#m Gm Abm Am BbM Bm\nCm\nFm Em Ebm Dm Dbm Cm\n103\nCm 6\nAm 6\nFm 6\nDm 6\nBbM 6\nC#m 6\nEm 6\nGm 6\n67\n=160-208 Note: Each chord lasts two measures.\n\n\u2669=152-208\n104\nCm6 C#m6 Dm6 Ebm6 Em6\nFm6 F#m6 Gm6 Abm6 Am6 Bbm6 Bm6\nCm6 Bm6 Bbm6 Am6 Abm6 Gm6\nF#m6 Fm6 Em6 Ebm6 Dm6 C#m6 Cm6\n\u2669=138-142\n105\nCm7 C#m7 Dm7 Ebm7 Em7\nEbm7 Fm7 F#m7 Gm7 Abm7 Am7 Bbm7 Bm7\nCm7 Bm7 Bbm7 Am7 Abm7 Gm7\nF#m7 Fm7 Em7 Ebm7 Dm7 C#m7 Cm7\n\nJ=b0-/20\nCm 7 Dm 7 Em 7 a \\ne\n\n+\n{~~ + iff VA ae a a\n\n106 i VE a 7 a a Be a a a ae\n4\n\nBm 0 7) Oba Bu Ab, 9 Phan 9 Em? Dm 7 Cm 9\n\nJf LITT LIL] ELT TL L aa A t\na af il fart fii 7 Ltr? t\u00a2t+ ttt LT FF\n\nLj\n\nLL\n\nLit\n\nAe 9 Em 9 Cm 7 bm? bet Boe 7\n\nmi Hr P+\nLe) wie eS\n\nYT SAE A A A A A 0 A\nVT A A A A Aiit\n\nA\n\nL\n\nIN A) ae Dwr Lt Lr El Oh 2\n\nia a a) TT a ae A \u2019 a a a 6 pf 7 7 a a a tft\nLf fT FA a aa 4 ff L Oar GE ae i f+LL. Lit\n\n69\n\n\n107\n=100-160\nCm- C#m-7 Dm-7 Em-7 Em-7 Fm-7\n(ascending) (descending) (ascending) (descending)\nF#m-7 Gm-7 Abm-7 Am-7 Bbmm-7 Bmm-7 Cmm-7\n(ascending) (descending)\nBbm-7 Am-7 Abm-7 Gm-7 F#m-7 Fm-7\nEm-7 Ebm-7 Dm-7 C#m-7 Cm-7\nPractice Pattern No. 107 reversing\ndirection of chord tones: descending,\nascending, etc.\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 13 extraction"
+}

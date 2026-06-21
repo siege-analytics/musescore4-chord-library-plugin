@@ -1,0 +1,45 @@
+# Queued via #334. Stage B: NEW master nelson-faria. EXEGETICAL: treats the Jobim / bossa-nova / Brazilian tradition as the implicit corpus. Pending #333 schema, will get exegesis_of:[{master_id:_pending:antonio-carlos-jobim, ...}].
+
+[master]
+id = "nelson-faria"
+name = "Nelson Faria"
+
+[work]
+id = "brazilian-guitar-book"
+title = "Brazilian Guitar Book"
+year = 1995
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/iGigbook/data/sync/_g Brazilian guitar book Nelson Faria.pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."

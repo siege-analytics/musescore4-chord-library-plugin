@@ -1,0 +1,37 @@
+# Queued via #334. Stage B: sibling work[] under benson master. Largest book in queue (434pp); apply tight-cap Stage 4 prompt per #322.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-5-melodic-minor"
+title = "The George Benson Method, Vol 5 — Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts"
+year = 2019
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/George Benson Method/Benson, George - The George Benson Method, Vol 5 (Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts).pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."

@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-felts-reharmonization-techniques
+stage: s3
+source_pdf: Felts, Randy - Reharmonization Techniques (2002).pdf
+source_pages: 28-36
+model: claude-haiku
+extracted_at: 2026-05-31T16:50:30+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — Tritone Substitution, Extended Dominant Seventh Chords, and Extended II-V7 Patterns
+
+_Distillation; backed by `chapters/ch03.md`._
+
+Chapter 3 teaches three interconnected reharmonization techniques for jazz standards: tritone substitution works backward from a target chord using dominant sevenths a perfect fifth apart, while altered tensions (b9, #9, b5, b13) typically resolve downward but permit upward motion in context. Extended dominant chains create forward harmonic momentum toward a target but risk rhythmic clutter, mitigated by placing chords only on strong beats and converting some dominants to minor sevenths for smoother texture. Extended II-V7 patterns combine these moves and work best with sparse melodic rhythms (quarters, dotted quarters, or halves) where one or two notes per chord allow quick resolution of clashes. Interpolated chords—typically minor sevenths between dominants—can be skipped strategically, and displacement (moving a target chord later in the phrase) stretches the progressions shape while creating harmonic space for new changes. Taken together, these techniques enable reharmonization that maintains forward motion and timbral sophistication without overwhelming the melody or tempo.

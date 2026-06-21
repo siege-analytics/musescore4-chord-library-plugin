@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: \"CRY ME A RIVER\" LICK\nPages 74-76 of the book.\n\n<<<CHAPTER TEXT\n\n\u201cConfirmation\u201d (Parker), beginning of bridge/B section:\n\n(eal\n4 bY\n\nus. $F ; ee\n\" pay oe\n3\n\n\u201cBillie's Bounce\u201d (Parker), 9th measure:\n\na\" (c\")\n4 4 bY 6\n\nwn, $= ie =\u2014=====\n\n\u201cOrnithology\u201d (Parker), 7th measure (this same melodic fragment also appears in the\nlast two measures of the bridge of Parker\u2019s \u201cThriving From A Riff\u2019/\u201dAnthropology\u201d).\n\n2\")\n\ne-\"\n248. feos ==\n\nThe supposed harmonic setting for a CESH to take place is a minor chord of long\nduration. However, the examples from recorded solos will reveal that improvisers will\nalso use.CESH on II-7 chords, V7 chords (the minor CESH will actually be built on the\nfifth of the V7, as in G - ona C7), or the II-V in combination.\n\n\n\nExamples From Recorded Solos\n\nBill Evans, piano (\u201cIsrael\u201d)\n\nGeorge Coleman, tenor saxophone (\u201cMaiden Voyage\u201d)\n\nev\n\n+4 1 6\n\n28. feiecaaitin\n\nHank Mobley, tenor saxophone (\u201cRemember\u201d)\n\ny (\u201d)\nby 6\n\n251, a tetety\n\nSonny Stitt, tenor saxophone (\u201cAfter Hours\u201d)\n\nce\" ,\n\n252. & : : m tee 7\n\nins\n\nStanley Turrentine, tenor saxophone (\u201cCherry Point\u201d)\n\nD-\"\n4 \" b7\n+ f\n\n+ -g- ote\nns et\n\n\n\nJohn Coltrane, tenor saxophone (\u201cBlue Train\u201d)\n\nQ-\" Ab=\" Gn\"\n1 o7 0 fia! 1 6 by 4\n\n4\n\n254.\n\n~\u201cZ\u2014 Zn\n\nJulian \u201cCannonball\u201d Adderley, alto saxophone (\u201cThe Way You Look Tonight\u201d)\n\nen\nQo\" { ( if 6\n\n3 = 3\n~- oe r a\n255, = ve Haas\n\nCharles Parker, alto saxophone (\u201cK.C. Blues\u201d)\n\n4 (\u20ac\")\n4 7 OG\n\na\n86. f tte te 2\n\nace ee\n\ngn\n\nClifford Brown, trumpet (\u201cPent-Up House\u201d)\n\n1 6\n\u201cFs +\nKenny Dorham, trumpet (\u201cBlue Bossa\u201d)\nf\" (a0)\n| 4 b7 6\n\u2014 eS ,\n258. & = i =\n3 te end\n\nKenny Dorham, trumpet (\u201cWoody n\u2019 You\u201d)\nap\" es\n\u2018 4 b7 \u2014\nf e ~ o- be\n\n259, \u2014\u2014\u2014\u2014\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

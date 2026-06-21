@@ -1,0 +1,78 @@
+{
+  "run_id": "2026-05-28T15-05-20-pass-guitar-method",
+  "config": "pipelines/master-distillation/configs/pass-guitar-method.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-pass-guitar-method/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-pass-guitar-method/pages.json",
+        "re-ingested: 34 pages, 25,806 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:46:14+00:00",
+      "ended_at": "2026-05-28T15:46:14+00:00",
+      "outputs": [
+        "detected 12 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-pass-guitar-method/chapter-bounds.json",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch01.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch02.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch03.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch04.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch05.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch06.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch07.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch08.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch09.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch10.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch11.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/chapters/ch12.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:51:44+00:00",
+      "ended_at": "2026-05-28T15:51:44+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/guitar-method-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:58:59+00:00",
+      "ended_at": "2026-05-28T15:58:59+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/joe-pass/guitar-method/derived/systems-draft.json",
+        "plugin/data/masters-corpus/joe-pass/guitar-method/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

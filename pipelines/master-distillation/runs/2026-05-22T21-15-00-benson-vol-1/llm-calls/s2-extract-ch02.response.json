@@ -1,0 +1,154 @@
+{
+  "quotes": [
+    {
+      "topic": "Diatonic scale definition",
+      "verbatim_quote": "The diatonic scale is a sequence of 7 musical notes organized in half steps and whole steps.\n    It is based on the 7 “natural” notes: C, D, E, F, G, A, B. The half steps are between the notes:\n    B, C and E, F.",
+      "why_load_bearing": "Defines the foundational scale and locates the two natural half steps the rest of the book relies on.",
+      "page": 7
+    },
+    {
+      "topic": "Major scale pattern",
+      "verbatim_quote": "• W-W-H-W-W-W-H • (W = whole tone / H = half tone).",
+      "why_load_bearing": "The canonical interval formula used to build every major scale referenced later.",
+      "page": 7
+    },
+    {
+      "topic": "Pattern changes from new root",
+      "verbatim_quote": "We can start the scale from any note, but the sound of the sequence will not be the same,\n    because the scale pattern will be changed. For example: The \"C\" major scale pattern is:\n    -W - W - H - W - W - W - H, but if we start it from the second note (D) the pattern would\n    change to - W - H - W - W - W - H - W.",
+      "why_load_bearing": "Explains why accidentals are required to preserve the major pattern in other keys.",
+      "page": 7
+    },
+    {
+      "topic": "Natural minor (relative) scale",
+      "verbatim_quote": "The natural minor scale, also called relative scale, is the major scale itself started from the\n6th degree. Therefore, if we have a \"C major\" scale, the minor scale will be \"A minor\".",
+      "why_load_bearing": "Establishes the relative-minor relationship the book uses throughout.",
+      "page": 8
+    },
+    {
+      "topic": "Relative minor pattern",
+      "verbatim_quote": "•W-H-W-W-H-T-T•",
+      "why_load_bearing": "Gives the interval formula for the natural minor scale.",
+      "page": 8
+    },
+    {
+      "topic": "Chromatic scale",
+      "verbatim_quote": "The chromatic scale consists of 12 half steps. In other words, it contains all 12 notes that\n\n                                68\nexist in western music (C, C#, D, D#, E, F, F#, G, G#, A, A#, B).",
+      "why_load_bearing": "Defines the 12-note universe from which all intervals and scales are drawn.",
+      "page": 8
+    },
+    {
+      "topic": "Left hand finger numbering",
+      "verbatim_quote": "Left Hand Fingers:\n    • Index Finger = 1\n    • Middle Finger = 2\n    • Ring Finger = 3\n    • Baby Finger (or Pinky) = 4",
+      "why_load_bearing": "Establishes the finger numbering convention used in every chord diagram in the book.",
+      "page": 9
+    },
+    {
+      "topic": "Muted and open string notation",
+      "verbatim_quote": "1) When there is a “X” on a string, it                     2) When there is a circle (Ο) on a string, it\n    means that the string must be muted or                     means that the string is open.",
+      "why_load_bearing": "Defines the X and O symbols required to read every chord diagram.",
+      "page": 9
+    },
+    {
+      "topic": "Fret number indicator placement",
+      "verbatim_quote": "3) When needed, in order to not have to draw a giant fretboard, we use a number on the\n                            46\n    right side of it, that represents the exact fret to be used. Notice that we always use this\n    number according to the closest ;inger from the guitar neck.",
+      "why_load_bearing": "Defines how the book denotes higher-position chord shapes.",
+      "page": 9
+    },
+    {
+      "topic": "Barre and multi-string finger notation",
+      "verbatim_quote": "when we use an arched line on many strings at        4668\n\n\n\n\nonce, it means that we must press the quantity of strings the arched line is showing us\nusing one 8inger. Usually we use the index to do that, however we have many examples\nwhere we use other 8ingers. For these cases, instead using an arched line, we repeat the\nnumber of the 8ingering to be used.",
+      "why_load_bearing": "Defines barre notation and the repeated-number convention for non-index barres.",
+      "page": 10
+    },
+    {
+      "topic": "Interval numbering on scale diagrams",
+      "verbatim_quote": "5) For scales and single notes visualization on the fretboard, we only use interval numbers\nover each string. Remember that intervals must be related to a chosen root, otherwise it\n\n                     46\nwould be impossible to number them.",
+      "why_load_bearing": "Establishes that scale diagrams show intervals (not fingers) relative to a root.",
+      "page": 10
+    },
+    {
+      "topic": "Splitting the fretboard around the root",
+      "verbatim_quote": "The chosen Root (R) divides the\n                                                                      Guitar Fretboard in two parts:\n                                                                      Left Side & Right Side.",
+      "why_load_bearing": "Introduces the left/right/central spatial framework used to organize intervals around the root.",
+      "page": 11
+    },
+    {
+      "topic": "Fretboard repeats at 12th fret",
+      "verbatim_quote": "Actually the guitar fretboard ends at the\n                                                           12th fret, because the notes repeat in the\n                   A#   D#      G#\n1st Fret →    F    Bb   Eb      Ab     C       F           same order they appeared previously. In\n                                                           other words, the 13th fret is the same as\n                                                           the 1st and so on.",
+      "why_load_bearing": "States the octave-repeat principle for fretboard memorization.",
+      "page": 12
+    },
+    {
+      "topic": "Fretboard memorization steps",
+      "verbatim_quote": "Step 1:\n     Memorize the names of the open string notes.\n\n     Step 2:\n     Memorize the names of the natural notes on the 6th and 5th strings (Note: \"natural note\"\n     means notes without any accidentals). Notes containing accidentals will consequently be\n     visualized. Remember that the 1st and 6th strings are the same (E).\n\n     Step 3:\n     Notes belonging to the 4th, 3rd string can be visualized using the interval of octaves from\n     the 5th and 6th strings.",
+      "why_load_bearing": "Prescribes the book's specific octave-based method for learning fretboard notes.",
+      "page": 13
+    },
+    {
+      "topic": "Second string via fourth string octave",
+      "verbatim_quote": "Step 4:\n                                   68\n     The second string notes can be visualized using an octave from the 4th string. So, before\n     trying to visualize the 2nd string notes, make sure you know the 4th string notes very well.",
+      "why_load_bearing": "Handles the B-string anomaly via a derived-octave shortcut from the 4th string.",
+      "page": 13
+    },
+    {
+      "topic": "Shapes vs intervals warning",
+      "verbatim_quote": "However, we must be careful when learning\n     a scale, because if we memorize it only by shape without knowing the intervals, eventually we\n     will have to come back and learn the intervals, otherwise it would be impossible to go to the\n     next step. Therefore, both must be learned at the same time.",
+      "why_load_bearing": "Core methodological rule: never learn shape without interval understanding.",
+      "page": 15
+    },
+    {
+      "topic": "Guide notes on 5th and 6th strings",
+      "verbatim_quote": "The secret to visualizing the guitar\n     fretboard is to learn everything having two guide points:\n     a) guide note on the 6th string\n     b) guide note on the 5th string\n     That guide note is what we call ROOT or 1, and all the intervals we play will be related with\n     it, even the most distant ones.",
+      "why_load_bearing": "Names the book's two-guide-point system used for every interval and chord shape.",
+      "page": 15
+    },
+    {
+      "topic": "Melodic vs harmonic intervals",
+      "verbatim_quote": "a) MELODIC & HARMONIC INTERVALS : Melodic intervals are notes played one after the\n     other, and harmonic intervals are notes played simultaneously.",
+      "why_load_bearing": "Foundational distinction needed before any chord/voicing discussion.",
+      "page": 17
+    },
+    {
+      "topic": "Simple vs compound intervals",
+      "verbatim_quote": "b) SIMPLE & COMPOUND INTERVALS : Simple intervals are intervals within one octave,\n     and compound intervals are those separated by more than one octave.",
+      "why_load_bearing": "Defines the simple/compound boundary that justifies labels like M9, b9, M2 vs M9.",
+      "page": 17
+    },
+    {
+      "topic": "Diatonic vs chromatic intervals",
+      "verbatim_quote": "d) DIATONIC & CHROMATIC INTERVALS : Diatonic intervals are those determined\nby notes in the diatonic scale (major scale), and chromatic intervals are those determined by\nmodified notes of the diatonic scale.",
+      "why_load_bearing": "Distinguishes scale-derived intervals from altered ones, prerequisite to chord alterations.",
+      "page": 18
+    },
+    {
+      "topic": "Enharmonic intervals",
+      "verbatim_quote": "f) ENHARMONIC INTERVALS: These are two notes notated or written differently, but with\nthe same sound.",
+      "why_load_bearing": "Defines enharmonic equivalence used throughout chord-spelling decisions.",
+      "page": 18
+    },
+    {
+      "topic": "Singing intervals via reference songs",
+      "verbatim_quote": "Knowing the intervals on paper is not enough. It is necessary to learn them by singing. In\norder to make that easier, let's use some songs as references. The process is quite simple, we will\nlearn the beginning of each song that contains each one of the 12 ascending intervals, as well the\n12 descending intervals. Therefore, there will be 24 songs (24 intervals).",
+      "why_load_bearing": "Prescribes the song-reference ear-training method the book hangs on.",
+      "page": 24
+    },
+    {
+      "topic": "Ascending interval song list",
+      "verbatim_quote": "Ascending Intervals:\n1) Minor Second = Isn't She Lovely (Stevie Wonder)\n2) Major Second = Happy Birthday (P. Hill / M. J. Hill )\n3) Minor Third = Sugar (Stanley Turrentine)\n4) Major Third = I Can't Get Started (Vernon Duke)\n5) Perfect Fourth = Someday My Prince Will Come (Frank Churchill)\n6) Aug Fourth/Dim Fifth = Maria - West Side Story (L. Bernstein)\n7) Perfect Fifth = Star Wars (John Williams)\n8) Aug Fifth/ Minor Sixth = Manhã de Carnaval (L. Bonfá)\n9) Major Sixth = Take the “A” Train (Billy Strayhorn)\n10) Minor Seventh = Star Trek theme (M. Giacchino)\n11) Major Seventh = Super Man (J. Williams)\n12) Perfect Octave = Somewhere Over the Rainbow (Harold Arlen)",
+      "why_load_bearing": "The book's complete reference table for ear-training each ascending interval.",
+      "page": 24
+    },
+    {
+      "topic": "Descending interval song list",
+      "verbatim_quote": "Descending Intervals:         68\n1) Minor Second = Stella by Starlight (Victor Young)\n                     46\n2) Major Second = Yesterday (Beatles)\n3) Minor Third = Hey Jude (Beatles)\n4) Major Third = Summertime (G. Gershwin)\n5) Perfect Fourth = Softly as in a Morning Sunrise (Romberg/Hammerstein II)\n6) Aug Fourth/ Dim Fifth = Black Sabbath (Black Sabbath)\n7) Perfect Fifth = Flintstones Theme (H. S. Curtin)\n8) Augmented Fifth/ Minor Sixth = Love Story Theme (Francis Lai)\n9) Major Sixth = Man In the Mirror; chorus (Michael Jackson)\n10) Minor Seventh = Watermelon Man (Herbie Hancock)\n11) Major Seventh = I Love You (Cole Porter)\n12) Perfect Octave = Willow Weep for Me (Ann Ronell)",
+      "why_load_bearing": "The descending-interval companion reference for the ear-training method.",
+      "page": 24
+    },
+    {
+      "topic": "Ascending/descending interval inversion rules",
+      "verbatim_quote": "1) Up a Minor 2nd = Down a Major 7th\n\n     2) Up a Major 2nd = Down a Minor 7th\n\n     3 Up a Minor 3rd = Down a Major 6th\n\n     4) Up a Major 3rd = Down a Minor 6th\n\n                                 68\n     5) Up a Perfect 4th = Down a Perfect 5th\n\n\n                        46\n     6) Up a Augmented 4th (diminished 5th) = Down a Augmented 4th (no changes)\n\n     7) Up a Perfect 5th = Down a Perfect 4th\n\n     8) Up a Augmented 5th (minor 6th) = Down a Major 3rd\n\n     9) Up a Major 6th = Down a Minor 3rd\n\n     10) Up a Minor 7th = Down a Major 2nd\n\n     11) Up a Major 7th = Down a Minor 2nd\n\n     12) Up a Octave = Down a Octave ( no changes)",
+      "why_load_bearing": "Codifies interval inversion, foundational for understanding chord inversions and voice leading.",
+      "page": 27
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Resolutions of Chord Cycles\nPages 11-11 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 8\n\nResolution of Chord Cycles\n\nBefore we tackle any of the remaining chords, let us get a thorough knowledge of\nhow to apply those we have already worked with. This is not an easy project because it\ndeals with harmony and, as you know, this is not a harmony book. Nevertheless, I will\nattempt to explain the movement of some of the principal chord cycles in music.\n\nAt this point the cycle in which we are most interested is from dominant V to tonic I. Now\nthe question is, what is the V and the I? The V of a chord demands resolution, the I is\nfinal. In other words, once you have played the | the ear is satisfied. Any chord that you\nplay during the course of a cycle demands some kind of temporary resolution until it\neventually reaches the V (dominant the most active chord of the tonality) and the V re-\nsolves into the I (Example 16.)\n\nThere are many courses to take through chord cycles that will lead to the dominant and\ntonic. One of the most popular cycles is from I to IV to V and back to 1 (Example 17.)\nAnother popular example, and the one in which we are most interested, is from I to II ta\nVv to I (Example 18.)\n\nCommit these exercises to memory because in lesson 9 we will approach the art of sub-\nstituting minor II chords for dominant V chords.\n\nEx. 16 . ~\nSuper- Sub- Sub- j Leadin, j\nToni Pp t Mediant & T\nonic Tonic Mediant dominent dominen: oman Tone onie\n$: = 9g 2 {8}\n<-> Let Tei Le >= ALG PA\npea 18} pS tet ASF \u2014 =\ncS * (87 ~\nc= I anf Il IV Vv VI VII I\nEx. 17\n4 Tonic Subdominent dominent Tonic\nory 4 3 =\nes \u201c \u2014 =\nC= 1 IV Vv I\nEx. 18\nh 2\nr R HH\nZ ce <S-\na = ov\nC= I Wl Vv I\n\n* The chords in parenthesis are the ones we are interested in for the present.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

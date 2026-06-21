@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Chord Forms\nPages 4-4 of the book.\n\n<<<CHAPTER TEXT\n\n2 To Rector Bailey\nA Great Friend and Teacher\n\nLESSON 1\n\nChord Forms\n\nBelow we have all the chord forms that will be used during this course of study.\nHowever, other chord forms will appear which are already familiar to you.\n\nWe are not dealing with rhythm (foundation) chords because rhythm and standard har-\nmonic progressions will come from other sources, such as the piano, bass or another\nguitar. What we are interested in is the application of the modern harmonic sound offered\nby the \"Upper Partials\u201d.\n\n.Try fingering these chords and familiarize yourself with them. Their movement will be\napplied starting in lesson 2.\n\n1 2 3 4 5 6\n* cmForm Gm Form GmajForm CmajForm Fm9Form  3Bb1i3b9 Form\ni 7 +\n1 oa -\nan r y 7\nz z 2\n3\nCry iH\nal a\n1 r j\n10\n7 8 9 (Bbmaj\u00e9 9) 11 12\nEbmaj7 Form Ebmaj6Form Fmaj6Form Fmaj69 Form Gmaj79Form Cmaj9 Form\nbs A HT 2\nf c3pe\nCrise a 3) HTT te4\n4 4 LI\n|\nT 1\n13 14 15 16 17 18\nG13b9 Form Gm6 Form Cm6Form Gmaj6Form Cmaj6Form Em69 Form\nA T | uaa\nI T > i\n2\u00a2 3 2 21 @ | | a\n4 slot ts 3 3 b]3\n4 4\n| !\n\n*If these Forms are too hard to finger in this position, move them up to a higher chord such as\n\nEb jn) or atm\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

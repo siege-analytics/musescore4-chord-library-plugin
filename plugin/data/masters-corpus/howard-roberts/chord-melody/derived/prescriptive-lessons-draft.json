@@ -1,0 +1,484 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-45-18-roberts-chord-melody",
+    "stage": "s5",
+    "source_pdf": "Roberts, Howard - Chord Melody.pdf",
+    "extracted_at": "2026-06-15T20:03:44+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "howard-roberts",
+  "work_id": "chord-melody",
+  "usage_notes": [
+    {
+      "chord_quality": "close-voicing",
+      "function_role": "texture-contrast-against-open-voicings",
+      "narrative": "Roberts prescribes close voicings as a deliberate textural device \u2014 \"very effective but not too often used, on the guitar\" \u2014 deployed specifically as contrast against open voicings: \"These can be used as texture contrast to the big sound of open voicings\" (chapter 3, p. 12). The implication is sparing use: close voicings land with more impact when they punctuate an otherwise open-voiced texture.",
+      "source_principle_ids": [
+        "close-voicing-as-texture-contrast"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 12"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "close-voicing",
+      "function_role": "voicing-conversion-to-open",
+      "narrative": "Roberts prescribes converting any close voicing to an open voicing by octave displacement: \"Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave\" (chapter 2, p. 6). This is the primary mechanism for expanding harmonic texture on guitar.",
+      "source_principle_ids": [
+        "close-to-open-octave-displacement"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 6"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "close-voicing",
+      "function_role": "block-chord-voicing-option",
+      "narrative": "Roberts explicitly allows both close and open voicings within the block chord device: \"This is done by placing a full chord underneath each melody note. The chords can be either close or open voicings\" (chapter 2, p. 8). The choice of density is left to the player's ear within the block chord context.",
+      "source_principle_ids": [
+        "block-chord-voicing-change-per-note"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "open-voicing",
+      "function_role": "primary-solo-guitar-texture",
+      "narrative": "Roberts establishes open voicings as the dominant sound of chord melody on guitar \u2014 the \"big sound\" against which close voicings provide contrast (chapter 3, p. 12). Open voicings are produced by moving one or more tones an octave away from a close position: \"Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave\" (chapter 2, p. 6).",
+      "source_principle_ids": [
+        "close-to-open-octave-displacement"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 6"
+        },
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 12"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "open-voicing",
+      "function_role": "note-omission-policy-under-sustain",
+      "narrative": "When sustaining an open voicing through a long melody sequence, Roberts prescribes dropping chord tones as fingering demands while relying on listener memory: \"if each chordal tone is sustained for as long as possible, the listener usually remember those notes that have been dropped\" (chapter 2, p. 9). The instruction is to sustain each tone as long as physically possible before releasing \u2014 delay, not avoidance.",
+      "source_principle_ids": [
+        "drop-tones-harmonic-memory",
+        "sustain-delay-finger-movement"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 9"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "open-voicing",
+      "function_role": "color-tone-addition-policy",
+      "narrative": "Roberts gives explicit permission to add extensions freely to any voicing: \"the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord and do not change its scale function or its role in the progression\" (chapter 4, p. 36). The arranger can reach for richer open voicings without disrupting harmonic logic.",
+      "source_principle_ids": [
+        "extensions-as-color-only"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 36"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "chromatic-substitution-target-for-diminished",
+      "narrative": "Roberts prescribes substituting diminished chords in place of dominant 7b9 chords to inject chromaticism: \"The E\u00b0 and Db\u00b0 chords are both functioning as A7b9, and are being used to provide some chromatic relief from the monotony of diatonic lines\" (chapter 3, p. 13). Any diminished chord whose tones overlap with the dominant 7b9 spelling is a valid substitute.",
+      "source_principle_ids": [
+        "diminished-for-dominant-7b9"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "harmonic-recontextualization-from-6th-chord",
+      "narrative": "Roberts demonstrates that a chord symbol may carry dominant 7b9 function even when spelled as a 6th chord: \"The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9)\" (chapter 3, p. 12). The lesson is that Roman numeral function must be read from the phrase context, not the chord symbol alone \u2014 a G6 can be the upper structure of an Eb7b9.",
+      "source_principle_ids": [
+        "four-voice-melodic-motion"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 12"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "chromatic-dominant-substitute",
+      "narrative": "Roberts prescribes using diminished chords (E\u00b0, Db\u00b0) as substitutes for dominant 7b9 sounds \u2014 specifically A7b9 in the cited example \u2014 to \"provide some chromatic relief from the monotony of diatonic lines\" (chapter 3, p. 13). Roberts advises practicing this substitution in all keys with various diatonic melodies as ear training (chapter 3, p. 13).",
+      "source_principle_ids": [
+        "diminished-for-dominant-7b9"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "chromatic-passing-chord",
+      "narrative": "Beyond its dominant-substitute role, Roberts implies diminished chord shapes function as chromatic passing connective tissue between diatonic progression points \u2014 part of the broader family of altered passing chords (alongside m7+5 shapes) enumerated in chapter 3 and demonstrated in the chapter 5 solo. Chapter 3 prescribes studying these substitutions in all keys: \"It is good ear training to improvise this sort of thing in all keys, with various diatonic melodies\" (p. 13).",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "tonic-area-substitution-for-maj9",
+      "narrative": "Roberts demonstrates a specific minor 7 substitution in a block chord context: \"The Gm7 in bar 3 is being used as a substitute for Eb maj 9\" (chapter 2, p. 8). The Gm7 supplies three of the Eb maj9's upper extensions (G=3, Bb=5, D=maj7, F=9), making it a viable relative-minor upper-structure substitute in chord melody harmonization.",
+      "source_principle_ids": [
+        "block-chord-voicing-change-per-note"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "diatonic-passing-progression-chord",
+      "narrative": "Roberts explicitly uses Am7 and Bm7 as structural diatonic chords in a passing-chord study: \"Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj7 (one chord per bar) being connected by the passing chords G#m7+5, Am7+5\" (chapter 3). The min7 chords anchor the diatonic skeleton that the altered passing shapes then connect.",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "voice-leading-sustain-policy",
+      "narrative": "Roberts's universal sustain rule applies to all chord qualities including min7: \"Sustain each chordal tone for as long as possible. In general, this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style\" (chapter 3, p. 15). For min7, this means the root, minor third, fifth, and seventh should each ring through into the next chord event until finger movement is forced.",
+      "source_principle_ids": [
+        "sustain-delay-finger-movement"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "color-tone-addition-policy",
+      "narrative": "Roberts explicitly names the major seventh as the first example of an extension that \"only affect the color and texture of the chord and do not change its scale function or its role in the progression\" (chapter 4, p. 36). The arranger should therefore feel free to reach for maj7 voicings wherever a major chord appears in the progression without disrupting harmonic identity.",
+      "source_principle_ids": [
+        "extensions-as-color-only"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 36"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "diatonic-structural-chord-in-passing-study",
+      "narrative": "Roberts uses Cmaj7 as one of the four structural diatonic anchor chords in the chapter 3 passing-chord study: \"the primary progression consisting of G6, Am7, Bm7, Cmaj7 (one chord per bar) being connected by the passing chords G#m7+5, Am7+5\" (chapter 3, p. 11). Cmaj7 sits at the IV position in G major and is treated as a stable harmonic target, not a passing shape.",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "6",
+      "function_role": "color-tone-addition-policy",
+      "narrative": "Roberts explicitly names the sixth as a coloristic extension that does not change a chord's scale function: \"the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord\" (chapter 4, p. 36). The 6th chord is therefore interchangeable with its triad or maj7 form for purposes of progression logic.",
+      "source_principle_ids": [
+        "extensions-as-color-only"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 36"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "6",
+      "function_role": "dominant-function-recontextualization",
+      "narrative": "Roberts demonstrates that a 6th chord can carry dominant 7b9 function when read in phrase context: \"The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9)\" (chapter 3, p. 12). This is a concrete instance of Roberts's principle that functional identity depends on full phrase analysis, not isolated chord spelling.",
+      "source_principle_ids": [
+        "four-voice-melodic-motion"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 12"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "6",
+      "function_role": "diatonic-structural-chord-in-passing-study",
+      "narrative": "Roberts uses G6 as the tonic anchor of the chapter 3 diatonic passing-chord example: \"the primary progression consisting of G6, Am7, Bm7, Cmaj7 (one chord per bar)\" (chapter 3, p. 11). G6 functions as I in G major, confirming the 6th voicing as a fully valid tonic chord quality in Roberts's harmonic vocabulary.",
+      "source_principle_ids": [
+        "extensions-as-color-only"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "add9",
+      "function_role": "color-tone-addition-policy",
+      "narrative": "Roberts names the ninth among the extensions that \"only affect the color and texture of the chord and do not change its scale function or its role in the progression\" (chapter 4, p. 36). The ninth may therefore be added to any chord freely in chord melody arranging without altering the harmonic grammar of the passage.",
+      "source_principle_ids": [
+        "extensions-as-color-only"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 36"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "chromatic-passing-chord-altered-shape",
+      "narrative": "Roberts prescribes altered minor-seventh chords with raised fifths (m7+5, equivalent to min7b5's enharmonic neighbor) as chromatic passing shapes between diatonic progression points: \"the passing chords G#m7+5, Am7+5\" connect the primary diatonic chords in Example 35 (chapter 3, p. 11). These altered passing shapes serve as connective tissue even when momentarily dissonant with the underlying harmony.",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug",
+      "function_role": "chromatic-passing-chord-altered-shape",
+      "narrative": "Roberts's chapter 3 passing-chord study employs m7+5 shapes (minor seventh with augmented fifth) as chromatic connective tissue between diatonic chords, demonstrating that augmented-fifth voicings belong to his palette of altered passing chords (chapter 3, p. 11). The augmented quality is treated not as a harmonic destination but as a linking texture that creates \"interesting extensions\" from the independence of melody and harmony (chapter 4, p. 40).",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 11"
+        },
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 40"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "voice-leading-sustain-policy",
+      "narrative": "Roberts states his universal chord-tone sustain rule across all chord qualities: \"Sustain each chordal tone for as long as possible. In general, this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style\" (chapter 3, p. 15). The rule is not quality-specific \u2014 it applies to every chord the player voices.",
+      "source_principle_ids": [
+        "sustain-delay-finger-movement"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 3 p. 15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "chromatic-melody-harmonization-policy",
+      "narrative": "Roberts prescribes a permissive rule for harmonizing chromatic melody notes against any chord quality: \"Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant\" (chapter 4, p. 38). When melody and harmony move independently, \"interesting extensions\" emerge from the friction (chapter 4, p. 40).",
+      "source_principle_ids": [
+        "chromatic-passing-chords"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 38"
+        },
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 40"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "low-register-voicing-floor-constraint",
+      "narrative": "Roberts states a hard physical constraint applying to all chord qualities: \"if the melody note is placed too low on the staff, you will not have enough strings left to form a satisfactory chord beneath it\" and the floor is explicit \u2014 \"as low as the 4th string but no lower\" (chapter 4, p. 36). When the melody falls below this floor, Roberts prescribes jumping the melody up an octave rather than compromising the voicing.",
+      "source_principle_ids": [
+        "fourth-string-density-floor",
+        "octave-jump-for-register"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 36"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "block-chord-voicing-change-per-melody-note",
+      "narrative": "Roberts prescribes that in block chord style every melody note must be accompanied by a freshly voiced chord: \"it is more desirable to change the voicing or inversion with each new melody note, in order to create the effect of all lines moving at once\" (chapter 2, p. 9). Leaving the chord form unchanged while the melody moves \"tends to destroy the block chord effect\" \u2014 a proscriptive corollary.",
+      "source_principle_ids": [
+        "block-chord-voicing-change-per-note"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 9"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "block-chord-static-form-prohibition",
+      "narrative": "Roberts explicitly warns against leaving the chord form unchanged when the melody moves in block chord style: \"Often the melody can be fingered easily without having to change the chord form, but this tends to destroy the block chord effect\" (chapter 2, p. 9). The student must change voicing or inversion with each new melody note even when it is mechanically unnecessary.",
+      "source_principle_ids": [
+        "block-chord-voicing-change-per-note"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 9"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "any/block-chord-voicing-change-per-melody-note"
+      ]
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "short-punctuation-placement-policy",
+      "narrative": "Roberts prescribes that short chord punctuations must be \"played with authority and appropriately placed within the bar\" to maintain harmonic continuity without constant restriking (chapter 2, p. 10). Harmonic continuity can be further reinforced by \"choosing melodies which emphasize chordal tones\" \u2014 the melodic line does harmonic work that the sparse chord cannot do alone.",
+      "source_principle_ids": [
+        "short-punctuation-harmonic-continuity"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 2 p. 10"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "any",
+      "function_role": "solo-guitar-arrangement-working-method",
+      "narrative": "Roberts prescribes a deliberately modest iterative method for developing chord melody arrangements: \"develop chord melody solos for each of these examples, keeping them as simple as possible. Concentrate mainly on finding chord voicings that sound good to you and still permit the melody to be played\" (chapter 4, p. 42). Simplicity is the starting constraint, not the final destination \u2014 repetition builds instinct toward extemporaneous chord melody (chapter 4, p. 52).",
+      "source_principle_ids": [
+        "octave-jump-for-register"
+      ],
+      "source_work_id": "chord-melody",
+      "references": [
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 42"
+        },
+        {
+          "source": "chord-melody",
+          "citation": "chapter 4 p. 52"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}

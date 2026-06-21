@@ -1,0 +1,846 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-bergonzi-melodic-rhythms-vol-4",
+    "stage": "s4",
+    "source_pdf": "Music - Guitar Music Theory - Jerry Bergonzi - Vol 4 - Melodic Rhythms.pdf",
+    "extracted_at": "2026-05-28T18:33:49+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jerry-bergonzi",
+  "work_id": "melodic-rhythms-vol-4",
+  "systems": [
+    {
+      "id": "jerry-bergonzi:melodic-rhythms-vol-4:consecutive-note-displacement",
+      "name": "Consecutive Note Displacement System",
+      "summary": "Central system: take a fixed group of consecutive eighth notes (2-7 notes, or triplet equivalents) and systematically shift the group's starting position across all eight metrical entry points in the bar. Members are the group sizes; traversal rules govern movement between entry points; modification rules govern harmonic anticipation, omission, hemioval mirroring.",
+      "members": [
+        {
+          "id": "group-2",
+          "name": "Two Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-3",
+          "name": "Three Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-4",
+          "name": "Four Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-5",
+          "name": "Five Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-6",
+          "name": "Six Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-7",
+          "name": "Seven Consecutive Eighth Notes"
+        },
+        {
+          "id": "group-3-triplet",
+          "name": "Three Consecutive Eighth-Note Triplets"
+        },
+        {
+          "id": "group-5-triplet",
+          "name": "Five Consecutive Eighth-Note Triplets"
+        },
+        {
+          "id": "group-6-triplet",
+          "name": "Six Consecutive Eighth-Note Triplets"
+        },
+        {
+          "id": "group-7-triplet",
+          "name": "Seven Consecutive Eighth-Note Triplets"
+        },
+        {
+          "id": "22-one-bar-rhythms",
+          "name": "22 One-Bar Rhythms (Chapter 1 Palette)"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "orderly-position-drilling",
+          "name": "Orderly Position-by-Position Drilling",
+          "summary": "Practice every entry point in order (1 through 8) before randomizing.",
+          "engine_payload": {
+            "kind": "_pending:positional-sequence-drill"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Eighth-note displacement method",
+              "quote_excerpt": "displace the grouping by starting on eight different places",
+              "page": 25
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Five Consecutive Eighth Notes",
+              "quote_excerpt": "practice playing five consecutive eighth notes beginning on these eight",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "randomization-after-drilling",
+          "name": "Randomization After Drilling",
+          "summary": "After mastering ordered positions, mix starting points unpredictably.",
+          "engine_payload": {
+            "kind": "_pending:randomize-after-structured"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Mixing Entry Points",
+              "quote_excerpt": "Start five consecutive eighth notes on different beats randomly",
+              "page": 30
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Random starting-beat practice",
+              "quote_excerpt": "Try starting six consecutive eighth notes from different beats randomly",
+              "page": 36
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Random Beat Starting Practice",
+              "quote_excerpt": "Try starting seven consecutive eighth notes from different beats randomly",
+              "page": 41
+            }
+          ]
+        },
+        {
+          "id": "half-beat-displacement",
+          "name": "Half-Beat Displacement Shift",
+          "summary": "Half-beat displacement (1/2, 1 1/2, 2 1/2) produces perceptually distinct rhythmic patterns.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Half-beat displacement effect",
+              "quote_excerpt": "displacing a rhythm 1/2 of a beat creates entirely different sounding rhythms",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "id": "metric-superimposition-traversal",
+          "name": "Metric Superimposition Traversal",
+          "summary": "Layer an internalized group over a conflicting time signature (3/4, 5/4, 7/4, 9/4, 11/4 over 4/4).",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "3/4 over 4/4 superimposition",
+              "quote_excerpt": "This is a 3/4 pattern which takes three bars of 4/4 to work out",
+              "page": 27
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Polyrhythm: 7/4 over 4/4",
+              "quote_excerpt": "Here is a 7/4 pattern over 4/4",
+              "page": 28
+            },
+            {
+              "chapter_n": 8,
+              "topic": "11/4 Pattern over 4/4",
+              "quote_excerpt": "This is an 11/4 pattern over 4/4",
+              "page": 43
+            },
+            {
+              "chapter_n": 15,
+              "topic": "5/4 over 4/4 alignment rule",
+              "quote_excerpt": "the pattern should hit one on the sixth bar",
+              "page": 69
+            },
+            {
+              "chapter_n": 15,
+              "topic": "7/4 over 4/4 alignment rule",
+              "quote_excerpt": "takes seven bars to work out so that on the eighth bar you are starting on beat one again",
+              "page": 71
+            }
+          ]
+        },
+        {
+          "id": "integrate-polyrhythm-into-random-starts",
+          "name": "Integrate Superimposition Back Into Random Starts",
+          "summary": "After polymetric drills, return to random-start exercise applying time-signature devices.",
+          "engine_payload": {
+            "kind": "_pending:loop-close-integration"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Applying time-signature devices",
+              "quote_excerpt": "After practicing #10-14 go back and try #9 again using some of these time signature devices",
+              "page": 37
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Applying Polyrhythms to Random Starts",
+              "quote_excerpt": "After practicing #10-14 go back and try #9 again using some of these time signature devices",
+              "page": 43
+            }
+          ]
+        },
+        {
+          "id": "hemioval-offset-traversal",
+          "name": "Hemioval Mirror-Offset Traversal",
+          "summary": "Generate 5/4 mirror by restating on beat 2-and; 7/4 mirror by restating on beat 3-and.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Mirror Rhythm: 5/4",
+              "quote_excerpt": "By starting the same rhythm on beat 2 and that was started on beat 1 you get a 5/4 mirror",
+              "page": 72
+            },
+            {
+              "chapter_n": 16,
+              "topic": "Mirror Rhythm: 7/4",
+              "quote_excerpt": "By starting the same rhythm on beat 3 and as beat 1, you get a 7/4 mirror rhythm",
+              "page": 72
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "harmony-anticipation-late-positions",
+          "name": "Harmony Anticipation at Late Entry Positions",
+          "summary": "At late entry positions, anticipate the next chord by approaching its notes, stating it directly, or letting the final eighth note sound the next chord.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Harmony anticipation rule",
+              "quote_excerpt": "For #6, #7, and #8, the harmony can be anticipated",
+              "page": 26
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Chord anticipation on beat 5 grouping",
+              "quote_excerpt": "On this rhythm the last eighth note would sound the next chord",
+              "page": 25
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Eighth Notes Crossing Bar Line",
+              "quote_excerpt": "For #5, #6, and #7, the eighth notes before crossing the bar line can either anticipate the next chord",
+              "page": 29
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Eighth notes anticipating next chord",
+              "quote_excerpt": "these eighth notes can anticipate the next chord, or they can be approach notes",
+              "page": 35
+            }
+          ]
+        },
+        {
+          "id": "triplet-gear-truncation",
+          "name": "Triplet-Gear Truncation Rule",
+          "summary": "Fit an eight-note phrase into triplet subdivision by leaving off either the first four or the last four notes.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 19,
+              "topic": "Triplet gear note truncation rule",
+              "quote_excerpt": "leave off the first four or the last four notes",
+              "page": 83
+            },
+            {
+              "chapter_n": 20,
+              "topic": "Triplet adaptation - first-notes omission",
+              "quote_excerpt": "For triplets try leaving off the first four notes",
+              "page": 86
+            }
+          ]
+        },
+        {
+          "id": "selective-triplet-silencing",
+          "name": "Selective Triplet Subdivision Silencing",
+          "summary": "Sound only four of six available triplet subdivisions across two consecutive triplet groups.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Triplet groupings",
+              "quote_excerpt": "only four of the six notes are sounded",
+              "page": 47
+            }
+          ]
+        },
+        {
+          "id": "sixteenth-note-conversion",
+          "name": "Eighth-Note to Sixteenth-Note Doubling Conversion",
+          "summary": "Convert any consecutive eighth-note exercise into sixteenth-note exercise by doubling up; resulting 2/4 phrase repeats twice to fill 4/4 bar.",
+          "engine_payload": {
+            "kind": "_pending:subdivision-doubling"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "sixteenth notes from eighth notes",
+              "quote_excerpt": "convert them to sixteenth-note exercises by doubling up",
+              "page": 62
+            },
+            {
+              "chapter_n": 13,
+              "topic": "2/4 to 4/4 repetition rule",
+              "quote_excerpt": "repeat the 2/4 phrase twice to make a 4/4 bar",
+              "page": 62
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jerry-bergonzi:melodic-rhythms-vol-4:time-zone-gear-system",
+      "name": "Time Zone / Gear-Switching System",
+      "summary": "Five rhythmic subdivisions as interchangeable gears: quarter-note triplet, eighth-note, triplet, sixteenth-note, sextuplet. Any line can be recast in any gear; traversal rules specify shifting; modification rules reshape lines to fit a new gear.",
+      "members": [
+        {
+          "id": "gear-quarter-note-triplet",
+          "name": "Quarter-Note Triplet Gear"
+        },
+        {
+          "id": "gear-eighth-note",
+          "name": "Eighth-Note Gear"
+        },
+        {
+          "id": "gear-triplet",
+          "name": "Triplet (Eighth-Note Triplet) Gear"
+        },
+        {
+          "id": "gear-sixteenth-note",
+          "name": "Sixteenth-Note Gear"
+        },
+        {
+          "id": "gear-sextuplet",
+          "name": "Sextuplet Gear"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "isolate-master-combine",
+          "name": "Isolate, Master, Combine Gear Sequence",
+          "summary": "Practice one zone exclusively, master it, then add the next, then move freely between zones.",
+          "engine_payload": {
+            "kind": "_pending:zone-isolation-progression"
+          },
+          "references": [
+            {
+              "chapter_n": 21,
+              "topic": "Time zones practice method",
+              "quote_excerpt": "stick to one time zone. Master that one and then go through and master the next",
+              "page": 88
+            }
+          ]
+        },
+        {
+          "id": "spontaneous-gear-switching",
+          "name": "Spontaneous Random Gear-Switching",
+          "summary": "Switch between feels randomly during improvisation rather than programming gear changes.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 20,
+              "topic": "Gear-change practice method",
+              "quote_excerpt": "try using this technique randomly and spontaneously",
+              "page": 86
+            }
+          ]
+        },
+        {
+          "id": "alternating-triplet-eighth-note-practice",
+          "name": "Alternating Triplet / Eighth-Note Pocket Practice",
+          "summary": "Play triplet rhythms then switch to eighth notes on the same tune to internalize the pocket through felt contrast.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 18,
+              "topic": "triplets as pocket practice",
+              "quote_excerpt": "play these triplet rhythms on Tune 8 and then play eighth notes to see if you feel a different pocket",
+              "page": 77
+            }
+          ]
+        },
+        {
+          "id": "felt-pulse-collapse",
+          "name": "Felt-Pulse Collapse (Feeling in 1, 2, or 4)",
+          "summary": "While tempo stays constant, internally collapse the felt beat unit to reshape phrase contour and escape the eighth-note trap.",
+          "engine_payload": {
+            "kind": "_pending:felt-meter-shift"
+          },
+          "references": [
+            {
+              "chapter_n": 27,
+              "topic": "Feeling Time in 1, 2, or 4",
+              "quote_excerpt": "feeling the tune in four. Next play that tune in two",
+              "page": 111
+            },
+            {
+              "chapter_n": 27,
+              "topic": "Fast Tempo in Two or One",
+              "quote_excerpt": "Fast tempo tunes are easier to play when you are feeling the tune in two",
+              "page": 111
+            },
+            {
+              "chapter_n": 27,
+              "topic": "Escaping Eighth-Note Trap",
+              "quote_excerpt": "try feeling the music in two or one",
+              "page": 111
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "coexistence-principle",
+          "name": "Eighth-Note / Triplet Coexistence Principle",
+          "summary": "Eighth notes coexist with the triplet feel via micro-timing (laying back, lobbing); they do not become literal triplets.",
+          "engine_payload": {
+            "kind": "_pending:micro-timing-coexistence"
+          },
+          "references": [
+            {
+              "chapter_n": 18,
+              "topic": "eighth notes vs. triplet feel",
+              "quote_excerpt": "your eighth notes should be able to coexist with the triplet feel",
+              "page": 77
+            },
+            {
+              "chapter_n": 18,
+              "topic": "laying back technique",
+              "quote_excerpt": "laying back on the eighth notes or putting some type of lob on the notes",
+              "page": 77
+            }
+          ]
+        },
+        {
+          "id": "expansion-contraction",
+          "name": "Expansion and Contraction of Note Groups",
+          "summary": "Reinterpret a fixed group of notes across different beat spans, from one beat through four beats, or 1 1/2 beats.",
+          "engine_payload": {
+            "kind": "_pending:metric-rescaling"
+          },
+          "references": [
+            {
+              "chapter_n": 24,
+              "topic": "contraction and expansion concept",
+              "quote_excerpt": "Take a group of notes and try playing them over two beats",
+              "page": 106
+            },
+            {
+              "chapter_n": 24,
+              "topic": "expansion over multiple beat spans",
+              "quote_excerpt": "Expand and try playing these five notes over three beats, and then over four beats",
+              "page": 106
+            },
+            {
+              "chapter_n": 24,
+              "topic": "expansion/contraction as perceptual tool",
+              "quote_excerpt": "another way to perceive odd groupings of notes",
+              "page": 106
+            }
+          ]
+        },
+        {
+          "id": "groove-internalization-repetition",
+          "name": "Groove Internalization via Repetition at Slow Tempo",
+          "summary": "Set metronome 50-60 on the half note and repeat a line until triplets feel natural with eighth-note phrasing.",
+          "engine_payload": {
+            "kind": "_pending:repetition-internalization"
+          },
+          "references": [
+            {
+              "chapter_n": 19,
+              "topic": "Groove internalization method",
+              "quote_excerpt": "repeating the line until you are in the groove of triplets",
+              "page": 83
+            },
+            {
+              "chapter_n": 19,
+              "topic": "Metronome and articulation reference",
+              "quote_excerpt": "Set your metronome between 50 and 60 for the half note",
+              "page": 83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jerry-bergonzi:melodic-rhythms-vol-4:polyrhythmic-construction",
+      "name": "Polyrhythmic Construction System",
+      "summary": "Additive, subtractive, and displacement-based construction of polyrhythmic ratios (5:4, 9:4, 10:4, 12:4) and tuplet forms (quintuplet, septuplet, nonuplet), plus hemiola and scale-sequence rhythmization.",
+      "members": [
+        {
+          "id": "ratio-5-over-4",
+          "name": "5-Against-4 Polyrhythm"
+        },
+        {
+          "id": "ratio-9-over-4",
+          "name": "9-Against-4 Polyrhythm"
+        },
+        {
+          "id": "ratio-10-over-4",
+          "name": "10-Against-4 Polyrhythm"
+        },
+        {
+          "id": "ratio-12-over-4",
+          "name": "12-Against-4 Polyrhythm"
+        },
+        {
+          "id": "quintuplet",
+          "name": "Quintuplet (5-Note Tuplet)"
+        },
+        {
+          "id": "septuplet",
+          "name": "Septuplet (7-Note Tuplet)"
+        },
+        {
+          "id": "nonuplet",
+          "name": "Nonuplet (9-Note Tuplet)"
+        },
+        {
+          "id": "hemiola",
+          "name": "Hemiola (3/4 Phrases over 4/4)"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "additive-construction",
+          "name": "Additive Polyrhythm Construction",
+          "summary": "Build a ratio by adding notes to an eighth-note line.",
+          "engine_payload": {
+            "kind": "_pending:additive-ratio-build"
+          },
+          "references": [
+            {
+              "chapter_n": 22,
+              "topic": "Nine notes per bar construction",
+              "quote_excerpt": "add two notes at the end of the original line to make nine notes per bar",
+              "page": 92
+            }
+          ]
+        },
+        {
+          "id": "subtractive-construction",
+          "name": "Subtractive Polyrhythm Construction",
+          "summary": "Build a ratio by removing notes from an eighth-note line.",
+          "engine_payload": {
+            "kind": "_pending:subtractive-ratio-build"
+          },
+          "references": [
+            {
+              "chapter_n": 22,
+              "topic": "Ten notes per bar construction",
+              "quote_excerpt": "Subtract six notes from the original line to make the ten notes",
+              "page": 92
+            },
+            {
+              "chapter_n": 22,
+              "topic": "Twelve notes per bar construction",
+              "quote_excerpt": "Subtract four notes from the original line",
+              "page": 92
+            }
+          ]
+        },
+        {
+          "id": "offset-displacement-construction",
+          "name": "Offset-by-Triplet Displacement",
+          "summary": "Generate a variation by offsetting a polyrhythmic line by one eighth-note triplet.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 22,
+              "topic": "Offset by eighth-note triplet",
+              "quote_excerpt": "This line could also be offset by an eighth-note triplet",
+              "page": 91
+            }
+          ]
+        },
+        {
+          "id": "bar-line-displacement-polyrhythm",
+          "name": "Bar-Line Displacement for Polyrhythmic Independence",
+          "summary": "Start polyrhythmic exercises one beat early or late so the pattern crosses the 4/4 bar line.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 24,
+              "topic": "bar-line displacement challenge",
+              "quote_excerpt": "moving all of the exercises over and starting them one beat early",
+              "page": 105
+            }
+          ]
+        },
+        {
+          "id": "hemiola-traversal",
+          "name": "Hemiola Phrase Traversal",
+          "summary": "Play 3/4 rhythmic phrases continuously over 4/4; cycle completes after four bars of 3/4.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "hemiola structure rule",
+              "quote_excerpt": "four bars of 3/4 to equal three bars of 4/4",
+              "page": 63
+            },
+            {
+              "chapter_n": 13,
+              "topic": "hemiola musical benefits",
+              "quote_excerpt": "beginning phrases from various beats within the bar",
+              "page": 63
+            }
+          ]
+        },
+        {
+          "id": "tuplet-metric-context-choice",
+          "name": "Tuplet Metric-Context Selection",
+          "summary": "Septuplets and nonuplets may be played over two, three, or four beats depending on context.",
+          "engine_payload": {
+            "kind": "_pending:metric-span-selection"
+          },
+          "references": [
+            {
+              "chapter_n": 23,
+              "topic": "Broken septuplets metric options",
+              "quote_excerpt": "septuplet rhythms over four beats, three beats, or two beats",
+              "page": 102
+            },
+            {
+              "chapter_n": 23,
+              "topic": "Broken nonuplets metric options",
+              "quote_excerpt": "play them over two, three, or four beats",
+              "page": 103
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "note-omission-odd-grouping",
+          "name": "Note Omission to Generate Odd Groupings",
+          "summary": "Leaving out one note from two groups of four creates groups of seven.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 28,
+              "topic": "Groups of Seven via Omission",
+              "quote_excerpt": "Leaving out one note in two groups of four creates groups of seven",
+              "page": 113
+            },
+            {
+              "chapter_n": 28,
+              "topic": "Omitting Notes",
+              "quote_excerpt": "leave out some of the notes within the pattern",
+              "page": 113
+            }
+          ]
+        },
+        {
+          "id": "modal-transposition-sequence",
+          "name": "Modal Transposition of Scale Sequence",
+          "summary": "Play pattern starting from every scale degree over a sus4 chord to remove avoid-note constraints.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 28,
+              "topic": "Modal Transposition of Pattern",
+              "quote_excerpt": "play the pattern starting from every degree of the scale",
+              "page": 113
+            }
+          ]
+        },
+        {
+          "id": "directional-and-entry-point-variation",
+          "name": "Directional and Entry-Point Variation",
+          "summary": "Vary a sequence by ascending/descending within it, or skipping to any scale degree as entry.",
+          "engine_payload": {
+            "kind": "_pending:sequence-entry-direction"
+          },
+          "references": [
+            {
+              "chapter_n": 28,
+              "topic": "Ascending/Descending Within Sequence",
+              "quote_excerpt": "Ascend or descend within the sequence",
+              "page": 114
+            },
+            {
+              "chapter_n": 28,
+              "topic": "Skip Entry Points",
+              "quote_excerpt": "Skip up or down to any note in the scale to start the sequence",
+              "page": 114
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jerry-bergonzi:melodic-rhythms-vol-4:rhythmic-grammar",
+      "name": "Rhythmic Grammar and Phrasing Constraint System",
+      "summary": "Six explicit phrase-placement constraints from Chapter 29 functioning as compositional grammar for jazz improvisation: beat-avoidance, density variation, anticipation offsets, late-resolution offsets, silence as choice, eighth-note trap avoidance.",
+      "members": [
+        {
+          "id": "constraint-beat-one-avoidance",
+          "name": "Beat-One Start/End Avoidance"
+        },
+        {
+          "id": "constraint-density-variation",
+          "name": "Eighth-Note Density Variation"
+        },
+        {
+          "id": "constraint-anticipation-offset",
+          "name": "Chord Anticipation Offset"
+        },
+        {
+          "id": "constraint-late-resolution",
+          "name": "Late Resolution"
+        },
+        {
+          "id": "constraint-silence-as-choice",
+          "name": "Silence and Endings as Active Choices"
+        },
+        {
+          "id": "constraint-eighth-note-trap-avoidance",
+          "name": "Eighth-Note Trap Avoidance via Quarter-Note Playing"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "beat-one-phrase-boundary-rule",
+          "name": "Beat-One Phrase Boundary Constraint",
+          "summary": "Never begin or end a phrase on beat one.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 29,
+              "topic": "Beat placement rules",
+              "quote_excerpt": "Never start on beat one. Never end on beat one",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "id": "anticipation-grammar-rule",
+          "name": "Chord Anticipation Grammar Rule",
+          "summary": "Practice anticipating chord arrivals at offsets from 1/2 to 3 beats.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 29,
+              "topic": "Beat placement rules",
+              "quote_excerpt": "Anticipate chords by 1/2 beat, by 1 beat, by 1 1/2 beats, by 2 beats",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "id": "late-resolution-grammar-rule",
+          "name": "Late Resolution Grammar Rule",
+          "summary": "Resolve to chord tones late by 1 to 4 beats.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 29,
+              "topic": "Beat placement rules",
+              "quote_excerpt": "Resolve late by 1 beat, 2 beats, 3 beats",
+              "page": 116
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "density-variation-rule",
+          "name": "Eighth-Note Density Alternation",
+          "summary": "Vary between predominantly eighth-note passages and passages without eighth notes.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 29,
+              "topic": "Beat placement rules",
+              "quote_excerpt": "Play predominantly eighth notes. Play without using eighth notes",
+              "page": 116
+            },
+            {
+              "chapter_n": 27,
+              "topic": "Less Notes / Breathing Room",
+              "quote_excerpt": "Very often, less is more. Playing less notes at times allows the music to breath",
+              "page": 110
+            }
+          ]
+        },
+        {
+          "id": "silence-as-composition-rule",
+          "name": "Silence and Endings as Compositional Choices",
+          "summary": "Rests are active compositional events; knowing when to end a solo invites the next idea.",
+          "engine_payload": {
+            "kind": "_pending:silence-as-composition"
+          },
+          "references": [
+            {
+              "chapter_n": 29,
+              "topic": "Pacing and musical storytelling",
+              "quote_excerpt": "Leave periods at the ends of sentences and paragraphs. Know when to end your solo",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "id": "accent-framework-fill-rule",
+          "name": "Accent-Framework Fill Rule",
+          "summary": "Begin with accents only, then fill in around them.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 27,
+              "topic": "Accents as Framework",
+              "quote_excerpt": "playing just accents as if you were the saxophone or trumpet section in a big band",
+              "page": 110
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

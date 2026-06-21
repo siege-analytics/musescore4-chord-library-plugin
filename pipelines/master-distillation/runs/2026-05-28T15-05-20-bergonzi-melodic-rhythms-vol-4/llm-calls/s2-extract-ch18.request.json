@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch18",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 18: 7/4 rhythms over 4/4\nPages 77-80 of the book.\n\n<<<CHAPTER TEXT\n\nIn the Pocket\n\nOne way to improve your feel or placement of eighth notes is to notice how your eighth notes fit\nwith the rhythm section which is often playing off of the triplet. In jazz playing, feeling the triplet\ncan help you to feel the groove of the rhythm section and help you to place your eighth notes \u201cin\nthe pocket.\u201d This doesn\u2019t mean that your eighth notes should be played as triplets like in this\nexample, but rather that your eighth notes should be able to coexist with the triplet feel behind\n\nthem. Sometimes this means laying back on the eighth notes or putting some type of lob on the\nnotes.\n\nPracticing playing triplets is one way to get more connected to the rhythm section groove and so it\ncan help to improve your placement of eighth notes. Try playing these triplet rhythms on Tune 8\n(One Heart) and then play eighth notes to see if you feel a different pocket,\n\nL FO AA =\na an\n\n34 3 Lz Lig\n\n2 fess LIE EL EF\n; Lo Wo\n\nL\u2014 3 3 bg Ls\n\ni\n\n3 xy xy yf |\nan + Comme ia (a A ae |\n\nSooo\n\net ee eee, Oe\n\ny VV a\n\nPTT } | | \u2014t\n\u2014 wets Le\n3 a 3 Le 3\n7. re 4 y. =\n\n\n\nIN THE POCKET\n\n= 2 1\n8. 3p Hh\nat\nLU 3 : 3 !\nom\n9. Fee Af\nfo \u2014\u20145\nL 3 jot 3 J\n10. (@\u2014F 4 $4 tt\ny] y Y 7\n11. f@ tty Lf <I\n\n3 M3 LZ a er ee 3\n\n12. Try this 7/4 rhythm over a 4/4 tune.\n\nvs]\nra 4.\n1A\n\nMoy 44 44\n_ = Y 7\n3 L344 L3 3 Lee Fd 3 oe\n\n\nSDLC RHYTHAS\n\nTune 8 \u00a2 One Heart (C Instruments)\n\nD7\n\nA-7\n\nE729\n\nct\n\nZz\n\nf\nf.\n\njf \u2014f-\n\na=\n\nf.\nLP\n\nf-\n\nFA\nZ.\nra\n\nhe.\n\nC7\n\nD7\n\nA-7\n\n6729\n\nC7\n\nG7\n\np7>9b13\n\nFA\n\nEb7\n\nD7\n\n579613\n\nC7\n\nG-7\nZz\n\nD7\n\nFA\nZ\n\ni\n\\\nel\n\n\n\nTune 8 | One Heart (B\u266d Instruments)\nTrack 17 - slow\nTrack 18 - fast\nC\u266d\u00f8\nF\u266f7\u266d9\nB-7\nE7\nA-7\nD7\nG\u0394\nC\u266d\u00f8\nF\u266f7\u266d9\nB-7\nE7\nE-7\nA7\nA-7\nD7\nB\u266d\u00f8\nE7\u266d9\u266d13\nA-7\nC-7\nF7\nG\u0394\nC\u266d\u00f8\nF\u266f7\u266d9\u266d13\nB-7\nE7\nA-7\nD7\nG\u0394\nE7\nA-7\nD7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 18 extraction"
+}

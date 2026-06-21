@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: JAZZ LICKS\nPages 22-23 of the book.\n\n<<<CHAPTER TEXT\n\niat\n\nig lite pall\n[B- re lita 4\n(| ) % iS ha\n| | ae\nha\ni He Te\nats\nHt LL\n| P Ly hd\n{| \\ He\nih! TT p\n| ion rT] \u00b0\nLi |\ntho N\nau 5 *\n{sts} lr] y |\nel \u201c|\n1S\nait ]\n; : |\n. |\na a\ney t\nq $ 4\n4 =\u201c\n4 ne q\nq ry el\nTt rT\ne mS ? S\ncy \u2014 6 fe. z +4\nEodgale \u00a3 onogle Fave Simple poeme Fedewe Fe\nShee We Ne we SS\n\neq!\n\nD9(13)\nQ\n\nDm9\n\n42)\nGB\n\nax \u00a9 3\n\nx\n\n\u201cA 1\nei\n1 wy\nI] .\nry ql\ns 1 |\nry\nel if FY\nry Br.\nry\n|\nr \u00ab\n)\nsa\ne\n+\nwn a\nood ib x Eq\nO\u00b0 TA Y\nq a q\n\n\n\nBlues Lines\n\nThough most students know these Blues Lines, they will\nserve as a reminder to those who may have forgotten them.\n\nTe\n\nb e e\ni) 7 T t ; t id -# \u00a3\nSS \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\nYa i be inal i tT T\nD) \u00e9 _ T v\nPentatonic\nbe \u00bb\nf) n be ere be (be \u2014\n\"2 1 To tT t i n\nq n i tT i i *T i I T tT i 1\n4\u2014\u2014 oe t T I tT t T } f\nce $\u2014+\u2014 Ff\nh | be e\n7 t T r r \u2014 i \u00e9\n== SSS SS \u2014\u2014\u2014\u2014\n\u2014+\u2014\nb. e\np) a yp \u2014\u2014e \u2014\u2014\u2014e\u2014 fie\n4 T T tT pe fall + r T tT i T 1\n65 A 4 t -! + + -|-~ t rT T tT t tT +\ni) oe T ' t\ni) n {\u2014 t T T mt t rt De\n5 pe = \u2014\u2014s t n T t ;\u2014} t i ea \u2014pe\u2014\u2014\u2014F\ne oT oe oe be | T T\n4\ne\n\u2014p\u2014\u00bb--- $e--\u2014_-#-\u2014 ; t t T\n\u2014\u2014 SS SS SSS SSS SS\ne , T ~ oe be Ee\n\nJazz Licks\n\nThe Jazz Licks will acquaint the student with some of the\nbasic phrasing and germinal ideas. Most are based on the\nDominant 7th Chord (C7) since many people seem to need\nguidance in their exploration of its possibilities, especially\nin distinguishing it from the major chord. Students are\nurged to memorize these licks, then try incorporating them\ninto their own improvisations. All the phrases must be\nplayed within at least three Chord Forms and transposed\n\nC7\n\ninto all keys. They should be practiced repeatedly at a\nmedium tempo until the student can sing them and hear\nthem and feel them.\n\nWhen playing a Dominant 7th Chord or Scale, one Chord\nForm must be kept in mind. By constantly using and think-\ning in terms of the Basic Chord Forms and simply flatting\nthe seventh tone, the number of mistakes made in playing\non the Dominant will be greatly reduced.\n\nC7\no\n\nT\noe\n\neo\nST\nre\ni\"\nny\n\n9\n\nre\nSpy\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

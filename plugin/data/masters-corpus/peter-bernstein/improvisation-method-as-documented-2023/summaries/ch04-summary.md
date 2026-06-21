@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-06-01-bernstein-improvisation-method
+stage: s3
+source_pdf: An approach to Jazz Improvisation A method by Peter Bernstein.pdf
+source_pages: 6-8
+model: claude-haiku
+extracted_at: 2026-05-23T23:12:27+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — The Primacy of the Melody and Its Relation to Chords
+
+_Distillation; backed by `chapters/ch04.md`._
+
+This chapter codifies the load-bearing rule of the method: the melody is primary, and harmony exists to serve it. The order-of-operations is explicit — the very first practice task on any tune is to play the melody as a monophonic instrument and deliver the story, with attention to lyric syllables as a guide to articulation (Melody as monophonic delivery), and a player must not rush to 'step 12' (harmonic embellishment) before completing 'step 1' (melody mastery) (Step 1 before step 12). On solo guitar Bernstein enters with conservative shell voicings and only expands extensions and signature runs after the structure is established (Conservative chord entry); chords are placed in the spaces the melody allows, never the reverse (Never sacrifice melody phrasing), and the 'juggling on a unicycle' maxim warns against texture-overload at the cost of melodic feel (Juggling on a unicycle). The chapter introduces target notes as the operational link between melody and comping: when the melody lands on a specific chord tone the player notes it and lets it dictate voicing choice (Melody dictates chord choice), illustrated by the Dm6-vs-Dm7 worked example where the melody's b7 overrides the default minor-tonic Dm6 (Dm6 vs Dm7 from melody). Bernstein also reframes harmony pedagogy itself — tensions are memorized by sensory flavor rather than symbol manipulation (Chords as flavor/spice) — and insists melody and chords be learned together (Learn melody and chords together). The chapter closes by extending the language analogy to punctuation: rhythm and the spaces between notes are what convert a string of pitches into a musical idea (Rhythm gives notes meaning, Punctuation analogy).

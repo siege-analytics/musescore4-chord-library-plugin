@@ -1,0 +1,64 @@
+{
+  "run_id": "2026-05-28T15-05-20-faria-brazilian-guitar-book",
+  "config": "pipelines/master-distillation/configs/faria-brazilian-guitar-book.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-faria-brazilian-guitar-book/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-faria-brazilian-guitar-book/pages.json",
+        "re-ingested: 146 pages, 81,515 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-28T23:39:42+00:00",
+      "ended_at": "2026-05-28T23:39:42+00:00",
+      "outputs": [
+        "detected 5 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-faria-brazilian-guitar-book/chapter-bounds.json",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/chapters/ch01.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/chapters/ch02.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/chapters/ch03.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/chapters/ch04.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/chapters/ch05.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-28T23:42:31+00:00",
+      "ended_at": "2026-05-28T23:42:31+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/brazilian-guitar-book-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-28T23:49:38+00:00",
+      "ended_at": "2026-05-28T23:49:38+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/derived/systems-draft.json",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/derived/STATEMENT.md",
+        "derived 4 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

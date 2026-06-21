@@ -1,0 +1,88 @@
+---
+run_id: 2026-05-28T15-05-20-benson-vol-6-giant-lines
+stage: s4
+source_pdf: Benson, George - The George Benson Method, Vol 6 (The Secret of the Giant Lines).pdf
+model: claude-sonnet
+extracted_at: 2026-06-03T05:39:57+00:00
+schema_version: 0.1
+---
+
+# The Secret of the Giant Lines — Statement of Outputs
+
+## Overview
+
+*The George Benson Method, Vol. 6: The Secret of the Giant Lines* is organized around a single master concept — the **Giant Line** — developed progressively across harmonic situations, chord qualities, and melodic contexts. Chapter 1 establishes the foundational pedagogical premise: chord knowledge is the necessary gateway to harmonic mastery, and melodic fluency follows from understanding harmony rather than preceding it. This chord-to-harmony-to-line sequence is the book's governing logic. Subsequent chapters (2–13) apply that logic almost entirely through notated exercises and musical examples rather than discursive prose, making this a performance-based method: the student learns by playing through systematically organized musical situations.
+
+The book's proprietary vocabulary structures its taxonomy of melodic content. **Static Giant Lines** are the primary object of study across the first three Situations (Chapters 2, 4, and 8), representing extended single-note melodic constructions sustained over a single chord. Chapters 5 and 7 introduce **Flux and Reflux** — melodic motion that creates and releases harmonic tension over a sustained D7(9) chord — deepening the static domain before the book progresses. Chapter 12 introduces and explains **Active Giant Lines**, in which melodic construction moves across changing harmony, and Chapter 13 applies that concept to Dm7 harmony in a cadential context, serving as the book's culminating applied chapter.
+
+The D7 chord family functions as the book's primary harmonic laboratory. Chapters 3, 5, 7, 8, and 9 all center on D7 in its various forms — D7(9) and D7(#9) — making it the foundational chord situation through which the method's core techniques are demonstrated. Chapter 9, the book's most theoretically explicit chapter, introduces the **First and Second GB Chord Transition techniques**, the **Ending Note Rule** (all outside lines must resolve to a D7 chord tone), and the **D Mixolydian/B7 outside rule** grounded in chord-family theory. Chapters 10 and 11 extend the framework to Minor 7th and Major 7th chord territory, and Chapter 13 introduces **guide chord visualization** — mapping single-note melodic fingerings onto guide chord shapes — as the practical fretboard method underlying Active Giant Lines.
+
+---
+
+## Systems
+
+### Outside Substitution and Chord Transition System
+
+**System ID:** `benson:method-vol-6-giant-lines:outside-substitution`
+
+This system governs how a single-line improviser moves between "inside" chord-family vocabulary and "outside" superimposed ideas over dominant chords. The central move is borrowing arpeggios or lines from a distantly related chord — such as A7 or B7 over a target D7 — to generate momentary harmonic tension, then resolving back to a chord tone of the original dominant before the next harmonic change. The outside effect is explicitly time-limited: remaining on the superimposed chord idea too long destroys the effect and produces non-musical dissonance. Members of the system are the melodic regions available over a dominant chord; traversal rules govern when and how to enter and exit the outside region; modification rules govern which substitute chord is chosen and what note the line must end on.
+
+**Members:**
+
+- **Inside Chord Family** — Scale tones and arpeggios native to the target dominant chord and its parent harmonic field.
+- **Outside Superimposed Chord** — A foreign chord (e.g., A7 over D7, or D7 leading to G) borrowed to create momentary harmonic tension outside the current key center.
+- **Resolution Landing Zone** — The mandatory chord-tone endpoint of any outside line, ensuring return to the inside before the next chord change.
+
+---
+
+**Traversal Rules:**
+
+1. **Outside Entry by Chord Superimposition** — `SubstitutionExpand`
+
+   Enter the outside region by playing small ideas from a distantly related chord over the target dominant to create an outside effect. As the Chapter 9 summary states, the book teaches "how to create sophisticated outside effects over D7 chords using George Benson-style chord transitions … employing substitution chords (A7, B7) and their associated scales to generate colorful harmonic tension." The Chapter 9 source quote: *"We can create a very interesting outside effect over a D7 chord by playing small A7 ideas"* (Chapter 9, p. 26, topic: George Benson Chord Transitions).
+
+2. **Outside Duration Ceiling** — `_pending:outside-duration-ceiling`
+
+   Do not remain on the outside superimposed chord idea for too long or the outside effect collapses and becomes non-musical. The Chapter 9 summary identifies "Benson's hallmark warning against staying on the substitution chord too long" as reflecting "his ear for the exact threshold where outside color tips into dissonance." The Chapter 9 source quote: *"Do not stay on the A7 too long because you will destroy the effect"* (Chapter 9, p. 26, topic: 7lux/re7lux outside effect warning).
+
+3. **V7-I Cadential Superimposition** — `SubstitutionExpand`
+
+   A second outside approach constructs a mini V7-I cadence embedded within the line over the target chord as an additional outside device. The Chapter 9 summary describes the "First and Second GB Chord Transition techniques" as the book's "harmonic vocabulary." The Chapter 9 source quote: *"second trick is also to create a cadence V7/I just like we did before by using D7 leading to G major"* (Chapter 9, p. 26, topic: Second GB Chord Transition).
+
+4. **Modal Family Outside Entry** — `FamilyCoherence`
+
+   When a chord belongs to a modal family, use the related secondary dominant to create an outside line leading to the modal tonic. The Chapter 9 summary notes the "D Mixolydian/B7 outside rule (grounded in the Emi chord family)" as a key load-bearing concept, along with "theoretical justification (Mixolydian mode derivation from chord families)." The Chapter 9 source quote: *"D Mixolydian derives from Emi Chord Family, we can use also B7 ideas leading to Emi"* (Chapter 9, p. 31, topic: D Mixolydian / B7 outside rule).
+
+---
+
+**Modification Rules:**
+
+1. **Resolution Note Must Be Chord Tone** — `ColorToneRequire`
+
+   Any single-line idea — inside or outside — must end on a chord tone of the target dominant chord before the harmonic change. The Chapter 9 summary identifies this as the "critical Ending Note Rule requiring that all outside-effect lines resolve to a D7 chord tone," encoding Benson's threshold discipline: "outside color is permitted, even encouraged, but harmonic coherence must be restored at the line's conclusion." The Chapter 9 source quote: *"make sure that the ending note from your single line idea is a chord tone for D7"* (Chapter 9, p. 26, topic: Ending note rule).
+
+2. **Major 7th Superimposition for Minor Resolution** — `SubstitutionExpand`
+
+   When resolving to a minor tonic (e.g., Dm7), prefer major-7th superimposed arpeggio ideas over the preceding dominant (A7) to strengthen the pull toward the minor chord. The Chapter 13 summary identifies this as part of the book's "systematic treatment of relative major and minor key relationships — specifically, distinguishing which melodic options work over dominant chords like A7 (leading to Dm7) versus C7 (leading to Fmaj7)." The Chapter 13 source quote: *"major 7th superimposed ideas will work better for A7 leading to Dm7"* (Chapter 13, p. 77, topic: Guide chord visualization suggestion).
+
+3. **Single-Line as Harmonic Gateway** — `_pending:line-harmony-bridge`
+
+   Chord study is not an end in itself — chords serve as the gateway to understanding harmony, which in turn enables single-line melodic fluency. The Chapter 1 summary identifies this chord-to-harmony-to-line progression as the "load-bearing concept introduced" in the chapter and "the book's governing pedagogical logic." The Chapter 1 source quote: *"The chords led me to the harmony, that helped me to become a better single line player"* (Chapter 1, p. 2, topic: Chords leading to harmony).
+
+---
+
+## Pending Work
+
+Two modification rules in the Outside Substitution and Chord Transition System carry `_pending` engine payload kinds, indicating that no existing engine primitive covers these behaviors and new primitives must be defined before these rules can be executed:
+
+- **`_pending:outside-duration-ceiling`** — Signals a needed engine primitive for a durational ceiling on the time spent on an outside or substitution chord idea before the outside effect collapses into dissonance. The rule is musically clear (Chapter 9 states the threshold explicitly as a warning), but the engine currently has no mechanism to enforce a maximum duration on a superimposed region before requiring exit. This primitive must model time-bounded outside excursions with a collapse condition.
+
+- **`_pending:line-harmony-bridge`** — Signals a needed engine primitive for the pedagogical claim that chord study is a gateway to harmony, which in turn enables single-line melodic fluency. This is the book's foundational premise (Chapter 1) and the logical basis for the entire method's sequencing, but it represents a meta-level claim about the learning order and rationale — not a directly executable melodic rule — and requires a primitive that can represent or enforce curricular sequencing logic of this kind.
+
+---
+
+## Provenance Notes
+
+- **System content** is drawn from three chapters with load-bearing prose: **Chapter 9** (D7(#9) outside playing, First and Second GB Chord Transition techniques, Ending Note Rule, D Mixolydian/B7 outside derivation from the Emi chord family), **Chapter 13** (Active Giant Lines applied to Dm7 cadential motion, major-7th superimposed ideas for A7-to-Dm7, guide chord visualization), and **Chapter 1** (the foundational chord-to-harmony-to-line claim).
+
+- **Chapters that did not yield a system:** Chapters 2, 3, 4, 5, 6, 7, 8, 10, 11, 12 — these are composed entirely of notated exercises and examples with no load-bearing prose. They implicitly demonstrate Static Giant Lines (Chapters 2, 4, 8), Flux and Reflux over D7(9) (Chapters 5 and 7), the First and Second GB Chord Transition Ideas in application (Chapter 6), Active Giant Lines (Chapter 12), and Minor 7th and Major 7th chord territory (Chapters 10 and 11) through notation rather than text. Their content cannot be extracted as rules or system members without score analysis beyond the scope of the current pipeline stage.

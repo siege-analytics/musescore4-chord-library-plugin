@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Masters' Lessons Bookshelf (#220 / #276 Stage A / #293 Stage A.1 / #295 enum provenance fix)",
+  "description": "Schema for plugin/data/masters.json. Stage A introduced a dual-shape window (legacy 'principles' / new 'systems'). Stage A.1 (#293) adds an optional 'works' layer for multi-method masters: Van Eps's 1939 Method vs Harmonic Mechanisms, Martin Taylor's multiple books, etc. Each master must declare at least one of principles[], systems[], works[]. The engine_payload.kind enum was rolled back in #295 from the originally-shipped invented names to the 12 names with design provenance in predecessor session 260521-aware-nebula's schema-systems-model.md. Per-master migration is tracked in #277-#285; Stage C will deprecate 'principles'.",
+  "type": "object",
+  "required": ["version", "masters"],
+  "properties": {
+    "version": { "const": "v1" },
+    "schemaNote": { "type": "string" },
+    "masters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/master" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "master": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "lived": { "type": "string" },
+        "traditions": { "type": "array", "items": { "type": "string" } },
+        "instrument": { "type": "string" },
+        "biography": { "type": "string" },
+        "principles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/principle" }
+        },
+        "systems": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/system" }
+        },
+        "works": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/work" }
+        },
+        "usage_notes": {
+          "type": "array",
+          "description": "Per-master × per-chord-quality pedagogical notes. Each entry says how this master uses or teaches voicings of the named chord quality — function role, idiom, common substitution, voice-leading context. Consumed by reviewer-facing surfaces (the #395 review form, the docs glossary) so reviewers can confirm 'is this how the master would use this chord in a lesson' rather than just 'is this a master-X voicing'. Optional; populated incrementally per #415 and follow-up tickets.",
+          "items": { "$ref": "#/$defs/usage_note" }
+        }
+      },
+      "anyOf": [
+        { "required": ["principles"] },
+        { "required": ["systems"] },
+        { "required": ["works"] }
+      ],
+      "additionalProperties": true
+    },
+    "work": {
+      "description": "A discrete body of method content authored by the master — typically one book or one method era. Multi-method masters (e.g. Van Eps's 1939 Method vs Harmonic Mechanisms) place their systems inside the matching work so per-method divergence is legible. Single-method masters do not need works[] at all; their systems live directly on the master.",
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(_placeholder:)?[a-z0-9_-]+$",
+          "description": "Master-local kebab id (e.g. '1939-method', 'harmonic-mechanisms'). '_placeholder:' prefix marks a work whose interior is pending research; its systems[] may be empty or absent."
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "year": { "anyOf": [{ "type": "string" }, { "type": "number" }, { "type": "null" }] },
+        "instrument_scope": { "type": "string" },
+        "summary": { "type": "string" },
+        "systems": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/system" }
+        },
+        "references": { "$ref": "#/$defs/references" }
+      },
+      "additionalProperties": true
+    },
+    "principle": {
+      "type": "object",
+      "required": ["id", "name", "summary"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "voicingStyleTags": { "type": "array", "items": { "type": "string" } },
+        "playStyleTags": { "type": "array", "items": { "type": "string" } },
+        "applies_to_modes": { "type": "array", "items": { "type": "string" } },
+        "applies_to_tunings": { "type": "array", "items": { "type": "string" } },
+        "tolerance_hints": { "type": "object" },
+        "references": { "$ref": "#/$defs/references" },
+        "example_voicing_signatures": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "system": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(_placeholder:)?[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$",
+          "description": "Two- or three-segment id. Two-segment '<master>:<slug>' for systems living directly on master.systems (single-method masters). Three-segment '<master>:<work>:<slug>' for systems inside master.works[*].systems (multi-method masters). Optional '_placeholder:' prefix marks a system whose interior is intentionally empty pending design — placeholder shape relaxes the non-empty-members rule."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "members": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/taxonomy" }
+        },
+        "traversal_rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rule" }
+        },
+        "modification_rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rule" }
+        },
+        "preferences": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/preference" }
+        },
+        "examples": { "type": "array" },
+        "references": { "$ref": "#/$defs/references" }
+      },
+      "anyOf": [
+        {
+          "description": "Placeholder shape: id begins with '_placeholder:'; members/rules may be omitted or empty.",
+          "properties": {
+            "id": { "pattern": "^_placeholder:[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$" }
+          },
+          "required": ["id"]
+        },
+        {
+          "description": "Real shape: non-empty members[] AND at least one of traversal_rules or modification_rules non-empty.",
+          "properties": {
+            "id": { "pattern": "^[a-z0-9_-]+:[a-z0-9_-]+(?::[a-z0-9_-]+)?$" },
+            "members": { "type": "array", "minItems": 1 }
+          },
+          "required": ["members"],
+          "anyOf": [
+            { "properties": { "traversal_rules":   { "type": "array", "minItems": 1 } }, "required": ["traversal_rules"] },
+            { "properties": { "modification_rules":{ "type": "array", "minItems": 1 } }, "required": ["modification_rules"] }
+          ]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "taxonomy": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "name", "engine_payload"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "engine_payload": { "$ref": "#/$defs/engine_payload" }
+      },
+      "additionalProperties": true
+    },
+    "engine_payload": {
+      "type": "object",
+      "required": ["kind"],
+      "description": "Each rule carries one engine_payload. `kind` must be one of the 12 named kinds defined in docs/payload-kinds.md (#298), OR a `_pending:<kebab>` placeholder for rules that don't fit any named kind. See docs/payload-kinds.md for per-kind semantics, required/optional fields, worked examples, and boundary notes. Stretches — coercing a rule into a wrong name — are the failure mode the glossary exists to prevent; when in doubt, use `_pending:`.",
+      "properties": {
+        "kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "PositionContinuity",
+                "VoiceMotion",
+                "StringSetTransition",
+                "SymmetryMovement",
+                "FamilyCoherence",
+                "SubstitutionExpand",
+                "DensityFloor",
+                "DensityCeiling",
+                "OmissionAllow",
+                "ColorToneRequire",
+                "NCTHarmonization",
+                "TextureCycle"
+              ]
+            },
+            { "type": "string", "pattern": "^_pending:[a-z0-9-]+$" }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "preference": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "engine_payload": { "$ref": "#/$defs/engine_payload" }
+      },
+      "additionalProperties": true
+    },
+    "usage_note": {
+      "description": "Per-master × per-chord-quality pedagogical note. Says how the master uses or teaches voicings of the given chord quality — function role, idiom, common substitution, voice-leading context. The narrative should give a reviewer enough to decide 'is this how the master would use this chord in a lesson' rather than just 'is this a master-X voicing'. Multiple notes per (master, quality) are allowed (e.g. Greene treats m7b5 differently in V-System vs sequential-articulation).",
+      "type": "object",
+      "required": ["chord_quality", "narrative"],
+      "properties": {
+        "chord_quality": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One of the chord_quality values appearing on voicings.json voicings[].chord_quality. No enum constraint yet — the voicings catalog itself defines the live vocabulary; usage_notes referencing unknown qualities will be flagged by a future cross-validation step."
+        },
+        "function_role": {
+          "type": "string",
+          "description": "Free text describing the chord's role in this master's teaching (e.g. 'predominant-in-minor-ii-V-i', 'tonic-substitute', 'passing-diminished'). No enum yet — values will be enumerated once N≥5 masters have populated usage_notes and patterns stabilize."
+        },
+        "narrative": {
+          "type": "string",
+          "minLength": 1,
+          "description": "1-3 sentences explaining how the master treats this chord quality. Should be specific enough to confirm/refute pedagogical claims, not just identify the namespace."
+        },
+        "source_principle_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional refs to this master's principles[].id values that justify the note. Grounds the narrative claim in the principle structure."
+        },
+        "source_work_id": {
+          "type": "string",
+          "description": "Optional ref to works[].id when the note is drawn from a specific book/chapter."
+        },
+        "provenance": {
+          "type": "string",
+          "enum": ["extracted", "inferred-from-principles", "hand-authored", "placeholder"],
+          "description": "How this usage_note was produced. 'extracted' = distilled from source text via chapter-loop (authoritative); 'inferred-from-principles' = derived by reasoning over this master's principles[] (speculative, pending re-distillation); 'hand-authored' = written by a curator from direct source reading; 'placeholder' = structural-only, content TBD. Downstream consumers (form, glossary, Ellington) may render different provenance levels differently."
+        },
+        "polarity": {
+          "type": "string",
+          "enum": ["prescriptive", "proscriptive"],
+          "description": "Whether the lesson tells the player what to DO (prescriptive — default) or what NOT to do (proscriptive — negative prescriptions, e.g. 'never substitute m6 before a dominant a 4th higher'). Optional; absent value is treated as 'prescriptive' by consumers. Added per #471 because corpus extractions repeatedly surface real negative-prescription content that the sub-5 coach (ellington-web#57) renders with different prose templates."
+        },
+        "cross_ref": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional refs to related usage_notes (matched by chord_quality + function_role within this master). Used to link a proscriptive parent to its prescriptive exception child (e.g. Greene's 'altered dominants may not replace I7 at song opening' proscriptive note cross-refs the dom7#9 'tonic-placement-exception' prescriptive note). Empty or absent means standalone."
+        },
+        "references": { "$ref": "#/$defs/references" }
+      },
+      "additionalProperties": true
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {
+          "source": { "type": "string" },
+          "citation": { "type": "string" },
+          "url": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

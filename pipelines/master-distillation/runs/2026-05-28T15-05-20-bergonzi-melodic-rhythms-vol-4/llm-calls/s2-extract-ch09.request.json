@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: Triplet groupings\nPages 44-48 of the book.\n\n<<<CHAPTER TEXT\n\nPlaying Three Consecutive Eighth Notes\n\nUsing Tunes 1, 2, and 3, practice playing groupings of three consecutive eighth notes starting on\ndifferent places within the bar.\n\n1. Starting on beat one.\n\n\u00a9\nle\n\nNe!\n\nDee\nLan\n\n2. Starting on the \u201cand\u201d of beat one.\n\n_@\n\nry <\nC\u20144F aS \u00a3\n3. Starting on beat two.\n\u20ac <\nEt t\u2014\u00e9\n\n4. Starting on the \u201cand\u201d of beat two.\n\n2\n\nz z x\nXS L ay\n5. Starting on beat three.\n@\nrey v2 \u00a3 ey\nLo ia \u00a2\nf i\n| I\nLY\n\n\n\nMELODIC RAYTHNS\n\n6. Starting on the \u201cand\u201d of beat three.\n\n7. Starting on beat four.\n\n8. Starting on the \u201cand\u201d of beat four,\n\n4@\u00ae\n\n\u2014\u2014\u2014 > y\n\n.\n\n== =\n\u2014_\u2014\u2014\u2014\u2014\n\n9. Try starting three consecutive eighth notes from different beats randomly.\n\n\n\nPLAYING $ CONSECUTEVE CLGHTA NOTES\n\nThe following exercises, 10-13, are written out in varying time signatures but should be played\nsuperimposed over 4/+. Practicing these rhythms will also help you to gain familiarity with play-\n\ning in these odd meters, .\n\n10. Play this 3/4 pattern over 4/4.\n\na\nme\n\na\n\n11. Play this 3/4 pattern over 4/4.\n\nte\n\nan\n\n12. Play this 5/4 pattern over 4/4.\n\nind\na}\nvA\n\nHe!\nHe)\n\nrN\nNe\n\n13. Play this 7/4 pattern over 4/4.\n\nHe\nhte\nrel\n\n\u00a3. \u20ac.\nf ~ e\n\nVi\n\nner:\n\n14. Try playing exercise #9 again using the additional rhythmic devices.\n\n\nPlaying Two Consecutive Eighth Notes\n\nAt this point having worked on the preceding chapters and\nplay random groupings of two eighth notes starting\nrhythms to consider:\n\ngotten the gist of this exercise, try and\nat various places within the bar. Here are some\n\n1. This is a 3/4 rhythmic pattern using two consecutive eighth notes.\n\n2. This is a 5/4 rhythmic pattern using two consecutive eighth notes.\n\nEee\n\n3. This is a 7/4 rhyth\n\nmic pattern using two consecutive eighth notes.\n\nr\n\nre\n+f\n\naoa\nyVv\n\nMTS\n\nTry playing random two\u2019s on Tunes 1,2 and 3.\n\n;\n\n\nTriplet Groupings.\n\nUsing Tune 5 (It Happened), practice the following triplet rhythms. Each one consists of two\ngroupings of eighth-note triplets, but only four of the six notes are sounded.\n\nUs\n\n9,\n\n\u2014 |\n{2 aa 2 7 a\n7 L Te H\nT ~\n3 L3H\n{2 =. ma J \u00a3\nxX. L \u00a3 \u00a3 (- L e\nLi 3 Lz\na ye \u00a3 <\nXe L L aS\nU3 3\nran \u00a3. yee\nxX e f. L L\n3 L\u2014.3\u2014J\n2 ri 7] ma J\nx \u00a9 Lf L\naS\nmt\na a a\nrey a ye &\nx L L is f- aS\nU3 3\nCe \u20ac Z Gey\nXU PS : L L\n! y\n3 Le 3\nray &. \u00a3. 7 A- 7 t\nx ay f \u00a2 f f t\nHL\n\u2014\na Sl\nca 2 \u00a3 yy\n(_o\u2014_ zn\n4 \u2014\u2014\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

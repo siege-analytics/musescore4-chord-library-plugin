@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: The Shadow Of Your Smile\nPages 4-6 of the book.\n\n<<<CHAPTER TEXT\n\nContents\n\nFrom Body and Soul\nThe Shadow Of Your Smile\nMy Funny Valentine\nHow Are Things In Glocca Morra\nBody And Soul\nEdelweiss\n'Round Midnight\nStardust\nBut Beautiful\nI Remember You\nGreensleeves\nCavatina\nSophisticated Lady\nSnowfall\n\nFrom Quiet Now\nLush Life\nMy One And Only Love\nGiant Steps\nOn A Misty Night\nTraumerei\nSo In Love/The More I SeeYou\nOlha Maria\nQuiet Now\nNessun Dorma\nWaltz For Debbie/Very Early\nTheme From Bang The Drum Slowly\n\nGlossary of Open-String Voicings\n77\n\nThe Shadow of Your Smile\n\nComp. Johnny Mandel\nArr Gene Bertoncint\n\nIntro\na \u00ab> Bo ee\nace a= = \u2014_\nve Jreely and expressively\n# fz a\nt 1 hes : \u2014\u2014\u2014\n\u2014 \u2014\u2014 \u2014\u2014\u2014-\ncy ' = :\n9 2\nS45 = 4\n0 > we\n2 w ;\n& = 2\n\u2014 Pr a =\nis rit. ke\nTay \u2014\u2014 od a * x iad = = ae = = 3\noS\" fr =\" ra.\n18 i 4 (melody) ft\nze + = t \u2014 \u2014\n= \"Tes 1 Bl Woe = \u00ae @OOO\u00ae Ey\nP ee | F ?\nA\nA ee, ee eee ee\ncar tore ae\n\n\n\n26\nIV\n28\n30\n33\n37\n41\n44\n47\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

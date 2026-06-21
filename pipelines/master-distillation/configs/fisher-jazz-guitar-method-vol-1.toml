@@ -1,0 +1,45 @@
+# Queued via #334. Stage B: sibling work[] under existing jody-fisher master (currently no works[]).
+
+[master]
+id = "jody-fisher"
+name = "Jody Fisher"
+
+[work]
+id = "jazz-guitar-method-vol-1-beginning"
+title = "Jazz Guitar Method, Vol 1 (Beginning)"
+year = 1995
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/Jody Fisher/Fisher, Jody - Jazz Guitar Method, Vol 1 (Beginning).pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = true
+
+[ocr]
+host = "cyberpower"
+user = "dheerajchand"
+vision_model = "qwen2.5vl:7b"
+confidence_threshold = 0.70
+min_chars_per_page = 40
+render_dpi = 200
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."

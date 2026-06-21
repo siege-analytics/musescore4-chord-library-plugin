@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-warnock-beginners-guide
+stage: s3
+source_pdf: Warnock, Matt - Beginner's Guide to Jazz Guitar.pdf
+source_pages: 4-8
+model: claude-haiku
+extracted_at: 2026-05-31T03:23:27+00:00
+schema_version: 0.1
+---
+
+# Chapter 2 — Chapter 1 — II V I Chords
+
+_Distillation; backed by `chapters/ch02.md`._
+
+The ii V I progression is presented as the foundational organizing principle of jazz guitar, and this chapter establishes the core chord vocabulary (Dm7, G7, Cmaj7, Cmaj9) with an explicit learning sequence: solo practice, metronome work, backing track integration, then rhythmic variation. Two named comping rhythms form the load-bearing terminology: the Freddie Green rhythm, defined as quarter-note chords on every beat with accents on beats 2 and 4 to imitate swing feel, and the Charleston rhythm, which places chords on beat 1 and the & of 2. The chapter’s characteristic move is establishing reproducible labeled techniques—each rhythm has a named source and specific structural rule—that students can master through isolated practice before combining them. The transition from imitation to improvisation occurs through mixing the Freddie Green and Charleston rhythms together, giving students a compositional tool for developing their own comping rather than playing either rhythm verbatim.

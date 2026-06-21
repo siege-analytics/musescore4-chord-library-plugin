@@ -1,0 +1,49 @@
+---
+run_id: 2026-05-28T15-05-20-greene-modern-chord-progressions
+stage: s3
+source_pdf: Modern Chord Progressions - Jazz And Classical Voicings For Guitar - Ted Greene.pdf
+model: claude-sonnet
+extracted_at: 2026-05-29T05:14:55+00:00
+schema_version: 0.1
+---
+
+# Book-level distillation — modern-chord-progressions
+
+_Aggregated from per-chapter summaries under `summaries/`._
+
+## Overall Arc and Pedagogical Structure
+
+*Modern Chord Progressions: Jazz & Classical Voicings for Guitar* by Ted Greene is structured as a progressive method that moves from physical and notational prerequisites through increasingly complex harmonic formulas, culminating in the chromatic and altered-dominant language of jazz. Chapters 1-3 establish the technical and conceptual foundation: fingerstyle mechanics, diagram notation, memorization strategies, the five-position neck framework, and the doctrine of chord homonyms. Chapters 4-6 introduce diatonic logic — harmonic formulas in major keys, diatonic chord scales, scalewise root movements (SWR), and scalewise bass lines (SWB) — building the reader's ability to construct and navigate chord progressions by systematic voice leading. Chapters 7-11 then survey the canonical harmonic formulas one by one: I vi ii V (Chapter 7), the diatonic cycle of 4ths (Chapter 8), iii7 VI7 ii7 V7 (Chapter 9), iii7 vi7 II7 V7 (Chapter 10), and III7 VI7 II7 V7 (Chapter 11), each formula receiving exhaustive voicing variations across the entire fingerboard. Chapter 12 is a reading list with no instructional content.
+
+## The Master's Characteristic Terminology and Systems
+
+Greene's method is built on several load-bearing terms introduced early and used throughout. *Harmonic formulas* are named chord progressions — I iii IV V, I vi ii V, iii vi ii V, etc. — treated as repeatable compositional and improvisational templates; they are labeled with triad-level Roman numerals even when extended voicings are actually employed (Chapter 4). *Extensions* are additional diatonic notes layered onto triads or seventh chords, and their inclusion is guided by ear-appeal rather than completeness — missing 5ths or roots are explicitly acceptable (Chapter 4). *Diatonic chord scales* are ordered sequences of chords built exclusively from major-scale notes, progressed by stepwise voice leading where each voice moves to the next scale degree of the same name (Chapter 5). *String transference* is Greene's technique for relocating a chord voicing across string groups: moving to higher strings shifts notes up while retaining shape except for mandatory 2nd-string adjustments, then the whole chord drops five frets; moving to lower strings requires 3rd-string corrections (Chapter 5). *Homonyms* are chord forms that sound identical but take different names depending on harmonic context — e.g., the same shape functions as Em6, C#m7b5, or A9 — governed by the rule that context determines correct naming (Chapter 3).
+
+## Notation, Physical Technique, and the Double-Stop System
+
+Chapters 1 and 2 install the technical operating system for the entire book. The right hand uses thumb and fingers without a flat pick; wrist height is prescribed at 2-3 inches with a squeeze plucking mechanic. Nail length is a prerequisite for fingerstyle tone quality. The *double stop* is a named technique: sounding two adjacent strings with a single finger, distinguished from *flattening* (an alternative for adjacent notes at the chord's top). The *5th finger principle* — credited to George Van Eps — allows one finger to fret two different frets. Diagram notation is codified: sustain ties between diagrams, connecting lines for double stops, and a symbol for added melodic notes over sustained chords. *Arpeggiation* — plucking chord tones individually — is prescribed as the diagnostic practice for verifying *cleanliness* (all intended notes sounding). The O notation marks notes plucked after strummed x-notes; fingerings in diagrams apply only to the initial chord sound unless otherwise indicated (Chapter 2).
+
+## Memorization and Fingerboard Organization
+
+Greene teaches three distinct memorization approaches — shape-based, interval-based, and root-based anchoring — and prescribes that experienced players combine all three eclectically (Chapter 3). The fingerboard is organized into five neck areas serving as positional reference points for major and minor chord forms (Chapter 2). A foundational reference table shows chords constructed by stacking thirds: triads as 1-3-5, seventh chords as 1-3-5-7, with extensions continuing the stack. Mastery requires learning all useful homonym names for each chord form; failure to do so is explicitly identified as a source of long-term difficulty (Chapter 3). During practice of diatonic chord scales and cycles, players are instructed to mentally track both chord names and Roman numeral functions simultaneously (Chapters 5 and 8).
+
+## Rules and Prescriptions
+
+The book is notably prescriptive. Several rules recur or are stated explicitly:
+
+- **Ear over theory:** voicing choices and register/transposition decisions are governed by ear judgment; muddy low voicings are to be avoided (Chapter 4).
+- **Descending as well as ascending:** chord scales must be practiced in both directions (Chapter 6).
+- **Resolve V to I:** V7 chords should periodically resolve to I to maintain functional-harmonic grounding — stated as a standing rule across Chapters 9, 10, and 11.
+- **Continuity before judgment:** physical difficulty signals a dexterity-training opportunity, not a flaw in the progression; smoothness must be achieved before assessing musical value (Chapter 7).
+- **Whole-fingerboard exploration:** every harmonic formula is to be explored across the entire fingerboard from multiple angles, using key transposition to prevent monotony (Chapters 7 and 8).
+- **Avoid overuse of cycles:** the cycle of 4ths pattern should be combined with other cycle patterns rather than used in isolation (Chapter 8).
+- **Soprano exceptions:** when a iim7/11 chord has its 11th in the soprano, the standard 3rd-raising conversion method for producing II7 does not apply (Chapter 10).
+- **Altered-dominant pacing:** introduce altered dominant chords after first preparing the ear with diatonic, "major scaley" sounds (Chapter 11).
+
+## Substitution Logic and Dominant-Seventh Conversion
+
+A significant portion of the method (Chapters 9-11) is devoted to systematic chord substitution. The foundational rule is that any m7 chord may be replaced with a dominant 7th according to personal taste (Chapter 9). Greene distinguishes diatonic minor sevenths (lowercase: vi7) from chromatic dominant sevenths on the same root (uppercase: VI7) through symbol convention. The specific conversion mechanism taught in Chapter 10 is: raise the 3rd of a ii7 shape by one fret to produce II7; when two 3rds are present, raise the lower-pitched one, which typically yields II7#9. The same logic applies to converting vi7 to VI7, though Chapter 10 notes that other methods often produce more desirable sounds for that conversion. Altered dominant chords — voicings incorporating #9, b9, #5, or b5 — are described as producing "spicy" color (Chapter 11), and substitution rules permit iii7 in place of III7 types and vi7 in place of VI7 types to expand harmonic vocabulary. The acoustic rationale given for why diatonic substitutions sound natural is the overtone series (Chapter 9).
+
+## George Van Eps's Contributions and the Team Concept
+
+Greene explicitly credits George Van Eps at two points. The *5th finger principle* (one finger spanning two frets) is attributed to Van Eps and introduced as a named technique in Chapter 1. In Chapter 5, Van Eps's *team concept* — alternating two interesting intervals using separate left-hand finger groups — is named as a specific embellishment approach for decorating chord scales. *Decoration* more broadly refers to breaking up chord scales through note delays or through moving lines derived from diatonic tones (Chapter 5). These attributions signal that the method positions itself within a lineage of advanced guitar-specific voice-leading technique rather than generic harmony instruction.

@@ -1,0 +1,619 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-baker-vol-2",
+    "stage": "s4",
+    "source_pdf": "Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf",
+    "extracted_at": "2026-05-29T00:24:14+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "mickey-baker",
+  "work_id": "complete-course-vol-2",
+  "systems": [
+    {
+      "id": "mickey-baker:complete-course-vol-2:functional-diatonic-harmony",
+      "name": "Functional Diatonic Harmony System",
+      "summary": "The central harmonic system of the method, organized around the II-V-I resolution chain. Chord forms (Upper Partial voicings) are the members; traversal is governed by dominant-to-tonic pull and the insertion of relative/substitute chords that must always arrive at V before resolving to I. Modification rules expand the dominant and II chord through upper partials (7th, 9th, 11th, aug. 11th, 13th, flat-5, flat-9), permit diminished and augmented chords as dominant substitutes, and license Forced Harmony as a device for harmonic activity. The system culminates in chord-melody arranging, where melody priority can override harmonic completeness.",
+      "members": [
+        {
+          "id": "tonic-i",
+          "name": "Tonic (I) Chord",
+          "summary": "Harmonic destination and point of rest; the ear is satisfied once I is reached."
+        },
+        {
+          "id": "subdominant-iv",
+          "name": "Subdominant (IV) Chord",
+          "summary": "Intermediate chord in the I-IV-V-I cycle; demands temporary resolution toward V."
+        },
+        {
+          "id": "dominant-v",
+          "name": "Dominant (V) Chord",
+          "summary": "Most active chord of the tonality; all cycle motion gravitates toward V before resolving to I."
+        },
+        {
+          "id": "supertonic-ii",
+          "name": "Supertonic (II) Chord",
+          "summary": "Prepares the dominant; can substitute for V; carries its own upper partials."
+        },
+        {
+          "id": "upper-partial-voicings",
+          "name": "Upper Partial Voicings (Chord Forms)",
+          "summary": "Extended voicing shapes: 9th, 11th, aug. 11th, 13th, flat-9 dominants, 6th and 9th tonic forms."
+        },
+        {
+          "id": "diminished-7th-substitute",
+          "name": "Diminished 7th as Dominant Substitute",
+          "summary": "Root-omitted flat-9 dominant reframed as diminished; resolves to tonic in place of V."
+        },
+        {
+          "id": "augmented-substitute",
+          "name": "Augmented Chord as Dominant Substitute",
+          "summary": "Augmented triad/7th functioning as altered dominant resolving to tonic."
+        },
+        {
+          "id": "passing-tone",
+          "name": "Passing Tone",
+          "summary": "Voice-leading mechanism (R/P notation) connecting 9th to 6th chord forms."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "dominant-to-tonic-resolution",
+          "name": "Dominant-to-Tonic Resolution",
+          "summary": "All chord cycles, however elaborated, must eventually reach V and resolve to I.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Rule: eventual dominant resolution",
+              "quote_excerpt": "no matter how many chords you add to the cycle, they should eventually reach the dominant",
+              "page": 13
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Dominant as most active chord",
+              "quote_excerpt": "eventually reaches the V (dominant the most active chord of the tonality)",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "ninth-to-sixth-voice-leading",
+          "name": "Ninth-to-Sixth Voice Leading",
+          "summary": "Modern progressions move from a 9th to a 6th chord via passing tones, replacing the simpler dominant-to-tonic resolution.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Minor/Major Ninth to Sixth Movement",
+              "quote_excerpt": "moving from a minor ninth to a minor sixth and from a major ninth to a major sixth",
+              "page": 8
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Minor Ninth to Minor Sixth Resolution",
+              "quote_excerpt": "Each chord is moving from a minor ninth to a minor sixth chord, via passing tones.",
+              "page": 7
+            }
+          ]
+        },
+        {
+          "id": "ii-chord-insertion",
+          "name": "II Chord Insertion Before V",
+          "summary": "When a progression moves only from dominant to tonic, the II chord is inserted before V.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "II chord substitution for V",
+              "quote_excerpt": "use the II chord instead of the V and resolve into the V from the II",
+              "page": 12
+            },
+            {
+              "chapter_n": 8,
+              "topic": "Minor II substitution preview",
+              "quote_excerpt": "substituting minor II chords for dominant V chords.",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "bottom-tone-whole-step-descent",
+          "name": "Bottom Tone Whole-Step Descent",
+          "summary": "The bass voice of each chord form moves down a whole tone across chord-form exercises.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Bottom tone movement rule",
+              "quote_excerpt": "the bottom tone of each chord moves down a whole tone.",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "chromatic-fingerboard-transposition",
+          "name": "Chromatic Fingerboard Transposition",
+          "summary": "Every exercise must be transposed chromatically up and down the full neck in both major and minor modes.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Chromatic Practice Instruction",
+              "quote_excerpt": "practice them chromatically, moving up and down the finger board",
+              "page": 8
+            },
+            {
+              "chapter_n": 6,
+              "topic": "V to I cadence (dominant to tonic)",
+              "quote_excerpt": "Practice this chromatically up and down the fingerboard.",
+              "page": 9
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "upper-partials-dominant-alteration",
+          "name": "Upper Partials Dominant Alteration",
+          "summary": "The dominant chord may be extended to 7th/9th/11th/aug.11th/13th; the 5th or 9th may be flatted; all remain Upper Partials and resolve to the tonic.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Upper Partials of dominant chord",
+              "quote_excerpt": "The dominant chord can be the dominant 7th, 9th, 11th, aug. 11th or 13th. The 5th or the 9th can be Flatted",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "id": "diminished-as-dominant-substitute",
+          "name": "Diminished 7th as Dominant Substitute",
+          "summary": "A diminished 7th chord functions as the upper structure of a flat-9 dominant and may replace V in V-I resolution.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 21,
+              "topic": "Diminished 7th as dominant substitute",
+              "quote_excerpt": "They are the Upper tones to a diminished or flatted 9th chord.",
+              "page": 34
+            },
+            {
+              "chapter_n": 21,
+              "topic": "Diminished resolving to tonic",
+              "quote_excerpt": "the diminished chord instead of the dominant, resolves into the tonic.",
+              "page": 34
+            }
+          ]
+        },
+        {
+          "id": "forced-harmony-expansion",
+          "name": "Forced Harmony Expansion",
+          "summary": "Additional chord progressions that move away from and back to the tonic are inserted to keep the music active.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Forced Harmony defined",
+              "quote_excerpt": "Forced Harmony (adding chords via progressions that move away from, then lead back into the tonic.)",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "id": "melody-priority-chord-omission",
+          "name": "Melody-Priority Chord Omission",
+          "summary": "In chord-melody arranging, chords must be omitted when they conflict with the melodic line.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 26,
+              "topic": "Exercise design philosophy",
+              "quote_excerpt": "chords are forced against the melody and, at some points, even dropped for a better melodic line.",
+              "page": 42
+            }
+          ]
+        },
+        {
+          "id": "player-ear-substitution-authority",
+          "name": "Player Ear as Substitution Authority",
+          "summary": "The player's ear governs substitution choices; jazz arrangements characteristically diverge from original progressions.",
+          "engine_payload": {
+            "kind": "_pending:ear-authority-substitution"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Chord melody arrangement philosophy",
+              "quote_excerpt": "musical sounds that sound best to you rather than the ideas and chord cycles that were originally written",
+              "page": 14
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Original progressions as starting point",
+              "quote_excerpt": "The original chord progressions of the song are routine and much is left to your imagination.",
+              "page": 14
+            }
+          ]
+        },
+        {
+          "id": "non-standard-voicing-creation",
+          "name": "Non-Standard Voicing Creation for Melody Fit",
+          "summary": "When no familiar shape harmonizes the melody, invent a voicing that fits the line and blends with the surrounding cycle.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 20,
+              "topic": "creating non-standard chords for melody",
+              "quote_excerpt": "it becomes necessary to create chords that will fit the melody and also blend well musically with the chord cycles",
+              "page": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mickey-baker:complete-course-vol-2:symmetric-harmony",
+      "name": "Symmetric Harmony System",
+      "summary": "A parallel harmonic universe (Chapter 13) that operates without a diatonic key center. Every chord functions as a tonic; harmonic motion distributes equally across the 12-tone scale via minor-third (T1-T4) or major-third (Augmented Cycle T1-T3) division. The diminished 7th chord is the emblematic vehicle. Symmetric Harmony is applied at cadences, phrase endings (Cadence Breaks), and introductions. Traversal rules govern direction and interval of fingerboard transposition; modification rules permit partial chord fragments, retrograde motion, and tonic-count expansion to 6 or 12 by inserting intermediate chords.",
+      "members": [
+        {
+          "id": "diminished-7th-tonic",
+          "name": "Diminished 7th Chord (4-tonic symmetric vehicle)",
+          "summary": "Built on successive minor thirds; all four tones are enharmonically equivalent tonics."
+        },
+        {
+          "id": "augmented-triad-tonic",
+          "name": "Augmented Triad / Augmented 7th (3-tonic symmetric vehicle)",
+          "summary": "Built on major thirds; major-third transposition reproduces the same pitch-class set."
+        },
+        {
+          "id": "symmetric-cycle-position",
+          "name": "Symmetric Cycle Position (T1-T4)",
+          "summary": "One of four equal fingerboard positions reached by minor thirds."
+        },
+        {
+          "id": "augmented-cycle-position",
+          "name": "Augmented Cycle Position (T1-T3)",
+          "summary": "One of three equal positions reached by major thirds."
+        },
+        {
+          "id": "chord-fragment",
+          "name": "Chord Fragment",
+          "summary": "Partial voicing executing the minor-third glissando in place of the full chord."
+        },
+        {
+          "id": "cadence-break-slot",
+          "name": "Cadence Break Slot",
+          "summary": "Structural one-to-two-bar pause at phrase endings where Symmetric Harmony is deployed."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "minor-third-symmetric-cycle",
+          "name": "Minor-Third Symmetric Cycle Traversal",
+          "summary": "Any chord shape is transposed up or down the fingerboard in minor thirds (T1-T4), maintaining the same left-hand shape.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Symmetric Cycles definition",
+              "quote_excerpt": "Only the first chord will be diagrammed and those to follow ... are a minor third higher.",
+              "page": 22
+            },
+            {
+              "chapter_n": 13,
+              "topic": "Diminished 7th chord fingerboard movement",
+              "quote_excerpt": "a diminished 7th chord which moves freely up and down the finger board in minor thirds.",
+              "page": 21
+            }
+          ]
+        },
+        {
+          "id": "major-third-augmented-cycle",
+          "name": "Major-Third Augmented Cycle Traversal",
+          "summary": "Augmented chord shapes are transposed in major thirds, dividing the 12-tone scale into three equal parts.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Symmetric Augmented Cycle \u2014 three tonics",
+              "quote_excerpt": "Divide the 12 tone scale in three equal parts and you get three tonics, T. 1, 2, and 3.",
+              "page": 26
+            },
+            {
+              "chapter_n": 17,
+              "topic": "Augmented chord construction",
+              "quote_excerpt": "When this chord is moved up a major third on the finger board, the same tones appear.",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "directional-glissando-rule",
+          "name": "Directional Glissando Rule (High-Down, Low-Up)",
+          "summary": "If a phrase ends high on the fingerboard move the cycle downward in minor thirds; if it ends low, move it upward.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Applying Symmetric Cycle to existing material",
+              "quote_excerpt": "If the last chord ends high on the finger board, move it down in minor thirds, if it ends low, move it up.",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "retrograde-cycle-practice",
+          "name": "Retrograde Cycle Traversal",
+          "summary": "Symmetric Cycle exercises are practiced backwards (T4-T3-T2-T1) to build descending facility.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Retrograde practice rule",
+              "quote_excerpt": "Play the exercises below backwards, starting with T1 then 4, 3, 2 and back to the 1.",
+              "page": 23
+            }
+          ]
+        },
+        {
+          "id": "parallel-motion-endpoint-rule",
+          "name": "Parallel Motion / Endpoint-Only Rule",
+          "summary": "Only the start and end points of the motion matter; harmony moves strictly in parallel up or down.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Symmetric Harmony \u2014 parallel motion rule",
+              "quote_excerpt": "Harmony is parallel either up or down and you can have as many as 12 tonics",
+              "page": 26
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tonic-expansion-six-twelve",
+          "name": "Tonic Count Expansion (6 or 12 Tonics)",
+          "summary": "The 3-tonic Augmented Cycle expands to 6 tonics by inserting intermediate chords, or up to 12 via full Symmetric Harmony.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Expanding to six tonics",
+              "quote_excerpt": "now we have six tonics, the additional tonics having been forced into the cycle.",
+              "page": 26
+            }
+          ]
+        },
+        {
+          "id": "chord-fragment-substitution",
+          "name": "Chord Fragment Substitution in Symmetric Cycle",
+          "summary": "Partial chord voicings may execute the minor-third glissando in place of the full chord.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Chord fragments in Symmetric Cycle",
+              "quote_excerpt": "It is possible to use only fragments of the chord rather than its entirety",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "non-diatonic-color-chord-insertion",
+          "name": "Non-Diatonic Color Chord Insertion",
+          "summary": "Chords absent from a song's original structure may be inserted to add color and originality.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 18,
+              "topic": "Non-diatonic chords for color",
+              "quote_excerpt": "many chords are used that don't appear in the original chord structure of a song. They are used to add color and originality.",
+              "page": 27
+            }
+          ]
+        },
+        {
+          "id": "cadence-break-harmonization",
+          "name": "Cadence Break Harmonization",
+          "summary": "The Cadence Break is filled with Symmetric Cycles, Pedal Point, or original chord progressions.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 22,
+              "topic": "Harmonizing the Cadence Break",
+              "quote_excerpt": "Symetric Cycles, Pedal Point and other types of original chord progressions may be employed at these points.",
+              "page": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mickey-baker:complete-course-vol-2:counterpoint-chord-melody",
+      "name": "Counterpoint and Chord-Melody System",
+      "summary": "The culminating system, framing prior learning as harmonic support for independent melodic lines. Counterpoint is the movement of two or more independent melodies \u2014 Cantus Firmus and Counter melody \u2014 rather than chord harmony. Members include the two melodic voices, arpeggiated bass voice, and Pedal Point. Traversal rules govern rhythmic contrast between voices and the requirement that chordal motion avoids bad harmonic movement. Modification rules govern arpeggiated bass extraction as counter-melody, Pedal Point distribution across ensemble, and chord omission for melody priority.",
+      "members": [
+        {
+          "id": "cantus-firmus",
+          "name": "Cantus Firmus (Original Melody)",
+          "summary": "Primary melodic voice against which the counter melody moves."
+        },
+        {
+          "id": "counter-melody",
+          "name": "Counter Melody (Added Voice)",
+          "summary": "Second independent melodic line; may be extracted as the first note of each arpeggiated chord."
+        },
+        {
+          "id": "arpeggiated-bass-voice",
+          "name": "Arpeggiated Bass Voice",
+          "summary": "Lowest note of each arpeggiated chord, treated as independent melodic line."
+        },
+        {
+          "id": "pedal-point",
+          "name": "Pedal Point",
+          "summary": "Sustained single pitch (canonically the fifth of the scale) held while harmonies shift above it."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "rhythmic-contrast-between-voices",
+          "name": "Rhythmic Contrast Between Voices",
+          "summary": "One voice sustains (up to four beats) while the other moves in quarter or eighth notes.",
+          "engine_payload": {
+            "kind": "_pending:voice-rhythmic-contrast"
+          },
+          "references": [
+            {
+              "chapter_n": 25,
+              "topic": "Two-line movement rule",
+              "quote_excerpt": "one melody sustains itself for as many as 4 beats, while the other line moves along in quarter or eighth notes.",
+              "page": 41
+            }
+          ]
+        },
+        {
+          "id": "harmonic-integrity-constraint",
+          "name": "Harmonic Integrity Constraint",
+          "summary": "Melodic independence must never compromise the harmonic foundation; examples avoid bad harmonic movement.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 25,
+              "topic": "Harmonic movement standard",
+              "quote_excerpt": "there is never a sign or sound of bad harmonic movement.",
+              "page": 41
+            }
+          ]
+        },
+        {
+          "id": "pedal-point-ensemble-distribution",
+          "name": "Pedal Point Ensemble Distribution",
+          "summary": "Bass plays the pedal tone; guitar or piano executes chord variations above; a melody instrument carries the song's line.",
+          "engine_payload": {
+            "kind": "_pending:ensemble-layer-assignment"
+          },
+          "references": [
+            {
+              "chapter_n": 24,
+              "topic": "Pedal Point distribution by ensemble",
+              "quote_excerpt": "the bass plays the Pedal Point while the piano or guitar plays the chord variations.",
+              "page": 40
+            },
+            {
+              "chapter_n": 24,
+              "topic": "Three-voice arrangement with Pedal Point",
+              "quote_excerpt": "bass playing Pedal Point, the guitar playing the chord variations and the voice or solo instrument carrying the melody",
+              "page": 40
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "arpeggiated-bass-counter-melody-extraction",
+          "name": "Arpeggiated Bass Counter-Melody Extraction",
+          "summary": "Only the first (lowest) note of each arpeggiated chord is retained to form a sustaining counter-melody line.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 25,
+              "topic": "Sustaining counter melody technique",
+              "quote_excerpt": "only the first note in each chord of the counter melody is used. This is a sustaining type of counter melody",
+              "page": 41
+            },
+            {
+              "chapter_n": 20,
+              "topic": "arpeggiated bass melodic line",
+              "quote_excerpt": "the first note of each chord is the most important. It forms a melodic line at the base of the chord",
+              "page": 33
+            }
+          ]
+        },
+        {
+          "id": "pedal-point-fifth-canonical",
+          "name": "Pedal Point Fifth-of-Scale Canonical Choice",
+          "summary": "The fifth of the scale is the canonical sustained pedal tone.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 22,
+              "topic": "Pedal Point definition",
+              "quote_excerpt": "The most popular note in Pedal Point is the fifth of the scale.",
+              "page": 37
+            },
+            {
+              "chapter_n": 23,
+              "topic": "Pedal point on D defined",
+              "quote_excerpt": "Pedal Point on D, the V of Gmaj.",
+              "page": 38
+            }
+          ]
+        },
+        {
+          "id": "chord-omission-for-melody",
+          "name": "Chord Omission for Melody Priority",
+          "summary": "In chord-melody arranging, chords conflicting with the melodic line must be dropped.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 26,
+              "topic": "Exercise design philosophy",
+              "quote_excerpt": "chords are forced against the melody and, at some points, even dropped for a better melodic line.",
+              "page": 42
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

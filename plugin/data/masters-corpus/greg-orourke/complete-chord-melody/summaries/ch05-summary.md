@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
+stage: s3
+source_pdf: complete_chord_melody.pdf
+source_pages: 137-199
+model: claude-haiku
+extracted_at: 2026-05-23T23:30:33+00:00
+schema_version: 0.1
+---
+
+# Chapter 5 — Module 4 - Arranging For Solo Guitar (Techniques)
+
+_Distillation; backed by `chapters/ch05.md`._
+
+Chapter 5 transitions from trio chord-melody to solo guitar arranging, organized around an aesthetic strategy and four core devices. The aesthetic strategy is alternation rather than simultaneity — walking bass, then chord line, then unaccompanied single line — because the listener's mind fills in the gaps to produce the illusion of a full band (Illusion of solo guitar). The load-bearing difference from trio playing is greater prominence of bass notes on the 5th and 6th strings since there is no bass player to cover that role (Bass on 5th/6th strings), and a specific key-selection rule follows: prefer A, E, or D so open strings can carry bass notes and free the fretting hand (Open-string keys). The diagnostic for thin-sounding arrangements is bass voiced too close to the upper harmony (Bass-upper proximity issue). The solo-guitar voicing primitive is the shell voicing — root, 3rd, and 7th only (Shell voicing definition) — derived from bar chords by dropping the 5th first as the rule for which note to cut (Drop the 5th), with the 6th available as a substitute for the 7th for a warmer, more resolved color (6 or 7 substitution), and a general refinement rule to avoid doubled notes unless the doubling happens to sound good (Avoid doubled notes). Workflow-wise, an intermediate drill of adding a bass note under the melody at each chord change builds the ear before voicings get added (Bass-notes-at-changes drill). The chapter then defines the four core solo-guitar devices: arpeggiation as plucking chord notes one at a time (Arpeggiation definition), octaves as Wes-Montgomery-style melody doubling one octave down (Octaves definition) supported by the muting technique of resting the first finger gently on the unwanted in-between string (Octave muting technique), and diads as Barney-Kessel-style parallel 3rds or 6ths (Diads definition). It closes with a four-step recipe for walking bass — fill beats 2 and 3 with diatonic, chromatic, or arpeggio notes between the beat-1 root and the beat-4 approach note (Walking bass four-step build) — and a chromatic approach-chord rule of repeating the same voicing one fret away from the target (Chromatic approach chord).

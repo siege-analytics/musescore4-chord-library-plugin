@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: BEBOP LICK\nPages 40-44 of the book.\n\n<<<CHAPTER TEXT\n\nExamples From Recorded Solos\n\nRay Brown, bass (\u201cBlues For Basie\u201d)\nA-? D\n\n4\nee 52\"\n10, SE\n\nScott LaFaro, bass (\u201cNardis\u201d)\nBi\n3 9\n\n+ @\n\n| Mt oe z\n\n\u2014=~3 =} juenned\n\nJim Hall, guitar (\u201cYou\u2019d Be So Nice To Come Home To\u201d)\nae D\u2019, 9\n5 bs\n\nr)\n122. g \u2014\n\nSlide Hampton, trombone (\u201cMoontrane\u201d)\n\nYD b4\n1 ot the\n\n3. =\n\nCharles Parker, alto saxophone (\u201cMoose The Mooche\u201d)\n\n\n\n30\n\nCharles Parker, alto saxophone (\u201cK.C. Blues\u201d)\n4\nCw\n\n3_ ~~.\nSa !\n\nPhil Woods, alto saxophone (\u201cAiregin\u201d)\n\nQ\u2019 3 90 aT\n-_ an oe\n126. & E Bac 2\n\nMcCoy Tyner, piano (\u201cBirdlike\u201d)\n\np\u201d ny\n\n3 9\n\n121.\n\nBill Evans, piano (\u201cIsrael\u201d, 1970 recording)\n\n4 ba\n18. \u2014\n\nBill Evans, piano (\u201cI Hear A Rhapsody\u201d)\n\neu C1 \u00a27\nb9. - 3 4 3 b4\nfi 3 oe \u2014\u2014 |_| nar\n129 | =\n\n-\n\nFreddie Hubbard, trumpet (\u201cUp Jumped Spring\u201d)\n\nNY\n\n3 b4\n\na Se ST\n\npasa ees\n\n\n\nAIT EEA AR SIET er \u201d\n\ncoerce yeas teppeteuerie nciateniapebtaiere |= thon oe Boe\n\nSEIS!\n\neee\n\ne\" Q\u201d\n3\n\no\u2014t = r\n& ba eo\n\nHank Mobley, tenor saxophone (\u201cNica\u2019s Dream\u201d)\n\nC\n\n|\n3 b9\n\nse it ee\n|\n\nSonny Rollins, tenor saxophone (\u201cI Know That You Know\u201d)\nD!\n3\n\n138, ore 2\n\nSonny Stitt, tenor saxophone (\u201cBy Accident\u201d)\n\n\u201d 4\nR 3 : ba\n\n69\n\n3\n\n(a4. 8\n\nAlso review examples 97, 101, and 102 in the 7-3 resolution section of this book, as\nthey are examples of 7-3 resolutions that connect with 3-b9 patterns.\n\nWays to Practice/Ingrain\n\nStudy the foregoing examples. Play them in all keys. Practice them in logical\nsequences, especially the cycle of fifths. The harmonic settings that are most appropriate\nare dominant seventh chords, dominant seventh chords moving around the cycle of\nfifths, II-7 to V7 cells moving downward in whole steps, and II? to V7 (alt.) moving\ndownward in whole steps. Find play-along tunes and exercise tracks with which to\npractice the 3-b9 device.\n\n31\n\n\n32\n\nExercises\n\ntinue Trasks Y ond AA!\nCech areaen pie ae\n\n445. 7 bet > A+ \u20144 \u2014 4 \u2014 /\u2014+\u2014_4\u2014 +\nee\neg rw Gl eb-\" a\u201d y-\" gh\n4 A A 4\n. - . . bo\"\na\nA ~\u20144\u2014_4\u2014 4\u2014_4\u2014_ 44+ | -&\n\nBp\" ev\" continue Track Y.\n\n86 =o ; =\n| ee ee\neontinue Track AA\u2019\n\nTe RACIST PEER ERTS reste o oe\n\nen (sy Bb\" continue track BB.\n\nCi ee eb\"\n138 Pe ince add {he\noye 4d pg reee\n\nAy? ye\" Gb\u2019 B'\n\nait TE RSA mR een RCHRN NE rt NER\n\ne\" Q\" _\n\n7. the letters of the root sequence for Track AA is the same as that for Track Y (C, F, Bb, Eb, Ab, etc.). The only\n\ndifference is that AA uses half-diminished chords(@) in place of minor seventh chords (-7) and altered dominants in place\nof the unaltered dominants (7).\n\n- since it will probably be necessary for the player to change registers rather frequently on #138, the change can occur on\nthe last 8th note (C# in this example) or wait until the 2nd note of the next bar, dropping down to the F (in this\nparticular key). The latter would make for a smaller interval to execute, but the former causes the arpeggiation of the\ndominant (B b) to be entirely ascending. Either can be used, effectively.\n\ntea MS RET RTO nr TNT TH er\n\n\n\nCHAPTER 5\nBEBOP SCALE\n\nDefinition\n\nA common scale (major, dorian, or mixolydian, usually) that has one specific\nchromatic tone (non-harmonic) added, causing the scale to have eight notes, rather than\nthe usual seven. The discovery of the scale\u2019s existence in improvised solos, as well as the\ndesignated term for the scale, are credited to David Baker, who has written much about\nthe scale and its use in HOW TO PLAY BEBOP.? The development of the scale,\nhistorically, came about as a result of the need to use an eight-note scale, instead ofa\nseven-note scale, in order to fit a 4/4 time signature (which can be consumed by 8 eighth-\nnotes). In other words, the bebop scale will equal four beats, instead of the three and\none-half beats that result from using a seven-note scale.\n\nThe added chromatic note in the major scale is the half-step between the fifth and sixth\ndegrees of the scale. In the dorian scale, the added note is the half-step between the\nthird and fourth degree, and in the mixolydian scale it\u2019s the half-step between the seventh\ndegree and the octave of the first degree.\n\nC major bebop (C*) ,\n\n+ \u2018 ne Gemmen meee\n=z\n> = F ery -6-\nC docian bebop (C7\")\nA + : =a +\n\u2014T TT ae I\npote EAS\nC mixolydian bebop C) = |\nape ne\ngp 8 * \u2018 \u2014 a \u2014\n\nTwo surprising facts emerge when studying the bebop scale: (1) the added chromatic\nnote, with respect its specificity, is 9914% consistent with what we find in analyzing\ntranscribed solos; and (2) the added note, in the case of the dorian and mixolydian, is the\nperfect anachronism to the chord quality with which it is used; that is, a major third\nagainst a minor seventh chord or a major seventh against a dominant seventh are\nprecisely the notes we generally consider to be contrary to the chord quality.\n\nThough Baker claims the scale originates with bebop players of the likes of Charles\nParker and Dizzy Gillespie in the mid-forties, there were, to be certain, much earlier\nprecedents. To cite one well-known example, consider the typical introduction of the\nmarch:\n\nc\"\n\n= == ==sSS\u2014\n\n9 - see Bibliography, page 142\n\n33\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

@@ -36,6 +36,17 @@ ColumnLayout {
     property var fingeringFn: function(v) { return "" }  // FingeringEngine.computeFingeringString
     property bool melodyLockDefault: false  // from Library tab's Melody Lock button
 
+    // Voicing comparison tray (#196). Bound from parent. Renders inline at the
+    // top of the walkthrough so the user can keep candidates side-by-side
+    // while stepping through chords.
+    property var compareVoicings: []
+    property var suggestFingeringFn: function(v) { return [] }
+
+    // Hidden alts (#210 Stage 2). Voicings for the current chord that the
+    // exclusion engine has hidden. Renders as a disclosure list at the
+    // bottom of the alt navigation.
+    property var hiddenAltVoicings: []
+
     // Lock states (readable by parent for bass string selection)
     readonly property bool melodyLocked: typeof melodyLockBtn !== "undefined" && melodyLockBtn ? melodyLockBtn.checked : false
     readonly property bool bassLocked: typeof bassLockBtn !== "undefined" && bassLockBtn ? bassLockBtn.checked : false
@@ -50,6 +61,13 @@ ColumnLayout {
     signal bassStringClicked(int bassStr)
     // Section-based mode (#167)
     signal sectionsChanged(var sections)
+    signal clearSavedChoicesClicked()  // #197 — wipe revoice memory for current scope
+    // #196 — tray controls shared with LibraryPanel
+    signal removeFromComparisonRequested(int index)
+    signal clearComparisonRequested()
+    // #210 Stage 2 — hidden voicing overrides
+    signal includeVoicingRequested(string signatureKey)
+    signal clearVoicingOverridesRequested()
 
     // Section data + mode list (wired from parent)
     property var scoreSections: []
@@ -80,6 +98,24 @@ ColumnLayout {
         if (batchActive && batchIndex > 0 && batchIndex <= batchChords.length)
             return batchChords[batchIndex - 1]
         return null
+    }
+
+    // Voicing comparison tray (#196) — same component used in LibraryPanel.
+    // Auto-hides when empty.
+    ComparisonTrayPanel {
+        compareVoicings: walkthroughPanel.compareVoicings
+        suggestFingeringFn: walkthroughPanel.suggestFingeringFn
+        onRemoveRequested: function(index) { walkthroughPanel.removeFromComparisonRequested(index) }
+        onClearRequested: walkthroughPanel.clearComparisonRequested()
+    }
+
+    // Hidden alts disclosure (#210 Stage 2). Voicings excluded for this
+    // chord under the current tuning/mode tolerances. Auto-hides when none.
+    HiddenVoicingsPanel {
+        hiddenVoicings: walkthroughPanel.hiddenAltVoicings
+        titlePrefix: "Hidden alts"
+        onIncludeRequested: function(sig) { walkthroughPanel.includeVoicingRequested(sig) }
+        onClearAllOverridesRequested: walkthroughPanel.clearVoicingOverridesRequested()
     }
 
     // Header row with title and nav buttons
@@ -1005,6 +1041,15 @@ ColumnLayout {
             ToolTip.visible: hovered
             ToolTip.text: "Re-select voicing with melody, bass note, and/or category override"
             onClicked: emitRevoice()
+        }
+
+        Button {
+            // #197 — wipe per-chord choices for this (score, mode, style, tuning) scope
+            text: "Clear saved"
+            font.pixelSize: 10
+            ToolTip.visible: hovered
+            ToolTip.text: "Forget all per-chord voicing choices saved for this score"
+            onClicked: walkthroughPanel.clearSavedChoicesClicked()
         }
     }
 

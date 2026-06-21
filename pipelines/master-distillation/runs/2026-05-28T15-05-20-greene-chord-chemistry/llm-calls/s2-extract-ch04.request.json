@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: The Major Scale\nPages 9-10 of the book.\n\n<<<CHAPTER TEXT\n\nSection 4\n\nThe Major Scale \u2014 The Foundation\nof Musical Theory\n\nAll talk of scales and tones in this book relates back to the major scale. It is hoped that you already\nhave a knowledge of this scale and its construction, but for those of you who don\u2019t:\n\nThe word scale (another term that is used for the word scale is mode) refers to a\u2019 group of notes\n(tones) and the intervals or distances between any 2 adjacent ones. The major scale is constructed in\nwhat are known as whole steps and 4 steps. These steps, again, refer to the intervals between two\nnotes. Any 2 notes that are 2 frets apart(in other words, separated by 1 fret) are said to be a whole\nstep apart. Examples: E and F#,Gand A, AD and BD, Cand D, etc. Any 2 notes that are adjacent (right\nnext to each other) are 4 step apart. Examples: E and F, G and Ab, A and A, C and D>, etc. The major\nscale has, starting from any note (which will coincide with the name of the scale), a series of two\nwhole steps, a 4 step, 3 whole steps, and anothet % step. Example: A major scale\n\n! 3 4 5 &\u20ac 7 8 The Ist (and 8th) tone of the\n\nA C* DI EVFHEGVA scale is called the root or\n\naay v v vive v tonic. The interval between\nwhole whole half whole whole whole half the Ist & 8th tones is called an\noctave,\n\nHere is one way to play the A major scale, but you should practice finding the notes of this scale\nin many places on the neck, because without a firm foundation in the major scale, you will have trouble\nunderstanding later concepts (this will probably be boring but there is no way around it). After learning\nthe A major scale, practice playing the major scales in all the other keys.\n\n4\nPLAY THIS\nFlasl; pew mE ee\nTHEN THE CH VOTE \u2014 b\nAND So OX,\n\nThe term TONE refers to the number of a note, if you were to number the notes of a major scale\nfrom 1 to 8. For instance, D is the 4th tone of the A major scale. When talking about these tones, it is\ncustomary just to say \u201cD is the fourth of A\u201d, or \u201cB is the fifth of A\u201d etc. Also the term \u201ca third\nhigher\u201d refers to counting 3 tones higher in the scale, including the tone you start from as the Ist\ntone. Examples: C# is a 3rd higher than A in the A major scale; G* is a Sth higher than C# in the A\nmajor scale, etc.\n\nWhen referring to chords whose roots are based on a major scale, roman numerals are commonly\nused. Example: D is called the IV of A; C\u00a5m is the II minor (Im) of A; E7 is the V7 of A, etc, Alo\nany I type chord may be referred to as the tonic chord. These statements will become clear as you\nprogress on.\n\nThe major scale can be used to understand the construction of chords as will be shown in section 5S.\n\n\n\nSection 5\n\nChord Formulas,\n& Families,\n\nEvery chord has a certain combination of tones that distinguishes it from every other chord. These\ntones may be derived from the major scale with the same root as the chord name. For instance, any\nminor chord always has the root, 3rd and 5th tones of the major scale with the same letter name.\nTherefore, an A minor chord has the notes A, C, and E since they are the root, 03rd and 5th of the A\nmajor scale (remember that the regular 3rd of the A major scale is C# so the b3rd is C), The\nparticular group of tones that is used for the construction of a particular kind of chord is called the\nFORMULA of that chord; any chord that has 3 tones in the formula is called a TRIAD.\n\nOn page 11 is a list of formulas of the most commonly used chords. They are divided into 3\ncategories or FAMILIES. The MAJOR, MINOR, and DOMINANT 7TH chords are the \u201cfathers\u201d of the\n3 families, and all the other chords, with a few exceptions, are derived from them. When tones are\nADDED to any of the 3 basic chords, the resulting chords are called EXTENSIONS. For example:\nCm7 is an extension of Cm because the bath (BD) is added to the basic Cm chord to make the Cm7. In\nother words, 1, 63, 5, becomes 1, 63, 5,67, Any chord that has a STH, #5TH, DTH or #9TH in the\nformula is called an ALTERED chord; any chord that has the 3RD replaced by a 4TH is called a\nSUSPENDED chord.\n\nAny chord may be played with different arrangements of the tones in the formulas; these different\nways to play the same chord are called INVERSIONS or VOICINGS.\n\nThe terms 9th, 11th, and 13th (they are the same letter names as 2nd, 4th and 6th) are a carry\nover from piano theory. These higher notes were to be played in the right hand or in the higher\noctaves. On the guitar, they are usually played near the top of a chord, but sometimes the 9th\nand ] 1th are even played in the bass.So, it is just due to tradition that they are still called 9, 11,\n13, as opposed to 2, 4, 6. For example in a 13th chord, you may refer to the 13th tone as the 6th\ntone instead \u2014 it doesn\u2019t really matter. However, when using the #9, it is usually put above the\n3rd in a chord, not below (such as in chords like 7 #9, 7#94#5, etc.), and the +11 is usually put\nabove the 5th in a chord (assuming there is a Sth being played) as in chords like the +11, 13411,\netc, Likewise, the 6th (13th) is hardly ever put below a 57. When you get to Section 7, you will\nbe able to observe these things clearly if you have learned your major scales.\n\nSince there are so many inversions on the guitar, a systematic way of remembering them would\nseem to be practical. The way suggested in this book is according to the STRINGS being used in the\nchord. This works best with chords whose formulas contain 3 or 4 tones, and can be explained as\nfollows: starting with a 3 or 4 note chord, RAISE each tone in the chord ON THE SAME STRING up\nto the next higher tone IN THE CHORD. Example: Em.\n\naq mT\n\nCONTINUED\ncare\n\nRS\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

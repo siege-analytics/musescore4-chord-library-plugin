@@ -1,0 +1,37 @@
+# Queued via #334. Stage B: sibling work[] under benson master.
+
+[master]
+id = "benson"
+name = "George Benson"
+
+[work]
+id = "method-vol-6-giant-lines"
+title = "The George Benson Method, Vol 6 — The Secret of the Giant Lines"
+year = 2019
+instrument_scope = "6-string"
+
+[source]
+pdf = "~/jazz_docs/Guitar/Methods/Jazz/George Benson Method/Benson, George - The George Benson Method, Vol 6 (The Secret of the Giant Lines).pdf"
+host = "cyberpower"
+user = "dheerajchand"
+needs_ocr = false
+
+[stages.s1]
+ocr_lang = "en"
+
+[stages.s2]
+chapter_strategy = "toc-or-heading"
+min_chapter_chars = 500
+model = "claude-sonnet"
+
+[stages.s3]
+per_chapter_model = "claude-haiku"
+book_level_model = "claude-sonnet"
+
+[stages.s4]
+model = "claude-sonnet"
+engine_kind_policy = "pending-when-unsure"
+
+[stages.s5]
+model = "claude-sonnet"
+notes = "Backfilled per #459. Granular-levels prompt (#434) in effect; config predates PR #423 (s5_prescriptive stage)."

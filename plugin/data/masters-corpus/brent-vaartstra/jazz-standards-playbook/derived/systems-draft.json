@@ -1,0 +1,843 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-29T06-51-17-vaartstra-jazz-standards-playbook",
+    "stage": "s4",
+    "source_pdf": "Greenan, Brent - The Jazz Standards Playbook.pdf",
+    "extracted_at": "2026-05-31T01:10:26+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "brent-vaartstra",
+  "work_id": "jazz-standards-playbook",
+  "systems": [
+    {
+      "id": "brent-vaartstra:jazz-standards-playbook:functional-harmony-navigation",
+      "name": "Functional Harmony Navigation System",
+      "summary": "This system governs how a jazz improviser moves through functional harmonic progressions built from the Major and Minor Diatonic Series of 7th Chords. Its members are the chord quality categories (major 7, dominant 7, minor 7, half-diminished, diminished 7) organized by their Roman numeral positions. Traversal rules specify how to move melodically between chord members using voice leading \u2014 primarily the stepwise resolution of guide tones (3rds and 7ths) from chord to chord, especially the 7th-to-3rd resolution across ii-V-I progressions. Modification rules describe how any chord member may be altered: diatonic minor chords may be converted to dominant 7ths, V chords may be replaced by tritone substitutes or backdoor dominants (bVII7), diminished 7 chords may substitute for rootless dominant b9 chords, and secondary dominant ii-V pairs may expand any diatonic chord into a momentary tonicization. The system's analytical stance is relational: every chord's function depends on the chords before and after it, never in isolation.",
+      "members": [
+        {
+          "id": "major-7",
+          "name": "Major 7 Chord (Imaj7, IVmaj7)",
+          "summary": "Tonic and subdominant function; formula Root-3-5-7; stable arrival points in ii-V-I cadences."
+        },
+        {
+          "id": "dominant-7",
+          "name": "Dominant 7 Chord (V7, secondary dominants, backdoor bVII7)",
+          "summary": "Primary tension chord; formula Root-3-5-b7; drives resolution; diatonic minor chords may be converted to dominant 7ths."
+        },
+        {
+          "id": "minor-7",
+          "name": "Minor 7 Chord (ii, iii, vi)",
+          "summary": "Pre-dominant and tonic minor function; formula Root-b3-5-b7; serves as the ii in ii-V-I and as tonicization targets."
+        },
+        {
+          "id": "half-diminished",
+          "name": "Half-Diminished Chord (ii\u00f87)",
+          "summary": "Minor ii chord in minor key ii-V-i progressions; formula Root-b3-b5-b7."
+        },
+        {
+          "id": "diminished-7",
+          "name": "Diminished 7 Chord (passing dim7, rootless dominant b9)",
+          "summary": "Functions as rootless dominant b9 substitute or chromatic passing chord; formula Root-b3-b5-bb7."
+        },
+        {
+          "id": "ii-v-i-unit",
+          "name": "ii-V-I Progression Unit",
+          "summary": "The cornerstone chord progression of jazz; the fundamental cell over which all traversal and modification rules operate."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "guide-tone-voice-leading",
+          "name": "Guide-Tone Voice Leading (7th resolves to 3rd)",
+          "summary": "When moving between chords in a ii-V-I or cycle-of-fourths progression, the 7th of each chord resolves by step to the 3rd of the next chord, producing smooth melodic connection.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "7th resolves to 3rd in ii-V-I",
+              "quote_excerpt": "the 7th of each chord resolves to the 3rd of the next chord",
+              "page": 37
+            },
+            {
+              "chapter_n": 2,
+              "topic": "Voice leading definition",
+              "quote_excerpt": "Voice leading is the smooth melodic movement of notes from one chord to the next",
+              "page": 37
+            }
+          ]
+        },
+        {
+          "id": "arpeggio-nearest-chord-tone",
+          "name": "Arpeggio Connection via Nearest Chord Tone",
+          "summary": "When moving between chord arpeggios, enter the next chord on whichever chord tone is closest to the last note played, not necessarily the root.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "chord tone arpeggio voice leading rule",
+              "quote_excerpt": "move to the nearest chord tone of the next chord",
+              "page": 65
+            },
+            {
+              "chapter_n": 7,
+              "topic": "modal arpeggio exercise principle",
+              "quote_excerpt": "connected each arpeggio with the nearest chord tone of the proceeding chord",
+              "page": 112
+            }
+          ]
+        },
+        {
+          "id": "cycle-of-fourths-movement",
+          "name": "Cycle-of-Fourths Harmonic Movement",
+          "summary": "Chords and key centers progress by descending fifths / ascending fourths as the default motion of jazz harmony, governing both analysis and improvisation planning.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "cycling 4ths importance",
+              "quote_excerpt": "it's a perfect study of cycling 4ths, which is an important movement in jazz repertoire",
+              "page": 149
+            },
+            {
+              "chapter_n": 10,
+              "topic": "vi chord starts cycling 4ths",
+              "quote_excerpt": "This vi chord starts a long cycle of 4ths all the way through the Dbmaj7",
+              "page": 158
+            }
+          ]
+        },
+        {
+          "id": "key-center-stepwise-connection",
+          "name": "Stepwise Connection at Key-Center Boundaries",
+          "summary": "When moving between rapidly modulating key centers (e.g., cycle of major thirds), prefer entering each new key center by half step or whole step at bar boundaries to maintain melodic flow.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Connecting key centers by half/whole step",
+              "quote_excerpt": "I do my best to enter into each new key center by half steps or whole steps",
+              "page": 147
+            }
+          ]
+        },
+        {
+          "id": "relational-chord-analysis",
+          "name": "Relational Chord Function Analysis",
+          "summary": "Always interpret a chord's function by examining both the chord before and after it; harmonic analysis is contextual, not absolute.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "chord function depends on context",
+              "quote_excerpt": "To understand the function of a chord, you must look at both the chord that comes before it and after it",
+              "page": 61
+            },
+            {
+              "chapter_n": 5,
+              "topic": "harmony analysis approach",
+              "quote_excerpt": "the most important thing to pay attention to is where the chords are going",
+              "page": 79
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "minor-to-dominant-conversion",
+          "name": "Diatonic Minor to Dominant 7 Conversion",
+          "summary": "Any diatonic minor chord may be converted to a dominant 7 chord; this is a standard jazz harmonic practice that expands the pool of resolving dominants.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor IV chord to dominant",
+              "quote_excerpt": "jazz musicians are constantly turning minor chords into dominant 7 chords",
+              "page": 33
+            },
+            {
+              "chapter_n": 6,
+              "topic": "diatonic minor to dominant conversion",
+              "quote_excerpt": "it is entirely normal and acceptable to turn minor chords in the diatonic series into dominant 7th chords",
+              "page": 95
+            }
+          ]
+        },
+        {
+          "id": "tritone-substitution",
+          "name": "Tritone Substitution",
+          "summary": "A dominant 7 chord may be replaced by the dominant 7 chord whose root lies a tritone interval away, sharing guide tones (3rd and 7th) with the original.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "bIImaj7 as tritone/chromatic sub",
+              "quote_excerpt": "a tritone substitution, meaning, a chord is being substituted by another chord with a root a tritone interval away",
+              "page": 122
+            }
+          ]
+        },
+        {
+          "id": "backdoor-dominant-substitution",
+          "name": "Backdoor Dominant Substitution (bVII7 for V7)",
+          "summary": "The V7 chord may be replaced by bVII7 (approaching the tonic by whole step), which shares many notes with an altered V7 and can be expanded to a full backdoor ii-V.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "backdoor dominant definition",
+              "quote_excerpt": "A backdoor dominant is a dominant 7th chord that substitutes the V7 chord for a bVII7 chord approaching the I chord by a whole step",
+              "page": 177
+            },
+            {
+              "chapter_n": 11,
+              "topic": "backdoor ii-V concept",
+              "quote_excerpt": "the Bbmin7-Eb7 is really acting as a backdoor ii-V into the Fmaj7",
+              "page": 178
+            }
+          ]
+        },
+        {
+          "id": "diminished-as-rootless-dominant-b9",
+          "name": "Diminished 7 as Rootless Dominant b9 Substitute",
+          "summary": "A diminished 7 chord may substitute for a dominant 7(b9) chord by functioning as its rootless voicing; all pitch classes are shared except the bass root.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Diminished 7 as rootless dominant b9",
+              "quote_excerpt": "You can think of the F#dim7 as a rootless D7(b9)",
+              "page": 141
+            },
+            {
+              "chapter_n": 9,
+              "topic": "Diminished chord as dominant substitute",
+              "quote_excerpt": "The F#dim7 chord is a substitute for the dominant VI7 chord",
+              "page": 141
+            }
+          ]
+        },
+        {
+          "id": "secondary-dominant-tonicization",
+          "name": "Secondary Dominant Tonicization (ii-V Expansion)",
+          "summary": "Any diatonic chord may be preceded by its secondary dominant (V7/x) or a full ii-V pair, temporarily tonicizing that chord as a new tonic.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "secondary dominant definition",
+              "quote_excerpt": "A secondary dominant is when a dominant 7 chord acts as a V chord of a diatonic chord other than the tonic",
+              "page": 62
+            },
+            {
+              "chapter_n": 5,
+              "topic": "ii-V of diatonic chords",
+              "quote_excerpt": "it's just as easy to add a ii chord in front of it to create a ii-V chord progression",
+              "page": 78
+            }
+          ]
+        },
+        {
+          "id": "hybrid-minor-ii-v-major-resolution",
+          "name": "Hybrid ii-V-I (Minor ii-V Resolving to Major I)",
+          "summary": "The ii and V chords may be borrowed from the parallel minor key while resolving to the major I chord, creating an expressive surprise.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "hybrid ii-V-I definition",
+              "quote_excerpt": "A hybrid ii-V-I is when a minor ii-V-i is mixed with a major ii-V-I. The ii and V are borrowed from the minor key, but they resolve to the major I",
+              "page": 179
+            },
+            {
+              "chapter_n": 11,
+              "topic": "hybrid ii-V-I expressive effect",
+              "quote_excerpt": "it gives you the sense that it will resolve to a minor chord, but then unexpectedly, it resolves to a major chord",
+              "page": 180
+            }
+          ]
+        },
+        {
+          "id": "minimal-change-voice-leading",
+          "name": "Minimal-Change Voice Leading (Only Alter 3rds and 7ths)",
+          "summary": "When navigating harmonically dense or shifting passages, adjust only the notes that define chord quality \u2014 the 3rds and 7ths \u2014 keeping all other melodic tones constant.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "minimal note changes between chords",
+              "quote_excerpt": "I try to adjust the notes minimally, only to accommodate the changes necessary from one chord to another",
+              "page": 129
+            },
+            {
+              "chapter_n": 8,
+              "topic": "defining notes / chord difference question",
+              "quote_excerpt": "What are the defining notes of each chord? In other words, which notes differ from the chord before it",
+              "page": 127
+            }
+          ]
+        },
+        {
+          "id": "extensions-over-7th-chords",
+          "name": "Extension Layer Permission (9ths, 11ths, 13ths)",
+          "summary": "Any 7th chord may be extended with 9th, 11th, or 13th tones; these upper extensions are available as color tones in improvisation.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "extensions beyond 7th chords",
+              "quote_excerpt": "Utilizing the 9th, 11th and 13th can have a powerful effect",
+              "page": 132
+            }
+          ]
+        },
+        {
+          "id": "chromatic-passing-tone",
+          "name": "Chromatic Passing Tone Insertion",
+          "summary": "Non-diatonic notes may be inserted between two diatonic notes by half-step to connect them; these are labeled chromatic passing tones and do not represent structural chord tones.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "chromatic passing tone definition",
+              "quote_excerpt": "A chromatic passing tone is a non-diatonic note that connects two diatonic notes in a passage, usually by half steps",
+              "page": 130
+            },
+            {
+              "chapter_n": 4,
+              "topic": "chromatic approach note",
+              "quote_excerpt": "the note in question does not represent a basic chord tone, extension or alteration, but is simply chromatically approaching a diatonic note",
+              "page": 65
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brent-vaartstra:jazz-standards-playbook:modal-harmony-system",
+      "name": "Modal Harmony Improvisation System",
+      "summary": "This system governs improvisation in modal harmonic contexts \u2014 pieces where chord movement is minimal or static and modes (rather than functional ii-V-I progressions) define the pitch language. Its members are the seven modes of the major scale, used as named pitch collections over sustained key centers. The central traversal rule is that modal arpeggios connect via the nearest chord tone rather than always starting on the root, and adjacent modes link through half- or whole-step motion. The defining modification rule is that guide tones (3rds and 7ths) are not required in modal contexts \u2014 the mode itself is the resource pool, and idiomatic modal playing means using modes as note choices rather than running them as scales. The Miles Davis approach to So What (sparse, space-conscious, phrase-then-expand, Dorian with occasional chromatic approach notes) is modeled as the aesthetic standard for this system.",
+      "members": [
+        {
+          "id": "ionian",
+          "name": "Ionian (Major) \u2014 Mode 1",
+          "summary": "Parent scale; W-W-H-W-W-W-H."
+        },
+        {
+          "id": "dorian",
+          "name": "Dorian \u2014 Mode 2",
+          "summary": "Primary mode for modal jazz; W-H-W-W-W-H-W; scale tone formula 1-2-b3-4-5-6-b7."
+        },
+        {
+          "id": "phrygian",
+          "name": "Phrygian \u2014 Mode 3",
+          "summary": "H-W-W-W-H-W-W; darkest diatonic mode."
+        },
+        {
+          "id": "lydian",
+          "name": "Lydian \u2014 Mode 4",
+          "summary": "W-W-W-H-W-W-H; raised 4th gives bright, floating quality."
+        },
+        {
+          "id": "mixolydian",
+          "name": "Mixolydian \u2014 Mode 5",
+          "summary": "Major scale with b7; formula 1-2-3-4-5-6-b7; primary scale for dominant 7 chords."
+        },
+        {
+          "id": "aeolian",
+          "name": "Aeolian (Natural Minor) \u2014 Mode 6",
+          "summary": "W-H-W-W-H-W-W; natural minor scale."
+        },
+        {
+          "id": "locrian",
+          "name": "Locrian \u2014 Mode 7",
+          "summary": "H-W-W-H-W-W-W; built on the leading tone; basis for half-diminished chord."
+        },
+        {
+          "id": "whole-half-diminished",
+          "name": "Whole-Half Diminished Scale",
+          "summary": "Eight-note scale; W-H-W-H-W-H-W; used over diminished 7 and dominant b9 chords."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "modal-arpeggio-nearest-tone",
+          "name": "Modal Arpeggio: Enter on Nearest Chord Tone",
+          "summary": "When connecting arpeggios across modal chord changes, begin the next arpeggio on whichever chord tone is closest to the last note played, not necessarily the root.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "modal arpeggio exercise principle",
+              "quote_excerpt": "connected each arpeggio with the nearest chord tone of the proceeding chord",
+              "page": 112
+            }
+          ]
+        },
+        {
+          "id": "modal-pattern-in-thirds",
+          "name": "Modal Pattern Exercise in 3rds with Half/Whole-Step Mode Links",
+          "summary": "Adjacent modes are connected through 3rd-based patterns that transition to the next mode by either a half step or whole step, internalizing mode relationships across the parent scale.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "modal pattern exercise in 3rds",
+              "quote_excerpt": "the pattern moves in 3rds and connects to the next mode in either a half step or a whole step",
+              "page": 113
+            }
+          ]
+        },
+        {
+          "id": "space-phrase-expand",
+          "name": "Space-and-Expand Phrasing (Miles Davis Model)",
+          "summary": "In modal contexts, play a phrase, leave space, then expand upon that phrase \u2014 avoiding continuous note-running in favor of sparse, intentional melodic statements.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Miles Davis style characteristics",
+              "quote_excerpt": "He plays a phrase, leaves some space, and then expands upon that phrase",
+              "page": 114
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "guide-tones-omitted-modal",
+          "name": "Guide Tone Omission in Modal Contexts",
+          "summary": "In modal harmony with minimal chord movement, guide tones (3rds and 7ths) are not required as connective tissue; the mode as pitch collection replaces the guide-tone framework.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "guide tones omitted for modal tunes",
+              "quote_excerpt": "there is no need to identify the guide tones",
+              "page": 103
+            }
+          ]
+        },
+        {
+          "id": "scales-as-pitch-collections",
+          "name": "Scales as Pitch Collections (Not Linear Drills)",
+          "summary": "Modes and scales are to be used as harmonic resource pools \u2014 non-ordered sets of available note choices \u2014 rather than linear sequences to be played up and down.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "scales as pitch collections",
+              "quote_excerpt": "The best way to think about the use of scales is 'pitch collections'",
+              "page": 99
+            },
+            {
+              "chapter_n": 7,
+              "topic": "modes as note choices, not scales",
+              "quote_excerpt": "this doesn't mean you should play the scales like scales. You should just use them as note choices",
+              "page": 111
+            }
+          ]
+        },
+        {
+          "id": "chromatic-approach-in-modal",
+          "name": "Chromatic Approach Notes in Modal Playing",
+          "summary": "Within Dorian or other modal contexts, occasional chromatic approach notes are permitted as expressive exceptions that do not disrupt modal identity.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Miles Davis style characteristics",
+              "quote_excerpt": "He generally plays within the Dorian mode, with exceptions of course and occasional chromatic approach notes",
+              "page": 114
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brent-vaartstra:jazz-standards-playbook:ear-first-acquisition",
+      "name": "Ear-First Acquisition System (LIST Process)",
+      "summary": "This system describes the procedural method by which a jazz musician should learn any standard. Its members are the four sequential stages of the LIST process (Listen, Internalize, Sing, Transfer), each with defined entry criteria and outputs. Traversal rules specify the mandatory order of progression through the stages \u2014 instrument put away during Listen, undivided attention during Internalize, singing the melody alone as a pass/fail gate before Transfer, and melody learned before chords within the Transfer stage. The modification rules specify enhancements within stages: including vocal versions and learning lyrics to deepen melodic internalization, using Frank Sinatra as the reference source for straight melody, isolating bass notes to train harmonic ear, and using sheet music only as a verification check rather than a primary learning source.",
+      "members": [
+        {
+          "id": "listen",
+          "name": "Listen \u2014 Stage 1",
+          "summary": "Instrument put away; deliberate listening to multiple recordings; no playing."
+        },
+        {
+          "id": "internalize",
+          "name": "Internalize \u2014 Stage 2",
+          "summary": "Undivided, distraction-free attention; treat music like a movie \u2014 full engagement."
+        },
+        {
+          "id": "sing",
+          "name": "Sing \u2014 Stage 3",
+          "summary": "Sing melody both with recording and alone; pass/fail gate before touching instrument; optionally sing bass notes for harmony."
+        },
+        {
+          "id": "transfer",
+          "name": "Transfer \u2014 Stage 4",
+          "summary": "Melody first, then chords; find on instrument what can already be sung; chord learning via root identification then quality determination."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "list-sequential-order",
+          "name": "LIST Stages Must Be Traversed in Order",
+          "summary": "The four stages must be completed in sequence \u2014 Listen before Internalize, Internalize before Sing, Sing before Transfer \u2014 with each stage's output serving as the prerequisite for the next.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "LIST process overview",
+              "quote_excerpt": "Listen / Internalize / Sing / Transfer",
+              "page": 15
+            },
+            {
+              "chapter_n": 1,
+              "topic": "Sing step: proof of internalization",
+              "quote_excerpt": "Be sure that you can sing the melody of the standard, both along with the recording and on your own, before you learn it on your instrument",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "melody-before-chords-in-transfer",
+          "name": "Melody Before Chords Within Transfer Stage",
+          "summary": "Within the Transfer stage, learn the melody on the instrument first; only after melody is established move to learning chord progressions by ear.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Transfer step: melody then chords",
+              "quote_excerpt": "Transfer the melody. Start learning the melody on your instrument",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "id": "root-then-quality-chord-identification",
+          "name": "Root Identification Before Quality Determination",
+          "summary": "When learning chords by ear, first identify the bass note (root), then determine the chord quality; these are two sequential cognitive operations, not simultaneous.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Pro tip: bass note identification",
+              "quote_excerpt": "if you can identify that the bass player is playing a concert Eb note for the first chord, then all you have to do is figure out what quality it is",
+              "page": 18
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "include-vocal-versions",
+          "name": "Include Vocal Recordings and Learn Lyrics",
+          "summary": "During the Listen stage, always include at least one vocal version; learning lyrics deepens melodic memory, especially for instrumentalists who would otherwise skip this step.",
+          "engine_payload": {
+            "kind": "_pending:aural-enrichment-protocol"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Pro tip: learn the lyrics",
+              "quote_excerpt": "Learning lyrics is extremely helpful for internalizing melodies",
+              "page": 16
+            }
+          ]
+        },
+        {
+          "id": "sinatra-reference-for-straight-melody",
+          "name": "Use Frank Sinatra (or Original Artist) as Straight Melody Reference",
+          "summary": "To establish a reliable, unembellished melody reference, use Frank Sinatra recordings (or the original composer/artist); avoid learning melody from artists known to heavily ornament.",
+          "engine_payload": {
+            "kind": "_pending:aural-enrichment-protocol"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Pro tip: finding straight melody",
+              "quote_excerpt": "Frank Sinatra is your friend. Frank almost always sings melodies straight",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "sing-bass-notes-for-harmony",
+          "name": "Extend Sing Stage to Bass Notes for Harmonic Training",
+          "summary": "To add harmonic ear training, extend the Sing stage by singing the bass line (root motion) of the standard, not just the melody.",
+          "engine_payload": {
+            "kind": "_pending:aural-enrichment-protocol"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Singing bass notes for harmony",
+              "quote_excerpt": "try singing the bass notes. This will help you begin to learn the harmony of the jazz standard",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "sheet-music-as-verification-only",
+          "name": "Sheet Music as Verification Tool Only",
+          "summary": "Sheet music may be used to check what has been learned by ear, but must not be used as the primary learning source; ear comes first, notation confirms.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Sheet music proper role",
+              "quote_excerpt": "The idea is not to throw away sheet music but to know its place",
+              "page": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brent-vaartstra:jazz-standards-playbook:improvisation-practice-toolkit",
+      "name": "Improvisation Practice Toolkit System",
+      "summary": "This system organizes the concrete improvisation practice methods taught across all chapters into a structured toolkit. Its members are the named practice tools: guide tones, melody reference, chord tones/arpeggios, contrafact composition, motif development, transcribed licks, and composed solos. Traversal rules govern how a practitioner sequences or escalates across tools \u2014 beginning with harmonic reduction (guide tones alone, or single-note practice) before adding melodic complexity, scaffolding through the three-chorus melody exercise from straight melody to free improvisation, and transposing all learned material through all 12 keys for full internalization. Modification rules govern how each tool may be altered or combined.",
+      "members": [
+        {
+          "id": "guide-tones-tool",
+          "name": "Guide Tones Practice Tool",
+          "summary": "Isolated half- or quarter-note 3rds and 7ths through the full song form; primary harmonic-melodic spine."
+        },
+        {
+          "id": "melody-reference-tool",
+          "name": "Melody Reference Tool",
+          "summary": "Using the tune's written melody as a guideline during improvisation; scaffolds departure from fully straight to freely improvised."
+        },
+        {
+          "id": "chord-tones-arpeggios-tool",
+          "name": "Chord Tones / Arpeggios Tool",
+          "summary": "Playing root, 3rd, 5th, and 7th as ordered arpeggios through changes; voice-led to nearest tone at each transition."
+        },
+        {
+          "id": "contrafact-tool",
+          "name": "Contrafact Composition Tool",
+          "summary": "A new melody composed over existing chord changes; may be simple/singable or bebop-style; must contain thematic repetition and structure."
+        },
+        {
+          "id": "motif-tool",
+          "name": "Motif Development Tool",
+          "summary": "Short rhythmic or melodic cells repeated and varied throughout a solo to create coherence over complex changes."
+        },
+        {
+          "id": "transcribed-licks-tool",
+          "name": "Transcribed Licks Tool",
+          "summary": "Licks learned from recordings of great jazz musicians, internalized and transposed through 12 keys."
+        },
+        {
+          "id": "composed-solos-tool",
+          "name": "Composed Solos Tool",
+          "summary": "Full solos composed at slow pace (written or memorized on instrument) to develop jazz language and phrase construction."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "three-chorus-melody-escalation",
+          "name": "Three-Chorus Melody Escalation",
+          "summary": "Practice escalates across three choruses: first chorus plays melody straight, second chorus embellishes it as a guideline, third chorus improvises freely while referencing melodic fragments.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Three-chorus melody exercise",
+              "quote_excerpt": "The first chorus, just play the melody completely straight",
+              "page": 49
+            }
+          ]
+        },
+        {
+          "id": "twelve-keys-internalization",
+          "name": "All Licks and Patterns Through All 12 Keys",
+          "summary": "Every lick, pattern, or harmonic concept must be practiced in all 12 keys to achieve full internalization and strengthen weak key areas.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "practicing licks in 12 keys",
+              "quote_excerpt": "I always suggest taking things through all 12 keys. It's a powerful practice that not only helps you internalize musical information",
+              "page": 101
+            }
+          ]
+        },
+        {
+          "id": "density-reduction-for-complex-passages",
+          "name": "Density Reduction for Harmonically Dense Passages",
+          "summary": "When facing confusing chord changes, reduce note density radically \u2014 down to a single note over an entire sequence \u2014 to isolate chord-tone hearing before adding complexity.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "playing fewer notes as practice",
+              "quote_excerpt": "try playing as few notes as possible over a given chord progression. Sometimes it can even have a profound effect to play just one note over an entire sequence",
+              "page": 132
+            },
+            {
+              "chapter_n": 8,
+              "topic": "keep it simple over confusing changes",
+              "quote_excerpt": "Whenever I come across a section within a piece of music that seems confusing",
+              "page": 127
+            }
+          ]
+        },
+        {
+          "id": "quarter-note-solo-rhythmic-reduction",
+          "name": "Quarter-Note Solo Exercise (Rhythmic Reduction)",
+          "summary": "Practice improvisation using only quarter notes to remove rhythmic complexity, isolating harmonic navigation as the sole focus.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "quarter note solo exercise",
+              "quote_excerpt": "I stick to a quarter note rhythm in all of my note choices. I take out the rhythmic component from my improvisation and just focus on navigating the changes",
+              "page": 184
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "contrafact-simplicity-rule",
+          "name": "Contrafact Singability and Simplicity Requirement",
+          "summary": "A student contrafact should be simple enough to sing, should outline chord changes through chord tones, and must express a coherent theme; complexity is secondary to melodic logic.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "contrafact melody goals",
+              "quote_excerpt": "I tried to keep the melody as simple as I could. My goal was to create a sing-able melody",
+              "page": 83
+            }
+          ]
+        },
+        {
+          "id": "bebop-contrafact-structure-rule",
+          "name": "Bebop Contrafact Mandatory Structure Rule",
+          "summary": "Even a busy bebop-style contrafact must contain repeated sections, rhythmic clones, and deliberate structure; stream-of-consciousness is not acceptable.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Bebop contrafact structure rule",
+              "quote_excerpt": "note the themes throughout. There are repeated sections, rhythmic clones and general structure",
+              "page": 85
+            }
+          ]
+        },
+        {
+          "id": "thematic-repetition-with-variation",
+          "name": "Thematic Repetition with Variation (Space and Breathing)",
+          "summary": "Strong improvisation includes recurring rhythmic and melodic themes with variations, and leaves deliberate space for the melody to breathe.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "recurring themes and space",
+              "quote_excerpt": "There are re-occurring rhythmic and melodic themes throughout with variations",
+              "page": 83
+            }
+          ]
+        },
+        {
+          "id": "strong-melody-licenses-outside-playing",
+          "name": "Strong Melody Licenses Harmonic Freedom (Including Outside Playing)",
+          "summary": "Any degree of harmonic freedom \u2014 including playing outside the chord changes \u2014 is permitted provided the improvised line is melodically strong and resolves with intention.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Melody guides outside playing",
+              "quote_excerpt": "You could even play outside of the chord changes, but if your improvised melody is strong and you resolve it confidently, it's going to sound intentional",
+              "page": 47
+            }
+          ]
+        },
+        {
+          "id": "note-mapping-for-dense-harmony",
+          "name": "Note-Mapping Scaffold for Dense Harmonic Passages",
+          "summary": "Over harmonically complex material, map out all available scale and chord tones as a conceptual scaffold before building melodic lines.",
+          "engine_payload": {
+            "kind": "_pending:note-map-scaffold"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "note map as improv tool",
+              "quote_excerpt": "it can be beneficial to take a step back and map out the notes we have available to us",
+              "page": 181
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

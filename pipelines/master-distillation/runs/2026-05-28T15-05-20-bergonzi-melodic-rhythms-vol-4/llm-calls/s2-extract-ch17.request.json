@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch17",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 17: 5/4 rhythms over 4/4\nPages 74-76 of the book.\n\n<<<CHAPTER TEXT\n\n19 4/4 Rhythms Over 3/4\n\nTake any of the 22 one-bar rhythms in Chapter 2 and play them over this 3/4 tune. Next, try combining two of those 4/4 rhythms and play them over this tune.\n\nTune 7 Come and Gone (C Instruments)\n\nTrack 15 - slow\nTrack 16 - fast\n\nBb\u0394\nD7alt.\nEb\u0394\nG7b9b13\n\nC-7\nG7alt.\nC-7\nF7\n\nBb\u0394\nE\u00f8\nA7b9\nC-7\nF7\n\nBb\u0394\nE\u00f8\nA7b9\nC-7\nF7\n\nBb\u0394\nD7alt.\nEb\u0394\nG7b9b13\n\nC-7\nG7alt.\nC-7\nF7\n\nBb\u0394\nF-7\nBb7\nEb\u0394\nE\u00f87\n\nD-7\nG7\nC-7\nF7\nBb\u0394\nG7\nC-7\nF7\n\nTune 7 Come and Gone (Bb Instruments)\nTrack 15 - slow\nTrack 16 - fast\nC\u0394\nE7alt.\nF\u0394\nA7b9b13\nD-7\nA7alt.\nD-7\nG7\nC\u0394\nF#\u00f8\nB7b9\nD-7\nG7\nC\u0394\nF#\u00f8\nB7b9\nD-7\nG7\nC\u0394\nE7alt.\nF\u0394\nA7b9b13\nD-7\nA7alt.\nD-7\nG7\nC\u0394\nG-7\nC7\nF\u0394\nF#\u00f87\nE-7\nA7\nD-7\nG7\nC\u0394\nA7\nD-7\nG7\n\nTune 7 \u266a Come and Gone (Eb Instruments)\nTrack 15 - slow\nTrack 16 - fast\nG\u0394\nB7alt.\nC\u0394\nE7b9b13\nA-7\nE7alt.\nA-7\nD7\nG\u0394\nC#\u00f8\nF#7b9\nA-7\nD7\nG\u0394\nC#\u00f8\nF#7b9\nA-7\nD7\nG\u0394\nB7alt.\nC\u0394\nE7b9b13\nA-7\nE7alt.\nA-7\nD7\nG\u0394\nD-7\nG7\nC\u0394\nC#7\nB-7\nE7\nA-7\nD7\nG\u0394\nE7\nA-7\nD7\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 17 extraction"
+}

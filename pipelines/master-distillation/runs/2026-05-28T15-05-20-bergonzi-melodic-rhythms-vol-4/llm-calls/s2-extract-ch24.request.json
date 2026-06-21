@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch24",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 24: Broken quintuplets, septuplets, and nonuplets\nPages 104-106 of the book.\n\n<<<CHAPTER TEXT\n\nwitching Gears .\n\n5\nThe intent of the exercises presented in this chapter is again rhythmic ear training. Practicing |\n\u201cswitching gears\u201d is meant to develop the ability to change from one polyrhythm to another in an\neffortless way. One could write an entire book on each one of these chapters. The exercises present- |\ned here and throughout this book are just a few suggestions of the many possibilities that can be\nused. By all means compose more exercises and make them your own!\n\nTry playing these next exercises first using any notes, then maybe just notes from one chord, and |\n\nthen finally over the tunes. Each rhythm is written out in a repeat format so you can get used to\n\nchanging back and forth between the different time zones.\nRox ta ia Z\n{\n3 3 3 3\n~\u2014t | = \u2014 \u2014y\n\u20ac \u00a3 f fF ra am A ff ff 7 f A A A\n(\u2014f- fff f ff\na se ee a\n7 7 |\nrt 7\nCh 644 FEL PLEAS\nim i | |\n3 3\nCE LEE f\n\u2014\u2014\u2014s L\n7\nn\n\u20ac pp Z C7 (ama LDH\nff { ff f { i i\n| a i] re poe\n3 3 3 3 7 7\nCE e444 z\n[Ty an\n3 3 7\n\n\nMELODIC RN ETI\n\n4,\n\nw ETN\nwhen\n\nrn\n\n~\n\nWI\n\nBN\ni\n\nNN\n1.\nI\n|\n\n=)\n\n2\n\na\nSTN\n\u2018\n\ni\n\n\u201cTN\n\n!f vou need another challenge try moving all of the exercises over and starting them one beat ear-\nly, ov try one beat late, so that the polyrhythm goes over the 4/4 bar line. Try randomly changing\nfrom one gear to another. To achieve a natural and fluid feeling while playing these changing gears\n\ncan take years of practice. Just trving it however gives vou another perspective on time.\n\n%.\n\nmm Hm memHEehHmHe HE He we HE Ee HE HE SH HE He Ee\nwk\n\u201cTN\nTIN\nN\nwe aoe\n\n\n\nContraction and Expansion\n\nTake a group of notes and try playing them over two beats. For example try this five-note grouping:\n\n\u201c a\nST\nb\nN\nul\nna\n\nwn\n\nExpand and try playing these five notes over three beats, and then over four beats. Next try playing i\nthe same five notes over 1 1/2 beats by contracting them.\n\nTry taking a three-note melody like,\n\nand play it in one beat, then two beats, three beats, and four beats. Try playing the notes in 1 1/2\nbeats, or play these notes three times in two beats like so:\n\n3 1\n\nThis concept of expansion or contraction is another way to perceive odd groupings of notes. Try\nthis technique on any of the tunes.\n\nirre)\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 24 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: 22 Rhythms\nPages 16-22 of the book.\n\n<<<CHAPTER TEXT\n\ni) RAYTNAS\n\nTune 2 ' Wine Tasting (Eb Instruments)\n\nB7alt.\n\nFis\n\nc7li\n\n|\n\nDA\n\nTrack 5 - slow\nTrack 6 - fast\n\nft\n\nc7Fl\n\nE-7\n\nA7\n\nDA\n\nA7\n\nE-7\n\nE7\n\nB-7\n\nFe7\u00b09\n\nCto\n\nB7alt.\n\nFko\n\nc7ll\n\nDA\n\ncll\n\nE-7\n\nDp\n\noH\n\nCk7ait.\n7a\n\nGH-7\nJ\n\nA7\n\nE-7\n\nB79\n\nA7\n\nFT\n\nWy\n\n\nMELOOLC\n\nBUY TAM S\n\nAfter playing each of the one-bar rhythms through Tune 2 the next step is to alter the placement\nof each rhythm. For example, you can play each rhythm one beat early, or two beats early, or one\nbeat late, and so on. These following exercises will help you to hear rhythms independent of bar\nlines and will help you to develop \u201cphrasing over the bar line.\u201d\n\nNotice that by displacing a rhythm 1/2 of a beat, or 1 1/2 beats, or 2 1/2 beats, you create entirely\ndifferent sounding rhythms at times.\n\n\n\nZt RWYTHHS\n\n22 Rhythms played one beat early\n\nNIE\nil | LU\nEAS\nRa \u2018|\n1 . ~~\npe AR\naw\nH\nSO\nwe q we\n\u2122\nm\u2122\n7 im\na\nmt\n~\nNL re\nBH\n| \u2018\neH\n\u2122\ney ky Se\n\n\u2122\n~t\n7) ff\nI\nea XN\ncee P\nN\nSe ov te\nNL \\ XE i\n| ,\n\u201c| | |\nNan ps\nWH\nua [\u2122 |\nWK an >\na Se ee\n\n\n\nT FH] ol 444 ,i=] CH = i:\nme bans ~ me oe i\nom ne ar\nNor j\nl | Py\n| : | |\nCa Pr aN 5\n| \u2122 Nt Nal\n/ * a4 |\n; H ) a\nii \u2122 i: Un\n! {\nat 7 \u2122 i in 4 sh ~~ sd\na HT |\n|, ime ine\nr\n4\ncS Ro eb ky | ke RL wv iS LU RL\n\n22 Rhythms played two beats early:\n]\n|\n|\n\n- Ty TT |\nIX \u2122 \u2122 KL \u2122 ~~\nni | |\n:\nxX nN m\nim 1 aa Ea 7\n: 7 \u2122 a imN NEL m\u2122\nAY ne | X |\n[ NH \u2014 X\nNLL he j * on Na Ly\n+ i at |\n4 i Til cn\n| | > ~ NUN\n| | ne\nHu | i 1\ni eb ky a a ce ) aE a\n\nMELODIC RIVTAMS\n\n\n\nS | FAT cH\n\u201c+ a \u201cst 7\n' ie | me\naN NUN. KLIN\nil ~ Un 7 7\n( | Nil mn\n\u00b0 ' iN ~~ 1. Nea\n> | Sa ea aH <a\n[s+ htt\n\u201d a IN |\nx sane Ltt\nm\u2122 a\n\u201c\n6 i\n@\n2 ! we co Se Ne Bey oO yy we\no\n<\n\u00b0\n[a\non\nal 7 7\nBa |\n=o | Naa mo mn . wy Naa Nam\nfol A Ne\nom a ry . om\nw\" 2 Ni P |\nNa \\ oo\nE \u00b0 | \u00a9 | me \u2018 / na LU\n~ 2 ~ fh mh LK\n| wt 7 4\n= 0 aw 5 * aa\nfang \u00b0 I ia Na\nN = rt a \u00bb EEX a\nNZ al Hl (i\nime LIM\nK Ne ee, oO wei Ne, Se we we RY\n\n\n\nTh TH anh | | an fT TH\n~ il | f\n| zt : l aH at a ~~ Si ND i fil\n| NL 7 \u2014\n~ rly NUN ltd on me\n\u00b0 ae yo Noe om | Ni a una\n2 im } \\ | \\! | vd | N N i\n|| ca i | f- ian\nnN | H u | al J |\n~ Af ~ lat ime \\ N >.\n= Lit Lely \u2014_\u2014\ni Gr (Fs\ni] | \u2018 [\u2122 Naa m\u2122\n2 i\n= we S O Oy ee Y we Ne\na\n\u2014\ncs]\nQ\ne .\n= An 3 a) Aaa ee a 7\n5 ~ r TY] ho ne al rr 1 \u00b0 i\n7) Cal i ALO\nSH\nE ue ia Lf | a\n= \u2122 Nianw Na\n~ a \u2122 KIX. Lt\n> 4 a | 7 ai\n= i || LL wt NU mn i | Ri\nx 4 me |\nnN NH aoae me K | J Nia a co ~ |\nN T Ty ry ey i\nNan\nz | | | I\n= i! li\n- u J oy 2\u2019 2 iy % SI vw a &\n\n\n\nOIE EE IEE EI IIE EE EEE E'Y\n\n= iF \u2014_ i\na4 ime h om aN um LL\nNit | \u00bb |\non 1 oni | | aa\nar] N\n2) |\n\u201c NL ea oI S| Nit 4\n7 Pe . on \u2122 Nae\nNU EEX Naa \u2122\n\u00ae AYA {| N\n2 LEX aH ims cow\nim Li\nA ca ae la N hae \u2122\n~\n| 7 lst \u2014 a a4 on\nr | Nan Naa JT ae [\u2122 \u2122 \u2122_\n~ Ne a oo Ne q ee ee U o Ne Me\n2\nSs\no\n-\u2014\n\u00a9\n2\nC) \u201c\n: coo f reo\nLs] on iN Lt\nn \u2014 BH \\ wt |\nE ae | XI a5 an 7 st a\n-_ Na wr\n[\u2122 \u2122 m\u2122\n5 |\n= on NAL\n4 ~ AL Nan\nN am rT ary Pinel N\nNaa art me NL m\u2122 Na\na wei Se } a we we oO |\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

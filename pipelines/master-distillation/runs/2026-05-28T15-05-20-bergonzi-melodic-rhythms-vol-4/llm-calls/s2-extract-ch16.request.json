@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch16",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 16: Hemiovals\nPages 72-73 of the book.\n\n<<<CHAPTER TEXT\n\nPAA RATTUMS DYER ASK a\n\nBy starting the same rhythm on beat 2 \u201cand\u201d that was started on beat 1, you get a 5/4 mirror [\nthythm. By starting the same rhythm on beat 3 \u201cand\u201d as beat 1, you get a 7/4 mirror rhythm.\n\nLe!\n\ncd\n\nKeer\n\nse\n\ncd\n\ne|\n\nLie!\n\nNel\n\nHeed\n\nre]\n\nbe\n\nrN\nrN\n\n\u2014 TN\n\nbind\n\nHel\n\nen\n\nHe\u2019\n\nrel\n\npest\n\nrfl\n\nmd\n\nCn\nNG\n\n% \u201ct x f i |\n\n. y\n\n~ \u2014 f\n\nfy LL DPP LS PF\n\nGi 1 |\nYL\n\n~~ ]\n\n-\u2014-\u2014 \u00a5 z vm i\n\n+t il | }\n\ny |\n\n=\n\nq cv 7]\n\niA f f\u00a2 f 1 (ana i\n\n\u201c\u00a3 yoy ty Tt\n\na, a\n\n. I\n\nra yoy 7a\n\niy L L\n\n+\n\n\nRetrograde Mirror Rhythms\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 16 extraction"
+}

@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-1
+stage: s3
+source_pdf: Fisher, Jody - Jazz Guitar Method, Vol 1 (Beginning).pdf
+source_pages: 30-53
+model: claude-haiku
+extracted_at: 2026-05-29T06:00:31+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — Chapter 3
+
+_Distillation; backed by `chapters/ch03.md`._
+
+Chapter 3 teaches the construction of extended chords by adding scale tones beyond the foundational triad: "Most chords are built on top of triads, so constructing larger chords is simply a matter of adding additional scale tones to the original triad." The chapter defines key formulas (Maj7 as Root-3-5-7, Maj6 as Root-3-5-6) and introduces the concept of extensions—the 9ths, 11ths, and 13ths derived "by continuing the major scale up through a second octave"—establishing the numbering system underpinning all extended chords. A critical voicing rule emerges: "Roots, 5ths and 9ths can be dropped in various combinations" but "it is generally not a good idea to drop 3rds and 7ths because these are the tones that define major, minor and dominant chords." Beyond theory, the chapter addresses fretboard technique through six major scale fingerings and introduces horizontal playing as "a very natural approach for all stringed instruments," alongside practical guidance on picking versus fingerpicking for larger chords. Together, these topics equip the reader with both the formulas and the physical vocabulary for navigating extended harmony and smooth neck movement.

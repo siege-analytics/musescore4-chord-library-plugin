@@ -1,0 +1,695 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-29T06-51-18-de-mause-fingerstyle-jazz",
+    "stage": "s4",
+    "source_pdf": "Carter - Fingerstyle Jazz.pdf",
+    "extracted_at": "2026-05-31T01:17:23+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "alan-de-mause",
+  "work_id": "complete-fingerstyle-jazz-guitar-book",
+  "systems": [
+    {
+      "id": "alan-de-mause:complete-fingerstyle-jazz-guitar-book:melody-harmonization-hierarchy",
+      "name": "Melody Harmonization Hierarchy System",
+      "summary": "The book's central system is a progressive hierarchy of harmonization devices applied to a single-note melody sourced from a lead sheet. The members are the harmonization intervals \u2014 unison/octave (bare melody), thirds below, tenths (octave-displaced thirds functioning as bass), and sixths below \u2014 each successive member adding harmonic density while following shared chord-tone matching logic. The system governs how a player traverses from one harmonization layer to the next (adding or swapping intervals) and how each member is modified (adjusting non-chord tones, varying rhythm, handling altered extensions). The unifying rule across all members is that melody primacy must be preserved and that the underlying chord symbol is the arbiter of acceptability, with the ear as the final court of appeal.",
+      "members": [
+        {
+          "id": "bare-melody",
+          "name": "Bare Single-Line Melody",
+          "summary": "The unharmonized melody derived from a lead sheet; the entry-point member of the hierarchy."
+        },
+        {
+          "id": "thirds-below",
+          "name": "Thirds Below (Parallel Thirds Harmonization)",
+          "summary": "A harmony note a diatonic third below each melody note, played with free stroke on adjacent strings."
+        },
+        {
+          "id": "tenths",
+          "name": "Tenths (Octave-Displaced Third as Bass)",
+          "summary": "The third dropped an octave lower so it functions as an independent bass note beneath the melody."
+        },
+        {
+          "id": "sixths-below",
+          "name": "Sixths Below (Diatonic Sixth Harmonization)",
+          "summary": "A harmony note a diatonic sixth below the melody, functioning as a melody shadow or bass note, with the key note kept on top."
+        },
+        {
+          "id": "root-fifth-bass",
+          "name": "Root/Fifth Oom-Pah Bass",
+          "summary": "Alternating root and fifth of each chord in the bass as the foundational accompaniment underneath the melody."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "add-bass-to-thirds",
+          "name": "Add Bass to Complete Three-Part Texture",
+          "summary": "When thirds harmonization is present, add root/fifth bass to complete the melody-harmony-bass three-voice arrangement.",
+          "engine_payload": {
+            "kind": "_pending:voice-layer-addition"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "adding bass to thirds texture",
+              "quote_excerpt": "Put the bass back in. Even a simple root/root and root/fifth bass can turn the melody with thirds into a full three-part arrangement",
+              "page": 92
+            }
+          ]
+        },
+        {
+          "id": "thirds-to-tenths-independent-rhythm",
+          "name": "Promote Thirds to Tenths with Independent Bass Rhythm",
+          "summary": "When moving from parallel thirds to tenths, assign the tenth its own independent rhythmic pattern rather than doubling the melody rhythm.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Parallel tenths vs independent bass rhythm",
+              "quote_excerpt": "the tenth does often function as a bass note, but only infrequently does it move parallel to the melodic rhythm. More often it has its own independent rhythm",
+              "page": 98
+            }
+          ]
+        },
+        {
+          "id": "melody-density-bass-counterpoint",
+          "name": "Rhythmic Counterpoint Between Melody Density and Bass Density",
+          "summary": "When the melody is rhythmically busy, use longer bass note values; when the melody is sparse, use a busier bass part.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-counterpoint"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Bass rhythm vs melody density rule",
+              "quote_excerpt": "If the rhythm of the melody is busy and many-noted, you can complement it by playing longer notes in the bass",
+              "page": 74
+            },
+            {
+              "chapter_n": 3,
+              "topic": "bass accompaniment rhythm as mood/character",
+              "quote_excerpt": "Changing the bass accompaniment rhythm can change the mood or character of a piece",
+              "page": 56
+            }
+          ]
+        },
+        {
+          "id": "abandon-arpeggiation-on-leaping-melody",
+          "name": "Abandon Arpeggiation When Melody Leaps Unpredictably",
+          "summary": "Switch away from arpeggiation texture to another accompaniment technique when the melody continually leaps wildly.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "when to abandon arpeggiation",
+              "quote_excerpt": "If you notice that the melody of the tune you wish to arrange continually leaps up and down wildly, abandon arpeggiation for that particular tune",
+              "page": 90
+            }
+          ]
+        },
+        {
+          "id": "sixths-key-note-on-top",
+          "name": "Keep Key Note on Top When Traversing to Sixths",
+          "summary": "When applying sixth-below harmonization, the key note must remain on top to preserve major tonality.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Table of Sixths key note on top rule",
+              "quote_excerpt": "scales harmonized in sixths have the key note of each scale on top, with the harmony note a sixth below. If the key note were in the bottom position the ear would perceive the scale as being in a minor key",
+              "page": 108
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "third-placement-melody-contains-third",
+          "name": "Omit Bass Third When Melody Already Supplies It",
+          "summary": "When the melody note is itself a major or minor third of the chord, do not add a redundant third in the bass; use root or fifth instead.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "third placement rule in arranging",
+              "quote_excerpt": "when the melody is a major or minor third, the bass note is either a root or fifth, and when the melody is other than a third, the third is used in the bass to harmonically identify the chord",
+              "page": 83
+            },
+            {
+              "chapter_n": 5,
+              "topic": "melody-contains-third exception",
+              "quote_excerpt": "If the melody in that measure already contains the major or minor third of the major or minor chord indicated above, no additional third is required",
+              "page": 82
+            }
+          ]
+        },
+        {
+          "id": "non-chord-tone-thirds-ear-test",
+          "name": "Accept Non-Chord-Tone Thirds That Pass the Ear Test",
+          "summary": "When a third-below harmonization lands on a non-chord tone, accept it if it passes an ear test; adjust to a nearby chord tone only if needed.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "non-chord tone thirds adjust or not",
+              "quote_excerpt": "Non-chord tones make for the interesting spice in an otherwise dull chord-tone-only dish. It's your ear and your decision",
+              "page": 92
+            }
+          ]
+        },
+        {
+          "id": "sixths-diatonic-extension-adjustment",
+          "name": "Adjust Sixths That Imply Unwanted Harmonic Extensions",
+          "summary": "When a diatonic sixth implies an extension (seventh, ninth) not intended by the chord symbol, optionally adjust the sixth to a strict chord tone.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Melody on fifth sixth below is minor seventh",
+              "quote_excerpt": "The minor seventh interval is contained in the C scale, so it is not a clash. You can change the C to D if you wish to keep the sound to a simple Dm chord",
+              "page": 104
+            }
+          ]
+        },
+        {
+          "id": "altered-fifth-bass-adjustment",
+          "name": "Sharpen or Flatten Fifth for Altered Chord Symbols",
+          "summary": "When the chord symbol specifies an altered fifth (#5 or b5), raise or lower the bass fifth accordingly rather than deriving it from the plain major scale.",
+          "engine_payload": {
+            "kind": "_pending:altered-interval-derive"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "altered fifths",
+              "quote_excerpt": "If the chord is c7#s, raise the fifth a half step, and if it is C7>5, lower the fifth a half step",
+              "page": 77
+            }
+          ]
+        },
+        {
+          "id": "mixed-rhythm-bass-variation",
+          "name": "Use Mixed-Rhythm Bass to De-Emphasize Strict Oom-Pah",
+          "summary": "Replace strict alternating root/fifth with quarter, half, or whole notes in mixed combinations for rhythmic variety.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "mixed rhythm bass technique",
+              "quote_excerpt": "Another way of de-emphasizing the oom-pah accompaniment while still using only root/fifth is to have bass notes with mixed rhythm moving in quarter, half or whole notes",
+              "page": 78
+            }
+          ]
+        },
+        {
+          "id": "sustain-effect-over-perfection",
+          "name": "Prioritize Musical Effect Over Sustain Perfection",
+          "summary": "Accept shorter note durations in arpeggiated harmonization when fingering constraints prevent full sustain; overall effect supersedes mechanical completeness.",
+          "engine_payload": {
+            "kind": "_pending:effect-priority"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "sustain vs separate arpeggio notes",
+              "quote_excerpt": "Go for the overall effect, and don't get crazy over the shorter duration of a single note",
+              "page": 89
+            }
+          ]
+        },
+        {
+          "id": "more-is-less-restraint",
+          "name": "More-Is-Less Arranging Restraint",
+          "summary": "Prefer slow-moving bass, call-and-answer sequences, and selective harmonic devices over dense layering of all available techniques simultaneously.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "More is less arranging principle",
+              "quote_excerpt": "here is a tune that isn't cluttered with every arranging device, but is still totally whole, missing nothing",
+              "page": 111
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Imply more with less",
+              "quote_excerpt": "In all of the tunes here I like to imply more with less. Chords, for instance, are most often only two or three notes, and the melody is all-important",
+              "page": 168
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alan-de-mause:complete-fingerstyle-jazz-guitar-book:harmonic-movement-system",
+      "name": "Jazz Harmonic Movement System",
+      "summary": "This system governs how harmonic motion is constructed and navigated in fingerstyle jazz arrangements. Its members are the three primary harmonic movement types the book identifies: diatonic (scale-step), cycle-of-fifths (descending perfect fifths), and chromatic (half-step root movement), plus the structural deployment contexts (intro, ending, turnaround, tag, modulation). Traversal rules describe how to move between chords using these types \u2014 particularly voice-leading by half or whole step rather than parallel root motion. Modification rules govern how individual chord members are altered at structural moments: intro gateway requirements, tag substitution, modulation methods, and the substitution of II\u2013V7 for direct dominant motion. The system treats harmonic movement as several simultaneously moving voices rather than block-chord substitution.",
+      "members": [
+        {
+          "id": "diatonic-harmony",
+          "name": "Diatonic Harmony (Scale-Step Movement)",
+          "summary": "Harmonic movement by whole and half steps within a single key."
+        },
+        {
+          "id": "cycle-of-fifths",
+          "name": "Cycle of Fifths (Descending Perfect Fifth Movement)",
+          "summary": "Harmonic movement descending by perfect fifths (or ascending fourths), the most basic harmonic movement of jazz."
+        },
+        {
+          "id": "chromatic-root-movement",
+          "name": "Chromatic Root Movement (Half-Step Progression)",
+          "summary": "Harmonic movement in which chord roots move by half steps, with diminished seventh as the standard connector chord for ascending sequences."
+        },
+        {
+          "id": "structural-deployment",
+          "name": "Structural Deployment Contexts",
+          "summary": "Formal positions within a performance \u2014 intro, ending, turnaround, tag, and modulation \u2014 each with specific harmonic requirements."
+        },
+        {
+          "id": "seventh-chord",
+          "name": "Seventh Chord (Minimum Jazz Harmonic Unit)",
+          "summary": "Four-note chords built by stacking thirds (1-3-5-7); the minimum harmonic unit of jazz harmony."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "voice-leading-over-root-position",
+          "name": "Voice-Lead by Step Rather Than Root-Position Block Motion",
+          "summary": "Prefer moving individual voices by half-step, whole-step, or mixed intervals over always placing the root in the bass; think of harmonic movement as several moving voices.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Root-in-Bass vs Voice Leading",
+              "quote_excerpt": "Always playing chords with the root in the bass works, but may not be as smooth or interesting as moving by half-step or whole-step intervals or mixed movement",
+              "page": 155
+            },
+            {
+              "chapter_n": 13,
+              "topic": "Harmonic Movement as Moving Voices",
+              "quote_excerpt": "If you think of harmonic movement as several moving voices rather than a glob of dots on a chord box grid, your arrangements and improvisations will be more airy, more interesting and less clunky",
+              "page": 156
+            }
+          ]
+        },
+        {
+          "id": "contrary-motion-v7-i",
+          "name": "Contrary Motion for V7\u2013I Resolution",
+          "summary": "In V7\u2013I progressions, accompany a descending top voice with an opposing (contrary) bass movement rather than parallel motion.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "V7-I Opposing Bass Movement",
+              "quote_excerpt": "As the top note descends by half step the root note has its own opposing pattern, not parallel to the top",
+              "page": 156
+            }
+          ]
+        },
+        {
+          "id": "tritone-pull-resolution",
+          "name": "Tritone Pull Drives V7\u2013I Resolution",
+          "summary": "The tritone interval within a dominant seventh chord (b7 and 3) creates tension that resolves by half step to the tonic chord tones.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Tritone Pull Explanation",
+              "quote_excerpt": "you can just feel the tug of the unresolved B' and E (the tritone interval of a-5) being pulled by the A and F in the resolved F chord",
+              "page": 156
+            }
+          ]
+        },
+        {
+          "id": "spread-texture-bass-alternation",
+          "name": "Spread Texture: Bass Alternates Up a Fourth / Down a Fifth",
+          "summary": "Create a spread texture by alternating bass notes up a fourth and then down a fifth, producing a tenth interval from the melody above.",
+          "engine_payload": {
+            "kind": "_pending:spread-interval-alternation"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "The Spread Bass-Melody Tenth",
+              "quote_excerpt": "The root bass notes alternate in moving up a fourth and then down a fifth. Each new bass note is a tenth interval from the melody note above",
+              "page": 157
+            }
+          ]
+        },
+        {
+          "id": "chromatic-bass-for-continuity",
+          "name": "Use Chromatic Bass-Note Choice to Maintain Chromatic Continuity",
+          "summary": "When moving between chords of different qualities, select the bass voicing note (root, third, fifth) that continues a chromatic line rather than jumping to the root.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Mixed harmonic movement",
+              "quote_excerpt": "the lowest note of Gmaj7 in the first measure is D, the fifth, and the lowest note of G7(5) is b5. This was done to continue the effect of chromatic movement from Gmaj7 to G7(5) to Cmaj7",
+              "page": 120
+            }
+          ]
+        },
+        {
+          "id": "diminished-seventh-ascending-connector",
+          "name": "Use Diminished Seventh as Connector for Ascending Chromatic Movement",
+          "summary": "When root movement ascends by half steps, insert a diminished seventh chord as the in-between connector chord.",
+          "engine_payload": {
+            "kind": "_pending:connector-chord-insertion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Ascending half-step harmony",
+              "quote_excerpt": "In many cases the diminished seventh chord is the in-between, the hamburger helper of ascending harmonic movement",
+              "page": 120
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "intro-must-end-on-v7",
+          "name": "Intro Gateway: Final Chord Must Be V7 or Substitute",
+          "summary": "Any intro must close on a V7 or V7 substitute chord to create the harmonic gateway into the first chord of the tune.",
+          "engine_payload": {
+            "kind": "_pending:structural-gateway-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Intro last chord rule",
+              "quote_excerpt": "The last chord of the intro must be a V7 or V7 substitute in order to move into the first chord of the tune itself",
+              "page": 160
+            }
+          ]
+        },
+        {
+          "id": "tag-i-to-v7-substitution",
+          "name": "Tag Initiation: Substitute V7 for Final I Chord",
+          "summary": "To initiate a tag/coda, replace the final I chord with a V7 (or substitute) chord, extending the harmonic motion.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Tag (coda) definition",
+              "quote_excerpt": "the replacement of the usual final I chord\u2014E, here\u2014with a V7 (or other substitute) chord is required",
+              "page": 164
+            }
+          ]
+        },
+        {
+          "id": "ii-v7-i-modulation",
+          "name": "II\u2013V7\u2013I as Most Idiomatic Modulation Bridge",
+          "summary": "When modulating between keys, use a II\u2013V7\u2013I of the new key as the smoothest and most idiomatic jazz bridge; this is preferred over bare V7 substitution or back-cycling alone.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "II-V7-I modulation method",
+              "quote_excerpt": "the most common jazz progression unit is II-V7-I. Use it here then, by putting a II of the upcoming new key in front of the new key V-7",
+              "page": 166
+            }
+          ]
+        },
+        {
+          "id": "reuse-final-measures-as-intro",
+          "name": "Reuse Song's Final Measures as Instant Intro",
+          "summary": "The last four or eight measures of the tune itself, including its melody, can directly serve as an intro, reducing preparation overhead.",
+          "engine_payload": {
+            "kind": "_pending:structural-reuse"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Last measures as intro",
+              "quote_excerpt": "the last four- or eight measures of the tune itself can often be used, including the melody",
+              "page": 160
+            }
+          ]
+        },
+        {
+          "id": "rootless-close-voicing-ensemble",
+          "name": "Drop Root/Fifth for Rootless Tritone/Fourth Voicing in Ensemble",
+          "summary": "In ensemble settings where the bassist supplies root and fifth, voice chords as alternating pairs of fourths and tritones (major/minor seventh to major third) without explicitly stating the root.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Closer voicing fourths and tritones",
+              "quote_excerpt": "There is no explicitly stated root or fifth of the chord. If you play in a group, the bassist will cover roots and fifths",
+              "page": 129
+            }
+          ]
+        },
+        {
+          "id": "two-note-sparse-voicing-sufficiency",
+          "name": "Two Additional Notes Suffice for a Full-Sounding Arrangement",
+          "summary": "A melody accompanied by only two inner-voice notes produces a full arrangement; do not add density beyond what the ear requires.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Two-note accompaniment sufficiency",
+              "quote_excerpt": "A melody accompanied by two additional notes is often all you need to make an arrangement sound full, whether you are playing by yourself or with a group",
+              "page": 125
+            }
+          ]
+        },
+        {
+          "id": "deceptive-cadence-bvi-substitution",
+          "name": "Deceptive Cadence bVI Substitution for Modulation",
+          "summary": "Insert a bVI chord after diatonic cycle movement to open alternative harmonic paths as a modulation device.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 15,
+              "topic": "Within-scale cycle / deceptive cadence",
+              "quote_excerpt": "a VI (A-6) of the C scale is inserted. This deceptive cadence opens up several possibilities",
+              "page": 167
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alan-de-mause:complete-fingerstyle-jazz-guitar-book:self-accompaniment-texture-system",
+      "name": "Self-Accompaniment Texture System",
+      "summary": "This system organizes the toolkit of self-accompaniment textures available to a solo fingerstyle jazz guitarist. Its members are the distinct bass-and-chord textures arrayed from simplest to most complex: root-movement bass, doubled bass, root/fifth alternation, walking bass with chromatic approach notes, arpeggiation, two-note inner voices, moving tenths, and bass-first walking-with-chord. Traversal rules govern when and how to move from one texture to another \u2014 primarily based on ensemble context (solo vs. group), melodic density, and stylistic period. Modification rules govern how individual textures are altered: applying anticipation/delay to any bass line, adjusting voicing register for ensemble, and choosing bass-first vs. chord-first conception. The system's governing aesthetic is that musical effect and coherence outrank mechanical interval adherence.",
+      "members": [
+        {
+          "id": "root-movement-bass",
+          "name": "Root-Movement Bass",
+          "summary": "Simplest accompaniment: bass notes match chord root names directly."
+        },
+        {
+          "id": "doubled-bass",
+          "name": "Doubled Bass Notes",
+          "summary": "Two same bass notes per measure; swing-era upright bass style."
+        },
+        {
+          "id": "root-fifth-alternation",
+          "name": "Root/Fifth Alternation",
+          "summary": "Bass alternates between root and fifth of each chord; folk, country, and jazz oom-pah idiom."
+        },
+        {
+          "id": "walking-bass",
+          "name": "Walking Bass with Chromatic Approach Notes",
+          "summary": "Jazz walking bass line using chromatic approach notes to target each chord."
+        },
+        {
+          "id": "arpeggiation-texture",
+          "name": "Arpeggiation",
+          "summary": "Broken-chord texture appropriate for slower tunes; p plays lower strings, i/m play higher strings with free stroke."
+        },
+        {
+          "id": "two-note-inner-voices",
+          "name": "Two-Note Inner-Voice Voicing",
+          "summary": "Sparse two-note accompaniment producing full texture with minimal voice count."
+        },
+        {
+          "id": "moving-tenths",
+          "name": "Moving Tenths (Stride Piano Device)",
+          "summary": "Sustained half-note or quarter-note tenths in the bass, adapted from swing-era piano practice."
+        },
+        {
+          "id": "bass-first-walking-chord",
+          "name": "Bass-First Walking-Bass-Plus-Chord",
+          "summary": "Offset bass note preceding the chord by a quarter or eighth note; conceived bass-first for maximum harmonic flexibility."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "bass-first-conception",
+          "name": "Conceive Bass Line Before Chord in Walking-Bass Texture",
+          "summary": "When building a walking-bass-plus-chord texture, plan or improvise the bass line first and add chords afterward; committing to chord fingering first severely restricts bass choices.",
+          "engine_payload": {
+            "kind": "_pending:generative-order"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Bass-first conception rule",
+              "quote_excerpt": "Think bass-plus-chord, not chord-plus-bass. It's best to conceive of a bass line first\u2014planned or improvised\u2014and then maybe add a chord",
+              "page": 141
+            }
+          ]
+        },
+        {
+          "id": "arpeggiation-for-slow-tunes",
+          "name": "Select Arpeggiation Texture for Slower-Moving Tunes",
+          "summary": "Choose arpeggiation as the accompaniment texture when the tune moves slowly; project the melody note clearly within the arpeggio.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Arpeggiation melody emphasis",
+              "quote_excerpt": "For slower moving tunes, arpeggiation is a natural for fingerstyle playing. Don't forget to emphasize the melody note so that it won't get lost",
+              "page": 125
+            }
+          ]
+        },
+        {
+          "id": "register-separation-with-electric-bass",
+          "name": "Voice High on Top Four/Five Strings When Electric Bass Present",
+          "summary": "In ensemble with electric bass, move all chord voicings to the upper four or five strings to avoid muddiness in the low register.",
+          "engine_payload": {
+            "kind": "_pending:register-separation"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Electric guitar/bass register separation",
+              "quote_excerpt": "play your rhythm part, whether constant or comping, higher on the board on the top four or at most five strings",
+              "page": 135
+            }
+          ]
+        },
+        {
+          "id": "comping-density-holes-vs-busy",
+          "name": "Comping Density: More in Holes, Less When Soloist Is Active",
+          "summary": "When accompanying a soloist, increase harmonic/rhythmic density during the soloist's rests and reduce it when the soloist plays busily.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Comping density rule",
+              "quote_excerpt": "play more when the soloist is not playing, and play less when he is. Play more when there are 'holes' to be filled",
+              "page": 135
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "anticipation-delay-bass",
+          "name": "Apply Anticipation or Delay to Bass Line for Rhythmic Variety",
+          "summary": "Lead the bass note ahead of the beat (anticipation) or delay it behind the beat to avoid four-on-the-floor heaviness.",
+          "engine_payload": {
+            "kind": "_pending:rhythmic-displacement"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Anticipation bass device",
+              "quote_excerpt": "Leading with a bass note is a way to give variety to accompaniment instead of just chugging along with four bass notes to a measure",
+              "page": 124
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Delaying bass line",
+              "quote_excerpt": "The opposite of leading with the lower line is trailing or delaying it. This too steers away from heaviness",
+              "page": 124
+            }
+          ]
+        },
+        {
+          "id": "effect-over-strict-interval-adherence",
+          "name": "Prioritize Effect Over Strict Interval Pattern",
+          "summary": "When varying alternating bass patterns, maintaining the low-to-high alternation effect matters more than preserving the exact interval (root/fifth, root/seventh, etc.).",
+          "engine_payload": {
+            "kind": "_pending:effect-priority"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Other alternating bass notes",
+              "quote_excerpt": "Keeping a strict pattern of root/seventh is not as important as long as the effect (low to high alternation) is there",
+              "page": 123
+            }
+          ]
+        },
+        {
+          "id": "melody-bass-overlap-as-solution",
+          "name": "Reframe Melody/Bass Overlap as Valid Arrangement Solution",
+          "summary": "When the melody note merges with the top voice of a two-note bass accompaniment, treat this as a valid arrangement solution rather than a voice-leading problem to fix.",
+          "engine_payload": {
+            "kind": "_pending:voice-overlap-permit"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Melody/bass overlap solution",
+              "quote_excerpt": "Often the melody may merge with and become the top part of the two note bass accompaniment. It's not a problem, it's a solution",
+              "page": 126
+            }
+          ]
+        },
+        {
+          "id": "avoid-constant-bass-doubling-modern",
+          "name": "Avoid Constant Bass Note Doubling in Modern Style",
+          "summary": "Unless recreating vintage jazz, do not double bass notes constantly (two same notes per measure); modern style favors more variety.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Avoid constant bass doubling",
+              "quote_excerpt": "Today the bass doesn't often play four quarter notes to the bar, especially during the first and last chorus. Unless you, as the guitarist/bassist, want to recreate vintage jazz, avoid constant doubling",
+              "page": 141
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

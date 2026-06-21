@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch33",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 33: Lydian Augmented Scale\nPages 146-154 of the book.\n\n<<<CHAPTER TEXT\n\n\u2018=\neee == oft ts =\nw = i \u2014 \u2014\nTe \u2014S 4-7 \u2014\u2014 a\n1 >\nia t T oes OT\nfe i) i : fF ma a re,\npo -$\u2014 4)\n3-6 ee \u2014- ans mele! Tt\n; >\nf = \u2014T 1 it f\ni r nt t : v7 = = CCC\nbd 7 F | 5 ke\n\nPlay this in all keys.\n\nADAPTATION OF PREVIOUSLY-PRESENTED\nPATTERNS TO HARMONIC MINOR SCALE\n\nC harmonic minor\n\na3 tira lai t\n\u00a5 oo! \u2014_\u2014\u2014\u2014\n/ + G vy\n= 2-160\nbog tty, bebe 9,\n24477 a a a\nYO = + =< sala T+\n\n2Archie Shepp, Four For Trane (Impulse \u00a7-71), Archie Shepp Group.\n\n142\n\n\n\ndmir.\n{eh a\n245 sh f -\u2014_\n\nies\nnm.\nnl\n|\n5\nit\nLL\nI\nf i\n\nPlay Patterns No. 244-246 in all keys.\n\nPatterns No. 153-157 were devoted to an introduction to the whole-tone scale, which is still another\nsymmetrical scale, as were the diminished and augmented scales. Its application, it will be remem-\nbered, was to augmented triads and the 7+5 chord. Patterns No. 247-250 merely develop some of\nthe other possible settings of the scale in pattern form.\n\ny\nja ll0- Me (C whole-tone scale) ascending\n\nCt m t !\n\n\u201c jt ; + H\u2014t An AL\nra iL + aE\n\" i id\n\nil\n\n247 \u2014\u2014\nfp |\n(in thirds)\n\n1\nii\n\ndescending\n!\n\n{\n{ i\u00a2 \u2014\u2014\nit Fie troP-t a Ar oS a on oe\ny iit \u2014 \u2014t = $0 ef ee\n\nt ut \u2014\u2014 t\n\nRepeat this one-half step higher (C-sharp\u2014D-flat whole-tone scale).\n\noo\n\n5\n\n143\n\n\n(C Whole-Tone Scale)\n\n, :\n(0-100 ascending descending\n\n7\n\nvs J\n248 ty vA q \u2014 jit ts i eas oe hess\n\ni iy\n+, i Le wy\nards 3rds up down\nup down\n\nPlay this on the C-sharp\u2014D-flat whole-tone scale.\n\n(C Whole-Tone Scale)\n\ns=/20-(00 (ascending)\n\n249+A\u2014F -\u2014+4 +e = fot \u2014\na rn\n(descending)\na { a2 H !\npee tpt tide !\nae a === go- ei\ny mo\n\nAlso practice this pattern using the whole-tone scale starting on D-flat.\n\n] =(Z0-/60 C whole-tone scale\n- NG \u2018 :\ntbe be OPA AR RO\n\n2507 = anes oes 3\n\u2014 \u2014+ Si |\n(non-harmonic\ntones)\n\nB whole-tone scale\n\nteh 7a aa | -AN (\\\n\na\n\nLv)\n\nA \u00a5\n+\not t =\n\nheusheni f\naf Py\n144\n\n(\n\n\n\nTHE LYDIAN AUGMENTED SCALE\u201d\n\nWhile it is true that most of the basic chords can be accomodated by the major scale, modal scales\nderived from major scales, and minor scales, it is also true that the jazz idiom includes the consistent\nuse of alrered chords and chords embellished by various types of ninths, elevenths, and thirteenths.\nit bas already become apparent that the diminished scale, the whole-tone scale, and the augmented\nscale are needed to accommodate some chords with such alterations and embellishments. The\nLYDIAN AUGMENTED SCALE is an extremely useful scale in this respect. It has two kinds of\napplication to dominant seventh chords, one resulting in the addition of a flatted fifth (or aug-\nmented eleventh) and the other application supplying an augmented fifth, a flatted ninth, an aug-\nmented ninth, and an augmented eleventh. An explanation of the structure of the lydian augmented\nscale follows, as well as its application and a number of patterns to aid the student in absorbing the\n\nscale.\u201d\n\nLYDIAN AUGMENTED SCALE\n\nWT. OW.T. WT. OW.T. S.T.% WT. S.T.\nSCHEME: I Il Tl gIv #V VI sOVILE I\n\n(Same as a major scale with a raised 4th and 5th step)\n\nC lydian augmented scale\n\ni)\n\niD\n\n{\n+o\n\u00a5\n\nQa\nS\n\na\n\n7\nFunction: Fits dominant 7th, lowered 5th (b5); or dominant 7th raised 5th, raised 9th, lowered\n\n11\n\n9th, augmented 1 af! b9 *)\n7\n+5\n\n>The term \u201clydian augmented scale\u201d as well as the scale itself owe their invention and application to George\nRussell. Russell's book, The Lydian Chromatic Concept (New York: Concept Publishing Company, 1959), is\nstrongly recommended to the inquisitive student of jazz improvisation.\n\n: \u201cMAdditional Patterns on the lydian augmented scale-may be found in David Baker\u2019s Developing Improvisational\nFacility (Based om the Lydian Concept) (Libertyville, Illinois: National Education Services, 1968).\n\n~ $SW. T. is an abbreviation for a whole tone or whole step. S. T. is an abbreviation for a semitone or half step. .\n\n145\n\n\n251\n\n7\nIn the case of the dominant 7th, flat 5th (b 5), the root of the scale is the seventh of the chord.\n\nmae Qn ts)\n\na oe in Fe\n\nTT\n> 4 3 ps(til) 5\n\nC lydian augmented scale.\n\nN\n\nA\nWw\niS\n\nIn the case of the dominant 7th, raised 5th, raised 9th, lowered 9th, and augmented 11th, the root\nof the scale is the third of the chord.\n\ni!\nEXAMPLE: 4 ba\nAt (fs\n\n: _ #6 a\n$0 4 | i\np sa 4+ #8 7 / 4 cad\n\nhss\n\nThere are 12 lydian augmented scales.\n\nLearn all twelve scales by playing them over and over throughout the range of your instrument.\nThen learn them as you did the major scale (by playing them in thirds, etc.). Be sure to practice\nthe scales in all twelve keys. ;\n\nC lydian augmented scale (descending )\n(ascending } L\n\u2014 Fetiy +i, t\nA f +t fi fal if jit\nne we IT i} 8\n\nV+ i i\n\n146\n\n\nC lydian augmented scale\n\n] 4 ee 1\n952 \u2014F\u2014 1 \u201ct 4 i (mai \\\n4 nae i \u2014\u2014\n(ascending )\n(descending)\ni |\n_\u00a2 be led\n(| T \u2014 \u20ac a\n/ a\nC lydian augmented scale\nA (ascending) \u2014\n\u2014\u2014\n253 : t n i v7 ft iL -\u00a2. \u2014 3 ri\n+ ( i \u2014\n(descending)\nt Eeeygtet |\npo a t = tr\n\u00a5\n(descending)\n(ascending )\n: __# \u00a3\u00a3 + the\n254 = t t et +1 it Hee\n~\u2014I T i Chee \u2014J\nr ( W\n\n147\n\n\nC lydian augmented scale\n\n(ascending) |\n5,\nrm\n255 im wt : et ae\na ds i _\u2014\u2014_\u2014\u2014\n(descending )\n\naif etyets ot ot pe\n\nSoS iSaiaee eee\nC lydian augmented scale\n(ascending ) ; |\nI \u2014S = = p ia : 2\n256 et it \u20187 me ina oe mo a tot\n7g ae \u2014\n(descending )\n+ f4i toi, Li , |\n+ t =f t tle \u2018i # \u201ctt f\nae \u2014 ee om 56\n=\nC lydian augmented scale\n(ascending ) (|\n\u201c| o\nfing a Ss \u2014 !\n257 \u2014 ! r oo 4 ic\n: |\ni\n(descending )\nFF } Bt\n\n148\n\n\n(descending)\n\n(ascending )\n4+ Lb\n\u2014 t rt = = = f + { i -\n\n258 it im i\nae ie\n\niN\n\nC lydian augmented scale\n\n(ascending )\n= je\nma\n\n9 =a ; =\n+? 7 ait\n\n(descending )\n\n1h pt pelt TI ee\nos aa\n\nC Iydian augmented scale\n\n(ascending )\n[ae mm ime |\nT Re T\n260 ae i 6 #4 7 cS ni a\n\u2014\u2014\u00a7 ; he Lin eo\n4 W tt i\n(descending )\n{ \\\n\n\u2014 ; eI\niwi 4\n\nui}\n\n\u2018al\n\n149\n\n\nC lydian augmented scale\n\n(ascending)\n4 \u2018a 4\n261 meaere 3 iz G =\u2014 zi bn\n: t i a T ata Wee\n(descending )\nL , a! > }\nA i ma iy } i nt t i 7 . r is\nat \u2018 T\nNH\nC lydian augmented scale\n(ascending) (descending)\n= A \u00ab ,\n22g ee tt\ni ws \u2014_ p= a\nC lydian augmented scale\n(ascending ) = |\nPat\n263 r = \u2014 3 z ii Be\n+ Mt I i\n(descending )\neit at #\n\u2014\u2014\u2014\u2014 : te #1 \u2014-=\n{iy = T A.\n\n150\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 33 extraction"
+}

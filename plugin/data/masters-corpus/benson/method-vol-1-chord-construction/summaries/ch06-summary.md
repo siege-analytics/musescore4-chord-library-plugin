@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-22T21-15-00-benson-vol-1
+stage: s3
+source_pdf: THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf
+source_pages: 206-241
+model: qwen2.5:72b
+extracted_at: 2026-05-22T21:27:39+00:00
+schema_version: 0.1
+---
+
+# Chapter 6 — How to Study the Harmonic Fields
+
+_Distillation; backed by `chapters/ch06.md`._
+
+Chapter 6 lays out a practice methodology and substitution catalog for studying the diatonic harmonic fields on guitar, opening with a four-rule Study Devices protocol (one key at a time, always with a rhythmic groove, mastery before key changes, and 6th/5th-string voicings before 4th-string ones) and a Visualization via bass note principle that anchors chord study to roots on the 5th and 6th strings rather than to scale shapes. Each diatonic degree is then walked through with its modal character and allowable swaps: the I degree's C6/Cmaj7 interchange with a b9-conflict exception when the melody is the octave, the IIm dorian extensions Dm7(9)/(11)/(13) with m6 deferred, the IIIm phrygian additions like Em7(b6), Cmaj7/E, C/E, Esus(b9) and the Jobim/Villa-Lobos Em7(b9), the IV lydian's optional #4 with G/F, G7(13), G7(9) implying F lydian, the V dominant-to-sus substitution (G7 to Gsus9/Gsus13, Dm/G as mixolydian), and the VIm aeolian extensions Am7(9)/(11)/(b6) plus Dm7/A and Fmaj7/A slash voicings. The chapter closes on the VIIm locrian avoid-note rule, recasting Bo as G7(9)/B and forbidding the 9th on the VII chord because it produces a b9 avoid note. The characteristic move throughout is reinterpreting each chord as a slash-chord or upper-structure of a neighboring diatonic chord while flagging which characteristic tones are optional. Load-bearing terminology introduced or formalized here includes harmonic fields, bass-note visualization, characteristic notes, avoid notes, sus substitution, and the modal labels (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian) tied to each diatonic degree.

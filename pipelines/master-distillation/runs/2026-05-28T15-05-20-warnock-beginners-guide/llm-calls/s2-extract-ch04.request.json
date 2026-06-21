@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: Chapter 3 \u2014 Approach Chords\nPages 11-13 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 3 \u2014 Approach Chords\n\nTo help you bring a jazzy sound to your comping over this ii V | progression you\nnow explore approach chords.\n\nApproach chords are where you play a chromatic chord one fret above or below\nthe target chord you\u2019re aiming for.\n\nThis means playing Ebm7-Dm7, or C#m7-Dm7, with Dm7 being your target note.\n\nApproach chords bring a tension and release sound to your comping, jazzing up\nyour chords along the way.\n\nStart with the approach chords from above, then from below, then mix both\ntogether to take your comping to the next level today.\n\nNote: At this point you notice that | stop writing the Cmaj9 symbol in bar 4, but\nyou still play that chord. In jazz, you normally see the simplest chord symbol\nwritten on a lead sheet, then you as the performer color that chord from there. So,\nit\u2019s good to get used to seeing Cmaj7 but playing the Cmaj9 color as it imitates a\nreal-life musical situation.\n\n11\n\n\nApproach Chords From Above\n\nThe first exercise features approach chords from above, where you play the same\nshape one fret higher, then resolve into your target chord from there.\n\nStart by playing this exercise on your own, then add a metronome when\ncomfortable.\n\nLastly, get these chords onto the backing track as soon as you can to hear them in\ncontext.\n\nSing the root notes if it\u2019s helpful, and once this rhythm is under your fingers, feel\nfree to mix up the groove and picking pattern with these chords over the track.\n\nHave fun exploring your first chromatic chord device as you jazz up your comping\nover a major ii V | progression.\n\nOw? G7 cmay7\n\nop. b | | |\n(Grae a\n\nev\u201d? \u2014 [ | DVtee~ee D\n|+$\u2014\u20147-6-6 6 \u20146 50-6 6665-5 5\u2014|-4-3-3\u20143\u20143\n7:\n}B 6 -5\u00a7 55 43-3331 4-3-3 33\n~\n\n12\n\n\nApproach Chords From Below\n\nYou can also work approach chords from below and resolve into your target chord\nfrom there in your comping.\n\nWork this example on your own, then add a metronome when ready.\n\nFrom there, you can add these chords to the backing track as you bring rhythm\nand form into this exercise.\n\nWhen ready, mix this pattern with the approach chords from above to double\nyour fun with this workout.\n\nLastly, feel free to change the rhythms and picking patterns when comfortable to\nexpand this approach chord exercise even further.\n\nOw? 67 cma?\ncm | | CU\ni\nr+ | *tgeeee f\n56-666 -|-3-\u00a2-6-6\u20146 4\u20145\u20145\u20145\u20145 1-2-3333\n4-5-5531 6-7-7 _7_7_|_ 3-4-4441 3-4-4444\nA 6 77 7 7 1 4 5 5 5 5 | 4 5 5 5 5 | 122 2 2\n[B45 55 5 23-33 3-1 2333-3\n~\n\n13\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

@@ -1,0 +1,485 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-12T09-45-18-roberts-jazz-guitar-technique-20-weeks",
+    "stage": "s4",
+    "source_pdf": "Roberts, Howard - Jazz Guitar Technique in 20 Weeks.pdf",
+    "extracted_at": "2026-06-15T20:34:20+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "howard-roberts",
+  "work_id": "jazz-guitar-technique-in-20-weeks",
+  "systems": [
+    {
+      "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics",
+      "name": "Physical Mechanics System",
+      "summary": "Governs the physical setup and hand technique required before any musical content is addressed. Establishes equipment standards, picking flexibility, left-right synchronization, and hand economy as the non-negotiable foundation for all subsequent development.",
+      "members": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:equipment-setup",
+          "name": "Equipment Setup",
+          "summary": "String gauge (.012 minimum), medium-high action, and medium-to-heavy celluloid picks are prescribed to build resistance and develop both hands. Metronome, tape recorder, and timer are mandatory practice tools."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:right-hand-technique",
+          "name": "Right-Hand Technique",
+          "summary": "Flexibility is the governing principle; rigid anchor systems (elbow, wrist, pick-guard) create speed ceilings under tension. Alternate picking with dynamic equality between up and down strokes is the required method."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:left-hand-technique",
+          "name": "Left-Hand Technique",
+          "summary": "Perpendicular finger angle (hammer-like), thumb centered on neck back, minimal finger lift, and flat wrist posture together constitute correct left-hand form."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:synchronization",
+          "name": "Left-Right Hand Synchronization",
+          "summary": "Perfect simultaneous attack by both hands is non-negotiable. Any flam (finger-first or pick-first) produces two sounds."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:rule-accuracy-before-speed",
+          "name": "Accuracy Precedes Speed",
+          "summary": "Speed is a byproduct of accuracy and is unattainable without it. Tempo goals must never be pursued at the expense of precision.",
+          "engine_payload": {
+            "kind": "_pending:accuracy-gate"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "tempo goals vs. accuracy",
+              "quote_excerpt": "Care should be taken not to sacrifice accuracy and precision in order to meet the tempo goals",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:rule-flexibility-over-anchor",
+          "name": "Flexibility Over Fixed Anchor",
+          "summary": "Right-hand technique must remain adaptable. Any fixed anchor system becomes a hard speed ceiling when tempos increase.",
+          "engine_payload": {
+            "kind": "_pending:technique-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "flexibility over fixed technique",
+              "quote_excerpt": "flexibility-the ability to adapt the right hand to a variety of moves-is the key to longevity",
+              "page": 5
+            },
+            {
+              "chapter_n": 2,
+              "topic": "avoiding anchor systems",
+              "quote_excerpt": "avoid is any kind of anchor system that inhibits freedom of movement",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:rule-no-flam",
+          "name": "No-Flam Synchronization Law",
+          "summary": "Left and right hands must attack each note simultaneously. Flams in either direction produce two audible sounds. Diagnosis requires very slow play across the full fingerboard.",
+          "engine_payload": {
+            "kind": "_pending:synchronization-gate"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "left-right hand synchronization",
+              "quote_excerpt": "the left and right hands must be in perfect synchronization. No Flams!",
+              "page": 5
+            },
+            {
+              "chapter_n": 2,
+              "topic": "slow practice to hear flam",
+              "quote_excerpt": "play tones very slowly at all points on the fingerboard",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:rule-alternate-picking-equality",
+          "name": "Alternate Picking Stroke Equality",
+          "summary": "Only alternate picking is permitted during project lessons. Upstrokes must sound as strong as downstrokes.",
+          "engine_payload": {
+            "kind": "_pending:picking-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "alternate picking requirement",
+              "quote_excerpt": "strive to make up strokes sound as strong as down strokes",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:rule-blame-attribution",
+          "name": "Correct-Hand Blame Attribution",
+          "summary": "Before attempting any technical fix, correctly identify which hand is at fault.",
+          "engine_payload": {
+            "kind": "_pending:diagnostic-protocol"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "blaming the wrong hand",
+              "quote_excerpt": "A most common mistake is to blame the left hand when the right hand is at fault",
+              "page": 17
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:physical-mechanics:mod-legato-unlock",
+          "name": "Legato Techniques Unlocked at Week 15",
+          "summary": "Hammer-ons, pull-offs, and glissandi are forbidden during Weeks 1-13. They are introduced in Weeks 15-17 specifically because they produce multiple notes per pick stroke.",
+          "engine_payload": {
+            "kind": "_pending:phase-gate-unlock"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "legato techniques boost speed",
+              "quote_excerpt": "via these devices several notes can be produced with one picking stroke",
+              "page": 15
+            },
+            {
+              "chapter_n": 7,
+              "topic": "eighth notes only rule",
+              "quote_excerpt": "No hammer-on's. No pull-offts. No other ornamentation",
+              "page": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony",
+      "name": "Fingerboard Harmony System",
+      "summary": "Organizes the entire guitar neck through key-center analysis and five movable scale patterns. Chord progressions are understood as belonging to key centers rather than treated chord-by-chord; arpeggios, scales, and interval skips are deployed within that framework to build harmonically grounded improvised lines.",
+      "members": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:key-center-analysis",
+          "name": "Key Center Analysis",
+          "summary": "Diatonic harmony is generated by stacking a major or minor scale in thirds. Chord progressions are assigned to a single key center identified analytically and ultimately by ear."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:five-patterns",
+          "name": "Five Movable Scale Patterns",
+          "summary": "Five finger-per-fret patterns cover the full fingerboard for any key. Tonics are circled for visual targeting. Patterns are connected by three moves: position skips, stretching, and sliding on half steps."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:melodic-toolkit",
+          "name": "Melodic Toolkit",
+          "summary": "Six scale types, arpeggios, interval skips (diatonically derived), and common tones constitute the complete melodic arsenal."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-key-center-first",
+          "name": "Key-Center-First Navigation",
+          "summary": "When moving to a new key center in a progression, select one of the five scale patterns for that key and improvise within that region.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "using key center brackets",
+              "quote_excerpt": "for each new one, move your hand to a convenient fingering pattern for that particular scale",
+              "page": 8
+            },
+            {
+              "chapter_n": 3,
+              "topic": "arpeggios within scale pattern",
+              "quote_excerpt": "arpeggios will be easier to handle if they are played within a scale pattern",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-pattern-connection-moves",
+          "name": "Three-Move Pattern Connection",
+          "summary": "Moving between the five patterns is achieved by exactly three techniques: position skips, stretching to the adjacent pattern, or sliding on the half step between patterns.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "three moves connecting patterns",
+              "quote_excerpt": "There are essentially three moves involved in moving from one pattern to another",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-diatonic-interval-skips",
+          "name": "Diatonic Interval Skip Derivation",
+          "summary": "Interval skips must be derived from the scale's half steps, producing combinations of major and minor intervals rather than parallel intervals.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "scale intervals avoid parallel",
+              "quote_excerpt": "playing scale intervals that take into account the half steps of the scale",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-scale-run-ceiling",
+          "name": "Consecutive Scale Tone Ceiling",
+          "summary": "No more than 3-4 consecutive scale tones in the same direction are permitted before changing direction or introducing a skip.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "breaking up scale-like playing",
+              "quote_excerpt": "don't play more than 3 or 4 scale tones in the same direction",
+              "page": 13
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-common-tone-relief",
+          "name": "Common Tone Relief",
+          "summary": "Sustained common tones are a legitimate device to flatten the melodic line and relieve excessive vertical movement.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "common tones defined",
+              "quote_excerpt": "A common tone is a note that is common to two or more chords",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:rule-harmonic-flexibility",
+          "name": "Ear as Final Harmonic Arbiter",
+          "summary": "Key-center brackets represent one analysis. Chord substitution and alternative key interpretations are freely available. The ear is the final arbiter.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "key center analysis flexibility",
+              "quote_excerpt": "If they're right, they will sound right and if they're wrong, you will know it immediately",
+              "page": 19
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:mod-harmonic-minor-from-diatonic",
+          "name": "Harmonic Minor Derived from Diatonic Pattern",
+          "summary": "Harmonic minor patterns are derived from already-learned diatonic patterns by raising the fifth scale step.",
+          "engine_payload": {
+            "kind": "_pending:pattern-derivation"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "modifying patterns for minor",
+              "quote_excerpt": "learned by simply sharping the fifth scale step of the diatonic scales",
+              "page": 9
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:fingerboard-harmony:mod-transposition-stimulus",
+          "name": "Transposition as Creative Stimulus",
+          "summary": "Repeating a project lesson in a transposed key forces new fingering patterns and stimulates fresh melodic ideas.",
+          "engine_payload": {
+            "kind": "_pending:transposition-stimulus"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "transposition stimulates ideas",
+              "quote_excerpt": "requires a change of fingering patterns, licks, etc. This also tends to stimulate fresh approaches",
+              "page": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline",
+      "name": "Practice Discipline System",
+      "summary": "Governs the structural, psychological, and scheduling requirements for executing the 20-week program. Covers daily session format, schedule adherence, the growth plateau cycle, the 21-day imprinting threshold, and the principle that technique training serves spontaneous musical invention.",
+      "members": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:session-structure",
+          "name": "Session Structure",
+          "summary": "50-minute daily sessions, six consecutive days per week, one day off. Three phases: duple (Weeks 1-6), triple (Weeks 8-13), tempo solidification with legato (Weeks 15-17). Target: \u2669=126."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:psychological-framework",
+          "name": "Psychological Framework",
+          "summary": "The growth plateau cycle inverts subjective experience: struggle signals neurological growth; felt fluency signals a rest period."
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:improvisation-ethos",
+          "name": "Improvisation Ethos",
+          "summary": "Technique training exists to enable spontaneous invention. Model solos are reference material, not prescriptions."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-schedule-adherence",
+          "name": "Absolute Schedule Adherence",
+          "summary": "Results are attainable only through exact compliance: no missed days, no shortened sessions, no out-of-sequence introductions of techniques.",
+          "engine_payload": {
+            "kind": "_pending:schedule-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "program adherence requirements",
+              "quote_excerpt": "attainable only if the reader follows each step of the program without deviation",
+              "page": 17
+            },
+            {
+              "chapter_n": 8,
+              "topic": "practice regularity imperative",
+              "quote_excerpt": "Avoid skipping a day, for whatever reason. The effect is hazardous to progress",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-21-day-imprint",
+          "name": "21-Day Permanent Imprinting Threshold",
+          "summary": "Maintaining a given tempo for approximately 21 consecutive days permanently locks that ability into the nervous system as a motor reflex.",
+          "engine_payload": {
+            "kind": "_pending:imprinting-threshold"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "21-day permanent imprinting threshold",
+              "quote_excerpt": "approximately 21 days, on a daily basis, the ability acquired during that period of time will be permanently imprinted",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-metronome-as-tracker",
+          "name": "Metronome as Progress Tracker, Not Target",
+          "summary": "The metronome records progress; it is never set to a desired speed as a goal.",
+          "engine_payload": {
+            "kind": "_pending:diagnostic-protocol"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "metronome as tracker not target",
+              "quote_excerpt": "Do not set your metronome to a desired speed and try to rise to meet it",
+              "page": 19
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-plateau-cycle",
+          "name": "Growth Plateau Cycle Invert Subjective Signal",
+          "summary": "The feeling of getting nowhere is the signal of active neurological development. The feeling of great progress signals a rest plateau.",
+          "engine_payload": {
+            "kind": "_pending:neurological-model"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "growth plateau cycle",
+              "quote_excerpt": "The progress was made during the uphill climb, not during the rest period",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-technique-serves-invention",
+          "name": "Technique Serves Spontaneous Invention",
+          "summary": "All technical training exists to remove obstacles to the immediate realization of musical ideas.",
+          "engine_payload": {
+            "kind": "_pending:creative-autonomy"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "spontaneous invention over examples",
+              "quote_excerpt": "The important consideration is the spontaneous invention of your own solo line",
+              "page": 27
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:rule-memorize-changes",
+          "name": "Memorize Changes to Free Attention",
+          "summary": "Chord changes must be memorized and removed from the page as quickly as possible to free cognitive attention.",
+          "engine_payload": {
+            "kind": "_pending:cognitive-load"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "memorizing chord changes",
+              "quote_excerpt": "Memorizing the chord changes allows you to focus all of your attention on what you are playing",
+              "page": 17
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:mod-group-practice-accelerator",
+          "name": "Group Practice as Phase Accelerator",
+          "summary": "Ensemble exchange (trading solos and comping with other guitarists) is superior to solo practice for this program.",
+          "engine_payload": {
+            "kind": "_pending:practice-mode-modifier"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "group practice as accelerator",
+              "quote_excerpt": "The group dynamics is superior to private study for a program of this sort",
+              "page": 18
+            }
+          ]
+        },
+        {
+          "id": "howard-roberts:jazz-guitar-technique-in-20-weeks:practice-discipline:mod-line-construction-tools",
+          "name": "Line Construction Entry-Point Tools",
+          "summary": "When improvisation stalls, three structured entry points are available: melody sketch over changes, question-and-answer form, and sing before playing.",
+          "engine_payload": {
+            "kind": "_pending:generative-scaffold"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "question and answer form",
+              "quote_excerpt": "A very common form for building a solo line is: QUESTION AND ANSWER",
+              "page": 16
+            },
+            {
+              "chapter_n": 6,
+              "topic": "sing before playing",
+              "quote_excerpt": "sing the solo",
+              "page": 16
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

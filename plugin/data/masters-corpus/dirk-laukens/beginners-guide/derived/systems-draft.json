@@ -1,0 +1,634 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-laukens-beginners-guide",
+    "stage": "s4",
+    "source_pdf": "Laukens, Dirk - The Beginner's Guide to Jazz Guitar.pdf",
+    "extracted_at": "2026-05-31T16:27:57+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "dirk-laukens",
+  "work_id": "beginners-guide",
+  "systems": [
+    {
+      "id": "dirk-laukens:beginners-guide:moveable-root-chord-system",
+      "name": "Moveable-Root Chord System",
+      "summary": "The book's primary harmonic system treats every chord shape as a transposable unit anchored by a red-dot root. Five chord qualities\u2014maj7, dominant 7, minor 7, half-diminished 7, and diminished 7\u2014form the taxonomy. Because the root dot determines the chord's name ('root = chord name'), any shape can be slid to any fret to produce all 12 transpositions without learning new fingerings. These five qualities are organized around the ii\u2013V\u2013I\u2013vi progression drawn from the major scale, and the system governs both chord construction and comping rhythm figures. The Roman-numeral notation (Chapter 7) supplies the labeling infrastructure the system presupposes, with capital numerals for major/dominant and small numerals for minor/diminished.",
+      "members": [
+        {
+          "id": "maj7",
+          "name": "Major 7 Chord",
+          "summary": "Tonic major quality; capital Roman numeral Imaj7."
+        },
+        {
+          "id": "dom7",
+          "name": "Dominant 7 Chord",
+          "summary": "Unstable dominant quality; capital Roman numeral V7."
+        },
+        {
+          "id": "min7",
+          "name": "Minor 7 Chord",
+          "summary": "Minor quality; small Roman numeral ii or vi."
+        },
+        {
+          "id": "half-dim7",
+          "name": "Half-Diminished 7 Chord",
+          "summary": "Minor ii chord in minor key contexts; small Roman numeral with \u00f8."
+        },
+        {
+          "id": "dim7",
+          "name": "Diminished 7 Chord",
+          "summary": "Symmetrical chord; only 2 moveable grips needed due to symmetry."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "root-equals-chord-name",
+          "name": "Root = Chord Name Transposition Rule",
+          "summary": "Move any shape so the red-dot root lands on the desired pitch; the chord's name follows automatically.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Transposition rule: root = chord name",
+              "quote_excerpt": "the red note...tells you what the name of the chord is",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "ii-v-i-vi-progression-order",
+          "name": "ii\u2013V\u2013I\u2013vi Functional Progression Order",
+          "summary": "Chords are connected in the ii\u2013V\u2013I\u2013vi sequence derived from the major scale.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "ii V I vi progression",
+              "quote_excerpt": "These chords...are found in countless jazz standards",
+              "page": 15
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tritone-substitution",
+          "name": "Tritone Substitution",
+          "summary": "Replace any dominant 7 chord with another dominant 7 a tritone away; the shared 3rd and 7th preserve harmonic function.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Tritone substitution mechanics",
+              "quote_excerpt": "play another 7th chord that occurs a tritone (#4 aka b5) away",
+              "page": 105
+            }
+          ]
+        },
+        {
+          "id": "color-tone-embellishment",
+          "name": "Color Tone Embellishment",
+          "summary": "Basic dominant 7 chord symbols on lead sheets may be expanded with 9ths, 13ths, and 6ths.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Lead sheet chord embellishment rule",
+              "quote_excerpt": "those chords can be embellished with 9ths, 13ths, 6ths, and other color tones",
+              "page": 159
+            }
+          ]
+        },
+        {
+          "id": "diminished-symmetry-reduction",
+          "name": "Diminished Symmetry Grip Reduction",
+          "summary": "Because diminished 7 chords are symmetrical, only 2 moveable grips are required to cover all 12 keys.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Diminished chord symmetry",
+              "quote_excerpt": "You only need to learn 2 grips for diminished chords because diminished chords are symmetrical",
+              "page": 70
+            }
+          ]
+        },
+        {
+          "id": "turnaround-substitution-variants",
+          "name": "Minor Blues Turnaround Substitution Variants",
+          "summary": "The turnaround of a minor blues admits three standard substitution families.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Minor blues turnaround variations",
+              "quote_excerpt": "variations include bVI-V-I, ii-V-I, or even biii-bVI/ii V/I",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "sus-chord-dominant-delay",
+          "name": "Sus Chord Dominant Delay",
+          "summary": "Replace or precede a dominant chord with its sus version to add rhythmic tension and delay resolution.",
+          "engine_payload": {
+            "kind": "_pending:suspension-delay"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Sus chord comping technique",
+              "quote_excerpt": "Sus chords are a nice way to delay and bring extra motion to dominant chords",
+              "page": 178
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirk-laukens:beginners-guide:function-assigned-scale-arpeggio-system",
+      "name": "Function-Assigned Scale and Arpeggio System",
+      "summary": "The book's second master system assigns specific scales and arpeggios to specific harmonic functions rather than to a key center. Joe Pass's aphorism 'When the chords change, you change' is the governing traversal rule.",
+      "members": [
+        {
+          "id": "major-blues-scale",
+          "name": "Major Blues Scale",
+          "summary": "Major pentatonic + b3."
+        },
+        {
+          "id": "natural-minor-aeolian",
+          "name": "Natural Minor / Aeolian"
+        },
+        {
+          "id": "harmonic-minor",
+          "name": "Harmonic Minor"
+        },
+        {
+          "id": "melodic-minor",
+          "name": "Melodic Minor"
+        },
+        {
+          "id": "phrygian-dominant",
+          "name": "Phrygian Dominant Scale"
+        },
+        {
+          "id": "lydian-dominant",
+          "name": "Lydian Dominant Scale"
+        },
+        {
+          "id": "min7-arpeggio",
+          "name": "Minor 7 Arpeggio"
+        },
+        {
+          "id": "dom7-arpeggio",
+          "name": "Dominant 7 Arpeggio"
+        },
+        {
+          "id": "maj7-arpeggio",
+          "name": "Major 7 Arpeggio"
+        },
+        {
+          "id": "dim7-arpeggio-3-to-9",
+          "name": "Diminished 7 / 3-to-9 Arpeggio"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "chord-specific-scale-change",
+          "name": "Chord-Specific Scale Change Rule",
+          "summary": "Scale selection must change with each chord change, not remain fixed on a single key center.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Scale-change rule (Joe Pass)",
+              "quote_excerpt": "When the chords change, you change",
+              "page": 95
+            }
+          ]
+        },
+        {
+          "id": "arpeggio-proximity-voice-leading",
+          "name": "Arpeggio Proximity Voice-Leading Rule",
+          "summary": "Connect arpeggios by nearness of pitches rather than restarting from the root.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Alternating arpeggios: voice leading rule",
+              "quote_excerpt": "switch to the nearest note of the second arpeggio",
+              "page": 61
+            }
+          ]
+        },
+        {
+          "id": "arpeggio-free-start-order",
+          "name": "Arpeggio Free-Start and Free-Order Rule",
+          "summary": "Arpeggios may be started on any chord tone and played in any order.",
+          "engine_payload": {
+            "kind": "_pending:free-start-order"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Creative arpeggio improvisation rule",
+              "quote_excerpt": "Arpeggios can be started on any note and played in any order",
+              "page": 62
+            }
+          ]
+        },
+        {
+          "id": "minor-pentatonic-bridge-traversal",
+          "name": "Minor Pentatonic Whole-Progression Bridge",
+          "summary": "On Summertime and similar minor progressions, the minor pentatonic or blues scale traverses the entire form.",
+          "engine_payload": {
+            "kind": "_pending:whole-progression-scalar"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Pentatonic as bridge to jazz soloing",
+              "quote_excerpt": "you can use the minor pentatonic or minor blues scale to solo over this entire progression",
+              "page": 33
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "harmonic-minor-over-v7alt",
+          "name": "Tonic Harmonic Minor over V7alt",
+          "summary": "Over V7alt in minor ii-V-I, use tonic harmonic minor (not the chord's root).",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Harmonic Minor over V7alt",
+              "quote_excerpt": "you use the tonic harmonic minor scale",
+              "page": 87
+            }
+          ]
+        },
+        {
+          "id": "melodic-minor-expressive-tension",
+          "name": "Melodic Minor Raised-7th as Deliberate Tension",
+          "summary": "The raised 7th of melodic minor over Im7 is a context-dependent expressive choice.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Melodic Minor expressive use",
+              "quote_excerpt": "experiment with this scale...where you want to use that raised 7th",
+              "page": 90
+            }
+          ]
+        },
+        {
+          "id": "major-blues-no-clash",
+          "name": "Major Blues Scale No-Clash Rule",
+          "summary": "Lacking a 7th, the major blues scale can be applied over both dominant 7 and major 7 chords.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Major Blues Scale versatility",
+              "quote_excerpt": "Because there is not 7th in this scale, it can be applied to both G7 and Gmaj7 chords",
+              "page": 83
+            }
+          ]
+        },
+        {
+          "id": "phrygian-dominant-v7-assignment",
+          "name": "Phrygian Dominant as First-Choice V7 Scale",
+          "summary": "In bebop, phrygian dominant is primary over V7/V7alt.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Phrygian dominant over V7",
+              "quote_excerpt": "phrygian dominant scale is a first-choice sound when improvising over V7 and V7alt chords",
+              "page": 101
+            }
+          ]
+        },
+        {
+          "id": "3-to-9-arpeggio-substitution",
+          "name": "3-to-9 Arpeggio Substitution",
+          "summary": "Dim7 arpeggio from the 3rd of any 7th chord outlines 3-5-b7-b9.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "3 to 9 arpeggio (dim7 from 3rd)",
+              "quote_excerpt": "When playing a dim7 arpeggio from the 3rd of any 7th chord, you'll outline the 3-5-b7-b9 intervals",
+              "page": 104
+            }
+          ]
+        },
+        {
+          "id": "approach-note-chromatic-resolution",
+          "name": "Approach Note Chromatic Resolution Rule",
+          "summary": "Approach a chord tone from one fret below; the chromatic neighbor must resolve to a chord tone.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Approach notes technique",
+              "quote_excerpt": "approach any note in an arpeggio by one fret below",
+              "page": 74
+            }
+          ]
+        },
+        {
+          "id": "enclosure-decoration",
+          "name": "Enclosure Decoration",
+          "summary": "Surround the target chord tone with one fret above and one below before landing.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Enclosures technique",
+              "quote_excerpt": "you play one fret above, then one fret below, then the chord tone",
+              "page": 76
+            }
+          ]
+        },
+        {
+          "id": "side-stepping-pentatonic",
+          "name": "Side-Stepping Minor Pentatonic Pair",
+          "summary": "Alternate two minor pentatonic scales a half step apart over a 7th chord.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Side-stepping technique",
+              "quote_excerpt": "Playing between two minor pentatonic scales over a 7th chord, a 1/2 step apart",
+              "page": 114
+            }
+          ]
+        },
+        {
+          "id": "b3-3-mixing-blues-sound",
+          "name": "b3 / 3 Mixing for Jazz-Blues Color",
+          "summary": "Mix minor blues b3 with Mixolydian major 3rd.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Mixing b3 and 3 for bluesy sound",
+              "quote_excerpt": "Mixing b3 and 3 is often used by jazz musicians to create a bluesy sound",
+              "page": 182
+            }
+          ]
+        },
+        {
+          "id": "lydian-dominant-tritone-sub-scale",
+          "name": "Lydian Dominant over Tritone Substitute",
+          "summary": "On a tritone substitute chord, use the Lydian Dominant scale (= altered scale of the original chord).",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Lydian Dominant as tritone sub scale",
+              "quote_excerpt": "B Lydian Dominant scale (= F Altered scale). B7 is the tritone substitute of F7",
+              "page": 183
+            }
+          ]
+        },
+        {
+          "id": "harmonic-minor-dom7b9",
+          "name": "Harmonic Minor over Dom 7b9",
+          "summary": "Use harmonic minor over a dominant 7 to produce a 7b9 color.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Harmonic minor for 7b9 sound",
+              "quote_excerpt": "uses the G Harmonic Minor scale over D7, creating a 7b9 sound",
+              "page": 184
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirk-laukens:beginners-guide:comping-rhythm-system",
+      "name": "Comping Rhythm and Texture System",
+      "summary": "A smaller system governing how chords are deployed rhythmically in accompaniment, with four comping figures and rules on cutoff and metronome practice.",
+      "members": [
+        {
+          "id": "freddie-green",
+          "name": "Freddie Green Rhythm",
+          "summary": "Steady four-to-the-bar with accents on 2 and 4."
+        },
+        {
+          "id": "beats-2-and-4",
+          "name": "Beats 2 and 4 Comping"
+        },
+        {
+          "id": "anticipation",
+          "name": "Anticipation",
+          "summary": "Next bar's chord on the & of 4."
+        },
+        {
+          "id": "charleston",
+          "name": "Charleston Pattern"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "rhythm-figure-cycling",
+          "name": "Comping Rhythm Figure Cycling",
+          "summary": "After learning chord changes, vary between the four comping figures.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Autumn Leaves study",
+              "quote_excerpt": "After you can play these chords and rhythms, change the rhythms",
+              "page": 24
+            }
+          ]
+        },
+        {
+          "id": "hi-hat-alignment",
+          "name": "Hi-Hat Ensemble Alignment",
+          "summary": "Beats-2-and-4 comping aligns with the drummer's hi-hat for ensemble swing.",
+          "engine_payload": {
+            "kind": "_pending:ensemble-alignment"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Beats 2 and 4 comping",
+              "quote_excerpt": "line up with the hi-hat on the drum kit",
+              "page": 21
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "chord-cutoff-beats-2-and-4",
+          "name": "Chord Cutoff Before Beats 2 and 4",
+          "summary": "In Freddie Green rhythm, chords must be muted before they ring over onto beats 2 and 4.",
+          "engine_payload": {
+            "kind": "_pending:duration-cutoff"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Beats 1 and 3 cutoff",
+              "quote_excerpt": "cut the chords off so they don't ring over on beats 2 and 4",
+              "page": 20
+            }
+          ]
+        },
+        {
+          "id": "metronome-for-syncopation",
+          "name": "Metronome Requirement for Syncopated Figures",
+          "summary": "Syncopated figures (anticipation, Charleston) must be practiced with a metronome.",
+          "engine_payload": {
+            "kind": "_pending:practice-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Syncopation rushing warning",
+              "quote_excerpt": "work with a metronome and go slow until you're ready to speed this pattern",
+              "page": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirk-laukens:beginners-guide:chord-melody-texture-system",
+      "name": "Chord-Melody Texture System",
+      "summary": "A specialized system for arranging jazz standards as solo guitar chord-melody, with a three-layer architecture (bass / chord / melody) and named contrary-motion and Joe-Pass-split rules.",
+      "members": [
+        {
+          "id": "bass-layer",
+          "name": "Bass Layer (Lower Strings)"
+        },
+        {
+          "id": "chord-layer",
+          "name": "Chord Voicing Layer (Middle Register)"
+        },
+        {
+          "id": "melody-layer",
+          "name": "Melody Layer (Upper Strings)"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "contrary-motion-voice-leading",
+          "name": "Contrary Motion Voice Leading",
+          "summary": "Prefer contrary motion between bass and inner voices when moving between chords.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Contrary motion voice leading",
+              "quote_excerpt": "Contrary motion in voice leading sounds nice",
+              "page": 178
+            }
+          ]
+        },
+        {
+          "id": "joe-pass-bass-treble-split",
+          "name": "Joe Pass Bass/Treble Split with Chord Accent",
+          "summary": "Alternate bass note with top chord voicing; accent only the chord portion.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Joe Pass chord-melody rhythm technique",
+              "quote_excerpt": "break up the chord into the bass note and the top 3 notes of the shape",
+              "page": 128
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "melody-confined-to-upper-strings",
+          "name": "Melody Confinement to Upper Strings",
+          "summary": "Melody must be moved to the top two strings to allow chord voicings below.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Chord melody placement",
+              "quote_excerpt": "melody has been moved to mostly the top 2 strings",
+              "page": 43
+            }
+          ]
+        },
+        {
+          "id": "burrell-chord-single-note-mixing",
+          "name": "Kenny Burrell Chord / Single-Note Mixing",
+          "summary": "Within a chorus, intersperse three-note chord shapes with single-note blues-scale lines.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Kenny Burrell chord/single-note mixing",
+              "quote_excerpt": "mixing chords and single-lines during each phrase of an improvised chorus",
+              "page": 185
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-coker-elements-jazz-language
+stage: s3
+source_pdf: Coker, Jerry - Elements of the Jazz Language.pdf
+source_pages: 26-32
+model: claude-haiku
+extracted_at: 2026-05-31T03:33:08+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — 3-b9
+
+_Distillation; backed by `chapters/ch04.md`._
+
+Chapter 4 introduces the **7-3 resolution**, in which the b7 of one chord resolves down a half-step to the 3 of the next chord, most commonly across a II-7 to V7 (and sometimes V7 to I) motion. Coker grounds the technique by contrasting it with Bach's 4-3 suspension and clarifying that the 7-3 is a voice-leading and melodic device, not a harmonic suspension. The chapter's core efficiency argument is that two notes can imply two chords (one note per chord), so the device dramatically compresses change-running into minimal melodic material. Coker shows the device working without bass accompaniment because the listener's ear-memory supplies the implied roots, and he cites Monk's "Round Midnight" (six 7-3 resolutions in the first eight bars) and Gerry Mulligan's pianoless quartet ("Line For Lyons") as canonical compositional and performance applications. The chapter ends with the standard practice directive: master the illustrated examples in all keys and apply them through exercise tracks and tune play-alongs.

@@ -60,6 +60,8 @@ This project builds on the work of many researchers, musicians, and open-source 
   - Chords archive: https://tedgreene.com/teaching/chords.asp
 - **George Van Eps** (1913-1998) — 7-string guitar pioneer, diagonal barre technique, harmonic mechanisms approach.
 - **Joe Pass** (1929-1994) — Economical chord voicing approach, three-shape system.
+  - Pass, Joe, and Bill Thrasher. *Joe Pass Guitar Style.* Gwyn Publishing, 1971.
+  - Pass, Joe. *The Joe Pass Guitar Method.* Chappell & Co., 1977 (distributed by Hal Leonard, HL00347734). Source for the six-Chord-Forms positional system (p. 4), the three- to four-note voicing-with-voice-leading principle (p. 30, head note to "Blues for Nina"; voice-leading panel p. 31), and the dominant-alteration/tritone substitution lattice (p. 25 head note to "Joe's Blues"; p. 30). PDF not redistributed (commercial copyright).
 - **Paul Vachon** — "How to Read Ted Greene Chord Diagrams." [PDF](https://tedgreene.com/images/lessons/students/PaulVachon/HowToReadTedGreeneChordDiagrams.pdf)
 - **James Hober** — V-System mathematical formalization. [PDF](https://tedgreene.com/images/lessons/v_system/02_V-System_Introduction.pdf)
 - **Marten Falk** — Guitar teacher at Lilla Akademien; fingering rules used by Norman & Grozman.

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch21",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 21: Half-time quarter-note triplet feel\nPages 88-90 of the book.\n\n<<<CHAPTER TEXT\n\nTIME ZONES\nCompose many other scale and intervallic sequences to really get the hang of it. Practice playing some of these time zones on Tune 9 (Twinkle Twinkle). First go through the whole play-along track and try sticking to one time zone. Master that one and then go through and master the next, etc. Then try varying the zones moving from one gear to another.\nTrack 19 - slow\nTrack 20 - fast\nTUNE 9 Twinkle Twinkle (C Instruments)\nF-7 Bb7 Eb\u0394\nE\u0394 Bb7 Ab7\nDb\u0394 G\u00f8 C7b9b13\nF\u0394 F\u00f8 Bb7b9\n2. F\u0394 F\u00f8 Bb7b9 Eb7 Ab\u0394\nAb-7 Db7 Gb\u0394\nF-7 Bb7 Eb\u0394 F-7 Bb7\nEb Eb-7 Ab7 Db\u0394 G\u00f8 C7b9\nF\u0394 F\u00f8 Bb7b9 Eb\u0394 D7 Db7 C7\nF-7 Bb7 Eb\u0394\n\n| xe BVT WS\n\nTune 9 \u00a2 Twinkle Twinkle (Bb Instruments)\n\nBb7\n\nFA\n\nC7\n\n\u00a37]\n\nC7?\n\nf\n\nGe\nFA\n\nfr\n\nGA\n\n729613\n\nAg\nf\n\nEbA\nZ\n\nN\n= Nelan\n\nBbA\n\nF7\n\nC79\n\nGo\n\nGA\n\n2.\n\nAbA\n\nEb7\n\nC7\n\nG-7\n\nFa\n\nC7\n\np79\n\nAso\n\nEbA\n\nBb7\n\nc7>9 FA E7 Eb7 D7\n\nGo\n\nGA\n\nFA\nZ\n\nC7\n\nG-7\n\n\n\nTAME LONES\n\nan\n2\nc\n\u00ae\nE\ns\n=\n2\nn\nc\na\niw\n~\n\u00ae\n2\n=\n=\n3\nload\n\u00ae\n2\n=\n=\n=\n=\n&\n-\no\n\u00a9\nc\n=\n=\n\nack 19 - slow.\nrack 20 - fast\n\nr\n\ni\n\nT\n\nF7\n\nC-7\n\nCA\n\nG7\n\nf-\n7a\n\n\u2014F\n\nfal\nA ee ae\n\nTX\ne&\n\n67?\n\nDe\n\nDA\n\n1479013\n\nEo\n\nBbA\n\nFA\n\nG7? C7\n\nDe\n\nDA\n\nfr\nEbA\n\nBb7\n\nF-7\n\nG7\n\nCA\n\nG7\n\nAT?\n\nEo\n\nBbA\n\nF7\n\nC-7\n\ni fan\u00a5\n\nA7\n\n679 CA B7 Bb7\n\nDe\n\nDA\n\nCA\n\nG7\n\nbp Pa PP\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 21 extraction"
+}

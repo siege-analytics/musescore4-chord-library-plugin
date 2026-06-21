@@ -5,6 +5,7 @@ import "Transposer.js" as Transposer
 import "DiagramEngine.js" as DiagramEngine
 import "ChordScales.js" as ChordScales
 import "FingeringEngine.js" as FingeringEngine
+import "DebugLog.js" as DebugLog
 
 // BatchEngine.qml — Walkthrough/batch voicing state machine.
 // Extracted from ChordLibrary.qml (B1, #100).
@@ -53,6 +54,20 @@ Item {
     // Section resolver (#167) — parent callback: (chordIdx) -> modeConfig object
     property var modeConfigResolverFn: null
 
+    // Curated shape boost lookup (#194 Phase 2a). Map of root-relative
+    // signature key -> { boost, name, ... }. Empty by default; ChordLibrary
+    // wires the parsed curated-shapes.json on startup.
+    property var curatedLookup: ({})
+
+    // Per-chord re-voice memory (#197). Both null when memory is disabled.
+    // getter: (chordSymbol) -> voicingId-or-null
+    // recorder: (chordSymbol, voicingId) -> void (caller persists)
+    property var revoiceMemoryGetFn: null
+    property var revoiceMemoryRecordFn: null
+
+    // Master style tags (#222 Track 3). Empty when no master is active.
+    property var masterVoicingStyleTags: []
+
     // === Batch state (managed internally, exposed for WalkthroughPanel) ===
 
     property var batchQueue: []
@@ -63,6 +78,8 @@ Item {
 
     // Alternative voicing state — grouped by bass string
     property var altVoicings: []
+    // #210 Stage 2 — alts hidden by exclusion engine for the current chord.
+    property var hiddenAltVoicings: []
     property int altCount: 0
     property int altIndex: 0
     property var bassStringGroups: ({})
@@ -116,7 +133,9 @@ Item {
             profileCategoryWeightFn: ChordScales.getProfileCategoryWeight,
             profileQualityBoostFn: ChordScales.getProfileQualityBoost,
             modeConfig: effectiveModeConfig,
-            modeId: effectiveModeId
+            modeId: effectiveModeId,
+            curatedLookup: curatedLookup,
+            masterVoicingStyleTags: masterVoicingStyleTags
         }
     }
 
@@ -197,6 +216,13 @@ Item {
         var item = batchChords[batchIndex - 1]
         if (!item) return
         item.voicing = voicing
+
+        // Persist alt selection for next session (#197).
+        // #211 Stage 3 — record by signature so memory survives id changes.
+        if (revoiceMemoryRecordFn) {
+            var sig = voicing._signatureKey || ChordSelector.signatureKey(voicing)
+            if (sig) revoiceMemoryRecordFn(item.text, sig)
+        }
 
         // Update clipboard
         var xml = generateXmlForVoicing(voicing, item.root)
@@ -365,6 +391,21 @@ Item {
                             // Pass the about-to-be-assigned chord index so section-aware
                             // mode resolution (#167) picks the right mode for each chord.
                             var voicing = findBestVoicing(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
+                            // Per-chord re-voice memory (#197). If the user picked
+                            // a specific voicing for this chord-symbol last time
+                            // under the same (mode, style, tuning), restore it.
+                            if (voicing && revoiceMemoryGetFn) {
+                                // #211 Stage 3 — memory stores signatureKey (v2).
+                                // Match alts by signature, not by voicing.id.
+                                var savedSig = revoiceMemoryGetFn(text)
+                                if (savedSig) {
+                                    var alts = findAllVoicings(parsed.root, parsed.quality, melodyMidi, bassMidi, chords.length)
+                                    for (var sai = 0; sai < alts.length; sai++) {
+                                        var altSig = alts[sai]._signatureKey || ChordSelector.signatureKey(alts[sai])
+                                        if (altSig === savedSig) { voicing = alts[sai]; break }
+                                    }
+                                }
+                            }
                             if (voicing) {
                                 chords.push({
                                     text: text,
@@ -416,8 +457,18 @@ Item {
         var nameParts = item.voicing.name.split(" — ")
         var shape = nameParts.length > 1 ? nameParts.slice(1).join(" — ") : item.voicing.category
 
-        // Load alternatives and group by bass string
-        altVoicings = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
+        // Load alternatives and group by bass string. #210 Stage 2:
+        // partition out excluded voicings so the bass-string nav only
+        // surfaces visible alts; hidden ones go to the disclosure panel.
+        var allAlts = findAllVoicings(item.root, item.quality, item.melodyMidi, item.bassMidi)
+        var visible = []
+        var hidden = []
+        for (var ai = 0; ai < allAlts.length; ai++) {
+            if (allAlts[ai] && allAlts[ai]._excludedReason) hidden.push(allAlts[ai])
+            else visible.push(allAlts[ai])
+        }
+        altVoicings = visible
+        hiddenAltVoicings = hidden
         buildBassStringGroups()
 
         // Auto-select the bass string group containing the current voicing
@@ -556,6 +607,13 @@ Item {
         item._warnings = warnings
         item.voicing = newVoicing
 
+        // Persist the user's choice for next session (#197).
+        // #211 Stage 3 — record by signature.
+        if (revoiceMemoryRecordFn) {
+            var newSig = newVoicing._signatureKey || ChordSelector.signatureKey(newVoicing)
+            if (newSig) revoiceMemoryRecordFn(item.text, newSig)
+        }
+
         // Regenerate clipboard XML
         var xml = generateXmlForVoicing(newVoicing, item.root)
         if (tempDiagramFile) {
@@ -615,7 +673,7 @@ Item {
         }
 
         if (!cursor.segment || cursor.tick !== targetTick) {
-            console.log("Voice2 export: could not find tick " + targetTick)
+            DebugLog.warn("Voice2 export: could not find tick " + targetTick)
             return false
         }
 

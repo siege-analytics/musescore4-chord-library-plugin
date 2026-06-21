@@ -1,0 +1,91 @@
+---
+run_id: 2026-05-28T15-05-20-felts-reharmonization-techniques
+stage: s4
+source_pdf: Felts, Randy - Reharmonization Techniques (2002).pdf
+model: claude-sonnet
+extracted_at: 2026-05-31T17:08:11+00:00
+schema_version: 0.1
+---
+
+# Reharmonization Techniques (Felts, 2002) — Statement of Outputs
+
+## Overview
+
+*Reharmonization Techniques* by Randy Felts is a systematic course in jazz and contemporary harmonic substitution, organized as a cumulative skill progression across sixteen chapters. The book moves from foundational vocabulary—diatonic function, tritone motion, cadential engineering—through borrowed and chromatic resources (modal interchange, bass-line construction, chord-symbol correction, turnarounds, modulation), then through voicing mechanics and special chord types, and finally into advanced modal, hybrid, and constant-structure frameworks. Each technique is presented with explicit stop-rules and application limits; the guiding ethic throughout is restraint—substitution is selective, not wholesale.
+
+The pedagogy is strictly bottom-up. Chapters 1–4 establish the core logic: three functional families (tonic, subdominant, dominant), two hard voice-leading gates (no unwanted b9, no tritone on minor sevenths), and the foundational substitution operations (diatonic approach, tritone substitution, displacement). Chapters 5–12 introduce chromatic and borrowed resources. Chapters 13–16 reach the book's most abstract material: modal reharmonization across five modes, hybrid chord voicings, constant-structure patterns, and their integration.
+
+Four systems are extracted: a central Functional Substitution Graph governing which chord substitutions are permissible and how harmonic rhythm, displacement, and tritone resources modify them; a Voice-Leading and Voicing System encoding piano realization rules, inversion constraints, and special chord types; a Turnaround and Phrase-Level Template System governing the four-slot turnaround template and its extension into endings and modulations; and a Modal and Constant-Structure System governing the book's advanced non-functional resources. Sixteen _pending: engine payload kinds signal areas where the rule's logic is captured but the formal engine implementation has not yet been specified.
+
+## Systems
+
+### Functional Substitution Graph (`randy-felts:reharmonization-techniques:functional-substitution-graph`)
+
+The central system. Chords are organized into three functional families—tonic (I, III, VI), subdominant (II, IV, V7sus4), and dominant (V7, VII-7(b5), contextual V7sus4). Every substitution in the book is governed by this tripartite structure. Two hard constraints act as gate conditions: the prohibition on unwanted b9 intervals between melody and harmony (with the V7(b9)→I exception), and the prohibition on tritone intervals over minor seventh chords (with the II-7-in-II-V cadential exception). The system encodes harmonic-rhythm density as a global control variable.
+
+Members: IMaj7, III-7, VI-7 (tonic); II-7, IVMaj7, V7sus4 (subdominant); V7, VII-7(b5) (dominant); bVIIMaj7; modal-interchange chords; tritone-substitute dominants (subV7); diminished seventh chords; hybrid voicings; constant-structure chord sets.
+
+Traversal rules: TR-FSG-01 family-membership substitution (`FamilyCoherence`); TR-FSG-02 b9 hard gate (`_pending:b9-melody-harmony-gate`); TR-FSG-03 tritone-on-minor-seventh hard gate (`_pending:tritone-minor-seventh-gate`); TR-FSG-04 strong cadence root-motion rule (`VoiceMotion`); TR-FSG-05 tritone substitution traversal (`SubstitutionExpand`); TR-FSG-06 harmonic rhythm density constraint (`DensityCeiling`); TR-FSG-07 modal interchange traversal — color over function (`FamilyCoherence`); TR-FSG-08 diminished seventh three-tier substitution hierarchy (`_pending:diminished-substitution-hierarchy`). Cites Ch. 1-3, 5, 12.
+
+Modification rules: MR-FSG-01 displacement — open space creation (`_pending:displacement-open-space`); MR-FSG-02 altered tension resolution (`VoiceMotion`); MR-FSG-03 dominant-to-minor-seventh texture softening (`_pending:dominant-to-minor-seventh-conversion`); MR-FSG-04 melody note shortening for harmonic freedom (`_pending:melody-shortening-harmonic-freedom`). Cites Ch. 3, 4, 8.
+
+### Voice-Leading and Voicing System (`randy-felts:reharmonization-techniques:voice-leading-voicing-system`)
+
+Encodes how chord substitutions are physically realized at the keyboard. Rules are keyed to root-motion interval class. A register floor places all tension tones above the F on the fourth line of the bass clef. Inverted chords function as passing chords; third-inversion chords require a preceding root-position form. Hybrid voicings and line clichés are members with their own construction rules and failure conditions.
+
+Members: root-position chords; first-, second-, and third-inversion chords; hybrid voicings; line cliché embellishments; passing-seventh voicings.
+
+Traversal rules: TR-VLV-01 perfect fourth/fifth root motion (`VoiceMotion`); TR-VLV-02 unison/second root motion: parallel voices (`VoiceMotion`); TR-VLV-03 third/sixth root motion (`VoiceMotion`); TR-VLV-04 tension register floor (`DensityFloor`); TR-VLV-05 inversion as passing chord (`PositionContinuity`); TR-VLV-06 hybrid voicing construction and failure condition (`_pending:hybrid-voicing-construction`). Cites Ch. 6, 10, 14.
+
+Modification rules: MR-VLV-01 line cliché — chromatic inner-voice motion (`_pending:line-cliche-inner-voice`); MR-VLV-02 bass note as chord tone (1, 3, 5, 7) rule (`_pending:bass-chord-tone-assignment`). Cites Ch. 6, 11.
+
+### Turnaround and Phrase-Level Template System (`randy-felts:reharmonization-techniques:turnaround-phrase-template`)
+
+Governs reharmonization at the phrase and song level. The core device is the four-slot turnaround template (tonic → link → subdominant → dominant) replacing the long tonic at measures 31–32. The III/VI tonic-substitution principle (from Ch. 1) acts as a cross-chapter rule. Extended endings resolve to a Maj7 in a new key via deceptive cadence. Modulatory interludes are 2–8 bars long and treat the new-key downbeat as a target chord.
+
+Members: slot-1 tonic-function chord; slot-2 link chord; slot-3 subdominant-function chord; slot-4 dominant-function chord; extended-ending chord (final Maj7 in new key); modulatory-interlude block.
+
+Traversal rules: TR-TPT-01 four-slot functional sequence (`FamilyCoherence`); TR-TPT-02 slot-1 catalog — tonic and tonic-substitute options (`FamilyCoherence`); TR-TPT-03 III/VI tonic-substitution principle cross-chapter (`FamilyCoherence`). Cites Ch. 1, 8, 9.
+
+Modification rules: MR-TPT-01 extended ending — deceptive cadence to new-key Maj7 (`_pending:extended-ending-deceptive-resolution`); MR-TPT-02 modulatory interlude construction (`_pending:modulatory-interlude-construction`). Cites Ch. 9.
+
+### Modal and Constant-Structure System (`randy-felts:reharmonization-techniques:modal-constant-structure-system`)
+
+Governs the book's most abstract resources. Modal reharmonization constrains both melody and chords to be diatonic to a chosen mode, places the I chord in strong rhythmic positions, and requires each modal key for at least four bars. Lydian requires a tonic pedal for the #11 to be perceived. Phrygian b9 and Lydian tritone outside modal context signal structural error. Constant-structure patterns replace tonal function with textural consistency. Chapter 16 integrates the three resources.
+
+Members: Dorian, Phrygian, Lydian, Mixolydian, Aeolian modal centers with mode-specific cadential pairs; constant-structure chord sets (half-step, whole-step, third bass motion); pedal tone / ostinato grounding layer.
+
+Traversal rules: TR-MCS-01 modal diatonic constraint (`_pending:modal-diatonic-constraint`); TR-MCS-02 Lydian tonic pedal requirement and mode-defining dissonance errors (`_pending:modal-pedal-and-error-detection`); TR-MCS-03 constant structure bass interval patterns (`StringSetTransition`). Cites Ch. 13, 15.
+
+Modification rules: MR-MCS-01 three combination options for modal + hybrid + constant structure (`_pending:modal-hybrid-constant-combination`); MR-MCS-02 repetition requirement for listener comprehension (`_pending:repetition-comprehension-requirement`); MR-MCS-03 modal melody selection criterion (`_pending:modal-melody-selection`). Cites Ch. 16.
+
+## Pending Work
+
+The following _pending:<kebab> engine_payload.kind values appear in the systems-draft. Each signals a rule whose logic is captured in the distillation but whose formal engine implementation has not yet been specified.
+
+- `_pending:b9-melody-harmony-gate` — Gate blocking any substitution creating a b9 interval between any chord tone and the melody note, with V7(b9)→I exception (TR-FSG-02).
+- `_pending:tritone-minor-seventh-gate` — Gate blocking substitutions placing the tritone in the melody over a minor seventh, with II-7 II-V exception (TR-FSG-03).
+- `_pending:diminished-substitution-hierarchy` — Three-tier decision procedure for selecting a dominant substitute for a diminished seventh (TR-FSG-08).
+- `_pending:displacement-open-space` — Transformation moving a target chord later in the phrase, with b3→T9 and b5→T11 special cases and tritone/sus4 clash repair (MR-FSG-01).
+- `_pending:dominant-to-minor-seventh-conversion` — Optional texture-softening conversion on strong beats (MR-FSG-03).
+- `_pending:melody-shortening-harmonic-freedom` — Rule permitting melody truncation after two beats to free harmonic space (MR-FSG-04).
+- `_pending:hybrid-voicing-construction` — Construction/validation procedure for hybrid voicings (TR-VLV-06).
+- `_pending:line-cliche-inner-voice` — Line cliché modification: motion range, default interval, target chord, overuse, tempo coupling (MR-VLV-01).
+- `_pending:bass-chord-tone-assignment` — Bass-line rule requiring chord-tone roles (1,3,5,7), forbidding extensions, direction consistency, max 3 consecutive dissonances (MR-VLV-02).
+- `_pending:extended-ending-deceptive-resolution` — Extended-ending construction (deceptive cadence → new-key Maj7, motivic melody) (MR-TPT-01).
+- `_pending:modulatory-interlude-construction` — 2–8 bar modulatory interlude construction (MR-TPT-02).
+- `_pending:modal-diatonic-constraint` — Modal melody/chord diatonic constraint, I placement, 4-bar minimum (TR-MCS-01).
+- `_pending:modal-pedal-and-error-detection` — Lydian pedal requirement and mode-defining dissonance error signals (TR-MCS-02).
+- `_pending:modal-hybrid-constant-combination` — Three-option combination procedure for modal/hybrid/constant-structure integration (MR-MCS-01).
+- `_pending:repetition-comprehension-requirement` — Modal/constant-structure repetition prescription for listener comprehension (MR-MCS-02).
+- `_pending:modal-melody-selection` — Two-criterion melody-selection rule for modal reharmonization (MR-MCS-03).
+
+## Provenance Notes
+
+Sources: book-level distillation (s3, run 2026-05-28T15-05-20-felts-reharmonization-techniques), sixteen per-chapter summaries (extracted 2026-05-31, model claude-haiku), and the systems-draft JSON (four systems, twenty-seven rules combined).
+
+Chapter-to-system mapping: Chapters 1–5, 8–9, 12 → Functional Substitution Graph; Chapters 6, 10, 11, 14 → Voice-Leading and Voicing System; Chapters 8–9 (with Ch. 1 cross-chapter) → Turnaround and Phrase-Level Template System; Chapters 13, 15, 16 → Modal and Constant-Structure System.
+
+Chapter 7 (Correction of Faulty Chord Symbols) yields no independent system. Its content is notational convention—rules for omitting vs. including tensions in chord symbols, preferring seventh chords over triads, enharmonic spelling, and line-cliché notation—that informs how members across other systems are labeled rather than constituting an independent traversal/modification graph.
+
+Fidelity-validation gaps: Chapters 5, 9, and 13 had few quotes survive the chapter-quote-fidelity validator during s2 extraction (1 surviving quote for ch09 and ch13; ch05 ended with empty quotes[] due to a validator interaction). Summaries for those chapters supplement validated quotes with broader chapter content. Rules drawn primarily from these chapters—TR-FSG-07 (modal interchange), TR-MCS-01 and TR-MCS-02 (modal constraints), MR-TPT-01 and MR-TPT-02 (extended endings and modulatory interludes)—warrant closer quote-level verification before engine implementation.

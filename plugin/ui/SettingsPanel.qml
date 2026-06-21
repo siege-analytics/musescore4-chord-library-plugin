@@ -87,6 +87,20 @@ Item {
     signal backupRestoreRequested()
     // Import from URL (#67)
     signal urlImportRequested(string url)
+    // #210 Stage 2 — voicing exclusion engine surface
+    signal clearVoicingOverridesRequested()
+    property var effectiveVoicingTolerances: ({})
+    property int voicingOverrideCount: 0
+    // #216 — per-dimension tolerance editor
+    property var voicingToleranceMap: ({ modes: {}, tunings: {} })
+    property var tuningIdList: []          // ["standard", "baritone", ...]
+    property var tuningDisplayList: []     // ["Standard 6-String", "Baritone", ...]
+    property var modeIdList: []            // ["chord-melody", ...]
+    property var modeDisplayList: []       // ["Chord Melody", ...]
+    property string tolEditTuning: ""      // "" = all-tunings (mode default)
+    property string tolEditMode: "chord-melody"
+    signal voicingToleranceChanged(string tuning, string mode, string dimension, var value)
+    signal voicingTolerancesResetRequested(string tuning, string mode)
     property string backupStatus: ""
     property color backupStatusColor: "black"
 
@@ -98,6 +112,52 @@ Item {
     property string compositionNumericRule: "weighted-sum"
     property string compositionScaleRule: "union-priority"
     property string compositionResolution: "re-resolve"
+
+    // Composition resolver (#195) — parent passes StyleComposer.resolve as a
+    // callback so the live readout doesn't import the model directly.
+    property var resolveCompositionFn: function(composition, allStyles) { return null }
+
+    // Build a draft composition from the current form state for live preview.
+    function _draftComposition() {
+        var enabled = []
+        var weights = {}
+        var keys = Object.keys(_compositionEnabled)
+        for (var i = 0; i < keys.length; i++) {
+            if (_compositionEnabled[keys[i]]) {
+                enabled.push(keys[i])
+                weights[keys[i]] = _compositionWeights[keys[i]] || 1.0
+            }
+        }
+        return {
+            id: "_draft",
+            name: compositionName,
+            composedFrom: enabled,
+            composition: {
+                numericRule: compositionNumericRule,
+                scaleRule: compositionScaleRule,
+                weights: weights,
+                resolution: compositionResolution
+            },
+            chordScaleOverrides: {},
+            categoryWeights: {},
+            qualityBoosts: {}
+        }
+    }
+
+    // Compact readout: top-N entries by absolute magnitude, formatted "key: ±value".
+    function _topByAbsMagnitude(obj, n) {
+        if (!obj) return []
+        var keys = Object.keys(obj)
+        var pairs = []
+        for (var i = 0; i < keys.length; i++) {
+            pairs.push({ key: keys[i], val: obj[keys[i]] })
+        }
+        pairs.sort(function(a, b) { return Math.abs(b.val) - Math.abs(a.val) })
+        return pairs.slice(0, n).map(function(p) {
+            var sign = p.val > 0 ? "+" : ""
+            return p.key + ": " + sign + p.val
+        })
+    }
 
     // --- Sub-tab state ---
     property int currentSubTab: 0
@@ -313,6 +373,199 @@ Item {
                                 font.pixelSize: 10
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    // === Voicing Tolerances (#210 Stage 2 + #216 editor) ===
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: tolColumn.implicitHeight + 16
+                        color: theme.consoleBg
+                        radius: 4
+                        border.color: theme.divider
+
+                        // Compute the effective tolerances for the (editTuning, editMode)
+                        // pair from the merged voicingToleranceMap. When editTuning="",
+                        // show the mode-level entry; otherwise the per-tuning entry.
+                        function _tolFor(tuning, mode) {
+                            var map = settingsPanel.voicingToleranceMap || {}
+                            if (tuning && tuning.length > 0) {
+                                var t = (map.tunings || {})[tuning]
+                                if (t && t[mode]) return t[mode]
+                            }
+                            return ((map.modes || {})[mode]) || {}
+                        }
+
+                        property var _editTol: _tolFor(settingsPanel.tolEditTuning, settingsPanel.tolEditMode)
+
+                        ColumnLayout {
+                            id: tolColumn
+                            anchors.fill: parent
+                            anchors.margins: 8
+                            spacing: 6
+
+                            Label {
+                                text: "VOICING TOLERANCES"
+                                font.pixelSize: 11
+                                font.bold: true
+                            }
+                            Label {
+                                text: "Edit thresholds per tuning and mode. Empty values fall through to mode-level defaults. Per-signature include/exclude overrides are managed via the 'Hidden voicings' lists in the Library tab and Walkthrough."
+                                font.pixelSize: 9
+                                color: theme.textMuted
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+
+                            // Tuning + mode selectors
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+
+                                Label { text: "Tuning:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    id: tolTuningCombo
+                                    Layout.fillWidth: true
+                                    font.pixelSize: 9
+                                    model: ["All tunings (mode default)"].concat(settingsPanel.tuningDisplayList)
+                                    currentIndex: {
+                                        if (!settingsPanel.tolEditTuning) return 0
+                                        var i = settingsPanel.tuningIdList.indexOf(settingsPanel.tolEditTuning)
+                                        return i >= 0 ? i + 1 : 0
+                                    }
+                                    onActivated: function(idx) {
+                                        if (idx === 0) settingsPanel.tolEditTuning = ""
+                                        else settingsPanel.tolEditTuning = settingsPanel.tuningIdList[idx - 1] || ""
+                                    }
+                                }
+                                Label { text: "Mode:"; font.pixelSize: 9 }
+                                ComboBox {
+                                    id: tolModeCombo
+                                    Layout.fillWidth: true
+                                    font.pixelSize: 9
+                                    model: settingsPanel.modeDisplayList
+                                    currentIndex: Math.max(0,
+                                        settingsPanel.modeIdList.indexOf(settingsPanel.tolEditMode))
+                                    onActivated: function(idx) {
+                                        settingsPanel.tolEditMode = settingsPanel.modeIdList[idx] || "chord-melody"
+                                    }
+                                }
+                            }
+
+                            // Numeric SpinBoxes
+                            Grid {
+                                columns: 2
+                                columnSpacing: 12
+                                rowSpacing: 4
+                                Layout.fillWidth: true
+
+                                Label { text: "Max fret:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 0; to: 24
+                                    value: parent.parent.parent._editTol.maxFret !== undefined ? parent.parent.parent._editTol.maxFret : 12
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxFret", value)
+                                }
+
+                                Label { text: "Max stretch (frets):"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 1; to: 10
+                                    value: parent.parent.parent._editTol.maxStretch !== undefined ? parent.parent.parent._editTol.maxStretch : 5
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxStretch", value)
+                                }
+
+                                Label { text: "Max muted strings:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 0; to: 7
+                                    value: parent.parent.parent._editTol.maxMutedStrings !== undefined ? parent.parent.parent._editTol.maxMutedStrings : 3
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxMutedStrings", value)
+                                }
+
+                                Label { text: "Min sounding notes:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                SpinBox {
+                                    from: 1; to: 7
+                                    value: parent.parent.parent._editTol.minSoundingNotes !== undefined ? parent.parent.parent._editTol.minSoundingNotes : 3
+                                    onValueModified: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "minSoundingNotes", value)
+                                }
+
+                                Label { text: "Max difficulty tier:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                ComboBox {
+                                    id: tolDifficultyCombo
+                                    model: ["standard", "advanced", "expert"]
+                                    font.pixelSize: 9
+                                    currentIndex: {
+                                        var t = parent.parent.parent._editTol.maxDifficultyTier || "advanced"
+                                        return Math.max(0, model.indexOf(t))
+                                    }
+                                    onActivated: function(idx) {
+                                        settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "maxDifficultyTier", model[idx])
+                                    }
+                                }
+
+                                Label { text: "Require root in bass:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                CheckBox {
+                                    checked: parent.parent.parent._editTol.requireRootInBass === true
+                                    onToggled: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "requireRootInBass", checked)
+                                }
+
+                                Label { text: "Allow open strings:"; font.pixelSize: 9; color: theme.textSecondary; Layout.alignment: Qt.AlignVCenter }
+                                CheckBox {
+                                    checked: parent.parent.parent._editTol.allowOpenStrings !== false
+                                    onToggled: settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "allowOpenStrings", checked)
+                                }
+                            }
+
+                            // Excluded categories — comma-separated TextField for MVP
+                            // (chip-multi-select deferred).
+                            Label {
+                                text: "Excluded categories (comma-separated, e.g. quartal, extended):"
+                                font.pixelSize: 9
+                                color: theme.textSecondary
+                            }
+                            TextField {
+                                id: tolExcludedField
+                                Layout.fillWidth: true
+                                font.pixelSize: 10
+                                selectByMouse: true
+                                text: ((parent.parent._editTol.excludedCategories) || []).join(", ")
+                                onEditingFinished: {
+                                    var raw = text.split(",")
+                                    var list = []
+                                    for (var i = 0; i < raw.length; i++) {
+                                        var s = raw[i].trim()
+                                        if (s.length > 0) list.push(s)
+                                    }
+                                    settingsPanel.voicingToleranceChanged(settingsPanel.tolEditTuning, settingsPanel.tolEditMode, "excludedCategories", list)
+                                }
+                            }
+
+                            // Footer actions
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 6
+
+                                Label {
+                                    text: "User overrides set: " + settingsPanel.voicingOverrideCount
+                                    font.pixelSize: 9
+                                    color: theme.textSecondary
+                                    Layout.fillWidth: true
+                                }
+                                Button {
+                                    text: "Reset this (tuning, mode)"
+                                    font.pixelSize: 9
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Revert all dimensions for the selected tuning + mode to file defaults."
+                                    onClicked: settingsPanel.voicingTolerancesResetRequested(
+                                        settingsPanel.tolEditTuning, settingsPanel.tolEditMode)
+                                }
+                                Button {
+                                    text: "Clear signature overrides"
+                                    font.pixelSize: 9
+                                    ToolTip.visible: hovered
+                                    ToolTip.text: "Clear per-signature include/exclude overrides (the ones from 'Hidden voicings' lists)."
+                                    enabled: settingsPanel.voicingOverrideCount > 0
+                                    onClicked: settingsPanel.clearVoicingOverridesRequested()
+                                }
                             }
                         }
                     }
@@ -1492,6 +1745,93 @@ Item {
                                     model: ["re-resolve", "freeze"]
                                     currentIndex: model.indexOf(settingsPanel.compositionResolution)
                                     onActivated: settingsPanel.compositionResolution = currentText
+                                }
+                            }
+
+                            // Resolved-style readout (#195). Shows what the
+                            // current composition draft actually evaluates to,
+                            // so users notice when two styles cancel out.
+                            Rectangle {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: resolvedReadoutCol.implicitHeight + 12
+                                color: theme.cardBackground
+                                border.color: theme.cardBorder
+                                border.width: 1
+                                radius: 4
+                                ColumnLayout {
+                                    id: resolvedReadoutCol
+                                    anchors.fill: parent
+                                    anchors.margins: 6
+                                    spacing: 3
+
+                                    property var _resolved: settingsPanel.resolveCompositionFn(
+                                        settingsPanel._draftComposition(),
+                                        settingsPanel.profilesData
+                                    )
+
+                                    Label {
+                                        text: "RESOLVED PREVIEW"
+                                        font.pixelSize: 9
+                                        font.bold: true
+                                        color: theme.textMuted
+                                    }
+                                    Label {
+                                        property var cw: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.categoryWeights : null
+                                        property var top: settingsPanel._topByAbsMagnitude(cw, 5)
+                                        visible: top.length > 0
+                                        text: "category weights: " + top.join(", ")
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property var qb: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.qualityBoosts : null
+                                        property var top: settingsPanel._topByAbsMagnitude(qb, 5)
+                                        visible: top.length > 0
+                                        text: "quality boosts: " + top.join(", ")
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property var cso: resolvedReadoutCol._resolved
+                                            ? resolvedReadoutCol._resolved.chordScaleOverrides : null
+                                        property string summary: {
+                                            if (!cso) return ""
+                                            var keys = Object.keys(cso)
+                                            if (keys.length === 0) return ""
+                                            var parts = []
+                                            for (var i = 0; i < Math.min(keys.length, 5); i++) {
+                                                parts.push(keys[i] + ": " + (cso[keys[i]] || []).join(", "))
+                                            }
+                                            return parts.join("  ·  ")
+                                        }
+                                        visible: summary.length > 0
+                                        text: "scales: " + summary
+                                        font.pixelSize: 9
+                                        font.family: "Menlo, Monaco, monospace"
+                                        wrapMode: Text.WordWrap
+                                        Layout.fillWidth: true
+                                    }
+                                    Label {
+                                        property bool empty: {
+                                            var r = resolvedReadoutCol._resolved
+                                            if (!r) return true
+                                            return Object.keys(r.categoryWeights || {}).length === 0
+                                                && Object.keys(r.qualityBoosts || {}).length === 0
+                                                && Object.keys(r.chordScaleOverrides || {}).length === 0
+                                        }
+                                        visible: empty
+                                        text: "resolved to nothing — select at least 2 styles with non-zero weights"
+                                        font.pixelSize: 9
+                                        font.italic: true
+                                        color: theme.textMuted
+                                        Layout.fillWidth: true
+                                    }
                                 }
                             }
 

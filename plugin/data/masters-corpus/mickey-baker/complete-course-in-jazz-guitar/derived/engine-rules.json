@@ -1,0 +1,1909 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-16-mickey-baker-complete-course-in-jazz-guitar",
+    "stage": "s6-engine-rules",
+    "source_pdf": null,
+    "extracted_at": "2026-06-16T23:00:55-05:00",
+    "schema_version": "0.2",
+    "model": "claude-opus-4-7",
+    "ticket": "#527"
+  },
+  "master_id": "mickey-baker",
+  "work_id": "complete-course-in-jazz-guitar",
+  "engine_rules": [
+    {
+      "rule_id": "baker-no-static-strum",
+      "name": "Reject static strumming in favor of voicing motion",
+      "when": {
+        "progression.type": "any",
+        "voicing.shape": "plain_strum"
+      },
+      "then": {
+        "voicing.shape": "adaptable_voicing_with_motion",
+        "progression.cycle_id": "baker-numbered-catalog"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "A plain two-bar strum appears in a Baker arrangement without substitution",
+      "anchor": "The old style of strumming chords for guitar will never do in modern playing, so we will have to work out a complete system.",
+      "source_page": 3,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Replacing strummed chords",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-use-catalog-only",
+      "name": "Draw voicings exclusively from the 26-to-30 numbered catalog",
+      "when": {
+        "chord_quality": "any",
+        "progression.type": "any"
+      },
+      "then": {
+        "voicing.shape": "baker_catalog_number",
+        "progression.cycle_id": "baker-numbered-catalog"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": "A voicing outside the numbered 1-30 catalog is prescribed as a primary chord choice",
+      "anchor": "Below you have 26 chords which you must learn to use right away. There are more chords to learn, but these are the most important.",
+      "source_page": 3,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "The 26 essential chords",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-seed-key-gc",
+      "name": "Ground initial chord exercises in G major and C major as seed keys",
+      "when": {
+        "progression.position": "initial_study",
+        "progression.type": "chord_exercise"
+      },
+      "then": {
+        "chord_symbol.substitute": "G_major_or_C_major_position",
+        "progression.cycle_id": "baker-seed-key-gc"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "maj7",
+        "maj6"
+      ],
+      "falsifier": "Exercises are introduced in a key other than G or C before those keys are mastered",
+      "anchor": "If you will notice, some of these chords are designed for the key of G major and some for C major. These are the two keys that we are going to work with first.",
+      "source_page": 3,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Two starting keys",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-transpose-mandatory",
+      "name": "Transpose every learned voicing to all remaining keys",
+      "when": {
+        "progression.type": "any",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "position_shifted_identical_fingering",
+        "progression.cycle_id": "baker-transposition-mandate"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": "A Baker prescription is practiced in only one key and the lesson advances without transposition",
+      "anchor": "It is very important that everything in the book be transposed to all of the other keys. You should be able to play any song in any key by the time you finish this book, and learning to transpose is the only thing that can help you to do this.",
+      "source_page": 3,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Transposition is mandatory",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-chromatic-neck-drill",
+      "name": "Internalize every new shape by sliding it chromatically up and down the neck",
+      "when": {
+        "progression.type": "chord_exercise",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "same_fingering_position_shifted_chromatically",
+        "progression.cycle_id": "baker-chromatic-drill"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "maj6",
+        "min6"
+      ],
+      "falsifier": "A new chord shape is learned only in one fret position without chromatic movement",
+      "anchor": "Take your G Chords which are the first three chords in Lesson One, and practice them chromatically always up the neck of your guitar as shown below.",
+      "source_page": 3,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Chromatic chord exercise",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-rhythm-palette-1-to-6",
+      "name": "Restrict comping palette to Chords No. 1-6 for rhythm exercises",
+      "when": {
+        "progression.type": "rhythm_comping",
+        "progression.position": "any"
+      },
+      "then": {
+        "voicing.shape": "baker_catalog_number_1_to_6",
+        "progression.cycle_id": "baker-rhythm-palette"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7",
+        "maj6"
+      ],
+      "falsifier": "Chords 7 or higher are prescribed as primary rhythm voicings in the foundational key exercises",
+      "anchor": "By the way, you are only using Chords No. 1, 2, 3, 4, 5, 6 for these Exercises. Just transpose them to the proper keys.",
+      "source_page": 4,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Six core rhythm chords",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-two-line-display",
+      "name": "Display every substitution in the two-line standard-above / new-below format",
+      "when": {
+        "substitution.context": "any_reharmonization",
+        "progression.type": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-two-line-format",
+        "chord_symbol.substitute": "new_changes_displayed_below_standard"
+      },
+      "preference": 0,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13",
+        "dom7b9"
+      ],
+      "falsifier": "A Baker substitution is presented without both the original and the new change visible together",
+      "anchor": "First, I'm going to write out the standard changes as they are in some songs, and below them I will write the new ones, the way they should be played against the old ones.",
+      "source_page": 4,
+      "_provenance": {
+        "chapter_n": 1,
+        "section_title": "Standard vs. new chords",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-chromatic-intro-drill",
+      "name": "Internalize intro shapes by practicing them chromatically up and down the fingerboard",
+      "when": {
+        "progression.type": "introduction",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "same_intro_fingering_shifted_chromatically",
+        "progression.cycle_id": "baker-chromatic-drill"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "maj7",
+        "maj6",
+        "dom7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "An intro shape is rehearsed only in its written key without chromatic movement",
+      "anchor": "You may find some of these very hard to play, but if you practice them chromatically up and down the finger board you will soon become accustomed to them.",
+      "source_page": 6,
+      "_provenance": {
+        "chapter_n": 2,
+        "section_title": "Chromatic intro practice",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-intro-rhythmic-displacement",
+      "name": "Generate new intros by displacing rhythm: root-first then chord, or arpeggiated",
+      "when": {
+        "progression.type": "introduction",
+        "substitution.context": "intro_generation"
+      },
+      "then": {
+        "voicing.shape": "root_then_chord_or_arpeggiated",
+        "progression.cycle_id": "baker-intro-rhythmic-displacement"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "maj7",
+        "maj6",
+        "min7",
+        "dom7",
+        "dom9"
+      ],
+      "falsifier": "A new intro is generated by adding new chord shapes rather than by rhythmically reordering an existing fixed set",
+      "anchor": "Another way to get new ideas is to change the rhythm of the introduction. Try playing them in arpeggio style, or try playing the bottom note of the chord first, then the chord.",
+      "source_page": 8,
+      "_provenance": {
+        "chapter_n": 2,
+        "section_title": "Vary rhythm to create intros",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-elevate-arpeggio-stringbass",
+      "name": "Prefer arpeggio or walking string-bass texture over plain strumming in any accompaniment context",
+      "when": {
+        "progression.type": "accompaniment",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "arpeggio_or_walking_stringbass",
+        "progression.cycle_id": "baker-texture-elevation"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13",
+        "maj6",
+        "min6"
+      ],
+      "falsifier": "Plain block strumming is prescribed as the primary texture for a comping or backing context",
+      "anchor": "In this Lesson I have a few ideas on how to use the Arpeggio, and the string bass.",
+      "source_page": 8,
+      "_provenance": {
+        "chapter_n": 2,
+        "section_title": "Arpeggio and string bass styles",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-major-triad-expand",
+      "name": "Replace any plain major triad with a maj7, maj6, or maj9 voicing from the catalog",
+      "when": {
+        "chord_quality": "maj",
+        "substitution.context": "plain_triad_in_progression"
+      },
+      "then": {
+        "voicing.shape": "baker_catalog_maj7_or_maj6_or_maj9",
+        "voicing.tensions": [
+          "maj7",
+          "maj6",
+          "maj9"
+        ],
+        "chord_symbol.substitute": "Cma7_or_Cma6_or_Cma9",
+        "progression.cycle_id": "baker-triad-expansion"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj"
+      ],
+      "falsifier": "A plain major triad is left unchanged without at least one extension voicing offered as substitution",
+      "anchor": "Now then, any chord on a major mode can be used in place of the major triad.",
+      "source_page": 10,
+      "_provenance": {
+        "chapter_n": 3,
+        "section_title": "Major triad substitution rule",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-add-color-via-progression",
+      "name": "Add harmonic color to any two-bar static chord by inserting an adaptable voicing progression",
+      "when": {
+        "progression.type": "static_two_bar",
+        "chord_quality": "maj"
+      },
+      "then": {
+        "voicing.shape": "adaptable_progression_voicings",
+        "progression.cycle_id": "baker-color-motion"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7"
+      ],
+      "falsifier": "A two-bar static major chord appears in a Baker arrangement without any motion through adapted voicings",
+      "anchor": "We don't want to strum a C major chord for the whole two bars, because it doesn't have enough color, and besides it sounds corny, so we add color by using progressions that are adaptable as follows",
+      "source_page": 10,
+      "_provenance": {
+        "chapter_n": 3,
+        "section_title": "Avoid strumming for color",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-minor-triad-expand",
+      "name": "Replace any plain minor chord with a min6, min7, or min9 voicing",
+      "when": {
+        "chord_quality": "min",
+        "substitution.context": "plain_minor_in_progression"
+      },
+      "then": {
+        "voicing.shape": "baker_catalog_min6_or_min7_or_min9",
+        "voicing.tensions": [
+          "min6",
+          "min7",
+          "min9"
+        ],
+        "chord_symbol.substitute": "Dmi6_or_Dmi7_or_Dmi9",
+        "progression.cycle_id": "baker-triad-expansion"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "min"
+      ],
+      "falsifier": "A plain minor triad is left unchanged in a Baker arrangement",
+      "anchor": "if you have a Dmi chord (Any minor chord can be used on the minor mode) Dmi6, Dmi7 and Dmi9 are adaptable, because they are all on the same mode.",
+      "source_page": 10,
+      "_provenance": {
+        "chapter_n": 3,
+        "section_title": "Minor and dominant substitution",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-dominant-extension-menu",
+      "name": "Expand any dominant-7 chord with the full extension menu: 13, 9, 7#5+9, 13#5+9, 7b5, 11, 13b9",
+      "when": {
+        "chord_quality": "dom7",
+        "substitution.context": "dominant_in_progression"
+      },
+      "then": {
+        "voicing.tensions": [
+          "13",
+          "9",
+          "7#5+9",
+          "13#5+9",
+          "7b5",
+          "11",
+          "13b9"
+        ],
+        "voicing.shape": "baker_catalog_extended_dominant",
+        "chord_symbol.substitute": "G13_G9_G7#5+9_G13#5+9_G7b5_G11_G13b9",
+        "progression.cycle_id": "baker-dominant-extension-menu"
+      },
+      "preference": 0,
+      "quality_binding": [
+        "dom7",
+        "dom9",
+        "dom13",
+        "dom11",
+        "dom7b9",
+        "aug7"
+      ],
+      "falsifier": "A plain dom7 chord is left unaltered in any Baker comping or solo context without a substitution being offered",
+      "anchor": "With dominant chords there is no limit to what can be done. For instance if you have a G7 Chord — you could use G13, G9, G7#5+9, G13#549, G75, G11, G1349 and so on.",
+      "source_page": 10,
+      "_provenance": {
+        "chapter_n": 3,
+        "section_title": "Minor and dominant substitution",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-substitution-must-serve-voiceleading",
+      "name": "Require substitution candidates to serve voice-leading in context; reject arbitrary insertion",
+      "when": {
+        "substitution.context": "any_reharmonization",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-voice-leading-gate",
+        "chord_symbol.substitute": "contextually_justified_voicing"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "aug7",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": "Baker prescribes inserting any extended voicing regardless of the preceding and following chord's voice-leading",
+      "anchor": "It all depends on how the chords are progressing. You just can't throw these chords in any place, they have to be part of some kind of progression.",
+      "source_page": 10,
+      "_provenance": {
+        "chapter_n": 3,
+        "section_title": "Substitutions need progression",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-two-positions-per-key",
+      "name": "Assign exactly two governing position sets to each key; in C major use 3rd and 8th positions",
+      "when": {
+        "chord_quality": "any",
+        "progression.type": "chord_exercise"
+      },
+      "then": {
+        "voicing.shape": "baker_two_position_sets",
+        "progression.cycle_id": "baker-two-positions-per-key"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7",
+        "maj6",
+        "min6",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "More than two position sets are prescribed for a single key",
+      "anchor": "With our new chords we only have two sets for each key. Like in the key of C major, one set of chords starts at the third position and the other set at the 8th position.",
+      "source_page": 12,
+      "_provenance": {
+        "chapter_n": 4,
+        "section_title": "Two position sets per key",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-dom-to-relative-minor",
+      "name": "Substitute any dominant-7 chord with the minor-7 built on its fifth (relative minor)",
+      "when": {
+        "chord_quality": "dom7",
+        "substitution.context": "dominant_substitution"
+      },
+      "then": {
+        "chord_symbol.substitute": "mi7_built_on_fifth_of_dominant",
+        "voicing.shape": "baker_relative_minor_sub",
+        "progression.cycle_id": "baker-dom-relative-minor"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7"
+      ],
+      "falsifier": "The fifth-above minor substitution is not offered when a dominant chord occupies a two-bar holding zone",
+      "anchor": "the 5th of any dominant chord can be substituted in place of the Dominant itself. Let's say that you have two bars of D7. All right, the 5th of D is A. A-minor is a very close relative to D7. Now you know that if you have a dominant 7 chord you can substitute its relative minor which is the 5th of the chord.",
+      "source_page": 12,
+      "_provenance": {
+        "chapter_n": 4,
+        "section_title": "Tritone-sub via relative minor",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-dom-minor-chart-drill",
+      "name": "Build a twelve-row dominant/relative-minor chart from C7 through B7 before applying the substitution",
+      "when": {
+        "progression.type": "substitution_reference",
+        "chord_quality": "dom7"
+      },
+      "then": {
+        "progression.cycle_id": "baker-dom-relative-minor-chart",
+        "chord_symbol.substitute": "twelve_row_dom_to_mi_chart"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7"
+      ],
+      "falsifier": "The substitution is applied without the student having constructed the twelve-row written chart",
+      "anchor": "you must write out all dominant 7 chords from C7 up to B7 and beside them put the relative minor like this: — the 5th of C7 is G minor",
+      "source_page": 12,
+      "_provenance": {
+        "chapter_n": 4,
+        "section_title": "Tritone-sub via relative minor",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-vamp-seven-key-target",
+      "name": "Transpose vamps to exactly seven keys: Db, Eb, F, G, A, Bb (plus home C), building charts for each",
+      "when": {
+        "progression.type": "vamp",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-vamp-seven-key",
+        "chord_symbol.substitute": "identical_shape_in_Db_Eb_F_G_A_Bb"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "Vamp transposition stops short of all seven target keys",
+      "anchor": "After you have worked these vamps out in this key which is C major, transpose them to the keys of: Dé, Eé, F, G, A, and Bé, then make up charts similar to this one in each key.",
+      "source_page": 12,
+      "_provenance": {
+        "chapter_n": 4,
+        "section_title": "Transpose vamps to seven keys",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-chords-27-to-30",
+      "name": "Add Chords 27-30 (open-string-root vamp voicings) for horn-backing fill-ins in G major",
+      "when": {
+        "progression.type": "vamp_fill_in",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "baker_catalog_27_to_30_open_string_root",
+        "progression.cycle_id": "baker-horn-backing-vamps"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "dom9",
+        "dom13",
+        "maj7",
+        "maj6"
+      ],
+      "falsifier": "Chords 27-30 are prescribed in a key whose open-string-root voicings are not available",
+      "anchor": "In order to work out these vamps, I will have to introduce a few new chords. We will call them chords No. 27, 28, 29 and 30.",
+      "source_page": 14,
+      "_provenance": {
+        "chapter_n": 5,
+        "section_title": "New chords 27-30",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-open-string-root-no-uniform-transpose",
+      "name": "Treat open-string-root vamp shapes (Chords 27-30) as key-specific; select per key rather than uniformly shift",
+      "when": {
+        "chord_quality": "any",
+        "substitution.context": "open_string_root_vamp"
+      },
+      "then": {
+        "progression.cycle_id": "baker-key-scoped-shape-exception",
+        "chord_symbol.substitute": "key_specific_open_string_selection"
+      },
+      "preference": 0,
+      "quality_binding": [
+        "dom7",
+        "maj7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Chords 27-30 are uniformly transposed chromatically rather than selected per key",
+      "anchor": "you can't play them all in every key.",
+      "source_page": 14,
+      "_provenance": {
+        "chapter_n": 5,
+        "section_title": "Some shapes don't transpose",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-dominant-as-connector",
+      "name": "Insert an appropriate dominant chord as the leading chord between any two non-dominant chords",
+      "when": {
+        "progression.type": "chord_connection",
+        "substitution.context": "any_chord_to_chord"
+      },
+      "then": {
+        "chord_symbol.substitute": "inserted_dominant_leading_chord",
+        "progression.cycle_id": "baker-dominant-as-leading"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "aug7"
+      ],
+      "falsifier": "Two non-adjacent chords are connected without an intervening dominant leading chord in a Baker arrangement",
+      "anchor": "This Lesson is the key to all of the other lessons. Here I have written out the best possible way to connect one chord to another using the dominant as leading chord for each example.",
+      "source_page": 17,
+      "_provenance": {
+        "chapter_n": 5,
+        "section_title": "Dominant as leading chord",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-three-connection-categories",
+      "name": "Classify every chord connection as one of three dominant-leading categories: dom-to-dom, dom-to-min, dom-to-maj",
+      "when": {
+        "progression.type": "chord_connection",
+        "chord_quality": "dom7"
+      },
+      "then": {
+        "progression.cycle_id": "baker-three-connection-taxonomy",
+        "chord_symbol.substitute": "dom_to_dom_OR_dom_to_min_OR_dom_to_maj"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "aug7"
+      ],
+      "falsifier": "A chord connection is analyzed outside these three categories",
+      "anchor": "First we have dominant to dominant connections, second, we have dominant to minor connections and third, dominant to major connections. With these few chord connections you can build progressions around any song.",
+      "source_page": 17,
+      "_provenance": {
+        "chapter_n": 5,
+        "section_title": "Three connection categories",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-apply-to-real-repertoire",
+      "name": "Apply learned voicings and substitutions to real tunes from sheet music immediately after drilling",
+      "when": {
+        "progression.type": "any",
+        "substitution.context": "repertoire_application"
+      },
+      "then": {
+        "progression.cycle_id": "baker-real-repertoire-loop",
+        "chord_symbol.substitute": "new_changes_applied_over_standard_song"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "A chord substitution pattern is drilled in exercises only without being applied to a real song",
+      "anchor": "Get four or five popular tunes ( sheet music ) or any kind of song that you like. Study the chord connections, then take your new chords and apply them to these songs.",
+      "source_page": 17,
+      "_provenance": {
+        "chapter_n": 6,
+        "section_title": "Applying chords to songs",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-transpose-intros-endings",
+      "name": "Transpose every intro and ending phrase to Db, Eb, F, G, Ab, Bb in addition to the home key",
+      "when": {
+        "progression.type": "introduction_or_ending",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-intro-ending-six-key",
+        "chord_symbol.substitute": "same_shape_in_Db_Eb_F_G_Ab_Bb"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7",
+        "dom9"
+      ],
+      "falsifier": "An intro or ending phrase is memorized in only one key without being transposed to the six target keys",
+      "anchor": "You are also to transpose each introduction to as many keys as possible, and the same with the endings, and the other material.",
+      "source_page": 17,
+      "_provenance": {
+        "chapter_n": 6,
+        "section_title": "Transpose intros and endings",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-ear-development-loop",
+      "name": "Develop harmonic ear by constantly listening to songs and working out chord progressions for them",
+      "when": {
+        "progression.type": "any",
+        "substitution.context": "ear_development"
+      },
+      "then": {
+        "progression.cycle_id": "baker-listen-and-fit-loop"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": null,
+      "anchor": "A lot can be done toward developing your ear by constantly listening to songs and working out progressions for them.",
+      "source_page": 17,
+      "_provenance": {
+        "chapter_n": 6,
+        "section_title": "Ear development by progression-building",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-two-names-maj6-min7",
+      "name": "Treat any maj6 voicing as interchangeable with its relative min7 a minor third below",
+      "when": {
+        "chord_quality": "maj6",
+        "substitution.context": "dual_function_voicing"
+      },
+      "then": {
+        "chord_symbol.substitute": "relative_min7_built_on_sixth",
+        "voicing.shape": "same_voicing_two_names",
+        "progression.cycle_id": "baker-two-names-principle"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj6",
+        "min7"
+      ],
+      "falsifier": "A maj6 shape is treated as having only one harmonic identity in a Baker substitution context",
+      "anchor": "When we are in one key a chord may be Gma? while still in another key — the same chord has a different name, Emi7. Below I have analyzed the harmonic structure of these chords. You are to learn both names of these chords in all keys.",
+      "source_page": 19,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Chords with two names",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-root-omitted-tritone-sub",
+      "name": "Voice G7#5 and Db9b5 as root-omitted tritone equivalents using the same physical shape",
+      "when": {
+        "chord_quality": "aug7",
+        "substitution.context": "b5_substitution"
+      },
+      "then": {
+        "voicing.shape": "root_omitted_g7sharp5_eq_db9b5",
+        "voicing.tensions": [
+          "#5",
+          "b5",
+          "b9"
+        ],
+        "chord_symbol.substitute": "Db9b5_for_G7#5_or_vice_versa",
+        "progression.cycle_id": "baker-tritone-equiv"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "aug7",
+        "dom7b9"
+      ],
+      "falsifier": "G7#5 and Db9b5 are treated as distinct voicings requiring separate fingerings",
+      "anchor": "7th z —Root 3rd 7 b5th ... Root omitted Root omitted",
+      "source_page": 19,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Root-omitted voicings",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-eleven-canonical-cycles",
+      "name": "Internalize all eleven canonical sequence cycles as the harmonic skeletons of the standard repertoire",
+      "when": {
+        "cycle.id": "baker_canonical_cycle_1_through_11",
+        "progression.type": "standard_tune"
+      },
+      "then": {
+        "progression.cycle_id": "baker_canonical_cycle_matched",
+        "chord_symbol.substitute": "baker_new_changes_for_cycle"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13",
+        "dom7b9"
+      ],
+      "falsifier": "A standard progression is analyzed without being mapped to one of the eleven canonical Baker cycles",
+      "anchor": "In this, our last lesson in chord study, I have written out some of the most used chord progressions in Jazz today. These are standard changes, and if you analyze them and work with them long enough, you will find that they appear in many different songs in various places.",
+      "source_page": 23,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Eleven sequences as standards",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-cycle1-c7-to-gmi7-gmi6",
+      "name": "Replace C7 with the ii-V pair Gmi7-Gmi6 (Cycle No. 1 recipe)",
+      "when": {
+        "chord_quality": "dom7",
+        "cycle.id": "baker_cycle_1",
+        "substitution.context": "C7_in_progression"
+      },
+      "then": {
+        "chord_symbol.substitute": "Gmi7_Gmi6",
+        "voicing.shape": "baker_catalog_min7_min6_pair",
+        "progression.cycle_id": "baker_cycle_1"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7"
+      ],
+      "falsifier": "C7 is left as a plain dominant-7 without the Gmi7-Gmi6 ii-V replacement in Cycle 1 context",
+      "anchor": "New: Gmi7 Gmi6 Gmi7 C7b5 Fmi7 Fmi6 Dmi7 Dmi6 Dmi7 G13b5b9 Cma7 Ebmi7 Dmi7 G13b9",
+      "source_page": 23,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Cycle No. 1 over standard changes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-cycle1-g7-to-dmi7-g13b9",
+      "name": "Replace G7 with the ii-V pair Dmi7-G13b9 (Cycle No. 1 recipe)",
+      "when": {
+        "chord_quality": "dom7",
+        "cycle.id": "baker_cycle_1",
+        "substitution.context": "G7_in_progression"
+      },
+      "then": {
+        "chord_symbol.substitute": "Dmi7_G13b9",
+        "voicing.shape": "baker_catalog_min7_dom13b9_pair",
+        "voicing.tensions": [
+          "b9",
+          "13"
+        ],
+        "progression.cycle_id": "baker_cycle_1"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "dom13"
+      ],
+      "falsifier": "G7 is left unaltered at the V position without the Dmi7-G13b9 pair in Cycle 1",
+      "anchor": "New: ... Dmi7 G13b5b9 Cma7 Ebmi7 Dmi7 G13b9",
+      "source_page": 23,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Cycle No. 1 over standard changes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-sequence-seven-key-transpose",
+      "name": "Transpose all eleven canonical sequences to F, G, Ab, Bb, C, Db, and Eb in addition to the home key",
+      "when": {
+        "cycle.id": "baker_canonical_cycle_1_through_11",
+        "progression.type": "chord_exercise"
+      },
+      "then": {
+        "progression.cycle_id": "baker_sequence_seven_key_transpose",
+        "chord_symbol.substitute": "cycle_pattern_in_F_G_Ab_Bb_C_Db_Eb"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Sequence exercises are performed in fewer than seven target keys",
+      "anchor": "Work them out thoroughly in the keys that they are in, then make up charts of each in all of the other keys: F, G, Ab, Bb, C, Db, and Eb.",
+      "source_page": 23,
+      "_provenance": {
+        "chapter_n": 7,
+        "section_title": "Sequence transposition assignment",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-alternate-pick-universal",
+      "name": "Apply alternate (up-and-down) picking to every exercise and solo in the book without exception",
+      "when": {
+        "progression.type": "any",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-alternate-picking-foundation"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": "A solo or exercise run is prescribed with single-direction picking rather than alternate strokes",
+      "anchor": "Every exercise and solo in this book is to be played with an up and down stroke. In order to play with an up and down stroke you must start right now. Anything that you play from now on, you are to use up and down strokes.",
+      "source_page": 27,
+      "_provenance": {
+        "chapter_n": 8,
+        "section_title": "Up-and-down stroke mandate",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-slow-before-fast",
+      "name": "Practice every exercise at the slowest relaxed tempo first; increase speed only when fully relaxed at slow tempo",
+      "when": {
+        "progression.type": "exercise",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-relaxed-slow-first"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": "Baker prescribes beginning an exercise at a fast tempo before achieving relaxed slow-tempo execution",
+      "anchor": "Take each exercise and practice it as slowly as possible. Only increase the tempo when you can play it relaxed at a slow tempo. Remember, if you cannot play an exercise slowly, you surely can't play it fast.",
+      "source_page": 27,
+      "_provenance": {
+        "chapter_n": 8,
+        "section_title": "Slow practice rule",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-ear-training-transcription",
+      "name": "Develop ear by playing with records, stealing horn solos, and humming ideas against the chord before playing them",
+      "when": {
+        "progression.type": "ear_development",
+        "substitution.context": "ear_training"
+      },
+      "then": {
+        "progression.cycle_id": "baker-hum-then-play-loop"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": null,
+      "anchor": "Practice playing your guitar with records, listen to solos by horn players, learn to steal solos from records. Anything that you hear another musician play, try to play it yourself. Strum the chords to any song that you like and hum ideas, — then apply the ideas to the guitar.",
+      "source_page": 26,
+      "_provenance": {
+        "chapter_n": 8,
+        "section_title": "Ear development practice",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-invariant-fingering",
+      "name": "Use a single invariant fingering for each run type, transposing by position-shift rather than altering the shape",
+      "when": {
+        "progression.type": "run_exercise",
+        "chord_quality": "any"
+      },
+      "then": {
+        "voicing.shape": "same_fingering_position_shifted",
+        "progression.cycle_id": "baker-invariant-fingering"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11"
+      ],
+      "falsifier": "Different fingering shapes are prescribed for the same run type in different keys",
+      "anchor": "*You are to use the same fingering, up and down the fingerboard.",
+      "source_page": 30,
+      "_provenance": {
+        "chapter_n": 9,
+        "section_title": "Chromatic fingering invariance",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-blues-five-key-target",
+      "name": "Restrict blues run and solo transposition to the five horn-friendly keys: F, G, Ab, Bb, C",
+      "when": {
+        "progression.type": "blues_solo",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-blues-five-key",
+        "chord_symbol.substitute": "transposed_to_F_G_Ab_Bb_C"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Blues solos are expected to be transposed to all twelve keys rather than the contracted five",
+      "anchor": "The keys that the blues are played in mostly, are: —F, G, A', BS and C. So these are the keys that you are to concentrate on for now. These simple patterns that I have written out in the next few lessons are to be transposed to all five of these keys.",
+      "source_page": 32,
+      "_provenance": {
+        "chapter_n": 9,
+        "section_title": "Five blues keys",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-exercise-runs-as-solo-material",
+      "name": "Build blues solos using exercise runs verbatim from Lessons 27-30, selecting the appropriate run for each chord",
+      "when": {
+        "progression.type": "blues_solo",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-exercise-as-performance",
+        "chord_symbol.substitute": "named_run_from_lessons_27_to_30"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Blues solos are constructed from new melodic material outside the Lessons 27-30 run vocabulary",
+      "anchor": "Now I am using these runs just as they were in the exercise, so all you have to do is to find the right one.",
+      "source_page": 32,
+      "_provenance": {
+        "chapter_n": 9,
+        "section_title": "Reuse of exercise runs",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-relative-run-sub-min7-for-maj",
+      "name": "Substitute a min7 run for any major chord using the same relative rule as chords (Emi7 run over G major)",
+      "when": {
+        "chord_quality": "maj",
+        "substitution.context": "run_selection_for_major_chord"
+      },
+      "then": {
+        "chord_symbol.substitute": "relative_min7_run",
+        "progression.cycle_id": "baker-relative-run-substitution"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "maj",
+        "maj6",
+        "maj7"
+      ],
+      "falsifier": "A major chord passage requires a diatonic major run and prohibits the relative min7 run substitution",
+      "anchor": "In Blues No. I for the first four bars I'm using an Emi7 run. You know that the chord for these four bars is G major for three and G7 for one. But Emi7 and Gma6 are the same (relatives), so it can be used as a major run (See Lesson 19). The same rule that applies to chords applies to runs.",
+      "source_page": 34,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Relative run substitution",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-ami7-for-d7-gmi7-for-c7",
+      "name": "Use Ami7 run over D7 and Gmi7 run over C7 as the blues bars 9-10 ii-for-V substitution",
+      "when": {
+        "chord_quality": "dom7",
+        "progression.position": "blues_bars_9_to_10",
+        "substitution.context": "ii_for_V_run"
+      },
+      "then": {
+        "chord_symbol.substitute": "Ami7_for_D7_Gmi7_for_C7",
+        "progression.cycle_id": "baker-blues-ii-for-v-bars-9-10"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7"
+      ],
+      "falsifier": "The standard V7 and IV7 runs are used at blues bars 9-10 without the corresponding min7 substitution",
+      "anchor": "In Blues progression sometimes at the ninth and tenth bar we use the V7 for one bar (which is D7 in the key of G major), and the IV7 for one bar (which is C7 in the key of G major), this allows you to use an Ami7 run for one bar and a Gmi7 run for one bar.",
+      "source_page": 34,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Relative run substitution",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-always-alter-v-to-i",
+      "name": "Always alter the dominant chord when it resolves to a major chord (G7#5+9 or G13b5+9 to Cma)",
+      "when": {
+        "chord_quality": "dom7",
+        "progression.position": "V_resolving_to_I",
+        "substitution.context": "dominant_to_major_resolution"
+      },
+      "then": {
+        "voicing.tensions": [
+          "#5",
+          "+9",
+          "b5",
+          "13",
+          "b9"
+        ],
+        "chord_symbol.substitute": "G7#5+9_or_G13b5+9",
+        "progression.cycle_id": "baker-always-alter-v"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "aug7",
+        "dom7b9",
+        "dom13"
+      ],
+      "falsifier": "An unaltered plain dom7 is prescribed at the V-to-I cadence point in a Baker arrangement",
+      "anchor": "Notice that when connecting a dominant chord to a major the dominant in most of the time altered, (G7#529 to Cma ot G135¢9 to Cma). By altering chords like this they blend together perfectly. This same thing applies to solo work.",
+      "source_page": 34,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Altered dominant principle",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-ami7-cmi7-gmaj-v-to-i-recipe",
+      "name": "Over V-to-I (D7→G major) use the Ami7→Cmi7→G major run sequence as the workhorse template",
+      "when": {
+        "chord_quality": "dom7",
+        "progression.position": "V_to_I",
+        "substitution.context": "run_over_V_into_I"
+      },
+      "then": {
+        "chord_symbol.substitute": "Ami7_run_then_Cmi7_run_then_Gmaj_run",
+        "progression.cycle_id": "baker-ami7-cmi7-gmaj-recipe"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7"
+      ],
+      "falsifier": "A plain D-major or D-dominant run is used over D7 resolving to G without the Ami7/Cmi7 substitution",
+      "anchor": "Whenever you have one or two bars of D7 going into G major, you may use an Ami7 run to a Cmi7 run which will blend right into a G major run.",
+      "source_page": 34,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Substituting minor-7 runs over V",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-strum-hum-internalize",
+      "name": "Internalize run-against-chord sound by strumming chords and humming the run simultaneously until the run is heard before it is played",
+      "when": {
+        "progression.type": "run_exercise",
+        "substitution.context": "internalization"
+      },
+      "then": {
+        "progression.cycle_id": "baker-strum-hum-drill"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": null,
+      "anchor": "After you've learned the connections by heart, practice strumming the chords and humming the runs to yourself. By doing this, you can hear just how these runs sound against the chord progressions.",
+      "source_page": 37,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Hum runs against chords",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-fill-in-blank-bar-format",
+      "name": "Scaffold improvisation by filling labeled-blank bars with runs of the specified type from the exercise vocabulary",
+      "when": {
+        "progression.type": "fill_in_solo",
+        "substitution.context": "scaffolded_improvisation"
+      },
+      "then": {
+        "progression.cycle_id": "baker-fill-in-run-type-dispatch",
+        "chord_symbol.substitute": "run_matching_labeled_type"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "Fill-in bars are completed with runs from outside the labeled run-type category",
+      "anchor": "If you will notice I've written two or three bars, and in some places the bars are blank. This of course is where you fill in. Over these blank bars I have written the type of run I'd like you to use, so all you have to do is fill them in.",
+      "source_page": 40,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Fill-in solo method",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-blend-runs-not-stack",
+      "name": "Join runs into connected melodic lines; reject concatenated runs that do not blend",
+      "when": {
+        "progression.type": "solo",
+        "substitution.context": "run_connection"
+      },
+      "then": {
+        "progression.cycle_id": "baker-line-blending"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Runs are concatenated without connecting material and the result is presented as a satisfactory Baker solo",
+      "anchor": "Above all, don't just throw the runs together. Make sure that they blend together as well as those that I have written.",
+      "source_page": 40,
+      "_provenance": {
+        "chapter_n": 10,
+        "section_title": "Blend over throw-together",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-riff-forced-against-chord",
+      "name": "License riff runs to contain non-diatonic tones; judge by fit against the chord rather than scale membership",
+      "when": {
+        "progression.type": "riff",
+        "substitution.context": "vamp_or_blues"
+      },
+      "then": {
+        "progression.cycle_id": "baker-forced-riff",
+        "chord_symbol.substitute": "riff_forced_non_diatonic_ok"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "A riff is rejected because it contains tones outside the prevailing scale or chord",
+      "anchor": "Riff Runs are only ideas put together and forced against the chord. They don't have to be true to the chord.",
+      "source_page": 42,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Definition of riff runs",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-riff-primary-over-vamp",
+      "name": "Use riffs rather than chord-derived runs as the primary melodic unit when vamp changes move faster than chord-tone runs allow",
+      "when": {
+        "progression.type": "vamp",
+        "substitution.context": "solo_over_fast_changes"
+      },
+      "then": {
+        "progression.cycle_id": "baker-forced-riff",
+        "chord_symbol.substitute": "riff_over_fast_vamp_changes"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "Chord-tone runs are prescribed as the primary melodic unit over fast-moving vamp changes",
+      "anchor": "The chord changes in Vamps move a little too fast for us to use chord runs, so we have to run ideas, which is where riffs come in,",
+      "source_page": 44,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Why riffs replace chord runs in vamps",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-position-naming-convention",
+      "name": "Name any playing position by the fret number behind which the first finger falls",
+      "when": {
+        "progression.type": "solo",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-position-by-first-finger"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": null,
+      "anchor": "The first six are in what is known as the 3rd position, because your first finger falls behind the 3rd fret on your Guitar. The 2nd six are in the 7th position, because your first finger falls behind the 7th fret on your Guitar. In other words, the fret that your first finger falls behind is the position that you are in.",
+      "source_page": 48,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Defining position by first finger",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-solo-two-positions-per-key",
+      "name": "In any given key use the two governing positions for solo work: e.g., 3rd+7th in G, 4th+8th in Ab",
+      "when": {
+        "progression.type": "solo",
+        "chord_quality": "any"
+      },
+      "then": {
+        "progression.cycle_id": "baker-solo-two-positions"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "More than two governing positions are prescribed for solo work in a single key",
+      "anchor": "In the key of G major, the 3rd and 7th positions are the most important in that key. In the key of Ab major it would be the 4th and 8th positions, in Bé major the 6th and 10th positions and so on.",
+      "source_page": 48,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Two key positions per key",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-c-major-single-position-exception",
+      "name": "In C major use only the 8th position for riff solo work; the 12th position is out of practical range",
+      "when": {
+        "progression.type": "solo",
+        "chord_quality": "any",
+        "progression.position": "key_of_C_major"
+      },
+      "then": {
+        "voicing.shape": "baker_8th_position_C_major",
+        "progression.cycle_id": "baker-c-major-single-position"
+      },
+      "preference": 0,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "Two positions are prescribed for riff solos in C major including the 12th position",
+      "anchor": "Now, when we get to the key of C major, we can use the 8th position, but we can't use the 12th position, because it is too far up on the fingerboard. So, this means that in the key of C major we only have one position for riff runs which is the 8th position.",
+      "source_page": 48,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "C major position exception",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-sing-riff-against-chord",
+      "name": "Internalize every riff by singing it against the chord progressions until it can be sung and played simultaneously",
+      "when": {
+        "progression.type": "riff",
+        "substitution.context": "internalization"
+      },
+      "then": {
+        "progression.cycle_id": "baker-sing-before-play"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": null,
+      "anchor": "Learn them all by heart, keep practicing them until you can sing them as you play them. Once you can sing them to yourself, try playing the chord progressions and singing the riffs together.",
+      "source_page": 44,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Internalize riffs by singing",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-rhythm-changes-bb-major",
+      "name": "Treat rhythm changes as vamp-style progressions and default their key to Bb major (concert)",
+      "when": {
+        "cycle.id": "baker_rhythm_changes",
+        "progression.type": "vamp"
+      },
+      "then": {
+        "chord_symbol.substitute": "vamp_voicings_in_Bb_major",
+        "progression.cycle_id": "baker-rhythm-changes"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "Rhythm changes are prescribed in a key other than Bb without explanation",
+      "anchor": "Rhythm changes are pretty much the same as Vamps. The only difference is this, when a musician says' let's play some rhythm changes' they are always in B major (concert)",
+      "source_page": 50,
+      "_provenance": {
+        "chapter_n": 11,
+        "section_title": "Rhythm changes definition",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-additional-third-position-scope",
+      "name": "Apply the additional 3rd-fret position (frets 3-6) to Ab, Bb, C, Db, and Eb major; treat F and G as marginal",
+      "when": {
+        "progression.type": "solo",
+        "chord_quality": "any",
+        "progression.position": "key_of_Ab_Bb_C_Db_Eb"
+      },
+      "then": {
+        "voicing.shape": "baker_additional_third_position_frets_3_to_6",
+        "progression.cycle_id": "baker-additional-third-position"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "The additional 3rd-fret position is prescribed as equally valid in all twelve keys including G and F",
+      "anchor": "I am introducing a new position for solo work. This position is to be used for the keys of A4, Bé, C, Dé, and Ee major ( it can be used for F, and G major but it is a little out of range).",
+      "source_page": 56,
+      "_provenance": {
+        "chapter_n": 12,
+        "section_title": "New 3rd position for solos",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-groove-riff-course-symmetry",
+      "name": "Construct a groove riff so its first and last courses are identical, then repeat it consecutively across song boundaries",
+      "when": {
+        "progression.type": "groove_riff",
+        "substitution.context": "blues_or_vamp"
+      },
+      "then": {
+        "progression.cycle_id": "baker-groove-riff",
+        "chord_symbol.substitute": "first_last_course_matching_riff"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "A groove riff's first and last courses differ",
+      "anchor": "When you go through this solo that I have written out, you will find that the first and the last courses are the same. This is known as a groove riff. Groove riffs are repeated consecutively.",
+      "source_page": 57,
+      "_provenance": {
+        "chapter_n": 12,
+        "section_title": "Groove riff definition",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-groove-riff-placement",
+      "name": "Place groove riffs at the opening and closing of blues or vamp tunes only; do not use in other song forms",
+      "when": {
+        "progression.type": "groove_riff",
+        "progression.position": "song_opening_or_closing"
+      },
+      "then": {
+        "progression.cycle_id": "baker-groove-riff-placement"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min"
+      ],
+      "falsifier": "Groove riffs are prescribed for ballad or standard-song-form choruses rather than blues/vamp forms",
+      "anchor": "You usually start and end a song with groove riffs. These kind of riffs are only used against Blues and vamp changes (progression).",
+      "source_page": 57,
+      "_provenance": {
+        "chapter_n": 12,
+        "section_title": "Where to use groove riffs",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-groove-riff-position-lock",
+      "name": "Execute groove-riff solos entirely within 3rd position (frets 3-6); do not leave this position for any part of the solo",
+      "when": {
+        "progression.type": "groove_riff",
+        "substitution.context": "blues_or_vamp_solo"
+      },
+      "then": {
+        "voicing.shape": "baker_third_position_frets_3_to_6_locked",
+        "progression.cycle_id": "baker-groove-riff-position-lock"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9"
+      ],
+      "falsifier": "A groove-riff solo moves outside the 3rd position (frets 3-6) during any part of its execution",
+      "anchor": "Now the tricky part about this solo is that it's all done in the 3rd position on your Guitar (between the 3rd and 6th fret )",
+      "source_page": 57,
+      "_provenance": {
+        "chapter_n": 12,
+        "section_title": "Solo entirely in 3rd position",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-sing-riff-verification",
+      "name": "Verify every forced-riff usage by singing the riff against the chord progressions to confirm the combination sounds correct",
+      "when": {
+        "progression.type": "riff",
+        "substitution.context": "forced_riff_verification"
+      },
+      "then": {
+        "progression.cycle_id": "baker-sing-against-chord-verification"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9"
+      ],
+      "falsifier": null,
+      "anchor": "study the riffs in each solo, then the chord progressions for those measures. Then sing the riffs while you play the chord progressions. This way you can hear just how the riffs sound against the chords.",
+      "source_page": 56,
+      "_provenance": {
+        "chapter_n": 12,
+        "section_title": "Sing riffs over progressions",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-implied-melody-goal",
+      "name": "Build solos so the implied melody is audible to the listener even when the tune is not literally played",
+      "when": {
+        "progression.type": "melody_chord_solo",
+        "substitution.context": "melody_building"
+      },
+      "then": {
+        "progression.cycle_id": "baker-implied-melody"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "A Baker melody-building solo departs from the tune so completely that the melody is no longer audible",
+      "anchor": "Notice how you can always hear the melody though it's not really there.",
+      "source_page": 59,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Implied-melody principle",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-chord-runs-around-melody",
+      "name": "Construct melody-based solos by weaving chord runs around the stated melody, not by abandoning it",
+      "when": {
+        "progression.type": "melody_chord_solo",
+        "substitution.context": "melody_solo_construction"
+      },
+      "then": {
+        "progression.cycle_id": "baker-chord-runs-around-melody"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7",
+        "dom9"
+      ],
+      "falsifier": "A melody-based solo is constructed by replacing the melody with arbitrary runs rather than wrapping runs around it",
+      "anchor": "I want you to make up a solo with this song, and build around the melody as I have done. All you have to do is run chords around it. Keep playing the melody and trying to fit in chord runs until you get some ideas,",
+      "source_page": 59,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Build by running chords around melody",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-melody-solo-7th-position-lock",
+      "name": "Execute melody-chord solos entirely between the 7th and 11th frets (7th position); do not leave this position",
+      "when": {
+        "progression.type": "melody_chord_solo",
+        "substitution.context": "melody_building"
+      },
+      "then": {
+        "voicing.shape": "baker_7th_position_frets_7_to_11_locked",
+        "progression.cycle_id": "baker-melody-solo-7th-position-lock"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "maj",
+        "min",
+        "dom7",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "A melody-chord solo moves below the 7th fret or above the 11th fret during its execution",
+      "anchor": "Every note in this solo is between the 7th and 11th fret on your Guitar (the 7th position). You are not to leave this position to play any part of this solo,",
+      "source_page": 61,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Position locked at 7th fret",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-solo-pattern-first-bar-sets",
+      "name": "Establish a solo pattern by using the first measure's rhythm as the constant frame for all subsequent measures in the course",
+      "when": {
+        "progression.type": "solo_pattern",
+        "substitution.context": "solo_construction"
+      },
+      "then": {
+        "progression.cycle_id": "baker-solo-pattern-rhythmic-frame"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dom9",
+        "dom13"
+      ],
+      "falsifier": "A solo pattern's rhythmic frame changes between measures within the same course",
+      "anchor": "Notice how the first measure sets the pattern for all of the measures to follow. This is what we call solo patterns.",
+      "source_page": 63,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Solo pattern definition",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-solo-pattern-same-timing-diff-notes",
+      "name": "Within a solo pattern hold the rhythmic template constant across all bars while varying only the run content",
+      "when": {
+        "progression.type": "solo_pattern",
+        "substitution.context": "pattern_based_solo"
+      },
+      "then": {
+        "progression.cycle_id": "baker-solo-pattern-same-timing"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7"
+      ],
+      "falsifier": "The rhythmic template changes between bars within a single solo pattern course",
+      "anchor": "Take Example No. 1; in the first bar of the solo we have one quarter note, four sixteenth notes and three quarter triplets (lazy triplets). In the second bar you have the same identical timing, only the run is different.",
+      "source_page": 63,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Same timing, different notes",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-groove-riff-by-singing",
+      "name": "Invent groove riffs by singing any riff against the blues chord progression until one fits the 12-bar sequence three times",
+      "when": {
+        "progression.type": "groove_riff",
+        "substitution.context": "riff_invention"
+      },
+      "then": {
+        "progression.cycle_id": "baker-groove-riff-sing-invention"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "dom9"
+      ],
+      "falsifier": null,
+      "anchor": "take your Guitar and play the chord progressions to the Blues, and start singing any of your riffs, and keep singing them until you can get one that fits in the 12 bar sequence three times, as well as the one in Lesson No. 48.",
+      "source_page": 59,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Finding groove riffs by singing",
+        "level": "section"
+      }
+    },
+    {
+      "rule_id": "baker-review-driven-discovery",
+      "name": "Return to earlier lessons repeatedly; each review pass reveals new content not absorbed in the first pass",
+      "when": {
+        "progression.type": "any",
+        "substitution.context": "study_practice"
+      },
+      "then": {
+        "progression.cycle_id": "baker-review-loop"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "dom7",
+        "maj",
+        "min",
+        "maj7",
+        "min7",
+        "dim7",
+        "aug7",
+        "dom9",
+        "dom13",
+        "dom7b9",
+        "dom11",
+        "maj6",
+        "min6",
+        "min9",
+        "maj9"
+      ],
+      "falsifier": null,
+      "anchor": "That's why I always tell you to go back over these lessons so much, because I know that every time you review a lesson, you will learn something new about it.",
+      "source_page": 59,
+      "_provenance": {
+        "chapter_n": 13,
+        "section_title": "Review to keep learning",
+        "level": "section"
+      }
+    }
+  ]
+}

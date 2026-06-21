@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-benson-vol-5-melodic-minor
+stage: s3
+source_pdf: Benson, George - The George Benson Method, Vol 5 (Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts).pdf
+source_pages: 15-25
+model: claude-haiku
+extracted_at: 2026-06-02T04:57:59+00:00
+schema_version: 0.1
+---
+
+# Chapter 5 — Giant Lines Creating Flux & Reflux over D7(9) Chord
+
+_Distillation; backed by `chapters/ch05.md`._
+
+Chapter 5 teaches the melodic minor scale as a foundational improvisation tool over jazz and fusion chord changes, emphasizing its advantage of containing no avoid notes and thus offering unlimited harmonic possibilities. The chapter demonstrates exact procedures for identifying which melodic minor scale to use over any chord by locating that chord as a specific degree within the scale family, with worked examples over Gsus(b9), C#7alt, and C+maj7. The characteristic pedagogical move visible here is the use of five vertical zones to visualize the melodic minor scale across the fretboard, anchored by alternating guide chords (Cmaj7(#5) and Am(maj7)), and derived from familiar Ionian and Aeolian constructions by flattening the third or modifying the fifth. The chapter introduces key terminology including the melodic minor scale itself, avoid notes, the five vertical zones system, guide chords, and the Lydian(#5)/melodic minor pairing, while establishing a meta-rule that patterns should be learned and applied by ear rather than strictly by their notated time signatures.

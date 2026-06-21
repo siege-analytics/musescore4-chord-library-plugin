@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch18",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 18: Augmented Triads\nPages 104-105 of the book.\n\n<<<CHAPTER TEXT\n\nIIIm7-V7-IM7 Progression (four measures):\n148\nI=120-160\nCm7\nFm7\nBb7\nEbm7\nBbm7\nEb7\nAbm7\nEbm7\nAb7\nDb7\nGbm7\nC#m7\nF#7\nBm7\nF#m7\nB7\nEm7\nBm7\nE7\nAm7\nD7\nGm7\nDm7\nG7\nCm7\nGm7\nC7\nFm7\n\nAUGMENTED CHORDS AND RESPECTIVE SCALES\n\nD\n\ni V4 3 4 Ss b 7\n\nThe C whole tone scale is illustrated in one octave. The numbers under each tone indicate the po-\nsition of that tone iv this scale. In all scales covered up wo this point the distances between tones No.\n1 and No. 8 were octaves. The student will notice, however, that in the illustrated C whole tone\nscale, the distance between tones No. I and No. 7 appears to be a seventh interval. Theoretically\nit is an avgmented seventh interval which when spelled enharmonically becomes an octave. In order\nto present the C whole tone scale in a manner that the student will find less confusing to utilize, we\nwill change the spelling to the following:\n\nb+,\n\naf \u2014s io. o =\n7 + oO o\n4 2 3 4 & o 7\n\nThis will be the accepted spelling for the C whole tone scale and any other scale that will be de-\nrived from it.\n\nThe whole tone scale has no relationship to key. It is unique because it contains a whole step be-\ntween each note of the scale, and thus it is called a whole tone scale. In order to produce a whole\ntone scale from any tone, all that is necessary is to have a whole step between each note until we\nhave reached the octave above the starting note (which will actually be tone No. 7 in the whole\ntone scale).\n\nA whole tone scale built on the nore D would look like this:\nD E Fs G# At Cc D\n1 2 3 4 5 7\n\nA careful examination of the C whole tone scale will show that the whole tone scale produced on\nthe note D contains the same notes. In the same manner, whole tone scales produced from the start-\ning notes E, F-sharp, G-sharp, A-sharp. will also contain the same tones with the sole exception of\nthe starting tone. Thus the C whole tone scale is used to form five other whole tone scales. all having\nthe same tones but with different starting pitches.\n\nNow that we have established the starting notes and specific tones of six whole tone scales, we can\ndo the same for the remaining six scales by starting on the note D-flat. The following example illu-\nstrates the D-flat whole tone scale:\n\n4 S o\nm rN ro! =\nT- m wy\n\n\u201cq\n9\n\nKR\nBb oO\nfw\nrN\nrn\n&\nN\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 18 extraction"
+}

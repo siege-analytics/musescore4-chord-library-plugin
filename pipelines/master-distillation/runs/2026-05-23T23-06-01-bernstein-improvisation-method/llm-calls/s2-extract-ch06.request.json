@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Harmonic Movement, Tension and Substitutions\nPages 11-12 of the book.\n\n<<<CHAPTER TEXT\n\nMoreover, he had a remarkable understanding of whatever I played during my solos. When my\nharmonic ideas were clear, he would follow along, making the notes I played sound even better.\nHe expressed that it was highly engaging for him to play with musicians who could grasp and\nrespond to his ideas, and he believed that the greatest musicians were those who could pick up on\nthe ideas of their fellow bandmates and create a profound musical conversation.\n\n\nSpend time comping\n\nDuring another lesson, Bernstein shared with me his practice of recording himself while comping\nfor extended periods of time. He would then listen back to the recordings and play over them.\nAccording to him, this practice was highly valuable for two reasons. Firstly, it allowed him to\ndedicate a significant amount of time to practicing comping. Secondly, it provided an\nopportunity to experience how it feels to play over his own comping, enabling him to assess the\ninterest and effectiveness of his comping ideas based on his own playing experience.\n\nHe also recounted his experiences of playing in sessions when he was younger, where they\nwould perform a single tune, chorus after chorus, for extended durations. In these situations, he\nhad to constantly come up with new ideas on the bandstand to keep the music moving forward.\nThis challenge proved to be beneficial in developing his improvisational ideas and expanding his\ncomping repertoire.\n\n\nRhythm of the comping\n\nBernstein emphasized the importance of rhythm in his comping, considering it to be equally vital\nas the chords he played. He believed that finding captivating rhythms that propelled the music\nforward was a key aspect. In one lesson, he showcased this idea by incorporating the iconic\nintro's rhythm from \"Star Eyes\" by Charlie Parker into his comping over the soloist. This\nrhythmic figure not only added a pleasing feel to the music but also served as a motif for\nvariation and development.\n\nWhile playing alongside Bernstein, I noticed his exceptional rhythmic support in his comping\nand his keen understanding of my playing. Even when I made occasional mistakes or\nunintentionally affected the timing, he would gracefully adjust and slow down or speed up with\nme, ensuring that the music continued to feel good. His deep sense of groove allowed him to\nflexibly adapt and mold the groove to suit the nuances of my playing, showcasing both his deep\nunderstanding of groove and his ability to respond and connect as a musician.\n\n\n\n\n                                                                                               11\n\n\nHarmonic movement tension and substitutions\n\nAccording to Bernstein, jazz music revolves around the interplay of tension and resolution, or\nV's and I's with various flavors. The crucial skill to develop is the ability to transition creatively\nbetween these chord progressions.\n\nHe explained to me that harmony, in his view, involves understanding how to navigate from one\nchord to another. Chords are not static entities, as they may sometimes appear on a lead sheet,\nbut rather tools for manipulating tension and resolution. To move from one sound to another, he\nemploys a wide range of passing chords and interweaves little melodies in between.\n\nThis approach is what makes Bernstein's harmonic ideas distinctive and expressive. His ability to\ntransition from a I to a V using different passing chords and incorporating melodic fragments is\nhighly creative and propels the music forward.\n\nAdditionally, Bernstein emphasized the importance of playing chords within a single chord.\nWhen a tune calls for a chord to be sustained over 4 or 2 measures, it becomes essential to\nexplore the play between harmonic tension and resolution within that chord. Also utilizing space\nand rhythm effectively is key while doing this.\n\nAccording to Bernstein, the tension is where the fun and creativity in music truly come alive. It\nis in these moments that you can explore various ways to navigate and shape that tension. This\napproach is why Bernstein's comping is so enjoyable and engaging to play with.\n\nIn one particular lesson, while playing \"Ornithology\" by Charlie Parker, he demonstrated his\npreference for not playing the roots of the I (one) chords. Instead, he would opt for an I69 chord\nderived from the V of the respective I (one) chord. This choice adds a unique tension and flavor\nto the I (one) chord, not resolving the tension fully.\n\nThis is the example he played for me:\n\n\n\n\n      Example n. 1: continuing the tension by playing the V on the bass over the changes of\n                                         \u201cOrnithology\u201d\n\n\n                                                                                                     12\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

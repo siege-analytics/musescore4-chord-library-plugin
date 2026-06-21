@@ -1,0 +1,56 @@
+{
+  "run_id": "2026-05-28T15-05-20-galbraith-jazz-solo-guitar",
+  "config": "pipelines/master-distillation/configs/galbraith-jazz-solo-guitar.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-galbraith-jazz-solo-guitar/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-galbraith-jazz-solo-guitar/pages.json",
+        "re-ingested: 65 pages, 16,023 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:04:29+00:00",
+      "ended_at": "2026-05-31T03:04:29+00:00",
+      "outputs": [
+        "detected 1 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-galbraith-jazz-solo-guitar/chapter-bounds.json",
+        "plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/chapters/ch01.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:05:25+00:00",
+      "ended_at": "2026-05-31T03:05:25+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/jazz-solo-guitar-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-31T03:06:28+00:00",
+      "ended_at": "2026-05-31T03:06:28+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/derived/systems-draft.json",
+        "plugin/data/masters-corpus/barry-galbraith/jazz-solo-guitar/derived/STATEMENT.md",
+        "derived 1 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

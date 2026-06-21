@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch25",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 25: Glossary of Open-String Voicings\nPages 77-81 of the book.\n\n<<<CHAPTER TEXT\n\n(Interpret and freely dramatically through 'H')\nlet ring\n104\n<image>\nlet ring\n108\n<image>\nlet ring\n112\n<image>\nlet ring\n116\n<image>\nlet ring\n120\n<image>\nlet ring\n124\n<image>\nVII\nIX\n\n0 at aide aa\n\nM\nhk\n\nre\n\u00bb\n\nHit\n\n~~\nHh\niI\n\n(\nWT\nHebron LL\n\u201cHl\n\nmet) tee ae\n\nWII\n\nBI\n\u2014?\n\nHT\nRII\n\nHHI\n\nHI\n\nHII\n\nBese\n\nMII\n\u201cOI!\nHT\nMil\n\n74\n\nHII\nOH\n\nial\n\na\n\nI!\n\nke\n\n\n\n152 a Tempo\nrit.\nH (Pensively)\n156\na Tempo\n160\nlet ring---1\n75\n\n~_\u2014\n\nThis page has intentionally been left blank to facilitate page tums.\n\n\nGlossary of Open-String Voicings\n\nThe Shadow of Your Smile\n(m. 9) 12 Em9 2 (mm. 19-20) A13\n(m. 39) Bm9\nMy Funny Valentine\nAbm13 F(add9)/A\n5 (m. 28) 2\nHow are Things in Glocca Morra\n(mm. 31-32) Em11 A13\nBody and Soul\nDbmaj7(#11) Amaj9\n9 (m. 7) 3 (m. 13) Db13\n(m. 22-23) Em9 Dm11 E9(#11) A13(b9)\nEdelweiss 'Round Midnight But Beautiful\n15 (m. 35) Ebmaj9 (m.3) Abm9 (m.26) Bb13(b9) (m. 13) G13\n1 Remember You\n79 (m. 11) C#m11 (m. 13) (m. 26) F#(sus4) F9 (m. 48) E7(#9)\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 25 extraction"
+}

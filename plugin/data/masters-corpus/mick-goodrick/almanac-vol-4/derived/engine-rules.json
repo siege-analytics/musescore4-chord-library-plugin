@@ -1,0 +1,781 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-17-mick-goodrick-almanac-vol-4",
+    "stage": "s6-engine-rules",
+    "source_pdf": null,
+    "extracted_at": "2026-06-17T09:44:47-05:00",
+    "schema_version": "0.2",
+    "model": "claude-opus-4-7",
+    "ticket": "#527"
+  },
+  "master_id": "mick-goodrick",
+  "work_id": "almanac-vol-4",
+  "engine_rules": [
+    {
+      "rule_id": "goodrick-v4-sus4-label-required",
+      "name": "Label Fourth-Based Chords sus4 Not C2 or add-2",
+      "when": {
+        "voicing.family": "fourth-based"
+      },
+      "then": {
+        "chord.label_format": "sus4"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Any fourth-based chord labeled C2 or add-2 rather than sus4",
+      "anchor": "My suggestion for a suitable name for this chord would be: G [sus4]",
+      "source_page": 4
+    },
+    {
+      "rule_id": "goodrick-v4-sus4-inversion-consistency",
+      "name": "Maintain sus4 Label Across All Inversions",
+      "when": {
+        "voicing.family": "fourth-based",
+        "voicing.inversion": [
+          "1st",
+          "2nd",
+          "3rd"
+        ]
+      },
+      "then": {
+        "chord.label_format": "sus4"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An inversion of a fourth-based chord reverts to C2 or add-2 notation",
+      "anchor": "Of course, this applies to all of the inversions as well",
+      "source_page": 4
+    },
+    {
+      "rule_id": "goodrick-v4-3pt-before-4pt-priority",
+      "name": "Route Through 3-Part Voicings Before 4-Part",
+      "when": {
+        "arrangement.style": "guitar-idiomatic"
+      },
+      "then": {
+        "voicing.density": "3-part",
+        "voicing.density_priority": "prefer-lower"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "4-part voicings presented as foundational before 3-part voicings are established",
+      "anchor": "3-part chords are easier to play than 4-part chords",
+      "source_page": 71
+    },
+    {
+      "rule_id": "goodrick-v4-density-ceiling-4pt",
+      "name": "Enforce 4-Part as Maximum Voicing Density",
+      "when": {
+        "voicing.construction": "any"
+      },
+      "then": {
+        "voicing.voice_count_max": 4
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A chord voicing is constructed with 5 or more simultaneous voices",
+      "anchor": "leaving out one voice of a 4-part chord",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-voice-omission-single",
+      "name": "Derive 3-Part Chords by Removing Exactly One Voice from 4-Part",
+      "when": {
+        "voicing.density": "3-part",
+        "voicing.derivation_method": "omission"
+      },
+      "then": {
+        "voicing.voices_removed": 1,
+        "voicing.source_density": "4-part"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 3-part chord is derived by removing more than one voice simultaneously from a 4-part source",
+      "anchor": "arrive at different 3-part chords by leaving out one voice",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-3pt-appears-4x",
+      "name": "Each 3-Part Chord Type Appears Exactly Four Times in Derivation Table",
+      "when": {
+        "voicing.derivation_method": "omission",
+        "voicing.source_density": "4-part"
+      },
+      "then": {
+        "voicing.occurrence_count": 4
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A 3-part chord type appears fewer or more than 4 times in the voice-omission derivation table",
+      "anchor": "Each 3-part chord appears four times",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-7th-no-3rd-distinct-type",
+      "name": "Catalog 7th(no 3rd) as Independent M-Lode Taxonomy Member",
+      "when": {
+        "chord.tensions_omitted": [
+          "3rd"
+        ],
+        "voicing.density": "3-part"
+      },
+      "then": {
+        "chord.taxonomy_family": "m-lode-expanded",
+        "chord.collapse_to_other": false
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj7",
+        "min7",
+        "min7b5",
+        "dim7"
+      ],
+      "falsifier": "7th(no 3rd) is collapsed into another chord category rather than cataloged as its own distinct type",
+      "anchor": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters",
+      "source_page": 7
+    },
+    {
+      "rule_id": "goodrick-v4-7th-no-5th-distinct-type",
+      "name": "Catalog 7th(no 5th) as Independent M-Lode Taxonomy Member",
+      "when": {
+        "chord.tensions_omitted": [
+          "5th"
+        ],
+        "voicing.density": "3-part"
+      },
+      "then": {
+        "chord.taxonomy_family": "m-lode-expanded",
+        "chord.collapse_to_other": false
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj7",
+        "min7",
+        "min7b5",
+        "dim7"
+      ],
+      "falsifier": "7th(no 5th) is treated as a reduced or incomplete form of a 4-part chord rather than its own type",
+      "anchor": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters",
+      "source_page": 7
+    },
+    {
+      "rule_id": "goodrick-v4-spread-cluster-3pt-distinct-type",
+      "name": "Catalog 3-Part Spread Clusters as Independent M-Lode Taxonomy Member",
+      "when": {
+        "voicing.family": "spread-cluster",
+        "voicing.density": "3-part"
+      },
+      "then": {
+        "chord.taxonomy_family": "m-lode-expanded",
+        "chord.subordinate_to": null
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "3-part Spread Clusters are treated as subordinate to or collapsed into another M-Lode category",
+      "anchor": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters",
+      "source_page": 7
+    },
+    {
+      "rule_id": "goodrick-v4-m-lode-expanded-3-new-types",
+      "name": "Expand M-Lode Taxonomy With All Three New 3-Part Chord Types Simultaneously",
+      "when": {
+        "chord.taxonomy_family": "m-lode-expanded"
+      },
+      "then": {
+        "chord.new_types_added": [
+          "7th (no 3rd)",
+          "7th (no 5th)",
+          "3-part Spread Clusters"
+        ]
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Only one or two of the three new types are added, leaving the M-Lode expansion incomplete",
+      "anchor": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters",
+      "source_page": 7
+    },
+    {
+      "rule_id": "goodrick-v4-gdvl-before-scvl",
+      "name": "Establish GDVL Before Introducing SCVL",
+      "when": {
+        "voice_leading.context": "introduction"
+      },
+      "then": {
+        "voice_leading.sequence": [
+          "GDVL",
+          "SCVL"
+        ]
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "SCVL is introduced to a student before GDVL is operational as the working mode",
+      "anchor": "IVLs and FVLs are all examples of SCVL, as opposed to GDVL",
+      "source_page": 161
+    },
+    {
+      "rule_id": "goodrick-v4-ivl-fvl-as-scvl",
+      "name": "Classify IVL and FVL as Sub-Types of SCVL",
+      "when": {
+        "voice_leading.type": [
+          "IVL",
+          "FVL"
+        ]
+      },
+      "then": {
+        "voice_leading.parent_type": "SCVL"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "IVL or FVL is classified as a type of GDVL or as independent of SCVL",
+      "anchor": "The IVLs and the FVLs are all examples of SCVL",
+      "source_page": 161
+    },
+    {
+      "rule_id": "goodrick-v4-melody-harmony-parity",
+      "name": "Treat Melodic and Harmonic Domains as Equal Weight",
+      "when": {
+        "arrangement.style": "any"
+      },
+      "then": {
+        "voice_leading.domain_weight.melody": 1.0,
+        "voice_leading.domain_weight.harmony": 1.0
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Voice-leading decisions systematically favor harmonic motion over melodic motion or vice versa",
+      "anchor": "excellent voice-leading treats both melody and harmony as equals",
+      "source_page": 188
+    },
+    {
+      "rule_id": "goodrick-v4-event-diatonic-6-transpositions",
+      "name": "Diatonic Event Transposition Yields Up to 6 Variants",
+      "when": {
+        "transposition.type": "diatonic",
+        "unit.type": "event"
+      },
+      "then": {
+        "transposition.step_max": 6,
+        "transposition.collapse_identical_intervals": true
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Diatonic transposition of an Event is applied beyond 6 steps without interval-collapse consolidation",
+      "anchor": "an event can be diatonically transposed to create 6 other events",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-event-collapse-identical-intervals",
+      "name": "Collapse Intervallically Identical Event Transpositions to One Representative",
+      "when": {
+        "transposition.type": "diatonic",
+        "unit.type": "event",
+        "transposition.interval_match": true
+      },
+      "then": {
+        "transposition.retain_count": 1,
+        "transposition.duplicates_discarded": true
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Intervallically identical diatonic event transpositions are listed as separate entries rather than collapsed",
+      "anchor": "but some of them will be intervallically identical",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-episode-modal-one-to-one",
+      "name": "Episode Diatonic Transposition Yields Exactly 6 Modal Variants Without Collapse",
+      "when": {
+        "transposition.type": "diatonic",
+        "unit.type": "episode"
+      },
+      "then": {
+        "transposition.step_count": 6,
+        "transposition.modal_variants": 6,
+        "transposition.collapse_identical_intervals": false
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Episode transposition produces fewer than 6 distinct modal variants or collapses any two modal variants together",
+      "anchor": "an episode can be diatonically transposed to create 6 other episodes",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-episode-modal-correspondence",
+      "name": "Map Each Transposed Episode to a Distinct Mode",
+      "when": {
+        "unit.type": "episode",
+        "transposition.type": "diatonic"
+      },
+      "then": {
+        "transposition.modal_mapping": "one-to-one",
+        "transposition.shared_mode_assignments": 0
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Two different episode transpositions are assigned to the same mode",
+      "anchor": "each corresponds to a different mode",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-event-episode-domain-agnostic",
+      "name": "Route Events and Episodes Identically Across Melodic, Contrapuntal, and Harmonic Domains",
+      "when": {
+        "unit.type": [
+          "event",
+          "episode"
+        ]
+      },
+      "then": {
+        "unit.valid_domains": [
+          "melodic",
+          "contrapuntal",
+          "harmonic",
+          "combination"
+        ]
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "An event or episode is restricted to only one domain when the source material permits all three",
+      "anchor": "Both events and episodes can be melodic, contrapuntal, harmonic",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-event-episode-length-not-defining",
+      "name": "Classify Event vs Episode by Note Coverage Not by Length",
+      "when": {
+        "unit.classification_criterion": "length"
+      },
+      "then": {
+        "unit.classification_criterion": "note_coverage"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Event/Episode classification is determined solely by duration rather than by note coverage scope",
+      "anchor": "events as being shorter, while episodes are longer",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-c-major-anchor-exercises",
+      "name": "Present Passing-Tone and Embellishment Exercises in C Major First",
+      "when": {
+        "exercise.type": [
+          "passing-tone",
+          "melodic-embellishment"
+        ],
+        "voicing.density": "3-part"
+      },
+      "then": {
+        "scale.context": "C_major",
+        "scale.accidentals": 0
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Passing-tone or melodic embellishment exercises on 3-part voicings are initially presented in a key other than C Major",
+      "anchor": "All of the material that follows in this next section will be presented in C Major (no accidentals)",
+      "source_page": 15
+    },
+    {
+      "rule_id": "goodrick-v4-transposition-student-responsibility",
+      "name": "Assign Key Transposition Responsibility to Student After C Major Presentation",
+      "when": {
+        "exercise.type": [
+          "passing-tone",
+          "melodic-embellishment"
+        ],
+        "scale.context": "C_major"
+      },
+      "then": {
+        "transposition.agent": "student",
+        "transposition.target_scales": "all-7-note-scales"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "The system automatically transposes embellishment exercises to other keys without requiring student-driven transposition",
+      "anchor": "developed the necessary skills to make the needed adjustments",
+      "source_page": 15
+    },
+    {
+      "rule_id": "goodrick-v4-cycle3-cycle4-master-organize",
+      "name": "Organize Chord Catalog Traversal by Cycle-3 / Cycle-4 Alternation",
+      "when": {
+        "catalog.id": "840-chord"
+      },
+      "then": {
+        "catalog.traversal_pattern": "cycle3-cycle4-alternation"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "The 840-chord catalog is traversed in a linear or non-alternating root-motion order",
+      "anchor": "this same approach could be applied to pretty much everything",
+      "source_page": 145
+    },
+    {
+      "rule_id": "goodrick-v4-catalog-840-dimensions",
+      "name": "Constrain Catalog to 24 Voicings × 35 Chord Types = 840 Entries",
+      "when": {
+        "catalog.id": "840-chord"
+      },
+      "then": {
+        "catalog.voicing_count": 24,
+        "catalog.chord_type_count": 35,
+        "catalog.total_entries": 840
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "The catalog is populated with a number of entries other than 840, or with dimensions other than 24×35",
+      "anchor": "3-part chords are easier to play than 4-part chords",
+      "source_page": 71
+    },
+    {
+      "rule_id": "goodrick-v4-catalog-3pt-chapters-before-4pt",
+      "name": "Sequence 3-Part Catalog Chapters Before 4-Part Catalog Chapters",
+      "when": {
+        "catalog.id": "840-chord",
+        "catalog.chapter_range": "6-9"
+      },
+      "then": {
+        "catalog.3pt_chapters_precede_4pt": true
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "4-part catalog chapters are presented or indexed before 3-part catalog chapters in the 840 sequence",
+      "anchor": "3-part chords are easier to play than 4-part chords",
+      "source_page": 71
+    },
+    {
+      "rule_id": "goodrick-v4-msrp-melodic-strand-replication",
+      "name": "Apply M.S.R.P. to Replicate a Melodic Strand Across Voices",
+      "when": {
+        "technique.id": "MSRP"
+      },
+      "then": {
+        "voice_leading.replication_source": "melodic_strand",
+        "voice_leading.replication_target": "all_voices"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "M.S.R.P. is applied to a non-melodic (purely harmonic) strand",
+      "anchor": "grip-slipping: more on this later",
+      "source_page": 2
+    },
+    {
+      "rule_id": "goodrick-v4-grip-slipping-position-continuity",
+      "name": "Apply Grip-Slipping to Maintain Fretboard Position Continuity",
+      "when": {
+        "technique.id": "grip-slipping"
+      },
+      "then": {
+        "voicing.position_shift": "minimal",
+        "voicing.continuity_constraint": "same-position-preferred"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Grip-slipping is applied in a context that forces large positional leaps rather than maintaining continuity",
+      "anchor": "grip-slipping: more on this later",
+      "source_page": 2
+    },
+    {
+      "rule_id": "goodrick-v4-scvl-chromatic-superstructure",
+      "name": "Treat SCVL as the Chromatic Superstructure Over GDVL Diatonic Foundation",
+      "when": {
+        "voice_leading.type": "SCVL"
+      },
+      "then": {
+        "voice_leading.scope": "chromatic",
+        "voice_leading.prerequisite": "GDVL"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "SCVL is applied without GDVL established as the operating diatonic foundation",
+      "anchor": "IVLs and FVLs are all examples of SCVL, as opposed to GDVL",
+      "source_page": 161
+    },
+    {
+      "rule_id": "goodrick-v4-gdvl-volumes-1-2-scope",
+      "name": "Assign GDVL as the Voice-Leading Mode for Volumes 1 and 2 Material",
+      "when": {
+        "work.volume": [
+          1,
+          2
+        ]
+      },
+      "then": {
+        "voice_leading.type": "GDVL"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Volumes 1 or 2 material is classified under SCVL rather than GDVL",
+      "anchor": "IVLs and FVLs are all examples of SCVL, as opposed to GDVL",
+      "source_page": 161
+    },
+    {
+      "rule_id": "goodrick-v4-fourth-based-3pt-sus4-scope",
+      "name": "Apply sus4 Labeling to Both 3-Part and 4-Part Fourth-Based Structures",
+      "when": {
+        "voicing.family": "fourth-based",
+        "voicing.density": [
+          "3-part",
+          "4-part"
+        ]
+      },
+      "then": {
+        "chord.label_format": "sus4"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "sus4 labeling is applied to 4-part fourth-based structures but not to 3-part, or vice versa",
+      "anchor": "I will grant you that C2 is shorter, but",
+      "source_page": 4
+    },
+    {
+      "rule_id": "goodrick-v4-7th-no-5th-omission-derivation",
+      "name": "Derive 7th(no 5th) Exclusively Via Single-Voice Omission from 4-Part 7th Chord",
+      "when": {
+        "chord.quality": "7th-no-5th",
+        "voicing.derivation_method": "omission"
+      },
+      "then": {
+        "voicing.voice_removed": "5th",
+        "voicing.source_quality": "7th-4-part"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "dom7",
+        "maj7",
+        "min7",
+        "min7b5"
+      ],
+      "falsifier": "7th(no 5th) is constructed by adding voices rather than by omission from a complete 4-part 7th chord",
+      "anchor": "arrive at different 3-part chords by leaving out one voice",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-symmetry-4-omission-positions",
+      "name": "Expose All Four Omission Positions to Reveal Symmetric Derivation Structure",
+      "when": {
+        "voicing.derivation_method": "omission",
+        "voicing.source_density": "4-part"
+      },
+      "then": {
+        "voicing.omission_positions_shown": [
+          "root",
+          "3rd",
+          "5th",
+          "7th"
+        ],
+        "voicing.symmetry_verified": true
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Fewer than all four voice-omission positions are explored, leaving the symmetric structure incomplete",
+      "anchor": "Each 3-part chord appears four times",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-episode-7-modal-total",
+      "name": "Account for All Seven Modes in Complete Episode Transposition Set",
+      "when": {
+        "unit.type": "episode",
+        "transposition.type": "diatonic",
+        "transposition.scope": "complete"
+      },
+      "then": {
+        "transposition.total_modal_forms": 7
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A complete episode transposition set contains fewer or more than 7 modal forms",
+      "anchor": "each corresponds to a different mode",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-event-episode-combination-domain",
+      "name": "Allow Events and Episodes to Span Combined Domains Simultaneously",
+      "when": {
+        "unit.type": [
+          "event",
+          "episode"
+        ],
+        "unit.domain_count": "multiple"
+      },
+      "then": {
+        "unit.multi_domain_allowed": true
+      },
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A combined-domain event or episode is split into separate single-domain units",
+      "anchor": "or in any combination",
+      "source_page": 3
+    },
+    {
+      "rule_id": "goodrick-v4-cycle3-cycle4-extensibility",
+      "name": "Apply Cycle-3 / Cycle-4 Alternation Principle to Any New Material Beyond the Core Catalog",
+      "when": {
+        "catalog.extension": true
+      },
+      "then": {
+        "catalog.traversal_pattern": "cycle3-cycle4-alternation"
+      },
+      "preference": 1,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Extended material beyond the 840-chord catalog is organized by a non-cycle-based traversal order",
+      "anchor": "this same approach could be applied to pretty much everything",
+      "source_page": 145
+    },
+    {
+      "rule_id": "goodrick-v4-no-chord-exceeds-4-voices",
+      "name": "Reject Any Voicing Construction That Exceeds Four Simultaneous Voices",
+      "when": {
+        "voicing.voice_count": ">4"
+      },
+      "then": {
+        "voicing.valid": false
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "A chord voicing with 5 or more voices passes validation within this system",
+      "anchor": "leaving out one voice of a 4-part chord",
+      "source_page": 9
+    },
+    {
+      "rule_id": "goodrick-v4-spread-cluster-coordinate-not-subordinate",
+      "name": "Catalog Spread Clusters as Coordinate With Not Subordinate to Other M-Lode Types",
+      "when": {
+        "voicing.family": "spread-cluster",
+        "voicing.density": "3-part"
+      },
+      "then": {
+        "chord.taxonomy_rank": "coordinate",
+        "chord.taxonomy_parent": "m-lode-expanded"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "3-part Spread Clusters are nested inside or subordinated to 7th(no 3rd) or 7th(no 5th) in the taxonomy",
+      "anchor": "we add 3 different 3-part chords: 7th (no 3rd), 7th (no 5th), 3-part Spread Clusters",
+      "source_page": 7
+    },
+    {
+      "rule_id": "goodrick-v4-passing-tone-c-major-then-transpose",
+      "name": "Sequence Passing-Tone Learning as C Major Mastery Then Independent Transposition",
+      "when": {
+        "exercise.type": "passing-tone",
+        "exercise.stage": "initial"
+      },
+      "then": {
+        "scale.context": "C_major",
+        "exercise.next_stage": "student-transposed-7-note-scales"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "Passing-tone exercises begin in a key with accidentals before C Major is mastered",
+      "anchor": "All of the material that follows in this next section will be presented in C Major (no accidentals)",
+      "source_page": 15
+    },
+    {
+      "rule_id": "goodrick-v4-ivl-interval-relation-defines-motion",
+      "name": "Define IVL Voice Motion by Interval Relationships Between Voices",
+      "when": {
+        "voice_leading.type": "IVL"
+      },
+      "then": {
+        "voice_leading.motion_criterion": "interval",
+        "voice_leading.parent_type": "SCVL"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "IVL voice motion is defined by functional harmonic role rather than interval distance",
+      "anchor": "The IVLs and the FVLs are all examples of SCVL",
+      "source_page": 161
+    },
+    {
+      "rule_id": "goodrick-v4-fvl-function-defines-motion",
+      "name": "Define FVL Voice Motion by Harmonic Function",
+      "when": {
+        "voice_leading.type": "FVL"
+      },
+      "then": {
+        "voice_leading.motion_criterion": "harmonic_function",
+        "voice_leading.parent_type": "SCVL"
+      },
+      "preference": 2,
+      "quality_binding": [
+        "any"
+      ],
+      "falsifier": "FVL voice motion is defined by pure interval distance rather than harmonic function",
+      "anchor": "The IVLs and the FVLs are all examples of SCVL",
+      "source_page": 161
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Validate voicings.json against the JSON schema and verify note accuracy.
+"""Validate plugin data files against their JSON schemas.
 
 Usage:
     python scripts/validate.py
+    python scripts/validate.py --target voicings
+    python scripts/validate.py --target masters
     python scripts/validate.py --data path/to/voicings.json
     python scripts/validate.py --verbose
     python scripts/validate.py --tuning tunings/7string-low-b.json
@@ -24,6 +26,17 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCHEMA = REPO_ROOT / "schema" / "voicings.schema.json"
 DEFAULT_DATA = REPO_ROOT / "plugin" / "data" / "voicings.json"
 DEFAULT_TUNING = REPO_ROOT / "plugin" / "tunings" / "7string-van-eps.json"
+
+TARGETS = {
+    "voicings": {
+        "schema": REPO_ROOT / "schema" / "voicings.schema.json",
+        "data":   REPO_ROOT / "plugin" / "data" / "voicings.json",
+    },
+    "masters": {
+        "schema": REPO_ROOT / "schema" / "masters.schema.json",
+        "data":   REPO_ROOT / "plugin" / "data" / "masters.json",
+    },
+}
 
 # Chromatic note names (using sharps and flats consistently)
 CHROMATIC = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
@@ -224,6 +237,140 @@ def validate(schema_path: Path, data_path: Path, verbose: bool = False) -> bool:
     return False
 
 
+def validate_masters(schema_path: Path, data_path: Path, verbose: bool = False) -> bool:
+    """Schema-validate plugin/data/masters.json and run masters-specific
+    consistency checks. See schema/masters.schema.json for the dual-shape
+    window (principles[] legacy / systems[] new)."""
+    with open(schema_path) as f:
+        schema = json.load(f)
+    with open(data_path) as f:
+        data = json.load(f)
+
+    validator = Draft202012Validator(schema)
+    errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+
+    if errors:
+        print(f"INVALID. {len(errors)} schema error(s) found:\n", file=sys.stderr)
+        for i, error in enumerate(errors, 1):
+            path = " > ".join(str(p) for p in error.absolute_path) or "(root)"
+            print(f"  {i}. [{path}] {error.message}", file=sys.stderr)
+        return False
+
+    masters = data.get("masters", [])
+    print(f"Valid. {len(masters)} master(s) passed schema validation.")
+
+    warnings = _check_masters_consistency(data)
+    if warnings:
+        print(f"\n{len(warnings)} consistency warning(s):", file=sys.stderr)
+        for w in warnings:
+            print(f"  - {w}", file=sys.stderr)
+
+    if verbose:
+        n_p = sum(len(m.get("principles", [])) for m in masters)
+        n_s = sum(len(m.get("systems", [])) for m in masters)
+        n_w = sum(len(m.get("works", [])) for m in masters)
+        for m in masters:
+            for w in m.get("works", []) or []:
+                n_s += len(w.get("systems", []) or [])
+        print(f"\n--- Summary ---")
+        print(f"Masters: {len(masters)}")
+        print(f"Works: {n_w}")
+        print(f"Principles (legacy): {n_p}")
+        print(f"Systems (new, incl. work-scoped): {n_s}")
+
+    return True
+
+
+def _check_masters_consistency(data: dict) -> list[str]:
+    """Cross-cutting checks beyond JSON Schema for masters.json.
+
+    Covers:
+      - duplicate master / principle / system / work ids
+      - system id owner-prefix matches enclosing master
+      - work-scoped system id (3 segments) work-prefix matches enclosing work
+      - master-level system ids are 2 segments; work-scoped are 3 segments
+      - system ids are unique across (master.systems + all works[].systems)
+        within a single master
+    """
+    warnings: list[str] = []
+    seen_master_ids: set[str] = set()
+
+    for m in data.get("masters", []):
+        mid = m.get("id", "<no-id>")
+        if mid in seen_master_ids:
+            warnings.append(f"Duplicate master id: {mid}")
+        seen_master_ids.add(mid)
+
+        seen_principle_ids: set[str] = set()
+        for p in m.get("principles", []) or []:
+            pid = p.get("id", "<no-id>")
+            if pid in seen_principle_ids:
+                warnings.append(f"{mid}: duplicate principle id '{pid}'")
+            seen_principle_ids.add(pid)
+
+        # Aggregate every system id under this master across master.systems
+        # and every works[*].systems, so we can flag cross-bucket duplicates.
+        all_system_ids: set[str] = set()
+
+        for s in m.get("systems", []) or []:
+            sid = s.get("id", "<no-id>")
+            if sid in all_system_ids:
+                warnings.append(f"{mid}: duplicate system id '{sid}'")
+            all_system_ids.add(sid)
+            _check_system_id(mid, None, sid, warnings, expect_segments=2)
+
+        seen_work_ids: set[str] = set()
+        for w in m.get("works", []) or []:
+            wid = w.get("id", "<no-id>")
+            if wid in seen_work_ids:
+                warnings.append(f"{mid}: duplicate work id '{wid}'")
+            seen_work_ids.add(wid)
+
+            for s in w.get("systems", []) or []:
+                sid = s.get("id", "<no-id>")
+                if sid in all_system_ids:
+                    warnings.append(f"{mid}: duplicate system id '{sid}'")
+                all_system_ids.add(sid)
+                _check_system_id(mid, wid, sid, warnings, expect_segments=3)
+
+    return warnings
+
+
+def _check_system_id(
+    master_id: str,
+    work_id: str | None,
+    sid: str,
+    warnings: list[str],
+    expect_segments: int,
+) -> None:
+    """Verify a system id matches its enclosing master (and work if any).
+
+    expect_segments: 2 for master-level systems, 3 for work-scoped systems.
+    """
+    bare = sid[len("_placeholder:"):] if sid.startswith("_placeholder:") else sid
+    parts = bare.split(":") if bare else []
+
+    if len(parts) != expect_segments:
+        where = f"work '{work_id}'" if work_id else "master.systems"
+        warnings.append(
+            f"{master_id}: system id '{sid}' in {where} expected "
+            f"{expect_segments} colon-separated segments, got {len(parts)}"
+        )
+        return
+
+    if parts[0] != master_id:
+        warnings.append(
+            f"{master_id}: system id '{sid}' master prefix '{parts[0]}' "
+            f"does not match master id"
+        )
+
+    if expect_segments == 3 and work_id is not None and parts[1] != work_id:
+        warnings.append(
+            f"{master_id}: system id '{sid}' work segment '{parts[1]}' "
+            f"does not match enclosing work id '{work_id}'"
+        )
+
+
 def _check_consistency(data: dict) -> list[str]:
     """Run additional consistency checks beyond schema validation."""
     warnings = []
@@ -369,32 +516,46 @@ def _print_summary(data: dict) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Validate voicings.json")
+    parser = argparse.ArgumentParser(description="Validate plugin data files")
     parser.add_argument(
-        "--schema", type=Path, default=DEFAULT_SCHEMA, help="Path to JSON schema"
+        "--target",
+        choices=sorted(TARGETS.keys()),
+        default="voicings",
+        help="Which data file to validate (default: voicings)",
     )
     parser.add_argument(
-        "--data", type=Path, default=DEFAULT_DATA, help="Path to voicings.json"
+        "--schema", type=Path, default=None, help="Override schema path"
+    )
+    parser.add_argument(
+        "--data", type=Path, default=None, help="Override data path"
     )
     parser.add_argument(
         "--tuning", type=Path, default=DEFAULT_TUNING,
-        help="Path to tuning config JSON (default: config/tunings/standard.json)"
+        help="Path to tuning config JSON (voicings target only)"
     )
     parser.add_argument("--verbose", "-v", action="store_true", help="Show summary")
     args = parser.parse_args()
 
-    if not args.schema.exists():
-        print(f"Schema not found: {args.schema}", file=sys.stderr)
+    target = TARGETS[args.target]
+    schema_path = args.schema or target["schema"]
+    data_path = args.data or target["data"]
+
+    if not schema_path.exists():
+        print(f"Schema not found: {schema_path}", file=sys.stderr)
         sys.exit(1)
-    if not args.data.exists():
-        print(f"Data not found: {args.data}", file=sys.stderr)
+    if not data_path.exists():
+        print(f"Data not found: {data_path}", file=sys.stderr)
         sys.exit(1)
 
-    valid = validate(args.schema, args.data, args.verbose)
+    if args.target == "masters":
+        ok = validate_masters(schema_path, data_path, args.verbose)
+        sys.exit(0 if ok else 1)
+
+    valid = validate(schema_path, data_path, args.verbose)
 
     # Load tuning and run all checks
     tuning = _load_tuning(args.tuning)
-    with open(args.data) as f:
+    with open(data_path) as f:
         data = json.load(f)
 
     # Consistency checks

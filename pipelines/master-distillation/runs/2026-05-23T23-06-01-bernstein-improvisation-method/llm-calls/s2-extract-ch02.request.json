@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Jazz as a Language and the Importance of Narrative\nPages 4-4 of the book.\n\n<<<CHAPTER TEXT\n\nConcepts\n\nOne remarkable aspect of Bernstein's creativity is his ability to perceive a concept from various\nperspectives. He employs different analogies to convey the same idea, allowing us, his students,\nto approach those concepts with distinct flavors and subtle variations. Ultimately, this leads to a\nmore diverse and captivating storytelling experience during improvisations. It is important to\nnote that all of these ideas were consistently discussed within the context of specific tunes. As\nwe delved into a particular song during a lesson, Bernstein would explain a concept from a\nperspective that aligned with the nuances and relevance of that specific tune. In subsequent\nlessons when exploring different songs, he would revisit the same concept, but from a slightly\ndifferent angle, tailored to the intricacies of the new piece. With this in mind, my aim in\ncapturing these ideas is to gather and synthesize the concepts discussed over multiple lessons,\npresenting them in a comprehensive manner. By doing so, I hope to provide a valuable resource\nfor understanding and applying Bernstein's insightful teachings.\n\n\nJazz as a language and the importance of narrative\n\nAccording to Bernstein, the way some schools teach jazz is problematic in his view. These\nschools often focus on providing students with chord progressions and corresponding scales,\nwithout emphasizing the concept of narrative, meaning, and effectively communicating a story\nthrough musical ideas. While the schools offer materials, they often neglect to explain the\nsignificance and underlying meaning behind those ideas. For Bernstein, jazz improvisation is\nakin to having a conversation, where one must possess a vocabulary and an understanding of\nhow to combine those musical \"words\" to convey specific ideas. It involves using musical\nsentences and paragraphs to organize and express meaning, ultimately telling a story.\n\nBernstein finds it somewhat unnatural how some schools approach music education. He draws a\ncomparison to how children learn a language, emphasizing that they don't learn to speak from a\nbook but rather by listening to others and imitating their speech, gradually acquiring words and\nlearning how to convey ideas using those words. In jazz education, he observes that the focus on\nlearning scales that fit over chords often neglects the concept of ideas, which he likens to words.\nWithout clear ideas or words, it becomes challenging to convey meaningful musical expressions.\nIt's akin to trying to generate words as you speak, rather than learning and creatively combining\nwords by understanding the syntax of the language. The ultimate goal is to delve deeper into\nexpression, meaning, and the art of storytelling.\n\nBernstein stresses the importance of practicality in using musical language, not merely reciting\nall the known words without expressing anything meaningful. Particularly in the early stages of\nlearning, one should develop the skill to use the language in a practical manner, knowing which\nphrases to employ in different musical situations. Key to this process is understanding what\n                                                                                                      4\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

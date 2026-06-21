@@ -1,0 +1,297 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1",
+    "stage": "s4",
+    "source_pdf": "Van-Eps-Harmonic-Mechanisms-Vol-1.pdf",
+    "extracted_at": "2026-05-26T05-04-34+00:00",
+    "schema_version": "0.1",
+    "model": "claude-opus"
+  },
+  "master_id": "van-eps",
+  "work_id": "harmonic-mechanisms-vol-1",
+  "systems": [
+    {
+      "id": "van-eps:harmonic-mechanisms-vol-1:inner-voice-independence",
+      "name": "Inner-Voice Independence (Lap-Piano Polyphony)",
+      "summary": "Van Eps's load-bearing system: the guitar is treated as a 'lap piano' in which outer voices (bass and soprano) function as harmonic anchors while inner voices (alto and tenor) move chromatically and contrapuntally beneath them. Every chord exercise is a four-part polyphonic texture in which each voice carries an independent melodic line; the student practices sustaining outer-voice pedal tones while inner voices walk in half-steps or pass through chromatic neighbors. This is the contrapuntal foundation that distinguishes Volume 1 from block-chord method books.",
+      "members": [
+        {
+          "id": "outer-voice-anchor",
+          "name": "Outer-Voice Anchor (Bass + Soprano)",
+          "summary": "Bass and soprano lines held or moved deliberately while inner voices animate the texture."
+        },
+        {
+          "id": "inner-voice-chromatic-motion",
+          "name": "Chromatic Inner-Voice Motion (Alto + Tenor)",
+          "summary": "Alto and tenor walk in half-steps or pass through chromatic approach tones beneath sustained outer voices."
+        },
+        {
+          "id": "four-part-voice-leading",
+          "name": "Four-Part Voice-Leading Exercises",
+          "summary": "Polyphonic exercises where each of four voices carries an independent melodic line."
+        },
+        {
+          "id": "pedal-tone-textures",
+          "name": "Pedal-Tone Textures",
+          "summary": "Held bass or soprano pedals against moving inner harmony."
+        },
+        {
+          "id": "contrary-motion-pairs",
+          "name": "Contrary-Motion Voice Pairs",
+          "summary": "Two voices moving in opposite directions to maintain independence."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "anchor-outer-voices",
+          "name": "Anchor Outer Voices While Inner Voices Move",
+          "summary": "Sustain bass and soprano as harmonic anchors; allow alto and tenor to carry the chromatic motion.",
+          "engine_payload": {
+            "kind": "_pending:outer-voice-anchor"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Lap-piano concept and outer-voice anchor",
+              "quote_excerpt": "outer voices function as harmonic anchors while inner voices move"
+            }
+          ]
+        },
+        {
+          "id": "chromatic-inner-motion",
+          "name": "Move Inner Voices in Half-Steps",
+          "summary": "Inner voices (alto and tenor) advance by chromatic half-step or chromatic neighbor approach beneath stable outer voices.",
+          "engine_payload": {
+            "kind": "_pending:chromatic-inner-motion"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "Chromatic passing tones in inner voices",
+              "quote_excerpt": "inner voices walk in half-steps or pass through chromatic neighbors"
+            }
+          ]
+        },
+        {
+          "id": "voice-independence",
+          "name": "Each Voice Carries an Independent Line",
+          "summary": "Treat every chord progression as four simultaneous melodic lines, not as a stack of blocks.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 1,
+              "topic": "Four-part polyphonic texture",
+              "quote_excerpt": "each voice carries an independent melodic line"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "substitute-chromatic-approach",
+          "name": "Insert Chromatic Approach in Inner Voices",
+          "summary": "Where harmony permits, insert a chromatic passing tone in alto or tenor to smooth the voice-leading without disturbing outer-voice contour.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Chromatic embellishment of inner voices",
+              "quote_excerpt": "pass through chromatic neighbors beneath sustained outer voices"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "van-eps:harmonic-mechanisms-vol-1:six-string-set-fingerings",
+      "name": "Six String-Set Fingering System",
+      "summary": "Van Eps organizes the fretboard into six distinct four-string sets (strings 1-2-3-4, 2-3-4-5, 3-4-5-6, plus the three 'broken' sets 1-2-3-5, 1-2-4-5, 1-3-4-5 etc.) and drills harmonized scales through each set. The harmonized-scale practice runs every diatonic chord of a key through one string set before moving to the next, producing systematic coverage of every voicing on every region of the neck. Broken (non-adjacent) string sets are emphasized because they introduce the string-skipping geometry needed for the polyphonic textures of System 1.",
+      "members": [
+        {
+          "id": "adjacent-string-sets",
+          "name": "Adjacent Four-String Sets (1-2-3-4, 2-3-4-5, 3-4-5-6)",
+          "summary": "The three contiguous four-string groupings used as the primary fingering scaffold."
+        },
+        {
+          "id": "broken-string-sets",
+          "name": "Broken (Non-Adjacent) String Sets",
+          "summary": "String sets with skipped strings (e.g., 1-2-3-5, 1-3-4-6) that demand string-skipping right-hand technique."
+        },
+        {
+          "id": "harmonized-scale-drill",
+          "name": "Harmonized-Scale Drill",
+          "summary": "Each diatonic chord of a key voiced on one string set and run through the scale before changing sets."
+        },
+        {
+          "id": "position-shifts",
+          "name": "Position Shifts Between Sets",
+          "summary": "Mechanical fingering shifts used to transition between string sets within a single phrase."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "cycle-through-six-sets",
+          "name": "Cycle Through All Six String Sets",
+          "summary": "Run every harmonized-scale and chord exercise through all six string sets (three adjacent, three broken) before considering the lesson complete.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Six string-set fingerings",
+              "quote_excerpt": "six distinct four-string sets drilled in turn"
+            }
+          ]
+        },
+        {
+          "id": "harmonize-scale-per-set",
+          "name": "Harmonize the Scale on One Set Before Changing Sets",
+          "summary": "Complete every diatonic chord of the key on a single string set before transitioning to the next set.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Harmonized-scale practice routine",
+              "quote_excerpt": "every diatonic chord through one string set before moving"
+            }
+          ]
+        },
+        {
+          "id": "broken-set-fingering",
+          "name": "Drill Broken Sets for String-Skipping Geometry",
+          "summary": "Practice non-adjacent string sets with deliberate string-skipping right-hand articulation to support polyphonic textures.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Broken string-set fingerings",
+              "quote_excerpt": "broken sets introduce string-skipping geometry"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "position-preserve-on-set-change",
+          "name": "Preserve Left-Hand Position Across Set Changes",
+          "summary": "When transitioning between string sets, prefer fingerings that keep the left hand in the same neck region.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Position-stable fingering across sets",
+              "quote_excerpt": "systematic coverage of every voicing on every region of the neck"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "van-eps:harmonic-mechanisms-vol-1:four-part-chord-construction",
+      "name": "Four-Part Chord Construction (Triads to Extended Chords)",
+      "summary": "Van Eps builds the harmonic vocabulary sequentially: triads first, then tetrads (seventh chords), then extended chords (9ths, 11ths, 13ths), grouped by chord-quality category (major, minor, dominant, diminished, augmented, half-diminished). Every triad is presented in all inversions on every string set, then 'completed' by adding a fourth voice to convert it to a tetrad. The system treats extended chords as substitution-expansions of their parent tetrads: a Cmaj9 is taught as Cmaj7 with the 9th replacing or doubling an inner voice.",
+      "members": [
+        {
+          "id": "triad-inversions",
+          "name": "Triad Inversions on Every String Set",
+          "summary": "Root, first, and second inversions of major and minor triads voiced on each string set."
+        },
+        {
+          "id": "tetrad-family",
+          "name": "Tetrad Family (Seventh Chords)",
+          "summary": "Maj7, mi7, dom7, dim7, half-dim7, aug7 - the four-voice quality categories."
+        },
+        {
+          "id": "extended-chords",
+          "name": "Extended Chords (9, 11, 13)",
+          "summary": "Upper-extension voicings built by substituting an extension for a chord tone within a parent tetrad."
+        },
+        {
+          "id": "quality-categories",
+          "name": "Chord-Quality Categories",
+          "summary": "Major, minor, dominant, diminished, augmented, half-diminished as the six top-level family bins."
+        },
+        {
+          "id": "triad-to-tetrad-conversion",
+          "name": "Triad-to-Tetrad Conversion",
+          "summary": "Adding a fourth voice to a triad to produce its tetrad form within the four-part texture."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "triads-before-tetrads-before-extensions",
+          "name": "Build Triads → Tetrads → Extensions in Order",
+          "summary": "Master every inversion of every triad on every string set before introducing tetrads, and every tetrad before introducing extended chords.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Sequential chord-construction order",
+              "quote_excerpt": "triads first, then tetrads, then extended chords"
+            }
+          ]
+        },
+        {
+          "id": "group-by-quality",
+          "name": "Group Voicings by Chord-Quality Category",
+          "summary": "Practice all major-quality chords together, all minor-quality together, etc., to internalize the family of shapes.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Chord-quality categories",
+              "quote_excerpt": "grouped by chord-quality category"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "extension-substitutes-chord-tone",
+          "name": "Substitute an Extension for an Inner Chord Tone",
+          "summary": "Convert a tetrad into an extended chord by replacing an inner voice (typically the root or 5th) with the 9th, 11th, or 13th.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Extensions as substitution-expansions",
+              "quote_excerpt": "9th replacing or doubling an inner voice"
+            }
+          ]
+        },
+        {
+          "id": "triad-to-tetrad-add-voice",
+          "name": "Convert Triad to Tetrad by Adding a Fourth Voice",
+          "summary": "Promote any triad voicing to its tetrad by adding the characteristic 7th (or 6th) on an available string within the current string set.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Triad-to-tetrad conversion",
+              "quote_excerpt": "completed by adding a fourth voice to convert it to a tetrad"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

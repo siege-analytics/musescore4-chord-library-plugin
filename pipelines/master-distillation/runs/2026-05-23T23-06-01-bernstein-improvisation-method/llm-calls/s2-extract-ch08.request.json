@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: Melodic Target Notes and the Narrative of the Solo\nPages 24-25 of the book.\n\n<<<CHAPTER TEXT\n\n                           Example n. 6: Altered line using the shape\nHe was exploring the shape, being as flexible as possible, finding different intervallic\ncombinations, and different ways to resolve the line.\n\nAn important disclaimer regarding these concepts is that while they are valuable for expanding\nand developing melodic ideas, it is crucial to work on internalizing and integrating this new\nmaterial. Bernstein emphasizes the concept of flexibility once again, highlighting the need to be\ncomfortable and adaptable with the ideas, being able to play them in different ways. He suggests\nusing fingerings that feel natural and comfortable for us, as trying to execute ideas with awkward\nfingerings can hinder the process of internalization. In my experience observing Bernstein's\nplaying, I've noticed his remarkable flexibility with fingerings. He effortlessly switches between\nmultiple options and selects the most appropriate one for the musical context.\n\nMoreover, Bernstein emphasizes the importance of being flexible in the delivery of ideas to\nensure they feel organic within the flow of a solo. He likens it to a conversation, where you don't\nwant to be preoccupied with when to interject something you've just learned. Such distractions\ncan hinder your ability to listen to what's happening and may result in untimely or forced\ndelivery of the idea. He suggests that through practicing these techniques, you develop the\nnecessary flexibility to internalize new ideas and seamlessly integrate them into musical dialogue\nwith authenticity and meaning.\n\nBernstein also emphasizes the distinction between playing ideas that relate to each other and\ncreate a narrative with purpose versus merely playing notes that work over the chords. He\nacknowledges that some players have built careers based solely on the latter approach.\nUltimately, he believes that the essence of music lies in weaving our own stories within the\ncontext of a song. He asserts that the true depth and meaning in music come not from playing\nmore notes or complex passages, but from testing how our personal stories resonate within the\nworld of stories. This is an aspect that formal education cannot provide\u2014it requires the intention\nto play with others and explore our musical ideas in the real world. In essence, his goal is to\nilluminate how the language of music functions, how ideas are constructed, and how to skillfully\ncombine them. By doing so, he aims to empower us to develop our own artistic craftsmanship, to\ncreate our own ideas, and ultimately to tell our own stories.\n\n\n\n                                                                                                24\n\n\nMelodic target notes\n\nBernstein consistently emphasizes the concept of using the target notes of the melody as the basis\nfor melodic improvisation whenever we play a tune. A notable example he mentions is the song\n\"Darn That Dream,\" which holds significant importance in understanding these target notes as\nthey form the core of the song's structure.\n\n\n\n\n                        Example n. 1: Target notes for \u201cDarn that dream\u201d\n\n\nOnce you feel comfortable with the original target notes derived from the melody, he suggests\ncreating your own. According to him, these landing points are closely connected to the notes he\nchooses for the top voicings while comping. This is because those notes often embody strong and\nmelodically pleasing phrases. For the initial bars of \"Darn That Dream,\" Bernstein proposes the\nfollowing target notes:\n\n\n\n\n                  Example n. 1: Bernstein\u2019s target notes for \u201cDarn that dream\u201d\n\n\nOnce you can identify these notes, he encourages exploring melodic lines that lead to these target\nnotes, starting with simple ideas and later exploring more complex ones, imparting a narrative\nquality and providing a specific framework for storytelling during improvisation. This exercise\nserves as a natural extension of practicing lines that resolve on each degree of the chord scale,\nbut with the melody guiding us to the precise target notes within the chord progression.\n\n\n                                                                                               25\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

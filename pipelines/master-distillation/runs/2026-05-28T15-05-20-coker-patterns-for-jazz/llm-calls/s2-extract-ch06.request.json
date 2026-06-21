@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: Major Scale Intervals\nPages 29-31 of the book.\n\n<<<CHAPTER TEXT\n\nBeginning with Pattern No. 44, the student would be wise to learn the chord-scale numbers\ngiven below each pattern and use them for quick, easy transposition. For example, the 1-2-3-5\npattern of No. 44 could be applied to any new chord root, since numbers only indicate pitch relation-\nships, not the pitches themselves. Although each of these patterns will be practiced in the four\nestablished chord progressions (Nos. 44-47, for example), covering all keys, it would also be ad-\nvisable to practice gach of the patterns bearing numbers (i.e., 1-2-3-5) with a reasonable number of\nprogressions from already existing tunes and jazz lines, available in fake books (collections of\npublished tunes and their progressions), song books, sheet music, or (if they are available to the\nstudent) private collections of tunes, copied or transcribed from various written sources or records.\nIn short, any of the patterns which follow, having the numbers (like 1-2-3-5) could be projected\nover any tune\u2019s entire length, when the minor forms of these patterns have been added to the fol-\nlowing major forms, since nearly all chords contained in the tune\u2019s progression will have either a\nmajor triad on the bottom (i.e., 1-2-3-5) or a minor triad (i.e., 1-2-flat 3-5).\n\nNote: To be used for Major Triad, M6, M7 or M9.\nChords of respective roots.\n\nj= /30-208\n\nc\n\nBw\n\neb\n\n0b\n\n\u2014.\n{ i\n\nAb\n\nvA i \u2018\n46 Pal et\n/ \u00a3238 1 \u00a3865 /4SS (continue in same manner)\nThis pattern is made up of the first, second, third and fifth rones of the chord scale.\nEPI PPP\n12/00-/44 Note: Each chord lasts two beats.\nen a ae Ce ae\n-\n45 t 77TH tt 7\u2014ft\n\u2019 aa $ U\n1238 $\u00a2'\u00a33 8 (continue in same manner)\n\n6See bridge section of Oliver Nelson's \u201cCascades,\u201d on The Blues And The Abstract Truth (Impulse S-5), Oliver\nNelson\u2019 Group. Also note Freddie Hubbard's ast chorus on the same selection.\n\n7John Coltrane, \u201cGiant Steps\u201d and other selections, on Giant Steps (Atlantic S-1311), John Coltrane Quartet.\n\n23\n\n\n\u2669=112-160\n46\n\u2669=108-152\n47\n\u2669=160-208\n48\nThis pattern is made up of the fifth, third, second and first tones of the chord scale.\nNote that the direction is descending from starting note in each chord.\n24\n\ndz 106-132\n\u00a2\n\neb\n\na\n\nhh! |oms\n=\n\n~\n\n~~\n\n?\n\na\nf\n\nFFE\n\nApply chord scale fragment 5-3-2-1 to the chords ig patterns No. 46 and 47.\n\n4292-120\n\np _,C-\n\nc .\n\n0 i = tJ TF Z TF\n=a a 7 Z ZT\nYo? \u2014\n(continue in same manner )\nNote: This pattern utilizes the alrernating chord scale fragments 1-2-3-5 and 5-3-2-1,\n-7 7 #4 a 7+ 7 JF FF \u2014\n\nApply the same principle of alternating fragments 1-2-3-5 and 5-3-2-1 to the chords in patterns No.\n\n45, 46 and 47.\n\n(292-140\noC\n\nc\n\nwe\n\ncb\n\nAb\n\n51\n\na\n\n= z ff \u2019 a A Lf jf\n\n| i if (ane if if\nB32) i \u00a336\n\nNote: This pattern utilizes the alternating chord scale fragments 5-3-2-1 and 1-2-3-5.\n\n8\n\nA\n\n?\n\nG\n\nC\n\na i iL\n\na J\n\nva\n\nft AL\n\nLf\nT\n\ni\n\nif\n\nvA\nL\n\nf\n\nApply the same principle of alternating fragments 5-3-2-1 and 1-2-3-5 to the chords in patterns No.\n\n45, 46 and 47.\n\n8John Coltrane, \u201cGiant Steps,\u201d on Giant Steps (Atlantic $-1311), John Coltrane Quartet. This pattern may be\n\nused on any chord with a major third.\n\nOliver Nelson, \u201cButch and Butch,\u201d on The Blues And The Abstract Truth (Impulse S-5), Oliver Nelson Group.\n\nThis pattern is used on minor chords descending in whole steps.\n\n25\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

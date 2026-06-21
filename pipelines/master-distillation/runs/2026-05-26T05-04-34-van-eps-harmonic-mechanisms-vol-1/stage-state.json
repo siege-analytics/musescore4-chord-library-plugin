@@ -1,0 +1,75 @@
+{
+  "run_id": "2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1",
+  "config": "pipelines/master-distillation/configs/van-eps-harmonic-mechanisms-vol-1.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-26T05:04:34+00:00",
+      "ended_at": "2026-05-26T07:59:37+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1/pages.json",
+        "re-ingested: 334 pages, 262,238 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-05-26T18:30:39+00:00",
+      "ended_at": "2026-05-26T18:30:39+00:00",
+      "outputs": [
+        "detected 14 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1/chapter-bounds.json",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch01.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch02.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch03.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch04.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch05.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch06.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch07.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch08.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch09.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch10.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch11.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch12.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch13.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/chapters/ch14.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-05-26T18:35:22+00:00",
+      "ended_at": "2026-05-26T18:35:22+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/harmonic-mechanisms-vol-1-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-05-26T19:48:38+00:00",
+      "ended_at": "2026-05-26T19:48:38+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/derived/systems-draft.json",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}

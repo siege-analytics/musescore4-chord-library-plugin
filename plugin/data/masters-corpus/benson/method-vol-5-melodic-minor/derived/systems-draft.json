@@ -1,0 +1,200 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-benson-vol-5-melodic-minor",
+    "stage": "s4",
+    "source_pdf": "Benson, George - The George Benson Method, Vol 5 (Melodic Minor World, Bebop Scales, Symmetric Ideas & Concepts).pdf",
+    "extracted_at": "2026-06-02T05:04:06+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "benson",
+  "work_id": "method-vol-5-melodic-minor",
+  "systems": [
+    {
+      "id": "benson:method-vol-5-melodic-minor:melodic-minor-improvisation",
+      "name": "Melodic Minor Improvisation System",
+      "summary": "The central system of the volume organizes the melodic minor scale as the master's preferred improvisation resource, justified by its defining property of containing no avoid notes. The system operates over seven diatonic chord members derived from the melodic minor scale, provides a degree-mapping procedure to identify which parent melodic minor scale to deploy over any target chord, and spatializes the scale across the guitar neck via five vertical zones anchored by two alternating guide chords (Cmaj7(#5) and Am(maj7)). Modification rules govern harmonic constraints on dual-identity chords and the relationship between theoretical knowledge of tensions and their selective voicing in practice.",
+      "members": [
+        {
+          "id": "am-maj7",
+          "name": "Am(maj7) \u2014 Melodic Minor I",
+          "summary": "Tonic minor-major seventh chord, first degree of A melodic minor; one of the two master guide chord shapes."
+        },
+        {
+          "id": "bsus-b9",
+          "name": "Bsus(b9) \u2014 Melodic Minor II",
+          "summary": "Suspended chord with flat nine, second degree of A melodic minor."
+        },
+        {
+          "id": "cmaj7-sharp5",
+          "name": "Cmaj7(#5) \u2014 Lydian(#5) / Melodic Minor III",
+          "summary": "Major seventh sharp-five chord, third degree of A melodic minor; the other master guide chord shape and the Lydian(#5) relative."
+        },
+        {
+          "id": "d7-9-sharp11-13",
+          "name": "D7(9, #11, 13) \u2014 Melodic Minor IV (dual-identity)",
+          "summary": "Dominant seventh chord with tensions 9, #11, and 13; fourth degree of A melodic minor. Carries dual identity as both a melodic minor IV chord and a dominant diminished voicing, constraining usable scales."
+        },
+        {
+          "id": "e7-9-b13",
+          "name": "E7(9, b13) \u2014 Melodic Minor V",
+          "summary": "Dominant seventh chord with tensions 9 and flat 13, fifth degree of A melodic minor."
+        },
+        {
+          "id": "f-sharp-half-dim",
+          "name": "F#\u00f8 \u2014 Melodic Minor VI",
+          "summary": "Half-diminished chord, sixth degree of A melodic minor."
+        },
+        {
+          "id": "g-sharp-7-alt",
+          "name": "G#7alt \u2014 Melodic Minor VII",
+          "summary": "Altered dominant chord, seventh degree of A melodic minor."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "degree-mapping-procedure",
+          "name": "Chord-Degree Mapping: Identify Parent Melodic Minor Scale",
+          "summary": "To select the correct melodic minor scale over any chord, locate that chord as a specific degree within the melodic minor scale family and use the parent scale associated with that degree position.",
+          "engine_payload": {
+            "kind": "_pending:chord-degree-parent-selection"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Scale application examples by chord",
+              "quote_excerpt": "Over a Gsus(b9) we would visualize the single lines as being derived from \"F\" melodic minor because the Gsus(b9) chord is the IInd degree",
+              "page": 15
+            }
+          ]
+        },
+        {
+          "id": "two-guide-chord-minimum",
+          "name": "Extended Scale Options Require Two Guide Chords",
+          "summary": "When using extended scale options, at least two guide chords must be used for proper fretboard visualization; a single anchor is insufficient.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Extended scale options: guide chords required",
+              "quote_excerpt": "we must use at least 2 guide chords in order to properly visualize what we are doing",
+              "page": 27
+            }
+          ]
+        },
+        {
+          "id": "melodic-idea-chord-shape-relation",
+          "name": "Relate Melodic Idea to Associated Chord Shape",
+          "summary": "Every melodic idea must be visualized in direct relation to its associated chord shape, using a reference key (e.g. Cm) to anchor the melodic pattern spatially on the fretboard.",
+          "engine_payload": {
+            "kind": "_pending:melodic-chord-shape-anchoring"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Cm key: visualizing Eb substitution",
+              "quote_excerpt": "the secret is to relate the melodic idea with the chord shape given",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "five-zone-guide-chord-alternation",
+          "name": "Five Vertical Zones with Alternating Guide Chords",
+          "summary": "The melodic minor scale is traversed across the fretboard through five vertical zones, each anchored by one of two alternating guide chords (Cmaj7(#5) and Am(maj7)), reusing the same zonal framework as Ionian and Aeolian.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Melodic minor construction rule",
+              "quote_excerpt": "use the same 5 vertical zones exactly as we did before with Ionian and Aeolian but this time having Cmaj7(#5) and Am(maj7) as guiding chords",
+              "page": 15
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Visualizing melodic minor tetrads per zone",
+              "quote_excerpt": "All the tetrads from the melodic minor family should be related to these two chords",
+              "page": 33
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "no-avoid-notes-unlimited-color",
+          "name": "No Avoid Notes: Unlimited Harmonic Possibilities",
+          "summary": "Because the melodic minor scale contains no avoid notes, any of its tones may be sounded over its associated chord without clash, yielding a larger palette of scale arpeggios and guide chords than scales with avoid notes.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Melodic Minor: no avoid notes",
+              "quote_excerpt": "this scale has no avoid notes, the possibilities are infinitely larger than other scales",
+              "page": 15
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Melodic minor: no avoid notes",
+              "quote_excerpt": "the melodic minor scale has no avoid notes, and for that reason we can have a bigger variety of scale arpeggios and guide chords",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "d7-sharp11-dual-identity-constraint",
+          "name": "D7(#11) Dual Identity: Scale-Use Constraint",
+          "summary": "D7(#11) functions simultaneously as the melodic minor IV chord and as a dominant diminished voicing; this dual identity prohibits the use of certain scales and chords over it that would be permitted for a standard degree-IV chord.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "D7(#11) dual function warning",
+              "quote_excerpt": "this chord also can be considered as a dominant diminished chord voicing possibility... we cannot use certain types of scales and chords, otherwise we might have a terrible result",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "tensions-known-not-all-voiced",
+          "name": "All Tensions Must Be Known; Not All Must Be Voiced",
+          "summary": "A player is not required to voice every available tension in practice, but must possess theoretical knowledge of all tensions to avoid harmonization and improvisation errors.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Melodic minor tensions: not all required",
+              "quote_excerpt": "do not have to contain all the tensions presented. However, we have to know all of them in order to do not make a mistake when harmonizing or improvising",
+              "page": 28
+            }
+          ]
+        },
+        {
+          "id": "ear-over-notation-meta-rule",
+          "name": "Apply Patterns by Ear, Not by Notated Time Signatures",
+          "summary": "Notated patterns carry a time signature for organizational clarity only; the student should extract pitch-and-interval content and re-deploy it rhythmically according to ear and musical context, prioritizing single lines over written groupings.",
+          "engine_payload": {
+            "kind": "_pending:ear-over-notation"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Time signatures in patterns: usage rule",
+              "quote_excerpt": "Don't let the time signatures confuse you. Learn the ideas that you like the most and apply them where you feel they sound the best",
+              "page": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

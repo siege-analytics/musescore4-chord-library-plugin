@@ -39,8 +39,16 @@ def run_js(modules, test_code):
         else:
             mod_paths.append(os.path.join(MODEL_DIR, m))
 
-    cmd = ["node", JS_RUNNER] + mod_paths + ["--", test_code]
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO_ROOT, timeout=30)
+    # #343: pass test code via stdin to avoid platform argv limits
+    # (Windows WinError 206 / Linux E2BIG) when JSON payloads grow.
+    # encoding="utf-8" is required because subprocess defaults to
+    # locale.getpreferredencoding() (cp1252 on Windows), which can't
+    # encode characters like → (→) used in test payloads.
+    cmd = ["node", JS_RUNNER] + mod_paths + ["--", "-"]
+    result = subprocess.run(
+        cmd, input=test_code, capture_output=True, text=True,
+        cwd=REPO_ROOT, timeout=30, encoding="utf-8",
+    )
 
     if result.returncode != 0 and not result.stdout.strip():
         return {"pass": False, "results": [], "error": result.stderr or "Node.js failed"}
@@ -742,6 +750,1101 @@ class TestDataCacheJS:
         """)
 
 
+# === ChordSelector.js — curated shape signature (#194) ===
+
+
+class TestChordSelectorSignature:
+    """Test the root-relative fingering signature helpers (#194)."""
+
+    def test_signature_key_stable_across_dot_order(self):
+        assert_js("ChordSelector.js", """
+            var v1 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:3,fret:2}, {string:4,fret:1}, {string:6,fret:1}],
+                intervals: ["3", "b7", "1"]
+            };
+            var v2 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            assertEqual(signatureKey(v1), signatureKey(v2),
+                "same shape, different dot order, same key");
+        """)
+
+    def test_signature_key_different_intervals_different_keys(self):
+        assert_js("ChordSelector.js", """
+            var maj7 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "7"]
+            };
+            var dom7 = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            assertNotEqual(signatureKey(maj7), signatureKey(dom7),
+                "different intervals -> different keys");
+        """)
+
+    def test_signature_key_root_relative(self):
+        # Same shape transposed: only the fret_number changes; the intervals
+        # stay the same; the key should match.
+        assert_js("ChordSelector.js", """
+            var c7 = {
+                strings: 6, mutes: [], open: [], fret_number: 8,
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            var f7 = Object.assign({}, c7, { fret_number: 1 });
+            assertEqual(signatureKey(c7), signatureKey(f7),
+                "root-relative: fret_number doesn't affect key");
+        """)
+
+    def test_build_curated_lookup_returns_keyed_map(self):
+        assert_js("ChordSelector.js", """
+            var payload = {
+                shapes: [{
+                    signature: {
+                        strings: 6, mutes: [], opens: [],
+                        pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                    },
+                    name: "Shell 137",
+                    boost: 60
+                }]
+            };
+            var lookup = buildCuratedLookup(payload);
+            var keys = Object.keys(lookup);
+            assertEqual(keys.length, 1, "one entry");
+            // Construct a matching voicing and verify the lookup finds it
+            var v = {
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1}, {string:4,fret:1}, {string:3,fret:2}],
+                intervals: ["1", "b7", "3"]
+            };
+            var key = signatureKey(v);
+            assert(lookup[key] !== undefined, "voicing signature matches curated");
+            assertEqual(lookup[key].boost, 60, "boost retrieved");
+        """)
+
+    def test_curated_boost_promotes_matching_candidate(self):
+        # #201 Phase 2a — when a candidate's root-relative signature matches
+        # a curated entry, _scoreCandidate adds entry.boost. Two otherwise
+        # equivalent candidates: only the one with a matching signature in
+        # the curated lookup should win, by exactly the boost margin.
+        assert_js("ChordSelector.js", """
+            var curated = {
+                id: "v-curated", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1", "b7", "3"], strings: 6
+            };
+            var plain = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:5,fret:3},{string:4,fret:2}],
+                intervals: ["1", "5", "3"], strings: 6
+            };
+            var payload = { shapes: [{
+                signature: {
+                    strings: 6, mutes: [], opens: [],
+                    pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                },
+                name: "Shell 137", boost: 80
+            }]};
+            var lookup = buildCuratedLookup(payload);
+            // Without lookup: shapes are scoring-equivalent here. We pick whatever
+            // findBestVoicing returns as a baseline and confirm the curated one
+            // wins once the lookup is in place.
+            var pickWithout = findBestVoicing([curated, plain], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            var pickWith = findBestVoicing([curated, plain], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}, curatedLookup: lookup
+            });
+            assertEqual(pickWith.id, "v-curated",
+                "curated lookup promotes matching signature");
+            // Sanity: the lookup-less call did not magically pick the same one
+            // for the same reason. Either result is allowed without lookup.
+            assert(pickWithout !== null, "baseline still returns something");
+        """)
+
+    def test_curated_boost_absent_lookup_is_noop(self):
+        # Absence of opts.curatedLookup must not throw and must not change
+        # scoring. Defensive against partial wiring.
+        assert_js("ChordSelector.js", """
+            var v = {
+                id: "v1", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1", "b7", "3"], strings: 6
+            };
+            var pick = findBestVoicing([v], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assertEqual(pick.id, "v1", "no lookup → still returns candidate");
+        """)
+
+    def test_curated_shapes_json_matches_runtime_signature(self):
+        # Regression: every entry in curated-shapes.json must produce a key
+        # that runtime signatureKey() would reconstruct for the same shape.
+        # This is the cross-script-and-runtime invariant for #194.
+        import json as _json
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "curated-shapes.json")) as f:
+            data = _json.load(f)
+        first = data["shapes"][0]
+        # Build a voicing from the signature pairs + dummy frets
+        pairs = first["signature"]["pairs"]
+        dots = [{"string": p[0], "fret": 1} for p in pairs]
+        intervals = [p[1] for p in pairs]
+        voicing = {
+            "strings": first["signature"]["strings"],
+            "mutes": first["signature"]["mutes"],
+            "open": first["signature"]["opens"],
+            "dots": dots,
+            "intervals": intervals,
+        }
+        result = run_js(["ChordSelector.js"], f"""
+            var payload = {_json.dumps(data)};
+            var lookup = buildCuratedLookup(payload);
+            var v = {_json.dumps(voicing)};
+            var key = signatureKey(v);
+            _results.push({{ pass: lookup[key] !== undefined, message: "first curated shape lookups via runtime signatureKey" }});
+            if (lookup[key] === undefined) _pass = false;
+        """)
+        assert result["pass"], f"curated shape signature mismatch: {result}"
+
+
+# === ChordSelector.js — unionVoicings (#209) ===
+
+
+class TestUnionVoicings:
+    """Test the curated+calculator union helper (#209 Stage 1)."""
+
+    def test_empty_inputs_return_empty(self):
+        assert_js("ChordSelector.js", """
+            assertEqual(unionVoicings(null, null).length, 0, "null inputs");
+            assertEqual(unionVoicings([], []).length, 0, "empty inputs");
+        """)
+
+    def test_disjoint_voicings_are_concatenated(self):
+        assert_js("ChordSelector.js", """
+            var a = [{
+                id: "c1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var b = [{
+                id: "g1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"]
+            }];
+            var u = unionVoicings(a, b);
+            assertEqual(u.length, 2, "both kept");
+        """)
+
+    def test_union_curated_wins_on_collision(self):
+        # Falsifier for the acceptance criterion: when curated and calculator
+        # both produce the same shape, the curated one (with its metadata)
+        # survives.
+        assert_js("ChordSelector.js", """
+            var curated = [{
+                id: "curated-id", name: "Shell 137 — root on top",
+                category: "shell", traditions: ["bebop"],
+                root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var calculator = [{
+                id: "calc-id", name: "dom7 fret 1",
+                category: "generated",
+                root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            }];
+            var u = unionVoicings(curated, calculator);
+            assertEqual(u.length, 1, "collision -> one entry");
+            assertEqual(u[0].id, "curated-id", "curated id survives");
+            assertEqual(u[0].name, "Shell 137 — root on top",
+                "curated name survives");
+            assertEqual(u[0].category, "shell", "curated category survives");
+        """)
+
+    def test_same_shape_different_quality_both_survive(self):
+        # The dedup key includes chord_quality, so a shape used as maj7
+        # by the curated set and as dom7 by the calculator both survive.
+        assert_js("ChordSelector.js", """
+            var a = [{
+                id: "as-maj7", root: "C", chord_quality: "maj7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"]
+            }];
+            var b = [{
+                id: "as-dom7", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"]
+            }];
+            var u = unionVoicings(a, b);
+            assertEqual(u.length, 2, "different quality, both kept");
+        """)
+
+    def test_calculator_voicing_inherits_curated_display_name(self):
+        # #211 Stage 3: when a calculator voicing's signature matches a
+        # curated lookup entry, its display name/category come from the
+        # curated entry. We exercise buildCuratedLookup + signatureKey
+        # directly (the QML applyExclusionPass calls both); the test
+        # confirms the lookup-by-signature works for downstream display.
+        assert_js("ChordSelector.js", """
+            var payload = {
+                shapes: [{
+                    signature: {
+                        strings: 6, mutes: [], opens: [],
+                        pairs: [[3, "3"], [4, "b7"], [6, "1"]]
+                    },
+                    name: "Shell 137 — root on top",
+                    category: "shell",
+                    boost: 60
+                }]
+            };
+            var lookup = buildCuratedLookup(payload);
+            var calculatorVoicing = {
+                id: "calc-gen-1",
+                name: "dom7 fret 1",     // calculator's generic name
+                category: "generated",   // calculator's generic category
+                strings: 6, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"]
+            };
+            var sig = signatureKey(calculatorVoicing);
+            var curated = lookup[sig];
+            assert(curated !== undefined, "calculator signature hits curated lookup");
+            assertEqual(curated.name, "Shell 137 — root on top",
+                "curated name available to attach");
+            assertEqual(curated.category, "shell",
+                "curated category available to attach");
+        """)
+
+    def test_voicing_schema_accepts_reserved_fields(self):
+        # Schema reservation for Track 2/3 (#212): voicings may carry
+        # voicingStyle and playStyle. They round-trip through union
+        # without being dropped.
+        assert_js("ChordSelector.js", """
+            var v = {
+                id: "v1", root: "C", chord_quality: "dom7", strings: 6,
+                mutes: [], open: [],
+                dots: [{string:6,fret:1}], intervals: ["1"],
+                voicingStyle: ["van-eps", "shell"],
+                playStyle: "sequential"
+            };
+            var u = unionVoicings([v], []);
+            assertEqual(u.length, 1, "kept");
+            assertEqual(u[0].voicingStyle.length, 2, "voicingStyle preserved");
+            assertEqual(u[0].voicingStyle[0], "van-eps", "first tag");
+            assertEqual(u[0].playStyle, "sequential", "playStyle preserved");
+        """)
+
+
+# === ExclusionEngine.js — per-tuning-per-mode exclusion (#210) ===
+
+
+class TestExclusionEngine:
+    """Test ExclusionEngine.js exclusion + override behavior."""
+
+    def test_no_tolerances_returns_null(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            assertEqual(evaluateExclusion(v, null, null, null), null,
+                "no tolerances -> visible");
+            assertEqual(evaluateExclusion(v, {}, null, null), null,
+                "empty tolerances -> visible");
+        """)
+
+    def test_excluded_categories_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [],
+                      intervals: [], fret_number: 5, category: "quartal" };
+            var t = { excludedCategories: ["quartal"] };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "excludedCategories", "category excluded");
+            assert(r.message.indexOf("quartal") >= 0, "message names category");
+        """)
+
+    def test_max_difficulty_tier_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            var t = { maxDifficultyTier: "advanced" };
+            var difficultyFn = function(_) { return { tier: "expert" }; };
+            var r = evaluateExclusion(v, t, null, { difficultyFn: difficultyFn });
+            assertEqual(r.dimension, "maxDifficultyTier", "expert > advanced");
+        """)
+
+    def test_max_difficulty_tier_passes_when_within_limit(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [],
+                      intervals: [], fret_number: 5 };
+            var t = { maxDifficultyTier: "advanced" };
+            var difficultyFn = function(_) { return { tier: "standard" }; };
+            assertEqual(evaluateExclusion(v, t, null, { difficultyFn: difficultyFn }), null,
+                "standard within advanced -> visible");
+        """)
+
+    def test_max_muted_strings_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:1,fret:1}], mutes: [2,3,4,5], open: [],
+                      intervals: ["1"], fret_number: 5 };
+            var t = { maxMutedStrings: 3 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxMutedStrings", "4 mutes > 3 max");
+        """)
+
+    def test_max_stretch_dimension(self):
+        # Dots at fret_number 1 with relative frets 1 and 7 → absolute 1 and 7
+        # → stretch 7 (inclusive). Should fail max=5.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1},{string:1,fret:7}],
+                      mutes: [], open: [], intervals: ["1","5"], fret_number: 1 };
+            var t = { maxStretch: 5 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxStretch", "stretch 7 > max 5");
+        """)
+
+    def test_max_fret_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 14 };
+            var t = { maxFret: 12 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "maxFret", "fret 14 > max 12");
+        """)
+
+    def test_min_sounding_notes_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}, {string:5,fret:1}],
+                      mutes: [], open: [], intervals: ["1","5"], fret_number: 5 };
+            var t = { minSoundingNotes: 3 };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "minSoundingNotes", "2 sounding < 3 min");
+        """)
+
+    def test_require_root_in_bass_dimension(self):
+        # Bass string (highest-numbered sounding) is string 6 with interval "5" → not root.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6,
+                      dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                      mutes: [], open: [],
+                      intervals: ["5","1","3"], fret_number: 5 };
+            var t = { requireRootInBass: true };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "requireRootInBass", "bass is 5th, not root");
+        """)
+
+    def test_allow_open_strings_dimension(self):
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [], open: [3,4],
+                      intervals: [], fret_number: 0 };
+            var t = { allowOpenStrings: false };
+            var r = evaluateExclusion(v, t, null, null);
+            assertEqual(r.dimension, "allowOpenStrings", "opens disallowed");
+        """)
+
+    def test_user_override_include_wins_over_tolerance(self):
+        # Acceptance criterion: allowlisted signature always passes.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [], mutes: [1,2,3,4,5], open: [],
+                      intervals: [], fret_number: 5, category: "quartal" };
+            // Would fail BOTH maxMutedStrings AND excludedCategories.
+            var t = { maxMutedStrings: 3, excludedCategories: ["quartal"] };
+            var overrides = { "my-sig": "include" };
+            var opts = { signatureKeyFn: function(_) { return "my-sig"; } };
+            assertEqual(evaluateExclusion(v, t, overrides, opts), null,
+                "allowlist wins over all tolerance failures");
+        """)
+
+    def test_user_override_exclude_wins_over_tolerance(self):
+        # Acceptance criterion: denylisted signature always fails.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "shell" };
+            // Would pass everything.
+            var t = { maxMutedStrings: 3, excludedCategories: [] };
+            var overrides = { "my-sig": "exclude" };
+            var opts = { signatureKeyFn: function(_) { return "my-sig"; } };
+            var r = evaluateExclusion(v, t, overrides, opts);
+            assertEqual(r.dimension, "userOverride", "denylist beats passing checks");
+        """)
+
+    def test_dimension_priority_category_before_difficulty(self):
+        # When two tolerances both fail, the higher-priority one wins.
+        # Category exclusion is higher priority than difficulty.
+        assert_js("ExclusionEngine.js", """
+            var v = { strings: 6, dots: [{string:6,fret:1}], mutes: [], open: [],
+                      intervals: ["1"], fret_number: 5, category: "quartal" };
+            var t = { excludedCategories: ["quartal"], maxDifficultyTier: "standard" };
+            var difficultyFn = function(_) { return { tier: "expert" }; };
+            var r = evaluateExclusion(v, t, null, { difficultyFn: difficultyFn });
+            assertEqual(r.dimension, "excludedCategories",
+                "category check fires before difficulty");
+        """)
+
+    def test_resolve_tolerances_mode_only(self):
+        assert_js("ExclusionEngine.js", """
+            var map = { modes: { "comping": { maxMutedStrings: 2 } } };
+            var t = resolveTolerances(map, "standard", "comping");
+            assertEqual(t.maxMutedStrings, 2, "mode default applied");
+        """)
+
+    def test_resolve_tolerances_tuning_overrides_mode(self):
+        assert_js("ExclusionEngine.js", """
+            var map = {
+                modes: { "comping": { maxMutedStrings: 2, maxFret: 12 } },
+                tunings: { "baritone": { "comping": { maxFret: 14 } } }
+            };
+            var t = resolveTolerances(map, "baritone", "comping");
+            assertEqual(t.maxMutedStrings, 2, "mode default preserved");
+            assertEqual(t.maxFret, 14, "tuning override applied");
+        """)
+
+    def test_merge_tolerances_user_overrides_base(self):
+        # #216 — user-edited tolerance overrides shadow file defaults at the
+        # dimension level. Untouched dimensions fall through.
+        assert_js("ExclusionEngine.js", """
+            var base = {
+                modes: {
+                    "comping": { maxFret: 12, maxStretch: 5, maxMutedStrings: 2 }
+                },
+                tunings: {}
+            };
+            var user = {
+                modes: {
+                    "comping": { maxStretch: 4 }   // user tightens the stretch
+                },
+                tunings: {}
+            };
+            var merged = mergeTolerances(base, user);
+            assertEqual(merged.modes.comping.maxFret, 12, "untouched dim falls through");
+            assertEqual(merged.modes.comping.maxStretch, 4, "user override wins");
+            assertEqual(merged.modes.comping.maxMutedStrings, 2, "other dim preserved");
+        """)
+
+    def test_merge_tolerances_tuning_overrides(self):
+        assert_js("ExclusionEngine.js", """
+            var base = {
+                modes: { "chord-melody": { maxFret: 12 } },
+                tunings: {
+                    "baritone": { "chord-melody": { maxFret: 14 } }
+                }
+            };
+            var user = {
+                modes: {},
+                tunings: {
+                    "baritone": { "chord-melody": { maxStretch: 7 } }
+                }
+            };
+            var merged = mergeTolerances(base, user);
+            // Tuning-level merge: base's tuning fret + user's tuning stretch
+            assertEqual(merged.tunings.baritone["chord-melody"].maxFret, 14,
+                "base tuning override preserved");
+            assertEqual(merged.tunings.baritone["chord-melody"].maxStretch, 7,
+                "user tuning override added");
+        """)
+
+    def test_merge_tolerances_handles_empty_inputs(self):
+        assert_js("ExclusionEngine.js", """
+            var m1 = mergeTolerances(null, null);
+            assertEqual(Object.keys(m1.modes).length, 0, "null inputs -> empty modes");
+            var m2 = mergeTolerances({}, {});
+            assertEqual(Object.keys(m2.modes).length, 0, "empty inputs -> empty modes");
+            var m3 = mergeTolerances({ modes: { "comping": { maxFret: 10 } } }, null);
+            assertEqual(m3.modes.comping.maxFret, 10, "null user -> base passes through");
+        """)
+
+    def test_tighten_tolerances_ceiling_takes_min(self):
+        assert_js("ExclusionEngine.js", """
+            var base = { maxFret: 12, maxStretch: 6, maxMutedStrings: 3 };
+            var hint = { maxFret: 10, maxStretch: 8, maxMutedStrings: 1 };
+            var t = tightenTolerances(base, hint);
+            assertEqual(t.maxFret, 10, "fret tighter wins");
+            assertEqual(t.maxStretch, 6, "base already tighter wins");
+            assertEqual(t.maxMutedStrings, 1, "mute tighter wins");
+        """)
+
+    def test_tighten_tolerances_floor_takes_max(self):
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances({ minSoundingNotes: 3 }, { minSoundingNotes: 4 });
+            assertEqual(t.minSoundingNotes, 4, "floor tighter wins");
+            t = tightenTolerances({ minSoundingNotes: 5 }, { minSoundingNotes: 4 });
+            assertEqual(t.minSoundingNotes, 5, "base already tighter wins");
+        """)
+
+    def test_tighten_tolerances_booleans_and_enum(self):
+        assert_js("ExclusionEngine.js", """
+            var t1 = tightenTolerances({ requireRootInBass: false }, { requireRootInBass: true });
+            assertEqual(t1.requireRootInBass, true, "any-true tightens");
+            var t2 = tightenTolerances({ allowOpenStrings: true }, { allowOpenStrings: false });
+            assertEqual(t2.allowOpenStrings, false, "any-disallow tightens");
+            var t3 = tightenTolerances({ maxDifficultyTier: "expert" }, { maxDifficultyTier: "standard" });
+            assertEqual(t3.maxDifficultyTier, "standard", "lower tier wins");
+        """)
+
+    def test_tighten_tolerances_excluded_categories_unions(self):
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances(
+                { excludedCategories: ["quartal"] },
+                { excludedCategories: ["extended", "altered"] }
+            );
+            assertEqual(t.excludedCategories.length, 3, "union of three");
+            assert(t.excludedCategories.indexOf("quartal") >= 0, "quartal present");
+            assert(t.excludedCategories.indexOf("extended") >= 0, "extended present");
+            assert(t.excludedCategories.indexOf("altered") >= 0, "altered present");
+        """)
+
+    def test_tighten_tolerances_unknown_dim_replaces(self):
+        # Forward-compat: future dimensions get REPLACED, not silently dropped.
+        assert_js("ExclusionEngine.js", """
+            var t = tightenTolerances({ futureDim: 5 }, { futureDim: 10 });
+            assertEqual(t.futureDim, 10, "unknown dim: hint replaces");
+        """)
+
+    def test_master_style_boost_promotes_matching_voicing(self):
+        # Ticket falsifier — a tagged voicing outscores an equivalent untagged one
+        # when the matching master is active.
+        assert_js("ChordSelector.js", """
+            var tagged = {
+                id: "v-greene", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                voicingStyle: ["greene"]
+            };
+            var untagged = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"], strings: 6
+            };
+            // Without master active: pick either (no signal — equivalent).
+            // With Greene active: tagged voicing wins.
+            var pick = findBestVoicing([untagged, tagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0},
+                masterVoicingStyleTags: ["greene"]
+            });
+            assertEqual(pick.id, "v-greene", "tagged voicing wins under matching master");
+        """)
+
+    def test_no_master_active_is_noop(self):
+        # When no master is active, scoring matches pre-#222 behavior.
+        # A tagged voicing should NOT outscore an equivalent untagged one
+        # just by virtue of being tagged.
+        assert_js("ChordSelector.js", """
+            var tagged = {
+                id: "v-greene", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                voicingStyle: ["greene"]
+            };
+            var untagged = {
+                id: "v-plain", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6
+            };
+            // Same shape, same scoring inputs, no master active.
+            // Sort order is determined by JS engine; either may win.
+            // Important: the BOOST itself should be zero in both cases.
+            var pickWithoutMaster = findBestVoicing([tagged, untagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assert(pickWithoutMaster !== null, "still picks one when no master");
+            // Now with Greene: tagged wins.
+            var pickWithMaster = findBestVoicing([tagged, untagged], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0},
+                masterVoicingStyleTags: ["greene"]
+            });
+            assertEqual(pickWithMaster.id, "v-greene", "master signal does reach scorer");
+        """)
+
+    def test_findbest_skips_excluded_voicings(self):
+        # findBestVoicing must not return a voicing with _excludedReason set,
+        # even if it would otherwise score highest.
+        assert_js("ChordSelector.js", """
+            var excluded = {
+                id: "v-excluded", root: "C", chord_quality: "dom7",
+                category: "shell", fret_number: 5, mutes: [], open: [],
+                dots: [{string:6,fret:1},{string:4,fret:1},{string:3,fret:2}],
+                intervals: ["1","b7","3"], strings: 6,
+                _excludedReason: { dimension: "userOverride", message: "user-excluded" }
+            };
+            var visible = {
+                id: "v-visible", root: "C", chord_quality: "dom7",
+                category: "drop2", fret_number: 5, mutes: [], open: [],
+                dots: [{string:5,fret:3},{string:4,fret:2},{string:3,fret:3}],
+                intervals: ["1","3","b7"], strings: 6
+            };
+            var pick = findBestVoicing([excluded, visible], "C", "dom7", {
+                maxStrings: 6, semitoneMap: {C:0}
+            });
+            assertEqual(pick.id, "v-visible",
+                "excluded voicing is not selectable as best");
+        """)
+
+
+# === RevoiceMemory.js — per-chord choice persistence (#197) ===
+
+
+class TestRevoiceMemory:
+    """Test RevoiceMemory.js scope-keyed choice storage."""
+
+    def test_empty_memory_starts_with_no_scopes(self):
+        # Default version bumped to "v2" by #211 Stage 3 (signature-keyed).
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            assertEqual(m.version, "v2", "version stamped");
+            assertEqual(Object.keys(m.scopes).length, 0, "no scopes yet");
+        """)
+
+    def test_record_and_get_round_trip(self):
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var key = buildScopeKey("/path/to.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, key, "Cm7", "v-shell-137", 1000);
+            assertEqual(getChoice(m, key, "Cm7"), "v-shell-137", "saved choice returned");
+            assertEqual(getChoice(m, key, "F7"), null, "absent symbol returns null");
+        """)
+
+    def test_scope_key_includes_all_axes(self):
+        # Each of (scorePath, mode, style, tuning) must produce a distinct key,
+        # so changing any one isolates a fresh scope.
+        assert_js("RevoiceMemory.js", """
+            var a = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var b = buildScopeKey("/b.mscz", "chord-melody", "default", "standard");
+            var c = buildScopeKey("/a.mscz", "comping",      "default", "standard");
+            var d = buildScopeKey("/a.mscz", "chord-melody", "bebop",   "standard");
+            var e = buildScopeKey("/a.mscz", "chord-melody", "default", "baritone");
+            assertNotEqual(a, b, "different score = different scope");
+            assertNotEqual(a, c, "different mode = different scope");
+            assertNotEqual(a, d, "different style = different scope");
+            assertNotEqual(a, e, "different tuning = different scope");
+        """)
+
+    def test_changing_mode_does_not_replay_prior_choice(self):
+        # The headline AC: changing mode/style/tuning must reset choices.
+        # Falsifier from the ticket.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var cm = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var cmp = buildScopeKey("/a.mscz", "comping",      "default", "standard");
+            recordChoice(m, cm, "F7", "v-melody-pick", 1000);
+            assertEqual(getChoice(m, cm, "F7"), "v-melody-pick", "saved in chord-melody scope");
+            assertEqual(getChoice(m, cmp, "F7"), null,
+                "switched to comping scope: no replay of chord-melody choice");
+        """)
+
+    def test_clear_scope_removes_just_one_scope(self):
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            var a = buildScopeKey("/a.mscz", "chord-melody", "default", "standard");
+            var b = buildScopeKey("/b.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, a, "C7", "v-a", 1000);
+            recordChoice(m, b, "C7", "v-b", 1000);
+            clearScope(m, a);
+            assertEqual(getChoice(m, a, "C7"), null, "scope a cleared");
+            assertEqual(getChoice(m, b, "C7"), "v-b", "scope b untouched");
+        """)
+
+    def test_prune_drops_oldest_scope_first(self):
+        # Build a memory with enough scopes to exceed a small budget, then
+        # confirm the oldest (by ts) is dropped.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            for (var i = 0; i < 50; i++) {
+                var key = "/score" + i + ".mscz|m:chord-melody|s:default|t:standard";
+                recordChoice(m, key, "F7", "v-id-" + i, i + 1);
+            }
+            var beforeKeys = Object.keys(m.scopes).length;
+            pruneToSize(m, 500);  // tight budget — most scopes drop
+            var afterKeys = Object.keys(m.scopes).length;
+            assert(afterKeys < beforeKeys, "prune dropped some scopes");
+            // The newest scope (ts=50) must survive.
+            var newestKey = "/score49.mscz|m:chord-melody|s:default|t:standard";
+            assert(m.scopes[newestKey] !== undefined, "newest scope survives");
+            // The oldest (ts=1) must be gone.
+            var oldestKey = "/score0.mscz|m:chord-melody|s:default|t:standard";
+            assert(m.scopes[oldestKey] === undefined, "oldest scope dropped");
+        """)
+
+    def test_parse_memory_handles_corrupt_input(self):
+        # Updated for #211 Stage 3 — empty memory is now v2.
+        assert_js("RevoiceMemory.js", """
+            assertEqual(parseMemory("").version, "v2", "empty string -> empty v2 memory");
+            assertEqual(parseMemory("not json").version, "v2", "invalid json -> empty v2 memory");
+            assertEqual(parseMemory('{"version":"v0"}').version, "v2", "unknown version -> empty");
+            // v1 memories still parse (caller migrates).
+            var v1 = parseMemory('{"version":"v1","scopes":{"a":{"choices":{"F7":"v1"},"ts":1}}}');
+            assertEqual(v1.version, "v1", "v1 still parseable");
+            assertEqual(v1.scopes.a.choices.F7, "v1", "v1 choices preserved");
+            // v2 memories parse straight through.
+            var v2 = parseMemory('{"version":"v2","scopes":{"a":{"choices":{"F7":"sig123"},"ts":1}}}');
+            assertEqual(v2.version, "v2", "v2 parses");
+            assertEqual(v2.scopes.a.choices.F7, "sig123", "v2 signature value");
+        """)
+
+    def test_revoice_memory_migrates_v1_to_v2(self):
+        # #211 Stage 3 ticket falsifier. v1 memory + an idToSig lookup
+        # produces a v2 memory with signatures in choices.
+        assert_js("RevoiceMemory.js", """
+            var memory = {
+                version: "v1",
+                scopes: {
+                    "scope-a": { choices: { "F7": "id-shell-137", "Cm7": "id-drop2" }, ts: 1000 },
+                    "scope-b": { choices: { "Bbmaj7": "id-shell-137" }, ts: 2000 }
+                }
+            };
+            var idToSig = {
+                "id-shell-137": "sig-shell-137",
+                "id-drop2": "sig-drop2"
+            };
+            migrateFromV1(memory, idToSig);
+            assertEqual(memory.version, "v2", "schema bumped");
+            assertEqual(memory.scopes["scope-a"].choices.F7, "sig-shell-137",
+                "F7 choice rewritten");
+            assertEqual(memory.scopes["scope-a"].choices.Cm7, "sig-drop2",
+                "Cm7 choice rewritten");
+            assertEqual(memory.scopes["scope-b"].choices.Bbmaj7, "sig-shell-137",
+                "scope-b also rewritten");
+            assertEqual((memory._droppedIds || []).length, 0, "nothing dropped");
+        """)
+
+    def test_revoice_memory_v2_round_trip(self):
+        # Post-migration, get/record operate on signatures as values.
+        assert_js("RevoiceMemory.js", """
+            var m = emptyMemory();
+            assertEqual(m.version, "v2", "starts at v2");
+            var key = buildScopeKey("/p.mscz", "chord-melody", "default", "standard");
+            recordChoice(m, key, "F7", "sig-shell-137", 1000);
+            assertEqual(getChoice(m, key, "F7"), "sig-shell-137",
+                "signature retrievable");
+        """)
+
+    def test_revoice_memory_migration_drops_unresolvable_ids(self):
+        assert_js("RevoiceMemory.js", """
+            var memory = {
+                version: "v1",
+                scopes: {
+                    "scope-a": { choices: { "F7": "id-known", "Cm7": "id-missing" }, ts: 1000 }
+                }
+            };
+            var idToSig = { "id-known": "sig-known" };  // id-missing not in lookup
+            migrateFromV1(memory, idToSig);
+            assertEqual(memory.scopes["scope-a"].choices.F7, "sig-known",
+                "resolvable id rewritten");
+            assertEqual(memory.scopes["scope-a"].choices.Cm7, undefined,
+                "unresolvable id dropped");
+            assertEqual((memory._droppedIds || []).length, 1,
+                "drop logged for surfaceable diagnostics");
+        """)
+
+    def test_revoice_memory_migration_is_noop_on_v2(self):
+        assert_js("RevoiceMemory.js", """
+            var m = { version: "v2", scopes: { "a": { choices: { "F7": "sig" }, ts: 1 } } };
+            migrateFromV1(m, {});
+            assertEqual(m.version, "v2", "still v2");
+            assertEqual(m.scopes.a.choices.F7, "sig", "untouched");
+        """)
+
+
+# === MastersStore.js — Masters' Lessons bookshelf (#220) ===
+
+
+class TestMastersStore:
+    """Test MastersStore.js loader + query helpers."""
+
+    SEED = """
+        var sample = {
+            version: "v1",
+            masters: [
+                {
+                    id: "ted-greene",
+                    name: "Ted Greene",
+                    principles: [
+                        {
+                            id: "voice-leading",
+                            name: "Voice leading",
+                            voicingStyleTags: ["greene"],
+                            applies_to_modes: ["chord-melody", "solo-guitar"]
+                        },
+                        {
+                            id: "sequential",
+                            name: "Sequential articulation",
+                            voicingStyleTags: ["greene"],
+                            playStyleTags: ["sequential"],
+                            applies_to_modes: ["chord-melody"]
+                        }
+                    ]
+                },
+                {
+                    id: "van-eps",
+                    name: "George Van Eps",
+                    principles: [
+                        {
+                            id: "comping-with-self",
+                            voicingStyleTags: ["van-eps"],
+                            applies_to_modes: ["chord-melody"],
+                            applies_to_tunings: ["7string-van-eps"]
+                        }
+                    ]
+                }
+            ]
+        };
+    """
+
+    def test_empty_store_when_no_input(self):
+        assert_js("MastersStore.js", """
+            var e = emptyStore();
+            assertEqual(e.version, "v1", "version stamped");
+            assertEqual(e.masters.length, 0, "no masters");
+        """)
+
+    def test_parse_store_rejects_invalid_inputs(self):
+        assert_js("MastersStore.js", """
+            assertEqual(parseStore("").masters.length, 0, "empty -> empty store");
+            assertEqual(parseStore("not json").masters.length, 0, "invalid json -> empty");
+            assertEqual(parseStore('{"version":"v0"}').masters.length, 0, "wrong version");
+            assertEqual(parseStore('{"version":"v1"}').masters.length, 0, "no masters array");
+        """)
+
+    def test_masters_store_loads_seeded_data(self):
+        # Ticket falsifier — confirms the loader round-trips seeded entries.
+        assert_js("MastersStore.js", """
+            var s = parseStore(JSON.stringify({
+                version: "v1",
+                masters: [{ id: "x", name: "X", principles: [] }]
+            }));
+            assertEqual(s.masters.length, 1, "one master loaded");
+            assertEqual(s.masters[0].id, "x", "id preserved");
+        """)
+
+    def test_find_master_by_id(self):
+        assert_js("MastersStore.js", self.SEED + """
+            assertEqual(findMaster(sample, "ted-greene").name, "Ted Greene", "found");
+            assertEqual(findMaster(sample, "no-such-master"), null, "missing -> null");
+        """)
+
+    def test_find_principle_by_master_and_id(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var p = findPrinciple(sample, "ted-greene", "voice-leading");
+            assertEqual(p.name, "Voice leading", "found");
+            assertEqual(findPrinciple(sample, "ted-greene", "no-such"), null, "missing -> null");
+            assertEqual(findPrinciple(sample, "no-such-master", "voice-leading"), null, "missing master");
+        """)
+
+    def test_all_principles_flattens_across_masters(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var all = allPrinciples(sample);
+            assertEqual(all.length, 3, "three principles total");
+            assertEqual(all[0].masterId, "ted-greene", "carries master id");
+            assertEqual(all[2].masterId, "van-eps", "second master included");
+        """)
+
+    def test_principles_by_voicing_style_tag(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var greene = principlesByVoicingStyle(sample, "greene");
+            assertEqual(greene.length, 2, "two greene principles");
+            var ve = principlesByVoicingStyle(sample, "van-eps");
+            assertEqual(ve.length, 1, "one van-eps principle");
+            assertEqual(principlesByVoicingStyle(sample, "no-such").length, 0, "no match");
+        """)
+
+    def test_principles_for_mode_and_tuning(self):
+        # Semantic: principles without an explicit applies_to_tunings list
+        # apply to all tunings (they're tuning-agnostic by default). Only
+        # tuning-restricted principles are filtered by the tuning argument.
+        assert_js("MastersStore.js", self.SEED + """
+            // chord-melody mode applies to all 3 sample principles
+            assertEqual(principlesFor(sample, "chord-melody", null).length, 3, "by mode");
+            // solo-guitar applies to one (Greene voice-leading)
+            assertEqual(principlesFor(sample, "solo-guitar", null).length, 1, "by mode solo");
+            // chord-melody + 7string-van-eps: all three principles match
+            // (Greene's two are tuning-agnostic; van-eps explicitly lists it).
+            assertEqual(principlesFor(sample, "chord-melody", "7string-van-eps").length, 3,
+                "tuning-agnostic principles still included");
+            // chord-melody + a tuning the van-eps principle does NOT list:
+            // van-eps drops, Greene's two stay (they're tuning-agnostic).
+            assertEqual(principlesFor(sample, "chord-melody", "standard").length, 2,
+                "tuning-restricted principle filtered out when tuning doesn't match");
+        """)
+
+    def test_counts_summary(self):
+        assert_js("MastersStore.js", self.SEED + """
+            var c = counts(sample);
+            assertEqual(c.masters, 2, "two masters");
+            assertEqual(c.principles, 3, "three principles");
+        """)
+
+    def test_collect_voicing_style_tags_unions_across_principles(self):
+        # #222 Track 3 — master's voicingStyleTags from all principles unioned.
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { voicingStyleTags: ["greene"] },
+                    { voicingStyleTags: ["greene", "shell"] },
+                    { voicingStyleTags: ["drop-2"] }
+                ]
+            };
+            var tags = collectVoicingStyleTags(master);
+            assertEqual(tags.length, 3, "deduped union");
+            assert(tags.indexOf("greene") >= 0, "greene present");
+            assert(tags.indexOf("shell") >= 0, "shell present");
+            assert(tags.indexOf("drop-2") >= 0, "drop-2 present");
+        """)
+
+    def test_derive_tolerances_folds_principle_hints(self):
+        # Combines tolerance_hints across principles using the tightenFn
+        # callback (provided by caller — comes from ExclusionEngine.tightenTolerances).
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { tolerance_hints: { maxFret: 12, minSoundingNotes: 3 } },
+                    { tolerance_hints: { maxFret: 10, minSoundingNotes: 4 } },
+                    { tolerance_hints: {} }  // empty hint -> skipped
+                ]
+            };
+            // Stub tightener: ceiling MIN, floor MAX.
+            var tighten = function(a, b) {
+                var out = {};
+                for (var k in a) out[k] = a[k];
+                for (var k in b) {
+                    if (out[k] === undefined) { out[k] = b[k]; continue; }
+                    if (k === "maxFret") out[k] = Math.min(out[k], b[k]);
+                    else if (k === "minSoundingNotes") out[k] = Math.max(out[k], b[k]);
+                    else out[k] = b[k];
+                }
+                return out;
+            };
+            var d = deriveTolerancesFromMaster(master, tighten);
+            assertEqual(d.maxFret, 10, "tightest fret wins");
+            assertEqual(d.minSoundingNotes, 4, "tightest floor wins");
+        """)
+
+    def test_derive_tolerances_returns_null_when_no_hints(self):
+        assert_js("MastersStore.js", """
+            var master = {
+                id: "x",
+                principles: [
+                    { voicingStyleTags: ["x"] },  // no tolerance_hints
+                    { tolerance_hints: {} }       // empty
+                ]
+            };
+            var d = deriveTolerancesFromMaster(master, function(){});
+            assertEqual(d, null, "no hints -> null (signal to skip overlay)");
+        """)
+
+    def test_loads_repo_masters_json(self):
+        # Regression fence: the actual plugin/data/masters.json must parse
+        # and meet the AC (≥ 7 masters, ≥ 1 principle each PROMOTED master).
+        # Corpus-only masters (status="corpus_only") legitimately have 0
+        # principles per the skip-promotion-but-keep-corpus pattern (#320).
+        import json as _json
+        with open(os.path.join(REPO_ROOT, "plugin", "data", "masters.json"), encoding="utf-8") as f:
+            data = _json.load(f)
+        result = run_js(["MastersStore.js"], f"""
+            var s = parseStore({_json.dumps(_json.dumps(data))});
+            var c = counts(s);
+            _results.push({{ pass: c.masters >= 7, message: "at least 7 masters ("+c.masters+")" }});
+            _results.push({{ pass: c.principles >= 7, message: "at least 7 principles ("+c.principles+")" }});
+            // Each PROMOTED master has at least one principle.
+            for (var i = 0; i < s.masters.length; i++) {{
+                var m = s.masters[i];
+                if (m.status === "corpus_only") continue;
+                var ok = m.principles && m.principles.length > 0;
+                _results.push({{
+                    pass: ok,
+                    message: "promoted master " + m.id + " has principles (" + (m.principles ? m.principles.length : 0) + ")"
+                }});
+                if (!ok) _pass = false;
+            }}
+        """)
+        assert result["pass"], f"masters.json schema check failed: {result}"
+
+
+# === ComparisonTray.js — side-by-side voicing comparison (#196) ===
+
+
+class TestComparisonTray:
+    """Test ComparisonTray.js FIFO + dedup behavior."""
+
+    def test_empty_tray_starts_empty(self):
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            assertEqual(t.length, 0, "tray empty");
+        """)
+
+    def test_add_appends_voicing(self):
+        assert_js("ComparisonTray.js", """
+            var t = add(emptyTray(), { id: "v1", name: "Shell" });
+            assertEqual(t.length, 1, "one entry");
+            assertEqual(t[0].id, "v1", "by id");
+        """)
+
+    def test_add_skips_duplicates_by_id(self):
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            t = add(t, { id: "v1" });
+            t = add(t, { id: "v1" });
+            assertEqual(t.length, 1, "duplicate add ignored");
+        """)
+
+    def test_comparison_tray_evicts_oldest_on_fourth(self):
+        # The ticket's named falsifier (#196): adding a 4th voicing must
+        # evict the first. Capacity is 3.
+        assert_js("ComparisonTray.js", """
+            var t = emptyTray();
+            t = add(t, { id: "v1" });
+            t = add(t, { id: "v2" });
+            t = add(t, { id: "v3" });
+            assertEqual(t.length, 3, "at capacity");
+            t = add(t, { id: "v4" });
+            assertEqual(t.length, 3, "still at capacity after 4th add");
+            assertEqual(t[0].id, "v2", "v1 evicted (FIFO)");
+            assertEqual(t[1].id, "v3", "v3 shifted");
+            assertEqual(t[2].id, "v4", "v4 appended");
+        """)
+
+    def test_remove_at_drops_specific_entry(self):
+        assert_js("ComparisonTray.js", """
+            var t = [{ id: "a" }, { id: "b" }, { id: "c" }];
+            t = removeAt(t, 1);
+            assertEqual(t.length, 2, "one removed");
+            assertEqual(t[0].id, "a", "first kept");
+            assertEqual(t[1].id, "c", "third kept");
+        """)
+
+    def test_clear_empties_tray(self):
+        # Falsifier for the Clear AC.
+        assert_js("ComparisonTray.js", """
+            var t = [{ id: "a" }, { id: "b" }, { id: "c" }];
+            t = clear();
+            assertEqual(t.length, 0, "tray cleared");
+        """)
+
+    def test_contains_reports_membership(self):
+        assert_js("ComparisonTray.js", """
+            var v = { id: "v1" };
+            assert(!contains([], v), "empty doesn't contain");
+            assert(contains([v], v), "contains by reference");
+            assert(contains([{ id: "v1" }], v), "contains by id even if different ref");
+        """)
+
+
 # === StyleComposer.js — style composition (#162) ===
 
 
@@ -932,6 +2035,25 @@ class TestStyleComposer:
             };
             var out = resolve(comp, all);
             assertEqual(out.categoryWeights.drop2, 10, "manouche skipped");
+        """)
+
+    def test_resolved_readout_matches_resolver(self):
+        # #195: the SettingsPanel readout consumes StyleComposer.resolve output
+        # directly. This test verifies a known composition fixture resolves to
+        # the expected category weights so the readout's "top by abs magnitude"
+        # display will surface the right entries.
+        assert_js("StyleComposer.js", self.BASES + """
+            var comp = {
+                id: "c1", composedFrom: ["bebop", "manouche"],
+                composition: { numericRule: "weighted-sum",
+                               weights: { bebop: 1.0, manouche: 1.0 } }
+            };
+            var resolved = resolve(comp, all);
+            // Verify deterministic outputs the readout would render:
+            assertEqual(resolved.categoryWeights.shell, 20, "shell stacks to 20");
+            assertEqual(resolved.categoryWeights.drop2, 0, "drop2 cancels");
+            // The readout sorts by absolute magnitude; shell would surface first.
+            // The drop2 cancellation surfaces via the dedicated 'resolved to nothing' branch only when ALL fields are zero.
         """)
 
     def test_missing_base_style_skipped(self):

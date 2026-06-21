@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-greene-chord-chemistry
+stage: s3
+source_pdf: Chord Chemistry by Ted Greene.pdf
+source_pages: 55-57
+model: claude-haiku
+extracted_at: 2026-05-29T05:48:13+00:00
+schema_version: 0.1
+---
+
+# Chapter 9 — Ear Training
+
+_Distillation; backed by `chapters/ch09.md`._
+
+Chapter 9 teaches ear training through a structured, three-stage progression: first, distinguish major and minor triads by their characteristic sound; second, locate dominant 7th chords relative to the major/minor poles, and recognize how major/major-7 and minor/minor-7 chords form closely related families; third, practice hearing chord progressions through experience and familiarity. The master's approach is categorical and triage-focused — when hearing a chord, immediately classify it into one of three aural categories (major, minor, or dominant), excluding only diminished, augmented, and chords without thirds. The chapter introduces the term "implied chords" to describe harmony that arises from two voices or melodies without explicit chord voicings, and emphasizes that progression-recognition comes mainly through experience. The method synthesizes both mental categorization of sounds and cumulative listening experience: experience is the best teacher, but a thorough study and mental categorization of sounds is essential to understanding and hearing chords and chord progressions.

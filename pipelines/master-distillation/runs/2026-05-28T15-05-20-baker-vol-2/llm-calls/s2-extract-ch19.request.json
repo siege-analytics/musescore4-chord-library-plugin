@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch19",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 19: Application of Symetric Cycles\nPages 28-32 of the book.\n\n<<<CHAPTER TEXT\n\n26\nLESSON 19\n\nApplication of Symetric Cycles\n\n(Rhythmic Chord and Melody Playing)\n\nIn this Lesson we have the first eight bars of a number of songs, employing all the\nchord cycles illustrated up to this point. This is Rhythmic Chord and Melody Playing. It\ndeals with background rather than melody. We will suppose the melody is coming from\n\nother source such as a vocalist or an instrument. The guitar plays fill-ins and frag-\nments of melody in the background. This is the best way to use the guitar when working\nwith a small combo such as bass, drums and guitar, or other small combinations. Once\nyou have mastered this type of playing the piano will no longer be a necessity. In fact,\ntoday many groups work without the piano.\n\nPractice the following exercises until they are part of you. Be absolute in your study.\nMemorize every musical thought brought out in each exercise. Bear in mind, that just\nglancing through this book doesn't mean a thing. It must be studied dilligently over and\nover again.\n\nWILL YOU STILL BE MINE?\n\nTOM ADAIR\nEX. 45 MATT DENNIS\nBb Gtdim cm7 FT Bb\n= 4\n| ---\u2014} \u2014\u2014 +] Le1 Ley t { Tr\na md TTT\nT\n+ 14\nBbmaj9 Bb13>9 Bdim Cm6 ICbmaj7 Bbmaj9\net aie Be\ncy cal le I J\nif t T I\nfo oo rT\n; Ghdim Cm7 F Gm Bb+ Bb Am etc.\n+ t 1 T = ry\n= 1 t a t yt T \u2014\nome} xe | if t t\nBb13b9 Bdim Cm6 Gm9 Bbt\n\\ 5 4 | @ etc,\n\nBe De if if it T t tT\neo he Uv T ] v * T\n\nstb F\n\n\u00a9 Copyright 1941 Embassy Music Corporation Used by Permission\n\n\n27\n\nOH! LOOK AT ME NOW\n\n. 46 JOE BUSHKIN\n\nJOHN DE VRIES\nSlow Bounce\n; Eb Gm Bbpm7 Eb?\naa p- \u2014\u2014we TY \u201ce\nes Es ==\n_\u2014 Se ee |\nEbmaj6 Ebmaj7 Gm Bbm9 Eb13b9\n7 \u2014_\n\neast\n\ni\nY [J 7\n\nAbm Gm Db7\nt t t + t t\ntI 1 = J a \u2014 ae i\nAbm9 Abm6 Gm Gm7\n= :\n= e\n+ is |\nBb7+ Bb? Baz BT\n: j Le} = rs =\na _}\u2014 |\nFm6 Fm9 Fm9 Bb13b9\n\u2014 oe oe Se Pe\n| |\n\n\u00a9 Copyright 1941 Embassy Music Corporation\n\nUsed by Permission\n\n\nJUST AS THOUGH YOU WERE HERE\n\nEDGAR DE LANGE\n\nEx. 47\nJOHN B. BROOKS\nSmoothly\nEb Cm Ab ET\n| cu 3 \u2014_\u2014\nmi T 3 = \u2014 t T t\nv \u00e9s T T \u201cTt\nEbmaj9 vr Fm9 Bb13>9\n2 2 4\n+ == \u2014 \u2014 :\n1 t aa\nT\nCm+6 D7 Gm7 Cm7\nAl EL Cm \u2014\u20143\u2014 3\n== SS\naa T + r T aie r< tT 1 oa\na a a a a aa SS\nhe Ht\nEbmaj? E>maj6 Ebdim 5 Gm6 cm\n{ | | d yy P 2 _4\n7 7 P- = rot\nbi \u2014p\n| |\nGT c7 Fm7 Bb7\nee =\u2014\u2014\u2014\n+2 yy + +\u2014 + T .\n\u2014 \u2014 \u2014 a |\n\u201c= aa ri = rer\nG+ Gdim Fm? Fmg Bb7b9 Bdim\nj 2S 4 be\nA. 1\nt\n\n\u00a9 Copyright 1942 Yankee Music Publishing Corporation\n\u00a9 Copyright assigned 1944 Dorsey Brothers' Music, Inc. Used by Permission\n\n\nIt STARTED ALL OVER AGAIN\n\nEx, 48\n\nBILL CAREY\nCARL FISHER\n\nBb7\nr%\n\nFT\nT\n\nCm6\n\nSlowly with a bounce\n\nF7\n\nEb\n\nCm6\u00e9\n\nMI,\n\nEb\n\na\n\nEbmaje6\n\netc.\n\nBbmg\n\nBbT\n\ni\n\nP etc.\n\nBbm6\n\nTY\ny\n\nc\u2014 3\u2014\n\nBbms\n\nin\n>\n\n#\n\n[=\nTF\n\n=\n\nUsed by Permission\n\n\u00a9 Copyright 1942 Embassy Music Corporation\n\n\n30\n\nEVERYTHING HAPPENS TO ME\n\nEx. 49\nTOM ADAIR\nMATT DENNIS\nA| Cm9 F9 Cm7 Dm7 Bbdim\n{ t t } ; t t T 1 I = S\nLeen RN\nH ttt : fcc 4\nony c ani + TTT\nA @ \u2018dim o Dm7 p Bbdim L Py\n~ : \u2014~\u2014 ==\ne+ \u2014_ f +\no =a ==\n: Cm7 Fe Fm6 G7 Ddim Cm\nraed T_T i ee\nf / :. tT 1 \u2014 is t T if\n\u2014\u2014<\u2014 = = 4\n1 aa\nis Bjacac ak) 5\nH Ht HHH\nCm7 Adim Fm7 Gt Ddim Cm\nht f o be Py\ners . \u2014\nbe /-\u2014 { oe\n\u2014\u2014 SS =\npt ee \u2014_\u2014_\n; os 2 T JT\na T t T T =\nBAe HH 7 HA Ebm Bbmaj9 F7$#9tob9\no 1 Cm ps 1\n\\ o\u2014 of bee? shee 1\nT T T T == _\n-\n\u2014t\n\nP\n\n\u00a9 Copyright 1941 Embassy Music Corporation Used by Permission\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 19 extraction"
+}

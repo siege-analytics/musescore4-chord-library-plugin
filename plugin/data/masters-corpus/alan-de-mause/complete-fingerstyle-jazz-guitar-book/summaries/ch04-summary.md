@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-29T06-51-18-de-mause-fingerstyle-jazz
+stage: s3
+source_pdf: Carter - Fingerstyle Jazz.pdf
+source_pages: 63-76
+model: claude-haiku
+extracted_at: 2026-05-29T07:26:10+00:00
+schema_version: 0.1
+---
+
+# Chapter 4 — Section One/Part 4: The Flow of Jazz: Eighth Notes
+
+_Distillation; backed by `chapters/ch04.md`._
+
+Chapter 4 teaches the practical fundamentals of arranging melodies for solo fingerstyle guitar, establishing key selection principles (favoring C, G, D, A, F major and A, E, B, D minor for open-string access), melody range thresholds (minimum D on the fourth string, ideally above B on the second string for brightness), and notational conventions (stems up for melody, beamed eighths for instrumental readability). The master's characteristic moves appear in the concrete, constraint-based approach to transposition—accidentals and chord symbols transpose by the same interval while chord qualities remain unchanged—and in the rhythmic counterpoint principle that busy melodies pair with longer bass notes and vice versa. Key terminology introduced includes perfect fifth (the interval from root to fifth scale step), which anchors the root/fifth bass pattern, alongside notational and performance principles like fingering consistency and the alternating-octaves bass technique, which works best in higher-register tunes to avoid voice-crossing confusion.

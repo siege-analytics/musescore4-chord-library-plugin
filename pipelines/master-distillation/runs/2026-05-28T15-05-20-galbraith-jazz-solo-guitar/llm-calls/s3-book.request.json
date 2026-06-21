@@ -1,0 +1,9 @@
+{
+  "stage": "s3",
+  "scope": "book",
+  "model": "claude-sonnet",
+  "system_prompt": "You are distilling the entire book into a coherent statement of what it teaches.\n\nThe user will give you the list of chapter-level summaries. Write a multi-paragraph\ndistillation (typically 4-8 paragraphs) that captures:\n\n  - the book's overall arc and pedagogical structure\n  - the master's characteristic systems, terminology, and moves\n  - the rules and prescriptions the book establishes\n  - any explicit method or methodology the book teaches\n\nCite chapters by number when useful (e.g. \"Chapter 3 introduces...\"). Do not\ninvent material outside the summaries. The output is the input to Stage 4\nwhich derives structured systems[] from it, so be precise about what the\nbook actually says, not what guitar pedagogy generically might say.\n\nOutput the prose \u2014 no preamble, no JSON. Use markdown headings if helpful.\n",
+  "user_prompt": "All chapter summaries follow.\n\n<<<CHAPTER SUMMARIES\n## Chapter 1: 42 Chord Melody Arrangements for Solo Guitar\n\n# Chapter 1 \u2014 42 Chord Melody Arrangements for Solo Guitar\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 contains no load-bearing prose passages \u2014 it is composed entirely of notated chord-melody arrangements. The book is a collection of 42 jazz-standard arrangements for solo guitar by Barry Galbraith (e.g., A Certain Smile, Alone Together, Autumn in New York, As Time Goes By, Have You Met Miss Jones?, How About You, I Cover the Waterfront, and many others), presented as fully voiced guitar notation without instructional commentary. The pedagogical content is encoded in the voicings, voice-leading, and chord substitutions Galbraith chose for each tune, not in explanatory prose.\nCHAPTER SUMMARIES>>>",
+  "response_schema": null,
+  "notes": "book-level distillation aggregating chapter summaries."
+}

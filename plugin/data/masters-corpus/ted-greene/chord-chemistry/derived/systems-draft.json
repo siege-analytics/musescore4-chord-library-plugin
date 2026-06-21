@@ -1,0 +1,948 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-greene-chord-chemistry",
+    "stage": "s4",
+    "source_pdf": "Chord Chemistry by Ted Greene.pdf",
+    "extracted_at": "2026-05-29T06:01:00+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "ted-greene",
+  "work_id": "greene-chord-chemistry",
+  "systems": [
+    {
+      "id": "ted-greene:greene-chord-chemistry:chord-formula-family",
+      "name": "Chord Formula and Family System",
+      "summary": "The central organizing system of Chord Chemistry. Every chord is defined by a formula \u2014 a specific combination of scale-degree numbers derived from the major scale built on the same root. Three chord families (MAJOR, MINOR, DOMINANT 7TH) serve as parent categories from which all extensions, altered chords, and suspended chords descend. The same-string inversion method generates exactly N distinct voicing forms for any N-note chord on a fixed string set.",
+      "members": [
+        {
+          "id": "major-family",
+          "name": "Major Family"
+        },
+        {
+          "id": "minor-family",
+          "name": "Minor Family"
+        },
+        {
+          "id": "dominant-family",
+          "name": "Dominant 7th Family"
+        },
+        {
+          "id": "diminished-aug-functional",
+          "name": "Diminished / Augmented (Dominant-Functional)"
+        },
+        {
+          "id": "suspended-chords",
+          "name": "Suspended Chords"
+        },
+        {
+          "id": "extension-chords",
+          "name": "Extension Chords"
+        },
+        {
+          "id": "altered-chords",
+          "name": "Altered Chords"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "same-string-inversion-traversal",
+          "name": "Same-String Inversion Traversal",
+          "summary": "Move between voicing forms by raising each tone on the same string to the next higher chord tone; yields exactly N forms for an N-note chord.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "String-set inversion system",
+              "quote_excerpt": "RAISE each tone in the chord ON THE SAME STRING",
+              "page": 10
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Triad has 3 forms rule",
+              "quote_excerpt": "any 3 note chord (triad) has only 3 different FORMS on the same set of strings",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "id": "family-parent-to-extension",
+          "name": "Family Parent-to-Extension Traversal",
+          "summary": "Navigate from parent chord to extensions/altered forms by adding or modifying tones.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Three chord families",
+              "quote_excerpt": "MAJOR, MINOR, and DOMINANT 7TH chords are the 'fathers' of the 3 families",
+              "page": 10
+            },
+            {
+              "chapter_n": 6,
+              "topic": "Altered chord notation rule",
+              "quote_excerpt": "altered chords are not listed here but they mean just what they say",
+              "page": 12
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "altered-fifth-retention",
+          "name": "Altered Fifth Retention Rule",
+          "summary": "An altered 5th must be kept in any voicing; the root may be omitted but the altered 5th may not.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Altered 5th must be kept",
+              "quote_excerpt": "if the 5th is altered you may not leave it out as it is essential",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "root-or-fifth-omission-five-note",
+          "name": "Root or Fifth Omission in Five-Note Chords",
+          "summary": "In any five-note chord, the root or 5th may be omitted and one remaining tone doubled.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Omitting root or 5th in 5-note chords",
+              "quote_excerpt": "in any chord with 5 tones in the formula, the root OR 5th is often omitted",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "third-omission-eleventh-chords",
+          "name": "Third Omission in 11th Chords",
+          "summary": "The 3rd is frequently omitted in 11th chords; optionally replaced by a 2nd or 4th in any chord.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Omitting 3rd in 11th chords",
+              "quote_excerpt": "In chords that have the 11th tone, the 3rd is often omitted",
+              "page": 11
+            }
+          ]
+        },
+        {
+          "id": "sharp-nine-plus-eleven-placement",
+          "name": "#9 and +11 Voice Placement Rule",
+          "summary": "#9 placed above the 3rd; +11 placed above the 5th when a 5th is present.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "#9 and +11 voice placement rule",
+              "quote_excerpt": "the #9 is usually put above the 3rd and the +11 is usually put above the 5th",
+              "page": 10
+            }
+          ]
+        },
+        {
+          "id": "polychord-bottom-triad-fifth-omit",
+          "name": "Polychord Bottom Triad Fifth Omission",
+          "summary": "Bottom triad of a polychord may omit its 5th; upper triads stay high when bassist plays root.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Bottom triad may omit 5th",
+              "quote_excerpt": "In many cases the bottom triad may leave out the 5th",
+              "page": 12
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Bass + upper triad voicing rule",
+              "quote_excerpt": "stick to medium to very high notes and let the bass player's note carry the bottom",
+              "page": 12
+            }
+          ]
+        },
+        {
+          "id": "dominant-major-substitution-rock",
+          "name": "Dominant-for-Major Substitution in Rock",
+          "summary": "In rock contexts, dominant 7th chords and their extensions may substitute for major chords.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 20,
+              "topic": "Dominant 7 for major in rock",
+              "quote_excerpt": "for a rock sound, quite often for a major chord you can substitute the dominant 7th and its extensions",
+              "page": 108
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ted-greene:greene-chord-chemistry:voice-leading-systematic",
+      "name": "Voice Leading and Systematic Thinking System",
+      "summary": "Greene's primary methodology for connecting chords: each chord tone is treated as an independent voice, and the motion of each voice from one chord to the next is analyzed and optimized. V7\u2013I is the foundational laboratory.",
+      "members": [
+        {
+          "id": "voice",
+          "name": "Voice (individual chord tone)"
+        },
+        {
+          "id": "leading-tone-voice",
+          "name": "Leading Tone Voice"
+        },
+        {
+          "id": "common-tone-voice",
+          "name": "Common Tone Voice"
+        },
+        {
+          "id": "chromatic-approach-voice",
+          "name": "Chromatic Approach Voice"
+        },
+        {
+          "id": "soprano-voice",
+          "name": "Soprano / Top Note Voice"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "leading-tone-resolution",
+          "name": "Leading-Tone Resolution (V7 to I)",
+          "summary": "The 3rd of V7 moves up by half-step to the root of I.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Leading-tone resolution",
+              "quote_excerpt": "The 3rd of the V7 chord moves up to the root of the I chord",
+              "page": 69
+            }
+          ]
+        },
+        {
+          "id": "common-tone-smoothing",
+          "name": "Common-Tone Smoothing",
+          "summary": "Retaining shared tones across adjacent chords smooths transitions.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Common tones smooth resolutions",
+              "quote_excerpt": "common tones on top of some of these chords. This is one aid to smooth chord resolutions",
+              "page": 61
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Common tones smooth modulations",
+              "quote_excerpt": "COMMON TONES on the top notes will sometimes help smooth out the transitions",
+              "page": 67
+            }
+          ]
+        },
+        {
+          "id": "chromatic-approach-voice-motion",
+          "name": "Chromatic Approach Chord Motion",
+          "summary": "A chord a half-step above or below the target is acceptable when supported by good voice leading.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Half-step approach chord rule",
+              "quote_excerpt": "Using a chord 1/2 step above or below the next chord is acceptable if good voice leading",
+              "page": 71
+            }
+          ]
+        },
+        {
+          "id": "ii-v-i-motion",
+          "name": "ii-V-I Cycle Motion",
+          "summary": "A m7 followed by dominant a 4th higher is the standard ii-V approach.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Dominant follows m7 by 4th higher",
+              "quote_excerpt": "following a minor 7th type chord a dominant chord whose root is a 4th higher",
+              "page": 71
+            },
+            {
+              "chapter_n": 12,
+              "topic": "ii-V smooths modulation",
+              "quote_excerpt": "smooth transition can be achieved if the new key is preceded by a IIm7 V7 progression",
+              "page": 65
+            }
+          ]
+        },
+        {
+          "id": "mmaj7-to-m7-voice-motion",
+          "name": "m(maj7) to m7 Voice-Leading Step",
+          "summary": "Major-7 tone in m(maj7) moves one fret up or down into a root or b7 tone.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "m(maj7) 7-tone voice leading rule",
+              "quote_excerpt": "the 7 TONE SHOULD MOVE UP 1 FRET or DOWN 1 FRET INTO A ROOT OR b7 TONE",
+              "page": 74
+            }
+          ]
+        },
+        {
+          "id": "back-cycling-motion",
+          "name": "Back-Cycling Motion",
+          "summary": "Precede any chord with its V7 (one step) or V and V-of-V (two steps) for voice-leading momentum.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Back-cycling defined",
+              "quote_excerpt": "putting in V chords right before another chord will be called back-cycling",
+              "page": 78
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Back-cycling two-chord rule",
+              "quote_excerpt": "if you go back 2 chords from any chord, you get the V and the V OF THE V",
+              "page": 79
+            }
+          ]
+        },
+        {
+          "id": "dominant-3fret-cycle-motion",
+          "name": "Dominant 3-Fret Cycle Motion",
+          "summary": "Any dominant chord may move in 3-fret intervals as long as the final chord resolves correctly.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Dominant 3-fret motion rule",
+              "quote_excerpt": "Almost any dominant type chord can be moved in intervals of 3 frets",
+              "page": 63
+            }
+          ]
+        },
+        {
+          "id": "altered-dominant-2fret-motion",
+          "name": "Altered Dominant 2-Fret Motion",
+          "summary": "Dominants with 5ths/#5ths may move in 2-fret intervals while still resolving.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Altered dominant 2-fret motion",
+              "quote_excerpt": "Dominant chords that have 5ths and/or #5ths may be used in 2 FRET INTERVALS effectively",
+              "page": 63
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "fifth-omission-strong-vl",
+          "name": "Fifth Omission When Voice Leading Is Strong",
+          "summary": "The 5th of a I chord may be omitted when the voice leading is strong.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "5th omission justified by voice leading",
+              "quote_excerpt": "leaving out the 5th in a I chord is acceptable",
+              "page": 69
+            }
+          ]
+        },
+        {
+          "id": "major7-from-double-root",
+          "name": "Major 7th from Double-Root Lowering",
+          "summary": "Lowering one root in a major chord with two roots yields a major 7th chord.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Major 7 = major minus one root",
+              "quote_excerpt": "if you lower ONE root in a major chord that has TWO roots, you will get a major 7th chord",
+              "page": 71
+            }
+          ]
+        },
+        {
+          "id": "melody-on-top-requirement",
+          "name": "Melody-on-Top Requirement (Chord Melody)",
+          "summary": "In chord melody, the melody must always sit above the chord voicing.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 14,
+              "topic": "Melody on top",
+              "quote_excerpt": "the melody is always played ABOVE the chord",
+              "page": 75
+            }
+          ]
+        },
+        {
+          "id": "altered-i7-no-song-opening",
+          "name": "No Altered I7 at Song Opening (Except 7#9)",
+          "summary": "Altered I7 chords should not open a song; 7#9 is the only exception.",
+          "engine_payload": {
+            "kind": "_pending:tonic-opening-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Don't start a song with altered I7",
+              "quote_excerpt": "you couldn't always replace a I7 at the beginning of a song with an altered chord",
+              "page": 58
+            },
+            {
+              "chapter_n": 11,
+              "topic": "+11 cannot start a song",
+              "quote_excerpt": "the +11 does not assume a tonic function",
+              "page": 61
+            }
+          ]
+        },
+        {
+          "id": "lowering-3rd-b7-yields-iv9",
+          "name": "Lowering 3rd and b7 to Generate IV9 (Rock)",
+          "summary": "Taking any dominant and lowering its 3rd and b7 by one fret each produces a 9th chord on the IV.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 20,
+              "topic": "Lowering 3rd and b7th yields IV9",
+              "quote_excerpt": "if you take any 7th chord and lower the 3rd and 7th 1 fret each, you will get a 9th chord built on the IV",
+              "page": 106
+            },
+            {
+              "chapter_n": 20,
+              "topic": "Progressive lowering through cycle",
+              "quote_excerpt": "you may progressively lower the 3rd and b7th, one fret at a time",
+              "page": 106
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ted-greene:greene-chord-chemistry:substitution-cycle",
+      "name": "Substitution and Cycle-of-Fourths System",
+      "summary": "How chords are substituted for one another and how harmonic motion through the cycle of 4ths/5ths creates momentum and modulation. Dominant 7 is the engine; tritone substitution is the master rule.",
+      "members": [
+        {
+          "id": "tonic-chord",
+          "name": "Tonic Chord (I / Im)"
+        },
+        {
+          "id": "dominant-chord",
+          "name": "Dominant Chord (V7 and altered)"
+        },
+        {
+          "id": "subdominant-chord",
+          "name": "Subdominant Chord (IV / ii)"
+        },
+        {
+          "id": "tritone-substitute",
+          "name": "Tritone Substitute Dominant"
+        },
+        {
+          "id": "secondary-dominant",
+          "name": "Secondary Dominant (V7-of-X)"
+        },
+        {
+          "id": "chord-synonym",
+          "name": "Chord Synonym"
+        },
+        {
+          "id": "passing-chord",
+          "name": "Passing Chord"
+        },
+        {
+          "id": "turnaround-series",
+          "name": "Turnaround Series"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tritone-substitution-traversal",
+          "name": "Tritone Substitution Traversal",
+          "summary": "Any dominant may be replaced by the dominant a tritone away.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Dominants a 5th apart relation",
+              "quote_excerpt": "all dominant chords a 5th apart are related",
+              "page": 61
+            },
+            {
+              "chapter_n": 15,
+              "topic": "Tritone back-cycle",
+              "quote_excerpt": "use chords a b5th higher than those in the cycle if you like the sound",
+              "page": 79
+            }
+          ]
+        },
+        {
+          "id": "cycle-4ths-dominant-motion",
+          "name": "Cycle-of-Fourths Dominant Motion",
+          "summary": "Dominants move through the cycle of 4ths/5ths; each resolves to a chord a 4th higher.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Cycle of 4ths/5ths foundation",
+              "quote_excerpt": "One key for understanding these patterns is the cycle of 4ths",
+              "page": 65
+            },
+            {
+              "chapter_n": 12,
+              "topic": "V7 function defined",
+              "quote_excerpt": "When dominant chords are used as the V7 of the key or THE V7 of a V7",
+              "page": 67
+            }
+          ]
+        },
+        {
+          "id": "duration-splitting-ii-v",
+          "name": "Duration-Splitting ii-V Interpolation",
+          "summary": "Play a m7 a 5th above for part of a dominant's duration, then resolve to the dominant.",
+          "engine_payload": {
+            "kind": "_pending:duration-split-substitution"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "m7 5th-higher substitution",
+              "quote_excerpt": "you may play a m7 type chord whose root is a 5th higher than the dominant",
+              "page": 58
+            }
+          ]
+        },
+        {
+          "id": "half-bar-dominant-insertion",
+          "name": "Half-Bar Dominant Insertion",
+          "summary": "When a chord is followed by another a 4th higher, split first chord and insert dominant on its root for second half.",
+          "engine_payload": {
+            "kind": "_pending:duration-split-substitution"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Tritone-sub / half-bar dominant interpolation",
+              "quote_excerpt": "you may divide the duration of the 1st chord in 1/2 and play a dominant chord with the same root",
+              "page": 59
+            }
+          ]
+        },
+        {
+          "id": "vii-dim-as-rootless-v7",
+          "name": "vii\u00b0 as Rootless V7 Substitution",
+          "summary": "The diminished triad on the 7th degree functions as a rootless V7.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "vii\u00b0 = V7 (no root)",
+              "quote_excerpt": "VII diminished triad sounds like a dominant 7th chord whose root is 2 whole steps lower",
+              "page": 86
+            }
+          ]
+        },
+        {
+          "id": "synonym-substitution",
+          "name": "Chord Synonym Substitution",
+          "summary": "Chords with identical tones are interchangeable.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Synonyms support substitution",
+              "quote_excerpt": "knowing chord synonyms is that you can use them to come up with substitute chords",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "scale-fragment-substitution",
+          "name": "Scale-Fragment Substitution",
+          "summary": "A fragment of diatonic harmonies may substitute for a single chord; the ending chord must align with the replaced one.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 19,
+              "topic": "Scale-fragment substitution",
+              "quote_excerpt": "widely used concept of playing a fragment of the fundamental harmonies of a scale",
+              "page": 103
+            },
+            {
+              "chapter_n": 19,
+              "topic": "Fragment ending chord matters",
+              "quote_excerpt": "the starting chord is not that important, but the ending chord is very important",
+              "page": 103
+            }
+          ]
+        },
+        {
+          "id": "resolving-diminished-substitution",
+          "name": "Resolving Diminished Substitution",
+          "summary": "Three notes of a diminished 7 one fret above V7's root combined with tonic root replaces V7.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 20,
+              "topic": "Resolving diminished construction",
+              "quote_excerpt": "any 3 notes of a diminished 7th chord whose root is one fret higher than the V7",
+              "page": 106
+            },
+            {
+              "chapter_n": 20,
+              "topic": "Resolving Diminished defined",
+              "quote_excerpt": "This chord will now replace the V7 chord, and will be called a RESOLVING DIMINISHED CHORD",
+              "page": 106
+            }
+          ]
+        },
+        {
+          "id": "diminished-passing-chord",
+          "name": "Diminished Passing Chord Motion",
+          "summary": "Diminished 7 chords (every 3 frets) and #IVo pass between structural chords.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Diminished as passing chords",
+              "quote_excerpt": "Diminished chords are used as 'passing' chords usually",
+              "page": 62
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Diminished repeats every 3 frets",
+              "quote_excerpt": "any form of the diminished chord repeats itself every 3 frets",
+              "page": 62
+            },
+            {
+              "chapter_n": 19,
+              "topic": "#IV\u00b0 passing chord",
+              "quote_excerpt": "often a #IV\u00b0 is used as a passing chord following a IV or IV7 type chord",
+              "page": 97
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "m6-avoidance-ii-v",
+          "name": "m6 Avoidance in ii-V Context",
+          "summary": "m6 should not be used on a minor chord followed by a dominant a 4th higher.",
+          "engine_payload": {
+            "kind": "_pending:harmonic-conflict-avoidance"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "m6 + dominant-4th-higher conflict",
+              "quote_excerpt": "Minor 6th type chords usually should not be used for a minor chord that is followed by a dominant chord a 4th higher",
+              "page": 61
+            }
+          ]
+        },
+        {
+          "id": "altered-minor-restriction",
+          "name": "Altered Minor Restriction to m7b5",
+          "summary": "The only widely used altered minor chord is m7b5.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "m7b5 sole altered minor",
+              "quote_excerpt": "The only altered minor chord that is widely used is the m7b5 type",
+              "page": 61
+            }
+          ]
+        },
+        {
+          "id": "11b9-restricted-to-v7",
+          "name": "11b9 Reserved for Authentic V7 Function",
+          "summary": "11b9 is used only for V7 of a key.",
+          "engine_payload": {
+            "kind": "_pending:function-restriction"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "11b9 used only for V7",
+              "quote_excerpt": "The 11b9 chords are usually used for the V7 chord of a key, but not often for others",
+              "page": 64
+            }
+          ]
+        },
+        {
+          "id": "turnaround-cadence-v7",
+          "name": "Turnaround Must Cadence on V7",
+          "summary": "Last chord of a turnaround must be V7 type or its b5 voicing.",
+          "engine_payload": {
+            "kind": "_pending:cadential-endpoint-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 19,
+              "topic": "Turnaround ends on V7",
+              "quote_excerpt": "The last chord of a turnaround is almost always a V7 type or its b5",
+              "page": 98
+            }
+          ]
+        },
+        {
+          "id": "dom-sus-as-partial-v7",
+          "name": "Dominant Sus as Partial or Full V7 Replacement",
+          "summary": "Sus dominants may share duration with V7 or stand alone as a full substitute when unresolved.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Dom sus partial replacement",
+              "quote_excerpt": "Dominant suspended chords are usually used as partial replacements for dominant 7th chords",
+              "page": 62
+            },
+            {
+              "chapter_n": 11,
+              "topic": "Unresolved sus substitution",
+              "quote_excerpt": "Sometimes suspended chords are left unresolved",
+              "page": 62
+            }
+          ]
+        },
+        {
+          "id": "9b5-preferred-over-plus11",
+          "name": "9b5 Preferred Over +11",
+          "summary": "9b5 is more common than +11 as altered dominant; less muddy sound.",
+          "engine_payload": {
+            "kind": "_pending:alteration-preference"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "9b5 preferred over +11",
+              "quote_excerpt": "It is actually more common to play a 9b5 than a +11",
+              "page": 61
+            },
+            {
+              "chapter_n": 8,
+              "topic": "9b5 preferred over 9#5b5",
+              "quote_excerpt": "9b5's have a less muddy sound and are more easily used",
+              "page": 52
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ted-greene:greene-chord-chemistry:fingerboard-geography",
+      "name": "Fingerboard Geography and Navigation System",
+      "summary": "The foundational spatial system mapping theoretical knowledge onto the physical guitar neck via two sets of reference points and 1st/6th string symmetry.",
+      "members": [
+        {
+          "id": "open-strings",
+          "name": "Open Strings (E A D G B E)"
+        },
+        {
+          "id": "first-reference-points",
+          "name": "1st Reference Points (5th Fret / 4th Fret for String 3)"
+        },
+        {
+          "id": "second-reference-points",
+          "name": "2nd Reference Points (12th Fret)"
+        },
+        {
+          "id": "string-symmetry-axis",
+          "name": "1st / 6th String Symmetry Axis"
+        },
+        {
+          "id": "moveable-chord-shape",
+          "name": "Moveable Chord Shape"
+        },
+        {
+          "id": "physically-related-chord-group",
+          "name": "Physically Related Chord Group"
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "reference-point-navigation",
+          "name": "Two-Reference-Point Navigation",
+          "summary": "Find any note by identifying which reference point is alphabetically closer and counting from it.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "finding notes using reference points",
+              "quote_excerpt": "ask yourself if F# is closer to A or E in the alphabet",
+              "page": 5
+            },
+            {
+              "chapter_n": 2,
+              "topic": "1st reference points (5th fret)",
+              "quote_excerpt": "on the 5th fret are the same as the open string notes on the next higher string",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "string-symmetry-traversal",
+          "name": "1st/6th String Symmetry Traversal",
+          "summary": "Notes on the 6th string apply identically to the 1st string at the same fret.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "1st and 6th string symmetry rule",
+              "quote_excerpt": "notes on the 1st and 6th strings are always the same letter names on identical frets",
+              "page": 5
+            }
+          ]
+        },
+        {
+          "id": "moveable-shape-transposition",
+          "name": "Moveable Shape Transposition",
+          "summary": "Any non-open shape transposes to any key by sliding frets.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 2,
+              "topic": "chord chart key choice and transposition",
+              "quote_excerpt": "they are all moveable to other keys; to play a C6 you could raise an A6 3 frets",
+              "page": 6
+            }
+          ]
+        },
+        {
+          "id": "physical-proximity-grouping",
+          "name": "Physical Proximity Chord Grouping",
+          "summary": "Memorize voicings by spatial clusters; learn physically related chords together.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Look for physically related chords",
+              "quote_excerpt": "try to look for chords that are closely related physically",
+              "page": 13
+            },
+            {
+              "chapter_n": 7,
+              "topic": "Physical relation aids memorization",
+              "quote_excerpt": "If you can relate to chords in this manner, it",
+              "page": 13
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "augmented-symmetry-naming",
+          "name": "Augmented 4-Fret Symmetry (Three Names)",
+          "summary": "Augmented chords repeat every 4 frets; each form has three enharmonic names.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Augmented symmetry",
+              "quote_excerpt": "Augmented chords repeat every 4 frets",
+              "page": 52
+            },
+            {
+              "chapter_n": 12,
+              "topic": "Augmented symmetry parallels diminished",
+              "quote_excerpt": "Augmented chords repeat themselves every 4 frets the same way diminished chords repeat every 3 frets",
+              "page": 63
+            }
+          ]
+        },
+        {
+          "id": "diminished-symmetry-naming",
+          "name": "Diminished 3-Fret Symmetry (Four Names)",
+          "summary": "Diminished 7 chords repeat every 3 frets; each form has four enharmonic names.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Diminished repeats every 3 frets",
+              "quote_excerpt": "any form of the diminished chord repeats itself every 3 frets",
+              "page": 62
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

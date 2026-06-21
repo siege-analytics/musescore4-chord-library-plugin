@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch24",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 24: Practical Use of Pedal Point\nPages 40-40 of the book.\n\n<<<CHAPTER TEXT\n\nLESSON 24\n\nPractical use of Pedal Point\n\nExercises 57 and 59 are not practical for playing in public. They were used to dem-\nonstrate the sound and feel of Pedal Point.\n\nPedal Point must be distributed according to the size of the unit or combo with which you\nare working. In most cases, the bass plays the Pedal Point while the piano or guitar plays\n\nthe chord variations.\n\nExercises 60 and 61 illustrate the first few bars of an arrangement with the bass playing\nPedal Point, the guitar playing the chord variations and the voiceor solo instrument carry-\ning the melody of the song. These are the same introductions used in exercises 58 and 59\n\nof lesson 23.\n\nPedal Point may also be used at the Cadence Breaks and endings.\n\nEx. 60\nSlowly '\nVoice (or Solo Instrument) ; etc.\n; 6 = \u2014 = x {\nA. ~. m Ef\n(eo\nGuitar b ete\nrN b - .\n6? bE \u20ac -\u00bb o__e\nlh. 1\n+\npt A +\n\u20ac T\nBass etc.\nSee a ee ee \u2018a -\u00bb\n2 - ee\nCt =o \u2014\u2014\u2014\u2014\u2014 \u2014\u2014 }\nPedal Point\nEx. 61\nSlowly\n41 Voice (or Solo Instrument)\nars\nuF 4\nGuitar\nhi \u2014 \u2014 \u2014~\nyas + |\n5 = mes\nVi a Vy |\nBass\n>>> >> oN, >> >P~ >>>\n= ===\na\n\nPedal Point\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 24 extraction"
+}

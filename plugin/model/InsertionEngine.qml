@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import "Transposer.js" as Transposer
+import "DebugLog.js" as DebugLog
 
 // InsertionEngine.qml — Diagram insertion and voicing playback.
 // Extracted from ChordLibrary.qml (B4, #103).
@@ -133,11 +134,11 @@ Item {
             var fd = pluginRef.newElement(Element.FRET_DIAGRAM)
             _hasSetDot = (typeof fd.setDot === "function")
             if (_hasSetDot)
-                console.log("setDot() API detected — using direct insertion")
+                DebugLog.log("setDot() API detected — using direct insertion")
             else
-                console.log("setDot() not available — using clipboard workaround")
+                DebugLog.log("setDot() not available — using clipboard workaround")
         } catch (e) {
-            console.log("Could not probe setDot(): " + e)
+            DebugLog.warn("Could not probe setDot(): " + e)
             _hasSetDot = false
         }
         return _hasSetDot
@@ -183,7 +184,7 @@ Item {
             return true
         } catch (e) {
             try { curScore.endCmd() } catch (ignore) {}
-            console.log("setDot() insert failed: " + e + " — falling back to clipboard")
+            DebugLog.log("setDot() insert failed: " + e + " — falling back to clipboard")
             _hasSetDot = null
             return false
         }
@@ -278,7 +279,7 @@ Item {
         try {
             if (audioFile) audioFile.write(request)
         } catch (e) {
-            console.log("Audio playback failed: " + e)
+            DebugLog.warn("Audio playback failed: " + e)
         }
     }
 }

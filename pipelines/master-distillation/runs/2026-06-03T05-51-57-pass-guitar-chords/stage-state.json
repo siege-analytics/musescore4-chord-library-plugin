@@ -1,0 +1,69 @@
+{
+  "run_id": "2026-06-03T05-51-57-pass-guitar-chords",
+  "config": "pipelines/master-distillation/configs/pass-guitar-chords.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-06-03T05-51-57+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-06-03T05-51-57-pass-guitar-chords/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-06-03T05-51-57-pass-guitar-chords/pages.json",
+        "re-ingested: 26 pages, 15,996 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-06-03T05:55:31+00:00",
+      "ended_at": "2026-06-03T05:55:31+00:00",
+      "outputs": [
+        "detected 2 chapter(s)",
+        "pipelines/master-distillation/runs/2026-06-03T05-51-57-pass-guitar-chords/chapter-bounds.json",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/chapters/ch01.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/chapters/ch02.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-06-03T05:57:59+00:00",
+      "ended_at": "2026-06-03T05:57:59+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/guitar-chords-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-06-03T06:02:36+00:00",
+      "ended_at": "2026-06-03T06:02:36+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/derived/systems-draft.json",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/derived/STATEMENT.md",
+        "derived 2 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-06-16T13:34:16+00:00",
+      "ended_at": "2026-06-16T13:34:16+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/joe-pass/guitar-chords/derived/PRESCRIPTIVE.md",
+        "extracted 13 prescriptive lesson(s) across 8 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}

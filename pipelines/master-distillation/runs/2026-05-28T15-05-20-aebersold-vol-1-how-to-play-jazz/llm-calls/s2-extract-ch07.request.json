@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Music Fundamentals For Improvising\nPages 25-27 of the book.\n\n<<<CHAPTER TEXT\n\n6.\n\n9.\n\nSTARTING A PHRASE OR MELODY\n\nGive some thought to the following ideas. Be prepared - let your mind guide you.\n\nListen to yourself.\n\n. At what part of your instrument will you begin your idea? Middle register, high, low?\n\nHow do you want to begin? Slowly, with held notes and use of space/rest? Quickly, with lots of\nnotes, attention, motion, or visibility? Moderately so as to take your time and suggest a searching\nmood?\n\nWhat note of scale or chord do you want to begin with?\n\nOnce you begin, do you want to ascend, descend, or stay in one general register?\n\nDo you want to use pick-ups? One, or more? If so, make sure they lead to the first strong beat!\nThe strong beats are beats 1 and 3.\n\nOnce you've begun your phrase, how long are you prepared to maintain your continuity, thoughts,\nideas? One measure, two, four, eight? Have you thought about it?\n\n. What rhythm are you going to play initially? Does your mind already \"HEAR\" the notes/pitches\n\nin rhythm? Can you actually play them? Remember, your first phrase represents the first several\nwords or idea of a sentence. Think clearly before you begin.\n\nChord tones (1,3,5 ) are good notes to begin a phrase with. Know where they are on your\ninstrument.\n\nIs your initial idea coming from your mind or is it something that your fingers have picked out?\n\n10. Windplayers...be sure you've taken a good deep breath BEFORE you start each phrase. You\n\nneed to SUPPORT the tone in order to effectively carry your musical thoughts to the mind\nof another. Think SOUND.\n\n11. Make sure you know where the beginning of the chorus is. Aim for it.\n\nThe jazz musician has always taken liberties with the melodies to songs. They personalize the\nactual melody and alter the rhythms as they follow the dictates of their mind.\n\n24\n\n\nMUSIC FUNDAMENTALS TO KEEP IN MIND\n\nWHEN IMPROVISING\n\nUse full range of instrument\n\nEmphasize certain notes of a scale or a chord\nListen to your own sound - do you like it?\nUse narrow intervals (chromatic passages)\nUse wide intervals (leaps)\n\nBe PATIENT with yourself\n\nBe patient with fellow musicians\n\n8th and 16th notes build tension\n\nRests, whole and half-notes create relaxation\nChordal passages\n\nArpeggios\n\nStaccato (a la Sonny Rollins)\n\nListen to others\n\nDon't overplay\n\nSequences\n\n- You should use variety above all else, but not too much.\n\nKeep the interested listener in mind.\n\nDynamics - loud & soft & in-between\nTension - Release\n\nAccents\n\nSlurs\n\nHeld Notes\n\nShakes\n\nScale Passages\n\nTrills\n\nUse Rest (space). Silence can be beautiful.\nVibrato\n\nRepetition (of anything)\n\nGlissandos\n\nVary your rhythms\n\nThink in terms of BUILDING a solo\nUse your MIND\n\n1\n\n2\n\n3. The pretty notes for major and dominant 7th chords/scales are the 6,7,9, and #4.\n\n4. The pretty notes for minor chords/scales are 4,6,7, and 9th. These notes create tension and should\nbe used in the over-all tension-release process.\n\n(Don 't play everything you know in every solo. >)\n\nWHAT DOES \"TO HEAR\" REALLY MEAN?\n\nTo hear is more than just an aural experience.\n\nNR\n\n. To Hear gives confidence in performance, practicing, teaching, composing and life in general.\n- To Hear gives more enjoyment as a listener. You hear at a deeper level of appreciation and\nunderstanding and this level grows as the years pass!\n\n3. To Hear will earn you appreciation as teacher/performer because your playing and your\nteaching/coaching will reflect your EAR'S knowledge. You'll say and play things which reflect\nyour knowledge and this can be extremely helpful to others in their musical quest.\n\n4. To Hear instills independence. It helps dispell the \"myths\" of jazz and open one's creative\n\nchannels. To Hear removes burdens and barriers.\n- To Hear makes one feel worthy of being part of the whole. It provides a certain amount of\n\nma\n\nsecurity and confidence which allows us to approach with assurance the springboard of one's\n\"inner music.\" To Hear removes insecurity and allows the mind to function properly in its\n\nnatural state.\n\n6. \"To Hear\" ultimately means freedom! Listen to yourself. Your inner self.\n\n(| Work on your ears. They can already hear music but they can't discern what's happening. )\n\n25\n\n\nPRACTICE PROCEDURE FOR MEMORIZING SCALES\nAND CHORDS TO ANY SONG\n\n1. Play Ist note, root/tonic note of each chord/scale\n2. Play first 2 notes of each scale\n3. Play first 3 notes of each scale\n4. Play first five notes of each scale\n5. Play triad (1, 3 and 5 of the scale)\n6. Play 7th chords (1, 3, 5 and 7th tones of each scale)\n7. Play 9th chords (1, 3, 5, 7 and 9th tones of each scale)\n8. Play the entire scale up and down\n9. Play 6th chords (1, 3, 5 and 6th tones of the scale)\n10. Play up scale to the 9th and back down the chord tones\n11. Play up 9th chord and then come back down the scale\n12. Play scale in broken thirds up and down. (1,3,2,4,3,5,4,6,5,7,6,8,7,9,8 then backwards)\nIf you were to use the above procedure for the 12-bar blues you would need 12 choruses to\ncomplete all twelve exercises. By the twelfth chorus your mind will be HEARING the chord/scale\nprogression in advance. Your fingers will begin to go to the right notes automatically, almost\n\nwithout having to tell them.\n\nNumbers 10, 11, and 12 will have to be altered or played very fast to fit them into the blues\nprogression. Usually I practice them without the recording first, to gain facility.\n\nAfter you get good enough, you won't have to go through this type procedure on every song. Your\nmind will be accustomed to the scales and chords and your sub-conscious mind will direct your\nfingers via your imagination. It really works but you have to do a certain amount of \"homework\"\nfirst. Listening to jazz, good jazz, can cut down on the time it takes to produce satisfying results.\n\nLearn the rules, then you get to break them.\nBe sure you learn them well or when you break them, others will think you never knew them.\n\nPlay \"drop the needle\" or \"raise the laser\" on the play-a-long recording.\nTry to figure out which track is playing just by listening. Surprise yourself.\n\n26\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}
