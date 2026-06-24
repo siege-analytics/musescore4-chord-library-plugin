@@ -970,6 +970,38 @@ MuseScore {
         return (_modesById && _modesById[activeMode]) ? _modesById[activeMode] : null
     }
 
+    // #586: persisted toggle for the "Why this voicing?" explanation surface
+    // (DataCache default true; settings-panel toggle is v1b follow-up).
+    property bool enableExplanationText: true
+
+    // #586: explanation-context accessor — produces the {mode, style, rule}
+    // shape ExplanationFormatter.format() consumes. v1 only populates mode/style;
+    // rule is always null (no plugin-runtime engine_rules consumption yet).
+    function currentExplanationContext() {
+        var modeCfg = currentModeConfig()
+        var mode = modeCfg ? {
+            id: activeMode,
+            name: modeCfg.name || activeMode,
+            description: modeCfg.description || ""
+        } : null
+
+        var style = null
+        if (_activeProfileId) {
+            for (var i = 0; i < _profileList.length; i++) {
+                var p = _profileList[i]
+                if (p.id === _activeProfileId) {
+                    style = {
+                        id: p.id,
+                        name: p.name || p.id,
+                        description: p.description || ""
+                    }
+                    break
+                }
+            }
+        }
+        return { mode: mode, style: style, rule: null }
+    }
+
     // Reset a built-in tuning's label + pitches to the factory defaults. Rereads
     // the bundled tuning JSON from the plugin's own tunings/ dir (the one deploy.sh
     // overwrites) and applies it.
@@ -1496,6 +1528,10 @@ MuseScore {
             if (typeof s.activeMasterId === "string") {
                 activeMasterId = s.activeMasterId
             }
+            // #586 — round-trip the explanation-text toggle
+            if (typeof s.enableExplanationText === "boolean") {
+                enableExplanationText = s.enableExplanationText
+            }
             refreshFilteredTunings()
             console.log("Settings loaded: placement=" + diagramPlacement + ", tuning=" + selectedTuning + ", context=" + filterContext + ", profile=" + (s.activeProfile || "default"))
         } catch (e) {
@@ -1523,6 +1559,7 @@ MuseScore {
             scoreSections: scoreSections,
             userVoicingOverrides: userVoicingOverrides,  // #210 Stage 2
             activeMasterId: activeMasterId,              // #222 Track 3
+            enableExplanationText: enableExplanationText, // #586
         }
         settingsFile.write(DataCache.serializeSettings(s))
         console.log("Settings saved")
@@ -3212,6 +3249,8 @@ MuseScore {
             tuningListModel: tuningList.slice()
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
+            // #586 v1b — explanation surface toggle
+            enableExplanationText: chordLibrary.enableExplanationText
             // #210 Stage 2 — voicing exclusion engine surface
             effectiveVoicingTolerances: ExclusionEngine.resolveTolerances(
                 chordLibrary.voicingToleranceMap,
@@ -3385,6 +3424,11 @@ MuseScore {
 
             onPlacementChanged: function(placement) {
                 diagramPlacement = placement
+                saveSettings()
+            }
+            // #586 v1b
+            onExplanationTextToggled: function(enabled) {
+                chordLibrary.enableExplanationText = enabled
                 saveSettings()
             }
             onEditTuningRequested: function(slug) { editTuning(slug) }
@@ -3568,6 +3612,10 @@ MuseScore {
             activeMode: chordLibrary.activeMode
             modeIdList: ["chord-melody", "comping", "solo-guitar", "duo"]
             modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
+            // #586 — explanation surface inputs
+            explanationContext: chordLibrary.currentExplanationContext()
+            enableExplanationText: chordLibrary.enableExplanationText
+            theme: chordLibrary.theme
             onSectionsChanged: function(sections) {
                 chordLibrary.scoreSections = sections
                 chordLibrary.saveSettings()
@@ -3633,6 +3681,10 @@ MuseScore {
             visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            // #586 v1b — explanation surface inputs
+            explanationContext: chordLibrary.currentExplanationContext()
+            enableExplanationText: chordLibrary.enableExplanationText
 
             filteredData: chordLibrary.filteredData
             voicingsData: chordLibrary.voicingsData

@@ -5,6 +5,7 @@ import "../model/MelodyEngine.js" as MelodyEngine
 import "../model/Transposer.js" as Transposer
 import "../model/ReharmonizationEngine.js" as Reharm
 import "../model/ChordScales.js" as ChordScales
+import "../model/ExplanationFormatter.js" as ExplanationFormatter
 
 // Voice Score walkthrough overlay panel.
 // Displays the guided per-chord voicing workflow with melody/category overrides.
@@ -75,6 +76,13 @@ ColumnLayout {
     property var modeDisplayList: ["Chord Melody", "Comping", "Solo Guitar", "Duo"]
     property string activeMode: "chord-melody"
     property bool sectionsEditorOpen: false
+
+    // #586 — explanation surface. Parent passes the {mode, style, rule} context
+    // (currentExplanationContext) + the user toggle. v1 ships Style/Mode-driven
+    // text; rule path is reserved for v2.
+    property var explanationContext: null  // {mode, style, rule} or null
+    property bool enableExplanationText: true
+    property var theme: null  // bound from parent so Explanation.qml inherits theming
 
     // Resolve which mode the given chord index sits in
     function _modeForChord(idx) {
@@ -531,6 +539,20 @@ ColumnLayout {
                 font.pixelSize: 10
                 font.family: "Menlo, Monaco, monospace"
                 color: "#aaa"
+            }
+
+            // #586 — "Why this voicing?" explanation block (Walkthrough surface).
+            // v1: Style/Mode-driven text from ExplanationFormatter. v2 will swap
+            // in rule-driven citations from engine_rules without changing this surface.
+            Explanation {
+                Layout.fillWidth: true
+                visible: currentItem !== null && walkthroughPanel.enableExplanationText
+                theme: walkthroughPanel.theme
+                displayMode: "full"
+                enabledSurface: walkthroughPanel.enableExplanationText
+                formatted: walkthroughPanel.explanationContext
+                    ? ExplanationFormatter.format(walkthroughPanel.explanationContext)
+                    : null
             }
 
             // Color legend for fretboard dot intervals

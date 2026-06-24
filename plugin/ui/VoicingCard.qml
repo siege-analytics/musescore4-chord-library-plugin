@@ -1,16 +1,20 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "../model/ExplanationFormatter.js" as ExplanationFormatter
 
 Rectangle {
     id: card
-    height: 80
+    height: explanation.visible ? 96 : 80   // +16px when explanation surface enabled
     radius: 4
     color: mouseArea.containsMouse ? theme.cardHover : theme.cardBackground
     border.color: theme.cardBorder
     border.width: 1
 
     property var voicing: ({})
+    // #586 v1b — explanation surface inputs (passed from parent / ChordLibrary)
+    property var explanationContext: null
+    property bool enableExplanationText: true
     signal doubleClicked(var voicing)
     signal compareClicked(var voicing)
 
@@ -146,6 +150,19 @@ Rectangle {
                 color: theme.textFaint
                 elide: Text.ElideRight
                 Layout.fillWidth: true
+            }
+
+            // #586 v1b — compact explanation surface ("Comping · Bebop — accompaniment…")
+            Explanation {
+                id: explanation
+                Layout.fillWidth: true
+                visible: card.enableExplanationText && card.explanationContext !== null && formatted !== null
+                theme: theme   // resolves through QML parent scope
+                displayMode: "compact"
+                enabledSurface: card.enableExplanationText
+                formatted: card.explanationContext
+                    ? ExplanationFormatter.format(card.explanationContext)
+                    : null
             }
         }
     }

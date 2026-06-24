@@ -39,7 +39,12 @@ function parseSettings(rawJson) {
         calcRootInBass: true,
         calcMinNotes: 3,
         calcMaxMuted: 3,
-        calcMaxPerQuality: 0
+        calcMaxPerQuality: 0,
+        // #586: surfaces a "Why this voicing?" explanation next to every voicing
+        // in Walkthrough + Library card. Default true honors the
+        // "lessons in everything" framing; the settings-panel toggle (v1b
+        // follow-up) lets expert users disable.
+        enableExplanationText: true
     }
     if (!rawJson || rawJson.length === 0) return defaults
     try {
@@ -56,7 +61,8 @@ function parseSettings(rawJson) {
             calcRootInBass: s.calcRootInBass !== undefined ? s.calcRootInBass : defaults.calcRootInBass,
             calcMinNotes: s.calcMinNotes !== undefined ? s.calcMinNotes : defaults.calcMinNotes,
             calcMaxMuted: s.calcMaxMuted !== undefined ? s.calcMaxMuted : defaults.calcMaxMuted,
-            calcMaxPerQuality: s.calcMaxPerQuality !== undefined ? s.calcMaxPerQuality : defaults.calcMaxPerQuality
+            calcMaxPerQuality: s.calcMaxPerQuality !== undefined ? s.calcMaxPerQuality : defaults.calcMaxPerQuality,
+            enableExplanationText: s.enableExplanationText !== undefined ? s.enableExplanationText : defaults.enableExplanationText
         }
     } catch (e) {
         return defaults
