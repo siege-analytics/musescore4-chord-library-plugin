@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "../model/ExplanationFormatter.js" as ExplanationFormatter
 
 // LibraryPanel.qml — Library tab UI (Tab 0) for the Chord Library plugin.
 // Extracted from ChordLibrary.qml (A6, #99).
@@ -20,6 +21,10 @@ import QtQuick.Layouts 1.15
 
 Item {
     id: libraryPanel
+
+    // #586 v1b — explanation surface inputs (from ChordLibrary)
+    property var explanationContext: null
+    property bool enableExplanationText: true
 
     // --- Input properties (data) ---
     property var filteredData: []
@@ -463,13 +468,19 @@ Item {
 
             delegate: Rectangle {
                 width: voicingList.width
-                height: 100
+                // #586 v1b — bump height +16px when explanation surface enabled
+                height: libraryPanel.enableExplanationText && libraryPanel.explanationContext ? 116 : 100
                 radius: 4
                 color: ma.containsMouse ? theme.chipHover : theme.chipBackground
                 border.color: theme.divider
                 border.width: 1
 
                 property var v: modelData || {}
+                // #586 v1b — formatted explanation for this card. Computed once per
+                // delegate instance; context comes from libraryPanel (passed by ChordLibrary).
+                property var _explanationFormatted: libraryPanel.explanationContext
+                    ? ExplanationFormatter.format(libraryPanel.explanationContext)
+                    : null
                 onVChanged: if (fretCanvas) fretCanvas.requestPaint()
 
                 MouseArea {
@@ -583,8 +594,19 @@ Item {
 
                     // Text info
                     ColumnLayout {
+                        id: cardTextCol
                         Layout.fillWidth: true
                         spacing: 2
+
+                        // #586 v1b — compact explanation row at the top of the text column
+                        Explanation {
+                            Layout.fillWidth: true
+                            visible: libraryPanel.enableExplanationText && _explanationFormatted !== null
+                            theme: theme
+                            displayMode: "compact"
+                            enabledSurface: libraryPanel.enableExplanationText
+                            formatted: _explanationFormatted
+                        }
 
                         Label {
                             text: v.name || ""

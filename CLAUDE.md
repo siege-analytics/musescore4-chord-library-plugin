@@ -275,6 +275,10 @@ Spec permits only `polarity ∈ {positive, avoid}`. If a master's source uses di
 
 `engine-rules-v{X.Y.Z}` git tag → GitHub Actions workflow → Release with `bundle.tar.gz` + `manifest.json` (validated against `plugin/schemas/engine-rules-manifest.schema.json`) + `fixture.json`. The manifest declares `schema_version` and `min_consumer_version` so downstream consumers can refuse mismatched bundles.
 
+### Explanation surface (#586)
+
+Plugin-side rendering of "Why this voicing?" text next to every voicing in Walkthrough + Library card. Pure-logic formatter at `plugin/model/ExplanationFormatter.js` (`.pragma library`) emits a structured token contract — `{ source: "style" | "mode" | "rule", id, payload }` — shared with the Ellington `rule_review` UI so both projects render the same field set without divergence. v1 ships `source: "style" | "mode"` paths drawn from `config/modes.json` + `config/styles.json` descriptions; v2 (engine-rules consumption in plugin runtime) slots into the reserved `source: "rule"` path without breaking v1 consumers. UI rendered by `plugin/ui/Explanation.qml` (full mode for Walkthrough side-panel, compact + tap-expand Popup for the Library card's 80px-constrained height). User toggle persisted via `DataCache.enableExplanationText` (default `true`).
+
 ---
 
-*Last updated: 2026-06-21*
+*Last updated: 2026-06-24*

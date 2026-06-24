@@ -25,6 +25,8 @@ Item {
 
     // --- Input properties (scalar) ---
     property string diagramPlacement: "above"
+    // #586 v1b — explanation surface toggle (persisted via DataCache)
+    property bool enableExplanationText: true
     property var builtInTunings: []
     property var tuningListModel: []   // explicitly set by parent after changes
 
@@ -48,6 +50,7 @@ Item {
 
     // --- Output signals ---
     signal placementChanged(string placement)
+    signal explanationTextToggled(bool enabled)  // #586 v1b
     signal editTuningRequested(string slug)
     signal deleteTuningRequested(string slug)
     signal moveTuningRequested(string slug, int direction)
@@ -229,6 +232,36 @@ Item {
                         font.pixelSize: 10
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
+                    }
+
+                    // --- Divider ---
+                    Rectangle { Layout.fillWidth: true; height: 1; color: theme.divider }
+
+                    // --- Explanation surface (#586 v1b) ---
+                    Label {
+                        text: "EXPLANATIONS"
+                        font.pixelSize: 11
+                        font.bold: true
+                        Layout.fillWidth: true
+                    }
+
+                    CheckBox {
+                        id: explanationToggle
+                        text: "Show 'Why this voicing?' text next to suggestions"
+                        checked: settingsPanel.enableExplanationText
+                        onCheckedChanged: {
+                            if (checked !== settingsPanel.enableExplanationText) {
+                                settingsPanel.explanationTextToggled(checked)
+                            }
+                        }
+                    }
+
+                    Label {
+                        text: "Adds a brief explanation drawn from the active Mode + Style next to every voicing in the Walkthrough and Library. Future: cites the matching master rule (Bergonzi, Greene, etc.) when engine_rules consumption ships."
+                        font.pixelSize: 10
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: theme.textMuted
                     }
 
                     // --- Divider ---

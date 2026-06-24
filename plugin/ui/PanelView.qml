@@ -7,6 +7,9 @@ ColumnLayout {
     spacing: 8
 
     property var libraryModel
+    // #586 v1b — explanation surface inputs (passed from parent)
+    property var explanationContext: null
+    property bool enableExplanationText: true
     signal insertRequested(var voicing)
 
     // Header
@@ -64,6 +67,8 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
         voicings: libraryModel.filteredVoicings
+        explanationContext: panelView.explanationContext
+        enableExplanationText: panelView.enableExplanationText
         onVoicingSelected: function(v) {
             panelView.insertRequested(v)
         }
