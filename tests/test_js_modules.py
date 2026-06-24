@@ -2766,3 +2766,107 @@ class TestStyleProfiles:
                 for name in scale_names:
                     assert name in valid_names, \
                         f"Profile '{p['name']}' references unknown scale '{name}' for quality '{quality}'"
+
+
+# === ExplanationFormatter.js (#586) ===
+
+
+class TestExplanationFormatter:
+    """ExplanationFormatter — v1 surfaces Style/Mode descriptions via the
+    locked {source, id, payload} token contract. Rule-driven path (v2) is
+    reserved; tested defensively for return-shape correctness."""
+
+    def test_null_when_no_context(self):
+        assert_js("ExplanationFormatter.js", """
+            assertEqual(format(null), null, "format(null) → null");
+            assertEqual(format({mode: null, style: null, rule: null}), null,
+                "all-null context → null");
+        """)
+
+    def test_mode_only(self):
+        assert_js("ExplanationFormatter.js", """
+            var out = format({
+                mode: {id: "comping", name: "Comping", description: "accompaniment behind a melody"},
+                style: null, rule: null
+            });
+            assertEqual(out.has_rule, false, "v1 path");
+            assertEqual(out.title, "Comping", "mode-only title");
+            assertEqual(out.body_full, "accompaniment behind a melody", "body_full");
+            assertEqual(out.body_compact, "accompaniment behind a melody", "body_compact");
+            assertEqual(out.token.source, "mode", "token source=mode");
+            assertEqual(out.token.id, "comping", "token id");
+        """)
+
+    def test_style_only(self):
+        assert_js("ExplanationFormatter.js", """
+            var out = format({
+                mode: null,
+                style: {id: "bebop", name: "Bebop", description: "altered dominants"},
+                rule: null
+            });
+            assertEqual(out.title, "Bebop", "style-only title");
+            assertEqual(out.token.source, "style", "token source=style");
+            assertEqual(out.token.id, "bebop", "token id");
+        """)
+
+    def test_both_mode_and_style(self):
+        assert_js("ExplanationFormatter.js", """
+            var out = format({
+                mode: {id: "comping", name: "Comping", description: "mode text"},
+                style: {id: "bebop", name: "Bebop", description: "style text"},
+                rule: null
+            });
+            assertEqual(out.title, "Comping · Bebop", "title joins both");
+            assert(out.body_full.indexOf("mode text") >= 0, "body_full has mode");
+            assert(out.body_full.indexOf("style text") >= 0, "body_full has style");
+            assertEqual(out.body_compact, "mode text", "compact prefers mode");
+            assertEqual(out.token.source, "style", "token prefers style when both active");
+        """)
+
+    def test_missing_description_field_defensive(self):
+        assert_js("ExplanationFormatter.js", """
+            var out = format({
+                mode: {id: "duo", name: "Duo"},
+                style: null, rule: null
+            });
+            assert(out !== null, "still renders without description");
+            assertEqual(out.title, "Duo", "title still works");
+            assertEqual(out.body_full, "", "body_full empty when description missing");
+        """)
+
+    def test_v2_rule_path_token_shape(self):
+        """Defensive — v1 doesn't call this path, but the rule-shape must be
+        contract-correct so v2 lands cleanly."""
+        assert_js("ExplanationFormatter.js", """
+            var rule = {
+                rule_id: "bergonzi-vol4-triadic-pairs",
+                master_id: "jerry-bergonzi", work_id: "melodic-rhythms-vol-4",
+                name: "Triadic pairs over Dom7",
+                anchor: "Avoid the 5th in shell voicings under dominant; double the b7 instead.",
+                source_page: 47, chapter_n: 3, section_title: "Triadic Pairs",
+                preference: 2, falsifier: "Doesn't apply in pedal/drone contexts.",
+                applicability_reasons: []
+            };
+            var out = format({mode: null, style: null, rule: rule});
+            assertEqual(out.has_rule, true, "rule path triggers has_rule");
+            assertEqual(out.token.source, "rule", "rule token source");
+            assertEqual(out.token.id, "bergonzi-vol4-triadic-pairs", "rule id passthrough");
+            assertEqual(out.token.payload.preference, 2, "preference passthrough");
+            assertEqual(out.token.payload.source_page, 47, "source_page passthrough");
+            assertEqual(out.polarity_phrase, "Strong preference (+2)", "polarity phrase");
+            assert(out.citation.indexOf("p.47") >= 0, "citation has page");
+            assertEqual(out.falsifier, "Doesn't apply in pedal/drone contexts.", "falsifier passthrough");
+        """)
+
+    def test_polarity_phrase_likert_range(self):
+        assert_js("ExplanationFormatter.js", """
+            function check(pref, expected) {
+                var out = format({mode: null, style: null, rule: {rule_id: "x", name: "x", preference: pref}});
+                assertEqual(out.polarity_phrase, expected, "preference=" + pref);
+            }
+            check(2, "Strong preference (+2)");
+            check(1, "Preference (+1)");
+            check(0, "Neutral");
+            check(-1, "Avoid (-1)");
+            check(-2, "Strong avoidance (-2)");
+        """)
