@@ -8,6 +8,9 @@ ListView {
     spacing: 4
 
     property var voicings: []
+    // #586 v1b — explanation surface inputs (bubbled from parent / ChordLibrary)
+    property var explanationContext: null
+    property bool enableExplanationText: true
     signal voicingSelected(var voicing)
     signal voicingCompare(var voicing)
 
@@ -16,6 +19,8 @@ ListView {
     delegate: VoicingCard {
         width: voicingGrid.width
         voicing: voicingGrid.voicings[index] || {}
+        explanationContext: voicingGrid.explanationContext
+        enableExplanationText: voicingGrid.enableExplanationText
         onDoubleClicked: function(v) {
             voicingGrid.voicingSelected(v)
         }

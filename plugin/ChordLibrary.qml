@@ -3249,6 +3249,8 @@ MuseScore {
             tuningListModel: tuningList.slice()
             theme: theme
             diagramPlacement: chordLibrary.diagramPlacement
+            // #586 v1b — explanation surface toggle
+            enableExplanationText: chordLibrary.enableExplanationText
             // #210 Stage 2 — voicing exclusion engine surface
             effectiveVoicingTolerances: ExclusionEngine.resolveTolerances(
                 chordLibrary.voicingToleranceMap,
@@ -3422,6 +3424,11 @@ MuseScore {
 
             onPlacementChanged: function(placement) {
                 diagramPlacement = placement
+                saveSettings()
+            }
+            // #586 v1b
+            onExplanationTextToggled: function(enabled) {
+                chordLibrary.enableExplanationText = enabled
                 saveSettings()
             }
             onEditTuningRequested: function(slug) { editTuning(slug) }
@@ -3674,6 +3681,10 @@ MuseScore {
             visible: currentTab === 0 && !showToolResults
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            // #586 v1b — explanation surface inputs
+            explanationContext: chordLibrary.currentExplanationContext()
+            enableExplanationText: chordLibrary.enableExplanationText
 
             filteredData: chordLibrary.filteredData
             voicingsData: chordLibrary.voicingsData

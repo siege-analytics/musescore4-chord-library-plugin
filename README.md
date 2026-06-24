@@ -77,6 +77,22 @@ Bundled releases are tagged independently from the plugin: `engine-rules-v0.1.0`
 
 Style and Mode scoring will increasingly *consume* engine-rules instead of carrying hand-tuned weights. The corpus is the rigorous, source-traceable replacement for "master profiles" — Pass-style comping, Bergonzi-style melodic-rhythms, Goodrick-mvmt voicing flow — all expressible as queries over the same firing contract.
 
+### Explaining suggestions (#586)
+
+Every voicing the plugin suggests now carries a brief "Why this voicing?" explanation, surfaced in the Walkthrough side-panel (full prose) and Library card (compact single-line + tap-to-expand). v1 draws the text from the active Mode + Style descriptions; a future v2 will render the matched master rule's `name + anchor + source_page + section_title + falsifier` from the engine-rules corpus directly (so the user sees "Bergonzi, *Melodic Rhythms* vol.4, p.47 — *Triadic Pairs over Dom7*: avoid the 5th in shell voicings under dominant; double the b7 instead.").
+
+The explanation surface ships off a structured token contract:
+
+```
+{ source: "style" | "mode" | "rule",
+  id:     <slug>,
+  payload: { ... } }
+```
+
+…ratified jointly with the [Ellington practice-feedback web app](https://github.com/siege-analytics/ellington-systems) so the plugin's QML rendering and Ellington's Django template rendering of "why this voicing" share one field set. Future engine_rules-driven explanations slot into the reserved `source: "rule"` path without breaking v1 consumers.
+
+Toggle in **Settings → Explanations** (defaults on; honors the "lessons in everything" framing while letting expert users disable the surface).
+
 ---
 
 ## Install
