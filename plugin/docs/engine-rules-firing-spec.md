@@ -383,9 +383,214 @@ Strong avoid (−2) renders with extra visual severity. Anchor: *"Avoid skipping
 - **#554** (Phase 7): melodic_rules artifact + Slonimsky distillation.
 - **v0.3** (future): canonical `then` action vocabulary; structured `falsifier` predicates; comparator-confidence model; melodic-layer composition with v0.2 harmonic engine.
 
+## §10 — Conformance Verdict Contract
+
+Codifies how downstream consumers evaluate a recording against fired rules and produce per-slice verdicts. Ratified jointly with [ellington-web#243](https://github.com/siege-analytics/ellington-web/issues/243) on 2026-06-24 as cross-project contract anchor #2.
+
+This appendix is **additive** to v0.2 (no firing-engine semantic change). It defines a downstream contract that consumers MUST implement identically so plugin v2 and Ellington render conformance data from the same shape. Drift between consumer implementations is the failure mode this section exists to prevent.
+
+### §10.1 — Two-layer split
+
+Conformance evaluation has two layers with different concerns:
+
+- **`SliceObservation`** — *deterministic* facts about what the player actually played in a slice's time window. Knows nothing about rules. Output of the audio pipeline (alignment + pitch extraction + chart-keyed chord-tone analysis).
+- **`RuleVerdict`** — *per-rule* conformance against a `SliceObservation`. Verdict ∈ {`satisfies`, `violates`, `neutral`, `indeterminate`}. One row per `(Recording, RuleFireResult)` pair.
+
+The split matters because slice observations are reusable across rule firings (and across recordings of the same chart, if cached); rule verdicts are derived from observations and depend on the rule's `polarity` + `then` action.
+
+### §10.2 — `SliceObservation` shape
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class PlayedPitch:
+    pitch_name: str           # scientific pitch notation, e.g. "C4", "Bb3"
+    duration_s: float         # how long the pitch was sustained in the slice window
+    confidence: float         # pitch-extractor's per-frame confidence, aggregated
+
+@dataclass
+class SliceObservation:
+    """Deterministic audio→played-content facts. Does not depend on any rule."""
+    slice_id: str
+    played_pitches: list[PlayedPitch]              # what the player played in this slice's window
+    played_intervals_relative_to_root: list[int]   # e.g. [0, 4, 7, 10] for played dom7-shaped content
+    inferred_chord_quality: str | None             # canonical token (per §2.1) if polyphonic detection available;
+                                                   # null for monophonic pitch traces (e.g. pyin output)
+    matched_chord_tones: int                        # how many chord-tones of the chart's notated chord the player played
+    total_chord_tones: int                          # expected count from chart's notated chord
+    off_chord_tones: list[str]                      # played pitches that are not chord-tones of the chart's chord
+    off_scale_tones: list[str]                      # played pitches outside the scale.context for this slice
+    scale_drift_semitones: float                    # median |played_freq - nearest_scale_tone| over the window
+    alignment_confidence: float                     # from upstream audio-alignment stage (0..1)
+    pitch_extraction_confidence: float              # from upstream pitch-extraction stage (0..1)
+    observation_confidence: float                   # composite — typically alignment × pitch_extraction
+```
+
+### §10.3 — `RuleVerdict` shape
+
+```python
+from typing import Literal
+
+@dataclass
+class RuleVerdict:
+    """Per-rule conformance against a SliceObservation."""
+    slice_id: str
+    rule_id: str
+    rule_polarity: Literal["positive", "avoid"]    # mirrors RuleFireResult.polarity (§6)
+    verdict: Literal["satisfies", "violates", "neutral", "indeterminate"]
+    evidence: Evidence                              # discriminated union — see §10.5
+    rule_evaluability_confidence: float             # how completely the rule's `then` action is evaluable in this version
+    verdict_confidence: float                       # composite — typically observation_confidence × rule_evaluability_confidence
+```
+
+### §10.4 — Verdict semantics
+
+The four-value verdict is determined by the cross-product of rule polarity × what the player did:
+
+| Rule `polarity` | Did the player do the thing the rule prescribes? | Verdict |
+|---|---|---|
+| `positive` | yes | `satisfies` ("you played Bergonzi's b7-doubled shell — matches the prescription") |
+| `positive` | no | `violates` ("Bergonzi suggests doubling the b7 here; you played the natural 5") |
+| `avoid` | did NOT do the avoided thing | `satisfies` ("Laukens warns against the 5 in shell voicings; you correctly omitted it") |
+| `avoid` | DID do the avoided thing | `violates` ("Laukens warns against the 5 here; you played it") |
+
+Two non-binary verdicts:
+
+- **`neutral`** — the rule fires (its `when` matches the slice) but its `then` action is not evaluable in the current consumer version. Most v0.1 verdicts will be `neutral` since spec §5 treats `then` as passthrough; concrete `then` action evaluation lands in v0.3. The `evidence` carries a `DeferredEvidence` variant explaining why.
+- **`indeterminate`** — `observation_confidence` is below the consumer's threshold (e.g. very low alignment + low pitch confidence). The rule may be perfectly evaluable but the audio doesn't support a confident call. Distinct from `neutral` because `indeterminate` is an audio-quality problem, not a rule-evaluability problem.
+
+### §10.5 — `Evidence` discriminated union
+
+`Evidence` is a discriminated union keyed by `type`. Locked variants:
+
+```python
+from typing import Union
+
+Evidence = Union[
+    ChordToneMembershipEvidence,
+    ScaleDriftEvidence,
+    DeferredEvidence,
+    # v2 variants (reserved, not yet implemented):
+    # VoicingMatchEvidence,
+    # RhythmAttackEvidence,
+]
+
+@dataclass
+class ChordToneMembershipEvidence:
+    type: Literal["chord_tone_membership"]
+    matched: int                              # number of chord-tones of the chart's chord the player played
+    total: int                                # expected count
+    missing: list[str]                        # chord-tones the player did not play
+    extra: list[str]                          # played pitches that are not chord-tones (subset of off_chord_tones)
+
+@dataclass
+class ScaleDriftEvidence:
+    type: Literal["scale_drift"]
+    median_drift_semitones: float
+    max_drift_semitones: float
+    drift_frame_count: int                    # number of pitch frames that drifted
+
+@dataclass
+class DeferredEvidence:
+    type: Literal["deferred"]
+    reason: str                               # e.g. "requires polyphonic pitch"
+    deferred_until_version: str               # e.g. "v0.2" or "v0.3"
+```
+
+**Why discriminated union, not free-form `dict`**: Free-form evidence dicts become unrenderable in the UI (every consumer has to know every rule's evidence shape) and untestable (can't unit-test a `dict`'s contract). Locking variants by `type` lets the UI register a renderer per variant and tests assert shape-correctness.
+
+**v2 evidence variants (reserved, do not implement in v0.1 consumers):**
+
+- `VoicingMatchEvidence` — evaluates whether the player played the specific voicing the rule prescribes (requires polyphonic detection)
+- `RhythmAttackEvidence` — evaluates whether the player's attack timing matches the rule's rhythmic prescription
+
+These will be added when v0.3 of the spec ratifies them. Until then, rules whose `then` action requires voicing or rhythm evaluation produce `verdict: "neutral"` with `evidence: DeferredEvidence(type="deferred", reason="requires polyphonic pitch", deferred_until_version="v0.2")`.
+
+### §10.6 — Confidence model
+
+Two confidence fields are surfaced separately so consumers can investigate low-confidence verdicts:
+
+- **`observation_confidence`** — audio-quality contribution (alignment × pitch extraction). A low value means the audio pipeline can't confidently say what the player played. Improving this requires upstream audio improvements (better alignment, better pitch detection).
+- **`rule_evaluability_confidence`** — rule-complexity contribution. A low value means the rule's `then` action is partially or fully unevaluable at the current consumer version, OR the rule depends on cross-slice context (e.g. tritone substitution requires both V and the substituted chord to be observed). Improving this requires either spec extensions (v0.3 `then` action vocabulary) or richer slicer context.
+
+The headline number consumers display is the composite `verdict_confidence = observation_confidence × rule_evaluability_confidence`. UI surfaces SHOULD expose drill-down to the two inputs when a user asks "why is this verdict low-confidence?"
+
+### §10.7 — v0.1 scope (consumer baseline)
+
+A v0.1 conformance consumer (Ellington's first audio epoch) implements:
+
+- `SliceObservation` with `inferred_chord_quality = None` (monophonic pitch traces; basic_pitch upgrade tracked separately)
+- `RuleVerdict` for the subset of rules whose `then` action is chord-quality-prescribing or scale-tone-prescribing
+- `ChordToneMembershipEvidence` for quality-prescribing rules
+- `ScaleDriftEvidence` for scale-tone-prescribing rules
+- `DeferredEvidence` for everything else (voicing-prescribing, rhythm-prescribing, multi-slice-context rules)
+
+Expected v0.1 verdict distribution: **<30% of fired rules produce evaluable verdicts** (`satisfies` or `violates`); the remaining 70%+ are `neutral` with `DeferredEvidence` describing why. This is correct conservative behavior — false-positive verdicts (claiming `satisfies`/`violates` on a rule whose `then` we can't actually evaluate) erode the corpus's pedagogical value. Honest deferral preserves trust.
+
+### §10.8 — Worked example
+
+Slice: chord `Cmaj7`, key `C`, `progression.position=I`, scale.context=`C_major`.
+
+Fired rule: `pass-imaj7-double-root` (hypothetical), polarity `positive`, `then`: "double the root in the bass". `then.action = "double_root"` (v0.3 vocabulary — for v0.1 this is `neutral` with `DeferredEvidence`).
+
+Player's monophonic recording in this slice's window: pitches `C4 (1.0s, 0.9 conf), E4 (0.5s, 0.85), G4 (0.6s, 0.9)`.
+
+Resulting `SliceObservation`:
+
+```
+slice_id: "slice-04"
+played_pitches: [C4/1.0s/0.9, E4/0.5s/0.85, G4/0.6s/0.9]
+played_intervals_relative_to_root: [0, 4, 7]
+inferred_chord_quality: null  # monophonic; quality not inferred
+matched_chord_tones: 3        # C, E, G are chord-tones of Cmaj7
+total_chord_tones: 4          # Cmaj7 = {C, E, G, B}
+off_chord_tones: []           # none played that aren't chord-tones
+off_scale_tones: []           # all in C_major
+scale_drift_semitones: 0.04   # very tight
+alignment_confidence: 0.92
+pitch_extraction_confidence: 0.88
+observation_confidence: 0.81
+```
+
+Resulting `RuleVerdict` for `pass-imaj7-double-root`:
+
+```
+slice_id: "slice-04"
+rule_id: "pass-imaj7-double-root"
+rule_polarity: "positive"
+verdict: "neutral"
+evidence: DeferredEvidence(
+    type="deferred",
+    reason="rule's then action is voicing-prescriptive; requires polyphonic pitch + voicing extraction",
+    deferred_until_version="v0.2"
+)
+rule_evaluability_confidence: 0.0   # cannot evaluate this rule at v0.1
+verdict_confidence: 0.0              # 0.81 × 0.0
+```
+
+Compare with a fired rule `chart-mode-tonic-arrival` (hypothetical chord-quality-prescribing rule, `then.expected_chord_quality = "maj7"`):
+
+```
+slice_id: "slice-04"
+rule_id: "chart-mode-tonic-arrival"
+rule_polarity: "positive"
+verdict: "satisfies"   # player's content matches Cmaj7 chord-tones; 3 of 4 played; no off-chord-tones
+evidence: ChordToneMembershipEvidence(
+    type="chord_tone_membership",
+    matched=3,
+    total=4,
+    missing=["B"],
+    extra=[]
+)
+rule_evaluability_confidence: 1.0    # quality-prescribing rule, fully evaluable in v0.1
+verdict_confidence: 0.81             # 0.81 × 1.0
+```
+
 ## Version history
 
 | Version | Date | Note |
 |---|---|---|
 | 0.1 | 2026-06-17 | Initial spec, ratified per #549 |
 | 0.2 | 2026-06-17 | Extended canonical token set via Ted Greene's three-family taxonomy (Chord Chemistry Ch. 5–6); family-hierarchical matching for `quality_binding`; expanded alias table including symbols (`+`, `°`, `ø`, `Δ`). Ratified per #555. Strict additive over v0.1. |
+| 0.2.1 | 2026-06-24 | §10 Conformance Verdict Contract added. Doc-only additive — no firing-engine semantic change. Ratified jointly with [ellington-web#243](https://github.com/siege-analytics/ellington-web/issues/243). Defines `SliceObservation` + `RuleVerdict` + `Evidence` discriminated union as the downstream contract for audio-conformance consumers (plugin v2 + Ellington apps.audio). |
