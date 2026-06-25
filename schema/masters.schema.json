@@ -41,6 +41,16 @@
           "type": "array",
           "description": "Per-master × per-chord-quality pedagogical notes. Each entry says how this master uses or teaches voicings of the named chord quality — function role, idiom, common substitution, voice-leading context. Consumed by reviewer-facing surfaces (the #395 review form, the docs glossary) so reviewers can confirm 'is this how the master would use this chord in a lesson' rather than just 'is this a master-X voicing'. Optional; populated incrementally per #415 and follow-up tickets.",
           "items": { "$ref": "#/$defs/usage_note" }
+        },
+        "studied_with": {
+          "type": "array",
+          "description": "Lineage DAG edges (#563): masters who served as formal teacher or sustained study source for this master. Each edge cites the biography source phrase that justifies the edge. Conservative — only edges where both endpoints are in the corpus get encoded. Consumed by Ellington v1.2 pedagogue trust model (ellington-web#96) for per-Master expertise weighting. Empty array means no studied-with edges have been extracted yet (default state); missing entries get treated identically to empty.",
+          "items": { "$ref": "#/$defs/lineage_edge" }
+        },
+        "influenced": {
+          "type": "array",
+          "description": "Lineage DAG edges (#563): masters who exerted stylistic / lineage influence on this master without direct study. Same edge shape and consumer contract as studied_with; semantic distinction is teacher-vs-influencer.",
+          "items": { "$ref": "#/$defs/lineage_edge" }
         }
       },
       "anyOf": [
@@ -263,6 +273,23 @@
         },
         "additionalProperties": true
       }
+    },
+    "lineage_edge": {
+      "description": "A single lineage edge (#563) — directed from the master that owns the studied_with/influenced array, to the master named by master_id. master_id MUST reference an existing master entry's id (graph-validation enforced by tests/test_masters_schema.py). source_phrase carries the biography quote that justifies the edge so the extraction is auditable.",
+      "type": "object",
+      "required": ["master_id"],
+      "properties": {
+        "master_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$",
+          "description": "id of the target master — must resolve to a real entry in masters[]."
+        },
+        "source_phrase": {
+          "type": "string",
+          "description": "Verbatim quote from the source master's biography that justifies the edge. Optional but strongly recommended for audit / reviewer trust."
+        }
+      },
+      "additionalProperties": true
     }
   }
 }
