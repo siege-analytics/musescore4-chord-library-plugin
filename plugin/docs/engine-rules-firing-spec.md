@@ -389,6 +389,8 @@ Codifies how downstream consumers evaluate a recording against fired rules and p
 
 This appendix is **additive** to v0.2 (no firing-engine semantic change). It defines a downstream contract that consumers MUST implement identically so plugin v2 and Ellington render conformance data from the same shape. Drift between consumer implementations is the failure mode this section exists to prevent.
 
+**Parity oracle**: `plugin/docs/fixtures/conformance-v0.2.1-fixture.json` ships a runnable cross-project drift-detection artifact — both consumer implementations (plugin v2 conformance + Ellington apps.audio.comparator) MUST produce the listed `expected_rule_verdict` outputs given the listed `slice_observation` + `rule_fire_result` inputs. Each consumer's test suite should import the fixture and assert field-by-field equality. The fixture itself is structurally validated by `tests/test_conformance_fixture.py` (this repo's CI), so the fixture cannot drift from §10 prose without failing CI.
+
 ### §10.1 — Two-layer split
 
 Conformance evaluation has two layers with different concerns:
