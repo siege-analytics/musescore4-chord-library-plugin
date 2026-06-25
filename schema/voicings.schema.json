@@ -5,6 +5,10 @@
   "type": "object",
   "required": ["voicings"],
   "properties": {
+    "manifest": {
+      "$ref": "#/$defs/manifest",
+      "description": "#593: top-level provenance manifest, parallel to engine-rules-bundle's manifest.json. Optional during rollout — once Ellington's sync_voicings is updated to require the manifest, this becomes required."
+    },
     "voicings": {
       "type": "array",
       "items": {
@@ -13,6 +17,39 @@
     }
   },
   "$defs": {
+    "manifest": {
+      "description": "Provenance manifest for the voicings corpus. Mirrors the engine-rules-bundle manifest shape so downstream consumers can verify (plugin_commit_sha, bundle_version) for reproducible idempotent syncs.",
+      "type": "object",
+      "required": ["bundle_version", "schema_version", "total_voicings"],
+      "properties": {
+        "bundle_version": {
+          "type": "string",
+          "description": "Semver of this voicings-corpus state, e.g. \"2.3.0\". Mirrors the plugin release the corpus shipped in. Bump when voicings are added/removed/edited; consumers key idempotence on (plugin_commit_sha, bundle_version)."
+        },
+        "schema_version": {
+          "type": "string",
+          "description": "Schema generation. Currently \"voicings-v1\"; bump on breaking schema changes."
+        },
+        "plugin_commit_sha": {
+          "anyOf": [{ "type": "string" }, { "type": "null" }],
+          "description": "Source-of-truth git commit SHA the corpus was published at. Filled at release time by the build workflow; null in committed source (chicken-and-egg — a file can't contain its own commit SHA). Consumers SHOULD fall back to deriving from the git ref they pulled when null."
+        },
+        "built_at": {
+          "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }],
+          "description": "ISO-8601 timestamp the corpus was last bundled. Null in committed source; filled at release time."
+        },
+        "total_voicings": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Count of entries in voicings[]. Validated by CI to match actual array length."
+        },
+        "min_consumer_version": {
+          "type": "string",
+          "description": "Minimum sync_voicings consumer version that understands this corpus shape. Forward-compat guard (Hyrum's-law) — older consumers refuse to ingest."
+        }
+      },
+      "additionalProperties": true
+    },
     "voicing": {
       "type": "object",
       "required": [
