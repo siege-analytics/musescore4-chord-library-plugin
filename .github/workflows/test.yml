@@ -50,7 +50,7 @@ jobs:
         # firing-spec §10 fixture (this PR): test_conformance_fixture.py guards
         # the cross-project parity oracle's structural invariants against §10
         # drift — fixture itself fails CI if it falls out of sync with the spec.
-        run: python -m pytest tests/test_js_modules.py tests/test_core.py tests/test_masters_schema.py tests/test_engine_rules_schema.py tests/test_no_bare_console_log_in_model.py tests/test_conformance_fixture.py tests/test_voicings_manifest.py -v --tb=short
+        run: python -m pytest tests/test_js_modules.py tests/test_core.py tests/test_masters_schema.py tests/test_engine_rules_schema.py tests/test_no_bare_console_log_in_model.py tests/test_conformance_fixture.py tests/test_voicings_manifest.py tests/test_sample_slices_fixture.py -v --tb=short
 
       - name: Run schema validation
         if: always()
