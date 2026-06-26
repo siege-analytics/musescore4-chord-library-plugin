@@ -689,3 +689,101 @@ class TestExegesisOfSchema:
         data = {"version": "v1", "masters": [m]}
         errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
         assert not errors, [e.message for e in errors]
+
+
+# === #338 System.style_attested[] schema ===
+
+
+class TestStyleAttestationSchema:
+    """Schema-additive ticket: style_attested[] declared on $defs/system."""
+
+    def _master_with_attested_system(self, attestations):
+        return _base_master({
+            "id": "van-eps",
+            "name": "George Van Eps",
+            "principles": [
+                {"id": "p", "name": "P", "summary": "test"}
+            ],
+            "systems": [{
+                "id": "van-eps:harmonic-mechanisms",
+                "name": "Harmonic Mechanisms",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {"id": "t", "name": "T",
+                     "engine_payload": {"kind": "VoiceMotion"}}
+                ],
+                "style_attested": attestations
+            }]
+        })
+
+    def test_system_without_style_attested_validates(self, validator):
+        m = _base_master({
+            "principles": [
+                {"id": "p", "name": "P", "summary": "test"}
+            ],
+            "systems": [{
+                "id": "van-eps:foo",
+                "name": "Foo",
+                "members": [{"id": "x", "name": "X"}],
+                "traversal_rules": [
+                    {"id": "t", "name": "T", "engine_payload": {"kind": "VoiceMotion"}}
+                ]
+            }]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_system_with_explicit_attestation_validates(self, validator):
+        m = self._master_with_attested_system([
+            {
+                "style_id": "ballad",
+                "attestation": "explicit",
+                "evidence": [{"chapter_n": 3, "topic": "ballad voicings", "page": 42}],
+                "caveats": "works with sus-2 substitution"
+            }
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_system_with_implicit_and_rejected_attestations_validates(self, validator):
+        m = self._master_with_attested_system([
+            {"style_id": "swing", "attestation": "implicit"},
+            {"style_id": "free-jazz", "attestation": "rejected"}
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_pending_style_id_validates(self, validator):
+        m = self._master_with_attested_system([
+            {"style_id": "_pending:gypsy-jazz", "attestation": "explicit"}
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_invalid_attestation_enum_rejected(self, validator):
+        m = self._master_with_attested_system([
+            {"style_id": "ballad", "attestation": "maybe"}
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = list(validator.iter_errors(data))
+        assert any("'maybe'" in str(e.message) or "enum" in str(e.message).lower() for e in errors), [e.message for e in errors]
+
+    def test_missing_style_id_rejected(self, validator):
+        m = self._master_with_attested_system([
+            {"attestation": "explicit"}
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = list(validator.iter_errors(data))
+        assert any("style_id" in str(e.message) or "required" in str(e.message).lower() for e in errors), [e.message for e in errors]
+
+    def test_invalid_style_id_pattern_rejected(self, validator):
+        m = self._master_with_attested_system([
+            {"style_id": "Ballad Mode", "attestation": "explicit"}
+        ])
+        data = {"version": "v1", "masters": [m]}
+        errors = list(validator.iter_errors(data))
+        assert any("does not match" in str(e.message) or "pattern" in str(e.message).lower() for e in errors), [e.message for e in errors]

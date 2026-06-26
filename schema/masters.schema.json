@@ -132,7 +132,12 @@
           "items": { "$ref": "#/$defs/preference" }
         },
         "examples": { "type": "array" },
-        "references": { "$ref": "#/$defs/references" }
+        "references": { "$ref": "#/$defs/references" },
+        "style_attested": {
+          "type": "array",
+          "description": "#338: which styles this system is attested in. Captured by Stage 4 when source quotes attest to a style application — substrate for future master × style engine composition. attestation values: `explicit` (master cites the style by name and applies the system), `implicit` (repertoire/examples are clearly in the style without naming it), `rejected` (master explicitly says this doesn't apply to the style). Optional; absent means no style attestation has been extracted yet.",
+          "items": { "$ref": "#/$defs/style_attestation" }
+        }
       },
       "anyOf": [
         {
@@ -318,6 +323,36 @@
             "type": "object",
             "additionalProperties": true
           }
+        }
+      },
+      "additionalProperties": true
+    },
+    "style_attestation": {
+      "description": "#338: a single style-attestation entry — declares which style this system is attested in and how strongly. Substrate for future master × style engine composition.",
+      "type": "object",
+      "required": ["style_id", "attestation"],
+      "properties": {
+        "style_id": {
+          "type": "string",
+          "pattern": "^(_pending:)?[a-z0-9_-]+$",
+          "description": "id of the style being attested. May be a real id resolving to plugin/data/styles.json, OR a `_pending:<slug>` for styles not yet cataloged."
+        },
+        "attestation": {
+          "type": "string",
+          "enum": ["explicit", "implicit", "rejected"],
+          "description": "Strength of the attestation. `explicit` = master cites the style by name and applies the system. `implicit` = repertoire/examples are clearly in the style without naming it. `rejected` = master explicitly says the system doesn't apply to the style."
+        },
+        "evidence": {
+          "type": "array",
+          "description": "Optional source quotes / page references that ground the attestation. Each entry is a free-shape object (chapter_n, topic, quote_excerpt, page).",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "caveats": {
+          "type": "string",
+          "description": "Optional prose noting where this attestation is partial or conditional (e.g. 'works with sus-2 substitution; avoid extended chromatic alterations')."
         }
       },
       "additionalProperties": true
