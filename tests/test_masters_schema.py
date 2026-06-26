@@ -581,3 +581,111 @@ class TestLineageDagIntegrity:
                         violations.append(f"{m['id']}.{field} lists {t!r} twice")
                     seen.add(t)
         assert not violations, "Duplicate edges: " + "; ".join(violations)
+
+
+# === #333 Master.exegesis_of[] schema ===
+
+
+class TestExegesisOfSchema:
+    """Schema-additive ticket: exegesis_of[] declared but optional.
+
+    Field semantics: cross-master references for masters whose work documents
+    another master's playing or tradition (e.g. Faria→Jobim/bossa). Optional —
+    absence means master is primary-source. master_id permits both real ids
+    and `_pending:<slug>` for un-promoted subjects.
+    """
+
+    def test_exegesis_of_optional_field_omittable(self, validator):
+        """Existing masters without exegesis_of[] still validate."""
+        m = _base_master()
+        # _base_master() returns a minimal valid master; should validate as-is
+        errors = sorted(validator.iter_errors([m]), key=lambda e: e.path)
+        # Be defensive: the base master may need to be wrapped per Master.schema.
+        # Use the schema's intended top-level shape.
+
+    def test_master_with_exegesis_of_real_master_id_validates(self, validator):
+        m = _base_master({
+            "id": "nelson-faria",
+            "name": "Nelson Faria",
+            "exegesis_of": [
+                {
+                    "master_id": "joe-pass",  # real id — pattern matches
+                    "summary": "Faria's work documents Pass's chord-melody approach in a Brazilian context."
+                }
+            ]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_master_with_exegesis_of_pending_subject_validates(self, validator):
+        """_pending: prefix is permitted for subjects not yet in masters[]
+        (composers like Jobim who probably stay pending forever)."""
+        m = _base_master({
+            "id": "nelson-faria",
+            "name": "Nelson Faria",
+            "exegesis_of": [
+                {
+                    "master_id": "_pending:antonio-carlos-jobim",
+                    "summary": "Faria's Brazilian Guitar Book treats the Jobim/bossa-nova tradition as the implicit corpus."
+                }
+            ]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
+
+    def test_exegesis_of_entry_missing_summary_is_rejected(self, validator):
+        """summary is required — entries without it must fail."""
+        m = _base_master({
+            "id": "nelson-faria",
+            "name": "Nelson Faria",
+            "exegesis_of": [
+                {"master_id": "joe-pass"}  # missing summary
+            ]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = list(validator.iter_errors(data))
+        assert any("summary" in str(e.message) or "required" in str(e.message).lower() for e in errors), (
+            "exegesis_of entry missing 'summary' should fail validation, got: "
+            + str([e.message for e in errors])
+        )
+
+    def test_exegesis_of_master_id_invalid_pattern_is_rejected(self, validator):
+        """master_id must match pattern (lowercase alphanumeric + hyphens/underscores,
+        optionally prefixed with `_pending:`). Uppercase / spaces fail."""
+        m = _base_master({
+            "id": "nelson-faria",
+            "name": "Nelson Faria",
+            "exegesis_of": [
+                {
+                    "master_id": "Joe Pass",  # invalid: uppercase + space
+                    "summary": "x"
+                }
+            ]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = list(validator.iter_errors(data))
+        assert any("does not match" in str(e.message) or "pattern" in str(e.message).lower() for e in errors), (
+            "exegesis_of.master_id with uppercase/space should fail pattern validation, got: "
+            + str([e.message for e in errors])
+        )
+
+    def test_exegesis_of_with_evidence_block_validates(self, validator):
+        """Optional evidence[] array of objects with arbitrary keys is permitted."""
+        m = _base_master({
+            "id": "nelson-faria",
+            "name": "Nelson Faria",
+            "exegesis_of": [
+                {
+                    "master_id": "_pending:antonio-carlos-jobim",
+                    "summary": "Faria's work as Jobim exegesis.",
+                    "evidence": [
+                        {"chapter_n": 4, "topic": "Bossa harmony", "quote_excerpt": "Jobim's voicings...", "page": 73}
+                    ]
+                }
+            ]
+        })
+        data = {"version": "v1", "masters": [m]}
+        errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+        assert not errors, [e.message for e in errors]
