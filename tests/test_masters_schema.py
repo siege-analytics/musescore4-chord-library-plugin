@@ -499,3 +499,85 @@ def test_consistency_flags_2segment_system_inside_work():
     }])
     warnings = mod._check_masters_consistency(data)
     assert any("expected 3 colon-separated segments" in w for w in warnings), warnings
+
+
+# === #563 Lineage DAG graph-validation ===
+
+
+class TestLineageDagIntegrity:
+    """Graph-validation for the studied_with / influenced lineage edges (#563).
+
+    Every edge's master_id MUST resolve to a real entry in masters[]. Catches
+    typos and stale references (e.g. if a master is renamed).
+    """
+
+    @pytest.fixture(scope="class")
+    def masters_data(self):
+        return json.loads(DATA_PATH.read_text(encoding="utf-8"))["masters"]
+
+    def test_studied_with_present_on_all_masters(self, masters_data):
+        # Acceptance criterion: every master carries the field (possibly empty).
+        for master in masters_data:
+            assert "studied_with" in master, (
+                f"master {master.get('id', '<unknown>')!r} missing studied_with field "
+                f"— must be present as at least an empty array"
+            )
+            assert isinstance(master["studied_with"], list), (
+                f"master {master['id']} studied_with not an array"
+            )
+
+    def test_influenced_present_on_all_masters(self, masters_data):
+        for master in masters_data:
+            assert "influenced" in master, (
+                f"master {master.get('id', '<unknown>')!r} missing influenced field "
+                f"— must be present as at least an empty array"
+            )
+            assert isinstance(master["influenced"], list), (
+                f"master {master['id']} influenced not an array"
+            )
+
+    def test_lineage_edges_resolve_to_real_masters(self, masters_data):
+        """Every edge's master_id must reference an existing master entry."""
+        master_ids = {m["id"] for m in masters_data}
+        dangling = []
+        for m in masters_data:
+            for field in ("studied_with", "influenced"):
+                for edge in m.get(field, []):
+                    target = edge.get("master_id") if isinstance(edge, dict) else None
+                    if target is None:
+                        dangling.append(
+                            f"{m['id']}.{field} edge missing master_id: {edge}"
+                        )
+                    elif target not in master_ids:
+                        dangling.append(
+                            f"{m['id']}.{field} → {target!r} (no such master in corpus)"
+                        )
+        assert not dangling, "Dangling lineage edges: " + "; ".join(dangling)
+
+    def test_no_self_edges(self, masters_data):
+        """A master shouldn't list itself as teacher/influencer (no self-loops)."""
+        violations = []
+        for m in masters_data:
+            for field in ("studied_with", "influenced"):
+                for edge in m.get(field, []):
+                    target = edge.get("master_id") if isinstance(edge, dict) else None
+                    if target == m["id"]:
+                        violations.append(f"{m['id']}.{field} → self")
+        assert not violations, "Self-edges in lineage DAG: " + "; ".join(violations)
+
+    def test_no_duplicate_edges_within_a_field(self, masters_data):
+        """A master shouldn't list the same target twice in the same field."""
+        violations = []
+        for m in masters_data:
+            for field in ("studied_with", "influenced"):
+                targets = []
+                for edge in m.get(field, []):
+                    t = edge.get("master_id") if isinstance(edge, dict) else None
+                    if t is not None:
+                        targets.append(t)
+                seen = set()
+                for t in targets:
+                    if t in seen:
+                        violations.append(f"{m['id']}.{field} lists {t!r} twice")
+                    seen.add(t)
+        assert not violations, "Duplicate edges: " + "; ".join(violations)
