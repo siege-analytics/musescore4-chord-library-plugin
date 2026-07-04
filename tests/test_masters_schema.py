@@ -92,6 +92,7 @@ def test_placeholder_system_allows_empty_interior(validator):
             {
                 "id": "_placeholder:van-eps:future-system",
                 "name": "Future system",
+                "summary": "Placeholder for future Van Eps system",
             }
         ],
     }
@@ -399,6 +400,7 @@ def test_three_segment_placeholder_system_inside_work_is_valid(validator):
                     {
                         "id": "_placeholder:van-eps:harmonic-mechanisms:lap-piano",
                         "name": "Lap piano counterpoint (research pending)",
+                        "summary": "Lap piano counterpoint techniques (source pending)",
                     }
                 ],
             }
