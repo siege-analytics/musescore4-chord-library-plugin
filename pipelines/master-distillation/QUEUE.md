@@ -98,7 +98,18 @@ to run via `source.host = "cyberpower"` against the canonical PDF corpus at
 ## Operational notes
 
 - **Run one book at a time.** Cyberpower vision-rescue serializes on Ollama anyway.
-- **Per-book branch.** `feature/<book-slug>` off `develop`; Stage B merges into develop.
+- **Per-book branch with worktree isolation.** When running Stage B for multiple books in parallel, each driver MUST use its own git worktree to avoid shared-HEAD contention. The shared `.git` dir is concurrency-safe (Git locks index/refs internally); the working tree is not.
+
+  ```bash
+  WORKTREE=~/git/siege-analytics/worktrees/<run-slug>
+  git worktree add "$WORKTREE" -b feat/<ticket>-stage-b-<run-slug> origin/develop
+  cd "$WORKTREE"
+  # ... run Stage B injection, commit, push, open PR ...
+  cd ~/git/siege-analytics/musescore4-chord-library-plugin
+  git worktree remove "$WORKTREE"
+  ```
+
+  Serial Stage B runs (one at a time) may use the main working tree directly, but worktrees are always safe and preferred.
 - **For books over ~150 pages** (most of Tier 3 + Tier 4 Felts): apply tight-cap Stage 4 prompt from PR #322 to avoid systems-draft subagent timeout.
 - **Recovery**: if local orchestrator dies mid-run, `python3 pipelines/master-distillation/ocr/reingest.py <run-id>` pulls the cyberpower outbox + rebuilds Stage 1 outputs.
 
