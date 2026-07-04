@@ -273,11 +273,11 @@ OCR_DEFAULTS = {
     "confidence_threshold": 0.70,
     "min_chars_per_page": 40,
     "render_dpi": 200,
-    # F8 fix (#339): wall-clock cap on the remote-runner poll loop. If
-    # Ollama wedges and ocr_runner hangs, the orchestrator polls forever
-    # without this. 120 min is generous for 500-page books at observed
-    # rates; longer real-world runs go through reingest.py on timeout.
-    "max_wait_minutes": 120,
+    # #504 fix: stall-based watchdog replaces wall-clock cap. The poll
+    # loop resets the timer whenever new pages appear; fires only when
+    # no progress for stall_minutes. Large books (300+ pages) no longer
+    # false-negative.
+    "stall_minutes": 30,
 }
 
 
@@ -399,20 +399,20 @@ def _extract_with_ocr(
     # appears. Robust to laptop sleep (the poll just pauses on sleep and
     # resumes on wake — the remote runner doesn't care).
     #
-    # F8 fix (#339): bounded by max_wait_minutes. If Ollama wedges, the
-    # remote pgrep keeps returning RUNNING forever; without the cap the
-    # orchestrator polls indefinitely. On timeout we raise — the remote
-    # runner may still complete, in which case `reingest.py <run_id>` is
-    # the recovery path.
+    # #504: stall-based watchdog. Track page-count progress; reset the
+    # stall timer when new pages appear. Fire only when no progress for
+    # stall_minutes.
     remote_outbox = f"{remote_home}/jazz-ocr/outbox/{book.run_id}"
     poll_interval = 30
-    max_wait_seconds = cfg["max_wait_minutes"] * 60
-    poll_start = time.monotonic()
+    stall_seconds = cfg["stall_minutes"] * 60
+    last_progress_time = time.monotonic()
+    last_page_count = 0
     while True:
         probe = subprocess.run(
             ["ssh", remote,
+             f"pages=$(ls {remote_outbox}/*.txt 2>/dev/null | wc -l); "
              f"if pgrep -f 'ocr_runner.*{book.run_id}' >/dev/null; then "
-             f"echo RUNNING; "
+             f"echo RUNNING $pages; "
              f"elif [ -f {remote_outbox}/raw-transcript.txt ]; then "
              f"echo DONE; "
              f"else "
@@ -420,7 +420,9 @@ def _extract_with_ocr(
              f"fi"],
             capture_output=True, text=True, check=True,
         )
-        status = probe.stdout.strip()
+        status_line = probe.stdout.strip()
+        parts = status_line.split()
+        status = parts[0]
         if status == "DONE":
             break
         if status == "CRASHED":
@@ -428,13 +430,18 @@ def _extract_with_ocr(
                 f"OCR runner exited without producing outbox. "
                 f"Check ~/jazz-ocr/{book.run_id}.log on {host}."
             )
-        # status == "RUNNING": check wall-clock cap before sleeping again.
-        elapsed = time.monotonic() - poll_start
-        if elapsed > max_wait_seconds:
+        # Track page-count progress; reset stall timer on new pages.
+        page_count = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 0
+        if page_count > last_page_count:
+            last_progress_time = time.monotonic()
+            last_page_count = page_count
+        stalled_for = time.monotonic() - last_progress_time
+        if stalled_for > stall_seconds:
             raise RuntimeError(
-                f"OCR runner timed out after {cfg['max_wait_minutes']} min "
-                f"(still RUNNING on {host}). The remote runner may yet "
-                f"complete; recover via "
+                f"OCR runner stalled for {cfg['stall_minutes']} min "
+                f"with no new pages (stuck at {last_page_count} pages "
+                f"on {host}). The remote runner may yet complete; "
+                f"recover via "
                 f"`python3 pipelines/master-distillation/ocr/reingest.py "
                 f"{book.run_id}`."
             )
