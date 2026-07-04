@@ -153,7 +153,7 @@ Return a structured report to the main agent:
 
 ## What you don't do
 
-- Stage B (editing `plugin/data/masters.json` to add the work/systems): main agent does this with curatorial judgment.
+- Stage B (editing `plugin/data/masters.json` to add the work/systems): main agent does this with curatorial judgment. When running parallel Stage B drivers, each uses a git worktree for isolation (see QUEUE.md operational notes).
 - Composite STATEMENT.md at master level (e.g. `plugin/data/masters-corpus/<master>/STATEMENT.md`): main agent does this if needed.
 - Opening PRs or committing: main agent handles git operations.
 - Curatorial decisions about which quotes are "really" load-bearing: trust the LLM's selection unless it's clearly hallucinating.
