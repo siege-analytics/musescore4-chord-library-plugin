@@ -7,15 +7,6 @@ extracted_at: 2026-05-23T23:38:58+00:00
 schema_version: 0.1
 ---
 
----
-run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
-stage: s4
-source_pdf: complete_chord_melody.pdf
-model: claude-sonnet
-extracted_at: 2026-05-23T23:32:30+00:00
-schema_version: 0.1
----
-
 # Complete Chord Melody (Greg O'Rourke) — Statement of Outputs
 
 ## Overview

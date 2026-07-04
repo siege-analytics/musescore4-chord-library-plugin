@@ -1,3 +1,4 @@
+import re
 """Stage 4 — Statement of outputs.
 
 Reads the chapter files (Stage 2) + chapter and book summaries (Stage 3)
@@ -413,7 +414,8 @@ def _write_statement(
         source_pages=None,
         model=model,
     )
-    text_out = prov.yaml_block() + "\n\n" + statement.strip() + "\n"
+    clean = re.sub(r"\A---\n.*?\n---\n*", "", statement.strip(), count=1, flags=re.DOTALL)
+    text_out = prov.yaml_block() + "\n\n" + clean.strip() + "\n"
     book.statement.write_text(text_out)
 
 
