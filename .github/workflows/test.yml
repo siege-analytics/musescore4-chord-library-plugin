@@ -21,6 +21,10 @@ jobs:
         python-version: ["3.12"]
 
     steps:
+      - name: Enable long paths (Windows)
+        if: runner.os == 'Windows'
+        run: git config --system core.longpaths true
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
