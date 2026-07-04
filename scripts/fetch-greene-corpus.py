@@ -3,7 +3,7 @@
 
 The Greene estate publishes the entire archive at https://tedgreene.com
 free of charge. This script downloads selected PDFs (and extracts text
-alongside them) to plugin/data/masters-corpus/greene/ for reference.
+alongside them) to plugin/data/masters-corpus/greene/raw-archive/ for reference.
 
 The MVP entry-point list keeps this commit reasonably-sized (target
 < 100MB); a --full sweep is available to crawl the whole site once we
@@ -50,7 +50,7 @@ except ImportError:
     HAS_PDFPLUMBER = False
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEST = REPO_ROOT / "plugin" / "data" / "masters-corpus" / "greene"
+DEST = REPO_ROOT / "plugin" / "data" / "masters-corpus" / "greene" / "raw-archive"
 
 USER_AGENT = "musescore4-chord-library-plugin masters-bookshelf (educational, https://github.com/siege-analytics)"
 DELAY_SECONDS = 1.0
