@@ -1,4 +1,3 @@
-import re
 """Stage 4 — Statement of outputs.
 
 Reads the chapter files (Stage 2) + chapter and book summaries (Stage 3)
@@ -22,6 +21,7 @@ available (or cloud-Sonnet via the file-dance fallback).
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from lib import provenance

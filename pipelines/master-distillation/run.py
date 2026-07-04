@@ -76,6 +76,22 @@ def cmd_new_run(args: argparse.Namespace) -> int:
     run_id = state.make_run_id(slug)
 
     book = _book_paths(cfg, run_id)
+
+    existing = list(book.committed_chapters_dir.glob("ch*.md"))
+    if existing and not args.overwrite:
+        print(
+            f"work_id '{cfg['work']['id']}' already has {len(existing)} "
+            f"committed chapter outputs at {book.committed_chapters_dir}. "
+            f"Use --overwrite to replace, or use a different work_id.",
+            file=sys.stderr,
+        )
+        return 1
+    if existing and args.overwrite:
+        print(
+            f"WARNING: --overwrite set; {len(existing)} existing chapter "
+            f"outputs at {book.committed_chapters_dir} will be replaced.",
+        )
+
     book.ensure_dirs()
 
     run = state.RunState.new(run_id, str(config_path))
@@ -223,6 +239,10 @@ def main() -> int:
 
     p_new = sub.add_parser("new-run", help="start a fresh run")
     p_new.add_argument("config", help="path to per-book YAML config")
+    p_new.add_argument(
+        "--overwrite", action="store_true",
+        help="allow clobbering existing chapter outputs for this work_id",
+    )
     p_new.set_defaults(func=cmd_new_run)
 
     p_resume = sub.add_parser("resume", help="continue an existing run")

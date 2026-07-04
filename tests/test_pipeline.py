@@ -520,15 +520,15 @@ def test_ocr_defaults_cover_required_keys():
     required = {
         "host", "user", "vision_model",
         "confidence_threshold", "min_chars_per_page", "render_dpi",
-        "max_wait_minutes",  # #339 F8 fix
+        "stall_minutes",  # #504 renamed from max_wait_minutes
     }
     assert required <= set(s1_extract.OCR_DEFAULTS.keys())
 
 
-def test_ocr_defaults_max_wait_minutes_is_positive():
-    """The poll-loop cap (#339 F8) must be a positive number; 0 would
-    immediately timeout, negative would loop forever (elapsed > -N false)."""
-    assert s1_extract.OCR_DEFAULTS["max_wait_minutes"] > 0
+def test_ocr_defaults_stall_minutes_is_positive():
+    """The stall-detection cap (#504) must be a positive number; 0 would
+    immediately timeout, negative would loop forever."""
+    assert s1_extract.OCR_DEFAULTS["stall_minutes"] > 0
 
 
 def test_ocr_orchestrator_does_not_pass_unexpanded_HOME_to_ssh(monkeypatch, tmp_path):
@@ -653,3 +653,77 @@ def test_remote_quoted_path_handles_spaces_and_apostrophes():
     assert quoted.endswith('.pdf"')
     # apostrophe survives inside double quotes
     assert "Baker's" in quoted
+
+
+# ---------------------------------------------------------------------------
+# cmd_new_run pre-flight check (#302)
+# ---------------------------------------------------------------------------
+
+
+def test_new_run_refuses_existing_chapters(tmp_path, monkeypatch):
+    """new-run must error if committed_chapters_dir already has ch*.md files."""
+    monkeypatch.setattr("lib.paths.CORPUS_ROOT", tmp_path / "corpus")
+    monkeypatch.setattr("lib.paths.RUNS_ROOT", tmp_path / "runs")
+
+    chapters_dir = tmp_path / "corpus" / "test" / "vol-1" / "chapters"
+    chapters_dir.mkdir(parents=True)
+    (chapters_dir / "ch01.md").write_text("existing chapter")
+    (chapters_dir / "ch02.md").write_text("existing chapter 2")
+
+    config_path = tmp_path / "test.toml"
+    config_path.write_text("""
+[master]
+id = "test"
+
+[work]
+id = "vol-1"
+
+[source]
+pdf = "/tmp/fake.pdf"
+""")
+
+    import importlib
+    run_mod = importlib.import_module("run")
+
+    args = type("Args", (), {
+        "config": str(config_path),
+        "overwrite": False,
+    })()
+
+    result = run_mod.cmd_new_run(args)
+    assert result == 1
+
+
+def test_new_run_allows_overwrite(tmp_path, monkeypatch):
+    """new-run with --overwrite must proceed past the chapter check."""
+    monkeypatch.setattr("lib.paths.CORPUS_ROOT", tmp_path / "corpus")
+    monkeypatch.setattr("lib.paths.RUNS_ROOT", tmp_path / "runs")
+
+    chapters_dir = tmp_path / "corpus" / "test" / "vol-1" / "chapters"
+    chapters_dir.mkdir(parents=True)
+    (chapters_dir / "ch01.md").write_text("existing chapter")
+
+    config_path = tmp_path / "test.toml"
+    config_path.write_text("""
+[master]
+id = "test"
+
+[work]
+id = "vol-1"
+
+[source]
+pdf = "/tmp/fake.pdf"
+""")
+
+    import importlib
+    run_mod = importlib.import_module("run")
+
+    args = type("Args", (), {
+        "config": str(config_path),
+        "overwrite": True,
+    })()
+
+    # Will proceed past the guard. May fail downstream (no PDF, etc.)
+    # but the pre-flight check should not fire.
+    result = run_mod.cmd_new_run(args)
+    assert result != 1
