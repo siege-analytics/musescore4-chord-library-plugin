@@ -7,15 +7,6 @@ extracted_at: 2026-05-26T18:17:20+00:00
 schema_version: 0.1
 ---
 
----
-run_id: 2026-05-23T23-56-18-baker-jazz-guitar
-stage: s4
-source_pdf: Mickey-Baker-s-Jazz-Guitar.pdf
-model: claude-sonnet
-extracted_at: 2026-05-26T18:08:54+00:00
-schema_version: 0.1
----
-
 # Mickey Baker's Complete Course in Jazz Guitar Vol. 1 — Statement of Outputs
 
 ## Overview

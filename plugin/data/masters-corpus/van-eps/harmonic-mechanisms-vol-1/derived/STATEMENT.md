@@ -7,15 +7,6 @@ extracted_at: 2026-05-26T19:48:38+00:00
 schema_version: 0.1
 ---
 
----
-run_id: 2026-05-26T05-04-34-van-eps-harmonic-mechanisms-vol-1
-stage: s4
-source_pdf: Van-Eps-Harmonic-Mechanisms-Vol-1.pdf
-model: claude-opus
-extracted_at: 2026-05-26T05-04-34+00:00
-schema_version: 0.1
----
-
 # George Van Eps, *Harmonic Mechanisms for Guitar*, Vol. 1 — Statement of Outputs
 
 ## Overview

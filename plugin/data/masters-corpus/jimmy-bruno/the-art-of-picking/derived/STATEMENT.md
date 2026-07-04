@@ -7,15 +7,6 @@ extracted_at: 2026-05-23T22:30:48+00:00
 schema_version: 0.1
 ---
 
----
-run_id: 2026-05-23T22-12-11-bruno-art-of-picking
-stage: s4
-source_pdf: Jimmy-Bruno-The-Art-Of-Picking.pdf
-model: claude-sonnet
-extracted_at: 2026-05-23T22:30:00+00:00
-schema_version: 0.1
----
-
 # The Art of Picking — Statement of Outputs
 
 ## Overview
