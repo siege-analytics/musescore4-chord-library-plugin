@@ -132,3 +132,33 @@ Each row on the form shows an `agent_confidence` of `HIGH`, `MED`, or `NONE`.
 - **`MED`** — The tag was derived: from a 'coverage' marker on the voicing, from a master-id alias in the voicing's tags, or from a category rule (e.g. category=quartal → quartal + jim-hall). The tagger thinks this fits but it's less certain.
 - **`NONE`** — The tagger couldn't attribute this voicing to any master with confidence and left the voicingStyle blank. These are exactly the rows your judgment helps most.
 
+## E. Form labels glossary
+
+What every column on the form means. Read this once; it'll save you decoding each row.
+
+### E.1 Background concepts
+
+- **`master`** — A guitarist whose chord-melody / comping vocabulary the engine knows about. Examples: `joe-pass`, `van-eps`, `dirk-laukens`, `peter-bernstein`, `pat-martino`. Tagging a voicing with a master means 'this voicing belongs to that master's tradition.'
+- **`tag`** — A short label connecting a voicing to either (a) a master (`joe-pass`, `van-eps`, ...) or (b) a specific principle of voicing or playing (`chord-melody`, `walking-bass`, `function-assigned`). Tags are how the engine decides what to recommend when a guitarist selects 'show me Joe Pass voicings.'
+- **`voicingStyle`** — The set of tags describing **what tradition the voicing belongs to** — usually master ids or principle names. Used by the engine to filter and rank voicings when a user picks a master.
+- **`playStyle`** — The set of tags describing **how the voicing is used in a tune**: `block`, `chord-melody`, `walking-bass`, `altered-dominant`, `drop-2`, etc. Independent of voicingStyle — a Joe Pass voicing can be played as `block` or as `walking-bass`.
+- **`category`** — The voicing's broad shape family: `drop2`, `drop3`, `shell`, `quartal`, `extended`, `altered`. See section A for definitions.
+
+### E.2 Agent's columns (what the form shows you)
+
+Three or four columns on each row are the **agent's guess** at what tags this voicing should carry, plus its reasoning.
+
+- **`agent_proposed_voicingStyle`** — The voicingStyle tags the automated tagger guessed for this voicing. Comma-separated.
+- **`agent_proposed_playStyle`** — The playStyle tags the tagger guessed. Comma-separated.
+- **`agent_confidence`** — `HIGH` / `MED` / `NONE` — see section D for what each level means. Higher confidence = stronger evidence behind the guess.
+- **`agent_reasoning`** — A one-line trace of *why* the tagger picked each tag. Format is `tag (CONFIDENCE): short-reason | next-tag (CONFIDENCE): ...`. Example: `dirk-laukens (MED): master 'dirk-laukens' (id-as-tag) | chord-function-driven (MED): discriminating tag`. Read it as a chain — each segment explains one tag the agent emitted. You can ignore the technical reasons (`id-as-tag`, `discriminating tag`) and just use the tags themselves as the signal.
+
+### E.3 Your columns (what we're asking you to fill in)
+
+The remaining columns are yours. Fill them in for the rows you have judgment on; skip rows you don't.
+
+- **`verdict`** — **YES** — the proposed tags fit; move on. **NO** — these tags do not belong on this voicing. **REFINE** — some are right, some are wrong, or some are missing; use `additions` to add what's missing and `override_reason` to explain what's wrong.
+- **`override_reason`** — Required if your verdict is NO or REFINE. **Briefly say why** you're disagreeing with the agent. Examples: "Caug7 doesn't fit Joe Pass's chord-melody vocabulary"; "This shell is sus2 — Bernstein's R-3-7 shell principle doesn't apply"; "Should also be van-eps, not just pass".
+- **`additions`** — Tags you would add, comma-separated. Use kebab-case (e.g. `van-eps`, not `Van Eps`). Reuse names from the proposed columns above so the vocabulary stays consistent. If you don't know the exact name, write a phrase in `notes` and the project owner will canonicalize.
+- **`notes`** — Free-form text. Anything that doesn't fit `additions` or `override_reason` — context about a specific voicing, a question, an aside. Optional.
+
