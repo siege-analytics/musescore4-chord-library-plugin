@@ -318,6 +318,11 @@ def _check_masters_consistency(data: dict) -> list[str]:
                 warnings.append(f"{mid}: duplicate system id '{sid}'")
             all_system_ids.add(sid)
             _check_system_id(mid, None, sid, warnings, expect_segments=2)
+            if sid.startswith("_placeholder:") and not s.get("summary"):
+                warnings.append(
+                    f"{mid}: placeholder system '{sid}' must have a "
+                    f"non-empty summary describing what it will contain"
+                )
 
         seen_work_ids: set[str] = set()
         for w in m.get("works", []) or []:
@@ -325,6 +330,11 @@ def _check_masters_consistency(data: dict) -> list[str]:
             if wid in seen_work_ids:
                 warnings.append(f"{mid}: duplicate work id '{wid}'")
             seen_work_ids.add(wid)
+            if wid.startswith("_placeholder:") and not w.get("summary"):
+                warnings.append(
+                    f"{mid}: placeholder work '{wid}' must have a "
+                    f"non-empty summary describing what it will contain"
+                )
 
             for s in w.get("systems", []) or []:
                 sid = s.get("id", "<no-id>")
@@ -332,6 +342,11 @@ def _check_masters_consistency(data: dict) -> list[str]:
                     warnings.append(f"{mid}: duplicate system id '{sid}'")
                 all_system_ids.add(sid)
                 _check_system_id(mid, wid, sid, warnings, expect_segments=3)
+                if sid.startswith("_placeholder:") and not s.get("summary"):
+                    warnings.append(
+                        f"{mid}: placeholder system '{sid}' must have a "
+                        f"non-empty summary describing what it will contain"
+                    )
 
     return warnings
 
