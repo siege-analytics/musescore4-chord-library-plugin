@@ -64,7 +64,7 @@ class SourceLocator:
 
     @property
     def is_remote(self) -> bool:
-        return self.host is not None
+        return bool(self.host)
 
     @property
     def remote_user_host(self) -> str:
@@ -100,7 +100,10 @@ class SourceLocator:
                     f"source PDF not found on {self.host}: {self.remote_path}"
                 )
         else:
-            assert self.local_path is not None
+            if self.local_path is None:
+                raise RuntimeError(
+                    "local_path unexpectedly None for non-remote source"
+                )
             if not self.local_path.exists():
                 raise FileNotFoundError(f"source PDF not found: {self.local_path}")
 
@@ -388,7 +391,10 @@ def _extract_with_ocr(
     launch_cmd = (
         f"nohup bash -c '{env_prefix}~/jazz-ocr/bin/run.sh {book.run_id}' "
         f"</dev/null >~/jazz-ocr/{book.run_id}.log 2>&1 & disown; "
-        f"sleep 1; pgrep -af 'ocr_runner.*{book.run_id}' >/dev/null"
+        f"for delay in 1 3 5; do "
+        f"sleep $delay; "
+        f"pgrep -af 'ocr_runner.*{book.run_id}' >/dev/null && exit 0; "
+        f"done; exit 1"
     )
     subprocess.run(
         ["ssh", remote, launch_cmd],
