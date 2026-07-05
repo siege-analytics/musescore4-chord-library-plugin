@@ -143,7 +143,7 @@ If the validator reports a note mismatch, your fret positions or declared notes 
 To validate with a non-standard tuning:
 
 ```bash
-python scripts/validate.py -v --tuning config/tunings/7string-low-b.json
+python scripts/validate.py -v --tuning plugin/tunings/7string-low-b.json
 ```
 
 ### Step 6: Cross-reference with Oolimo
@@ -165,14 +165,14 @@ Include the source (book + page number) and confirmation that you checked with O
 
 ## Managing tunings
 
-Tuning configurations live in `config/tunings/` as JSON files. The validator uses these to compute correct notes at fret positions.
+Tuning configurations live in `plugin/tunings/` as JSON files. The validator uses these to compute correct notes at fret positions.
 
 ### Tuning file format
 
 ```json
 {
-  "name": "Standard + Van Eps 7th (Low A)",
-  "description": "Standard 6-string with optional 7th string tuned to low A.",
+  "name": "Van Eps 7-String (Low A)",
+  "description": "George Van Eps 7-string tuning. Standard 6-string with low A (A1) on the 7th string.",
   "strings": {
     "1": 64,
     "2": 59,
@@ -190,8 +190,7 @@ Tuning configurations live in `config/tunings/` as JSON files. The validator use
     "5": "A2",
     "6": "E2",
     "7": "A1"
-  },
-  "reference": "MIDI note numbers. Middle C (C4) = 60. A440 (A4) = 69."
+  }
 }
 ```
 
@@ -209,10 +208,10 @@ The `strings` object maps string number to the MIDI note number of the open stri
 
 ### Adding a tuning
 
-1. Create a new JSON file in `config/tunings/` (e.g., `open-g.json`)
+1. Create a new JSON file in `plugin/tunings/` (e.g., `open-g.json`)
 2. Set the `strings` object with MIDI note numbers for each open string
 3. Add a human-readable `notes` object
-4. Test it: `python scripts/validate.py -v --tuning config/tunings/open-g.json`
+4. Test it: `python scripts/validate.py -v --tuning plugin/tunings/open-g.json`
 
 ### Editing a tuning
 
@@ -222,10 +221,16 @@ Edit the `strings` values in the JSON file. To change the 7th string from low A 
 
 | File | Description |
 |------|-------------|
-| `standard.json` | Standard 6-string + Van Eps 7th (low A). **Default.** |
+| `standard.json` | Standard 6-string (E-A-D-G-B-E). **Default.** |
+| `7string-van-eps.json` | Van Eps 7-string with low A (A1 below low E) |
 | `7string-low-b.json` | Standard 7-string with low B |
+| `breau-7-high-a.json` | Breau 7-string with high A (A4 above high E) |
 | `dadgad.json` | DADGAD alternate tuning |
-| `all-fourths.json` | All-fourths tuning (E A D G C F) |
+| `all-fourths.json` | All-fourths tuning (E-A-D-G-C-F) |
+| `all-thirds-6.json` | All-thirds 6-string tuning |
+| `all-thirds-7.json` | All-thirds 7-string tuning |
+| `baritone.json` | Baritone guitar tuning |
+| `baritone-a.json` | Baritone A tuning |
 
 ---
 
