@@ -23,7 +23,9 @@ Most authors sit clearly on one side; some sit on both (Jens Larsen is the canon
 
 Plus two orthogonal harvest destinations — a book may route to **L** or **R** in addition to or instead of M/P:
 
-- **L (library)** — encyclopedic / reference content (chord dictionaries, voicing catalogues, pattern compendia). Goes into `plugin/data/` as library extensions with source attribution. No principles[] or STATEMENT.md.
+- **L (library)** — encyclopedic / reference content (chord dictionaries, voicing catalogues, pattern compendia). Goes into `plugin/data/` as library extensions with source attribution. Subdivided into:
+  - **L-general** — cross-source catalogues drawn from many voices. No single master's attribution dominates. Analogy: LSJ (Liddell-Scott-Jones) is the general Greek lexicon.
+  - **L-master** — single-master vocabulary catalogues attributed to one voice. The catalogue IS this master's contribution; attribution matters. Analogy: Cunliffe is the Homeric Greek lexicon -- single-corpus, single attribution.
 - **R (rules)** — algorithmic content (substitution rules, fingering principles, voice-leading patterns, technique sequences). Goes into a rules config namespace with source attribution. Engine consumes rules across styles, not as one style.
 
 And one terminal disposition:
@@ -44,10 +46,15 @@ A single author can produce books in multiple buckets (Laukens: chord-dictionary
 - **Brent Greenan** (jazz-standards-playbook). Known to people who read about him; influence without distinctive principles.
 - **Bill Carter** (fingerstyle-jazz). Well-known pedagogue in fingerstyle circles. Real teaching impact; not a unique artistic voice.
 
-### L — library / reference content
-- **Dirk Laukens** (chord-dictionary). Catalogue of chord shapes.
-- **Heussenstamm-Silbergleit** (goldmine-100-jazz-lessons). 100-lesson catalogue.
-- **Jerry Coker** (patterns-for-jazz). Pattern compendium.
+### L-general — cross-source library / reference content
+- **Dirk Laukens** (chord-dictionary). Catalogue of chord shapes drawn from many voices.
+- **Heussenstamm-Silbergleit** (goldmine-100-jazz-lessons). 100-lesson catalogue, cross-source.
+- **Jerry Coker** (patterns-for-jazz). Pattern compendium spanning the idiom.
+
+### L-master — single-master vocabulary catalogue
+- **Joe Pass** (guitar-chords). Pass's own chord vocabulary catalogue; attribution to his voice matters.
+- **Gene Bertoncini** (arrangements-for-solo-guitar). Bertoncini's arrangement catalogue; each voicing choice is his.
+- **Barry Galbraith** (jazz-solo-guitar). Galbraith's 42 chord-melody arrangements; single-master catalogue.
 
 ### R — algorithmic / rules content
 - **Randy Felts** (reharmonization-techniques). Substitution catalogue → engine rule layer.
@@ -66,6 +73,25 @@ For a book under consideration:
 2. **If not, is the author's pedagogical impact non-trivial?** If their books sold to tens of thousands, were taught in studios for years, or shaped a generation's vocabulary, the book is P-material. Their principles still get extracted; they are tagged so the engine knows they are received-wisdom, not style-bound.
 3. **Independently — does the content shape itself suggest L or R?** A chord dictionary is L regardless of author status. A substitution catalogue is R regardless. M and P entries can additionally have works that route to L/R.
 4. **Does the book duplicate stronger texts at lower fidelity?** S.
+
+## Library-only-master convention
+
+Some masters are voices in the canon whose only available source is an L-master catalogue -- no prose method book from which to extract principles. These masters get:
+
+- `status: "master"` in masters.json -- they ARE voices; their catalogue attests a distinctive approach
+- `works[]` entry pointing at the L-master catalogue
+- `principles: []` (empty) and no STATEMENT.md until a prose source is found
+- Systems may use `_placeholder:` prefix for future systems pending source acquisition
+
+This is distinct from `corpus` status. A corpus entry is reference-only material with no claim of artistic voice. A library-only master IS a voice -- the principles are pending prose-source discovery, not absent.
+
+### Worked examples
+
+**Joe Pass** — `guitar-chords` is L-master (his chord vocabulary). `guitar-method` is M (prose method with extractable principles). Pass has both an M source and an L-master source. His masters.json entry has `status: "promoted"` with both works listed.
+
+**Gene Bertoncini** — `arrangements-for-solo-guitar` is L-master. No prose method book exists. His masters.json entry has `status: "promoted"` with the L-master work. `principles: []` until a prose source is found. Systems use `_placeholder:` prefix (e.g., `_placeholder:gene-bertoncini:arrangements-for-solo-guitar:chord-melody-fundamentals`).
+
+**Barry Galbraith** — `jazz-solo-guitar` (42 chord-melody arrangements) is L-master. Galbraith also has prose method books (the four-volume *Guitar Comping* series), but those are not yet in the corpus. His masters.json entry has `status: "promoted"` with the L-master work present. Systems use `_placeholder:` prefix for future system work pending source acquisition.
 
 ## Engine semantics
 
