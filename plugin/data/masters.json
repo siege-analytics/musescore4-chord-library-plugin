@@ -46606,7 +46606,25 @@
       ],
       "status": "promoted",
       "studied_with": [],
-      "influenced": []
+      "influenced": [],
+      "works": [
+        {
+          "id": "aids-to-technique",
+          "title": "Aids to Technique for Guitar",
+          "prescriptive_lessons": {
+            "status": "pending",
+            "source": "staging/Smith, Johnny - Aids to Technique for Guitar.pdf"
+          }
+        },
+        {
+          "id": "chord-solos",
+          "title": "Chord Solos",
+          "prescriptive_lessons": {
+            "status": "pending",
+            "source": "staging/Smith, Johnny - Chord Solos.pdf"
+          }
+        }
+      ]
     },
     {
       "id": "lenny-breau",
