@@ -1,0 +1,156 @@
+---
+run_id: 2026-05-22T21-15-00-benson-vol-1
+stage: s5
+source_pdf: THE-GEORGE-BENSON-METHOD-VOL-1-Chord-Construction-Beginning-Harmony-1st-Edition.pdf
+model: claude-sonnet
+extracted_at: 2026-06-11T23:31:18+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons — benson × method-vol-1-chord-construction
+
+## maj7
+Benson teaches 11 distinct maj7 lesson(s) in this volume (3 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 200, 'Ist degree: C6 vs Cmaj7'] On the I degree, freely interchange C6 and Cmaj7 almost all the time. 'We can replace C6 by Cmaj7 or vice-versa almost all the time.' (Ch. 6, p. 200). Use C6 instead when the melody is the octave to avoid a b9 conflict between melody and chord.
+- [p. 209, 'IV degree lydian #4 rule'] 'We do not have to put the (#4) in the chord all the time, but in a few cases it might work. In theory, G/F can be considered an F Lydian chord, including G7(13) or G7(9).' (Ch. 6, p. 209). The #4 (augmented 11th) is optional on the IV Lydian maj7 chord and need not appear in every voicing.
+- [p. 207, 'IIIm degree phrygian options'] On the IIIm (Phrygian) degree, recast Em7 as the slash voicing Cmaj7/E or C/E. 'Em7 can be replaced by Em7(b6), Cmaj7/E or even C/E, which are the same chords.' (Ch. 6, p. 207). This slash approach reinterprets the maj7 chord as an upper structure over the phrygian bass.
+- [p. 217, 'VIm degree aeolian options'] On the VIm (Aeolian) degree, every Fmaj7/A can be considered an Aeolian chord. 'In theory, every Dm7/A or Fmaj7/A can be considered as an Aeolian chord.' (Ch. 6, p. 217). Use the Fmaj7/A slash voicing to supply an aeolian color over the vi bass note.
+- [p. 83, 'Sixth-chord/seventh-chord equivalence'] 'Cm(b6) is exactly the same as Abmaj7 first inversion.' (Ch. 4, p. 83). When a Cm(b6) voicing appears, recognize it as Abmaj7 in first inversion and choose the label that best fits the harmonic context.
+- [p. 77, 'Flat-9 between bass and top to avoid'] (proscriptive) 'For major and minor chords, we should avoid intervals of a flat 9th between the bass note and the top note of the chord.' (Ch. 4, p. 77). When building maj7 voicings in any inversion, verify that the interval spanning from the lowest sounding note to the highest is not a minor 9th.
+- [p. 84, 'Drop 2 and Drop 3'] (proscriptive) 'Drop chord voicings can only be used with tetrads.' (Ch. 4, p. 84). Drop 2 and Drop 3 apply to the four-note maj7 chord exclusively; do not carry these transformations into maj9 or maj7#11 voicings.
+- [p. 112, 'Guitar must omit notes; not piano'] 'Many of the chords on the guitar have to be edited... unlike the piano which is a complete harmonic instrument.' (Ch. 4, p. 112). For maj7 voicings, omit the 5th when needed to make the shape playable; the root, major 3rd, and major 7th carry the essential identity.
+- [p. 84, 'Smallest movement voice-leading'] 'The choice of notes for a chord sequence, most of the time must keep the smallest possible movement between the notes from one chord to another.' (Ch. 4, p. 84). Select maj7 inversions (root, 1st, 2nd, 3rd position) to minimize melodic step size when moving to or from the chord.
+- [p. 200, 'Ist degree: C6 vs Cmaj7'] (proscriptive) 'We rarely use the perfect 4th over an Ionian chord. However we have some exceptions, where we can find chords with 4ths and 3rds or even omitted 3rd chords.' (Ch. 6, p. 200). On a maj7 Ionian chord, treat the natural 4th as an avoid note except in specific open-voicing or quartal contexts.
+- [p. 187, 'Study Devices for Harmonic Fields'] 'To make visualization easier, choose chords that are close to each other, using only the 6th and 5th string chords. The 4th string chords should be studied only after you are comfortable with the others.' (Ch. 6, p. 187). Learn all maj7 voicings rooted on the 6th and 5th strings as a prerequisite to studying 4th-string maj7 positions.
+
+## maj6
+Benson teaches 2 distinct maj6 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 200, 'Ist degree: C6 vs Cmaj7'] 'We can replace C6 by Cmaj7 or vice-versa almost all the time. The only exception is when the melody is the octave. In this case we must use C6, in order to not create a conflict between the melody and the chord (a b9 interval).' (Ch. 6, p. 200). The maj6 voicing is the preferred choice specifically when the melody sits on the octave of the root.
+- [p. 83, 'Sixth-chord/seventh-chord equivalence'] 'C6 is exactly the same as Am7 first inversion and Cm(b6) is exactly the same as Abmaj7 first inversion. We can call them by both names, but depending on the harmonic situation one of them will work better.' (Ch. 4, p. 83). Choose the C6 or Am7/first-inversion label that best fits the harmonic context; neither is universally preferable.
+
+## maj7#11
+Benson teaches 1 distinct maj7#11 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 126, '11th chord 3rd-vs-4th dissonance rule'] For major chords functioning in a Lydian context, the augmented 11th (#4) is the characteristic note of the mode. 'For major chords and dominant 7th chords, most of the time we use the #11th (#4) to prevent unwanted dissonance with the major 3rd.' (Ch. 4, p. 126). Apply #11 freely on major chords to preserve Lydian modal color.
+
+## maj9
+Benson teaches 2 distinct maj9 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 182, 'Extended notes usage rule'] Extended notes on the Ionian (I) chord include the major 9th, perfect 11th, and major 13th as tensions, but 'not all extended notes of a chord must be in it. Many of them should only be played as the passing tones of a melody on the chord.' (Ch. 5, p. 182). Add the major 9th to the I voicing for color, but treat it as a melodic option rather than a required component.
+- [p. 227, 'Rule: extensions as passing tones'] 'VERY IMPORTANT: Not all extended notes of a chord must be in it. Many of them should only be played as the passing tones of a melody on the chord.' (Ch. 7, p. 227). The major 9th on a maj9 chord is primarily a melodic passing-tone resource; omitting it from the voicing is standard practice and does not undermine the chord identity.
+
+## min7
+Benson teaches 9 distinct min7 lesson(s) in this volume (3 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 204, 'IIm degree dorian replacements'] On the IIm (Dorian) degree, the base min7 voicing can be freely replaced with its Dorian extensions. 'We can replace Dm7(9) dorian by Dm7(11) or even Dm7(13).' (Ch. 6, p. 204). Begin from the Dm7 shape and add the 9th, 11th, or 13th depending on the melodic context.
+- [p. 207, 'IIIm degree phrygian options'] On the IIIm (Phrygian) degree, Em7 can be enriched or replaced with a flat-6 addition or equivalent slash voicings. 'Em7 can be replaced by Em7(b6), Cmaj7/E or even C/E, which are the same chords. However, as a phrygian chord, Em7 can also be replaced by Esus(b9).' (Ch. 6, p. 207).
+- [p. 217, 'VIm degree aeolian options'] On the VIm (Aeolian) degree, replace Am7 with Am7(9), Am7(11), or Am7(b6) for extended color, or use the slash voicings Dm7/A or Fmaj7/A. 'We can replace Am7(9) Aeolian with Am7(11) or even Am7(b6). But just like any degree, the characteristic notes do not have to be in the chord all the time.' (Ch. 6, p. 217).
+- [p. 77, 'Flat-9 between bass and top to avoid'] (proscriptive) 'For major and minor chords, we should avoid intervals of a flat 9th between the bass note and the top note of the chord.' (Ch. 4, p. 77). On min7 shapes the most common trigger is a 3rd-inversion voicing where the b7 bass sits a minor 9th below the root on top; revoice to eliminate that span.
+- [p. 83, 'Sixth-chord/seventh-chord equivalence'] 'C6 is exactly the same as Am7 first inversion.' (Ch. 4, p. 83). When encountering Am7 in first inversion, recognize it as functionally equivalent to a C6 voicing; select whichever label serves the local harmonic analysis.
+- [p. 84, 'Drop 2 and Drop 3'] (proscriptive) 'Drop chord voicings can only be used with tetrads.' (Ch. 4, p. 84). Use Drop 2 / Drop 3 on the four-note min7 chord shape only, not on min9 or min7(11) extensions.
+- [p. 58, 'Left-side shape caveat'] (proscriptive) 'The 6th string/left side shape... we do not use with a minor chord.' (Ch. 4, p. 58). For minor chord skeletons rooted on the 6th string, always use the right-side or 5th-string skeleton rather than the left-side shape.
+- [p. 126, '11th chord 3rd-vs-4th dissonance rule'] 'However, for minor chords the perfect 11th (4th) can be used freely.' (Ch. 4, p. 126). Unlike major and dominant chords where the natural 11 clashes with the major 3rd, the minor 11th is an unrestricted tension on any minor 7th voicing and may be added at will.
+- [p. 187, 'Study Devices for Harmonic Fields'] 'To make visualization easier, choose chords that are close to each other, using only the 6th and 5th string chords. The 4th string chords should be studied only after you are comfortable with the others.' (Ch. 6, p. 187). Build min7 fluency first on the 6th and 5th strings in a single key before moving to 4th-string positions or modulating.
+
+## min9
+Benson teaches 2 distinct min9 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 204, 'IIm degree dorian replacements'] The 9th is a standard Dorian extension on the IIm degree. 'We can replace Dm7(9) dorian by Dm7(11) or even Dm7(13).' (Ch. 6, p. 204). Dm7(9) is the primary Dorian voicing recommended as the starting point before adding the 11th or 13th.
+- [p. 182, 'Extended notes usage rule'] 'Not all extended notes of a chord must be in it. Many of them should only be played as the passing tones of a melody on the chord.' (Ch. 5, p. 182). On a min9 chord the 9th belongs primarily to the melody line over the chord; it need not appear in the comping voicing.
+
+## min6
+Benson teaches 1 distinct min6 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 204, 'IIm degree dorian replacements'] 'In theory, we could also use Dm6, but minor 6th chords are more complex than they look, so we will come back to them later. For now, let us consider that they can sometimes replace a minor 7th chord.' (Ch. 6, p. 204). Defer the min6 on the IIm degree until the simpler Dorian extensions are mastered.
+
+## dom7
+Benson teaches 10 distinct dom7 lesson(s) in this volume (4 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 213, 'V degree dominant sus substitution'] On the V degree, the dominant 7th can always be replaced with a sus chord. 'We can replace the V chord (dominant) with a sus chord. Example: G7 can be replaced by Gsus9 or Gsus13.' (Ch. 6, p. 213).
+- [p. 126, '11th chord 3rd-vs-4th dissonance rule'] 'For major chords and dominant 7th chords, most of the time we use the #11th (#4) to prevent unwanted dissonance with the major 3rd. Only in some specific cases do we use the major 3rd and the perfect 11th (4th) together.' (Ch. 4, p. 126). On dominant 7th chords prefer #11 over natural 11 except in deliberate cases.
+- [p. 77, 'Flat-9 between bass and top to avoid'] (proscriptive) 'For major and minor chords, we should avoid intervals of a flat 9th between the bass note and the top note of the chord.' (Ch. 4, p. 77). This voicing prohibition also applies to inversions and slash voicings: check that the outer-voice interval between bass and melody is never a minor 9th when the chord is major or minor.
+- [p. 84, 'Drop 2 and Drop 3'] (proscriptive) 'It is very important to understand that drop chord voicings can only be used with tetrads, leaving behind the tensions 9th, 11th and 13th that will be used later with the extended chords.' (Ch. 4, p. 84). Apply Drop 2 and Drop 3 transformations only to four-note dominant 7th shapes; never apply them to extended (9, 11, 13) voicings.
+- [p. 58, 'Left-side shape caveat'] (proscriptive) 'It is important to understand that some chords using the left side shape might not work properly because they are almost impossible to play. The 5th string/left side shape works better than the 6th string/left side shape, which we do not use with a minor chord.' (Ch. 4, p. 58). When building Chord Skeleton shapes for any quality on the 6th string, avoid the left-side shape; prefer 5th-string or right-side alternatives.
+- [p. 112, 'Guitar must omit notes; not piano'] 'It is important to remember that many of the chords on the guitar have to be edited. This is totally different from the piano which is a complete harmonic instrument, where we can have many chord voicing possibilities without having to omit any note.' (Ch. 4, p. 112). On guitar, freely omit chord tones — especially the 5th — to make voicings physically playable; this is not a compromise but the instrument defining constraint.
+- [p. 84, 'Smallest movement voice-leading'] 'The choice of notes for a chord sequence, most of the time must keep the smallest possible movement between the notes from one chord to another. Certainly, sometimes there may be deliberate leaps, but the smallest movement will almost always be the best way.' (Ch. 4, p. 84). When moving between dominant 7th voicings (or any chord pair), choose the inversion and string set that minimizes total voice movement.
+- [p. 127, '4th-string chords derived from 5th/6th'] 'The extended chords will be learned by rooting them on the 5th and 6th strings. The 4th string will be used to play the 6th and 5th string chords without the bass note. Usually, a 4th string chord is derived from a 6th string chord. It will start from the 7th or 6th of the chord.' (Ch. 4, p. 127). When moving a dominant 7th voicing to the 4th string, begin from the shape 7th or 6th degree rather than attempting an independent fingering.
+- [p. 182, 'Mixolydian characteristics'] (proscriptive) 'Avoid notes: perfect 4th' on the Mixolydian (V) chord (Ch. 5, p. 182). The natural 11th/4th creates a characteristic half-step clash with the major 3rd in dominant 7th voicings; use #11 instead or omit the 11th entirely.
+- [p. 187, 'Study Devices for Harmonic Fields'] 'To make visualization easier, choose chords that are close to each other, using only the 6th and 5th string chords. The 4th string chords should be studied only after you are comfortable with the others.' (Ch. 6, p. 187). Master all dominant 7th voicings rooted on the 6th and 5th strings before attempting 4th-string positions.
+
+## dom11
+Benson teaches 1 distinct dom11 lesson(s) in this volume (1 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 182, 'Mixolydian characteristics'] (proscriptive) The perfect 11th (natural 4th) is listed as an avoid note for the Mixolydian (V) chord: 'Avoid notes: perfect 4th' (Ch. 5, p. 182). For dominant chords, avoid placing the natural 11th in the voicing because it clashes with the major 3rd; use #11 instead on major and dominant qualities.
+
+## dom7#11
+Benson teaches 1 distinct dom7#11 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 126, '11th chord 3rd-vs-4th dissonance rule'] Prefer the #11 on dominant chords functioning as the V or in a Lydian Dominant context. 'For major chords and dominant 7th chords, most of the time we use the #11th (#4) to prevent unwanted dissonance with the major 3rd.' (Ch. 4, p. 126). The Lydian Dominant scale (IV of Melodic Minor) is the primary source for this color on the V chord.
+
+## dom13
+Benson teaches 3 distinct dom13 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 126, '13th chords almost omit the 5th'] 'Notice that in this type of chord, the 5th is almost always omitted.' (Ch. 4, p. 126). When voicing a 13th chord on guitar, drop the 5th to keep the voicing practical; the essential tones are the root, 3rd, 7th, and 13th.
+- [p. 209, 'IV degree lydian #4 rule'] A G7(13) or G7(9) voicing over an F bass implies F Lydian. 'In theory, G/F can be considered an F Lydian chord, including G7(13) or G7(9).' (Ch. 6, p. 209). Use the dom13 chord as an upper-structure slash to evoke the Lydian color on the IV degree.
+- [p. 182, 'Extended notes usage rule'] 'Not all extended notes of a chord must be in it. Many of them should only be played as the passing tones of a melody on the chord.' (Ch. 5, p. 182). On a dom13, the 9th and 11th layers in particular serve as melodic ornaments rather than mandatory voicing components; voice only the root, 3rd, 7th, and 13th on the guitar.
+
+## dom7alt
+Benson teaches 2 distinct dom7alt lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 126, 'Altered chord definition'] 'Every dominant chord with more than one altered extended note is called an altered chord.' (Ch. 4, p. 126). When applying alterations to a dominant chord, ensure at least two altered extensions (e.g., b9 and b5, or #9 and #5) are present to qualify it as altered; a single alteration simply modifies the dominant without crossing into the altered category.
+- [p. 224, 'Function of derived chord families'; p. 251, 'Altered Scale intervals'] The VII Altered Scale (Root/min 2nd/aug 2nd/maj 3rd/aug 4th/min 6th/min 7th) from Melodic Minor is the primary theoretical source for altered dominant voicings. 'We cannot use the chord families derived from these three groups of scale modes to guide us through songs, we can only use them to add more colors to the chords.' (Ch. 7, p. 224). Apply Altered Scale colors on top of an existing dominant chord rather than as a structural replacement.
+
+## dom7b9
+Benson teaches 2 distinct dom7b9 lesson(s) in this volume (2 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 77, 'Flat-9 between bass and top to avoid'] (proscriptive) 'For major and minor chords, we should avoid intervals of a flat 9th between the bass note and the top note of the chord.' (Ch. 4, p. 77). This prohibition applies broadly to any voicing where the interval from bass to top note spans a minor 9th, so when building dom7b9 shapes take care not to position the b9 as the top note against the bass.
+- [p. 221, 'VIIm locrian avoid-note rule'] (proscriptive) 'The VII degree cannot use the 9th in the chord, because it would be flat 9th, which does not work properly for this type of chord. Remember that the flat 9th is an avoid note on locrian chord.' (Ch. 6, p. 221). Never add the 9th to the half-diminished VII chord when reinterpreted as a dominant-7 slash voicing over the leading tone.
+
+## sus4
+Benson teaches 5 distinct sus4 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 213, 'V degree dominant sus substitution'] 'We can replace the V chord (dominant) with a sus chord. Example: G7 can be replaced by Gsus9 or Gsus13.' (Ch. 6, p. 213). The sus4 substitution for the V dominant is a primary Mixolydian color move; keep the perfect 4th in place of the 3rd and leave the minor 7th intact.
+- [p. 108, 'Suspended chord definition'] 'Suspended chords are those where the 3rd is replaced by the 4th or 2nd. We call these chords sus2 and sus4. Although the two instances exist, the most common is to replace the 3rd by the 4th.' (Ch. 4, p. 108). Always treat the sus4 as a 3rd-replacement voicing, not as an added-tone chord.
+- [p. 109, 'Sus chord visualization tip'] 'In order to visualize this type of chord properly, it is recommended to consider them as dominant 7th chords using some different tension notes. In other words, for the sus chords visualization, we will use the simple dominant 7th chord shapes we already know to guide us.' (Ch. 4, p. 109). Build every sus4 shape by starting from a known dominant-7 shape and replacing the 3rd with the 4th.
+- [p. 207, 'IIIm degree phrygian options'] 'As a phrygian chord, Em7 can also be replaced by Esus(b9) and sometimes Em7(b9), which was often used by composers such as Antonio Carlos Jobim and also Heitor Villa Lobos.' (Ch. 6, p. 207). On the IIIm Phrygian degree the sus(b9) voicing is a characteristic coloristic substitution with a strong Brazilian art-music precedent.
+- [p. 108, 'Sus9 / Sus13 chord-symbol semantics'] 'Gsus9: means that we have chord tones: root, perfect 4th, minor 7th and major 9th. Gsus13: means that we have chord tones: root, perfect 4th, minor 7th and major 13th. (It can also mean: root, perfect 4th, minor 7th major 9th and major 13th).' (Ch. 4, p. 108). Always decode sus9/sus13 symbols by stripping the 3rd and substituting the 4th within the dominant-7 parent shape before adding the named extension.
+
+## min7b5
+Benson teaches 3 distinct min7b5 lesson(s) in this volume (1 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 221, 'VIIm locrian avoid-note rule'] 'Bø can be replaced with G7/B or even G/B. This happens frequently because we consider the Bø as being G7(9)/B.' (Ch. 6, p. 221). The half-diminished VII chord should routinely be recast as a slash voicing of the dominant a minor 7th below, making its locrian function explicit through the bass note alone.
+- [p. 182, 'Locrian characteristics'; p. 221, 'VIIm locrian avoid-note rule'] (proscriptive) The minor 2nd (b9) is the primary avoid note for Locrian: 'Avoid notes: minor 2nd' (Ch. 5, p. 182). On the half-diminished VII chord, 'the VII degree cannot use the 9th in the chord, because it would be flat 9th, which does not work properly for this type of chord.' (Ch. 6, p. 221). Never voice the 9th on a Locrian half-diminished chord.
+- [p. 84, 'Drop 2 and Drop 3'] 'Drop chord voicings can only be used with tetrads.' (Ch. 4, p. 84). The half-diminished (min7b5) is a tetrad and may be subjected to Drop 2 / Drop 3 transformations; do not apply these to any extension-bearing version of the chord.
+
+## dim7
+Benson teaches 4 distinct dim7 lesson(s) in this volume (1 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 75, 'Symmetric chords - no inversion'] (proscriptive) 'There is no inversion to diminished or augmented chords, because they are symmetric. Symmetric chords are those that repeat themselves in a predetermined intervallic cycle. The diminished chord, for example, repeats itself each minor 3rd.' (Ch. 4, p. 75). Do not apply root/first/second inversion analysis to dim7 shapes; instead navigate them via their enharmonic minor-3rd equivalences.
+- [p. 128, 'Dominant 7 to diminished/half-dim/maj7#4 web'] Dominant 7th chords 'have a strong relationship with diminished, half diminished and major 7th (#4) chords.' (Ch. 4, p. 128). Use the dim7 as an enharmonic substitute for a dominant-7 chord a half-step above any of its chord tones, exploiting the four-way symmetric identity to access distant tonal regions.
+- [p. 277, 'Harmonic Major VIIm Locrian bb7'; p. 224, 'Function of derived chord families'] The Harmonic Major VIIm Locrian (bb7) mode (Root/min 2nd/min 3rd/perf 4th/dim 5th/min 6th/dim 7th) is the theoretical source for diminished 7th colors including o7(b13) and (11) textures (Ch. 7, p. 277). 'We cannot use the chord families derived from these three groups of scale modes to guide us through songs, we can only use them to add more colors to the chords.' (Ch. 7, p. 224). Apply these dim7 colors as tension layers over existing chords, never as structural substitutes.
+- [p. 64, 'Diminished triad shape rationale'] 'The diminished triad will use a left shape using 3 consecutive strings. Actually this type of diminished shape is not as common as the real diminished chord. We use this shape to create phrases (licks) when improvising, or even when we play a solo guitar piece.' (Ch. 4, p. 64). Reserve the triadic diminished left-side shape for melodic/improvisational use rather than comping.
+
+## aug7
+Benson teaches 2 distinct aug7 lesson(s) in this volume (1 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 75, 'Symmetric chords - no inversion'] (proscriptive) 'There is no inversion to diminished or augmented chords, because they are symmetric... the augmented chords repeat themselves every major 3rd.' (Ch. 4, p. 75). Do not label augmented chord shapes as root, first, or second inversions; treat the three enharmonic positions as equivalent.
+- [p. 251, 'bIII Lydian Augmented intervals'; p. 224, 'Function of derived chord families'] The bIII Lydian Augmented scale from Melodic Minor (Root/maj 2nd/maj 3rd/aug 4th/aug 5th/maj 6th/maj 7th) is the primary color source for augmented dominant tones (Ch. 7, p. 251). Apply the augmented color over a dominant chord as a tension device, not as a structural harmonic move. 'We can only use them to add more colors to the chords.' (Ch. 7, p. 224).
+
+## min-maj7
+Benson teaches 3 distinct min-maj7 lesson(s) in this volume (2 proscriptive). Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 226, 'Avoid/characteristic notes for Am(maj7)'] The Im Harmonic Minor mode yields a min-maj7 chord (Root/min 3rd/perf 5th/maj 7th). Its characteristic note is the major 7th and its avoid note is the minor 6th when the chord is Am(maj7): 'Avoid notes: minor 6th when the chord is Am(maj7). Characteristic notes: major 7th.' (Ch. 7, p. 226). Emphasize the major 7th as the defining tension and keep the minor 6th out of the voicing when holding on the chord.
+- [p. 224, 'Function of derived chord families'] (proscriptive) 'It is important to understand that we cannot use the chord families derived from these three groups of scale modes to guide us through songs, we can only use them to add more colors to the chords.' (Ch. 7, p. 224). The min-maj7 voicing sourced from Harmonic Minor is a coloristic tension device layered over an existing minor chord, not a progression-guiding substitution.
+- [p. 226, 'Avoid/characteristic notes for Am(maj7)'] (proscriptive) When voicing Am(maj7), avoid the minor 6th as a chord tone: 'Avoid notes: minor 6th when the chord is Am(maj7).' (Ch. 7, p. 226). The minor 6th is usable as a passing tone in the melody over the chord but must never land as a resting note within the voicing.
+
+## dom7#9
+Benson teaches 1 distinct dom7#9 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 126, 'Altered chord definition'] A dominant chord carrying both a #9 and any other alteration qualifies as an altered chord: 'Every dominant chord with more than one altered extended note is called an altered chord.' (Ch. 4, p. 126). Apply the #9 in combination with at least one other alteration (b5, b9, #5, or b13) and source the resulting color from the VII Altered Scale of Melodic Minor.
+
+## dom7b5
+Benson teaches 1 distinct dom7b5 lesson(s) in this volume. Coverage spans chord-construction, harmonic-field placement, and voicing/avoid-note restrictions.
+
+- [p. 128, 'Dominant 7 to diminished/half-dim/maj7#4 web'] Dominant 7th chords 'have a strong relationship with diminished, half diminished and major 7th (#4) chords.' (Ch. 4, p. 128). The dom7b5 participates in this web of enharmonic identities; use the relationship to navigate between a dom7b5 and a diminished or half-diminished voicing on the same set of strings.

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch16",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 16: Appendix V: Answers from Page 128\nPages 149-151 of the book.\n\n<<<CHAPTER TEXT\n\n- =\neae \u2018 q i\n\nAnswers: from page 128 145\n\n17. IDENTIFYING OUTLINES\n\nLearn to identify outlines and recognize the devices used to embellish them. Here are five examples\nfrom Cannonball Adderley. Identify which outline is shown, and what devices are used to make them\ninteresting.\n\n17.1 Cannonball Adderley:\nOutline No.2: Inverted direction with pick-up notes.\n\nEbm7 Ab7\nfr. I\nT\nGy a oP oe =\nPe;\n@ v\n17.2 Cannonball Adderley:\nOutline No.3: 3-5-7-9 arpeggio with octave displacement on the C7.\nGm7 C7? Fmaj7\nfal\n2 \u2014 z\nif fe Ps\nSi oe rd e 4 SS\nCy) z be z eo oe\n17-3 Cannonball Adderley:\nOutline No.1: Stop and go rhythms delay the resolution of E7 until beat three; arpeggio on E7 (3-\n5-7-9) delays resolution of Am.\nBo7 E7 Am7\nee ; \u2014_\ni fon GI i as\nt ie z T =\u2014T*<\n17.4 Cannonball Adderley:\nOutline No.2: Leap back to a chord tone creates sawtooth shape, delays resolution of C7;\nchromatic leading tone (D#) precedes target note (E); leap from third to root of C7,\nGm7 C7 Fmaj7\n=\n\u2014\u2014\u2014_\u2014\u2014 z :\nSY ts \u201ctse \u20ac\nD) = bv @ @ \u2014\nro\n175 Cannonball Adderley:\nOutline No.3: arpeggiated tone is used below; target note (A) is delayed by its upper and lower\nneighbor tones; target note (A) is approached from above (C \u2014 Bb \u2014 A) and below (G \u2014 G# \u2014 A).\nCm7 F7\nf 3\nee |\n= z\n) \u2014t + =\n= a? te\n\nConnecting Chords with Linear Harmony\n\n\n\n146 Index Musical Examples by Artist\n\nIndex of Musical Examples by Artist\n\nAdderley, Cannonball Harrell, Tom\n21, 36, 37, 44, 51, 53, 56, 57, 68, 72, 78, 79, 128 18, 19, 22, 23, 27, 28, 31, 35, 36, 38, 39, 41, 43,\n\non\n\nAlexander, Ashley\n21\nBach, J. S.\n29, 30\nBaker, Chet\n26, 27\nBarron, Kenny\n37, 42, 70\nBrecker, Randy\n41, 78\nBrown, Clifford\n\n20, 31, 32, 33, 34, 35, 37, 38, 42, 47, 48, 49, 51,\n53, 54, 56, 57, 58, 59, 60, 61, 64, 67, 69, 71, 72,\n\n73, 74, 76\nByrd, Donald\n35, 36, 40, 43\nChambers, Paul\n50, 62\nColtrane, John\n50, 66\nDonaldson, Lou\n134\nEvans, Bill\n\n20, 26, 37, 44, 47, 51, 57, 60, 61, 63, 66, 67, 73\n\nFarmer, Art\n40, 52\nGarland, Red\n45\nGillespie, Dizzy\n33, 42, 54\nGiuffre, Jimmy\n46, 65\nGordon, Dexter\n20, 30, 69\nHamilton, Scott\n62\n\n44, 50, 51, 52, 53,\n66, 68, 70, 71, 74,\n\nHeath, Jimmy\n52\nHubbard, Freddie\n\n19, 20, 22, 24, 32,\nJackson, Milt\n\n43\n\nJohnson, J. J.\n\n25\nLittle, Booker\n\n22, 34, 39, 40\nMcLean, Jackie\n\n26, 68\nMitchell, Blue\n\n21, 30, 62, 67\nMonk, Thelonious\n\n49\nMontgomery, Wes\n\n49, 03\nMorgan, Lee\n\n36, 55, 67, 69, 73,\n\nNavarro, Fats\n24, 47, 55\nParker, Charlie\n\n18, 19, 22, 24, 25,\n50, 52, 59, 67, 69,\n\nRollins, Sonny\n\n32, 39, 53, 61,63,\n\nStern, Mike\n30\nStitt, Sonny\n\n19; 20, 33; 35; SQ,\n\nTerry, Clark\n24, 36\nZawinul, Josef\n\n27, 59, 60\n\n55, 56, 57, 58, 59, 61, 63, 65,\n1\n\n34, 42, 62, 69, 70, 75\n\n26, 31, 33, 34, 45, 46, 47, 48,\n70, 71, 72:76\n\n46\n\n53, 54, 55, 68\n\nConnecting Chords with Linear Harmony\n\n\n\nMore Jazz Books from Houston Publishing\n\nSryuistic ETUDES IN THE Jazz IDIOM\n\ncompiled by Lou Fischer B74 $28.00\n\nA compilation of 120 etudes composed by 7 respected\nperformers/educators in the jazz area. Ideal for use as\nAll-State Audition materials or in recital, the text has\nalready been adopted by NM, AZ, GA, TN, KY, CA,\nand the JAJE All-Star Jr. College Jazz Ensemble. Con-\ntains 5 etudes each in the Swing, Ballad, and Latin/Funk\ncategories, with each group of 5 beginning at a medium\nlevel progressing in difficulty. A total of 15 etudes each\nfor Saxophone by Gunnar Mossblad, M.M.; Trumpet\nby Dr. Walter Barr; Trombone and Bass Trombone by\nMark Anderson, M.A.; Piano by Dr. Charles Argersinger;\nGuitar by Chris DeRose, B.M.; Bass by Lou Fischer,\nM.M.; and Drums by Steve Houghton.\n\nEXPANSIONS\n\nby Gary Campbell BOI $12.00\n\nA methodical approach to developing new melodic ideas\nbased on commonly used chord-scales, newer more in-\nnovative scales, and interval forms. Addresses applica-\ntions in diatonic tunes dealing more effectively with\nmodal settings, re-harmonizations and non diatonic chord\nprogressions, and rhythmic and stylistic considerations.\nUsed and endorsed by Michael and Randy Brecker, Bob\nMintzer, and John Abercrombie.\n\nBasic Workout DRitLs\n\nby Denis DiBlasio B58 $14.95\n\nA great book for all instruments to give a student the\nbasic tools that aid in the mastering of improvisation. A\n\nfine book by a fine writer. Includes play-along cassette.\n\nB100 US. $35.00\n\nISBN0793561930\n\nDistributed By\n\n7290\n\npo \"(3999\n\nHL00841077\n\n00841077\n\nA SIMPLE AND DirECT GUIDE TO JAZZ IMPROVISATION\nby Bob Rawlins B75 $14.95\n\nConfronts the question of how to improvise. A manual\nto help you know what to do with specific chords in spe-\ncific contexts. Lays out clear and objective guidelines on\nhow to turn scales and chords into real music. Perfect for\na college or high school improv class.\n\nLEAD SHEET INTERPRETATIONS\n\nby Howard Burke & Dean Radzik B48 $14.95\n\nThis book teaches how to play \u201cFake Book\u201d melodies.\nIncludes a cassette of examples discussed throughout the\nbook. Very helpful for putting together a jazz combo for\nthe first time, or just for your own fine-tuning.\n\nTECHNICAL EXERCISES FOR THE INTERMEDIATE TO\nPROFESSIONAL MUSICIAN\n\nby Jordon Ruwe B77 $19.95\n\nDesigned to develop technical ability moving through\nall keys. Embodies the essence of Bop for strengthening\nmelodic lines for personal and developmental growth.\nChord symbols placed above each exercise to aid in analy-\nsis. Clear and concise organization through all 12 keys.\n\nTALKING JAzz/PLAyING JAZZ ~\n\nby Peter Ballin B68 $19.95\n\nthis book involves the quest to teach not just the me-\nchanics of improv, but the art of actually \u201cspeaking\u201d\n\nthrough improv to tell the listener a story. Includes a -\n\ndiskette with a working demo of \u201cBand in a Box\u201d soft-\nware and play-along files. Mac and PC diskettes included\n\nwith each book.\n\nISBN-13: \u00a278-0-7935-6193-3\n\nHAL LEONARD\n\nCORPORATION\n\n9\n\nWN\n\n561933\n\n| \u2014\u2014 = <\u2014 a a \u2014_\u2014\n\n1\n\na\n\nT\n\n2\n\naN\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 16 extraction"
+}

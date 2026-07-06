@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: Wrapping Things Up\nPages 188-193 of the book.\n\n<<<CHAPTER TEXT\n\nWRAPPING THINGS UP\n\nJazz standards are the vehicles that jazz musicians use to improvise.\nTo become a better jazz musician, it is imperative that we study them\nand explore their unique harmonic worlds. The more jazz standards you\nexplore, the more you will understand how to improvise over all of them.\n\nAs | said in the introduction of this book, | chose these ten jazz stan-\ndards for very specific reasons. | didn\u2019t pick them just so you could\nlearn them, although | hope you do. | chose them because they all con-\ntain powerful harmonic and rhythmic lessons that apply to hundreds of\nother standards.\n\nMy hope has been that as you have explored this book some of the\nmystery of jazz harmony has been cleared up. Indeed, music is a life-\ntime study. There is no final arrival point. That\u2019s part of what makes it\nso intriguing and fun. | hope that these studies will serve you for many\nyears to come, not just at the time you are first working through them.\n\nFinally, | want to thank you for working through this book and spend-\ning time with me! Although | haven\u2019t been with you in the flesh, when |\nwrite books like these, | always imagine you are in my home studio, and\nlam teaching you in person.\n\nJazz is brilliant music and a wonderful art form to study. Keep on\nworking through it, enjoy the ride, and remember to have fun on your\nmusical journey.\n\n-Brent Vaartstra\n\n188\n\n\ni DOWNLOAD NOW\n\nZero to Improv is an eBook that walks you through\nhow to become a great jazz improviser from the\nground up. It\u2019s a jazz theory approach that starts\n\nwith the basics and builds so that you have all the\nknowledge you need to level-up your jazz playing.\n\n\n\nYou'll also enjoy these\npremium jazz courses...\n\n@\n\n30 Days to Better Jazz Playing\n\n3 0 Dd) A Y S is an audio eCourse that brings\n\nyou through 30 days of focused,\n\nT 0 = E T T E R goal-oriented practicing, where\nyou will be working on things\nal A Z Z P L AY [ Ni G that will actually improve your\n\njazz playing!\n\nLEARN MORE\n\nHow to Play What You Hear is\n\nHOW TO PLAY an ear training course that\nWHAT You walks you through 4 important\n\nsteps for improving your ears so\nHEAR you can play the music you hear\n\nin your head more easily.\nLEARN MORE\n\n\nACKNOWLEDGEMENTS\n\nHuge special thanks go out to all of my music teachers who have\nfreely given me much of the information presented in this book.\n\nThanks to my first jazz teacher, Justin Nielsen, my college pro-\nfessors at Cornish College of the Arts and the City College of\nNew York, and some of my jazz heroes I\u2019ve been blessed to study\nwith. If you\u2019re reading this, you know who you are.\n\nThanks to Brett Pontecorvo, for fact-checking, notation editing,\nformatting, and recording the exercises in this book.\n\nThanks to Stacey Grainger of Stacey Grainger Design for the\nincredible design work in this book.\n\nThanks to Justin Kellerer for business planning and tech solu-\ntions on learnjazzstandards.com.\n\nAs always, a huge thank you to my wife, Philippia, who has always\nbeen there to encourage me and help me through big projects like\nthis.\n\n-Brent\n\n\neee\nABOUT THE AUTHOR\n\nBrent Vaartstra is a professional jazz guitarist and educator\nliving in New York City. He is the blogger and podcast host\nfor learnjazzstandards.com which he owns and operates. He\nactively performs around the New York metropolitan area and\nis the author of the Hal Leonard publications \u201c500 Jazz Licks\u201d\nand \u201cVisual Improvisation for Jazz Guitar.\u201d To learn more, visit\nwww.brentvaartstra.com.\n\n\n\nTERMS OF USE\n\nThe information contained in this book is for informational purposes\nonly.\n\nLearn Jazz Standards LLC holds the copyright for The Jazz Stan-\ndards Playbook in electronic or physical formats. In purchasing this\neBook from learnjazzstanards.com, you have agreed to download the\ncontent for your individual use only. Re-distribution of any kind is strict-\nly prohibited unless licensed to do so.\n\nThe copyright to all content in this eBook including, graphics, images,\nlayouts, and text belongs to us, or we have a license to use those ma-\nterials.\n\nBy reading this book, you agree that the author and Learn Jazz Stan-\ndards LLC is not responsible for the success or failure of your musical\neducation relating to any information presented in The Jazz Stan-\ndards Playbook.\n\nAmazon affiliate links have been included in this book under Suggest-\ned Recordings. Learn Jazz Standards receives a small kickback from\nthese sales at no extra cost to you.\n\nThe terms of use of this eBook are governed by the laws of the State\nof New York.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

@@ -1,0 +1,224 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-laukens-tritone-substitution-licks",
+    "stage": "s5",
+    "source_pdf": "Laukens, Dirk - Tritone Substitution Licks.pdf",
+    "extracted_at": "2026-06-11T22:20:17+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "dirk-laukens",
+  "work_id": "tritone-substitution-licks",
+  "usage_notes": [
+    {
+      "chord_quality": "min7",
+      "function_role": "harmonic-family-membership-ii-chord",
+      "narrative": "min7 as ii in II-V-I: Dm7 | G7 | CM7. Dm7 occupies the ii slot before the dominant (chapter 1 p.1).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.1"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "soloing-option-dorian-bebop-scale",
+      "narrative": "Over ii min7, use Dorian bebop scale (Dorian + chromatic passing tone). 'D Dorian bebop (D-E-F-F#-G-A-B-C)' over Dm7 in Lick #6 measure 1 (chapter 1 p.5).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.5"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "measure-slot-assignment-ii-chord-arpeggio",
+      "narrative": "ii min7 occupies bar 1, voiced with its own arpeggio. 'Bar 1: Dm7 arpeggio (D-F-A-C)' as direct approach (chapter 1 p.2).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.2"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-family-membership-original-v7",
+      "narrative": "dom7 as original V7 targeted by the tritone substitution. G7 is the canonical V7 whose altered extensions are highlighted by the substitute (chapter 1 p.1).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.1"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tritone-substitution-rule-sub-v7",
+      "narrative": "'The basic application of a tritone chord substitution is to take any 7th chord and play another 7th chord that has its root a tritone away from the original' (chapter 1 p.1) \u2014 yields Dm7 | Db7 | CM7 in C major.",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.1"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "soloing-option-dom7-arpeggio-over-sub-v7",
+      "narrative": "Over substitute dom7 (Db7), solo with dom7 arpeggio on substitute root: 'Bar 2: Descending Db7 arpeggio (Db-F-A-Cb)'. Root of Db7 highlights #11/b5 of G7 (chapter 1 p.1-2).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.2"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "soloing-option-dom9-arpeggio-over-sub-v7",
+      "narrative": "'The second option is to play a dominant 9 arpeggio (1-3-5-b7-9)' \u2014 add ninth to dom7 arpeggio. Db9 tones map to #11, b7, b9, major third, b13 of G7 (chapter 1 p.1, 3).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.3"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "soloing-option-major-pentatonic-over-sub-v7",
+      "narrative": "'The third option' \u2014 major pentatonic (1-2-3-5-6) built on substitute root. Db major pentatonic maps to #11, b13, b7, b9 of G7 yielding 'interesting colors' (chapter 1 p.1, 3).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.3"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "soloing-option-mixolydian-over-sub-v7",
+      "narrative": "'The fourth option' \u2014 Mixolydian (1-2-3-4-5-6-b7) built on substitute root; shares all tones with major pentatonic plus 4/11 and b7. 'The seventh of Db7 (B) is the third of G7.' Lick #6: 'Db7 mixolydian mode' in measure 2 (chapter 1 p.2, 5).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.5"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "approach-note-avoidance-sixth-of-sub-v7",
+      "narrative": "'The sixth (Bb) of Db7 should be used as an approach note in order to target a chord tone' (chapter 1 p.1) \u2014 treat 6th as approach not resting tone in pentatonic/Mixolydian over substitute.",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.1"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "altered-tone-color-mapping-sub-v7-to-original-v7",
+      "narrative": "Every tone over substitute dom7 is an altered extension of original V7: 'Db is the #11 of the G7 chord. Eb is the b13 of G7. F is the minor 7th of G7. Ab is the b9 of G7' \u2014 substitution systematically highlights b9, #11, b13 alterations (chapter 1 p.1, 3).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.3"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "chromatic-voice-leading-resolution-sub-v7-to-i",
+      "narrative": "Resolve substitute dom7 to tonic via chromaticism: 'Measure 2: Db9 arpeggio (Eb-Cb-Ab-F-Db) and chromaticism to approach the root of CM7' (Lick #5, chapter 1 p.4).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.4"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "measure-slot-assignment-sub-v7",
+      "narrative": "Substitute dom7 occupies bar 2 \u2014 all soloing material (arpeggio/pentatonic/modal) assigned to that slot. 'Bar 1: Dm7 arpeggio / Bar 2: Descending Db7 arpeggio / Bar 3: CM7 arpeggio' (chapter 1 p.2).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.2"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "harmonic-family-membership-i-maj7-tonic",
+      "narrative": "maj7 as tonic I resolving II-V-I. CM7 = destination in Dm7|Db7|CM7. 'Bar 3: CM7 arpeggio (C-E-G-B)' as resolution statement (chapter 1 p.1-2).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.2"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "measure-slot-assignment-i-maj7-resolution-target",
+      "narrative": "All chromatic/arpeggio motion from substitute dom7 resolves into maj7 tonic in bar 3 \u2014 'chromaticism to approach the root of CM7' is the terminal gesture (chapter 1 p.4).",
+      "source_principle_ids": [],
+      "source_work_id": "tritone-substitution-licks",
+      "references": [
+        {
+          "source": "tritone-substitution-licks",
+          "citation": "chapter 1 p.4"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}

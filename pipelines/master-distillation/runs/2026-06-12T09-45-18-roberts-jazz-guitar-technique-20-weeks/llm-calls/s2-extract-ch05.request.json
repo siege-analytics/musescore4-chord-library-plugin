@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: LINE SHAPING\nPages 14-15 of the book.\n\n<<<CHAPTER TEXT\n\nTHE PROGRAM\n\nThe Program is made up of a series of project lessons, each lasting\n\n50 minutes per day, running six consecutive days per week, with\n\none day off. The objective is to gradually increase the tempo over\n\nthe course of 20 weeks to reach a metronome setting of approximately\n= 126 (maintaining precision and accuracy at all times).\n\nThe First Six Weeks, Project Lessons 1-A, 1-B, 2-A, 2-B, 3-A, 3-B,\nfocus on the use of eighth notes, as representative of duple time,\nsixteenth notes, thirty-second notes, etc. Each project lesson is\nbroken down into a series of steps to be carried out within specified\ntime frames. The first lesson (1-A) deals with a common chord pro-\ngression, showing the key centers bracketed above the chords.\n\nProject Lesson 1-B uses the same chord progression transposed to\nanother key, thus requiring a change of fingering patterns, licks,\n\netc. This also tends to stimulate fresh approaches and ideas. Lesson\n2-A is a new chord progression and Lesson 2-B is the same progression\ntransposed to another key. Project Lesson 3-A uses a new progression\nand Lesson 3-B uses the same progression transposed to another key.\n\nThe Seventh Week - Review.\n\nDay 1 Review Project Lesson 1-A\nDay 2 Review Project Lesson 1-B\nDay 3 Review Project Lesson 2-A\nDay 4 Review Project Lesson 2-B\nDay 5 Review Project Lesson 3-A\nDay 6 Review Project Lesson 3-B\n\nWeeks Eight Through Thirteen, Project Lessons 4-A, 4-B, 5-A, 5-B,\n\n6-A, 6-B focus on triple time via eighth note triplets as representative\n\nof their relative divisions and sub-divisions, i.e., quarter note triplets,\nsixteenth note triplets, etc. As before, each project lesson is broken down\ninto a series programmed steps with corresponding time frames. Lesson\n4-A presents a new progression, with key centers bracketed above.\n\n~Project Lesson 4-B uses the same progression, transposed to another key.\n\nLesson 5-A is a new progression and Lesson 5~B is the same progression\ntransposed to another key. Project Lesson 6-A is a new progression\nand Lesson 6-B is the same progression transposed to another key.\n\n\nTHE PROGRAM\n\nE. The Fourteenth Week - Review.\nDay 1 Review Project Lesson 4-A\nDay 2 Review Project Lesson 4-B\nDay 3 Review Project Lesson 5-A\nDay 4 Review Project Lesson 5-B\nDay 5 Review Project Lesson 6-A\nDay 6 Review Project Lesson 6-B\n\nF. Weeks 15, 16, 17 - Review.\n\nReview the projecat lessons in any order to establish your present\nmaximum tempo as a permanent reflex. The project lesson steps\nand time frames are to be followed as before.\n\nG. Weeks 18, 19, 20 - Review.\n\nReview the project lessons as before using (a) hammer-on's\n(b)pull-off's (c) glissandi (slides). The introduction of these\ntechniques should cause your technique \u2018and speed to increase\ndramatically in that via these devices several notes can be pro-\nduced with one picking stroke.\n\nH. The Appendix in the back of the book consists of examples or\nmodels of the kind of lines intended for the project lessons and\nare numbered accordingly, i.e. 1-A, 1-B, 2-A, 2-B, etc.\n\nNOTE: Think of this program as training with the Chicago Bears, as\ncompared \u2018to joining a health spa. Trust the program. Do the work exactly\nas prescribed, then stand back and watch it work. You should see\ndramatic progress within about six weeks.\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

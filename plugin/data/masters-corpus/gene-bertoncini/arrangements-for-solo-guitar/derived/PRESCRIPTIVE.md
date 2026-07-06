@@ -1,0 +1,12 @@
+---
+run_id: 2026-05-28T15-05-20-bertoncini-arrangements-solo-guitar
+stage: s5
+source_pdf: _m Bertoncini Arrangements for Solo Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-06-11T14:56:14+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons — gene-bertoncini × arrangements-for-solo-guitar
+
+_No per-chord-quality prescriptive lessons extracted: this work is a notated performance folio (Ambient Records 2011 compilation of 24 solo-guitar arrangements drawn from the *Body and Soul* and *Quiet Now* recordings), not a method book. The book contains no prescriptive prose; the Preface enumerates textural roles (melody-in-soprano, melody-in-bass, melody-nestled-inside-voicing, counterpoint, cluster voicings, open-string voicings, per-string color) but these surface in the masters.json `systems` taxonomy as a placeholder-shape system, not as per-chord_quality usage_notes. Extracting prescriptive lessons from Bertoncini's chord-melody approach would require notation-level analysis of the 24 arrangements themselves — see #432 placeholder recast._

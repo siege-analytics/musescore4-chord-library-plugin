@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: 3-PART 4THS\nPages 9-10 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART 4THS\n\nVolume II begins with 3-part 4th voicings (and their spread counterparts, 3-part 5ths).\nYou need to be aware of some enharmonic problems that occur when we get to C Melodic\nMinor and C Harmonic Minor.\n\nThe problems involve the interval of a diminished 4th. To be more specific, we're talk-\n\ning about B and Eb. A diminished 4th looks like a 4th on the staff. But the sound is a Major 3rd.\n\n[B and D#] Consequently, chords that contain the notes B and Eb don\u2019t sound like 4th voicings.\nLet me list them for you.\n\nFrom C Melodic Minor and C Harmonic Minor:\n\nED F B B Eb F\n\nB E F EF Bo = Ermin7\u00aero2ra)\nF B E& F B E\nFrom C Melodic Minor ONLY:\nABE EA B\nE> A B A B Eb =) B7test)\n\nBEA BEA\n\nFrom C Harmonic Minor ONLY:\n\nAb B Ep Eb Ab B\nED Ab B Ab B E = = Abmin\nB Ep Ap B Eb Ab\n\nThat is not to say that there is anything wrong with these voicings. It\u2019s just that they\ndon\u2019t work very well in a 4th voicings context. And there's a very simple and logical explana-\ntion for that...Let\u2019s take a closer look at Triads vs. 4th voicings.\n\nTriads are 3-part chords based on tertial harmony (harmony derived from 3rds). 3-part\n4ths are 3-part chords based on quartal harmony (harmony derived from 4ths). As it turns out,\ntertial harmony and quartal harmony are pretty much exact opposites. Let\u2019s see how!\n\n\n3-PART 4THS leontinued)\n\nLet's analyze the intervals in all 3 inversions of a triad and a 3-part 4th voicing:\n\nTRIADS 3-PART 4THS\nG G G Cc Cc a\nE Ey - ef} 3 \\ sn G Gy on oh tt bow\nCc; c C Di OD D\nTwo 3rds and One 5th Two 4ths and One 7th\nCc Cc Cc D D D\nG| G gh a \\ an C/ Cy a, c } } si\nele} E G|G : G\nOne 3rd, One 4th and One 6th One 2nd, One 4th and One 5th\nE E } a E G G | nh G\nCc C) am \u00a9 \\ on D D) ,? 4 Ysa\nG|G G ci|cs \u2122 Cc\nOne 3rd, One 4th and One 6th One 2nd, One 4th and One 5th\nTOTALS: TOTALS:\n\nFour 3rds, Two 4ths, One 5th, Two 6ths\nPrimary intervals: 3rds and 6ths\nSecondary intervals: 4ths and 5ths\nColor intervals: 2nds and 7ths (missing)\n\nTwo 2nds, Four 4ths, Two 5ths, One 7th\nPrimary intervals: 4ths and 5ths\nSecondary intervals: 2nds and 7ths\nColor intervals: 3rds and 6ths (missing)\n\nLooks like \u201cTriads are from Venus and 4th Voicings are from Mars!!\u201d\n\nMORE ABOUT 4THS\n\nAs mentioned earlier, 3-part 4ths in Melodic and Harmonic Minor have some tricky con-\nsiderations. [the diminished 4th] Fortunately, those problems don\u2019t occur in the Major Scale.\n\nHere's a really great thing to do that is very \u201cguitar-friendly.\u201d After you've spent some\ntime exploring the 3-part 4ths in C Major, tune the low E string down a whole step to D. Use\nthe low D string as a pedal, [you could also use the A string] and play through all the cycles! I\nthink you'll be very pleased with the results. {you\u2019d be playing in D dorian mode; since there\naren\u2019t any \u201cavoid\u201d notes in Dorian, pretty much anything and everything you play will work\nvery nicely!} This approach could also be applied to all the other modes of the C Major Scale,\n\nbut this D Dorian thing is by far the easiest!\n\nWhile I\u2019m on the subject, you might also consider the possibility of ARPEGGLIATING\nthe 4th voicings to arrive at WAY COOL melodies! [The next time someone calls \u201cSo What,\u201d or\n\nanother tune of that ilk, you'll be ready...]\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

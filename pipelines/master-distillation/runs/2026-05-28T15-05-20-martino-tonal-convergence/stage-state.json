@@ -1,0 +1,43 @@
+{
+  "run_id": "2026-05-28T15-05-20-martino-tonal-convergence",
+  "config": "pipelines/master-distillation/configs/martino-tonal-convergence.toml",
+  "stages": {
+    "s1": {
+      "status": "awaiting-review",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "ingested from queue output (50084 bytes)"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s3": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s4": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

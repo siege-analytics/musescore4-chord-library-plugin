@@ -1,0 +1,614 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-pass-guitar-method",
+    "stage": "s5",
+    "source_pdf": "Pass, Joe - Guitar Method (1997).pdf",
+    "extracted_at": "2026-06-11T14:50:45+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "joe-pass",
+  "work_id": "guitar-method",
+  "usage_notes": [
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Pass identifies the Dominant 7th Chord as the load-bearing gateway to jazz phrasing, explicitly distinguishing it from the major chord: 'Most are based on the Dominant 7th Chord (C7) since many people seem to need guidance in their exploration of its possibilities, especially in distinguishing it from the major chord.' The dom7 family anchors the entire dominant-flexibility system. (Ch. 7, p. 22)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 7 p.22"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "shell-voicing-floor",
+      "narrative": "Pass prescribes anchoring the dom7 to the Basic Chord Form and flatting only the seventh tone as the irreducible minimum for improvising on the dominant: 'By constantly using and thinking in terms of the Basic Chord Forms and simply flatting the seventh tone, the number of mistakes made in playing on the Dominant will be greatly reduced.' (Ch. 7, p. 23)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:chord-forms-navigation"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 7 p.23"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "color-tone-policy",
+      "narrative": "Pass explicitly permits and encourages the alteration of dom7 with b9, +9, b5, or +5 in improvised lines: 'Against almost any Dominant 7th Chord, I will include the b9, +9, b5, or +5 in my lines, which is the Altered Dominant 7th Scale in most cases but the student is cautioned to use his ears.' (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "scale-pairing-rule",
+      "narrative": "Pass mandates an exclusive pairing: the three diminished scales are played only against Dominant 7th chords - 'There are only three Diminished Scales. The five examples are all to be played against Dominant 7th Chords.' (Ch. 5, p. 20)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 5 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "color-tone-substitution-palette",
+      "narrative": "In the blues context of Joe's Blues, Pass provides a concrete substitution palette for the tonic dom7: 'The following variants may be used in place of G7: G13, G9, G9(6), G7+9, G7(b9). Db9 in the fourth measure can be played in the same way.' (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "voicing-economy-rule",
+      "narrative": "Pass imposes a strict density ceiling on all dom7 voicings: 'All changes should be reduced to three- or four-note chords.' Unnecessary doubling or thickness is explicitly rejected regardless of how many extensions are being used. (Ch. 10, p. 30)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "voice-leading-into-next-chord",
+      "narrative": "Pass prescribes that dom7 voicings must connect to the next chord either through stepwise voice motion or by sharing a common tone: 'for better movement, voicings should lead into one another or have a common tone connecting them.' (Ch. 10, p. 30)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "idiom-lick-internalization",
+      "narrative": "Pass requires that dom7-based jazz licks be memorized and transposed through at least three Chord Forms and all keys, practiced at medium tempo until the student 'can sing them and hear them and feel them.' (Ch. 7, p. 22)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:chord-forms-navigation"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 7 p.22"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "chord-derived-melody-application",
+      "narrative": "Pass instructs that melodic/scale patterns over dom7 chords must grow out of the chord itself: 'The melodic/scale patterns, in the following examples, grow out of the chords at the beginning of each line, which should be apparent when they are played.' (Ch. 5, p. 21)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 5 p.21"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tritone-substitution",
+      "narrative": "Pass states the tritone substitution rule explicitly: 'E7 can be replaced with E+9/Em9/E13/E9 or Bb9/Bb+9/Bbm9/Bb13/Bb9. Bar 9 can be altered in much the same way since these chords are interchangeable.' Any member of the E7 dominant family is interchangeable with any member of the Bb9 dominant family. (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "ear-driven-phrase-verification",
+      "narrative": "Pass imposes a behavioral check on every dominant-chord harmonic choice during improvisation: 'Students must be able to choose freely from the alternatives available not only in chording but also in solo improvisation. In Joe's Blues the student should check out each phrase against the chord he thinks is being used.' (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "chord-form-anchor-for-improvisation",
+      "narrative": "Pass specifies that when playing a dom7 chord or scale, one Chord Form must be kept in mind at all times: 'When playing a Dominant 7th Chord or Scale, one Chord Form must be kept in mind.' (Ch. 7, p. 23)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:chord-forms-navigation"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 7 p.23"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Pass classifies altered dominants (+9, b9, +5, b5 combined) as freely interchangeable members of the dominant family: '+9/b9/13/9(6)/11/-+5/b5 may be substituted for simple Dominants.' (Ch. 10, p. 30)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "color-tone-requirement-in-ii-v-i",
+      "narrative": "In the ii-V-I template presented in Alison, Pass requires the dominant to carry at least one altered extension to generate chromatic voice motion toward the tonic: 'Dm7 G7(13) G7(+5) Cmaj7 or Cm9 voice leading.' The alteration is not decorative but structurally necessary. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "scale-pairing-rule",
+      "narrative": "Pass directly links the Altered Dominant 7th Scale to the combination of b9, +9, b5, and +5 alterations: 'Against almost any Dominant 7th Chord, I will include the b9, +9, b5, or +5 in my lines, which is the Altered Dominant 7th Scale [See page 10] in most cases.' (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Pass identifies the dom7b9 as a diminished-chord voicing against which a Diminished Scale is employed: 'G7b9 is a diminished chord against which a Diminished Scale can be employed.' (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "scale-pairing-rule",
+      "narrative": "The b9 alteration activates the Diminished Scale pairing: 'G7b9 is a diminished chord against which a Diminished Scale can be employed.' Pass further notes that 'For improvisation the b9 and +9 go together.' (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "color-tone-substitution-palette",
+      "narrative": "In the Joe's Blues palette, G7(b9) is one of five freely available substitutions for the tonic dominant G7: 'variants may be used in place of G7: G13, G9, G9(6), G7+9, G7(b9).' Selection is ear-driven. (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "voice-leading-compound-resolution",
+      "narrative": "Pass demonstrates compound altered dominant resolution in the Alison voice-leading example B: 'Dm9 C13 G7(+5/b9) - C9(6) (c) Fmaj7 voice leading.' The b9 is compounded with the +5 alteration to maximize chromatic voice movement into the extended tonic C9(6). (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-resolution-target",
+      "narrative": "Pass places maj7 (Cmaj7) as the resolution target of the ii-V-I template in Alison: 'Dm7 G7(13) G7(+5) Cmaj7 or Cm9 voice leading.' The tonic maj7 is reached by stepwise or common-tone connection from the altered dominant. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "voicing-economy-rule",
+      "narrative": "The economy ceiling applies universally including to maj7 tonic chords: 'All changes should be reduced to three- or four-note chords.' In the Alison examples, Bbmaj7 and Ebmaj7 appear as resolution targets; their voicings conform to the three-or-four-note maximum. (Ch. 10, p. 30; Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        },
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "substitution-target-in-chord-voicing",
+      "narrative": "In Alison, Pass demonstrates Ebmaj7 as a substituted voicing over the underlying Eb backbone chord: '(C7) (F7) (Bbmaj7) (Eb) - F13 Bbm7 Ebmaj7.' (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "extended-tonic-in-compound-resolution",
+      "narrative": "In Alison voice-leading example B, the extended tonic C9(6) appears as the resolution target of the compound altered dominant: 'G7(+5/b9) - C9(6) (c) Fmaj7 voice leading.' The maj7 tonic is extended to the ninth and sixth to absorb the chromatic voice motion. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "rhythmic-triplet-feel-application",
+      "narrative": "Pass specifies a triplet feel as the governing rhythmic framework for the chord-melody application of Alison, where maj7 voicings (Cmaj7, Bbmaj7, Ebmaj7) appear as resolution targets. All voice-leading moves into maj7 tonic chords in this context are executed within this triplet rhythmic grid. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "supertonic-ii-function-in-ii-v-i",
+      "narrative": "Pass uses Dm7 as the canonical ii chord in the ii-V-I template demonstrated in Alison: 'Dm7 G7(13) G7(+5) Cmaj7 or Cm9 voice leading.' The min7 built on the supertonic initiates the voice-leading sequence. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "turnaround-pivot-substitution",
+      "narrative": "Pass explicitly names Bm7 as a turnaround pivot in Joe's Blues bar 8: 'In bar 8 Bm7 can be replaced by F13/F9/F+9/Fm9. Bm7 can be changed to a Dominant 7th (B7) or B9/B13.' The min7 functions as a harmonically flexible pivot whose specific quality can be abandoned mid-bar. (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "voice-leading-into-next-chord",
+      "narrative": "In the ii-V-I template, Dm7 and Dm9 appear as the initiating ii chord requiring smooth connection to the dominant: 'Dm9 C13 G7(+5/b9) - C9(6).' The min7/min9 must lead into the following dominant through stepwise motion or a common tone. (Ch. 11, p. 31; Ch. 10, p. 30)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        },
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "substituted-chord-over-dom7-backbone",
+      "narrative": "In Alison, Bbm7 substitutes over the underlying F7 in the backbone progression: '(C7) (F7) (Bbmaj7) (Eb) - F13 Bbm7 Ebmaj7.' The min7 quality is the specific substituted form selected for the subdominant function. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Pass classifies dim7 as functionally linked to the dom7b9: 'G7b9 is a diminished chord against which a Diminished Scale can be employed.' The diminished quality in Pass's system is not an independent category but an alteration-state of the dominant, specifically the b9 form. (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "scale-pairing-rule",
+      "narrative": "The three diminished scales pair exclusively with dominant-related (diminished) chord contexts: 'There are only three Diminished Scales. The five examples are all to be played against Dominant 7th Chords.' Pass's diminished scale is anchored to the dominant/diminished function. (Ch. 5, p. 20)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 5 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "passing-chord-in-functional-progression",
+      "narrative": "In the Grete improvisation framework, an Edim passing chord appears directly in the backbone sequence: 'Eb Edim | Dm7 G7.' The diminished chord functions as a chromatic passing chord between Eb and Dm7. (Ch. 12, p. 32)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 12 p.32"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7#11",
+      "function_role": "extended-dominant-in-chord-sequence",
+      "narrative": "Pass identifies the 11th as one of the freely substitutable dominant extensions: '+9/b9/13/9(6)/11/-+5/b5 may be substituted for simple Dominants.' (Ch. 10, p. 30)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 10 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min9",
+      "function_role": "supertonic-ii-extended-form",
+      "narrative": "Pass uses Dm9 in the advanced voice-leading example of Alison: 'Dm9 C13 G7(+5/b9) - C9(6) (c) Fmaj7 voice leading.' The min9 is the extended form of the supertonic ii chord. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Pass identifies the augmented dominant (dom7+5) as a distinct member of the dominant family linked exclusively to whole-tone scale: 'the chord G7+5 is augmented and can be interpreted linearly by an Augmented Scale.' (Ch. 1, p. 8)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 1 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "scale-pairing-rule",
+      "narrative": "The two whole-tone scales are prescribed exclusively for dom7+5 chords: 'There are but two Whole Tone Scales. They will fit with all Dominant 7+5 Chords.' (Ch. 5, p. 20)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 5 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "voice-leading-color-tone-in-ii-v-i",
+      "narrative": "Pass uses G7(+5) as an intermediate altered-dominant voicing within the ii-V-I template, appearing between G7(13) and Cmaj7: 'Dm7 G7(13) G7(+5) Cmaj7.' The +5 form is a chromatic intensifier in the dominant approach. (Ch. 11, p. 31)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:voicing-economy-and-voice-leading"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 11 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "tritone-substitution-interchangeability",
+      "narrative": "Pass treats E+9 (augmented dominant with +9) as interchangeable with the Bb9 tritone family: 'E7 can be replaced with E+9/Em9/E13/E9 or Bb9/Bb+9/Bbm9/Bb13/Bb9.' (Ch. 8, p. 24)",
+      "source_principle_ids": [
+        "joe-pass:guitar-method:dominant-flexibility-substitution"
+      ],
+      "source_work_id": "guitar-method",
+      "references": [
+        {
+          "source": "guitar-method",
+          "citation": "ch 8 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}

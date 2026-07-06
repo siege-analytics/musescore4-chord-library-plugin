@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch08",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 8: 3-Part Chords Derived From a 4-Part 4th\nPages 12-12 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART CHORDS DERIVED FROM A TBN II\n\n4-way close Drop 2\n\nBe triad 3-part spread = 7* Be triad 3-part spread = 7%\nCc (B\u00b0) 4\" cluster (no 5\") Cc (B\u00b0) 4h cluster (no 5\")\nB B B B D D D D\nF F F F Root B B B B\nD D D D position F E F c F\nCc c Cc Cc c Cc\n5 B \u2018 \u00a7 \u00a2 I* inversion F F F Cc F\nF F F D F B B B B\nD D D D\nD D D D B B B B\nCc Cc Cc c 2\u00b04 inversion D D D dD\nFler | fle \u00a2 &\n\nF F\nF F F c Cc c Cc\nD D D D 3inversion F F F F\nCc Cc Cc c D D D D\nB B B B B B B B\n\nDrop 3 Drop 2&3\nBe triad 3-part spread 7 Be triad 3-part spread 7\nCc (B\u00b0) 4\u00b0 cluster (no 5*) Cc (B\u00b0) ah cluster (no 5\u201c)\nF F F F F F F F\nD D D D Root B B B B\nepee Eb es ae:\nB B B B B B B B\nF F F F 1* inversion Cc Cc Cc Cc\n5i| o>. \u00a9 56 5 Dp} dD \u00a9 bd \u00bbD\nCc c Cc c Cc c Cc Cc\nB B B B 2\u00b04 inversion D D D D\nPi Poe & 8 Pl Por f\nF\nD D D D D D D D\nE F t c \u00a3 3inversion F F F Cc F\nB B B B B B B\nDrop 2&4 Double Drop 2, Drop3\n\nB triad 3-part spread = 7 Be triad 3-part spread 7\nc (B\u00ae) 4\" cluster (no 5\") Cc (B\u00b0) 4 cluster (no 5!)\nB B B B D D D D\nD D D D Root F F FE\nF F FE c F position B B B B\nc c Cc c c\nCc Cc Cc c F F F F\nF F F F 1* inversion B B B B\nB[ 8 * 8 s[o \u00a7 \u00a7 \u00a7\nD D\nD D DB D B B B B\nB B B B 2\u00b0\u00a2 inversion Cc c c c\nCc c c c D D D D\nF F F F F F F F\nF F F F c c c Cc\n5 D Cc 5 5 3*inversion D p E D D\nB B B B B B B\n\n11\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 8 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: IT'S ALL YOURS...\nPages 6-6 of the book.\n\n<<<CHAPTER TEXT\n\nDISCLAIMER/WARNING/CAUTIONIS\n\nPlease be advised that the author and publisher take no responsibility whatsoever for\nany (and all) accidental and inadvertent self-inflicted injuries that may occur from exploring\nthe material in this book. (This is especially relevant in regard to the left hand fingers, wrist,\nforearm, shoulder, muscles, tendons, bones, cartilage, nerves, etc., et al.)\n\nAny guitarist who works with this book is going to be exposed to literally hundreds of\nchords that involve stretches and fingering configurations that will be totally new and unfa-\nmiliar. Be particularly cautious with descending voice-leadings that move down the finger-\nboard. With each new descending chord, the distance between the frets gradually increases.\n\nEach (and every) guitarist must continuously monitor the sensations they perceive in\ntheir left (fingering) hand. Error on the side of being overly careful. \u201cNo pain\u2014is the way to\ngo.\u201d Perhaps it would be even better to put it this way: \u201cNot even the slightest hint of any\ndiscomfort\u2014is the way to go.\u201d\n\nThe problem lies with the fact that a large percentage of this material is going to be new\nto pretty much every guitarist who begins to work with it. When guitarists get a chance to\nplay a whole bunch of stuff that is not only new to them, but also has a uniquely different and\ncompelling sound to it, there is a tendency to want to overdo it. All these new sounds can\nhave an almost narcotic-like effect. The ear perks up; the mind comes into sharp focus; the\nemotions begin to soar; the imagination begins to project a future when you'll be able to use\nall this great stuff to completely blow people away(!)...all at the expense of your left hand\nwhich, at this point, starts to feel like it\u2019s just been run over by a truck.\n\nYou just got caught up in \u201cseduction by novelty.\u201d You stopped monitoring the sensa-\ntions in your left (fingering) hand. You did too much. You over-extended your physical limits.\nYou over-stretched. You had a nice ride, for sure. But now you'll have to pay the price for\ndays, weeks, possibly months. (Believe me, I\u2019m not exaggerating!) In some cases, the damage\ncould involve years of recovery time. Occasionally, it could cause damage beyond recovery\ntime. The word for that is \u201cpermanent.\u201d The phrase in sports terminology is \u201ccareer-ending.\u201d\n\nThink about it \u2014Picture yourself with permanent damage\u2014Now what?\n\nQ: Mr. Goodchord, are you trying to scare us?\nA: You got that right!\n\nYou must exercise your sensitivity, your intelligence, your caution and your good\njudgement. No one else can do this for you. Only you can. And when you do, there should be\nno problem.\n\nYou have been WARNED)! (Please take good care of your hands!)\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

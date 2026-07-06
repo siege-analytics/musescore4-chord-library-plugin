@@ -1,0 +1,15 @@
+---
+run_id: 2026-06-10T15-35-34-laukens-complete-chord-melody
+stage: s3
+source_pdf: Laukens, Dirk - Complete Chord Melody.pdf
+source_pages: 11-40
+model: claude-haiku
+extracted_at: 2026-06-10T17:38:26+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — MODULE 1 - CHORD MELODY QUICKSTART
+
+_Distillation; backed by `chapters/ch03.md`._
+
+Chapter 3 introduces the chord melody quickstart by establishing the method's foundational rules: selecting a key where the melody sits on the top 2-3 strings in the 3rd to 9th fret range, placing chords economically on only long-held melody notes to avoid cluttering, and adapting unsustainable long notes by substituting chord voicings instead. The chapter then layers the harmonic taxonomy — three primary families (Major, Minor, Dominant) subdivided into sub-families (m7b5, altered dominant, natural dominant) — that govern correct harmonization, centered on the concept of the chord collection, which maps every diatonic interval so any melody note can be harmonized. Right-hand technique options (thumb pick, plectrum with string-skipping, hybrid picking) are presented, along with the left-hand move of using barre fingerings to free fingers for ornaments. Throughout, the master's characteristic move is visible: the Joe Pass technique of connecting block chords with scalar passing tones, exemplifying how space created by horizontal melody playing becomes room for harmonic and linear sophistication.

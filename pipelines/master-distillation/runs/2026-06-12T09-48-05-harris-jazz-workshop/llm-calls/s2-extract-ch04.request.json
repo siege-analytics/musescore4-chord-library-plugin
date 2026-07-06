@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: The Rhythm Section\nPages 79-84 of the book.\n\n<<<CHAPTER TEXT\n\n72\n\n3-19b) Based on \u201cIf I Should Lose You\u201d by Robin-Rainger\n3-19c) Based on \u201cIn Your Own Sweet Way\u201d by Dave Brubeck\n\u2018Major-minor-minor/6\u2019\n\n3-20) This figure shows the progression from major to minor to minor\nwith the 6th degree in the bass:(Bb major-G minor-Gm/E).\n\n\nFig. 3-19b \"IF I SHOULD LOSE YOU\"\nGm7 Am7\u266d5 D7 Gm7 G\u266d7 Fm7 B\u266d7\nE\u266dmaj7 C7 (Eo) Fm7 B\u266d7 E\u266dmaj7 E\u266dmaj7 Gm7\nFig. 3-19c \"IN YOUR OWN SWEET WAY\"\nAm7\u266d5 D7\u266d9 Gm Gm6 Cm7 B\u266d6 E\u266dmaj7\nA\u266dm7 D\u266d7 G\u266dmaj7 C\u266dmaj7 Cm7\u266d5 F7\u266d9 B\u266dmaj7+11\nFig. 3-20\n\n\n3-21a) The previous progression based on bars 24-25 of \u201cStella by\nStarlight\u201d by Young-Washington. The chord movements are I major-\nIlI7-relative minor-bVIdim-Imaj/5-minor/6.\n\nb) Here, the harmonic.concept of the previous figure is applied to a\nprogression-based on the first 4 bars of \u201cLike Someone In Love\u201d by\nvan Heusen-Burke.\n\nc) Again, the harmony of Fig.3-21a is applied to changes based on the\nfirst 2 bars of \u201cI Remember You\u201d by Schertzinger-Mercer.\n\nd) The movements on the 24th-25th bars of \u201cStella by Starlight\u201d writ-\nten for guitar.\n\n\nMovable Chords for Piano and Guitar\n\nFig. 3-21a \u201cSTELLA BY STARLIGHT\u201d\n\nrt \u00a9) @\u00ae \u2014_\u2014\u2014\u2014 @)\nss f= = cs \u2014\nBt D?7Gm_= Ae Bb Gm\nA Fs\u201d \u201c6\nPale oe \u2014\u2014FEmts =\nTt } 3 = =\n\nFig. 3-21b \u201cLIKE SOMEONE IN LOVE\u201d\n\na4\nrey rho ft\n\nFig, 3-21\u00a2 \u201cI REMEMBER YOU\u201d\n\nmn t \u2014\u2014 \\\n\n6 a a\n\n2S\n\n\n3-22) The 4 related dominant 7ths used as V7 substitutions\n\nIn the following two figures, (3-22a written for guitar and 3-22b for\npiano), we have illustrations of how related dominant 7th chords may\nbe used to substitute \u2018for eachother\u2019 when the V7 chord moves back to\nthe I. Refer to Figs.1-15, 1-15a, and 1-17 for explanation of how to find\nthe dominant 7th chords related to a-given diminished chord; and also\nfor examples of how to practice those related dominant 7th scales \u2018into\neachother\u2019 to outline key chord movements. In the following examples,\nD7 going to G major is outlined. The diminished that D7 comes from is\nF# (F#-A-C-Eb). Given that F7, Ab7, and B7 are also related to F#\ndiminished, they make very interesting voicings when played against D\nin the bass. In addition, notice how diminished chord tones (circled)\ncan be incorporated into the progression.\n\n\nMouable Chonda fon Piano and Guitar\n\n7\n\nGmaj7\n\nD7\n\nFig. 3-22b\n\n\u2014I\u2014\n\n=\nT=\n\nB?\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

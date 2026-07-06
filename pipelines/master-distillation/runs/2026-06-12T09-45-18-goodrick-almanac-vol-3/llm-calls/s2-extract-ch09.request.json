@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: 3-Part Chords Derived From a 4-Part Spread Cluster\nPages 13-13 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART CHORDS DERIVED FROM A 4-PART 4th\n\n4-way close Drop 2\n4-part 3-part 3-part = 7* 7 4-part 3-part 3-part 7 7\n4th 4th 4\" (no 5\") (no 3\") gtr th 4% (no 54) (no 3)\nB B B B E E E E\nE F F F Root B B Bo OB\nE E E E Position F F F FE\nc c c c c c c c\nc c c c . . F F F FE\nB B B B 1 inversion Cc Cc ral rel\nF F F F B B B B\nE E E E. E E E E\nE E E E B B B B\nc Cc Cc c 2\" inversion E E E E\nB B B B Cc c Cc c\nF F F F F F F F\nF F F F E E E E\nE E E E 3inversion B B B B\nCc Cc c c c c c c\nB B B B F F F F\nDrop 3 Drop 2 & 3\n4-part 3-part 3-part = 7* 7 4-part 3-part 3-part 7** 7\nqth 4th 4% {no 5%) (no 3\") 4h 4h 4\" (no 5\") (no 3\")\nF F F F F F F : F\nE E E E Root B B B B\nB B B B Position E E E E\nc c c c c c c c\nB B B B B B B B\nF F F F 1* inversion Cc Cc Cc Cc\nc c c Cc F F F F\nE E E E E E E E\nc Cc Cc Cc Cc c Cc c\nB B B B 2\u00b0 inversion E E E E\nE E E E B B B B\nF F F F F F F\nE E E E E E E E\nt \u20ac F c \u20ac 3\" inversion F F F c F\nB B B B B B B B\nDrop 2&4 Double Drop 2, Drop3\n4-part 3-part 3-part = 7\" 7h 4-part 3-part 3-part 7 7\nAth 4th 4\" (no 5) (no 3\") 4h 4th 4\u00b0 (no 5) (no 3\")\nB B B B E E E E\nE E E E Root FE FE E E\nE F F F position B B B B\nCc c c c Cc Cc Cc Cc\nCc Cc c Cc F F F F\nF F F F 1* inversion B B B B\nB B B B Cc c Cc c\nE E E E E E E E\nE E E E B B B B\nB B B B 24 inversion c c c c\nCc c c Cc E E E E\nF F F F F F F F\nF F F F c c Cc c\nFE, * \u00a2 EO: SMinversion F FOr : E\nB B B B B B B B\nAlmanac of Guitar Voice-Leading Volume III 12\n\n~~,\n\nLON ON ON OR EON ON EON LRN RENN LEN\n\nEEN\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

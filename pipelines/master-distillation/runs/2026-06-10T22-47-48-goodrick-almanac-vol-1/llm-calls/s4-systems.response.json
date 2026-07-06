@@ -1,0 +1,133 @@
+{
+  "master_id": "mick-goodrick",
+  "work_id": "almanac-vol-1",
+  "systems": [
+    {
+      "id": "mick-goodrick:almanac-vol-1:cycle-indexed-voice-leading",
+      "name": "Cycle-Indexed Voice-Leading System",
+      "summary": "The central organizational system of the Almanac: every tertian and quartal sonority is cataloged across six cycles (2-7) within three parent scales, with voice-leading analyzed at three levels for both Close and Spread voicings.",
+      "members": [
+        {"id": "cycle-2", "name": "Cycle 2", "summary": "Stepwise (2nd) root-motion cycle applied across all voicing families and parent scales."},
+        {"id": "cycle-3", "name": "Cycle 3", "summary": "Third-motion root cycle applied across all voicing families and parent scales."},
+        {"id": "cycle-4", "name": "Cycle 4", "summary": "Fourth-motion root cycle applied across all voicing families and parent scales."},
+        {"id": "cycle-5", "name": "Cycle 5", "summary": "Fifth-motion root cycle applied across all voicing families and parent scales."},
+        {"id": "cycle-6", "name": "Cycle 6", "summary": "Sixth-motion root cycle applied across all voicing families and parent scales."},
+        {"id": "cycle-7", "name": "Cycle 7", "summary": "Seventh-motion root cycle applied across all voicing families and parent scales."},
+        {"id": "scale-c-major", "name": "C Major", "summary": "Parent scale environment 1: diatonic tertian and quartal voicings."},
+        {"id": "scale-c-melodic-minor", "name": "C Melodic Minor", "summary": "Parent scale environment 2: melodic minor tertian and quartal voicings."},
+        {"id": "scale-c-harmonic-minor", "name": "C Harmonic Minor", "summary": "Parent scale environment 3: harmonic minor tertian and quartal voicings."}
+      ],
+      "traversal_rules": [
+        {
+          "id": "tr-msrp-top-voice",
+          "name": "M.S.R.P. Top-Voice Minimization",
+          "summary": "When traversing cycles within a parent scale, select the voicing path that produces the most stepwise melodic motion in the top voice, as indicated by the M.S.R.P. string for each cycle entry.",
+          "engine_payload": {"kind": "VoiceMotion"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "Most Stepwise Resolution Pattern (M.S.R.P.) strings"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "M.S.R.P. string indicating the Most Stepwise Resolution Pattern"}
+          ]
+        },
+        {
+          "id": "tr-common-tone-preference",
+          "name": "Common-Tone Preference Per Voice",
+          "summary": "Within each cycle traversal, prefer to sustain (or minimally displace) the voice that carries a common tone between adjacent chords, minimizing aggregate voice motion across the cycle.",
+          "engine_payload": {"kind": "VoiceMotion"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "intervallic voice-leading relationships, functional voice-leading information"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "Functional Voice-Leading (harmonic context)"}
+          ]
+        },
+        {
+          "id": "tr-cycle-environment-grid",
+          "name": "Six-Cycle by Three-Scale Grid Traversal",
+          "summary": "Every voicing family is traversed through all 18 environments (6 cycles x 3 parent scales), making cycle and scale independent traversal axes that can be varied orthogonally.",
+          "engine_payload": {"kind": "PositionContinuity"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "six cycles (2-7) within three parent scales: C Major, C Melodic Minor, and C Harmonic Minor"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "six cycles (cycles 2-7) and three parent scales (C Major, C Melodic Minor, and C Harmonic Minor)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-1:voicing-family-parallelism",
+      "name": "Voicing Family Parallelism System",
+      "summary": "The Almanac applies identical analytical layers to every sonority family - triads, seventh chords, TBN constructs (Vol 1), and quartal/cluster voicings (Vol 2) - in both Close and Spread positions, asserting that voice-leading is the same problem regardless of the chord family in use.",
+      "members": [
+        {"id": "family-triad", "name": "Triad", "summary": "Three-voice tertian sonority (Vol 1), cataloged in Close and Spread positions across all 18 environments."},
+        {"id": "family-seventh", "name": "Seventh Chord", "summary": "Four-voice tertian sonority (Vol 1), cataloged in Close and Spread positions across all 18 environments."},
+        {"id": "family-tbn-i", "name": "TBN I (Two-Note Base I)", "summary": "Goodrick's two-note base construct type I (Vol 1), cataloged in Close and Spread positions."},
+        {"id": "family-tbn-ii", "name": "TBN II (Two-Note Base II)", "summary": "Goodrick's two-note base construct type II (Vol 1), cataloged in Close and Spread positions."},
+        {"id": "family-3part-quartal", "name": "3-Part Quartal", "summary": "Three-voice quartal voicing (Vol 2) in close, spread, and cluster formations."},
+        {"id": "family-4part-quartal", "name": "4-Part Quartal", "summary": "Four-voice quartal voicing (Vol 2) in close, spread, and cluster formations."},
+        {"id": "family-spread-cluster", "name": "Spread Cluster", "summary": "Cluster voicing in spread formation (Vol 2), resisting conventional chord naming."},
+        {"id": "position-close", "name": "Close Position", "summary": "Voicings compressed within the smallest available span; one axis of the Close/Spread parameterization."},
+        {"id": "position-spread", "name": "Spread Position", "summary": "Voicings expanded beyond close range; the complementary axis of the Close/Spread parameterization."}
+      ],
+      "modification_rules": [
+        {
+          "id": "mr-family-coherence-analytical-layers",
+          "name": "Uniform Analytical Layers Across Families",
+          "summary": "Every voicing family - regardless of whether it is tertian, TBN, or quartal/cluster - receives the same three analytical layers: Intervallic Voice-Leading, Functional Voice-Leading, and M.S.R.P. This uniform treatment asserts that the voice-leading problem is identical across families; only the distribution of common tones, steps, and leaps differs.",
+          "engine_payload": {"kind": "FamilyCoherence"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "intervallic voice-leading relationships, functional voice-leading information, and Most Stepwise Resolution Pattern (M.S.R.P.) strings"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "Intervallic Voice-Leading (pitch relationships), Functional Voice-Leading (harmonic context)"}
+          ]
+        },
+        {
+          "id": "mr-close-spread-parameterization",
+          "name": "Close to Spread Density Axis",
+          "summary": "Each voicing family entry is fully parameterized along the Close/Spread axis: the same chord in close position and spread position is cataloged as a pair, allowing the density of any voicing to be modified while preserving the underlying intervallic and functional voice-leading analysis.",
+          "engine_payload": {"kind": "_pending:voicing-density-axis"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "Each voicing is displayed in both close and spread positions"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "3-part and 4-part quartal voicings (close, spread, and cluster formations)"}
+          ]
+        },
+        {
+          "id": "mr-quartal-nct-resist-naming",
+          "name": "Quartal / Cluster NCT Harmonization - Resist Naming",
+          "summary": "Vol 2 quartal and cluster voicings are explicitly treated as sonorities that resist conventional chord naming. The analytical layers are applied identically, but the harmonic identity is left open - these voicings harmonize non-chord tones by embedding them in structures that do not privilege any single tonal interpretation.",
+          "engine_payload": {"kind": "NCTHarmonization"},
+          "references": [
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "the volume's strategic shift away from tertian harmony toward quartal and cluster sonorities that resist conventional chord naming"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mick-goodrick:almanac-vol-1:analytical-layer-system",
+      "name": "Three-Layer Analytical System",
+      "summary": "The Almanac imposes three mandatory analytical lenses on every voicing entry: Intervallic Voice-Leading (which voice moves by which interval), Functional Voice-Leading (which scale-degree function moves to which), and M.S.R.P. (the most stepwise top-voice path through the cycle). These layers are the book's primary teaching mechanism, replacing prose explanation with exhaustive, machine-readable mappings.",
+      "members": [
+        {"id": "layer-intervallic", "name": "Intervallic Voice-Leading", "summary": "Maps each voice's motion to a specific interval (unison, 2nd, 3rd, etc.) between successive chords in the cycle."},
+        {"id": "layer-functional", "name": "Functional Voice-Leading", "summary": "Maps each voice's motion in terms of scale-degree function (root, 3rd, 5th, 7th, etc.) - the harmonic grammar layer above raw intervals."},
+        {"id": "layer-msrp", "name": "M.S.R.P. (Most Stepwise Resolution Pattern)", "summary": "A string encoding the most stepwise form of the top-voice melodic line through the complete cycle, serving as a melodic efficiency benchmark for voice-leading choices."}
+      ],
+      "traversal_rules": [
+        {
+          "id": "tr-intervallic-voice-motion",
+          "name": "Intervallic Voice Motion Mapping",
+          "summary": "For each step in a cycle traversal, the intervallic layer is read first to identify which voice carries the common tone (interval 0), which voices move by step (intervals 1-2), and which voices must leap - establishing the motion budget before any voicing is chosen.",
+          "engine_payload": {"kind": "VoiceMotion"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "intervallic voice-leading relationships"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "Intervallic Voice-Leading (pitch relationships)"}
+          ]
+        },
+        {
+          "id": "tr-functional-substitution",
+          "name": "Functional Layer Substitution Expansion",
+          "summary": "Because the functional layer tracks scale-degree function independently of the specific chord, voicings sharing identical functional voice-leading profiles across different cycles or scales are interchangeable substitutes - the functional layer is the basis for any substitution logic built on top of the catalog.",
+          "engine_payload": {"kind": "SubstitutionExpand"},
+          "references": [
+            {"chapter_n": 1, "page": 12, "topic": "chapter summary", "quote_excerpt": "functional voice-leading information"},
+            {"chapter_n": 2, "page": 190, "topic": "chapter summary", "quote_excerpt": "Functional Voice-Leading (harmonic context)"}
+          ]
+        }
+      ]
+    }
+  ]
+}

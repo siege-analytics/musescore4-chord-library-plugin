@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: THE PROGRAM\nPages 16-17 of the book.\n\n<<<CHAPTER TEXT\n\nae TCT err Tent\n\nPOINTERS\n\nA. Itis true that the more you practice, the more quickly you will progress. So, after\nyour one hour per day of controlled practice, if you feel like playing for 12 more\nhours, so much th\u00e9 better. Be in tune with your physical and psychological high's\nand low's and use them appropriately. When you feel like doing it, do it.\n\nB. Guitar players are inveterate noodlers, and | think that a very effective type of\nlearning takes place while watching television and noodling. Do it when you feel\nlike it.\n\nC. Sometimes it's helpful to sketch out a very simple melody line over the changes,\ni.e. half note, quarter notes, halves, etc. Let this line run through your head as\na basic melody and play \"fills\" around it. This wil! at least get your line started\nwith some form.\n\nD. A very common form for building a solo line is: QUESTION AND ANSWER. When\nthis Q/A routine re-occurs, it is generally called a sequence.\n\nSEQUENCE\nQ A Q A\n\ni T ae 7\naes SSSs=55\n\nE. Listen to the \"pre-recorded changes\" and sing the solo the wa\u2019\nplay it.\n\nte\nF. REST: Lie flat on the floor. Hands flat, not crossed. Legs\u2018fMt*not crossed.\nClose your eyes, breath deep, and say to yourself, \"I will relax'how.\"-\n\nG. REST: Stand with your back up against a wall. Press each part of your body\nagainst the wall. Naturally parts of your body will not want to do this, like the\nsmall_of the back, the nape of the neck, etc. But the idea is to attempt \"real hard\"\nfor about 30 seconds. Do this on one of the 3-minute breaks.\n\nH. In this program you will reach many moments in which you hate that \"same old lick\"\nyou \"always play\". Be aware of this point in the tune and the next time around,\ndo something else, no stops. Yes, the tape is running, and the next time is\ncoming right up. So welcome to the world of a hot improvisor.\n\n|. HANGUPS: Play very slowly and listen carefully for any flams. Use all up strokes.\nMake each note sound as loud and strong as any other. Now use all up strokes,\nscales, interval skips. Now use consecutive down and up strokes. Now reverse\nto all up (on the down beat) and down (on the up beat) strokes.\n\nJ. The Warm-Up. At the beginning of each practice session, warm up for 5 minutes\nby playing notes all over the fingerboard. Play very slowly, low, high, and\nmedium pitches, to develop a feel for string travel at a given picking area. Notes\nplayed high up on the neck have a much greater string travel than the low ones\nand can create coordination problems between the left and right hands. Both\nmust attack the string simultaneously.\n\n\\\n\n\nPOINTERS\n\n\u2014\n\nK.| A most common mistake is to blame the left hand when the right hand is at\nfault, or vice versa. Watch out for this.\n\nL. Get the progression off the paper and into your head as soon as possible.\nMemorizing the chord changes allows you to focus all of your attention on what\nyou are playing rather than reading the music.\n\nM. The objectives put forth in this book are attainable only if the reader follows\neach step of the program without deviation from the schedule (that means no\n\nmissed days, hours shortened, time frames disobeyed, key centers missed,\nintroducing hammer-on's, pull-off's, before stated, playin tted eighth six-\nteenth notes instead of eighth notes, etc., etc.) If you do it, you get It.\nyou don't, you don't. \u2014_ >\n\nN{ In the Growth Process, we all go through periods in which we are activating new\nnerve junctures, both in the brain and throughout other parts of the body.\n\nThis type of growth work draws a tremendous amount of systemic energies. The\noverall physical feeling is like pulling a train uphill, and the psychological\nspin-off is the feeling that we are getting nowhere. This will persist for some\nperiod of time. We then tend to go into a natural state of rest, \"a plateau.\"\nDuring this rest period, we tend to feel that we have the world by the tail and\ngreat progress is taking place. Actually the reverse is true. The progress\n\nwas made during the uphill climb, not during the rest period. The rest period\nwill continue for some period of time. Don't worry about it. Then the road will\nbecome very rough again, and we will begin to become aware of our weaknesses.\nThis will last until we select the specific area to attack first. We will then begin\nthe uphill climb again and plateau again only to meet our deficiencies face to\n\nface again. So, on and on it goes, but your practice regimen must remain constant.\n\nSelf- oo. et\nQuestioning\n\n17\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}
