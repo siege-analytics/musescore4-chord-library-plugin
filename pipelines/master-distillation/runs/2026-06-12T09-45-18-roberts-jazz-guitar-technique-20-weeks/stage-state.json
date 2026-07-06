@@ -1,0 +1,76 @@
+{
+  "run_id": "2026-06-12T09-45-18-roberts-jazz-guitar-technique-20-weeks",
+  "config": "pipelines/master-distillation/configs/roberts-jazz-guitar-technique-20-weeks.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-06-14T18:08:19+00:00",
+      "ended_at": "2026-06-14T20:09:09+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-06-12T09-45-18-roberts-jazz-guitar-technique-20-weeks/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-06-12T09-45-18-roberts-jazz-guitar-technique-20-weeks/pages.json",
+        "re-ingested: 83 pages, 89,649 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:16:22+00:00",
+      "ended_at": "2026-06-15T20:16:22+00:00",
+      "outputs": [
+        "detected 9 chapter(s)",
+        "pipelines/master-distillation/runs/2026-06-12T09-45-18-roberts-jazz-guitar-technique-20-weeks/chapter-bounds.json",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch01.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch02.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch03.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch04.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch05.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch06.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch07.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch08.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/chapters/ch09.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:26:12+00:00",
+      "ended_at": "2026-06-15T20:26:12+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/jazz-guitar-technique-in-20-weeks-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:34:20+00:00",
+      "ended_at": "2026-06-15T20:34:20+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/derived/systems-draft.json",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/derived/STATEMENT.md",
+        "derived 3 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:46:27+00:00",
+      "ended_at": "2026-06-15T20:46:27+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/howard-roberts/jazz-guitar-technique-in-20-weeks/derived/PRESCRIPTIVE.md",
+        "extracted 60 prescriptive lesson(s) across 3 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: PICKING\nPages 4-5 of the book.\n\n<<<CHAPTER TEXT\n\nEQUIPMENT\n\nYOUR GUITAR\n\nThe set up of your guitar plays a very important role in the deve~\nlopment of accuracy and strength. Speed comes as a by-product of\naccuracy. Without accuracy, speed is unattainable. Extremely nar-\nrow gauge strings do not create enough resistance or \"return\" to\ntheir center position quickly enough to permit the right hand to de-\nvelope predictable accuracy, or to strengthen the left hand. So, use\na medium-heavy set of strings; nothing smaller than an .012 first\nstring, etc. The strings should be raised to a medium-high action.\nThere are three reasons for this: (1) to eliminate buzzes, (2) to help.\nstrengthen the left hand, and (3) to develop accuracy for the right\nhand.\n\nThe neck should be inspected to assure that it is straight. The frets\n\nshould be dressed down, eliminating high and low spots to avoid buzzes. i\n\nAn acoustic-electric guitar or straight acoustic are best suited for this j\n\u2014 _ job.\u2019 For those who play a classical guitar, your instrument will be fine\n\n_taking into consideration the necessary adjustments.\n\nOn the practical side, a large percentage of us must play with very\nsmall gauge strings, with low action, solid body, etc., to meet the re-\nquirements of today's popular music. Since it is not practical to change\nstrings every day to practice, it may become necessary to have one i\nguitar for the gig and another one to practice on. H\n\nAfter adjusting your guitar, make sure that each note rings loud and\nclear; just like a grand piano, over the entire range of the fingerboard.\n\nYOUR PICK\n\nYour pick should be of medium size, and medium to heavy in thickness. |\nAvoid very large or odd shaped picks. Standard celluloid picks are\n\nwell suited to this purpose.\n\nOTHER IMPORTANT EQUIPMENT\n\nAlso essential to the studies in this book will be: (1) a metronome, (2)\na reel-to-reel or cassette tape recorder, and (3) an alarm clock or timer.\n\n\n\nPICKING\n\nIf you will be using finger-style picking, | recommend the standard\nclassical techniques. If you will be using a pick, a word of caution\nmight be appropriate. Since the birth of modern electric guitar,\napproximately 1937, many styles of plectrum technique have emerged.\nSome successfully met the challenges of new music, and others became\nburdens as a result of inadequate or \"non\"-training. Since this book\nfocuses on the total development of single-string technique for impro-\nvising, and not specifically on picking, the reader must make it a\npoint to develop a functional picking style on his or her own. Seven\nPages of the Howard Roberts Guitar Book are devoted to the subject\nof picking and an even more in-depth study can be found in the How-\nard Roberts Guitar Manual Picking. | can, however, point out some\nthings to avoid.\n\nThe right hand seems to be the greatest limiting factor for most mod-\nern-day guitar improvisors. It appears that once a style of picking\nhas become habitual, it is very difficult to change, and frequently,\ntotal retraining is required. So, taking into consideration that there\nare many techniques one may use to execute a given passage, we must\nconstantly remind ourselves that flexibility-the ability to adapt the\nright hand to a variety of moves-is the key to longevity. The big\nthing to avoid is any kind of anchor system that inhibits freedom of\nmovement. Observe anchors at the elbow, at the wrist, grasping the\npick-guard with the little finger, etc.; all of which may be functional\nfor a specific sound, but should be viewed with caution when considered\nas the basis of an overall right hand technique. Remember: Keep it\nloose! - like a guy strumming a ukelele in a pineapple field. Tf there\nis any rigidness in your picking leverage system, it can stop you like\na brick wall when the tempos get fast.\n\nUnder any circumstances, the left and right hands must be in perfect\nsynchronization. No Flams! If the finger attacks first and the pick\nfollows, there will be two sounds instead of one. If the pick attacks\nfirst and the finger follows, again, two sounds instead of one. The\nkey here is to close the gap so that the \"flam\" effect is unnoticeable.\nTo do so, play tones very slowly at all points on the fingerboard. Only\nin this way can we hear the flam effect. If we play fast in warming up,\nit becomes more difficult to hear the differential of attack.\n\nFINGERINGS\n\nThe thumb of the left hand should ride along the approximate cen-\nter of the back of the neck.\u2019 The fingers should operate straight\nup and down on the strings, like hammers in a piano, at a right\nangle to the fingerboard. Attacking the string at an angle will\nmove the string from it's center position, both cutting down on ac-\ncuracy and also stretching the string to sound out of tune.\n\nThe fingers should be lifted only high enough off the string to a-\nvoid string noise when moving, but not so high as to become wasted\nmotion.\n\nThe wrist should maintain a fairly flat posture. Avoid severe arch-\ning of the left wrist as this can produce undesirable strains.\n\n5\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

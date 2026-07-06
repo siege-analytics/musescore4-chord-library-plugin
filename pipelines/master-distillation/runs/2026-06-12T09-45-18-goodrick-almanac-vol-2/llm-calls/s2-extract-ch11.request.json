@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: A USEFUL TIP\nPages 15-15 of the book.\n\n<<<CHAPTER TEXT\n\nWHAT ABOUT OCTAVE INSERTION WITH 4-PART CHORDS?\n\nOf course it\u2019s possible. Again, looking at all of it from a guitarists\u2019 standpoint, a couple\nof options come to mind :\n\nDrop 4 is an option. Some of it is very difficult to play, but some of it is not.\n\nYou might also want to look at this option:\n\nTake a drop 2 voicing, and do the \u201coctave insertion thing\u201d between the middle two\nvoices...We could call this a Double Drop 2, Drop 4 voicing. {If you play finger-style, you may\nbe surprised at how well it falls...}\n\nAnother option that is a bit more extreme [and only for finger-style guitarists] would be:\nDrop 3 and 4\n\nIf you happen to be one of our many guests that don\u2019t play the guitar, just consider\nyourself lucky, because you could use these same principles in any way that you can\n\nAUSEFUL TIP\n\nIn order to explore the 2-part and 3-part options that have been discussed in the easiest\npossible manner, I would recommend the following:\n\n1) Take a blank 4x6 index card and cut it into eight 1/2 inch x 6 inch strips.\n[You could also use paper, but the index card is better because of its thickness. ]\n\n2) Trim off just a bit of the width of all 8 strips.\n\n3) Use these strips to cover up different lines [melodies] that need to be omitted in\nworking with the 2-part and 3-part options.\n\n[NOTE: 4 strips would be enough for the 3-part material, but you'll need all 8 strips to\ndo the 2-part stuff. {counterpoint} ]\n\nBelieve me when I say that it makes it so much easier to work with these other options.\n\n[Also, I'd guess that you are beginning to realize that our decision to have the books coil-\nbound was a good one...]\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}

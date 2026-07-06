@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch15",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 15: Appendix IV: Suggestions for Using Outlines with Jazz Improvisation Classes\nPages 148-148 of the book.\n\n<<<CHAPTER TEXT\n\n144 Appendix IV Using Outlines in Jazz Classes\n\nAppendix IV:\n\nSuggestions for Using Outlines in Jazz Improvisation Classes\n\nWRITTEN COMPONENT\n\ne Have students write out outlines for each new tune assigned in class to learn. Write out as shown for\nthe previous standard jazz progressions.\n\nHelps the students recognize the patterns in written form. Helps them prepare for improvising by\nlearning the harmonic progression and identifying the tones necessary for modulation.\n\ne Have students write out their own variations on each of the outlines.\n\nOne or two new lines for each outline over a semester would give students quite an arsenal of\nmusical ideas. Practicing them develops technique and dexterity.\n\ne Have students write out and learn solos using the outlines, ideas from the book, and the Etudes as\nmodels.\n\nHelps the students integrate and use their knowledge creatively.\n\nEAR TRAINING\n\ne Have class sing through the outlines on the tune one outline at a time. Instead of all quarter note\nvalues, anticipate the downbeat on the upbeat of beat four.\n\ne Have individuals scat solos through the tune based strictly on the outlines. Use the syllables DOO\nand DAHT (the jazz \u201cmovable DOO\u201d) to help them emphasize jazz articulations.\n\nPrepares them for identifying the notes aurally. Once the notes can be recognized aurally, creating\nmelodies through the harmony will be easier.\n\nTECHNIQUE DRILL\n\ne Practice as a class through the outlines on the tune one outline at a time. Instead of all quarter note\nvalues, anticipate the downbeat on the upbeat of beat four. Work through the exercises in Chapter X.\n\ne Invent more interesting lines based on the outlines and plug them in to the tunes,\nGives the students clear, practical drills to practice.\nCONTROLLED IMPROVISATION\n\ne Have individuals improvise on the tune using only one outline at a time. When the entire class has\nplayed outline no.1, then move on to outline no.2, then outline no.3.\n\nLimiting is a way of learning control. Control is what all musicians and composers strive in any style\nor discipline.\n\nINTEGRATED IMPROVISATION\ne Have the students improvise freely on the tune using all three outlines and any other materials.\nOutlines give them security in hearing and playing clear harmonic ideas in a linear fashion. Once\n\nthey can hear and understand the basic path it will be easier to stray from that path and explore,\nknowing and hearing where to return.\n\nConnecting Chords with Linear Harmony\n\nBHEeEReHEHEEHEEBEEHEEBEEHh\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 15 extraction"
+}

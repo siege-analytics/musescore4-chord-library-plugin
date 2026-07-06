@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: 3-Part Chords Derived From a 7th Chord\nPages 9-9 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART CHORDS: FOUND AND IDENTIFIED!\n\nWhat follows is a brief, introductory study of how to arrive at different 3-part chords\nby leaving out one voice of a 4-part chord. I took one 4-part chord from each of the 5\ndifferent 4-part chord families:\n\n7th chord: \u00a9 CMaj7\n\nG\nTBNI: Cc\n. Be\nTBN II: C\nB\n4-part 4ths: F\nCc\n4-part B\nSpread D\nClusters: Cc\n\nIt\u2019s interesting to observe which 3-part chords are generated from the five 4-part chord families:\n\n4-PART CHORD\n\n7th chord generates _ two different triads, 7th (no 3rd), 7th (no 5th)\n\nTBN I generates _ one triad, 7th (no 3rd), 3-part spread cluster, 3-part 4ths\nTBN II generates _ one triad, 3-part 4ths, 3-part spread cluster, 7th (no 5th)\n4-part 4ths generates two 3-part 4ths, 7th (no 5th), 7th (no 3rd)\n\n4part spread cluster generates _ two 3-part spread clusters, 7th (no 5th), 7th (no 3rd)\n\n[Each 3-part chord appears four times...]\n\nThe next chapter after this one is called Stuff To Do With 3-Part Chords. That will\nkeep you busy for awhile. A later chapter is called Twenty 3-Part Chords You Should\nKnow. This should be helpful...\n\nBut if you really are a \u201cglutton for punishment,\u201d go to the chapter 840 Chords You\nShould Know (Part 1), look at the page Thirty-Five 4-Part Structures From C, and realize that\n\ni\n~2 PED\nthe five examples used in the present chapter (CMaj7, C, C, C, C ) correspond to numbers 1,\n8, 15, 22 and 29. That means that there are only thirty more 4-part structures to explore in the\npresent fashion! (JOY OF JOYS!)\n\nAlmanac of Guitar Voice-Leading Volume III 8\n\nNNT\n\n\\\n\noN\n\nos,\n\nNNN\n\noS\n\nNN\n\n\\\n\nNO\n\ncy\n\na\n\nae\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

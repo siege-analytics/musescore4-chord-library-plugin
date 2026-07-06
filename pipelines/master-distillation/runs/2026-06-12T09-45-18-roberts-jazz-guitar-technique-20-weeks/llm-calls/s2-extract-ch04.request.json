@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: THE FINGERBOARD\nPages 11-13 of the book.\n\n<<<CHAPTER TEXT\n\nLINE SHAPING\n\nIn that the studies in this book are deliberately limited to rhythms of uninterrupted\nduple and triple time, interesting rhythmic figures or motifs cannot be used to brighten\nup the solo lines. Therefore, your choice of melodic tone sequences will become the\nmajor device for creating interesting lines. So to help form a perspective on this subject,\nthe following is a brief outline of some basic line shaping elements for consideration.\n(Scales, Interval Skips, Arpeggios)\n\nCOMMON TONES 7\n\nA common tone is a note that is common to two or more chords, a very simple technique\nbut not to be overlooked, i.e. when playing non-stop eighth notes, or triplets, etc., it\nis not necessary to keep the line moving at all times. The line can be flattened out ---\na nice relief from excessive vertical movement.\n\nExample 5\nBhmaj? Ded Fem BA E*magj? Ga? cbt Abs\non po ana a\n== S==SSS=\"::\nSCALES\n\nCreate smooth rolling lines. Some of the more common scales you may use are:\n\nThe Chromatic Scale (Symetrical, consecutive 34 steps)\n\nExample 6\n\ngts\n\nnn\nSS a ee ee\n\noe\n\nATP\n:\n\nThe Diatonic Major Scale (with } steps between the 3rd/4th and 7th/8th scale steps\n~w.idicated with lines between the notes ( o\u2014\u2014\u2014\u2014 2 ).\n\nExample 7 (C Major)\n\nq\nhow _ ?- ed\noe\n+ e id ba \u201c\n\u2019 2 3 4 35 6 q 8\n\u2018The Relative Minor Scale\nThe Natural Minor Scale\nExample 8 (A minor)\n2\nQ = = z o 2\n=a ?-\nhb.\nyy 2 3 4 s 6 7 8\n\n\nLINE SHAPING\n\nThe Relative Harmonic Minor Scale (with } steps between the 2nd/3rd and 7th/8th scale\nsteps.)\n\nExample 9 (A harmonic minor)\n\nQ pe\n\nW\\ ae \u2014o-\n\nay on\n\n' 2 3 an 5 6 7 8\n\nThe Relative Melodic Minor Scale (with } steps between the 2nd/3rd and 7th/8th scale steps\nascending and reverting back to the natural minor descending. NOTE: The ascending and\ndescending rules here are a technicality, which in the final analysis may be disregarded\n\nin favor of the existant bar harmony, e.g. the key A minor, the bar harmony is E7b9.\n\nWe would more than likely use F ascending or descending.\n\nExample 10 (A melodic minor)\n\n.\n$ = - \u2014\u2014\u2014 x \u00a2-o- #2\nTea ~\nVe\nTy 2 2 \u201c4 s pi 7 8\n\u00a2 ya. no\nz re Z =\n~ \u00a32.\n1 4 6 5 4 3 2 1\n\nThe Diminished Scale (symetrical, consecutive whole step and half steps) most commonly\nused over dominant \u2018th chords or diminished chords.\n\nExample 11\n\npt >\n\nrl\n\neS > \u2014 - 5-3\n\nQ\nLet\nQ\n&\n\n=\n\nThe Whole Tone Scale (symetrical, consecutive whole steps) most commonly used over\ndominant 7th chords. 7\n\nExample 12\n\n?\n\n5 2\nJ}.\n\nT > o \u00b0 2\n\n\nLINE SHAPING\n\nThe Major Pentatonic Scale (same as diatonic major with the active tones 3rd and 7th\nleft out). When harmonized creates inversions of a Major 6/9 chord, with little gravi-\ntational pull toward any key center \"depending on the usage\".\n\nExample 13\n\nMEP\n\n%\n\n_ oO\nARPEGGIOS\nArpeggios are specifically chords, broken up into single notes. They are effective in out-\n\nlining the bar harmony and offer a nice contrast to scale movement as they create smooth\nrolling lines, at sharper angles than scales.\n\nExample 14\nv.\nDow G4 CMaj.4 Cc\u201d\n0 4 \u00a3 4 ont + 4 4\n\neL\n\nT t i\" i } { = \u00a2\n\nINTERVAL SKIPS\n\nInterval skips create sharp, dramatic lines. An interval is the distance between any two\nnotes, Large interval skips can be a valuable tool for creating interesting lines and can\nhave a dramatic effect in breaking up the monotomy of excessive scale movement. Any\nsequence of interval skips, 3rds, 7ths, S9ths, etc., can easily be applied to a key center\nby playing scale intervals that take into account the half steps of the scale, thus, resulting\nin combinations of major and minor 3rds or major and minor 7ths (not, parallel 3rds, 7ths,\netc.) ~\n\n~ Example 15\nq m | 4\n\\ \u2014 sin rm arm oe $2. rou = te :\n\u00a9 t f- f-- ZL ZL 7 ZL. = be ymah ge\nte Oa + o o oo + ~~ - -\n\nA most common complaint of beginning improvisors is that their playing tends to become\ntoo scale-like. One solution to this could be to stop playing things that \"sound\" like\nscales, for example, as an exercise; don't play more than 3 or 4 scale tones in the same\ndirection, e.g. this type of scale movement creates interval skips, small and large, thus\nbreaking up the scale effect.\n\nExample 16\n\nce a \u2122 T o rT + \u00a2\n= ory = =\nUy tie\n\n4aTr\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

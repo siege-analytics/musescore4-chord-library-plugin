@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: Outline Fragments\nPages 79-81 of the book.\n\n<<<CHAPTER TEXT\n\nChapter 6 Outline No.3 75\n\n247. Tom Harrell:\n\nAm7 D7 Gm7\nfy\n(one te es\nry)\n\nHubbard delays the resolution to the B flat for an entire measure. Compare this to Ex.174 of Parker.\n\n248. Freddie Hubbard:\n\nCm7 F7 Bb\nfh\nhaa \u2014 \u2014\u2014 a! _\u2014\u2014\n: i F FZ \u2014\u2014-\nry tha ge\u201d\n\nSUGGESTED EXERCISES:\n\n1. Create your own lines using similar devices from the above examples.\n\n2. Learn some of the above examples in all keys.\n\n3. Write out solos on standard jazz progressions and incorporate some of the above examples.\nPractice the solos like any etude.\n\n4, Try improvising over standard progressions and use some of the above examples in your solos.\n\n5. Alter some of the above examples either by adding more notes, rhythmic displacing, fragmenting,\netc. to come up with lines of you own.\n\n6. Practice outline no.3 anticipating the thirds over the barline in all major and minor keys.\n\nDm7 G7 Cmaj7\nf\noeeae z Ss\nry} oe a\n\nConnecting Chords with Linear Harmony\n\n\n\n76 Chapter 7 Outline Fragments\n\n= creat = =\n\nVII, _ OUTLINE FRAGMENTS\n\nIn the discussion of harmonic clarity, the target notes were the third of ii moving to the seventh of ii,\nresolving to the third of V7 moving to the seventh of V7, resolving to the third of I. Fragments of\noutlines have been previously shown where harmonic clarity was still present with some of the elements\nmissing.\n\nParker's sequence in ex.249 relies on the seventh of ii resolving to the third of V7 for clarity. The turn,\nthe leap from third to the root, and the rhythmic displacement give life to this example.\n\n249, Charlie Parker:\n\nD7 P 5 G7\n4 \u2014 ll 3 3 e\n===\" 2S =\" =\n=e eo e\ne \u2014_ =\nC7 F7 3 3\n3 3\nh = \u2014 = \u2014 = x\non T } wt | \u2014 x gto = foie z _\ne id o l= \u2014_\n\nBrown uses similar motion in this sequence. The shape is echoed later, but with an arpeggio on the V7\nchord,\n\n250. Clifford Brown:\n\nAbm7 Db7 Ffm7 B7\nfa\\ i \u2014\noan eH\nrs i m! it\n\n\u201ct\nyl iY \u20ac A a ri ie td oe I ay\n\n251. Clifford Brown:\n\nFim7 B7\n(ye b\u2014- \u2014 =\n2 oP Poe\n\nConnecting Chords with Linear Harmony\n\nBER EE BERBER HEHEHE EHEEREB EE\n\n\n\nChapter 7 Outline Fragments Wea\n\nThe only note missing from Morgan's excerpt is the third of the iig chord. The V7 chord is anticipated\nand arpeggiated. The line follows outline no.1 one down to the third of C minor.\n\n252. Lee Morgan:\n\nDoa7 G7 Cm\na\nt a\n\u2014\u2014= eee:\ne\n\nHarrell begins with an accented upper neighbor tone followed by the third. The leap is an arpeggiated\ntone to the fifth, The seventh on the upbeat is followed by the next target note on the downbeat.\n\n253. Tom Harrell:\n\nBm7 E7\n\n=\n=\n\neB\n@\n\nConnecting Chords with Linear Harmony\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}

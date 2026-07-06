@@ -1,0 +1,45 @@
+{
+  "run_id": "2026-05-28T15-05-20-carter-fingerstyle-jazz",
+  "config": "pipelines/master-distillation/configs/carter-fingerstyle-jazz.toml",
+  "stages": {
+    "s1": {
+      "status": "awaiting-review",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-carter-fingerstyle-jazz/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-carter-fingerstyle-jazz/pages.json",
+        "re-ingested: 184 pages, 210,804 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s3": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s4": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

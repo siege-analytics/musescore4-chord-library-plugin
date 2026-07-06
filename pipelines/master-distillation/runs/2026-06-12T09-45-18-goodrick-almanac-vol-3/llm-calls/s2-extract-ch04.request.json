@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: 3-Part Chords: Found and Identified!\nPages 8-8 of the book.\n\n<<<CHAPTER TEXT\n\nTHE REAL COMPLEAT M-LODEW feontinued?\n\nIn Volume 2, we analyzed the intervals in all 3 inversions of a triad and a 3-part 4th\nvoicing to help show the comparison of their make-up. The triads primarily consist of 3rds\nand 6ths with some 4ths and 5ths, but contain no 2nds or 7ths.While the 3-part 4ths primar-\nily consist of 4ths and 5ths with some 2nds and 7ths, but contain no 3rds or 6ths. Clearly,\nthese two 3-part chords are very different chord types. We can now show a comparative\ninterval analysis of ALL the chords and make some observations about the various families\nthat exist within each given scale (in this case, C major, root position):\n\n3-PART\nTriad 3-Part 4th Spread Cluster 7th (no 3rd) 7th (no 5th)\nG B E B\n3rd 4th 2nd 3rd 5th\ned ed D1 a ct\u201d Lon\nEt 3rd Ft 4th cf Sth E} 3rd\nC Cc Cc\n4-PART.\n\nTBN I TBN II 4-Part 4th Spread Cluster\n\nB : 3rd Ps) B ei E of 2nd\n5th E\n7th pd 3rd me (= 3rd \u201c| 4th\n\u201cESth i: 7th | (10th) c\neS 3rd Dj 2nd ra 2nd ct i 2nd\n\n3-PART 3/6 4/5 (2/7 4-PART 3/6 4/5 2/7\n\nTriad Hl | = 7th moo 1) =6\n\n7th (no 3rd) | | 1 = TBN I tou nw =6\n\n7th (no 5th) I | | =3 TBN II Il ll to =\n\n3-Part 4th Ul | =3 4-Part 4th 1 om nwo =\n\nSpread Cluster I Il =3 Spread Cluster I I Hho =\n5 5 5 10 10 10\n\nIf we merely look at the interval types that occur within these chord families, we\nobserve that the total available intervals are evenly distributed within each of the five dif-\nferent chord types in both 3- and 4-part chords. It is also interesting to note that the omis-\nsion of interval types only occurs within particular 3-part chord families (triad; 3-part 4th;\nspread cluster). Finally, the four chord families with the most even distribution are found\nboth in 3- and 4-part chords (7th, no3rd; 7th, no5th; TBN I; TBN ID). If this is at all interest-\ning to readers, perhaps a further interval study of the inversions and various drop voicings\nwithin these chord families will yield some other similarities and differences worth noting.\nAs for me, I hope I never have to think about this again!!!\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

@@ -1,0 +1,697 @@
+{
+  "_provenance": {
+    "run_id": "2026-06-10T15-35-34-laukens-complete-chord-melody",
+    "stage": "s4",
+    "source_pdf": "Laukens, Dirk - Complete Chord Melody.pdf",
+    "extracted_at": "2026-06-10T17:47:46+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "dirk-laukens",
+  "work_id": "complete-chord-melody",
+  "systems": [
+    {
+      "id": "dirk-laukens:complete-chord-melody:chord-melody-harmonization",
+      "name": "Chord Melody Harmonization System",
+      "summary": "The central system of the book, governing how any melody note is mapped to a chord voicing through a three-family taxonomy (Major, Minor, Dominant \u2014 with sub-families for m7b5 and altered dominant), a chord collection for every diatonic interval above a given root, and the golden rule that interval measurement is always against the current chord in the progression, not the overall key. The system's traversal logic moves the arranger horizontally across the neck via CAGED-anchored chord collections on the top two strings. Modification rules govern how voicings are altered: notes may be omitted (fifth, root, eleventh, ninth preferred), shell voicings (root, 3rd, 7th) serve as the density floor, and chords are placed sparsely \u2014 only on long-held melody notes \u2014 with unplayable voicings resolved by cutting notes rather than abandoning the chord.",
+      "members": [
+        {
+          "id": "family-major",
+          "name": "Major Family",
+          "summary": "Chords whose quality is major: CMaj7, C6, CMaj9 and extensions."
+        },
+        {
+          "id": "family-minor-m7",
+          "name": "Minor m7 Sub-Family",
+          "summary": "Minor seventh chords and extensions: Cm7, Cm9, Cm13."
+        },
+        {
+          "id": "family-minor-m7b5",
+          "name": "Minor m7b5 Sub-Family",
+          "summary": "Half-diminished chords: Cm7b5, Cm11b5; used on ii of minor ii-V-i."
+        },
+        {
+          "id": "family-dominant-natural",
+          "name": "Natural Dominant Sub-Family",
+          "summary": "Unaltered dominant seventh chords and extensions: C7, C9, C13."
+        },
+        {
+          "id": "family-dominant-altered",
+          "name": "Altered Dominant Sub-Family",
+          "summary": "Dominant chords with altered tensions: C7(b9), C7(b13b9), C7(b5), C7alt."
+        },
+        {
+          "id": "chord-collection-string1",
+          "name": "Chord Collection \u2014 Melody on 1st String",
+          "summary": "Set of voicings covering every diatonic interval as the top note on the first string, organized by CAGED position."
+        },
+        {
+          "id": "chord-collection-string2",
+          "name": "Chord Collection \u2014 Melody on 2nd String",
+          "summary": "Parallel set of voicings with the melody note as the highest note on the second string."
+        },
+        {
+          "id": "shell-voicing",
+          "name": "Shell Voicing",
+          "summary": "Three-note voicing containing root, 3rd, and 7th."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "horizontal-melody-placement",
+          "name": "Horizontal Melody Placement on Top 2 Strings",
+          "summary": "Melody is repositioned onto the top 1-2 strings, requiring horizontal movement across the neck rather than staying in a single position.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "melody placement on strings",
+              "quote_excerpt": "play more horizontally over the fretboard, rather than staying in a single position"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Melody on top 2-3 strings",
+              "quote_excerpt": "change the fingering of the melody to sit on the top 2 (or 3) strings"
+            }
+          ]
+        },
+        {
+          "id": "caged-collection-navigation",
+          "name": "CAGED-Anchored Collection Navigation",
+          "summary": "Navigate between chord voicings by anchoring to the CAGED fretboard area closest to the melody note.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "CAGED system fretboard orientation",
+              "quote_excerpt": "play a ii V I using chord shapes from the above collections closest to each fretboard area"
+            }
+          ]
+        },
+        {
+          "id": "golden-rule-interval-to-chord",
+          "name": "Golden Rule: Interval Measured Against Current Chord",
+          "summary": "Select the voicing whose interval label matches the melody note's relationship to the current chord \u2014 never to the overall key.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Golden rule: interval relates to chord",
+              "quote_excerpt": "Always relate the interval to the chord at that point in the chord progression"
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Interval label relates to current chord",
+              "quote_excerpt": "interval number we give a melody note must relate to the current chord in the progression"
+            }
+          ]
+        },
+        {
+          "id": "string-set-two-string-melody",
+          "name": "String-Set Transition Between 1st and 2nd String Collections",
+          "summary": "When the melody moves from the 1st to the 2nd string, transition to the corresponding 2nd-string chord collection.",
+          "engine_payload": {
+            "kind": "StringSetTransition"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "2nd string chord collections",
+              "quote_excerpt": "additional chord collections that have their highest note on the 2nd string"
+            }
+          ]
+        },
+        {
+          "id": "chord-scale-improvisation",
+          "name": "Chord-Scale Palette Traversal",
+          "summary": "Within a position, any chord from the collection may follow any other; blending chord voicings with single-note lines is the characteristic traversal gesture.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Improvising with chord scale",
+              "quote_excerpt": "play through each of the shapes - any of the shapes in any order will generally sound fine"
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Joe Pass chord-scale approach",
+              "quote_excerpt": "Joe Pass would often play a block chord then link to the next chord voicing with scale notes or passing tones"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "shell-voicing-floor",
+          "name": "Shell Voicing Density Floor",
+          "summary": "Every chord must contain at minimum the root, 3rd, and 7th \u2014 the bare bones defining chord identity.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Shell voicing definition",
+              "quote_excerpt": "shell voicings \u2014 i.e. the 'bare bones' of what you need to define the sound of the chord: the root, 3rd, and 7th"
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Why remove the fifth",
+              "quote_excerpt": "You can remove the 5th from the chord and still retain the essential character of the sound"
+            }
+          ]
+        },
+        {
+          "id": "sparse-chord-placement",
+          "name": "Sparse Chord Placement \u2014 Long Notes Only",
+          "summary": "Chords are placed only on long-held melody notes; cluttering short notes destroys melodic intelligibility.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "chord placement rule",
+              "quote_excerpt": "I mainly place chords on the long-held melody notes"
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Chord placement frequency",
+              "quote_excerpt": "less is more \u2014 placing chords at key places 'here and there'"
+            }
+          ]
+        },
+        {
+          "id": "note-omission-policy",
+          "name": "Note Omission Policy \u2014 5th, Root, 11th, 9th Preferred",
+          "summary": "When a voicing is unplayable, cut notes in order: 5th first, then root, 11th, 9th; the 3rd and 7th are kept unless the chord is especially complex.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Common omitted intervals",
+              "quote_excerpt": "Intervals most commonly omitted include the 5th, the root (1st), the 11th, and the 9th"
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Options for difficult voicings",
+              "quote_excerpt": "Cut out notes from the chord - e.g. we could cut that low B to make it easier to change to the next chord"
+            }
+          ]
+        },
+        {
+          "id": "long-note-chord-substitution",
+          "name": "Long-Note Chord Substitution",
+          "summary": "When a long melody note cannot ring on guitar, substitute a chord voicing to mark the harmonic change.",
+          "engine_payload": {
+            "kind": "_pending:long-note-voicing-substitute"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "adapting long melody notes",
+              "quote_excerpt": "rather than trying to hold them for their full length, I place a chord voicing"
+            }
+          ]
+        },
+        {
+          "id": "color-tone-dominant",
+          "name": "Color Tone Requirement on Dominant Chords",
+          "summary": "Extensions and altered tensions must be added to dominant chords to produce an authentically jazz-flavoured sound.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Adding tension to dominant chords",
+              "quote_excerpt": "The jazzy sound in arrangements usually comes from adding extensions and tensions to voicings - particularly to dominant chords"
+            }
+          ]
+        },
+        {
+          "id": "voicing-generation-add-adapt",
+          "name": "Voicing Generation by Adding or Adapting Notes",
+          "summary": "New voicings are derived from a base shape by adding or altering individual notes.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Generating voicings by adding/adapting notes",
+              "quote_excerpt": "how many different chord voicings I can create from this G7 shape, simply by adding or adapting notes"
+            }
+          ]
+        },
+        {
+          "id": "octave-drop-for-range",
+          "name": "Octave Drop for Fretboard Range Management",
+          "summary": "When chord collection shapes climb too high on the neck, drop them an octave to stay in a practical range.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Transposing chord collection by octave drop",
+              "quote_excerpt": "drop some shapes down the octave when they start to get a bit too high"
+            }
+          ]
+        },
+        {
+          "id": "sub-family-discrimination",
+          "name": "Sub-Family Discrimination \u2014 Altered vs Natural Dominant, m7 vs m7b5",
+          "summary": "Sub-family selection must match the harmonic situation; the wrong sub-family produces audible harmonic errors.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "altered vs. natural dominant rule",
+              "quote_excerpt": "can often sound wrong playing a natural dominant instead of an altered dominant or playing a m7 instead of a m7b5 chord"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirk-laukens:complete-chord-melody:substitution-reharmonization",
+      "name": "Substitution and Reharmonization System",
+      "summary": "A layered substitution lattice built on top of the base harmonization system, allowing the arranger to replace or expand chords using tritone substitution (guide tones swap), relative substitution (vi for I), chord-iii substitution, minor-for-dominant (iim7 for V7), back cycling (circle of fourths), and common tone substitution (substitute chord must share the melody note). The ii/V interchangeability rule, attributed to Joe Pass, collapses two operations into a general swap freedom. Guide tones (3rd and 7th) are the harmonic engine making most substitutions valid. Lick swaps extend the system into the melodic domain by replacing repeated written melody with improvised lines matched to the underlying harmony. Back cycling and aggressive substitution are appropriate in solo guitar but may clash with other players in an ensemble.",
+      "members": [
+        {
+          "id": "sub-tritone",
+          "name": "Tritone Substitution",
+          "summary": "Replace any chord with one whose root is a tritone away; guide tones swap positions while remaining common tones."
+        },
+        {
+          "id": "sub-relative",
+          "name": "Relative Substitution (vi for I)",
+          "summary": "Replace the I chord of a key with the vi chord."
+        },
+        {
+          "id": "sub-chord-iii",
+          "name": "Chord-iii Substitution",
+          "summary": "Substitute a major chord for chord iii of its key."
+        },
+        {
+          "id": "sub-minor-for-dominant",
+          "name": "Minor-for-Dominant Substitution (iim7 for V7)",
+          "summary": "Use the minor 7 built on the 5th of any dominant chord in place of that dominant."
+        },
+        {
+          "id": "sub-back-cycling",
+          "name": "Back Cycling",
+          "summary": "Add preparatory chords by moving backwards through the circle of fourths."
+        },
+        {
+          "id": "sub-common-tone",
+          "name": "Common Tone Substitution",
+          "summary": "Substitute any chord for another as long as the new chord shares the current melody note."
+        },
+        {
+          "id": "sub-lick-swap",
+          "name": "Lick Swap",
+          "summary": "Replace a repeated melodic figure with an idiomatic jazz lick matched to the underlying harmony."
+        },
+        {
+          "id": "sub-chord-addition",
+          "name": "Chord Addition",
+          "summary": "Insert substitute chords at additional points to expand harmonic rhythm."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "guide-tone-common-tone-validity",
+          "name": "Guide Tone Common-Tone Validity Check",
+          "summary": "A substitution is valid when 3rd and 7th of the substitute are common tones with the original chord.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "guide tones swap in tritone sub",
+              "quote_excerpt": "guide tones have essentially swapped places between these two chords"
+            }
+          ]
+        },
+        {
+          "id": "ii-v-interchangeability",
+          "name": "ii-V Interchangeability",
+          "summary": "The ii and V chords may be freely interchanged in solo guitar arranging, attributed to Joe Pass.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "ii\u2013V interchangeability",
+              "quote_excerpt": "Joe Pass would often mention that the ii and the V chord can be interchanged"
+            }
+          ]
+        },
+        {
+          "id": "common-tone-melody-match",
+          "name": "Common Tone Melody Match",
+          "summary": "Substitute chord must contain the current melody note as one of its chord tones.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "common tone substitution rule",
+              "quote_excerpt": "substitute any chord for another chord, as long as the new chord has a note in common with it that you use as the melody note on top"
+            }
+          ]
+        },
+        {
+          "id": "lick-swap-trigger",
+          "name": "Lick Swap Structural Trigger",
+          "summary": "Lick swaps are triggered by a repeated melodic figure (e.g., a repeated A section) and matched to the harmonic type of that moment.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "when to substitute licks for melody",
+              "quote_excerpt": "jazz chart with a melodic figure that repeats (e.g. a repeat of an A section) - this can be a good place to use this technique"
+            },
+            {
+              "chapter_n": 7,
+              "topic": "minor ii V lick substitution",
+              "quote_excerpt": "minor ii V i progression at that point (Bm7b5 - E7(b9) - Am7), so you can use a minor ii V i jazz lick"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tritone-sub-rule",
+          "name": "Tritone Substitution Rule",
+          "summary": "Any chord may be replaced by the chord whose root lies a tritone (split octave) away.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "tritone substitution rule",
+              "quote_excerpt": "You can replace any chord with another whose root is a tritone away from the root of the original chord"
+            },
+            {
+              "chapter_n": 6,
+              "topic": "tritone as split octave",
+              "quote_excerpt": "tritone interval is sometimes referred to as a split octave"
+            }
+          ]
+        },
+        {
+          "id": "relative-sub-rule",
+          "name": "Relative Substitution Rule (vi for I)",
+          "summary": "The I chord of a key may be replaced by the vi chord of that key.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "relative substitution rule",
+              "quote_excerpt": "you can replace the I chord of a key with the vi chord of the key"
+            }
+          ]
+        },
+        {
+          "id": "chord-iii-sub-rule",
+          "name": "Chord-iii Substitution Rule",
+          "summary": "A major chord may be substituted by chord iii of its key.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "chord iii substitution rule",
+              "quote_excerpt": "you can substitute a major chord for chord iii of its key"
+            }
+          ]
+        },
+        {
+          "id": "minor-for-dominant-rule",
+          "name": "Minor-for-Dominant Substitution Rule",
+          "summary": "A dominant chord may be replaced by the minor 7 chord built on its fifth scale degree.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "minor for dominant substitution rule",
+              "quote_excerpt": "You can use a minor 7 chord from the 5th of any dominant chord"
+            }
+          ]
+        },
+        {
+          "id": "back-cycling-rule",
+          "name": "Back Cycling Substitution Rule",
+          "summary": "Additional chords may be prepended by traversing backwards through the circle of fourths; restricted to solo guitar to avoid ensemble clashes.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "back cycling substitution rule",
+              "quote_excerpt": "add chords to the chord progression of a song based on the 'back cycle', i.e. the circle of fourths"
+            },
+            {
+              "chapter_n": 7,
+              "topic": "back cycling band context warning",
+              "quote_excerpt": "won't necessarily work well if you are playing in a band as the changes may clash"
+            }
+          ]
+        },
+        {
+          "id": "late-song-placement-complex-subs",
+          "name": "Late-Song Placement of Complex Substitutions",
+          "summary": "Extreme reharmonizations should appear later in the song form so listeners first establish the original harmony.",
+          "engine_payload": {
+            "kind": "_pending:form-placement-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "later-song placement of complex substitutions",
+              "quote_excerpt": "may be desirable to add these kinds of substitutions a bit later in the song form"
+            }
+          ]
+        },
+        {
+          "id": "chromatic-approach-chord",
+          "name": "Chromatic Approach Chord",
+          "summary": "A chromatic passing chord uses the same voicing shape one fret above or below the target chord, resolving to the target.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "chromatic approach chords",
+              "quote_excerpt": "voicing on the note being approached, then play the same voicing one fret away for the approach note"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirk-laukens:complete-chord-melody:solo-guitar-texture",
+      "name": "Solo Guitar Texture and Walking Bass System",
+      "summary": "Structural engine for solo guitar arranging: a single guitarist implies a full-band texture by rotating three layers \u2014 walking bass (strings 5-6), shell chords (downbeat or '& of 1'), and single-note melodic lines (strings 1-2). The walking bass layer has its own four-step construction rule: root on beat 1, approach note on beat 4, inner beats from scales/chromatics/arpeggios. The texture succeeds through implication and omission \u2014 the listener's mind fills in the band. Diads are preferred over octaves for richer jazz sound. The texture cycle is the book's answer to the fundamental solo guitar problem: providing bass, harmony, and melody simultaneously.",
+      "members": [
+        {
+          "id": "layer-walking-bass",
+          "name": "Walking Bass Layer",
+          "summary": "Bass line on strings 5-6 with the four-step construction rule."
+        },
+        {
+          "id": "layer-shell-chord",
+          "name": "Shell Chord Layer",
+          "summary": "Shell voicings dropped on downbeat or '& of 1' over the bass line."
+        },
+        {
+          "id": "layer-single-line",
+          "name": "Single-Note Melodic Line Layer",
+          "summary": "Unaccompanied scalar lines on strings 1-2 filling space left by long melody notes."
+        },
+        {
+          "id": "texture-diad",
+          "name": "Diad (Parallel-Interval Harmonization)",
+          "summary": "Harmonizing a line in parallel 3rds or 6ths."
+        },
+        {
+          "id": "texture-octave",
+          "name": "Octave Doubling",
+          "summary": "Doubling the melody one octave below with muting of the intervening string."
+        },
+        {
+          "id": "texture-arpeggiation",
+          "name": "Arpeggiation",
+          "summary": "Notes of a chord plucked one at a time for a lyrical effect, especially in ballads."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "texture-rotation-illusion",
+          "name": "Texture Rotation \u2014 Illusion of Full Band",
+          "summary": "Alternate between walking bass, chord lines, and single-note lines across measures to create the illusion of a rhythm section.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Solo guitar illusion concept",
+              "quote_excerpt": "alternating through these different devices gives the 'illusion' to the audience of a complete band"
+            }
+          ]
+        },
+        {
+          "id": "walking-bass-long-note-fill",
+          "name": "Walking Bass as Long-Note Fill",
+          "summary": "Deploy walking bass specifically during long-held melody notes to maintain rhythmic drive.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "walking bass melodic role",
+              "quote_excerpt": "walking bass is used to fill out sections where there is a long-held melody note"
+            }
+          ]
+        },
+        {
+          "id": "shell-voicing-rhythmic-placement",
+          "name": "Shell Voicing Rhythmic Placement \u2014 Downbeat or & of 1",
+          "summary": "Shell voicings placed on beat 1 or '& of 1' to create rhythmic variety.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "walking bass shell voicings",
+              "quote_excerpt": "It's good to mix up playing them on the downbeat and on the '& of 1' to create variety"
+            }
+          ]
+        },
+        {
+          "id": "diad-over-octave-preference",
+          "name": "Diad Preference Over Octaves",
+          "summary": "Diads (parallel 3rds or 6ths) preferred over octaves for a richer, more authentic jazz sound.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "diads as octave alternative",
+              "quote_excerpt": "alternative approach to using octaves and is a softer but richer sound, which sounds very authentic in the jazz guitar tradition"
+            },
+            {
+              "chapter_n": 5,
+              "topic": "Diads definition",
+              "quote_excerpt": "Diads are when you harmonize a line in a parallel interval, usually 3rds or 6ths"
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "walking-bass-construction",
+          "name": "Walking Bass Four-Step Construction",
+          "summary": "Build a walking bassline: (1) root on beat 1, (2) approach note on beat 4, (3-4) inner beats from scales, chromatics, or arpeggios.",
+          "engine_payload": {
+            "kind": "_pending:walking-bass-construction"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "walking bass construction",
+              "quote_excerpt": "Place the root on beat 1 of each bar"
+            },
+            {
+              "chapter_n": 6,
+              "topic": "walking bass beat 4 approach",
+              "quote_excerpt": "add either a diatonic or chromatic note on beat 4"
+            },
+            {
+              "chapter_n": 6,
+              "topic": "walking bass inner notes",
+              "quote_excerpt": "add two more notes in between the root note of beat 1, and the approach note of beat 4"
+            }
+          ]
+        },
+        {
+          "id": "bass-prominence-solo-vs-trio",
+          "name": "Bass String Prominence in Solo Arrangement",
+          "summary": "In solo guitar, strings 5-6 must carry the bass function; arrangement sounds thin without it.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Bass notes role in solo guitar",
+              "quote_excerpt": "no longer have a bass player to play with, so you need to fill that role ourselves"
+            }
+          ]
+        },
+        {
+          "id": "key-selection-open-strings",
+          "name": "Key Selection for Open-String Bass Notes",
+          "summary": "Choose an arrangement key (A, E, D) that allows open strings on the bass, freeing fretting fingers.",
+          "engine_payload": {
+            "kind": "_pending:key-selection-constraint"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Key selection for open strings",
+              "quote_excerpt": "Choosing a key like A, E, or D gives you essentially another set of free fingers"
+            }
+          ]
+        },
+        {
+          "id": "arpeggiation-ballad-context",
+          "name": "Arpeggiation in Ballad Context",
+          "summary": "Substitute block chord plucking with arpeggiation in ballad arrangements for a lyrical texture.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Arpeggiation definition and effect",
+              "quote_excerpt": "Arpeggiation is when you pluck the notes of a chord one at a time"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

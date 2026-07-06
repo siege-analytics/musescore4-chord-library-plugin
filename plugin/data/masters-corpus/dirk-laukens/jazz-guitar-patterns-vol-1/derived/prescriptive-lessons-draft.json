@@ -1,0 +1,770 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-laukens-jazz-guitar-patterns-vol-1",
+    "stage": "s5",
+    "source_pdf": "Laukens, Dirk - Jazz Guitar Patterns, Vol 1.pdf",
+    "extracted_at": "2026-06-11T15:57:08+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "dirk-laukens",
+  "work_id": "jazz-guitar-patterns-vol-1",
+  "usage_notes": [
+    {
+      "chord_quality": "maj7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Laukens places maj7 chords in the tonic-major family, the resolution target of ii-V-I progressions in major keys (chapter 3 p. 13; chapter 6 p. 200).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "minor-triad-substitution-on-third",
+      "narrative": "Paradigm minor-triad-over-major: 'You can play a minor triad starting on the 3rd of a major chord. For example: Em over Cmaj7' (chapter 8 p. 289).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 289"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "relative-minor-arpeggio-substitution",
+      "narrative": "'Pattern 72 features an Am7 arpeggio over Cmaj7 and can also be used over Am7' (chapter 7 p. 253) \u2014 relative-minor arpeggio produces maj9 colour without root-position shape.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 253"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "major-bebop-scale-application",
+      "narrative": "'Major bebop scale = major scale + b6' as the idiomatic scale over maj7 chords; guitar requires slides for chromatic passing tone (chapter 7 p. 243).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 243"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "chromatic-voice-leading-target",
+      "narrative": "Characteristic colour move: chromatic descending line between the 7 and 5 of the major chord (chapter 8 p. 285).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 285"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "g6-arpeggio-dual-function",
+      "narrative": "'Pattern 57 starts with a G6 arpeggio and can be used on major or dominant chords' (chapter 6 p. 200).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "pattern-major-only-restriction",
+      "narrative": "'Pattern 47 is an extension of pattern 43, but this one can only be used on major chords because it contains the 7th' (chapter 5 p. 150).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "min7 chords as ii in major ii-V-I and iv in minor (chapter 4 p. 100; chapter 7 p. 240). Dm7 is the paradigm ii chord throughout Studies 4-8.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "relative-major-arpeggio-substitution",
+      "narrative": "Wes Montgomery prescription: 'You can play a major triad or maj7 chord on the third of a major chord. For example: Fmaj7 (or F) over Dm7' (chapter 4 p. 100; chapter 8 p. 280).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "minor-triad-substitution-on-fifth",
+      "narrative": "'You can play a minor triad starting on the 5th of a minor chord. For example: Am over Dm7' (chapter 8 p. 289).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 289"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "augmented-arpeggio-minor-maj7-color",
+      "narrative": "'Augmented chords are often used to play over minor chords, resulting in a minor/major 7 sound. Over a minor chord you can play an augmented triad or maj7#5 arpeggio, both built on the b3' (chapter 4 p. 100; chapter 7 p. 251).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "minor-bebop-scale-application",
+      "narrative": "'Minor bebop scale = Dorian mode + 7' as idiomatic scale over min7; guitar uses slides for chromatic passing tone (chapter 7 p. 242).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 242"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "dominant-bebop-scale-as-ii-chord-coverage",
+      "narrative": "'The G dominant bebop scale can be played over: G7, G9, G13; Gsus4; Dm7 (in a II VI in C major)' (chapter 7 p. 240) \u2014 covers ii-V pair simultaneously.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 240"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "minor-1235-pattern-application",
+      "narrative": "'Pattern 42 circles around the b3 of Dm7 and contains a minor 1235 pattern starting on the second note' (chapter 5 p. 150) \u2014 circling of b3 distinguishes from major-context counterpart.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "half-step-triad-connection-to-dominant",
+      "narrative": "'if you play an Am triad over Dm7, you can lower one fret and play Abm over G7' (chapter 8 p. 290) \u2014 fingerboard shortcut connecting ii-V triad substitutions.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 290"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "V chord in both major and minor ii-V-I and the most heavily substituted chord quality in the method (chapter 3 p. 13).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "half-diminished-arpeggio-substitution-ninth-sound",
+      "narrative": "'Playing a half-diminished arpeggio from the 3rd of a dominant chord brings out the 9 sound. For example: Bm7b5 over G7' (chapter 3 p. 13; chapter 6 p. 200) \u2014 'very common substitution.'",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "minor-triad-substitution-on-fifth-wes-move",
+      "narrative": "'Playing Dm over G7 is a technique Wes Montgomery would often use in his solos' (chapter 3 p. 13). Systematic formulation: 'You can play a minor triad starting on the 5th of a dominant chord. For example: Dm over G7' (chapter 8 p. 290).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-bebop-scale-application",
+      "narrative": "'The dominant bebop scale is a Mixolydian mode with a descending chromatic note between the root and the b7' (chapter 7 p. 240-241). Primary scale resource over G7, G9, G13.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 240"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-minor-phrygian-dominant-scale-choice",
+      "narrative": "'You can play the tonic harmonic minor scale over any dominant chord. For example: C harmonic minor over G7... creates a 7b9, b13 sound... Another name for the harmonic minor scale played over a dominant chord is the Phrygian dominant scale' (chapter 5 p. 150).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tritone-substitution-arpeggio",
+      "narrative": "'Pattern 82 uses tritone substitution by playing a Bb7 arpeggio over E7' (chapter 8 p. 287) \u2014 tritone-sub dominant generates full altered sound via chromatic voice-leading.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 287"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "1235-pattern-major-resolution-variant",
+      "narrative": "'Dominants going to major chords can use the regular 1235 pattern. Dominants going to minor chords require a b9 instead of a 9' (chapter 4 p. 100).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "augmented-arpeggio-altered-sound",
+      "narrative": "'An augmented 7th arpeggio or triad is a convenient way to bring out an altered sound on dominant chords' (chapter 3 p. 13).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bebop-scale-arpeggio-combination",
+      "narrative": "'Pattern 83 starts with the chromatic part of the G (dominant) bebop scale and continues with a G7 arpeggio' (chapter 8 p. 288) \u2014 standard bebop construction of chromatic approach leading to arpeggio.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 288"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "em7-upper-structure-arpeggio",
+      "narrative": "'Pattern 86 combines an Em7 arpeggio with a chromatic line' (chapter 8 p. 293) \u2014 Em7 = upper-structure minor 7th from 6th/13th over G7.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 293"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "pattern-modification-to-dominant-from-major",
+      "narrative": "'You can also play this pattern over dominant chords by changing the natural 7 to a b7 (the 5th note in the pattern)' (chapter 8 p. 286) \u2014 one-pitch change separates maj7 from dom7 pattern application.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 286"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "sus4-triad-b9-b13-substitution",
+      "narrative": "Ab minor triad over G7: 'The triad brings out a sus4 sound (C) with the altered tensions b9 (Ab) and b13 (Eb)' (chapter 3 p. 13).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "voice-leading-13-to-b13-to-9",
+      "narrative": "'This last pattern voice leads from 13 to b13 to the 9 of C major' (chapter 8 p. 294) \u2014 chromatic descending motion through 13th smooths dominant-to-tonic resolution.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 294"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "5-b9-5-voice-leading-over-ii-V-I",
+      "narrative": "'Notice the voice leading going from the 5th of Dm7, to the b9 of G7, to the 5th of Cmaj7. This is a common voice leading over a II V I' (chapter 7 p. 246).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 246"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "harmonic-family-membership",
+      "narrative": "dom7b9 within altered-dominant family, produced when harmonic minor (Phrygian dominant) played over V7 in minor ii-V-I; 7b9/b13 sound is defining colour of V7 in minor contexts (chapter 3 p. 13; chapter 5 p. 150).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "diminished-arpeggio-b9-color",
+      "narrative": "'Diminished arpeggios are a common way to play over dominant chord and produce a 7b9 sound. Playing a diminished arpeggio from the b9, 3, 5, or b7 of a dominant chord brings out the b9 sound. For example: Abdim7 over G7' (chapter 5 p. 150).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "halfdim-to-dim-chromatic-voice-leading",
+      "narrative": "'Here, I switch from a Bm7b5 arpeggio to a Bdim7 arpeggio, going from the 9 to the b9' (chapter 6 p. 200) \u2014 half-diminished to diminished switch intensifies dominant tension.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "1235-b9-variant-minor-resolution",
+      "narrative": "'Dominants going to minor chords require a b9 instead of a 9' (chapter 4 p. 100) \u2014 single alteration converts major-resolving dominant line into minor-resolving one.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "harmonic-family-membership",
+      "narrative": "dom7alt = maximally tense V chord with all four altered tones (b9, #9, b5/b13) from altered scale (7th mode of melodic minor); G altered scale = Ab melodic minor from G (chapter 6 p. 200).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "altered-scale-definition-and-application",
+      "narrative": "'The altered scale contains all four of the common altered notes (b9-#9-b5-b13), which are used to create tension over the underlying chord' (chapter 6 p. 200). Used over dom7 in both major and minor keys.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "gaug7-arpeggio-from-altered-scale",
+      "narrative": "'One of the arpeggios contained in the altered scale is the Gaug7' (chapter 6 p. 200) \u2014 discrete melodic unit extracted rather than running scale stepwise.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "bmaj7s5-arpeggio-from-altered-scale",
+      "narrative": "'Another useful arpeggio in the altered scale is the Bmaj7#5' (chapter 6 p. 200) \u2014 higher-register altered color distinct from Gaug7.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "abm-maj7-arpeggio-from-altered-scale",
+      "narrative": "'Another useful arpeggio in the altered scale is the Abm/maj7' (chapter 6 p. 200) \u2014 completes the three-arpeggio systematic altered-scale extraction set.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "madd9-substitution-from-b9",
+      "narrative": "'You can play an m(add9) over altered dominant chords, starting on the b9. For example: Fm(add9) over E7#9' (chapter 4 p. 100) \u2014 produces #9 and b13 colors.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "minor-triad-on-b9-altered-color",
+      "narrative": "'You can play a minor triad starting on the b9 of a dominant chord. For example: Abm over G7' (chapter 8 p. 290) \u2014 most altered of minor-triad-over-dominant substitutions.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 290"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "altered-scale-run-entry-on-b13",
+      "narrative": "'This is a typical altered scale run starting on the b13' (chapter 8 p. 281) \u2014 b13 immediately projects altered color before descent through remaining tensions.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 8 p. 281"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "harmonic-family-membership",
+      "narrative": "min7b5 as ii in minor ii-V-I, paired with V7alt or V7b9, resolving to minor tonic. Bm7b5-E7alt-Am is the paradigm (chapter 3 p. 13).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "maj7-arpeggio-substitution-from-b5",
+      "narrative": "'You can play a maj7 chord over a half-diminished chord, starting on the b5 of that half-diminished chord. For example: Fmaj7 over Bm7b5' (chapter 3 p. 13) \u2014 produces #11 color.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "madd9-arpeggio-substitution-from-b3",
+      "narrative": "'You can play a m(add9) arpeggio over half-diminished chords, starting on the b3. For example: Dm(add9) over Bm7b5' (chapter 4 p. 100).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "dominant-bebop-scale-as-halfdim-coverage",
+      "narrative": "'The G dominant bebop scale can be played over: ... Bm7b5 (in a II VI in A minor)' (chapter 7 p. 240) \u2014 bridges half-dim ii and dominant V in minor ii-V.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 240"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "cmaj7-arpeggio-tri-function-substitution",
+      "narrative": "'This Cmaj7 arpeggio can be used over Cmaj7, Am7, or F#m7b5' (chapter 5 p. 150) \u2014 single arpeggio shape serves three harmonic targets simultaneously.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Within the dominant substitution family \u2014 not as independent chords but as arpeggio shapes deployed over dominants to produce b9 coloration (chapter 5 p. 150; chapter 6 p. 200).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "symmetrical-inversion-fretboard-rule",
+      "narrative": "'The convenient thing about diminished chords and arpeggios is that their inversions are identical in shape and notes' due to stacked minor thirds \u2014 every inversion of Cdim7 uses same fingering (chapter 5 p. 150).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "b9-coloration-substitution-over-dominant",
+      "narrative": "'Playing a diminished arpeggio from the b9, 3, 5, or b7 of a dominant chord brings out the b9 sound. For example: Abdim7 over G7' (chapter 5 p. 150) \u2014 all four entry points yield same shape due to symmetry.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 5 p. 150"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "sus4",
+      "function_role": "harmonic-family-membership",
+      "narrative": "Sus4 within dominant family: 'The G dominant bebop scale can be played over: G7, G9, G13; Gsus4; Dm7' (chapter 7 p. 240) \u2014 sus4 as dominant color variant, not independent quality.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 7 p. 240"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "sus4",
+      "function_role": "ab-minor-triad-sus4-altered-overlay",
+      "narrative": "Ab minor triad over G7 \u2014 'The triad brings out a sus4 sound (C) with the altered tensions b9 (Ab) and b13 (Eb)' (chapter 3 p. 13) \u2014 sus4 reachable via b9-rooted minor triad sub.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 3 p. 13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "harmonic-family-membership",
+      "narrative": "'One of the arpeggios contained in the altered scale is the Gaug7' (chapter 6 p. 200) \u2014 aug7 as superimposition shape over dom7alt, not independent quality.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 6 p. 200"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "augmented-symmetry-fretboard-rule",
+      "narrative": "'its inversions look exactly the same, so you can just slide the same shape 4 frets up or down and essentially get the same chord' (chapter 4 p. 100) \u2014 mirrors dim7 symmetry rule.",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "tritone-sub-dom7s11-application",
+      "narrative": "'Augmented triads can also be used to solo over dominant #11 chords... For example: Db7#11 going to Cmaj7. Because Db7#11 is a substitution for G7alt, you can use a G augmented triad over that chord' (chapter 4 p. 100).",
+      "source_principle_ids": [],
+      "source_work_id": "jazz-guitar-patterns-vol-1",
+      "references": [
+        {
+          "source": "jazz-guitar-patterns-vol-1",
+          "citation": "chapter 4 p. 100"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: TERMS\nPages 2-3 of the book.\n\n<<<CHAPTER TEXT\n\nVolume III\nBeyond The Mother Lode\n\nTERMS\n\nOne of the fun things about writing books like this is that you get to make up stuff.\nJust throw out some fancy-sounding terms and maybe you can fool people into thinking that\nyou know something...\n\n\u00b0 IVL: intervallic voice-leading\n\n\u00ae FVL: functional voice-leading\n\n\u00b0 GDVL: generic diatonic voice-leading\n\n\u00b0 SCVL: specific chromatic voice-leading\n\n\u00a9 ate: common tone(s)\n\n\u00ae pts passing tone(s)\n\ne M.S.R.P.: melodic strand replication procedure\noe\n\ngrip-slipping: more on this later... .\n\n(The effect of fooling people can be enhanced by not defining these made-up terms...)\n\nme \\ON\n\nEVENT/EPISODE\nEVENT EPISODE\n{ involves 2-6 diatonic scale { involves all 7 diatonic scale\nnotes at least once each. notes at least once each.\n\nFNE END DNC\nBc AB. G-7a \u00e9te.\n\nan event can be diatonically\ntransposed to create 6 other\nevents, but some of them will\nbe intervallically identical.\n\nBoth events and episodes can be melodic, contrapuntal, harmonic or in any combination...\n\nan episode can be diatonically\ntransposed to create 6 other\nepisodes, where each corresponds\nto a different mode.\n\nWe naturally tend to think of events as being shorter, while episodes are longer.\n\nThis is true much of the time. However, it is quite possible to have a very long event and\n\na relatively short episode.\n\nAlmanac of Guitar Voice-Leading Volume III\n\nPDP LNLNIER NINN INENIN INN IN IDIINININ INIA\n\nTN,\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

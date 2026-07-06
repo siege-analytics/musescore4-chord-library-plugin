@@ -1,0 +1,52 @@
+{
+  "run_id": "2026-05-28T15-05-20-greenan-jazz-standards-playbook",
+  "config": "pipelines/master-distillation/configs/greenan-jazz-standards-playbook.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-05-28T15:05:20+00:00",
+      "ended_at": null,
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greenan-jazz-standards-playbook/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-greenan-jazz-standards-playbook/pages.json",
+        "re-ingested: 193 pages, 164,310 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "awaiting-llm",
+      "started_at": "2026-06-16T13:53:14+00:00",
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s3": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s4": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "sB": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    },
+    "s5": {
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "outputs": [],
+      "error_message": null
+    }
+  }
+}

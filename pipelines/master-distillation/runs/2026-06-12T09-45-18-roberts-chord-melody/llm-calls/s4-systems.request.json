@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: howard-roberts\nWork id: chord-melody\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nmodel: claude-sonnet\nextracted_at: 2026-06-15T18:45:39+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 chord-melody\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\nHoward Roberts's Chord Melody method is built on a single animating conviction: that chord melody playing is not an arrangement trick but a mature improvisational language, and that the student should move steadily from rule-governed exercises toward a wholly personal, extemporaneous style. The book's five chapters form a clean arc \u2014 foundational principles, vocabulary of devices, analytical studies, practical arranging craft, and finally a full solo demonstration \u2014 but the arc is not merely additive. Each chapter recontextualizes everything that came before, so that rules introduced early are shown, by the end, to be provisional scaffolding around a deeper ear-based judgment.\n\nThe method opens with fingering, and the choice is not incidental. Before Roberts allows a single chord or melody, he establishes the evaluative framework that will govern every subsequent decision: musical quality and mechanical efficiency, held in deliberate tension. The rule for string selection \u2014 prefer the fingering that keeps the greatest vibrating string length \u2014 is immediately a rule about sound, not about convenience. And the efficiency principle is immediately tempered: the student must not develop a fear of large position jumps, because expressive contrast is itself a musical value. This paired-principle structure \u2014 stating a criterion, then qualifying it with its counterweight \u2014 is Roberts's signature intellectual move, and it recurs throughout the book. It teaches the student to hold two considerations simultaneously rather than collapsing a complex judgment into a single formula.\n\nChapter 2 lays out the core harmonic vocabulary: close and open voicings, the conversion between them by octave displacement, and the four practical devices \u2014 block chords, sustained chord backgrounds, common tones, and short punctuations. But the chapter's deepest claim is about voice leading. Roberts insists that in four-part harmony one is actually managing four independent melody lines, and that the connective logic between chords lives in how those lines move \u2014 in parallel, in contrary motion, or through counter lines placed most often in the second voice and activated precisely when the main melody is static. This reframing turns chord melody from a vertical stacking problem into a horizontal, melodic one. The chords are not objects to be placed; they are the momentary convergence of lines that are always in motion.\n\nA key resource that threads through both Chapter 2 and Chapter 3 is the listener's harmonic memory. Roberts treats it not as a limitation to work around but as a compositional tool to be exploited. Sustained chord backgrounds work because a chord, once clearly stated, remains alive in the listener's ear through several melody notes that follow. Short punctuations work because a well-timed accent, played with authority, implies harmonic flow without constant restriking. Dropped voices in a voicing are acceptable because the harmonic outline, if clearly established and melodically reinforced by emphasizing chord tones, will be completed by the listener. This principle gives the player permission to be sparse \u2014 and makes sparseness a skill rather than a deficiency.\n\nChapter 3 deepens the harmonic analysis by insisting that chord symbols are secondary to voice leading. A chord's Roman numeral function can only be read from the phrase, not from an isolated spelling, and this is why substitutions \u2014 diminished chords replacing dominant 7b9 sounds, chromatic passing chords connecting diatonic points, altered shapes like m7+5 serving as connective tissue \u2014 are not exotic effects but natural consequences of thinking in lines. The master's most concrete physical instruction also appears here: sustain each chord tone as long as physically possible, delaying finger movement until absolutely necessary. The discipline is technical in form but musical in purpose, because it is precisely this reluctance to release that generates the continuity defining chord melody style. Inner voices are shown to evolve developmentally across a phrase, moving from mere passing tones to counter lines to fully melodic patterns.\n\nChapter 4 confronts the guitar's physical constraints directly and turns them into a productive discipline. When the melody sits too low, there are not enough strings below it to voice a satisfying chord \u2014 the fourth string is an absolute floor. The solution is octave displacement: jump the melody up an octave, and do it often enough that the ear learns to hear across the seam. A liberating corollary principle is introduced alongside this: extensions such as the major seventh, sixth, and ninth alter color without changing scale function, so the arranger can reach for richer voicings freely. And chromatic melody notes may be harmonized against any chord form within finger reach, even when momentarily dissonant, because when melody and harmony move with independent force, interesting extensions emerge from the friction. The prescribed working method is modest and iterative \u2014 arrange as simply as possible, let the ear find what sounds good, repeat \u2014 because Roberts presents repetition itself as the engine that builds instinct.\n\nThe final chapter is a strategic inversion of the entire method's pedagogy. Where every preceding chapter stated principles first and gave short examples, Chapter 5 offers only a fully notated solo \u2014 no prose, no rules \u2014 and lets the performance embody the integrated mature style. The student is positioned as a listener-analyst rather than a rule-applier. The solo is to be studied the way one would study a transcription of a master, absorbing not individual techniques but the way all of them coexist and interpenetrate in real time. This closing move defines the book's ultimate aim: not a player who executes a checklist of devices, but one who has internalized the language deeply enough to improvise chord melody in a voice entirely their own.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 4-4\nmodel: claude-haiku\nextracted_at: 2026-06-15T18:38:57+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Fingerings\n\n_Distillation; backed by `chapters/ch01.md`._\n\nChapter 1 introduces the two-part evaluative framework \u2014 musical quality and mechanical efficiency \u2014 that governs every fingering decision throughout the method. On the musical side, Roberts prescribes a concrete string-selection rule: favor the fingering that keeps the greatest vibrating string length, allowing notes to sing and sustain rather than cutting them short by moving to a higher string. Mechanical efficiency, in turn, is defined as the disciplined elimination of unnecessary or awkward hand and finger movements. Characteristically, Roberts immediately tempers that efficiency principle with a counterweight: players should not cultivate a fear of radical position jumps or large interval leaps, since these are legitimate and frequently expressive techniques that provide contrast to smooth scalar movement. The chapter closes by establishing the notational conventions \u2014 string numbers in circles below the staff, fingering numbers left of the notes, and T for the thumb \u2014 that the reader will need to decode every exercise that follows. Roberts signature move here is the paired-principle structure: he never states one criterion without immediately qualifying or balancing it with another, preventing the student from collapsing a nuanced judgment into a single rule.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 5-10\nmodel: claude-haiku\nextracted_at: 2026-06-15T18:40:25+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Chord Melody Devices\n\n_Distillation; backed by `chapters/ch02.md`._\n\nChapter 2 of Roberts' Chord Melody method lays out the core vocabulary and techniques for combining melody and harmony on the guitar. Roberts begins with two fundamental voicing types \u2014 close block voicings, where notes are packed tightly together, and open voicings, where they are spread apart \u2014 and shows how a close voicing can be converted to an open one simply by moving one or more tones up or down an octave. The chapter's governing principle is that voice leading is the single most important force linking chords: in four-part harmony one is really dealing with four independent melody lines, which may move in parallel (same direction, same number of steps), in contrary motion (opposite directions), or through counter lines, which Roberts typically places in the second voice from the top and activates most when the main melody is static. Building on these connective tools, the chapter surveys four practical chord-melody devices: block chords (a full chord placed under every melody note, with voicing or inversion changed with each new note so all lines appear to move together), sustained chord background (one chord held through several melody notes, dropping tones only as fingering demands while trusting the listener's harmonic memory to fill the gaps), common tones (a single note sustained across a sequence of chords), and short chord punctuations (brief harmonic accents that, when played with authority and timed well within the bar, can imply a full harmonic flow without constant restriking). A characteristic Roberts move threads through all four devices: the listener's ability to remember harmony is treated as a compositional resource, so sparse or dropped voicings remain acceptable so long as the harmonic outline is clearly established and melodically reinforced by emphasizing chord tones.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 11-35\nmodel: claude-haiku\nextracted_at: 2026-06-15T18:41:26+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Chord Melody Studies\n\n_Distillation; backed by `chapters/ch03.md`._\n\nChapter 3 of this guitar method introduces chord melody playing as a craft of layered harmonic decisions, beginning with the principle that close voicings serve as deliberate textural contrast against the broader sound of open voicings. A central harmonic insight is that chord symbols matter less than the voice leading that produces them \u2014 functional Roman numeral identity can only be determined from the full phrase, not from isolated spellings \u2014 and this extends to substitution techniques where diminished chords replace dominant 7b9 sounds to inject chromaticism into otherwise diatonic lines. The master's characteristic technical instruction is to sustain each chord tone as long as physically possible, delaying finger movement until absolutely necessary, because this discipline directly generates the continuity that defines chord melody style. Two-note dyads are flagged as a largely unexplored resource for implied harmony, particularly in improvisation, while chromatic passing chords (including altered passing chords like m7+5 shapes) serve as connective tissue between diatonic progression points. Inner voices evolve developmentally \u2014 from passing tones to counter lines to fully melodic patterns \u2014 and the chapter closes by enumerating the complete structural vocabulary a chord melody player should command: vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained chord backgrounds, and short punctuations.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 36-53\nmodel: claude-haiku\nextracted_at: 2026-06-15T18:42:36+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Project Studies\n\n_Distillation; backed by `chapters/ch04.md`._\n\nChapter 4 of this guitar method introduces the practical craft of chord melody arranging through project studies, anchoring everything in a core physical constraint: if the melody note sits too low on the staff, there aren't enough remaining strings to voice a satisfying chord beneath it, with the fourth string serving as an absolute floor for low-register playing. To navigate this limitation, the author prescribes jumping octaves \u2014 transposing the melody up an octave as often as needed \u2014 and insists that with experience this can be done without breaking melodic continuity. A liberating harmonic principle underlies the entire chapter: extensions such as the major seventh, sixth, and ninth only alter color and texture without changing a chord's scale function, so the arranger is free to reach for richer voicings without disrupting the progression's logic. The author goes further by treating chromatic melody notes permissively \u2014 any note within finger range can be harmonized against a given chord form, even if the result is momentarily dissonant \u2014 and points out that when melody and harmony move with independent force, surprising and interesting extensions emerge naturally from that friction. The prescribed working method is deliberately modest: develop arrangements that are as simple as possible, trusting the ear to find voicings that sound good while still letting the melody sing on top. Repetition of this process is presented as the engine of growth, gradually building an instinct for octave displacement and voicing choice until the player edges toward something the author frames as the ultimate goal: extemporaneous chord melody improvisation in a style entirely one's own.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s3\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 54-56\nmodel: claude-haiku\nextracted_at: 2026-06-15T18:43:31+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Chord Melody Solo\n\n_Distillation; backed by `chapters/ch05.md`._\n\nChapter 5 is the closing solo of the method \u2014 a fully notated chord melody performance piece that demonstrates the cumulative application of every device introduced earlier (close and open voicings, parallel and contrary motion, counter lines, block chords, sustained backgrounds, short punctuations, octave jumps, chromatic substitutions). No new teaching prose appears; the chapter functions as a worked example, intended to be studied and absorbed as one would a transcription of a master performance. The pedagogical move is the inverse of the rest of the book: rather than stating rules and giving short examples, Roberts here lets the solo itself embody the integrated mature style toward which the entire method has been pointing.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s2\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 4-4\nmodel: claude-sonnet\nextracted_at: 2026-06-14T20:30:52+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 Fingerings\n\n_Pages 4-4._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Evaluating fingering changes: musical quality vs mechanical efficiency\n\n> In evaluating the feasibility of a change, first consider musical quality and mechanical efficiency:\n\n**Significance (p. 4).** Establishes the two-criterion framework that governs all fingering decisions.\n\n## Rule: choosing strings for sustain and tone\n\n> As a rule, the musical quality can be enhanced by choosing a fingering or a set of strings in which the greater string length is maintained, thus permitting the Strings to \"sing\" and sustain longer.\n\n**Significance (p. 4).** Prescribes a concrete rule for string selection: prefer the string set that yields greater vibrating length.\n\n## Rule: avoiding unnecessary hand/finger movements\n\n> Mechanical efficiency is primarily a matter of avoiding unnecessary or awkward hand or finger movements.\n\n**Significance (p. 4).** Defines mechanical efficiency as the guiding principle for minimizing wasted motion.\n\n## Principle: do not fear radical jumps or large intervals\n\n> in developing a sense of mechanical efficiency. do not also develop a fear of radical jumps or large intervals on the fingerboard. for these techniques are frequently required. For example, radical interval jumps may supply a nice contrast to smooth scale-wise line movement.\n\n**Significance (p. 4).** Counters over-reliance on efficiency by establishing that large position shifts are legitimate techniques.\n\n## Notation convention: string numbers and fingering numbers\n\n> String numbers indicate the lower note of the chord and are in circles under the staff. Fingering numbers are placed to the left of the notes. The thumb is frequently used throughout the studies and is indicated (T).\n\n**Significance (p. 4).** Defines the notational system used throughout the method for communicating string choice, fingering, and thumb use.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s2\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 5-10\nmodel: claude-sonnet\nextracted_at: 2026-06-15T18:30:01+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Chord Melody Devices\n\n_Pages 5-10._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Close block voicings defined\n\n> Close Block Voicings in which the notes are packed closely together.\n\n**Significance (p. 5).** Defines close block voicings as a fundamental vertical harmony structure.\n\n## Open voicings defined\n\n> Open Voicings in which the notes are spread apart.\n\n**Significance (p. 6).** Defines open voicings as the second primary vertical structure.\n\n## Technique: opening closed voicings\n\n> Closed voiced chords can be opened up as far as your reach will permit, simply by moving one or more chordal tones up or down an octave.\n\n**Significance (p. 6).** Prescribes the technique for converting close voicings to open voicings.\n\n## Voice leading is primary connective force\n\n> The melody lines formed by each of the chordal tones is the most important single factor linking one chord to another. In four part harmony, for example, one is really dealing with four separate melody lines.\n\n**Significance (p. 6).** States the foundational principle that voice leading is the primary connective force in harmony.\n\n## Parallel motion defined\n\n> PARALLEL MOTION, a chord progression in which each tone is moving the same number of scale steps and in the same direction.\n\n**Significance (p. 6).** Provides the formal definition of parallel motion.\n\n## Contrary motion defined\n\n> CONTRARY MOTION is, as the word im\n>\n> Ex plies, a situation in which the chordal tones are\n> moving in opposite directions.\n\n**Significance (p. 7).** Provides the formal definition of contrary motion.\n\n## Counter lines: placement and role\n\n> COUNTER LINES are usually treated as a melodic accompaniment to the main body of a tune. They are also used as connecting lines from one chord to another and, on guitar, are frequently found in the second voice from the top. When the main melody has little motion, the counter line can be more active.\n\n**Significance (p. 7).** Defines counter lines, prescribes their typical placement on guitar (second voice from top), and gives the rule for activity level.\n\n## Common tone defined\n\n> A COMMON TONE is a note that is related to, and sustained through, a sequence of chords played in succession.\n\n**Significance (p. 8).** Provides the formal definition of the common tone device.\n\n## Block chords defined + technique\n\n> BLOCK CHORDS. Here is a rudimentary. yet effective way of producing melody and\n> harmony simultaneously. This is done by placing a full chord underneath each melody note. The chords can\n> be either close or open voicings.\n\n**Significance (p. 8).** Defines block chords and prescribes placing a full chord under each melody note.\n\n## Block chord picking technique options\n\n> You might experiment with picking techniques here: For example, all down strokes, or alternate down and up strokes, or plucking all strings simultaneously with fingers.\n\n**Significance (p. 8).** Prescribes specific picking/plucking technique options for executing block chords.\n\n## Block chord substitution example\n\n> Note: The Gm7 in bar 3 is being used as a substitute for Eb maj 9.\n\n**Significance (p. 8).** Prescribes a specific chord substitution (Gm7 for Eb maj9) in context.\n\n## Block chord effect: voicing must move with melody\n\n> The block chord effect is best achieved when the chordal tones are made to move when the melody moves.\n> and preferably in the same direction as the melody. Often the melody can be fingered easily without having\n> to change the chord form, but this tends to destroy the block chord effect; therefore it is more desirable to\n> change the voicing or inversion with each new melody note, in order to create the effect of all lines moving\n> at once.\n\n**Significance (p. 9).** Gives the rule for achieving block chord effect: change voicing/inversion with each melody note.\n\n## Sustained chord background defined\n\n> SUSTAINED CHORD BACKGROUND is a modification of the block chord style. in that\n> one chord is sustained through two or more melody notes.\n\n**Significance (p. 9).** Defines sustained chord background and its relationship to block chords.\n\n## Dropping chord tones while sustaining\n\n> When a chord is sustained throughout a long sequence of melody notes, fingering requirements frequent\n> make it necessary to drop one or more of the chordal tones in order to manipulate the melody. This\n> especially true in improvising with the aforementioned common guitar voicings when the voice leadi\n> not been fully worked out. However, if each chordal tone is sustained for as long as possible, the listenc\n> usually remember those notes that have been dropped.\n\n**Significance (p. 9).** Explains practical rule for handling dropped chord tones, relying on listener's harmonic memory.\n\n## Short chord punctuations and harmonic continuity\n\n> SHORT CHORD PUNCTUATIONS., Because of the listener\u2019s ability to remember the soun\n> of harmony, it is possible to outline the flow of harmony by short chord punctuations. These can be use\n> without sacrificing harmonic continuity, when they are played with authority and appropriately placed withi:\n> the bar. This continuity can be further reinforced by choosing melodies which emphasize chordal tones.\n\n**Significance (p. 10).** Defines short chord punctuations and gives the rule for maintaining harmonic continuity.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s2\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 11-35\nmodel: claude-sonnet\nextracted_at: 2026-06-15T18:33:29+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Chord Melody Studies\n\n_Pages 11-35._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Close voicings as texture contrast\n\n> Example 13 illustrates close voicings, very effective but not too often used, on the guitar. These can be used as texture contrast to the big sound of open voicings.\n\n**Significance (p. 12).** Prescribes a specific technique application \u2014 using close voicings as a deliberate textural contrast device against open voicings.\n\n## G6 functioning as dominant chord\n\n> The G6 in bar 3 is functioning as a dominant chord (Eb + 7b9).\n\n**Significance (p. 12).** Defines a harmonic substitution principle \u2014 a chord symbol (G6) may serve a dominant function reinterpreted as Eb7b9, illustrating chord recontextualization.\n\n## Diminished chords as chromatic substitution for dominant\n\n> The E\u00b0 and Dbo chords are both functioning as A7b9, and are being used to provide some chromatic relief from the monotony of diatonic lines.\n\n**Significance (p. 13).** Prescribes a specific substitution rule: diminished chords (E\u00b0, Db\u00b0) can replace a dominant 7b9 chord (A7b9) to inject chromaticism into diatonic harmonization.\n\n## Diatonic scale harmonization with chromaticism \u2014 practice rule\n\n> It is good ear training to improvise this sort of thing in all keys. with various diatonic melodies.\n\n**Significance (p. 13).** Prescribes a practice method \u2014 transposing diatonic harmonization with chromatic substitutions to all keys as ear training.\n\n## Chord symbol vs. voice leading primacy\n\n> the spelling of the chord symbols in Exumple\n> 16 is less important than the voice leading which creates them. Accordingly, symbol identification of these\n> chords (more properly \u201csounds\u2019) is awkward and unnecessary. Their functional or Roman Numeral\n> identification (i.e. II7, V7, etc.) depends upon analysis of the entire phrase in which the chords occur.\n\n**Significance (p. 13).** Establishes a foundational principle: voice leading takes precedence over chord symbol labeling, and functional (Roman numeral) identity must be determined from full phrase context, not isolated chord spelling.\n\n## Sustaining chord tones \u2014 continuity principle\n\n> Sustain each chordal tone for as long as possible. In general. this means to keep your fingers in place until it's absolutely necessary to move them. This will contribute measurably to the continuity of your chord melody style.\n\n**Significance (p. 15).** States a master technical principle: maximum finger sustain through delayed movement directly produces melodic and harmonic continuity in chord melody playing.\n\n## Two-note voicings for implied harmony\n\n> The use of two notes to create the overall effect of harmony has been Telativels\n> unexplored in guitar playing, particularly in improvisation, and could, with practice, make a valuable\n> contribution to the versatility of one\u2019s style.\n\n**Significance (p. 18).** Defines a conceptual technique \u2014 dyads (two-note voicings) as an underutilized but viable harmonic device, especially in improvisation.\n\n## Passing chords connecting diatonic progression\n\n> 0\n>\n> Example 35 shows the primary progression consisting of G6, Am7, Bm7, Cmaj 7 (one chord per bart\n> being connected by the passing chords G#m7+5, Am7+5, et\n\n**Significance.** Prescribes a harmonization approach: chromatic passing chords (altered passing chords) connect diatonic progression chords, demonstrating a linking technique.\n\n## Counter line development into melodic pattern\n\n> Example 37 shows further development of a counter line resulting from the extension of the passing tones into a more melodic pattern.\n\n**Significance (p. 31).** Explains the evolutionary principle from passing tones to counter line to fully melodic pattern, establishing a developmental hierarchy for inner-voice elaboration.\n\n## Structural devices of chord melody \u2014 summary inventory\n\n> Example 38 is a chord melody solo embodying the structural devices outlined up to this point. Look for vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained chord backgrounds and short chord punctuations.\n\n**Significance (p. 32).** Enumerates the complete taxonomy of chord melody structural devices \u2014 vertical textures, contrary motion, parallel motion, counter lines, block chords, sustained backgrounds, and short punctuations \u2014 that the chapter teaches.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s2\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 36-53\nmodel: claude-sonnet\nextracted_at: 2026-06-15T18:35:21+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 Project Studies\n\n_Pages 36-53._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Melody register and chord voicing\n\n> if the melody note is placed too low on the staff, you will not have enough strings left to form a satisfactory chord beneath it.\n\n**Significance (p. 36).** States the core physical constraint of chord melody on guitar.\n\n## Jumping octaves technique\n\n> you will often find it both helpful and necessary to transpose the melody up an octave (this is called \"jumping octaves\") several times throughout the course of a solo. With experience and finesse, this can be done without losing melodic continuity.\n\n**Significance (p. 36).** Defines octave transposition as essential technique.\n\n## Low-register melody limit\n\n> It is possible however to play a low register scale or melody (as low as the 4th string but no lower) with some fragment of the chord beneath.\n\n**Significance (p. 36).** Specific rule with hard limit \u2014 4th string floor.\n\n## Role of chord extensions in diatonic function\n\n> the addition of the extensions Maj. 7th, 6th, 9th, etc., only affect the color and texture of the chord and do not change its scale function or its role in the progression\n\n**Significance (p. 36).** Foundational harmonic principle: extensions are coloristic.\n\n## Harmonizing chromatic melody notes\n\n> Any chromatic note within finger range can always be harmonized with a given chord form, although it may occasionally be dissonant.\n\n**Significance (p. 38).** Permissive rule \u2014 no chromatic melody note is unharmonizable.\n\n## Independence of melody and harmony in chromatic descents\n\n> In each case the melody and the harmony have their own force and are independent of each other. Note the interesting extensions that occur as a result of this independence.\n\n**Significance (p. 40).** Compositional principle: melody and harmony can move independently.\n\n## Approach to developing chord melody solos\n\n> develop chord melody solos for each of these examples, keeping them as simple as possible. Concentrate mainly on finding chord voicings that sound good to you and still permit the melody to be played.\n\n**Significance (p. 42).** Working method: simplicity, ear-based voicing, melody accommodation.\n\n## Path to extemporaneous chord melody improvisation\n\n> The more of this you do, the more proficient you will become and you will then begin to acquire an instinct for finding the right chord voicings, jumping octaves, etc., thus bringing you within reach of extemporaneous improvising in a chord melody style of your own.\n\n**Significance (p. 52).** Pedagogical goal: spontaneous chord melody improvisation.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-45-18-roberts-chord-melody\nstage: s2\nsource_pdf: Roberts, Howard - Chord Melody.pdf\nsource_pages: 54-56\nmodel: claude-sonnet\nextracted_at: 2026-06-15T18:37:02+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Chord Melody Solo\n\n_Pages 54-56._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n_No load-bearing passages identified in this chapter._\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for howard-roberts/chord-melody; use _pending: when unsure about kind."
+}

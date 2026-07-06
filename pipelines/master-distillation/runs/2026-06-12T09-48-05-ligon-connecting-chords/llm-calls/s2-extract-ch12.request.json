@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch12",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 12: Appendix I: Three Etudes on Standard Progressions\nPages 135-137 of the book.\n\n<<<CHAPTER TEXT\n\nBEEREEREEE EEE EE EERE ERE\n\nAppendix I\n\nThree Etudes\n\n131\n\nAppendix I:\nThree Etudes on Standard Progressions\n\nThese three etudes are examples of invented solos based on standard progressions from Chapter 10.\nInvent your own solos using the outlines and other materials. Be creative. Use all three outlines and\nmake them sound musical.\n\nEtude 1. Standard Progression Il: \u201cRhythm Changes\u201d\n\nBb G7 Cm7 F7 Bb Cm7 F7\nNo.1 No.2\nfal a oe all f \u2014\nLK - yc aes \u2014\u2014 e \u00a3 Sf . The\ne +} \u2018 a \u201ca # y\n1\nEm7 Bb7 Ebmaj7 E\u00b07 Bb Cm7 F7\nNo.3 No.3\n=\nhe a t = = a *t cr\nLSS\u00a54 \u2014 LI\n; @) ee L\u2014_ eo\nBb G7 Cm7 F7 Dm7 = Ctm7 Cm7 F7\nNo3 No.3 No.2\n4 Ly I\nfan} > oe BP he } a = i im > \u2014\n5 ry \u2014 ~ ~! te i L=\nBb Ebm7 Ab7 Bb\nNo.2 =\n4 =\n= 5 = = >\u2014 4 > t T + oa \u00a5 ye\nCy e \u2018 ibe == as\n@) ~ \u00b0\n13\nAm7 D7 G7 wo\nNo.3 No.2\n| = =|\nT i Cl\nTe _\u201d. Lil \u00a2 =o ssa an 2 1 T Lae\nBSS? |\n\u201d oe \u2014\nGm7 C7 Cm7 F7\nNo.2\nA | Ss u\nmr a ad is\n5 5 2 a4 t ete sa i ie >i _ | f \u2014\nC9) = \u201cae \u2014\n21\nBb Cm7 F7 Doz, , G7 Cm7 F7\nNo.3\nj \u00bb_f \u2014 > Ea ;\ntes? - 2 5 i = t\nZ \u2014\u2014 \u2014S =\n25\nBb Bb7/D Eb Ab7 Bb C7 +F7 Bb\nNo.3\npores Pa\n\u00bb cme ae = oe 9 =\nK}\u2014__\u2014 oe pe\u2014o\u2014\nan& \u2014 ~\n\nConnecting Chords with Linear Harmony\n\n\n132 Appendix I Three Etudes\nEtude 2. Standard Progression III: Are You All the Outlines?\nFm7 Bbm7 Eb7 Abmaj7\no.1\nNo.1 No.1 No.1\na 3 eee ee \u2014 f SS u\nBt cm y t is \u2018 | Z a on: \u00a5 \u2014\u2014s\n- \u201ca \u2014 o\n1\nDbmaj7 De7 ey Cmaj7\nNo.2\n4 ty i i\ncea = i == | Ss ==- =\n. \u00ae) = Ll} [et\nCm7 Fm7 Bb7 Ebmaj7\nNo.1 \u2014 No.2 No.3\nj = = 7 zy\n| fan WA = mag i T a\nf 2 & e\no Sf = =\n9\nAbmaj7 D7 Gmaj7\nNo.3\nA | hao \u2014 nl\na nes t \u2014\u2014 a Bie \u2014 a es ae\nG2 = \u2014\u2014 <<\nSY os\nry) a SS\n13\nAm7 D7 Gmaj7\n4 No.1 ;\nfh\ni fam = it ; 1 it + it =\n= \u2014\u2014 a2 eo\n17 Ly\nFim7 B7 Emaj7 C7\nNo.2 No.1\n\u2014 a | SS\na m4 \u2014\u2014 st\n3) T = m \u2014s\n24\nFm7 Bbm7 Eb7 Abmaj7\nNo 3 No.3\npi a eet\n\u20ac ' } < oe \u2014o\nci a hee a a a a a\n25\nDbmaj7 Dbmmaj7 Cm7 B\u00b07\n| 4 \u2014\n2 = 71 y a5 = se i $e \u2014>\u2014 I\n(ae v I I te ao \u2014 : e I\n09 b= ~\nBbm7 Eb7 Abmaj7 Go7 CF\nNo.3 No.3\nSs lesa \u2014\n(yn Comer $y =) s = \u00a3 = F =\nai = L-\n\nConnecting Chords with Linear Harmony\n\nBERR ERR EERE BER EBB BBE BS\n\n\n\u2018BEEBE EERE RR RERRREERERER E-\n\nAppendix I Three Etudes 133\nEtude 3, Standard Progression IV: Outlines by Starlight\nEo7 No3 A7 Cm7 F7 \u2018ie\n\u2014\u2014\u2014 pats\n= z 7a Th = = 2 1\n: o\u2014 oe * < TY 4\n@) Hoe tei ww oe\n1\nsy Bb7 Ebmaj7 Ab7\nNo.1\nfy | \u2014\u2014 ; =\n\u2014_- ; = i\"\nEA } | 2m =) es 3 wi = aso Sse Ao,\nry) a? te o vi? a\n5 \u2014\nBbmaj7 Eo7 AT Dm7 Eb7\nNo.2 No.2\n| \u2014 ;\nfan} ? aE y \u2014_ = ete ts t of iS \u2014 t =\ny = a eA ad = o gre\n9\nFmaj7 Gm7 Ao7 D7\nNo.3\nf\u2014_| > \u2014 {\n> sf \u2014 2 H\n= tee o 12 ae T oe T\nC3) \u2014 Vy =~ ee! -\n13\nG7 Cm7\nNo.1\n-\u2014 Nol\np= i \u2014 x\ntr? $e\u2014bay + Ct = <\u2014\u2014$* i\nm5 i oe = \u2014 . _\n17\nEbm7 Ab7 Bbmaj7\nNa.1\nfh | \\ \u2014\nyt im =\nb ole i =\n\u00a9 ta \u2014@ f = abe. =i \u2014\u2014\u2014a .\nDY a) v\nEo7 A7 Do7 G7\nNo.1\nCT No.2\n\n25\n\nCo7 wos F7 Bbmaj7\n\n|\n\n29\n\nConnecting Chords with Linear Harmony\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 12 extraction"
+}

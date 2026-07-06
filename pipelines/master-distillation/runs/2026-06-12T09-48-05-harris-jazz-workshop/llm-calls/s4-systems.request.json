@@ -1,0 +1,254 @@
+{
+  "stage": "s4",
+  "scope": "systems",
+  "model": "claude-sonnet",
+  "system_prompt": "You are deriving structured \"systems\" from the distilled summary of a guitar method book.\n\nA SYSTEM is a graph-with-rules. It has:\n  - members[]: the taxonomy (the things this system operates over \u2014 chord\n    types, position regions, voicing categories, scale forms, etc.)\n  - traversal_rules[]: how you MOVE between members (preference for\n    common-tone voice motion, pivot-finger shifts, position continuity,\n    etc.)\n  - modification_rules[]: how you ALTER a member (substitution lattices,\n    voicing density changes, omission policies, color-tone requirements,\n    etc.)\n\nEach rule carries an `engine_payload` with a `kind` field. The kind is\neither ONE of these 12 names (use exactly as spelled):\n\n  PositionContinuity, VoiceMotion, StringSetTransition, SymmetryMovement,\n  FamilyCoherence, SubstitutionExpand, DensityFloor, DensityCeiling,\n  OmissionAllow, ColorToneRequire, NCTHarmonization, TextureCycle\n\nOR a `_pending:<short-kebab-slug>` placeholder when no name in the list\nclearly fits. When in doubt, USE `_pending:`. Do not stretch a name to fit.\nThe formal definitions of these kinds are pending (#298); your job today\nis to pick the best label or honestly admit uncertainty.\n\nOutput a JSON object with this shape:\n\n  {\n    \"master_id\": \"<from config>\",\n    \"work_id\": \"<from config>\",\n    \"systems\": [\n      {\n        \"id\": \"<master_id>:<work_id>:<system-slug>\",\n        \"name\": \"<full system name>\",\n        \"summary\": \"<one-paragraph prose>\",\n        \"members\": [\n          { \"id\": \"<slug>\", \"name\": \"<full name>\", \"summary\": \"<optional>\" }\n        ],\n        \"traversal_rules\": [\n          {\n            \"id\": \"<slug>\",\n            \"name\": \"<full name>\",\n            \"summary\": \"<one sentence>\",\n            \"engine_payload\": { \"kind\": \"<kind-name or _pending:slug>\" }\n          }\n        ],\n        \"modification_rules\": [...]\n      }\n    ]\n  }\n\nGuidance:\n- Three-segment system ids. Slug is kebab-case. Example:\n  \"benson:method-vol-1-chord-construction:harmonized-scale\"\n- Aim for 1-4 systems per book. A book usually has ONE central system plus\n  optionally a few smaller ones.\n- A system MUST have non-empty members AND at least one rule (traversal\n  or modification) \u2014 empty systems are not useful.\n- members[], traversal_rules[], modification_rules[] are all optional fields\n  per the schema, but a real system has at least members + one rule kind.\n- If the book teaches a system you can't structure as members+rules,\n  describe it in `summary` and leave members/rules empty rather than\n  inventing.\n\nEVERY rule (traversal_rule, modification_rule, preference) MUST carry a\n`references[]` array with at least one entry pointing back at the chapter\nquote that backs the rule. Reference shape:\n\n  { \"chapter_n\": <int>, \"topic\": \"<topic label from chapter file>\",\n    \"quote_excerpt\": \"<5-15 word snippet of the source quote>\",\n    \"page\": <int, optional> }\n\nIf a rule has no source quote it does not belong in the systems-draft \u2014\nwrite it into the system's `summary` field or omit it. References make\nevery kind assignment auditable; without them, this draft cannot be\nreviewed against the source.\n",
+  "user_prompt": "Master id: barry-harris\nWork id: jazz-workshop\n\nBOOK-LEVEL DISTILLATION:\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:31:41+00:00\nschema_version: 0.1\n---\n\n# Book-level distillation \u2014 jazz-workshop\n\n_Aggregated from per-chapter summaries under `summaries/`._\n\n# Barry Harris's Jazz Workshop: Master Class in Harmonic Thinking and Scalewise Improvisation\n\nBarry Harris's *Jazz Workshop* teaches a unified system where **technique always serves musical context** and every harmonic complexity reduces to scalewise rules and movable positions. The pedagogical core is encapsulated in his dictum \"practice your playing\u2014not your practicing,\" which orients every exercise toward re-creating ensemble sound and phrasing independent of the rhythm section. The book's architecture moves from foundational scales and arpeggios (Chapter 1) through solo construction methodology (Chapter 2), then generalizes that thinking to harmonic voicing systems (Chapters 3\u20134), and finally demonstrates how those systems apply to the vocalist's technical mastery (Chapter 5).\n\nThe book establishes **three load-bearing harmonic definitions** that function as universal calculation rules throughout: the **Related Diminished Chord** (a major 3rd above the dominant note), the **Important Minor** (the minor 7th chord on the 5th degree of a dominant 7th scale), and the **Minor 6 Diminished Scale** (a fusion of a minor 6 chord with its related diminished chord). These are not merely named chords but generators\u2014each one unfolds into systematic pathways for melody, harmony, and voicing movement. The *Related Diminished Chord* in particular crystallizes one of Harris's signature discoveries: four dominants built from the same diminished triad become interchangeable, permitting the D7\u2013Gmaj7 substitution where F#-diminished yields D7, F7, Ab7, and B7 as functionally equivalent harmonic colors.\n\nHarris's **half-step practice model** is the generative engine of the book. Rooted in bebop language, it applies scale-degree-specific rules across dominant 7th, major, and minor (melodic) scales to create endless improvisational vocabulary without relying on rote memorization. The **Three-Step Solo Building** method (choose scales, generate phrases in all keys and tempos, transpose across tunes) transforms abstract theory into a reproducible practice routine. The characteristic mechanical directive\u2014**remember to move each note to the next note of the scale**\u2014converts harmonic theory into tactile execution for both pianists and guitarists.\n\nChapter 3 dismantles the **harmonic rigidity misconception** that chords are fixed vertical objects. Harris shows that virtually all chords collapse into one of two foundational scales: the **major 6 diminished** and **minor 6 diminished**. By recognizing that every m7 chord is an inversion of a major 6th and every m7b5 is an inversion of a minor 6th, players see chords not as isolated sonorities but as positions within a continuous scalar landscape. The book also establishes **named harmonic units** that become transportable across songs: the **major-minor-minor/6 voice-leading move** carries a specific bass-line formula; the *Stella by Starlight* progression generalizes into a Roman-numeral blueprint that applies wherever that progression appears.\n\nThe vocalizing chapter demonstrates that technical mastery of **scalar and rhythmical skills** is the liberation pathway to expressive freedom. The singer must develop **independent time and phrasing** separate from the rhythm section, and must master harmonic definitions like the **augmented arpeggio** and **whole tone scale** as functional tools. Throughout, Harris emphasizes **re-creating the rhythm section mentally during solo practice**. The book's thesis is that jazz improvisation is learnable through systematic application of three harmonic definitions, two foundational diminished scales, and one core directional rule.\n\n\nCHAPTER SUMMARIES:\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 7-28\nmodel: claude-haiku\nextracted_at: 2026-06-15T20:30:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 The Basics\n\n_Distillation; backed by `chapters/ch01.md`._\n\n# Chapter 1 Summary\n\nBarry Harris introduces the foundational principle that **technique must always serve musical context**, encapsulated in his dictum \"practice your playing\u2014not your practicing,\" which establishes the pedagogical frame for all subsequent exercises. The chapter teaches essential building blocks including the **'up and down' scale** (2-bar phrases from tonic to 7th and back), the **three important arpeggios on dominant 7th** (on tonic, 5th, and 7th degrees), and the signature **pivoting technique** (a multi-purpose tool that creates rhythmic strength through accentual shifts). Harris's characteristic pedagogical move is the **half-step practice model**, a generative system rooted in bebop language that applies scale-degree-specific rules across dominant 7th, major, and minor (melodic) scales to create endless improvisational possibilities. The chapter establishes critical terminology including major scale half-step rules, minor scale half-step rules (using ascending melodic minor with one exception for the b3rd), and the practical rule of thumb for finding related diminished chords (build a major 3rd above the dominant note). Throughout, Harris emphasizes re-creating the rhythm section mentally during solo practice.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 29-58\nmodel: claude-haiku\nextracted_at: 2026-06-15T20:30:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Applications\n\n_Distillation; backed by `chapters/ch02.md`._\n\n# Chapter 2 Summary\n\nChapter 2 teaches a foundational **Three-Step Solo Building** method: (1) choose and practice the correct scale(s) to outline the chord progression, which illuminates both harmony and improvisation pathways; (2) generate many phrases based on those scales, practicing them in all keys and tempos; (3) apply those phrases across different tunes using the same progression. Harris introduces three load-bearing harmonic definitions that anchor the exercises: the **Related Diminished Chord**, built a major 3rd above the dominant note, enables diminished-chord-extension techniques; **Important Minor**, the minor 7th chord on the 5th degree of a dominant 7th scale, provides a reusable harmonic tool for progressions like Rhythm Changes; and the **Minor 6 Diminished Scale**, constructed by combining a minor 6 chord with its related diminished chord, represents one of Harris's signature compositional-harmonic concepts. These three definitions form the harmonic vocabulary and calculation rules that students apply across the applications work that follows.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 59-78\nmodel: claude-haiku\nextracted_at: 2026-06-15T20:30:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Movable Chords for Piano and Guitar\n\n_Distillation; backed by `chapters/ch03.md`._\n\n# Chapter 3: Movable Chords for Piano and Guitar\n\nThis chapter introduces the **scale for chording** concept, which assigns virtually all chords to one of two foundational scales\u2014the major 6 diminished and minor 6 diminished\u2014enabling systematic voicing movement across a progression. Harris addresses the **harmonic rigidity misconception** that chords are fixed vertical points, diagnosing why players repeat the same two or three voicings for each change, and offers movable chords as the antidote. The method rests on two axiomatic equivalences: every **m7** chord is an inversion of a major 6th, and every **m7b5** is an inversion of a minor 6th, collapsing seemingly different chord families into a unified harmonic vocabulary. The **C6 diminished scale construction** reveals internal architecture\u2014eight notes comprised of three interlocking diminished chords\u2014that becomes the organizational blueprint for voicing choices. The mechanical engine driving all movement is Harris's characteristic directive: **remember to move each note to the next note of the scale**, transforming abstract harmonic theory into a tactile, scale-based sequencing rule that piano and guitar players can execute immediately.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 79-84\nmodel: claude-haiku\nextracted_at: 2026-06-15T20:30:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 The Rhythm Section\n\n_Distillation; backed by `chapters/ch04.md`._\n\n# Chapter 4: The Rhythm Section\n\nChapter 4 teaches the harmonic substitution technique of **related dominant 7th chords**, where the V7 chord and its related dominants (derived from the same diminished triad) can substitute for each other when resolving to the I chord, enabling richer voicing options and interchangeability in cadential movements. Harris illustrates this through the concrete **D7\u2013Gmaj7 substitution example**, where F#-diminished generates four related dominants (D7, F7, Ab7, B7) that can all be voiced against D in the bass\u2014a signature Harris technique for maintaining bass continuity while shifting harmonic color. The chapter introduces the **major-minor-minor/6 voice-leading move** (e.g., Bb major\u2013G minor\u2013Gm/E), a named harmonic unit with a specific bass-line formula that becomes reusable across transpositions. Harris generalizes the *Stella by Starlight* progression into a transportable Roman-numeral formula (I major\u2013III7\u2013relative minor\u2013\u266dVIdim\u2013Imaj/5\u2013minor/6), exemplifying his method of extracting song-specific observations into universal harmonic rules.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s3\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 85-101\nmodel: claude-haiku\nextracted_at: 2026-06-15T20:30:48+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Vocalizing\n\n_Distillation; backed by `chapters/ch05.md`._\n\n# Chapter 5: Vocalizing\n\nThe chapter teaches vocalizing as a jazz improvisation practice grounded in two principles: the singer must develop **independent time and phrasing** separate from the rhythm section's foundation, and technical mastery of **scalar and rhythmical skills** is prerequisite to expressive freedom. Harris demonstrates specific harmonic applications through *Y.M.B. in S.* figures, establishing key-dependent rules for **E diminished** and **B diminished** chord choices that correspond to dominant-7 resolutions in minor keys. The chapter introduces load-bearing vocabulary including the **augmented arpeggio** (major arpeggio with raised 5th), the **whole tone scale** (six-note construction built entirely on whole-steps), and the foundational concept of the **vocalist's role** as both storyteller and rhythmic instrument. Harris's characteristic pedagogical move appears throughout: presenting technical definitions and harmonic rules as the liberation pathway\u2014mastery of scales and chord structures frees the singer to explore nuance and depth.\n\n\nCOMMITTED CHAPTER FILES (verbatim quotes + rationales):\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s2\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 7-28\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:17:05+00:00\nschema_version: 0.1\n---\n\n# Chapter 1 \u2014 The Basics\n\n_Pages 7-28._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## technique vs. musical context\n\n> Technique might best be thought of as a means to an end. \u2018That is to say, strong technique is a prerequisite for jazz improvisa-\n> tion; but, for the purposes of practicing, technique must always have\n> a musical context. To get the point across Barry says, \u201cpractice your\n> playing\u2014not your practicing.\u201d\n\n**Significance (p. 10).** This is the foundational pedagogical rule of the entire method: technique is subordinate to musical context, setting the frame for every exercise that follows.\n\n## re-creating rhythm section in practice\n\n> A lot of practice time is spent\n> alone, so it is essential to re-create the rhythm section for yourself as\n> you play. Hear the drums, the bass and the chord changes. Practice\n> in tempo, and envision how the rhythm section would accompany\n> you.\n\n**Significance (p. 10).** This is a concrete rule for solo practice that defines the expected mental environment for all exercises in the method.\n\n## 'up and down' scale definition\n\n> \u2018Up and down\u2019 refers to a scale played from its tonic up to its 7th\n> degree (either dominant or major 7th), and then straight back down.\n> This produces a 2 bar phrase.\n\n**Significance (p. 11).** This defines the fundamental unit of scale practice used throughout the book, establishing the precise meaning of a term referenced in every subsequent scale exercise.\n\n## three important arpeggios on dominant 7th\n\n> The three important arpeggios on the dominant 7th scale are found\n> on the tonic, the Sth and the 7th. Illustrated in its entirety is the arpeg-\n> gio on the tonic (C). Practice the arpeggios on the 5th and 7th (Gm and\n> Bb, shown in root position) the same way.\n\n**Significance (p. 13).** This names a specific structural rule of the Harris method \u2014 that only three arpeggio positions on the dominant 7th scale are 'important' \u2014 which guides the student's priorities in practice.\n\n## pivoting technique definition\n\n> Pivoting is a multi-purpose technique that is an important tool for all\n> instruments. It is especially useful for horn/string players and vocalists\n> enabling them to perform a melodic line of any length and/or range\n> while remaining within the boundaries of their instruments. Notice that\n> the accentual structure of the line changes where the pivot creates new\n> highest and lowest notes, which naturally feel rhythmically stronger\n> within the melodic line.\n\n**Significance (p. 13).** This defines 'pivoting' \u2014 a signature Harris technique \u2014 explaining both its mechanical function and its rhythmic consequence.\n\n## Harris Half-Step Practice Model definition\n\n> Half-steps typify the language of the bebop player. With this in mind,\n> Barry developed the half-step practice model to teach the art of play-\n> ing rhythmically. In their basic role, they appear as notes added to the\n> descending form of the scale. Through various applications, (shown\n> below), the half-steps become an endless source from which to gener-\n> ate improvisational ideas. The dominant 7th scale, the major and the\n> minor scales each have their own set of \u2018rules\u2019 for adding half-steps.\n\n**Significance (p. 17).** This is the master definition of the method's central concept \u2014 the half-step practice model \u2014 establishing both its bebop lineage and its role as the generative engine of improvisation throughout the book.\n\n## major scale half-step rules\n\n> The first rule for descending from the 1-3-5 and major7 is: 1\n> added half-step between the 6-5.\n>\n> The second rule applying to the 3-5 and major7 is: 3 added half-\n> steps between the 3-2; 2-1; 6-5. Another way to practice this second\n> tule is by placing the half-steps between the 3-2; major7-6; 6-5.\n>\n> The first rule for descending from the 2-4-6 is: no added half-\n> steps. Play straight down the scale from the various starting notes.\n>\n> The second rule for the 2-4-6 is: 2 added half-steps which can\n> come between the 2-1; 6-5 or between the major7-6; 6-5. (Practice both\n> sets.)\n\n**Significance (p. 23).** These four rules constitute the complete major-scale half-step system, parallel to the dominant 7th rules but with distinct placements that must be memorized separately.\n\n## minor scale half-step rules\n\n> The minor scale that the half-steps are added to is the melodic minor in\n> ascending form-tonic - 2 - b3 - 4 - 5 - 6 - major7.\n>\n> The added half-steps for this scale fall in the same places as do\n> the half-steps for the major scale. The one exception to this is where\n> the major scale rules add a b3rd. Because this note is already present in\n> the melodic minor scale, any other note may be used in its place.\n> Notice that this may also be achieved by using interval jumps and by\n>\n> repeating the same note twice.\n\n**Significance (p. 25).** This defines the specific minor scale form used in the Harris system (ascending melodic minor) and states the single exception rule that differentiates it from the major scale half-step application.\n\n## finding related diminished chord\n\n> The rule of thumb for finding a related diminished chord is to\n> build it a major 3rd above the dominant note. If you are looking for the\n> related diminished chord to a dominant 7th chord, just go up a major\n> 3rd from the root of the dominant 7th chord\n\n**Significance (p. 27).** This is the single most-used rule of thumb in the Harris method, providing the practical formula for locating the related diminished chord from any dominant 7th.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s2\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 29-58\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:19:42+00:00\nschema_version: 0.1\n---\n\n# Chapter 2 \u2014 Applications\n\n_Pages 29-58._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Three-Step Solo Building\n\n> Consider three steps:\n>\n> 1. Choose the correct scale(s) to outline the chord\n> progression (song). Practice the scale(s) thoroughly.\n> Not only will this sound the harmony, given that the\n> chords come from the various scales, but it will also\n> illuminate any darkened corner in the tune, shedding\n> light on \u2018how to solo.\u201d\n>\n> 2. Make-up as many different phrases as possible\n> based on the scale(s) outlining the harmony, Practice\n> them in all keys, and at challenging tempos.\n>\n> 3. Find different tunes that make use of the chord\n> progression that you are working on, and try out the\n> phrases in each of them.\n\n**Significance (p. 37).** This is Barry Harris's complete pedagogical framework for improvisation \u2014 the three-step method that governs all the application exercises that follow.\n\n## Related Diminished Chord Definition\n\n> The related diminished chord is built from a major 3rd above the domi-\n> nant note, For instance, in the key of D the dominant note is A anda\n> third above is C#.\n\n**Significance (p. 42).** This is the definitional rule for constructing the related diminished chord \u2014 the foundational calculation that unlocks Barry Harris's diminished-chord-extension techniques.\n\n## Important Minor Definition\n\n> \u201cImportant minor\u2019 is the term given to the chord found on the Sth\n> degree of a dominant 7th scale (5 of 5),\n\n**Significance (p. 46).** This defines 'important minor' as a chord function \u2014 the minor 7th built on the 5th of a dominant \u2014 giving a reusable harmonic tool applied throughout the Rhythm Changes and other progressions.\n\n## Minor 6 Diminished Scale Definition\n\n> This scale is formed by combining a minor 6 chord with its related\n> diminished chord, The diminished chord is built from a major 3rd\n> above the dominant note of the scale.\n\n**Significance (p. 58).** This is the construction rule for the Minor 6 Diminished Scale \u2014 one of Barry Harris's signature concepts \u2014 establishing exactly how to build it from two constituent harmonic units.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s2\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 59-78\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:21:40+00:00\nschema_version: 0.1\n---\n\n# Chapter 3 \u2014 Movable Chords for Piano and Guitar\n\n_Pages 59-78._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Scale for Chording Concept\n\n> Introduced\n> here is a 'scale for chording,' and a method of\n> assigning virtually any chord to one of two\n> scales\u2014the major 6 diminished and the minor 6\n> diminished.\n\n**Significance (p. 66).** This is the foundational methodological claim of the entire chapter, naming the two scales that organize all subsequent chord-movement exercises.\n\n## Harmonic Rigidity Misconception\n\n> The misconception that chords are fixed\n> points in the tune, bound by vertical harmonic\n> movement, may be the culprit behind the ten-\n> dency to play the same two or three voicings\n> over and over for the same change.\n\n**Significance (p. 66).** Harris names the specific bad habit his method corrects, giving players a diagnostic frame for why movable chords matter.\n\n## C6 Diminished Scale Construction\n\n> This scale is actually comprised of all 3 diminished chords. The\n> C and A belong to one diminished, the E and G to a second, and the B\n> diminished chord provides the other four notes of the scale.\n\n**Significance (p. 67).** Defines the internal architecture of the C6 diminished scale by mapping its eight notes onto three interlocking diminished chords.\n\n## m7 and m7b5 Re-thinking\n\n> Every minor 7 chord is an inversion of a major 6th chord, and every\n> minor? flat5 chord is an inversion of a minor 6th chord.\n\n**Significance (p. 69).** States the two axiomatic equivalences that allow Harris to collapse the m7 and m7b5 chord families into the 6th-chord scales, unifying the harmonic vocabulary.\n\n## Moving Voicing Rule\n\n> Remember to move each note to the next note of the scale.\n\n**Significance (p. 71).** The single mechanical instruction that generates all movable chord progressions in this method.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s2\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 79-84\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:22:43+00:00\nschema_version: 0.1\n---\n\n# Chapter 4 \u2014 The Rhythm Section\n\n_Pages 79-84._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## Related dominant 7th substitutions\n\n> we have illustrations of how related dominant 7th chords may\n> be used to substitute \u2018for eachother\u2019 when the V7 chord moves back to\n> the I.\n\n**Significance (p. 83).** This states the core rule governing V7 substitution via related dominants, which is the chapter's central harmonic concept.\n\n## D7\u2013Gmaj7 substitution example\n\n> In the following examples,\n> D7 going to G major is outlined. The diminished that D7 comes from is\n> F# (F#-A-C-Eb). Given that F7, Ab7, and B7 are also related to F#\n> diminished, they make very interesting voicings when played against D\n> in the bass.\n\n**Significance (p. 83).** This is the worked example that concretely demonstrates how to derive and deploy all four related dominants, including the technique of keeping D in the bass.\n\n## Major-minor-minor/6 progression\n\n> This figure shows the progression from major to minor to minor\n> with the 6th degree in the bass:(Bb major-G minor-Gm/E).\n\n**Significance (p. 79).** This defines the 'major-minor-minor/6' voice-leading move as a named, reusable harmonic unit with a specific bass-line formula.\n\n## Stella by Starlight chord movements\n\n> The chord movements are I major-\n> IlI7-relative minor-bVIdim-Imaj/5-minor/6.\n\n**Significance (p. 81).** This Roman-numeral formula encodes the generalized harmonic sequence derived from the Stella passage, making it a transportable rule rather than a song-specific observation.\n\n\n---\n\n---\nrun_id: 2026-06-12T09-48-05-harris-jazz-workshop\nstage: s2\nsource_pdf: Harris, Barry - Jazz Workshop.pdf\nsource_pages: 85-101\nmodel: claude-sonnet\nextracted_at: 2026-06-15T20:24:12+00:00\nschema_version: 0.1\n---\n\n# Chapter 5 \u2014 Vocalizing\n\n_Pages 85-101._\n\n> **Verbatim-quote constraint.** The quotes below are exact substrings of the raw transcript produced by `pdftotext`. The transcript may contain extraction artifacts where the book's typeface confuses the tool \u2014 e.g. `7irst` or `<irst` for `first`, `speci7ic` for `specific`. **Do NOT manually fix these in this file**: the quote-fidelity validator compares against the raw transcript, so a 'fixed' quote will fail verification and break Stage 2 idempotency. If a future pipeline iteration adds artifact-normalization, it must normalize the transcript and these files together.\n\n## vocalist's role and independence\n\n> Here, the voice is cast into the role of\n> both storyteller and melodic/rhythmic\n> instrument. To achieve success in the\n> areas of story and rhythm, it is essen-\n> tial for the singer to develop a sense\n> of time and phrasing independent of\n> what the rhythm section lays down.\n\n**Significance (p. 90).** Defines the foundational principle of the vocalizing chapter: the singer must internalize independent time rather than relying on the rhythm section.\n\n## technical skills for improvisation\n\n> It is also vital for the vocalist, as it\n> is for any instrumentalist in this\n> music, to develop technical (scalar\n> and rhythmical) skills in order to mas-\n> ter the art of improvisation\u2014to then be\n> free to explore nuance, possibility, and\n> depth.\n\n**Significance (p. 90).** States the method's core pedagogical sequence: technical mastery of scales and rhythm is the prerequisite that unlocks expressive freedom.\n\n## E diminished chord, Y.M.B. in S.\n\n> Demonstrated in the following four figures are examples of the last\n> 2 bars of \u201cY.M.B. in S,,\u201d incorporating notes of the diminished chord.\n> Examples are notated in the keys of F and C minor. C7 (in the key of F\n> minor) uses the E-diminished chord; while G7 (in the key of C minor)\n> uses the B diminished chord.\n\n**Significance (p. 93).** Establishes the key-specific rule for choosing the related diminished chord: C7 in F minor \u2192 E-diminished, G7 in C minor \u2192 B-diminished.\n\n## Ab augmented arpeggio definition\n\n> An Ab augmented arpeggio (the 5th degree is raised a half-step from\n> the major)\n\n**Significance (p. 95).** Gives a precise, in-text definition of the augmented arpeggio as a variant of the major arpeggio with the 5th raised a half-step.\n\n## Ab whole tone scale definition\n\n> The Ab whole tone scale (a six note scale built on whole-steps\n> above the root)\n\n**Significance (p. 95).** Defines the whole tone scale concisely within the warm-up series, establishing its structure as a six-note, all-whole-step construction for use in improvisation.\n\n",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "master_id",
+      "work_id",
+      "systems"
+    ],
+    "properties": {
+      "master_id": {
+        "type": "string"
+      },
+      "work_id": {
+        "type": "string"
+      },
+      "systems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary": {
+              "type": "string"
+            },
+            "members": {
+              "type": "array"
+            },
+            "traversal_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "modification_rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "preferences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "engine_payload",
+                  "references"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "engine_payload": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  "references": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "chapter_n"
+                      ],
+                      "properties": {
+                        "chapter_n": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "topic": {
+                          "type": "string"
+                        },
+                        "quote_excerpt": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "references": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "derive systems[] for barry-harris/jazz-workshop; use _pending: when unsure about kind."
+}

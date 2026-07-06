@@ -1,0 +1,90 @@
+{
+  "run_id": "2026-06-12T09-48-05-ligon-connecting-chords",
+  "config": "pipelines/master-distillation/configs/ligon-connecting-chords.toml",
+  "stages": {
+    "s1": {
+      "status": "accepted",
+      "started_at": "2026-06-13T06:15:04+00:00",
+      "ended_at": "2026-06-13T06:15:05+00:00",
+      "outputs": [
+        "pipelines/master-distillation/runs/2026-06-12T09-48-05-ligon-connecting-chords/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-06-12T09-48-05-ligon-connecting-chords/pages.json",
+        "re-ingested: 151 pages, 185,655 characters"
+      ],
+      "error_message": null
+    },
+    "s2": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:26:17+00:00",
+      "ended_at": "2026-06-15T20:26:17+00:00",
+      "outputs": [
+        "detected 16 chapter(s)",
+        "pipelines/master-distillation/runs/2026-06-12T09-48-05-ligon-connecting-chords/chapter-bounds.json",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch01.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch02.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch03.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch04.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch05.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch06.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch07.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch08.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch09.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch10.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch11.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch12.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch13.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch14.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch15.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/chapters/ch16.md"
+      ],
+      "error_message": null
+    },
+    "s3": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:30:23+00:00",
+      "ended_at": "2026-06-15T20:30:23+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch11-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch12-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch13-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch14-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch15-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/summaries/ch16-summary.md",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/connecting-chords-with-linear-harmony-book-summary.md"
+      ],
+      "error_message": null
+    },
+    "s4": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:36:24+00:00",
+      "ended_at": "2026-06-15T20:36:24+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/derived/systems-draft.json",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/derived/STATEMENT.md",
+        "derived 1 system(s); see systems-draft.json"
+      ],
+      "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-06-15T20:41:56+00:00",
+      "ended_at": "2026-06-15T20:41:56+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/bert-ligon/connecting-chords-with-linear-harmony/derived/PRESCRIPTIVE.md",
+        "extracted 25 prescriptive lesson(s) across 5 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
+    }
+  }
+}

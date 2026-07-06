@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch05",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 5: Chord Melody Solo\nPages 54-56 of the book.\n\n<<<CHAPTER TEXT\n\nEx. 66 (cont\u2019d)\n\n7\nDn 2 2 \u2014\u2014 a, Em AR Dw?\n4 aS go . 2. if - iN\n= ia 3 \u00e9 \u2014- f\nae Sy 7 % zy\n@ \u00ae Gu 5\n\nx aig\nCoa? G70 Dm = Abell \u00a9 Gil IN TD iia v\noN B74\ny) + t + \u2014 = i\na 2 \u00b0 3 3 \u00ae \u00ae Sy 2 \u00ae oe\n\n\n\nEx. 66 (cont'd)\n\nw \u201c\n\nPERE Tsar\n\nx 3 a 3\nFew? (9) Fn9 aye\n4 \\ ( b-\u2014 e 4 3 \u201c3s\n\u00a9 oe 6 _ oa 4 @\u00ae \u00ae 1 =< is) se a\nmg x\n\n55\n\n\nEx. 66 (cont\u2019d)\n\nOO xx\n\nxx\n\n\u2018\nVT\n\n& & te\n\u2014~&% Db4 o% Dh%y Cua? Bbyyy Cm? a\nu ma re the} cr;\n+e a i ree\nT 7 ei on tf oF +15\n/ 7 =\nOOGEGGS@ 29 8O% +#-0\noO\nbo 2.\ngQ bs 4e-\n\u2018A im\nram\u2019 , a\nbp 2:\nBs\nZB\nA-\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 5 extraction"
+}

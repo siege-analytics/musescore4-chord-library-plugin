@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch04",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 4: WHAT IS THE M-LODE?\nPages 8-8 of the book.\n\n<<<CHAPTER TEXT\n\nWELCOME TO VOLUME It (continued)\n\nI\u2019m assuming that anyone who has this new Volume II in their hands has already been\nworking with Volume I for a while. This way, the text from the first book does not need to be\nrepeated here...(except for the \u201cDisclaimer /Caution/ Warning!!!\u201d page, which always needs to\nbe repeated!) However, it would be good to keep in mind that many of the ideas in this text for\nVolume II are retroactive. That is to say that they apply to both books.\n\nI would imagine that people are beginning to see that these books are not just for guitar-\nists. These books are for all musicians. In fact, it is probably becoming clear that pianists, com-\nposers and arrangers have a great advantage in that they don\u2019t have to be concerned with the\nlimitations of the guitar. (We guitarists know how very fortunate they are...)\n\nVolume II contains 3-part 4ths, 4-part 4ths and spread clusters voice-led through all 6\ncycles in C Major, C Melodic Minor and C Harmonic Minor. If we add this material to all the\nmaterial in Volume I, we have \u201cThe Mother Lode.\u201d (We'll start referring to it as the M-Lode...)\n\nWHAT IS THE M-LODE?\nHere it is: 3-Part Structures 4-Part Structures\n| Triads (Volumel) \u2014 7\" Chords\nTBN I\nTBN II\n| 3-part 4ths (Volume Il) _ 4-part 4ths\n| Spread Clusters\n\nIt would seem that the main focus is on 4-part structures and that the 3-part structures\nare used as \u201csupplements.\u201d If you look at all of the material in Volume I, you would see that\nit\u2019s all triad-based. The triads are triads. The 7th chords are a triad plus another note. TBN Lis a\ntriad plus another note. And TBN II is also a triad plus another note.\n\nWhat Volume II does is to complete the M-Lode by introducing 3-part 4ths (as a supple-\nment) and then introducing 4-part 4ths and Spread Clusters. (I know that the term SPREAD\nCLUSTER makes many people think of JUMBO SHRIMP, but what the heck...)\n\nSo, now you've got the complete set of 5 families of 4-part chords: 7th, TBN I, TBN IL, 4\npart 4th, Spread Cluster. What follows next is very important:\n\nTHERE ARE NO OTHER TYPES OF 4-PART* CHORD FAMILIES WITHIN THE 3\nDIATONIC 7-NOTE SCALES WE ARE WORKING WITH!!! (MAJOR, MELODIC MINOR,\nHARMONIC MINOR) {*4-part being defined as \u201ccontaining 4 different notes\u201d}\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 4 extraction"
+}

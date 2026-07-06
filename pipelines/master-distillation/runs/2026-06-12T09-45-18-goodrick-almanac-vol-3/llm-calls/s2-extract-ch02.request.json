@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch02",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 2: Name That Chord: Some Names for the Nameless Chords in Volume II\nPages 3-5 of the book.\n\n<<<CHAPTER TEXT\n\nTERMS\n\nOne of the fun things about writing books like this is that you get to make up stuff.\nJust throw out some fancy-sounding terms and maybe you can fool people into thinking that\nyou know something...\n\n\u00b0 IVL: intervallic voice-leading\n\n\u00ae FVL: functional voice-leading\n\n\u00b0 GDVL: generic diatonic voice-leading\n\n\u00b0 SCVL: specific chromatic voice-leading\n\n\u00a9 ate: common tone(s)\n\n\u00ae pts passing tone(s)\n\ne M.S.R.P.: melodic strand replication procedure\noe\n\ngrip-slipping: more on this later... .\n\n(The effect of fooling people can be enhanced by not defining these made-up terms...)\n\nme \\ON\n\nEVENT/EPISODE\nEVENT EPISODE\n{ involves 2-6 diatonic scale { involves all 7 diatonic scale\nnotes at least once each. notes at least once each.\n\nFNE END DNC\nBc AB. G-7a \u00e9te.\n\nan event can be diatonically\ntransposed to create 6 other\nevents, but some of them will\nbe intervallically identical.\n\nBoth events and episodes can be melodic, contrapuntal, harmonic or in any combination...\n\nan episode can be diatonically\ntransposed to create 6 other\nepisodes, where each corresponds\nto a different mode.\n\nWe naturally tend to think of events as being shorter, while episodes are longer.\n\nThis is true much of the time. However, it is quite possible to have a very long event and\n\na relatively short episode.\n\nAlmanac of Guitar Voice-Leading Volume III\n\nPDP LNLNIER NINN INENIN INN IN IDIINININ INIA\n\nTN,\n\n\nNAME THAT CHORD: SOME NAMES FOR THE \u201cNAMELESS\u201d CHORDS IN VOLUME It\nO.K., I promised some names in Volume II and I will comply...\nJust as Volume II does, let\u2019s start with 3-part 4ths.\n\nCc\nWhat could we call this chord? G We could call it C2...\nD\n\nThis name is supposed to mean: C Major triad with 2 substituted for 3. A more\naccurate rendering might be: C triad [no third] add 2. Not especially brief...a bit cumbersome\n(in my opinion). My suggestion for a suitable name for this chord would be: G [sus4].\nThat means a G Major triad with 4 suspended for 3. I will grant you that C2 is shorter, but\nIneed to ask, \u201cHow many musicans understand this terminology?\u201d (I think not many...)\nAlso, you need to consider the potential problems that would occur with other names that\nare more complicated: B Diminished triad [no b3rd] add b9. {This is much easier to name\nas F [sus#4].} Or how about: E Minor triad [no b3rd] add b9. {This is much easier to name\nas B diminished [sus4].}\n\nSo, here are the NAMES of these chords that I feel are essentially shorter and more to the point:\n\n3-PART 4THS (C MAJOR)\nG(sus4) Am(sus4) Bdim(sus4) C(sus4) Dm(sus4) Em(sus4) F(sus#4)\n\nCc D E F G A B\nG A B Cc D E\" F\nD E F G A B Cc\n\nOf course, this applies to all of the inversions as well...\n\n3-PART 4THS (C MELODIC MINOR)\n\n[F7(b5, no 3)] [B7(n05)]\n\nG(sus4) A\u00b0%(sus4) B(b 5) Cm(sus4) Dm(sus4) Eb+(sus # 4) F(sus# 4)\nCc D Eb F G A B\nG A B Cc D Eb F\nD Eb F G A B Cc\n\n3-PART 4THS (C HARMONIC MINOR)\n[F7(b5, no 3)] [Abm]\n\nG(sus4) Ab (sus #4) BC b 5) Cm(sus4) D\u00b0(sus4) Eb+(sus4) Fm(sus# 4)\nCc D Eb F G Ab B\nG Ab B c D Eb F\nD Eb F G Ab B Cc\n\n\n\nNAMES FOR 4-PART 4THS\n\nThis is fairly simple: Sus 4 Chords...[I think it\u2019s the best way to go...]\n\nYour other option would be: C Major 7th [no 5] substitute 4 for the missing 5th.\n{I don\u2019t think you want to go there...I certainly don\u2019t!]\n\nHere it is according to what's in the Volume II book:\n\n4-PART 4THS (C MAJOR)\n\nFMaj7(sus #4) G7(sus4) Am/7(sus4) Bm7(b5, sus4) CMaj7(sus4) Dm*7(sus4) Em7(sus4)\n\nE F G A B Cc D\nB Cc D E F G A\nF G A B Cc D E\nCc D E F G A B\nOf course, it\u2019s the same for all inversions...[g00d luck!!!!!1]\n4-PART 4THS (C MELODIC MINOR) [B7(#9,n08)]\n\nF7(sus #4) G7(sus4) Am7(b5,sus4) B7(b5) CmMaj7(sus4) Dm7(sus4) Eb +Maj7(sus #4)\n\nEb F G A B Cc D\nB Cc D Eb F G A\nF G A B Cc D Eb\nC D Eb F G A B\n\n4-PART 4THS (C HARMONIC MINOR)\n[Fm7(b5)] [AbMaj7(b5)]\nFm7(sus #4) G7(sus4) AbMaj7(sus#4) B6( bs) CmMaj7(sus4) Dm7( b5,sus4) Eb +Maj7(sus4)\n\nEb F G Ab B c D\n\nB Cc D Eb F G Ab\n\nF G Ab B Cc D Eb\n\nCc D Eb F G Ab B\nAlmanac of Guitar Voice-Leading Volume III 4\n\n\u201coN\n\nNNN\n\n\\\n\noN\n\nLOS EON EON OR ON RN ON RN EON EN ON EON EON EEN / os\n\nLN ENO\n\n(LINE\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 2 extraction"
+}

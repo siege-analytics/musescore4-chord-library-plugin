@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch01",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 1: Fingerings\nPages 4-4 of the book.\n\n<<<CHAPTER TEXT\n\nACP ECR SW IT NT TE\n\nAL LIT SNES\n\nFINGERINGS\n\nWhile it is true that the same chord voicings\ncan often be played on two or three different sets\nof strings, it is seldom possible to do so without\nsome change of the fingering. In evaluating the\nfeasibility of a change, first consider musical\nquality and mechanical efficiency:\n\na. As a rule, the musical quality can be\nenhanced by choosing a fingering or a set\nof strings in which the greater string\nlength is maintained, thus permitting the\nStrings to \u201csing\u201d and sustain longer.\n\nb. Mechanical efficiency is primarily a mat-\nter of avoiding unnecessary or awkward\nhand or finger movements. However, in\ndeveloping a sense of mechanical effi-\nciency. do not also develop a fear of\nradical jumps or large intervals on the\nfingerboard. for these techniques are\nfrequently required. For example, radi-\ncal interval jumps may supply a nice\ncontrast to smooth scale-wise line move-\nment.\n\nString numbers indicate the lower note of the\nchord and are in circles under the staff. Fingering\nnumbers are placed to the left of the notes. The\nthumb is frequently used throughout the studies\nand is indicated (T).\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 1 extraction"
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch03",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 3: WELCOME TO VOLUME II\nPages 7-8 of the book.\n\n<<<CHAPTER TEXT\n\nit\u2019s ALL YOURS...\n\nA Message To All Composers And/Or Arrangers:\n\nMr. Goodchord would like to inform you that any and all music that you are able to\ncompose/ arrange by using any [and all] material contained in these books is completely [and\nentirely] your own. We are making this material available to as many musicians as possible\n[world-wide] just in the hope that much great music will result.\n\nOur Universal Notation System\u2122 was created [and has evolved] to insure that all of you\nwho use this material can feel secure in the knowledge that what you do with it is yours, and\nyou would never have to worry about us claiming that \u201cthey got that from us...\u201d\n\nOur intention from the start was just to present all of it in an intelligent manner that\n\nguaranteed that all who made use of it were completely free to do anything [and all things]\nwith it.\n\nAs long as you use standard musical notation, and/or tablature, or some other system,\nwe have no claim at all for what you do.\n\nIt's ALL YOURS! Here\u2019s to a lot of great music for the future!!\n\nWELCOME TO VOLUME Ul\n\nThis present book finishes the task (begun with Volume I) of completing \u201cThe Mother\nLode.\u201d (Fellow guitarist Joe Diorio came up with this name when he received an advance copy of\nVolume I.) Both volumes combined contain 600-plus pages. Are you ready for some assembly?\nDo you have batteries?\n\nIn Volume I, all the chords have names.\n\nIn Volume I, none of the chords have names.\n\nYou may be asking \u201cWhy is that?\u201d\n\nI would answer that it seemed like a good idea at the time...\n\nActually, the reason that all the chords in Volume II are left nameless is that the names one\nmight use get complicated. [Cmaj9th(noSth), for example.] Also, these names could easily tend\nto limit how the chords could be used. Since the chords in Volume II revolve around structures of\n4th intervals and 2nd intervals, they are more ambiguous sounding than the structures in Vol-\nume I. Also, in many cases they are more flexible in terms of multiple functions. But the truth be\ntold, \u201cit just seemed like a good idea at the time...\u201d (and I\u2019m going to stick with it!)\n\n\nWELCOME TO VOLUME It (continued)\n\nI\u2019m assuming that anyone who has this new Volume II in their hands has already been\nworking with Volume I for a while. This way, the text from the first book does not need to be\nrepeated here...(except for the \u201cDisclaimer /Caution/ Warning!!!\u201d page, which always needs to\nbe repeated!) However, it would be good to keep in mind that many of the ideas in this text for\nVolume II are retroactive. That is to say that they apply to both books.\n\nI would imagine that people are beginning to see that these books are not just for guitar-\nists. These books are for all musicians. In fact, it is probably becoming clear that pianists, com-\nposers and arrangers have a great advantage in that they don\u2019t have to be concerned with the\nlimitations of the guitar. (We guitarists know how very fortunate they are...)\n\nVolume II contains 3-part 4ths, 4-part 4ths and spread clusters voice-led through all 6\ncycles in C Major, C Melodic Minor and C Harmonic Minor. If we add this material to all the\nmaterial in Volume I, we have \u201cThe Mother Lode.\u201d (We'll start referring to it as the M-Lode...)\n\nWHAT IS THE M-LODE?\nHere it is: 3-Part Structures 4-Part Structures\n| Triads (Volumel) \u2014 7\" Chords\nTBN I\nTBN II\n| 3-part 4ths (Volume Il) _ 4-part 4ths\n| Spread Clusters\n\nIt would seem that the main focus is on 4-part structures and that the 3-part structures\nare used as \u201csupplements.\u201d If you look at all of the material in Volume I, you would see that\nit\u2019s all triad-based. The triads are triads. The 7th chords are a triad plus another note. TBN Lis a\ntriad plus another note. And TBN II is also a triad plus another note.\n\nWhat Volume II does is to complete the M-Lode by introducing 3-part 4ths (as a supple-\nment) and then introducing 4-part 4ths and Spread Clusters. (I know that the term SPREAD\nCLUSTER makes many people think of JUMBO SHRIMP, but what the heck...)\n\nSo, now you've got the complete set of 5 families of 4-part chords: 7th, TBN I, TBN IL, 4\npart 4th, Spread Cluster. What follows next is very important:\n\nTHERE ARE NO OTHER TYPES OF 4-PART* CHORD FAMILIES WITHIN THE 3\nDIATONIC 7-NOTE SCALES WE ARE WORKING WITH!!! (MAJOR, MELODIC MINOR,\nHARMONIC MINOR) {*4-part being defined as \u201ccontaining 4 different notes\u201d}\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 3 extraction"
+}

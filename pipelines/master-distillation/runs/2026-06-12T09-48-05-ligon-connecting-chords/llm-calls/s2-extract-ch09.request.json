@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch09",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 9: Get It in Your Playing\nPages 84-85 of the book.\n\n<<<CHAPTER TEXT\n\n80\n\nChapter 9 Get it in Your Playing\n\nIX. GET IT INYOUR PLAYING\n\nHow to Practice the Outlines:\n\nLearn the outlines in their bare form in a// major and minor keys. To play them in\nminor, use harmonic minor (the key signature for the minor key and raise the leading\ntone). It is difficult or impossible to elaborate on anything until you know it well.\n\nPractice the outlines with the proper jazz articulations and feel, Swing the eighth notes;\naccent the up beats. Begin by playing them with quarter note values to get them locked\nin, When you speed up the quarter notes they will feel like eighth notes.\n\nTake standards tunes and progressions and plug in the bare outlines. For example, on\n\nBlues:\n\ne Play several choruses of a blues progression and every time you get to a ii - V7 make\nyourself play Outline #1.\n\ne After several choruses switch to Outline #2, and then #3.\n\n* Besides the typical ii - V7 in measures 9-10 and 12, try a ii - V7 to the IV chord in\nmeasure 4, a iio - V7 to the ii chord in measure 8.\n\ne All of the outlines work for the first two measures.\n\nIn the key of F:\n\n| F | Bb7 lr | Cm7 EF |\n| Bb7 | B\u00b07 | F | Ag7 D7 |\n| Gm7 | C7 | FE | Gm7 C7 |\n\nPractice some favorites from this anthology or your own collection in all keys. Try to\nmake every note swing, accent the tops of lines and changes of direction. Do not\npractice sloppy or you will play sloppy.\n\nManipulate and personalize some of your favorites:\n\nChange a note or two\n\nChange some of the rhythms\n\nAdd some turns and ornaments where there weren't any\nTake some ornaments away\n\nTry it in a minor key with the appropriate accidentals, etc.\nPlay in all keys!\n\nMake up your own. Take each outline and invent several examples. Start with an outline\nand one device (neighbor tones, passing tones, arpeggiation tones, etc.) and invent\nAgain, practice in all keys.\n\nTake examples of your own and others and plug into tunes and standards progressions.\nPrepare ahead of time to make them work.\n\nUse your knowledge of these outlines to help you hear harmony. Sing the outlines over\nprogressions. Listen to them to help you hear unfamiliar progressions.\n\nConnecting Chords with Linear Harmony\n\nBEBB BBE BEB EBEBEBBEBBEBESE\n\n\nChapter 9 Get itin Your Playing 81\n\nMost standard tunes never modulate more than one accidental up or down. The keys\nmost frequently modulated to from the key of C (no sharps or flats) are: A minor (no\nsharps or flats), F and D minor (one flat), G and E minor (one sharp). These other keys\ncorrespond to the diatonic triads of the key of C: Dm = ii, Em = iii, F = IV, G = V, Am =\nvi. Practice singing modulations from the key of I to the key of ii, iii, IV, V, vi, and back\nagain to I.\n\nLISTEN! These pages just contain pitches and timing approximations. The accents,\nactual placement, inflections, articulations, timbre: the elements that make these lines\nswing, are learned by listening and imitating the great jazz artists. There is no substitute.\n\nConnecting Chords with Linear Harmony\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 9 extraction"
+}

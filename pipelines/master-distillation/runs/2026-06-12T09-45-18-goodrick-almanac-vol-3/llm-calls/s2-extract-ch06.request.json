@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch06",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 6: 3-Part Chords Derived From a TBN I\nPages 10-10 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART CHORDS DERIVED FROM A 7th CHORD\n\n4-way close Drop 2\nCMaj7 triad triad = CMaj7 CMaj7 CMaj7 triad triad CMaj7 CMaj7\n{C) (E\u2122) (no 3%) (no 5%) (C) (E\")  (no3\") (no 5)\nB B B B E E E E\nRoot\nG G G G we B B B B\nE E E E Position G G G G\nc Cc Cc Cc c c c Cc\n\u00a3 \u00a2 B 5 5 1* inversion \u00e9 \u00e9 6 \u00e9 Cc\nG G G G B B B B\nE E E E E E E E\nE E E E B B B B\nCc \u00a2c c c 24 inversion E E E E\nB B B B Cc Cc Cc c\nG G G G G G G G\nG G G G Cc Cc Cc\nE E E E 3\" inversion G G G G\nc c Cc Cc E E E E\nB B B B B B B B\nDrop 3 Drop 2 &3\nCMaj7 triad triad = CMaj7 CMaj7 CMaj7 triad = triad ~=CMaj7 CMaj7\n(C) (E\u2122) (no3\") (no 5%) (C) (E\")  (no3\") (no 5\")\n& e e G E Root G G G :\n00! B B B B\nB B B B position E E E E E\nc Cc. c Cc c Cc c Cc\nB B B B B B B\nG G G G 7* inversion c Cc c c\nCc c c c G G G G\nE E E E E E E E\nCc c Cc Cc c Cc c c\nB B B B 2 inversion E E E E\nE E E E B B B B\nG G G G G G G\nE E E E E E E E\nc c c 3\" inversion G G G G\nG G G G c Cc Cc Cc\nB B B B B B B\nDrop 2&4 Double Drop 2, Drop3\nCMaj7 triad = triad =CMaj7  CMaj7 CMaj7 triad triad =CMaj7 CMaj7\n(C) (E\u2122) (no 3*) (no 5%) (C) {E\") (no3\") (no 5%\nB B B B E\nE E E E Root G G G G .\nG G G G position B B B B\nc Cc Cc c Cc Cc c Cc\nc Cc Cc c G G G G\nG G G G 1\u201c inversion B B B B\nB B B B c Cc c Cc\nE E E E E E E E\nE E E E B B B B\nB B B B 24 inversion c c c Cc\nCc Cc Cc c E E E E\nG G G G G G G G\nG G G G Cc Cc Cc Cc\nc Cc c c 3+linversion E E E E\nE E E E G G G G\nB B B B B B B B\n\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 6 extraction"
+}

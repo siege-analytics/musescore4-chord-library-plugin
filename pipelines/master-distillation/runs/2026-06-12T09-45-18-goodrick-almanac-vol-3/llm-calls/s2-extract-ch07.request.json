@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch07",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 7: 3-Part Chords Derived From a TBN II\nPages 11-11 of the book.\n\n<<<CHAPTER TEXT\n\n3-PART CHORDS DERIVED FROM A TBNI\n\n4-way close Drop 2\nG triad 7\" \u2014 spread 3-part G triad 7 \u2014 spread 3-part\nCc (G)  (no3\") cluster 4* Cc (G) (no3\") cluster = 4\nB B B B D D D D\nG G G G Root B B B B\nD D 4 D Position G G G G\nCc c Cc c c c c\nCc Cc Cc Cc . . G G G G\nB B B B 1* inversion c Cc al c\ngi $ \u00a7 0 \u00a7 ple F 3\nD D\nD D D D B B B B\nCc Cc Cc c 2\u21224 inversion D D D D\naja be ple \u00a7 & \u00a7\nG G G\nG G G G Cc c c Cc\nD D D D 3 inversion G G G G\nc Cc Cc Cc D D D D\nB B B B B B B B\nDrop 3 Drop 2&3\nG triad 7\" \u2014 spread 3-part G triad = =7 ~~ spread 3-part\nCc (G) (no 3\") cluster 4% or (G)  {(no3\") cluster 4%\nG G G G G G G G\nD D D D Root B B B B\npp Poe 2 rue BP Oe BB\nc Cc\nB B B B B B B\nG G G 1* inversion Cc Cc c Cc\ni i\nc Cc Cc c Cc Cc c Cc\nB B B B 2\" inversion D D D D\nBp go. F 8 plea fF\nD D D D D D D D\n\u00a2 g \u00a2 \u00a7 3\" inversion \u00e9 G 6 c \u00e9\nB B B B B\nDrop 2 & 4 Double Drop 2, Drop3\nP P P\nG triad = 7* ~\u2014s spread = 3-part G triad ==7\" ~~ spread 3-part\nCc (G)  (no3\u2122) cluster 4% Cc (G)  (no3\") cluster 4%\nB B B B D D D D\nD D D D Root G G G G\nee: _ ey Fo foe.\nCc Cc c Cc G G G G\nG G G G 1\u201c inversion B B B B\nBB F 8 Sj > * & \u00a7\nD D dD\nD D D D B B B B\n\u00a2 \u00b0 \u00a2 B c 24 inversion b p c 5 5\nG G\nG G G G c c c Cc\nCc c Cc Cc 3\" inversion D D D D\nD D D D G G G G\nB B B B B B B\nAlmanac of Guitar Voice-Leading Volume III 10\n\nTNS\n\nNN\n\nLON LOS ION LO ION BION NO NEN a\u201c\n\noN mL\n\noN eS\n\n_\n\na aa\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 7 extraction"
+}
