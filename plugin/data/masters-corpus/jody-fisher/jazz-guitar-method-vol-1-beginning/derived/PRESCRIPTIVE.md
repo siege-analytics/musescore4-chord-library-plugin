@@ -1,0 +1,62 @@
+---
+run_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-1
+stage: s5
+source_pdf: Fisher, Jody - Jazz Guitar Method, Vol 1 (Beginning).pdf
+model: claude-sonnet
+extracted_at: 2026-07-07T13:04:44+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons -- jody-fisher x jazz-guitar-method-vol-1-beginning
+
+## maj7
+
+Fisher treats Maj7 as the harmonic anchor of diatonic thinking, building it additively (R-3-5-7) from the major triad and assigning it two parent-scale options because it appears on both I and IV of any major scale. Voicing discipline is strict: the 3rd and 7th must be retained as identity tones; roots, 5ths, and 9ths are freely droppable. Spatially, Fisher warns against defaulting to a single positional box -- improvisation over Maj7 requires combining locked-position and horizontal fretboard thinking.
+
+- [ch.3 p.30] Maj7 is defined as R-3-5-7: the major triad with the 7th degree added. Students are prescribed to derive all Maj7 fingerings from this additive formula rather than memorizing shapes in isolation.
+- [ch.3 p.46] Retaining the 3rd and 7th in any Maj7 voicing is prescribed; removing the 3rd collapses major/minor ambiguity, removing the 7th reduces the chord to a plain major triad. Roots, 5ths, and 9ths may be dropped freely. *(Also stated as proscription: do not drop 3rd or 7th.)*
+- [ch.4 p.56] Within a fully diatonic progression (e.g., CMaj7--Amin7--FMaj7--G7), CMaj7 is approached with the C major scale; no scale-switching is needed when all chords share a single parent key.
+- [ch.5 p.69] Ionian mode (the major scale from its root) is the prescribed improvisation scale over a IMaj7 chord. The derivative and parallel approaches yield identical scale content; the labeling differs by conceptual frame.
+- [ch.5 p.77] Every Maj7 chord yields exactly two parent-scale choices -- the keys in which it functions as I and IV respectively. This two-choice rule distinguishes Maj7 from min7 (three choices), dom7 (one), and min7b5 (one).
+- [ch.6 p.90] *(Proscriptive)* Using locked position exclusively over Maj7 severely limits improvisational ideas. Fisher mandates combining vertical (locked) and horizontal (open-position) thinking over any chord, including static Maj7 vamps.
+
+---
+
+## maj6
+
+Fisher introduces Maj6 (R-3-5-6) as a parallel tonic-quality chord to Maj7, differing only in substituting the 6th scale degree for the 7th. The voicing rule remains the same as for all chord qualities: retain the 3rd as the primary identity tone. Fisher does not discuss Maj6 improvisation scale options separately; the general voicing-tone hierarchy from Chapter 3 governs it.
+
+- [ch.3 p.33] Maj6 formula is R-3-5-6; concrete examples are given in F (F-A-C-D) and C (C-E-G-A). Students build it by substituting the 6th degree for the 7th, treating it as an alternate tonic-quality chord alongside Maj7.
+- [ch.3 p.46] The 3rd must be retained in Maj6 voicings per the universal identity-tone rule. The 6th extension (like the 9th on other chord types) falls in the droppable category; Fisher does not address Maj6 omission explicitly, but the general hierarchy applies.
+
+---
+
+## min7
+
+Min7 receives the most improvisation flexibility in Fisher's system -- three parent-scale choices -- because it appears on three scale degrees (ii, iii, vi) of every major key. The primary prescription maps Dorian to the ii-chord instance. Voicing rules mirror all other chord qualities: 3rd and 7th are non-negotiable; when min7 appears outside the current key, diatonic thinking must be abandoned in favor of a modal switch.
+
+- [ch.3 p.46] Retain the minor 3rd and minor 7th in all min7 voicings; the 3rd marks it as minor rather than major or dominant, the 7th distinguishes it from a plain minor triad. *(Also stated as proscription: do not drop 3rd or 7th.)*
+- [ch.5 p.69] Dorian mode is the prescribed improvisation scale over the ii min7 chord (e.g., D Dorian over Dmin7 in the key of C). In the derivative approach this is simply the parent major scale starting from its second degree.
+- [ch.5 p.77] Every min7 chord has three parent-scale choices, reflecting its presence on ii, iii, and vi of any major scale. The student selects among them by identifying which diatonic degree the chord occupies in context.
+- [ch.5 p.83] *(Proscriptive)* When a min7 chord is non-diatonic to the current key, Fisher proscribes continuing diatonic scale thinking; the student must switch to a modal approach, identifying the parent key in which that min7 is a diatonic member.
+
+---
+
+## dom7
+
+Dom7 is Fisher's most constrained chord for improvisation: exactly one parent-scale choice, because harmonizing any major scale yields only one dom7 (V7). The defining tritone (major 3rd + minor 7th) makes both tones non-droppable. Non-diatonic dom7 chords (secondary dominants) require an immediate modal-thinking switch and must not be treated as belonging to the current key's scale.
+
+- [ch.3 p.46] Retain the major 3rd and minor 7th in all dom7 voicings; together they form the tritone that is the chord's defining acoustic signature and harmonic tension. *(Also stated as proscription: do not drop 3rd or 7th.)*
+- [ch.4 p.56] G7 as the V chord in a diatonic progression (CMaj7--Amin7--FMaj7--G7) is approached exclusively with the C major scale (G Mixolydian); no alternative parent scale is available in this context.
+- [ch.5 p.71] When a chord root that is diatonic appears with an altered chord quality (e.g., E7 instead of Emin7 in the key of C), Fisher notates it as a capital Roman numeral (III7, II7) and prescribes switching to the modal approach to find the implied parent key.
+- [ch.5 p.77] Every dom7 chord has exactly one parent-scale choice. *(Proscriptive)* Unlike min7, no alternate major-scale substitutions are permitted; applying a second parent scale over a dom7 violates the diatonic system.
+- [ch.5 p.83] *(Proscriptive)* A non-diatonic dom7 must not be treated with diatonic scale thinking; switching to modal approach is mandatory. A secondary dominant's altered tones (e.g., G# on E7 in the key of C) are outside the diatonic set and will produce wrong-scale improvisation if the switch is skipped.
+
+---
+
+## min7b5
+
+Min7b5 shares the same one-choice constraint as dom7 -- it appears only once per major scale (on vii) -- and Fisher's improvisation rule is correspondingly strict: identify the single parent key, apply Locrian. The b5, normally a droppable fifth, functions here as the defining alteration of the chord's half-diminished quality and must be treated with care in voicing decisions.
+
+- [ch.3 p.46] Retain the minor 3rd and minor 7th in min7b5 voicings per the universal identity-tone rule; the b5 is an alteration of the normally droppable 5th but defines the half-diminished quality in this chord.
+- [ch.5 p.77] Every min7b5 chord has exactly one parent-scale choice, reflecting its sole appearance on the vii degree of any major scale. *(Proscriptive)* Multiple parent-scale options are not available; the student must identify the single parent key and apply Locrian -- in contrast to the three choices available for min7.
