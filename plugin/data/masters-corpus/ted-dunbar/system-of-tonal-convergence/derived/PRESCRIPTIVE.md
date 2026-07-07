@@ -1,0 +1,96 @@
+---
+run_id: 2026-05-29T06-30-11-dunbar-system-of-tonal-convergence
+stage: s5
+source_pdf: Martino, Pat - A System of Tonal Convergence.pdf
+model: claude-sonnet
+extracted_at: 2026-07-07T11:47:42+00:00
+schema_version: 0.1
+---
+
+# PRESCRIPTIVE.md -- Ted Dunbar: *A System of Tonal Convergence*
+**Review surface for curator.** Confirm or refute each lesson before injection into masters.json.
+Source run: `2026-05-29T06-30-11-dunbar-system-of-tonal-convergence`
+
+---
+
+## `dom7` -- Dominant Seventh (7 lessons)
+
+The dominant seventh is Dunbar's load-bearing chord type: its tritone is the "mysterious" central interval of the II-V cadence, and the entire 24-scale engine is designed primarily to converge on it and through it. Over a single V7, the practitioner rotates multiple scale colors (major, minor, augmented, dominant, diminished) in varying orders, extracting all modal-member chords along the way. Two pre-execution steps -- ear priming and sound projection -- are mandatory before any scale is deployed; a universal voice-leading rule (final note +/- half or whole step from root, 3rd, or 5th of target) validates whether a scale qualifies.
+
+- **`convergence-pivot-dominant`** -- V7 is "the largest and most flexible of all chord types" due to its tritone. Prescribes rotating multiple scale-color types over a single V7 "in several rotas varying their order," inspired by Coltrane and Lateef. *(Ch. 1, p. 4)*
+- **`convergence-pivot-dominant-variant-expansion`** -- Plain V7 is expanded into 7b9, 7#5, 7#9, 7b5 as direct applications of tritone flexibility. Each variant is a legitimate convergence chord at the V position of any II-V. *(Ch. 1, p. 4)*
+- **`chord-on-chord-approach-via-tritone-sub`** -- Any main chord may be preceded by a dominant seventh a tritone away. The Circle of Gravities (Ch. 8) maps these relationships and is the prescribed navigational tool for chord-on-chord motion. *(Ch. 8, p. 66)*
+- **`ear-primed-scale-application`** -- Before playing any convergence scale, "brainwash your ear with the tonality ... with several cadences into the key." Paired with sound projection, these constitute the mandatory pre-execution ritual. *(Ch. 2, pp. 18, 20)*
+- **`scale-extraction-for-chord-resolution`** -- Extract all possible chords from every convergence scale for resolution over V7. Rule: "Each chord represents a member chord sound of one of the modes of the scale it comes from." *(Ch. 2, pp. 17, 20)*
+- **`universal-last-note-voice-leading`** -- Validation criterion for admissible scales: "The last note of all the scales in this system are only a whole or half step away from the 1st, 3rd, or 5th or root of the desired tonal destination." *(Ch. 2, p. 22)*
+- **`tritone-pivot-scale-11-approach`** -- Scale #11 (Dunbar's personal descending E-Bb tritone scale) is a characteristic convergence vehicle for V7. Usable "from any note within it"; its tritone matches V7's tritone. All 24 scales "may be connected together in different orders for convergence." *(Ch. 3, pp. 28, 30)*
+
+---
+
+## `dom7b9` -- Dominant 7b9 (1 lesson)
+
+Dunbar names 7b9 as a first-tier alteration variant hosted by the dominant's tritone, co-equal with 7#5 and 7#9. It is prescribed as a natural expansion of plain V7 in II-V cadences and turnbacks.
+
+- **`tritone-convergence-dominant`** -- Listed by name in the dominant family: "The 7th chord having the all important tritone host the largest and most flexible of all the chord types. (7th bs, 7b9, 7th #5, 7th #9)." Prescribed for II-V cadences and turnbacks where chromatic color beyond plain V7 is wanted. *(Ch. 1, p. 4; Ch. 8, p. 69)*
+
+---
+
+## `dom7alt` -- Dominant Altered, 7#5 / 7#9 (1 lesson)
+
+Altered dominants are outgrowths of the same tritone logic that generates 7b9: the tritone inside V7 is resolved via chromatic tones, and raising the 5th or 9th are two sanctioned paths.
+
+- **`tritone-convergence-dominant-altered`** -- 7#5 and 7#9 named alongside 7b9 as dominant variants eligible for convergence. "It is just a matter of using chromatic tones to resolve the tritone." Both are standard V-position convergence chords. *(Ch. 1, p. 4; Ch. 8, p. 69)*
+
+---
+
+## `min7b5` -- Half-Diminished (1 lesson)
+
+The system was conceived at the II-V cadence; the min7b5 quality as ii of minor is a primary target. Scale #15 ("half-diminished / half-whole-tone") is the specifically prescribed convergence scale.
+
+- **`ii-chord-of-minor-ii-v-i`** -- Scale #15 prescribed for min7b5 contexts: "The scale has one half of its length yielding diminish color." Its E-natural leading tone resolves directly to F (the target), making it the designated approach for the minor-ii function. *(Ch. 3, p. 32)*
+
+---
+
+## `dim7` -- Diminished Seventh (1 lesson)
+
+Two distinct diminished scale types are prescribed, differentiated by interval-symmetry direction. Both satisfy the universal last-note rule; practitioner chooses based on approach direction and color.
+
+- **`convergence-scale-color-diminished`** -- Scale #4 (H-W symmetry) vs. Scale #5 (W-H symmetry): "This scale ... permits ascending diminish color to a point of convergence." Both bombard the target with diminished color; direction/color preference governs the choice. *(Ch. 2, pp. 21-22)*
+
+---
+
+## `min7` -- Minor Seventh (2 lessons)
+
+Dunbar addresses min7 in two distinct prescriptive contexts: as a ii chord (Dorian and G Jazz Melodic Minor are interchangeable convergence scales) and as a minor tonic where a major-3rd scale conflict triggers a redirection to the fifth.
+
+- **`dorian-ii-convergence-scale`** -- Dorian mode prescribed directly as a convergence scale over ii (min7): "simply a dorian mode of the F major." G Jazz Melodic Minor is interchangeable because it shares the same pitches; both resolve via the final tetrachord. *(Ch. 4, p. 50)*
+- **`minor-tonic-embellishment-via-scale-on-fifth`** -- When a convergence scale contains a major 3rd conflicting with a minor-tonic target, redirect it to embellish the fifth: "Scale #3 has a major 3rd already in it so it has to [be] used ... to embellish the 5th of the F minor." Preserves minor identity while retaining convergence function. *(Ch. 8, p. 70)*
+
+---
+
+## `maj7` -- Major Seventh (1 lesson)
+
+Scale #16 is the prescribed major-color convergence vehicle. Its Lydian-inflected construction starts on the dominant's leading tone, embedding the dominant's voice-leading motion directly into the scale.
+
+- **`lydian-approach-scale-target`** -- Scale #16 (major scale with raised 4th) "begins on the 7th of the V chord of F major," with the raised 4th equaling the major 3rd of V. Satisfies the universal last-note rule while contributing Lydian color. *(Ch. 3, p. 33)*
+
+---
+
+## Curator checklist
+
+| # | chord_quality | function_role | Status |
+|---|---|---|---|
+| 1 | dom7 | convergence-pivot-dominant | |
+| 2 | dom7 | convergence-pivot-dominant-variant-expansion | |
+| 3 | dom7 | chord-on-chord-approach-via-tritone-sub | |
+| 4 | dom7 | ear-primed-scale-application | |
+| 5 | dom7 | scale-extraction-for-chord-resolution | |
+| 6 | dom7 | universal-last-note-voice-leading | |
+| 7 | dom7 | tritone-pivot-scale-11-approach | |
+| 8 | dom7b9 | tritone-convergence-dominant | |
+| 9 | dom7alt | tritone-convergence-dominant-altered | |
+| 10 | min7b5 | ii-chord-of-minor-ii-v-i | |
+| 11 | dim7 | convergence-scale-color-diminished | |
+| 12 | min7 | dorian-ii-convergence-scale | |
+| 13 | min7 | minor-tonic-embellishment-via-scale-on-fifth | |
+| 14 | maj7 | lydian-approach-scale-target | |
