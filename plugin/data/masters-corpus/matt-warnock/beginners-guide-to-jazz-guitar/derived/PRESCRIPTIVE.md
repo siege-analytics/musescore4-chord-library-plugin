@@ -1,0 +1,46 @@
+---
+run_id: 2026-05-28T15-05-20-warnock-beginners-guide
+stage: s5
+source_pdf: Warnock, Matt - Beginner's Guide to Jazz Guitar.pdf
+model: claude-sonnet
+extracted_at: 2026-07-07T21:26:54+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons -- matt-warnock x beginners-guide-to-jazz-guitar
+
+## maj7
+
+Warnock treats maj7 exclusively as the I-chord resolution target in a ii V I, and his central prescription is that the bare Cmaj7 voicing is insufficient for real performance: the 9th is the default color addition a performer should supply when reading a lead-sheet Cmaj7 symbol. Rhythmic support for the I chord follows the same sequenced rollout as the rest of the progression -- Freddie Green quarter-note comping first, approach chords second, melody-first picking third -- with mandatory resolution into the maj7 target whenever approach chords are employed.
+
+- [ch.4 p.11] **Lead-sheet color expansion**: Warnock prescribes reading Cmaj7 on the chart but voicing Cmaj9 in performance. The written symbol is the floor, not the ceiling; adding the 9th "imitates a real-life musical situation."
+- [ch.4 p.11] **Bare voicing proscription** *(proscriptive)*: Playing the unadorned Cmaj7 when the chart shows Cmaj7 fails real-world expectation. The convention is implicit but firm: minimum symbol != minimum voicing.
+- [ch.2 p.5] **Freddie Green placement**: Cmaj7/Cmaj9 as the I-chord landing point is first stabilized with all-four-beat quarter-note comping, accents on 2 and 4, before any syncopation or approach-chord color is introduced.
+- [ch.4 p.12] **Approach-chord chromatic displacement**: The Cmaj7/Cmaj9 shape is played one fret above or below, then resolved into the target. Resolution is mandatory -- the approach is structurally incomplete without it.
+- [ch.3 p.10] **Melody-first picking**: For chord-melody and chord-soloing contexts on the I chord, Warnock prescribes leading with the top voice after the bass-first pattern has been internalized.
+
+## maj9
+
+Warnock establishes Cmaj9 as the functional default voicing for the I chord throughout the book -- not an extension to be added later, but the richer of two presented colors from the first chapter. Its shape is treated as a single, indivisible unit for approach-chord purposes: the voicing moves chromatically as-is, with no rearrangement.
+
+- [ch.2 p.4 / ch.4 p.11] **Default color voicing over maj7 symbol**: Cmaj9 is introduced alongside Cmaj7 as "two colors of the Cmaj7 sound," with the 9th color representing idiomatic jazz comping practice. The 9th is the prescribed performer addition when the chart reads Cmaj7.
+- [ch.4 p.11-12] **Shape preservation under approach chords**: When applying chromatic approach to Cmaj9, the entire voicing moves as a unit one fret above or below. The shape is not revoiced for the chromatic displacement; "the same shape" is the explicit prescription.
+
+## min7
+
+Warnock uses Dm7 as the ii-chord entry point for every technique in the book, and the pedagogical sequence for min7 is the clearest expression of his isolate -> internalize -> integrate arc. All comping techniques -- Freddie Green, Charleston, approach chords, bass-first picking -- are first mastered on Dm7 in isolation before being applied over the backing track or combined with other patterns.
+
+- [ch.2 p.4] **Voicing introduction**: Dm7 is the first chord in the four-shape ii V I block. Prescribed sequence is memorization solo, then metronome, then backing track -- no shortcuts through stages.
+- [ch.2 p.5] **Freddie Green rhythmic placement**: Quarter-note comping with 2-and-4 accents is the mandatory first rhythmic approach for Dm7. The hi-hat imitation framing gives students a physical swing-feel rationale, not just a rule.
+- [ch.2 p.6] **Charleston rhythmic placement**: After Freddie Green is internalized, the Charleston (beat 1 and & of 2) is added to Dm7, then both patterns are mixed freely. The sequencing is prescribed -- Freddie Green before Charleston, not concurrent introduction.
+- [ch.4 p.11-12] **Approach-chord chromatic displacement**: The Dm7 shape moves one fret above (approach from above, practiced first) or below (approach from below), then resolves into target. Above before below is the prescribed direction order; both are then mixed.
+- [ch.3 p.9] **Bass-first picking pattern**: When no bassist is present or in solo guitar contexts, Warnock prescribes separating the bass note from the upper voices in the picking hand on Dm7. Bass-first is learned before melody-first.
+
+## dom7
+
+Warnock's treatment of G7 as the V chord is deliberately streamlined: no chord-specific dominant scale is introduced, and all comping techniques applied to dom7 are drawn from the same system used for the other two chords. The tension-release function of the dominant is acknowledged explicitly in the approach-chord context, where the chromatic displacement before resolution is framed as producing "tension and release."
+
+- [ch.2 p.4] **Voicing introduction**: G7 enters as part of the four-chord ii V I block using the same solo -> metronome -> backing track -> rhythmic variation sequence prescribed for all chords.
+- [ch.2 p.5] **Freddie Green rhythmic placement**: Freddie Green quarter-note comping with 2-and-4 accents is the first rhythmic prescription for G7, identical in application to its use on Dm7 and Cmaj7.
+- [ch.4 p.11] **Approach-chord chromatic displacement**: The G7 voicing shape moves one fret above or below and resolves into the target chord. Warnock notes the dominant context makes this tension-release framing especially apt: approach chords "bring a tension and release sound to your comping."
+- [ch.5 p.14] **Scale choice for soloing**: No separate dominant scale (Mixolydian, altered, etc.) is prescribed. Warnock instructs students to use the C major scale over G7 because all three ii V I chords belong to the parent key. The prescription is explicit: one scale covers the entire progression.
