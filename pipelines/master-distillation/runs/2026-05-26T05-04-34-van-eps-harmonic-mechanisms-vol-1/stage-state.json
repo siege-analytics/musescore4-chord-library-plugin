@@ -70,6 +70,17 @@
         "derived 3 system(s); see systems-draft.json"
       ],
       "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-07-07T06:51:33+00:00",
+      "ended_at": "2026-07-07T06:51:33+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/van-eps/harmonic-mechanisms-vol-1/derived/PRESCRIPTIVE.md",
+        "extracted 44 prescriptive lesson(s) across 9 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
     }
   }
 }
