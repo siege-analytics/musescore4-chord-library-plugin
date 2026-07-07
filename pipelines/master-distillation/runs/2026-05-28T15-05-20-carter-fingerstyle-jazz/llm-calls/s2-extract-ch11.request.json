@@ -1,0 +1,48 @@
+{
+  "stage": "s2",
+  "scope": "extract-ch11",
+  "model": "claude-sonnet",
+  "system_prompt": "You are extracting load-bearing passages from one chapter of a guitar method book.\n\nThe user will give you the verbatim text of one chapter. Extract every passage\nthat does any of the following:\n\n- teaches a technique (how to play, fingering, hand position, picking pattern)\n- defines a concept (a chord type, a scale, a position system, a terminology)\n- gives a rule (when to do X, what to avoid, what to prefer)\n- shows a load-bearing example (an exercise that illustrates a method's\n  characteristic move)\n\nOutput a JSON object with this shape:\n\n  { \"quotes\": [\n      { \"topic\": \"<short topic label>\",\n        \"verbatim_quote\": \"<exact substring of the input>\",\n        \"why_load_bearing\": \"<one sentence on why this passage matters>\",\n        \"page\": <int, optional>\n      },\n      ...\n  ] }\n\nCRITICAL RULES:\n1. `verbatim_quote` MUST be an EXACT substring of the input text. Do not\n   paraphrase. Do not add words. Do not fix typos. Copy character-for-character.\n2. If you can't find a substantial passage in the input that fits a topic,\n   skip the topic \u2014 don't fabricate.\n3. Skip prose that is purely biographical, motivational, or transitional.\n   Keep prose that teaches.\n4. Aim for 3-15 quotes per chapter. A chapter with only one load-bearing\n   passage gets one quote; a dense chapter gets many.\n5. `topic` is a short label (2-6 words). Use the book's own terminology\n   when possible.\n6. `why_load_bearing` is one sentence in YOUR voice explaining the\n   significance \u2014 not a paraphrase of the quote.",
+  "user_prompt": "Chapter 11: Creating Fingerstyle Jazz Guitar Solos, Part 7: Harmonizing with sixths\nPages 108-114 of the book.\n\n<<<CHAPTER TEXT\n\nSECTION TWO/PART 8: HARMONIZING WITH SIXTHS\n\nE7\n\nB7(#5)\n\nI\n\nF#7\n\nir 2\n\nTT\n\nGt7\nVV]\n\nitr\n=\n\ni171\n\nHa\n\nnC}\n\nA#\u00b07\n\nA7\n\n3\n6\n\n\u201cia,\n\n; I\n\n4h\n\na\n\nE7\n\nB7\n\nFim7\nBIT\n\narf\n\naif\n\n107\n\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\n\nTABLE OF SIXTHS\nBy convention, scales harmonized in sixths have the key note of each scale on top, with the\n\nharmony note a sixth below. If the key note were in the bottom position the ear would perceive the\nscale as being in a minor key rather than a major key.\n\nC major\n\n| +\n\u00a9|o\n\n| o\ndb | no\n| >\n\nod\n\nalo\n& | >\ndd |\n+1o\n\now\n\nJ o>\ned\n\nG major\n\n&) Oo\nDo\nolo\n\nd/o\npi ND\n\nS/o\no1o\n\nb| db\nNo | a\n\nOD+\n\nplo\n\nQo) mH\noO) Nn\n\nF 023-26\nt A a hed 2. mn\no\u2014\u20142 24\na 7 ay a a\no\u2014\u2014_2 4 @\u2014__p 4 2 9 42-6\n- ry 2. 4 4 2 8\no\u2014\u2014\u20142\nB \u2014 a 3-2\n2\u20143 3\u2014\u20142\n\n108\n\n\nSECTION TWO/PART 8: HARMONIZING WITH SIXTHS\n\nE major\n\nIt's time again to get to work completing the fingering for these flat key scales in sixths.\n\nF major\n\nr\n\nPO\n\nees\n\n109\n\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\nBb major\nEb major\nAb major\nDb major\n110\n\nSECTION TWO/PART 8: HARMONIZING WITH SIXTHS\n\nGb major\nA f | | | _ J Jj J | 4 + +~\u2014\nSee a i \u2014\u2014\u2014\u2014\u2014\u2014 \u2014_ = |\nrrorrt?tt * ) fo ry -\n+ See\nA 4 u i rf 3 4 : ia \u2018 4 3 + ia : 4\nB \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 4-2 +\nCrackers and Muscles (completed) ; 4 medium\nD\nPry ep ad pape\n> 3 4 P 1\nEa = 3 5 a 3 e\u2014e a\u20143 o\u2014\u2014-8\nFA 2 , \u2014 \u2014_ \u2014 @ = @\u2014o o\u20144 : o--\u2014-8\n8 5 5 mn @\nD A7 D A7 D A7 D\nparte) tg og) _j J _ pj\n0 > S q = >\n2 \u20187 r 4 r 5 r 2. 2. f 0 t r\n\u2014 oe \u2014\u2014 \u2014\nA 3 * 3 = ad 4\u2014\u2014\u2014 4 6\nBa @ - 8 \u2014 = =\n\nAs you did with thirds, take a familiar tune and harmonize it with diatonic sixths. Be careful to\nuse the appropriate major or minor sixth and to make adjustments. where necessary.\nCongratulations!\n\nYou have persisted this far in Section Two. I\u2019m impressed. Pat yourself on the back if no one\nelse is around to do it. If | were there I\u2019d do it.\n\nMore is less\n\nWhen | thought about the tune | would write for this last part of Section Two, it occurred to me\nthat | might stuff the tune full of everything you\u2019ve learned in these eight sections on arranging for\nsolo jazz guitar. | thought again. After haranguing you over and over to be tasteful and not throw\neverything plus the kitchen sink into an arrangement, how could | allow myself to do that?\n\nSo here is a tune that isn\u2019t cluttered with every arranging device, but is still totally whole,\nmissing nothing\u2014one that sounds impressive but is simple to play. Yeah, | like those kind too.\nThere is nothing new here. The bass is slow-moving; the melodic line is mostly eighth notes. Keep\nthe feeling of swing going, but don\u2019t over-exaggerate, as the tune should be played at least at a\nmedium tempo or faster. The tune has pairs of measures that use call-and-answer, as several of\nthe blues did earlier on. These sequences are what give a tune shape, and | use this compositional\nstyle a iot.\n\nEnjoy!\n\n111\n\n\nTHE COMPLETE FINGERSTYLE JAZZ GUITAR BOOK\nTraining in A\nC\nC7+\nDm7\nG7(#5)\nC\nC\nG7\nC\nD7(b5)\nDm7\nG7\nC\nC7\n112\n\nSECTION TWO/PART 8: HARMONIZING WITH SIXTHS\n\nDm7\n\nD7(b5)\n\n\u2014\n\nTe\n\n4 a)\n\nD7\n\n4\ny\nr\n\nD7\n\na\n\n\"\ney\n\nrd\n\ntit.\n\nC7(#9)\n\nG7\n\nral\n\nDm7\nra\n\n43)\n\n4\n\n113\n\n\nCHAPTER TEXT>>>",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+      "quotes"
+    ],
+    "properties": {
+      "quotes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "topic",
+            "verbatim_quote",
+            "why_load_bearing"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verbatim_quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "why_load_bearing": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "notes": "chapter 11 extraction"
+}

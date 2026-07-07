@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-carter-fingerstyle-jazz
+stage: s3
+source_pdf: Carter, Bill - Mel Bay's Complete Fingerstyle Jazz Guitar.pdf
+source_pages: 9-19
+model: claude-haiku
+extracted_at: 2026-07-07T01:08:08+00:00
+schema_version: 0.1
+---
+
+# Chapter 1 — Beginning Fingerstyle Jazz Guitar, Part 1: Guitars, hand positions, fingerstyle strokes
+
+_Distillation; backed by `chapters/ch01.md`._
+
+Beginning Fingerstyle Jazz Guitar establishes the foundational equipment and technique requirements for the discipline, starting with the guitar-selection criterion that both hands must have sufficient string spacing to finger and pluck without muffling adjacent strings, and the posture rule that the guitar should be held by the right elbow, left leg, and chest so the left hand remains free for fretting. The chapter introduces the notational vocabulary—right-hand fingers named p, i, m, a, c and left-hand fingers labeled 1, 2, 3, 4—and specifies the interlocking right-hand rules: thumb angled outward in an inverted hitchhike position, first three fingers tilted toward the bridge, and hand arch at least level with the strings. Two complementary picking schemes form the mechanical core: the alternating i-m technique for fluent single-string passages and the one-finger-per-string assignment for arpeggiated cross-string patterns, governed by a practical decision rule to choose based on whether notes stay on one string or move across several. Critical stroke procedures—rest stroke for melody emphasis, free stroke for the thumb, and the strike-while-in-motion rule to maintain legato flow—are paired with enabling left-hand techniques (wrist arch and tip-toe fingering to avoid muting) and maintenance standards (nail uniformity and left-thumb placement under the neck rather than wrapped around it).

@@ -1,0 +1,627 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-carter-fingerstyle-jazz",
+    "stage": "s4",
+    "source_pdf": "Carter, Bill - Mel Bay's Complete Fingerstyle Jazz Guitar.pdf",
+    "extracted_at": "2026-07-07T01:37:32+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "bill-carter",
+  "work_id": "complete-fingerstyle-jazz-guitar",
+  "systems": [
+    {
+      "id": "bill-carter:complete-fingerstyle-jazz-guitar:solo-arrangement",
+      "name": "Solo Fingerstyle Arrangement System",
+      "summary": "Carter's central system for reducing a full-band jazz standard to a solo fingerstyle guitar arrangement. The system operates over four voice/texture categories (melody, harmonization interval, bass, accompaniment texture) and governs how a player moves between them and alters each layer. The workflow proceeds from tune selection through melodic placement, harmonization with thirds/sixths/tenths, bass anchoring, and density calibration. The ear is the final arbiter throughout.",
+      "members": [
+        {
+          "id": "melody-voice",
+          "name": "Melody Voice",
+          "summary": "The top voice; a single-note melody from a lead sheet, stems up, typically in a guitar-friendly key above the fourth string D threshold."
+        },
+        {
+          "id": "thirds-harmonization",
+          "name": "Thirds Harmonization",
+          "summary": "A harmony note a diatonic third below the melody, adjusted major or minor against the chord symbol."
+        },
+        {
+          "id": "sixths-harmonization",
+          "name": "Sixths Harmonization",
+          "summary": "A harmony note a diatonic sixth below the melody. Key note must sit on top; sixth below."
+        },
+        {
+          "id": "tenths-harmonization",
+          "name": "Tenths Harmonization",
+          "summary": "An octave-plus-third below the melody. Functions as an independent bass voice with its own rhythm."
+        },
+        {
+          "id": "root-bass",
+          "name": "Root / Root-Fifth Bass",
+          "summary": "A foundational bass layer using the chord root alone or alternating root and perfect fifth."
+        },
+        {
+          "id": "walking-bass",
+          "name": "Walking Bass",
+          "summary": "A quarter-note bass line using scale-step passing tones and chromatic approach notes between chord roots."
+        },
+        {
+          "id": "arpeggio-accompaniment",
+          "name": "Arpeggio / Broken-Chord Accompaniment",
+          "summary": "Arpeggio patterns assigning p to lower strings and i-m-a to upper strings with free stroke."
+        },
+        {
+          "id": "comping-texture",
+          "name": "Comping Texture",
+          "summary": "Sparse, responsive chordal punctuation calibrated to the melody's activity level."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tr-melody-range-gate",
+          "name": "Melody Range Gate before harmonizing",
+          "summary": "Before selecting a harmonization member, verify the melody sits above the fourth-string D threshold; if not, raise it an octave.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Melody range rule",
+              "quote_excerpt": "tunes with a preponderance of notes lower than D, fourth string, are too low for two-part arranging",
+              "page": 62
+            }
+          ]
+        },
+        {
+          "id": "tr-density-inversion",
+          "name": "Density Inversion: busy melody implies sparse bass",
+          "summary": "When transitioning between melody and bass texture, invert rhythmic density.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Bass rhythm rule of thumb",
+              "quote_excerpt": "If the rhythm of the melody is busy and many-noted, you can complement it by playing longer notes in the bass",
+              "page": 74
+            }
+          ]
+        },
+        {
+          "id": "tr-walking-during-rests",
+          "name": "Walking bass during melodic rests; comping during sustained melody",
+          "summary": "Switch to walking bass when the melody is inactive; shift to comping texture when melody notes are sustained.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Walking bass vs. riff bass",
+              "quote_excerpt": "Sometimes a walking bass style is used and sometimes a measure has a riff while the melody is not active",
+              "page": 85
+            }
+          ]
+        },
+        {
+          "id": "tr-arpeggio-below-melody",
+          "name": "Arpeggio must not exceed melody ceiling",
+          "summary": "When using arpeggio accompaniment, never allow the arpeggio sweep to reach higher than the melody voice.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Arpeggio range vs. melody rule",
+              "quote_excerpt": "watch that your choice of arpeggiation does not reach higher than the melody",
+              "page": 88
+            }
+          ]
+        },
+        {
+          "id": "tr-tenths-independent-rhythm",
+          "name": "Tenths move on independent rhythm, not parallel to melody",
+          "summary": "When traversing from melody to tenths, give the tenth its own rhythmic value.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Parallel tenths limitation",
+              "quote_excerpt": "You probably would not use parallel tenths throughout the arrangement",
+              "page": 98
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "mr-thirds-major-minor-adjust",
+          "name": "Thirds major/minor adjustment against chord symbol",
+          "summary": "When applying a third below the melody, consult the chord symbol and the TABLE OF THIRDS.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Thirds exercise procedure",
+              "quote_excerpt": "Try putting thirds below each melody note. Follow the chord symbols to check for the correct third",
+              "page": 93
+            }
+          ]
+        },
+        {
+          "id": "mr-sixths-key-note-on-top",
+          "name": "Sixths: key note must be on top",
+          "summary": "When applying sixth harmonization, the key note must remain on top with the harmony a sixth below.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Sixths key-note convention",
+              "quote_excerpt": "By convention, scales harmonized in sixths have the key note of each scale on top",
+              "page": 108
+            }
+          ]
+        },
+        {
+          "id": "mr-sixths-major-minor-adjust",
+          "name": "Sixths major/minor adjustment same as thirds",
+          "summary": "Apply the same major/minor adjustment discipline to sixths as to thirds.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Diatonic sixth harmonization",
+              "quote_excerpt": "take a familiar tune and harmonize it with diatonic sixths",
+              "page": 111
+            }
+          ]
+        },
+        {
+          "id": "mr-thirds-add-bass-anchor",
+          "name": "Thirds harmonization requires bass anchor for three-voice texture",
+          "summary": "A section harmonized only in thirds needs a root or root/fifth bass added.",
+          "engine_payload": {
+            "kind": "DensityFloor"
+          },
+          "references": [
+            {
+              "chapter_n": 9,
+              "topic": "Bringing back the bass",
+              "quote_excerpt": "A melody harmonized only in thirds can progress by itself for a section of a tune, but probably not for the entire song",
+              "page": 93
+            }
+          ]
+        },
+        {
+          "id": "mr-mandatory-third-when-melody-ambiguous",
+          "name": "Add major/minor third in bass when melody is harmonically ambiguous",
+          "summary": "When the melody note belongs equally to major and minor, the accompaniment must supply the third.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Mandatory thirds in bass",
+              "quote_excerpt": "The accompaniment needs the major or minor third to clarify the specific harmony",
+              "page": 83
+            }
+          ]
+        },
+        {
+          "id": "mr-economy-of-devices",
+          "name": "Compositional restraint: deploy arranging devices sparingly",
+          "summary": "A complete arrangement should use arranging devices economically.",
+          "engine_payload": {
+            "kind": "DensityCeiling"
+          },
+          "references": [
+            {
+              "chapter_n": 11,
+              "topic": "Compositional restraint",
+              "quote_excerpt": "here is a tune that is not cluttered with every arranging device, but is still totally whole",
+              "page": 111
+            }
+          ]
+        },
+        {
+          "id": "mr-altered-fifth-root-bass",
+          "name": "Altered fifth: raise or lower fifth per chord symbol",
+          "summary": "When the chord symbol carries #5 or b5, raise or lower the fifth by a half step.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Altered fifths",
+              "quote_excerpt": "If the chord is C7#5, raise the fifth a half step",
+              "page": 77
+            }
+          ]
+        },
+        {
+          "id": "mr-abandon-arpeggio-for-leaping-melody",
+          "name": "Abandon arpeggio when melody leaps wildly",
+          "summary": "If the melody continually leaps in large intervals, arpeggio accompaniment is not appropriate.",
+          "engine_payload": {
+            "kind": "_pending:texture-abandon-on-melodic-leap"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "When to abandon arpeggiation",
+              "quote_excerpt": "If you notice that the melody continually leaps up and down wildly, abandon arpeggiation",
+              "page": 90
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bill-carter:complete-fingerstyle-jazz-guitar:cycle-voice-leading",
+      "name": "Cycle-of-Fifths Voice Leading System",
+      "summary": "Carter's professional-level system for generating smooth harmonic progressions through the cycle of fifths, treating harmony as several independent moving voices rather than static chord shapes.",
+      "members": [
+        {
+          "id": "major-seventh-chord",
+          "name": "Major Seventh Chord (I, IV)",
+          "summary": "Two occur per major key. Voiced as open-position fragments."
+        },
+        {
+          "id": "dominant-seventh-chord",
+          "name": "Dominant Seventh Chord (V7)",
+          "summary": "One per major key. Contains the tritone that pulls by half steps to the I chord."
+        },
+        {
+          "id": "minor-seventh-chord",
+          "name": "Minor Seventh Chord (II, III, VI)",
+          "summary": "Three per major key. In II-V-I: voiced as root + seventh."
+        },
+        {
+          "id": "half-diminished-chord",
+          "name": "Half-Diminished Seventh Chord (VII)",
+          "summary": "One per major key; functions as a passing or substitution chord."
+        },
+        {
+          "id": "diminished-seventh-chord",
+          "name": "Diminished Seventh Chord",
+          "summary": "The hamburger helper passing chord connecting adjacent diatonic chords."
+        },
+        {
+          "id": "fourths-tritones-voicing",
+          "name": "Fourths / Tritones Rootless Voicing",
+          "summary": "Voicing pairs alternating fourths and tritones, omitting root and fifth."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tr-cycle-direction",
+          "name": "Move down a fifth or up a fourth through the cycle",
+          "summary": "On guitar, substitute up a fourth for down a fifth to stay in position.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Cycle direction and movement",
+              "quote_excerpt": "When you run out of room, move up a fourth instead of down a fifth",
+              "page": 155
+            }
+          ]
+        },
+        {
+          "id": "tr-tritone-pull-resolution",
+          "name": "V7 tritone resolves by half step to I",
+          "summary": "The tritone interval of V7 resolves inward by half step to root and third of I.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "V7-I tritone pull",
+              "quote_excerpt": "the unresolved Bb and E being pulled by the A and F in the resolved F chord",
+              "page": 156
+            }
+          ]
+        },
+        {
+          "id": "tr-voices-not-globs",
+          "name": "Conceive harmony as moving voices, not chord shapes",
+          "summary": "Track the linear motion of individual voices rather than placing static chord shapes.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Voices not chord globs",
+              "quote_excerpt": "If you think of harmonic movement as several moving voices rather than a glob of dots",
+              "page": 157
+            }
+          ]
+        },
+        {
+          "id": "tr-diminished-as-connector",
+          "name": "Diminished seventh as chromatic connector",
+          "summary": "Insert a diminished seventh chord as a chromatic passing chord between diatonic chords.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Diminished as passing chord",
+              "quote_excerpt": "In many cases the diminished seventh chord is the in-between, the hamburger helper",
+              "page": 121
+            }
+          ]
+        },
+        {
+          "id": "tr-ii-v-i-unit",
+          "name": "II-V-I as the foundational traversal unit",
+          "summary": "Move through chords primarily as II-V-I units.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "II-V-I movement pattern",
+              "quote_excerpt": "The most common harmonic movement in jazz is II-V-l",
+              "page": 129
+            }
+          ]
+        },
+        {
+          "id": "tr-two-beat-harmonic-rhythm",
+          "name": "Two-beat harmonic rhythm default for cycle practice",
+          "summary": "Change harmony every two beats; begin each group with the root.",
+          "engine_payload": {
+            "kind": "_pending:harmonic-rhythm-default"
+          },
+          "references": [
+            {
+              "chapter_n": 16,
+              "topic": "Cycle direction and movement",
+              "quote_excerpt": "the harmony changes every two beats",
+              "page": 155
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "mr-open-position-voicing",
+          "name": "Redistribute chord tones across octaves for playability",
+          "summary": "Convert close-position to open-position by moving the third up an octave.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Open position voicings",
+              "quote_excerpt": "the third of the chord has been moved an octave higher",
+              "page": 117
+            }
+          ]
+        },
+        {
+          "id": "mr-fourths-tritones-omit-root",
+          "name": "Fourths/tritones voicing omits root and fifth",
+          "summary": "Omit root and fifth; delegate root coverage to the bassist.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 13,
+              "topic": "Fourths and tritones voicing",
+              "quote_excerpt": "There is no explicitly stated root or fifth of the chord",
+              "page": 130
+            }
+          ]
+        },
+        {
+          "id": "mr-tritone-sub",
+          "name": "Tritone substitution: replace V7 with chord a tritone away",
+          "summary": "A V7 may be replaced by a dominant seventh a tritone away.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Bass thirds in bebop blues",
+              "quote_excerpt": "chord substitution material focuses on tritone substitutions",
+              "page": 85
+            }
+          ]
+        },
+        {
+          "id": "mr-bidirectional-practice",
+          "name": "Bidirectional practice: general to specific and vice versa",
+          "summary": "Extract cycle passages for specific tunes; generalize tune passages through the cycle.",
+          "engine_payload": {
+            "kind": "_pending:bidirectional-practice-method"
+          },
+          "references": [
+            {
+              "chapter_n": 12,
+              "topic": "Specific-general practice method",
+              "quote_excerpt": "create specific examples from general exercises and to make general exercises from specific examples",
+              "page": 115
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bill-carter:complete-fingerstyle-jazz-guitar:structural-devices",
+      "name": "Jazz Performance Structure System",
+      "summary": "Carter's system governing the structural units of a jazz performance: intros, endings, turnarounds, tags, and modulations. All grounded in the I-V7 relationship and the cycle of fifths.",
+      "members": [
+        {
+          "id": "intro",
+          "name": "Introduction",
+          "summary": "A two- or four-bar framework; must end on V7 to resolve into the tune."
+        },
+        {
+          "id": "ending",
+          "name": "Ending",
+          "summary": "A closing structure using V7-I or IV-I; produced from any intro by omitting the final V7."
+        },
+        {
+          "id": "vamp",
+          "name": "Vamp",
+          "summary": "A repeating intro used with singers; repeated until the singer cues."
+        },
+        {
+          "id": "turnaround",
+          "name": "Turnaround",
+          "summary": "Final two measures of each chorus; functions as a two-measure intro."
+        },
+        {
+          "id": "tag",
+          "name": "Tag / Coda",
+          "summary": "Extension of the final chorus; replace final I with V7."
+        },
+        {
+          "id": "modulation",
+          "name": "Modulation",
+          "summary": "Key change via V7 borrow, back-cycling, or II-V7-I from target key."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tr-intro-must-end-on-V7",
+          "name": "Intro must end on V7",
+          "summary": "Every intro must conclude on V7 to resolve into the tune.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "I-V7 intro-ending rule",
+              "quote_excerpt": "The last chord of the intro must be a V7 or V7 substitute",
+              "page": 160
+            }
+          ]
+        },
+        {
+          "id": "tr-intro-to-ending-conversion",
+          "name": "Omit final V7 to convert intro into ending",
+          "summary": "Any intro becomes an ending by omitting the final V7.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "2-in-1 intro-ending trick",
+              "quote_excerpt": "What if you just did not play the G13 on the third beat? Your intro would become an instant ending",
+              "page": 163
+            }
+          ]
+        },
+        {
+          "id": "tr-turnaround-as-two-bar-intro",
+          "name": "Turnaround functions as two-measure intro",
+          "summary": "Two-measure intro material works as a turnaround.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Turnaround function",
+              "quote_excerpt": "whatever you would use as a two-measure intro of a tune you could use as a turnaround",
+              "page": 164
+            }
+          ]
+        },
+        {
+          "id": "tr-tag-requires-V7-extension",
+          "name": "Tag replaces final I with V7",
+          "summary": "Execute a tag by replacing the final I chord with V7.",
+          "engine_payload": {
+            "kind": "_pending:structural-extension-trigger"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Tag definition",
+              "quote_excerpt": "the replacement of the usual final I chord with a V7 or other substitute chord is required",
+              "page": 164
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "mr-modulation-V7-borrow",
+          "name": "Fastest modulation: borrow V7 from target key",
+          "summary": "Use the last two beats to play V7 of the upcoming key.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Instant V7-I modulation",
+              "quote_excerpt": "You can modulate as fast as two beats. Use the last two beats to borrow V7",
+              "page": 165
+            }
+          ]
+        },
+        {
+          "id": "mr-modulation-back-cycling",
+          "name": "Back-cycling modulation from target V7",
+          "summary": "Work backwards through the cycle of fifths from the target key V7.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "Back cycling for modulation",
+              "quote_excerpt": "Using the cycle of fifths as a method of movement, work backwards",
+              "page": 166
+            }
+          ]
+        },
+        {
+          "id": "mr-modulation-ii-v7-i",
+          "name": "II-V7-I modulation from target key",
+          "summary": "Place the II chord of the upcoming key before V7 for smooth modulation.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 17,
+              "topic": "II-V7-I modulation",
+              "quote_excerpt": "the most common jazz progression unit is II-V7-I. Use it here then",
+              "page": 166
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
