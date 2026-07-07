@@ -1,0 +1,595 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-van-eps-1939-method",
+    "stage": "s5",
+    "source_pdf": "Van Eps, George - The Method for Guitar.pdf",
+    "extracted_at": "2026-07-07T21:11:58+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "van-eps",
+  "work_id": "1939-method",
+  "usage_notes": [
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-long-form",
+      "narrative": "For major triads in harmonized scale study, Van Eps prescribes six distinct fingering forms across defined string sets and key ranges, each practiced independently as long, medium, and condensed variants. 'The first exercise is a harmonized major scale in triads using six different fingerings... the fingerings are different in each one, and should be practiced as separate exercises.' Chapter 2, p. 8.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.8"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-sequence-form",
+      "narrative": "For major triads in sequence form, Van Eps prescribes the three-steps-up-and-back pattern: 'the major scale (harmonized in common triads) is shown in sequence form, three steps up and return on the first triad, then, on the second triad, etc., ascending; the reverse, descending.' This structural pattern governs traversal through all six forms. Chapter 2, p. 10.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.10"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-equal-note-value",
+      "narrative": "Van Eps proscribes rushing the final note of each measure when playing major triad harmonized scale forms: 'the tendency is to skip over the last note in each measure in order to get to the next position in time.' Notes must be of equal value; legato shift requires a quick, accurate positional change, not an early exit from the preceding note. Chapter 2, p. 9.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.9"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-mixed-rhythm",
+      "narrative": "When major triad harmonized scale exercises alternate whole-note triads with arpeggio-picked measures, Van Eps prescribes counting four beats for the whole-note measure just as for the arpeggio measure: 'every other measure is in arpeggio picking and the natural tendency is to hurry the whole notes. Count four beats for the first measure just as you would for the second measure.' Chapter 2, p. 11.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-barre-variation",
+      "narrative": "For the barre triad in major harmonized scale forms, Van Eps prescribes rotating through all four fingers as the barre finger in turn: 'the second triad should be played not only with a Barre of the fourth finger as marked, but also with Barres of the third, second and first fingers alternately.' Chapter 2, p. 12.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.12"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-inner-voice-sustain",
+      "narrative": "Van Eps prescribes sustaining inner voices for their full written value while the upper melodic line moves: 'The upper (melodic) line is in half notes while the two lower voices are in whole notes. Make sure they sustain their full value.' This voice-independence requirement is stated as the governing purpose of practicing all three forms equally for balanced technique. Chapter 2, p. 14.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.14"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-finger-flattening",
+      "narrative": "Van Eps prescribes the finger-flattening technique for major triad forms where an added note is required: 'you flatten the first joint of the second finger to produce the added note, which brings this principle into the classification of a fifth finger. It is a very difficult maneuver because the finger that is doing the flattening must sustain another note during the process... This flattening principle must be practiced methodically as it must be reliable rhythmically and should be done with a snap.' Chapter 2, p. 15.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.15"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-modulation-point",
+      "narrative": "At modulation points between major triad forms, Van Eps proscribes sliding the left hand: 'Do not slide the left hand in the modulation. It should be a fast, accurate change. The pressure should be released for just a fraction of a second during the change.' Chapter 2, p. 15.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.15"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-two-octave-linkage",
+      "narrative": "After all six major triad forms are perfected individually, Van Eps prescribes joining the lower and upper forms without a break: 'After all the forms have been perfected join them up with the harmonized scale an octave higher and practice without a break. You will then be able to run two octaves in the harmonized scale.' Chapter 2, p. 13.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.13"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-standard-treatment",
+      "narrative": "For minor triads in harmonized scale study, Van Eps prescribes the same six-form treatment as for major: arpeggio picking and all-keys transposition are the standard method. 'Give this exercise the same treatment as Ex. 1, such as arpeggio picking, etc. Practice in all keys.' Chapter 3, p. 18.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.18"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-legato-constant",
+      "narrative": "Legato is prescribed as a constant, non-optional goal across all six minor fingering forms: 'Always bear in mind the legato practice and the use of the six different fingerings. Practice in all keys.' Chapter 3, p. 19.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.19"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-unconventional-fingering",
+      "narrative": "Van Eps warns that lower minor scale forms contain unconventional but correct fingerings that must not be altered: 'Practice very carefully as some of the fingerings, though correct, are confusing.' The student is explicitly told not to substitute conventional fingerings where the method's fingering is prescribed. Chapter 3, p. 20.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-alternate-picking",
+      "narrative": "For minor triad harmonized scale exercises using alternate picking, Van Eps prescribes upstrokes specifically on the second and fourth triads in each measure: 'this exercise uses alternate picking, which means that the second and fourth triads in the measure are played with up-strokes.' Chapter 3, p. 25.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.25"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-tonic-only-reduction",
+      "narrative": "Van Eps prescribes a specific harmonic reduction technique for minor scale study -- using only the tonic triad as harmony while each fingering form is practiced with attention to its individual technical hazards: 'The harmonized minor scale built on the tonic chord... using the tonic triad only, as harmony. Practice each form carefully as each fingering presents different hazards. This exercise is to be practiced in all keys.' Chapter 3, p. 22.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.22"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-bass-sustain",
+      "narrative": "Van Eps prescribes applying extra fretting pressure on the bass note to sustain it while other fingers are in motion: 'You may have difficulty in sustaining the bass note while the other fingers are performing. This is overcome by concentration and a little more pressure on that one note. Practice slowly.' Chapter 3, p. 35.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.35"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-symmetry-four-fret-jump",
+      "narrative": "Van Eps prescribes exploiting diminished symmetry -- the property that the chord repeats every four frets -- with fast, slide-free positional jumps using the same fingering transposed: 'the diminished chord repeats itself every four frets. Therefore it is necessary to have a good foundation in order to judge the distance between triads... The jumps should be fast and accurate with the fingers solidly implanted each time. In other words, look out for slides.' Chapter 3, p. 28.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.28"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-idle-finger-suspension",
+      "narrative": "For diminished triad exercises, Van Eps prescribes keeping idle fingers suspended just above the string they are not fretting: 'The first finger should rest just above the fourth string, not riding it, but suspended a little above the string.' In the reverse exercise, the fourth finger performs the same readied suspension above the first string. Both idle fingers must lie in readiness until perfect. Chapter 3, p. 28.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.28"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-rocker-arm-legato",
+      "narrative": "For legato execution of diminished triad sequences, Van Eps prescribes the rocker-arm alternation: 'The first and fourth fingers should alternate like the ends of a rocker arm. In other words the first finger should remain down until the fourth comes down, but make sure there are never four notes sounding not even for a fraction of a second.' Downstrokes are used until the exercise is mastered; alternate picking follows. Chapter 3, p. 28.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.28"
+        }
+      ],
+      "provenance": "extracted",
+      "cross_ref": [
+        "dim/diminished-rocker-arm-no-overlap"
+      ]
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-rocker-arm-no-overlap",
+      "narrative": "Van Eps proscribes allowing all four notes of a diminished rocker-arm sequence to sound simultaneously, even for a fraction of a second: 'make sure there are never four notes sounding not even for a fraction of a second.' The overlapping sound is the diagnostic failure of incorrect rocker-arm technique. Chapter 3, p. 28.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.28"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "dim/diminished-rocker-arm-legato"
+      ]
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-open-voicing-string-deaden",
+      "narrative": "For open-voicing diminished chord exercises, Van Eps prescribes using a fretting finger to simultaneously mute the adjacent string: 'It is necessary to \"deaden\" a string. This is taken care of by the fingering. For instance, in the first form the D string (IV) is stopped from vibrating with the second finger while that finger is used for the note on the A (V) string.' Chapter 3, p. 31.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-open-voicing-arc-pick-path",
+      "narrative": "In open-voicing diminished exercises where a sustaining voice sits above the target string, Van Eps prescribes a modified pick-return path -- a small arc around the upper string after the downstroke: 'After the down-stroke the pick should travel in a small returning arc around the upper string so you will not touch it and stop its vibration. Then with the descending backward motion the pick will strike the middle note safely. Use a complete wrist action.' Chapter 3, p. 32.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.32"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-open-voicing-no-sustain-deaden",
+      "narrative": "Van Eps proscribes deadening either sustaining voice with the upstroke in open-voicing diminished work: 'Make sure you do not deaden either of the sustaining voices with the up-stroke.' The arc pick-path prescription is the method's specific remedy for this error. Chapter 3, p. 32.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.32"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "dim/diminished-open-voicing-arc-pick-path"
+      ]
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-single-finger-two-note",
+      "narrative": "For the chromatic diminished scale form requiring two successive notes from one finger, Van Eps prescribes executing the movement at maximum speed without sliding: 'The difficulty here is in making these two notes sound as though they were fingered with two fingers instead of one. This can be done by making the movement very fast without sliding or slurring. Practice slowly.' Chapter 3, p. 31.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-unusual-second-finger",
+      "narrative": "For the diminished exercise introducing an unusual second-finger position, Van Eps prescribes keeping all other fingers arched while the second finger bears the strain: 'Make sure that all the fingers except the second are arched. Don't be alarmed if the first joint of the second finger aches slightly while it is learning to bear the strain.' The fingering remains the same ascending to the octave and reverses descending. Chapter 3, p. 30.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-hammer-attack",
+      "narrative": "For diminished chord exercises requiring simultaneous two-finger drops, Van Eps prescribes a hammer-fashion snap coordinated with the pick stroke: 'have the fingers formed before the two fingers drop and make sure they come down together firmly. Do not merely lay them down but snap them down hammer-fashion simultaneously with the pick stroke. Give the notes their full value and practice slowly.' Chapter 3, p. 34.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.34"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-contrary-motion-stretch",
+      "narrative": "For contrary-motion diminished stretching exercises, Van Eps prescribes sustained practice in both forms across all keys, normalizing the resulting dissonances as structurally correct: 'Contrary motion is introduced in this stretching exercise. This comes more under the heading of hand gymnastics. Constant practice of these two forms will definitely increase the spread of the fingers, particularly in the first form. Though dissonant in spots, it is correct.' Chapter 3, p. 27.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.27"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "7",
+      "function_role": "seventh-arpeggio-full-fingerboard",
+      "narrative": "For seventh arpeggio exercises spanning the full fingerboard, Van Eps prescribes a specific truncation rule when the range exceeds the instrument: 'These exercises cannot be played in all the keys in their original form but can be moved up and down the fingerboard by leaving out the first measure when descending (if too low) and leaving out the fifth measure when ascending (if too high).' Chapter 3, p. 24.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-arpeggio-picking",
+      "narrative": "For major triad harmonized scale exercises, Van Eps prescribes arpeggio picking as the core right-hand technique: a pulsation in which the pick passes over each string with a slight kick, stopping downstrokes against the next-highest string. 'The pick passes over each string and accents it with a slight kick, which is more of a pulsation... In the down strokes, use the next highest string as a pick stop.' Striking two strings at once is the diagnostic error of incorrect pulsation. Chapter 2, p. 9.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.9"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-no-force-picking",
+      "narrative": "Van Eps proscribes forcibly pushing the pick across strings rather than pulsating: 'you will not strike two strings at once, as you might do if you were just forcibly pushing the pick across the strings.' Striking two strings simultaneously is explicitly named as the indicator that pulsation is absent. Chapter 2, p. 9.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 2 p.9"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "maj/harmonized-scale-triad-arpeggio-picking"
+      ]
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-broken-string-set",
+      "narrative": "For broken string set exercises, Van Eps prescribes smooth pick-jumping over the skipped string: 'This is the first exercise using a broken set of three strings... Practice in all keys in straight down strokes, then with arpeggio picking. Be careful in the latter as you have to jump over a string with the pick. This must be done smoothly.' Chapter 3, p. 26.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonized-scale-triad-lower-string-pressure",
+      "narrative": "Van Eps prescribes increased fretting pressure when major triad exercises are transposed to lower string sets: 'More pressure has to be applied when playing on the lower strings in order to obtain a clear tone.' This is a universal transposition rule that applies across all chord types. Chapter 3, p. 37.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.37"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-lower-string-pressure",
+      "narrative": "Van Eps prescribes increased fretting pressure when minor triad exercises are transposed to lower string sets: 'More pressure has to be applied when playing on the lower strings in order to obtain a clear tone. Practice carefully.' This rule is stated as a physical property of string tension and applies across all forms and chord types at lower string registers. Chapter 3, p. 37.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.37"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonized-scale-triad-up-stroke-revision",
+      "narrative": "After all minor triad exercises have been learned with downstrokes, Van Eps prescribes a method-wide retrospective revision: 'Go back through the book now, taking all exercises in which down-strokes only were used and practice them using up-strokes. Then practice them using up and down strokes alternately. WARNING: In crossing the strings with the pick, make sure the up-strokes are played just as quickly as the down strokes.' Chapter 3, p. 39.",
+      "source_principle_ids": [
+        "van-eps:1939-method:right-hand-picking"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.39"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-fourth-finger-arch",
+      "narrative": "Van Eps prescribes keeping the fourth finger arched throughout diminished exercises: 'This exercise increases the reach of the fourth finger. This finger will have a tendency to lay flat when it should be arched. This may be a strain at first but it can be developed through work.' Chapter 3, p. 30.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-no-flat-fourth-finger",
+      "narrative": "Van Eps proscribes allowing the fourth finger to lay flat in diminished exercises: 'This finger will have a tendency to lay flat when it should be arched.' The flat fourth-finger posture is named as the characteristic failure mode to be actively corrected. Chapter 3, p. 30.",
+      "source_principle_ids": [
+        "van-eps:1939-method:harmonized-scale-forms"
+      ],
+      "source_work_id": "1939-method",
+      "references": [
+        {
+          "source": "1939-method",
+          "citation": "Chapter 3 p.30"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "dim/diminished-fourth-finger-arch"
+      ]
+    }
+  ]
+}
