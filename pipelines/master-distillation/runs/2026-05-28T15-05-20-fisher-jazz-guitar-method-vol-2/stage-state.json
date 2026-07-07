@@ -67,6 +67,17 @@
       "ended_at": null,
       "outputs": [],
       "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-07-07T15:43:31+00:00",
+      "ended_at": "2026-07-07T15:43:31+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/jody-fisher/jazz-guitar-method-vol-2-intermediate/derived/PRESCRIPTIVE.md",
+        "extracted 26 prescriptive lesson(s) across 7 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
     }
   }
 }
