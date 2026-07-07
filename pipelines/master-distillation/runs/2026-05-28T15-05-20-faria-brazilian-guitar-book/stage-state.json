@@ -59,6 +59,17 @@
       "ended_at": null,
       "outputs": [],
       "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-07-07T12:30:56+00:00",
+      "ended_at": "2026-07-07T12:30:56+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/nelson-faria/brazilian-guitar-book/derived/PRESCRIPTIVE.md",
+        "extracted 29 prescriptive lesson(s) across 3 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
+      "error_message": null
     }
   }
 }

@@ -1,0 +1,513 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-faria-brazilian-guitar-book",
+    "stage": "s5",
+    "source_pdf": "_g Brazilian guitar book Nelson Faria.pdf",
+    "extracted_at": "2026-07-07T12:30:56+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "nelson-faria",
+  "work_id": "brazilian-guitar-book",
+  "usage_notes": [
+    {
+      "chord_quality": "dom7",
+      "function_role": "baiao-modal-tonic",
+      "narrative": "For dom7 chords in baiao, Faria prescribes practicing all patterns against a 'static seventh chord (mixolydian mode)' -- the dom7 is the modal tonic of the style, not a functional dominant. The bass plays a syncopated pedal tone while the upper voices land on the beat, inverting the samba texture. Chapter 5, p. 121.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell",
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 121"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "baiao-lydian-b7-tonic",
+      "narrative": "Faria prescribes applying baiao Variation #1 (cowbell/syncopated bass texture) 'on a typical lydian b7 mode progression,' treating the dom7 with a raised 4th as the primary harmonic color. The open-string berimbau device in Variation #2 is also anchored to this same lydian b7 modal dom7. Chapter 5, p. 122 and p. 124.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 122"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 124"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-bass-root-fifth-alternation",
+      "narrative": "For any chord in samba (dom7 chords appear throughout the typical samba turnaround harmonies), Faria prescribes: 'The bass line keeps switching between the root and the fifth of the chord, and it's a better choice to play the fifth below the root. If the bass note is already placed on the 6th string, you may keep the same note for the whole measure.' Chapter 1, p. 25.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 25"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "frevo-walking-bass-harmony",
+      "narrative": "In frevo, Faria prescribes treating the bass movement of dom7 and other chord changes like a jazz 'walking bass, playing even quarter notes,' while syncopations are placed exclusively on the top voices of the chord. The harmonies are kept simple -- 'usually turnarounds' -- and the sixth string root is held where possible. Chapter 4, p. 102 and p. 104.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture",
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 4, p. 102"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 4, p. 104"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "bossa-nova-dense-voicing",
+      "narrative": "For five-voice chord voicings in bossa nova (maj7 and other extended chords appear in bossa nova harmony), Faria prescribes an explicit right-hand fingering extension: 'To play the five-note chords in this example, you must use right hand fingers 1, 2 and 3' plus additional fingers, applying the five-note technique to dense upper-structure voicings. Chapter 2, p. 66.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 66"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "choro-inverted-passing-harmony",
+      "narrative": "For diminished chords in choro accompaniment, Faria prescribes inverted voicings as the default: 'the use of triads, seventh and diminished chords are common, usually in an inverted position.' Root-position dim7 is not the idiomatic choice; the guitarist should reach for an inversion. The bass line movement around the diminished chord is treated as structurally primary. Chapter 3, p. 86.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:choro-form-harmony"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 86"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "choro-root-position-voicing",
+      "narrative": "Do not voice diminished chords in root position in choro accompaniment. Faria states they are used 'usually in an inverted position,' making root-position dim7 a stylistic error in choro context. Chapter 3, p. 86.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:choro-form-harmony"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 86"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "dim7/choro-inverted-passing-harmony"
+      ]
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-syncopated-bass-fingering",
+      "narrative": "When the bass line in samba moves syncopated and independently from the chord, Faria prescribes the thumb for execution; but when the bass occurs in a 'block style' situation, the student must switch to the index finger: 'play the bass line with the thumb when it occurs as an independent line and with the first finger (index) when it occurs in a block style situation.' Chapter 1, p. 30.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-variation-3-left-hand",
+      "narrative": "For Samba Variation #3, Faria prescribes an unconventional but specific left-hand fingering order for voicing the chord: 'The chords must be fingered (left hand fingers) from top to bottom 3-1-4-2.' This is not left to the student's discretion -- the fingering is load-bearing for clean execution of the variation. Chapter 1, p. 30.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-variation-17-wide-stretch",
+      "narrative": "For a Db9 (dominant with extension) voicing in Samba Variation #17, Faria prescribes three alternative left-hand solutions for the wide stretch: 'Either use the thumb over technique or the left hand fingering 4-1-1-3-2 (from top to bottom) or play the Ab and Db notes by pressing your second finger (left hand) in between the 5th and 6th strings.' Chapter 1, p. 47.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 47"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-agogo-register-switching",
+      "narrative": "For Samba Variation #1, Faria prescribes voicing the chord changes by switching between low and high register positions 'to simulate the agogo (a percussion instrument made of two cowbells -- hi and low pitches held together).' The variation is a mirror-image two-measure form with the register switch as the defining architectural gesture. Chapter 1, p. 26.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-fill-in-contextual",
+      "narrative": "For Samba Variation #15 specifically, Faria prescribes a contextual deployment rule: 'Use this pattern to fill in spaces at the singer's pause or at the end of a section.' The student is taught not to apply this variation continuously but to reserve it for these structural slots. Chapter 1, p. 44.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bossa-nova-fill-in-contextual",
+      "narrative": "For Bossa Nova Variation #4, Faria prescribes the same contextual restriction as Samba #15: 'This pattern is very useful at the singer's pause or at the end of a section.' An optional 16th-note displacement sub-variant is also available: 'You can also syncopate by a 16th note.' Chapter 2, p. 68.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 68"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bossa-nova-harmony-change-offset",
+      "narrative": "In Bossa Nova, when a harmony change coincides with a syncopated note, Faria prescribes that the chord change arrives a 16th note before the syncopated rhythmic accent: 'Notice that the harmony changes a 16th note' ahead of the syncopated landing. This precise rhythmic offset is a defining bossa nova detail. Chapter 2, p. 69.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "frevo-upbeat-only-muting",
+      "narrative": "For Frevo Variation #4, Faria prescribes an upbeat-only texture and offers a left-hand muting technique as an alternative execution path: 'You can play this example using straight 8th notes, muting the down beats with your left hand.' The variation is described as 'a good example of a variation playing only the up beats of the measure.' Chapter 4, p. 108.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture",
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 4, p. 108"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "baiao-salsa-bass-syncopation",
+      "narrative": "For Baiao Variation #5, Faria teaches that syncopating the bass line inflects the genre feel: 'Notice the syncopation of the bass line. It gives a salsa flavor on baiao patterns.' The student is taught that bass rhythmic placement is a genre-inflection lever, not merely a technical option. Chapter 5, p. 126.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 126"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "baiao-berimbau-open-string",
+      "narrative": "For Baiao Variation #2, Faria prescribes using an open G string as a drone device: 'This is a typical baiao cliche on the lydian b7 mode, using a G open string simulating a berimbau pattern.' The open string is not merely a convenience fingering but a timbre-simulation prescription. Chapter 5, p. 124.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 124"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-batucada-four-measure-cycle",
+      "narrative": "For Samba Variation #9, Faria prescribes extending the basic samba cell to a four-measure cycle that 'mixes syncopated and non-syncopated rhythms, generating a batucada style pattern.' The mixing of syncopated and non-syncopated rhythms within the cycle is the defining prescription -- it is not an error but the intended character. Chapter 1, p. 39.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 39"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-partido-alto-subtype",
+      "narrative": "Samba Variation #7 is named and prescribed as the 'Partido alto' sub-style: 'This pattern outlines a samba variation known as Partido alto.' The student is directed to learn this pattern as a distinct named genre category within the broader samba family, not merely as a rhythmic exercise. Chapter 1, p. 33.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell",
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 33"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-variation-6-counterpoint",
+      "narrative": "Samba Variation #6 is defined as 'the result of syncopating every beat in a measure,' and Faria prescribes it explicitly as a counterpoint technique: 'This makes a strong counterpoint between the bass line (on the beat) and the chord changes.' The on-beat bass against off-beat chord changes is the load-bearing prescription. Chapter 1, p. 33.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 33"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bossa-nova-clave-direction-lock",
+      "narrative": "For bossa nova chord accompaniment built on the clave, Faria prescribes that the clave direction must be fixed for the entire performance: 'The clave can be played as shown above or inverted, but once the' direction is chosen, it cannot be changed. Switching clave direction mid-performance is a stylistic error. Chapter 2, p. 61.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 61"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "choro-section-c-modulation",
+      "narrative": "For choro accompaniment, Faria prescribes a formal modulation rule at Section C: 'The choro form is frequently divided in 3 parts -- A, B and C -- with a modulation to the V or IV chord key center in the part C.' The guitarist must navigate this modulation when reaching the C section. Chapter 3, p. 86.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:choro-form-harmony"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 86"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "baiao-broken-chords-texture",
+      "narrative": "Baiao Variation #4 is specifically designated for the 'broken chords' style: 'This pattern is specifically used in the broken chords style.' Faria treats this as a distinct textural category within baiao guitar accompaniment that the student should deploy as a named option. Chapter 5, p. 125.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 125"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "frevo-sixth-string-root-anchor",
+      "narrative": "In frevo, Faria prescribes anchoring bass notes to the sixth string where possible: 'If the bass note is already placed on the 6th string, you may keep the same note for the whole measure.' This is a voicing-efficiency rule that prevents unnecessary string crossing. Chapter 4, p. 104.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 4, p. 104"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bossa-nova-staccato-upper-voice",
+      "narrative": "Bossa Nova Variation #3 in its short-note sub-style prescribes staccato articulation and registral reduction of the upper voices: 'It's basically the variation #3, but using short notes, and playing only the' reduced register positions. This modification transforms the texture without changing the rhythmic cell. Chapter 2, p. 67.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 67"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "choro-pandeiro-muting-practice",
+      "narrative": "For choro, Faria prescribes a two-stage practice method before performing chord accompaniment: first practice with left-hand muting ('practice these patterns and variations muting the strings with your left hand'), then reinforce with body-percussion ('clapping hands in the high voices and tapping the low voices with your foot'). Chapter 3, p. 88.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture",
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 88"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "choro-variation-5-placement",
+      "narrative": "Choro Variation #5 carries a specific deployment restriction: 'You can use this pattern through the entire song or at the end of a section.' Faria explicitly names the end-of-section as the idiomatic placement. Chapter 3, p. 93.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:variation-deployment"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 93"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "frevo-marcha-rancho-3-4",
+      "narrative": "Frevo Variation #5 is designated for the marcha rancho sub-style: 'This variation is an example of a marcha rancho in 3/4 meter.' Faria prescribes the 3/4 version as a distinct deployable option within the frevo vocabulary. Chapter 4, p. 110.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:variation-deployment",
+        "nelson-faria:brazilian-guitar-book:style-rhythmic-cell"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 4, p. 110"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "samba-core-technique-internalization",
+      "narrative": "Before playing the samba syncopation cliche on the guitar, Faria prescribes kinesthetic pre-internalization: 'It's also a good idea to practice away from the guitar, clapping hands on the high voices and tapping the low voices with your foot.' This body-percussion drill must precede instrument execution and applies across all five Brazilian styles. Chapter 1, p. 25.",
+      "source_principle_ids": [
+        "nelson-faria:brazilian-guitar-book:two-layer-texture"
+      ],
+      "source_work_id": "brazilian-guitar-book",
+      "references": [
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 1, p. 25"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 2, p. 62"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 3, p. 88"
+        },
+        {
+          "source": "brazilian-guitar-book",
+          "citation": "Chapter 5, p. 121"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}
