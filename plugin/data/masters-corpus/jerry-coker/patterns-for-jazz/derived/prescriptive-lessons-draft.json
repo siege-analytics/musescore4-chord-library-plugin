@@ -1,0 +1,750 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-coker-patterns-for-jazz",
+    "stage": "s5",
+    "source_pdf": "Coker, Jerry - Patterns for Jazz (1970).pdf",
+    "extracted_at": "2026-07-07T11:03:04+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jerry-coker",
+  "work_id": "patterns-for-jazz",
+  "usage_notes": [
+    {
+      "chord_quality": "maj",
+      "function_role": "tonic-major-triad-parent-scale-anchor",
+      "narrative": "Coker prescribes deriving the major triad by extracting scale degrees 1-3-5 from the major scale of the chord root: 'By extracting tones No. 1-3-5 from the C Major scale, we arrive at the notes forming the C Major Triad' (Chapter 1, p. 1). Students must be able to recite, write, and play major triads in every key before beginning pattern exercises (Chapter 1, p. 3).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 1"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 3"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "tonic-major-bottom-structure-pattern-scope",
+      "narrative": "Coker prescribes applying the 1-2-3-5 ascending pattern to any chord with a major third -- 'This pattern may be used on any chord with a major third' (Chapter 6, p. 25). This pattern, together with its minor counterpart 1-2-b3-5, is sufficient to cover virtually all chord changes in a standard tune: 'nearly all chords contained in the tune's progression will have either a major triad on the bottom (i.e., 1-2-3-5) or a minor triad' (Chapter 6, p. 29).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 6 p. 25"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 6 p. 29"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj6",
+      "function_role": "tonic-major-sixth-shared-parent-scale",
+      "narrative": "Coker prescribes deriving the major sixth chord by extracting scale degrees 1-3-5-6 from the major scale of the chord root: 'Tones No. 1-3-5-6 of the C Major scale form the C Major Sixth Chord' (Chapter 1, p. 1). Because the M6 shares the major scale with the triad, M7, and M9, patterns written under a triad symbol apply equally to CM6 -- 'The use of the triad symbol in the following patterns is merely for convenience, since it would be impossible to determine exactly which chord is being used when the scale is common to all the chords mentioned' (Chapter 4, p. 16).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation",
+        "jerry-coker:patterns-for-jazz:modal-derivation/family-unification-single-symbol"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 1"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 4 p. 16"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-major-seventh-shared-parent-scale",
+      "narrative": "Coker prescribes deriving the major seventh chord by extracting scale degrees 1-3-5-7 from the major scale of the chord root: 'Tones #1-3-5-7 form the C Major Seventh Chord' (Chapter 1, p. 2). The M7 shares the same parent major scale with the triad, M6, and M9, so a single scale fingering covers all four qualities (Chapter 4, p. 16). Coker also prescribes the heuristic that 'in most instances, the M7 chord is likely to function as IM7 rather than IVM7' (Chapter 16, p. 82), reducing the decision burden when key context is ambiguous.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 2"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 4 p. 16"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 16 p. 82"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-resolution-in-IIm7-V7-IM7",
+      "narrative": "Coker prescribes treating the IM7 as the resolution target of the IIm7-V7-IM7 group and assigns it the major scale of its root for improvisation. The method extends one-measure IIm7-V7 patterns to accommodate the IM7 resolution by recycling mastered fragments rather than introducing new material: 'Rather than introducing new patterns, we will use four of the patterns previously discussed with the IIm7-V7 progression and extend them to the IM7' (Chapter 17, p. 90). All three chords share a single parent key signature (Chapter 16, p. 83).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/iim7-v7-im7-group-traversal",
+        "jerry-coker:patterns-for-jazz:modal-derivation/compositional-economy-recycling"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 16 p. 83"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 90"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-two-fragment-complete-coverage",
+      "narrative": "Coker prescribes using the two-fragment combination 5-8-6-4 and 2-5-3-1 from the major scale to achieve complete coverage of all four major chord qualities in a single pattern: 'This pattern utilizes two fragments (5-8-6-4 and 2-5-3-1) from the chord scale, which when played simultaneously will sound any of the major forms of the chords expressed (Triad, M6, M7 and M9)' (Chapter 7, p. 27). This is the book's prescribed method for building harmonic completeness without separate patterns for each extension.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/two-fragment-coverage"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 7 p. 27"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj9",
+      "function_role": "tonic-major-ninth-shared-parent-scale",
+      "narrative": "Coker prescribes deriving the major ninth chord by extracting scale degrees 1-3-5-7-9 from the major scale of the chord root: 'Tones #1-3-5-7-9 form the C Major Ninth Chord' (Chapter 1, p. 2). The ninth is the same pitch as the second scale degree -- 'the ninth, eleventh and thirteenth are also the second, fourth and sixth tones respectively, as they are the same letter names' (Chapter 1, p. 3). Because M9 shares the same major scale parent as the triad, M6, and M7, no separate scale is needed for improvisation.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation",
+        "jerry-coker:patterns-for-jazz:modal-derivation/enharmonic-equivalence-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 2"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 1 p. 3"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-mixolydian-source",
+      "narrative": "Coker prescribes extracting scale degrees 1-3-5-7 from the Mixolydian mode to form the dominant seventh chord: 'By extracting tones No. 1-3-5-7 from the B-Flat Mixolydian mode, we arrive at the notes forming the B-Flat Dominant Seventh Chord' (Chapter 9, p. 50). The student must relate each Mixolydian mode to its parent key before applying formulas or playing improvisation patterns over the chord (Chapter 9, p. 51).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 9 p. 50"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 9 p. 51"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-function-invariant-core",
+      "narrative": "Coker prescribes a firm rule for dominant function: 'the chord retains its dominant function as long as the third is major and the seventh is minor, regardless of the type of ninth used' (Chapter 25, p. 119). This frees the improviser to alter the ninth, fifth, eleventh, and thirteenth freely. The fifth may be perfect, lowered, or raised; the eleventh perfect or augmented; the thirteenth major or (rarely) minor -- all without disturbing dominant function (Chapter 25, p. 121).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/dominant-seventh-color-tone-alteration"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 119"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 121"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-V7-in-IIm7-V7-fragment-assignment",
+      "narrative": "Coker prescribes assigning fragment 3-4-5-1 (extracted from the dominant seventh scale) to the V7 chord within a one-measure IIm7-V7: 'The fragment 3-4-5-7 is to be extracted from the scale of the minor 7th chord, and the fragment 3-4-5-1 is to be extracted from the scale of the dominant seventh chord' (Chapter 17, p. 88). An alternate two-measure assignment pairs fragment 1-2-6-5 against the IIm7's 3-4-5-7, with specific attention to the unusual interval between degrees 2 and 6 (Chapter 20, p. 97).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/two-fragment-coverage"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 88"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 20 p. 97"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-shared-parent-key-with-IIm7",
+      "narrative": "Coker prescribes exploiting the shared parent key of IIm7 and V7 to run a single scalar pattern across both chords without alteration: 'The pattern fits both chords because they both have the same parent key. Consequently, the accidentals in their respective scales are the same' (Chapter 17, p. 95). On a two-measure IIm7-V7, Coker assigns ascending direction to the IIm7 and descending direction to the V7: 'ascending the scale of the minor seventh chord and descending the scale of the dominant seventh chord' (Chapter 17, p. 94).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/shared-parent-key-continuity"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 94"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 95"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-diminished-half-step-color-tones",
+      "narrative": "Coker prescribes using a diminished scale whose root sits one half-step above the dominant seventh chord root to simultaneously supply all four essential color tones: 'the root of the scale is a half-step above the root of the seventh chord (i.e, a C-sharp diminished scale is used with a C7)' (Chapter 27, p. 130). This yields flat-9, +9, +11, and 13 together -- 'all four color tones are common to one another and can be used together to good effect' (Chapter 27, p. 131).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-half-step-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 130"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 131"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-one-diminished-scale-four-chords",
+      "narrative": "Coker prescribes applying a single diminished scale to four different dominant seventh chords whose roots lie within the same diminished seventh chord: 'a diminished scale on C-sharp, E, G, or A will fit and enhance (because of the color tones provided) a C7, E-flat7, F-sharp7, or A7 chord' (Chapter 27, p. 131). This efficiency principle -- one scale serves four roots -- directly follows from the diminished-fifth substitution rule linking tritone and minor-third-related dominant chords.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-fifth-substitution",
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-half-step-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 131"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-lydian-augmented-flat5-alignment",
+      "narrative": "Coker prescribes one of two specific Lydian Augmented Scale alignments for dominant seventh flat-5 chords: 'In the case of the dominant 7th, flat 5th (b5), the root of the scale is the seventh of the chord' (Chapter 33, p. 146). This alignment yields an augmented eleventh (flat-5) color tone over the chord. Students must learn all twelve Lydian Augmented scales 'by playing them over and over throughout the range of your instrument' and in intervallic patterns such as thirds (Chapter 33, p. 146).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/lydian-augmented-two-position-deployment"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 33 p. 146"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-lydian-augmented-altered-extensions-alignment",
+      "narrative": "Coker prescribes a second Lydian Augmented Scale alignment for dominant chords with raised 5th, raised 9th, lowered 9th, and augmented 11th: 'In the case of the dominant 7th, raised 5th, raised 9th, lowered 9th, and augmented 11th, the root of the scale is the third of the chord' (Chapter 33, p. 146). This distinct root placement -- on the chord's third rather than its seventh -- simultaneously yields all four alterations, making it the prescribed scale source for this altered-dominant context.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/lydian-augmented-two-position-deployment"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 33 p. 146"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-turnaround-endpoint",
+      "narrative": "Coker prescribes that a turnaround (turnback) must end on a V7 chord or a flat-II7/flat-IIM7 dominant substitute: 'most will begin with a tonic chord (but only for about two beats) and will end with either a V7 chord (dominant) or a flat-II7 or flat-IM7 (dominant substitute)' (Chapter 25, p. 118). This gives phrase-endings 'a sense of direction, namely to return gracefully to the beginning of a repeated section' (Chapter 25, p. 118).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:turnaround-permutation/turnaround-endpoint-constraint"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 118"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom9",
+      "function_role": "dominant-ninth-shares-mixolydian-with-dom7",
+      "narrative": "Coker prescribes using the same Mixolydian scale for both dominant seventh and dominant ninth chords sharing the same root: 'Note that the same scale is used for dominant seventh and dominant ninth chords having the same root' (Chapter 9, p. 51). No separate scale or fingering is required; the ninth (scale degree 9 = scale degree 2) is already contained in the Mixolydian parent.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/dominant-family"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 9 p. 51"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "dominant-altered-ninth-flat9-option",
+      "narrative": "Coker prescribes treating the flat-9 (minor ninth) as one of two available altered ninth options on a dominant seventh chord: 'when the ninth is added to the dominant seventh chord (1-3-5-7), it can also be augmented (+9) or minor (flat-9 -- sometimes referred to as a diminished ninth)' (Chapter 25, p. 119). Dominant function is retained as long as the third is major and the seventh is minor, regardless of the ninth's quality (Chapter 25, p. 119). The flat-9 is also one of the four color tones supplied by the diminished scale one half-step above the chord root (Chapter 27, p. 130).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/dominant-seventh-color-tone-alteration",
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-half-step-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 119"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 130"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "dominant-altered-all-four-color-tones-diminished-source",
+      "narrative": "Coker prescribes obtaining flat-9, +9, +11, and 13 simultaneously from the diminished scale positioned one half-step above the dominant seventh root: 'the pattern also yields the color tones of flat-9, +9, +11, and 13... the experienced improviser or arranger knows that all four color tones are common to one another and can be used together to good effect' (Chapter 27, p. 131). This is the book's primary prescription for fully altered dominant improvisation using a symmetrical scale source.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-half-step-rule",
+        "jerry-coker:patterns-for-jazz:modal-derivation/dominant-seventh-color-tone-alteration"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 131"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "dominant-altered-lydian-augmented-four-simultaneous-alterations",
+      "narrative": "Coker prescribes deploying the Lydian Augmented Scale with its root on the chord's third to supply four simultaneous alterations -- raised 5th, raised 9th, lowered 9th, and augmented 11th -- over a single dominant chord: 'The LYDIAN AUGMENTED SCALE is an extremely useful scale in this respect... the other application supplying an augmented fifth, a flatted ninth, an augmented ninth, and an augmented eleventh' (Chapter 33, p. 145). This is one of only two prescribed scale-to-chord alignments for the Lydian Augmented Scale.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/lydian-augmented-two-position-deployment"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 33 p. 145"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 33 p. 146"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "minor-triad-dorian-source",
+      "narrative": "Coker prescribes deriving the minor triad by extracting scale degrees 1-3-5 from the Dorian mode of the chord root: 'By extracting the tones No. 1-3-5 from the B Dorian Mode, we arrive at the notes forming the B Minor Triad' (Chapter 11, p. 62). The student must relate each Dorian mode to its parent major key before applying any formula (Chapter 12, p. 63).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/minor-family"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 11 p. 62"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 12 p. 63"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min6",
+      "function_role": "minor-sixth-dorian-source",
+      "narrative": "Coker prescribes deriving the minor sixth chord by extracting scale degrees 1-3-5-6 from the Dorian mode: 'Tones No. 1-3-5-6 of the B Dorian Mode form the B Minor Sixth Chord' (Chapter 11, p. 62). All four minor chord types -- minor triad, m6, m7, m9 -- share the same Dorian mode parent and the same underlying triad: 'Note that all four chords contain the same triad, B, D, F-Sharp; and all four chords use the same basic scale, the B Dorian Mode, to establish their sound' (Chapter 12, p. 67).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/minor-family"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 11 p. 62"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 12 p. 67"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "IIm7-dorian-source-chord-group",
+      "narrative": "Coker prescribes treating min7 as the IIm7 in the IIm7-V7-IM7 chord group and deriving its improvisation scale from the Dorian mode: 'the Gm7 uses a Dorian Mode on the note G (which has the parent key of F Major)' (Chapter 16, p. 83). Because IIm7 and V7 share the same parent key, the improviser may run a single Dorian-derived scalar pattern through both chords (Chapter 17, p. 95). The heuristic is: 'the m7 chord functions more commonly as a IIm7 than as a IIIm7 or VIm7' (Chapter 16, p. 82).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/iim7-v7-im7-group-traversal",
+        "jerry-coker:patterns-for-jazz:modal-derivation/shared-parent-key-continuity"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 16 p. 82"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 16 p. 83"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 95"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "minor-seventh-dorian-formula-and-scale-unification",
+      "narrative": "Coker prescribes deriving the minor seventh chord by extracting scale degrees 1-3-5-7 from the Dorian mode (Chapter 12, p. 67), and prescribes using the Dorian mode itself as the improvisation scale for all four minor chord qualities. 'The minor triad, m6, m7 and m9 chords all use the same basic scale: a dorian mode on the chord root... The use of the minor seventh chord symbol is merely for convenience, since it would be impossible to determine exactly which chord is being used when the scale is common to all chords mentioned' (Chapter 15, p. 79). Digital patterns are therefore notated with the m7 symbol for the whole minor family.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/family-unification-single-symbol"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 12 p. 67"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 15 p. 79"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "IIm7-fragment-3-4-5-7-assignment",
+      "narrative": "Coker prescribes extracting the fragment 3-4-5-7 from the minor seventh chord's scale to form the IIm7 portion of the two-fragment IIm7-V7 pattern: 'The fragment 3-4-5-7 is to be extracted from the scale of the minor 7th chord' (Chapter 17, p. 88). In the two-measure version of this pattern, the fragment is extended as 3-4-5-7 9-10-9-8 (Chapter 20, p. 97). The underlying rationale is that both IIm7 and V7 share one parent scale, so fragment continuity is harmonically coherent.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/two-fragment-coverage",
+        "jerry-coker:patterns-for-jazz:modal-derivation/shared-parent-key-continuity"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 17 p. 88"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 20 p. 97"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "minor-seventh-arpeggio-direction-reversal",
+      "narrative": "Coker prescribes practicing minor seventh chord arpeggio patterns by reversing their direction on successive repetitions: 'Practice Pattern No. 108 by reversing the direction of the chord tones: descending, ascending, etc.' (Chapter 14, p. 71). Each chord lasts two beats in these exercises: 'Note: Each chord lasts two beats' (Chapter 14, p. 71). This directional reversal is the defining technical move for internalizing the Dorian sound.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/directional-alternation-traversal"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 14 p. 71"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min9",
+      "function_role": "minor-ninth-dorian-source",
+      "narrative": "Coker prescribes deriving the minor ninth chord by extracting scale degrees 1-3-5-7-9 from the Dorian mode: 'Tones No. 1-3-5-7-9 of the B Dorian Mode form the B Minor Ninth Chord' (Chapter 12, p. 67). The ninth collapses to the second scale degree by the enharmonic equivalence rule. Because m9 shares the Dorian parent with the minor triad, m6, and m7, the same digital patterns cover all four qualities (Chapter 15, p. 79).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/minor-family",
+        "jerry-coker:patterns-for-jazz:modal-derivation/enharmonic-equivalence-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 12 p. 67"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 15 p. 79"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim",
+      "function_role": "diminished-triad-diminished-scale-source",
+      "narrative": "Coker prescribes deriving the diminished triad by extracting scale degrees 1-3-5 from the diminished scale on the chord root: 'By extracting tones No. 1-3-5 from any diminished scale, we arrive at the Diminished Triad on that particular root' (Chapter 21, p. 110). The diminished triad and diminished seventh chord share the same underlying diminished scale, so chord symbol choice is a notational convenience only: 'The use of the Diminished Triad symbol in the following patterns is merely for convenience, since it would be impossible to determine exactly which chord is being used when the scale is common to both' (Chapter 22, p. 116).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/diminished-family",
+        "jerry-coker:patterns-for-jazz:modal-derivation/family-unification-single-symbol"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 21 p. 110"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 22 p. 116"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "diminished-seventh-diminished-scale-source",
+      "narrative": "Coker prescribes deriving the diminished seventh chord by extracting scale degrees 1-3-5-7 from the diminished scale: 'By extracting tones No. 1-3-5-7 from any diminished scale, we arrive at the Diminished Seventh Chord on that particular root' (Chapter 21, p. 110). The diminished scale is symmetrical -- eight alternating whole and half steps -- and has only three distinct pitch collections covering all twelve roots; mastering three scales gives complete coverage (Chapter 27, p. 130).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/diminished-family",
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/four-root-diminished-symmetry"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 21 p. 110"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 130"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "diminished-seventh-four-root-transposition-rule",
+      "narrative": "Coker prescribes practicing diminished scale patterns starting from every root shown in the reference chart (fig. 32), exploiting the four-root symmetry: 'Be sure to practice it using EVERY starting note illustrated on the chart in fig. 32' (Chapter 22, p. 116). Each diminished scale serves four roots -- e.g., the C diminished scale also yields E-flat, G-flat, and A diminished scales with identical tones but different starting pitches (Chapter 21, p. 109). Transposition across all four roots within each collection is non-optional.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/four-root-diminished-symmetry",
+        "jerry-coker:patterns-for-jazz:modal-derivation/all-twelve-keys-transposition"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 22 p. 116"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 21 p. 109"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "diminished-seventh-tritone-minor-third-substitution",
+      "narrative": "Coker prescribes treating dominant seventh chords whose roots lie within the same diminished seventh chord as mutual substitutes: 'chords whose roots are within the same diminished seventh chord are likely substitutes for each other... chords located a diminished fifth apart, especially when they are dominant sevenths, will substitute for each other (i.e., C7 and F-sharp7). Now we see that halfway to each of the diminished fifth intervals... are two more substitute possibilities' (Chapter 27, p. 131). This yields four dominant seventh substitute relationships from a single tritone pair.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/diminished-fifth-substitution"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 131"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "diminished-seventh-chromatic-passing-tone-extension",
+      "narrative": "Coker prescribes adding chromatic non-harmonic passing tones between the whole-step intervals of a diminished scale pattern to create chromatic density while preserving the diminished character: 'a non-harmonic (non-chord) tone is added chromatically between pairs of tones from the scale -- pairs which are normally a whole-step apart. The result is a chromatic scale, though the scale continues to sound like a diminished scale because of the placement of the non-harmonic tones' (Chapter 27, p. 130). Placement -- not pitch content -- determines whether the diminished sound is preserved.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/chromatic-nct-passing-tone"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 27 p. 130"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug",
+      "function_role": "augmented-triad-whole-tone-source",
+      "narrative": "Coker prescribes extracting scale degrees 1-3-5 from the whole-tone scale to form the augmented triad: 'By extracting the tones No. 1-3-5 from any whole tone scale, we arrive at the Augmented Triad on that particular root' (Chapter 19, p. 106). Students are warned not to miscount the triad as having six tones due to enharmonic respelling in the chart -- 'The correct spelling for the E Augmented Triad should be E-G-sharp-B-sharp' even though B-sharp is notated as C (Chapter 19, p. 107). Only two distinct whole-tone pitch collections exist, so the student needs only two scale fingerings to cover all twelve augmented triad roots (Chapter 18, p. 104).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/whole-tone-family",
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/two-collection-whole-tone-traversal"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 19 p. 106"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 19 p. 107"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 18 p. 104"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "aug7",
+      "function_role": "augmented-seventh-whole-tone-source",
+      "narrative": "Coker prescribes extracting scale degrees 1-3-5-6 from the whole-tone scale to form the augmented seventh chord: 'By extracting tones No. 1-3-5-6 from a whole tone scale, we arrive at the Augmented Seventh chord on that particular root' (Chapter 19, p. 107). Both the augmented triad and augmented seventh chord share the same parent triad and parent whole-tone scale, giving a unifying principle for voice-leading and substitution (Chapter 19, p. 107). Enharmonic respelling is permitted freely to maintain correct chord spelling (Chapter 19, p. 106).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/whole-tone-family",
+        "jerry-coker:patterns-for-jazz:modal-derivation/enharmonic-equivalence-rule"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 19 p. 107"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 19 p. 106"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "major-seventh-augmented-fifth-augmented-scale-source",
+      "narrative": "Coker prescribes the augmented scale as the primary scale source for the M7+5 chord (major seventh with augmented fifth): 'the augmented scale fits a rarely-used chord, the major seventh chord with an augmented fifth (M7+5)' (Chapter 28, p. 134). The augmented scale, spelled on C as C-D#-E-G-Ab-B, contains two chromatically adjacent augmented triads and has only four distinct transpositions. 'With slightly less effect, the scale can be applied to the major seventh chord (M7)' as a secondary option (Chapter 28, p. 134).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:modal-derivation/augmented-scale-family",
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/four-collection-augmented-traversal"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 28 p. 134"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-turnaround-starting-point",
+      "narrative": "Coker prescribes beginning a turnaround with a tonic major seventh chord held for only approximately two beats before permuting through other qualities: 'most will begin with a tonic chord (but only for about two beats)' (Chapter 25, p. 118). The root remains stationary while the chord type changes -- 'the root will remain stationary through two or more chords, while the chord type on that same root will change' (Chapter 23, p. 115) -- shifting function and key center through quality variation alone.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:turnaround-permutation/turnaround-endpoint-constraint",
+        "jerry-coker:patterns-for-jazz:turnaround-permutation/stationary-root-quality-permutation"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 118"
+        },
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 23 p. 115"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-polychord-upper-structure-from-extensions",
+      "narrative": "Coker prescribes two methods for constructing polychords over dominant seventh chords: use the given chord plus one of its substitutions, or build the upper triad from the ninth, eleventh, or thirteenth of the given chord -- 'proper choice of the added triad is achieved in one of two ways: either by using both the given chord and one of its substitutions; or by locating a second chord whose tones are made up of ninths, elevenths, or thirteenths of the given chord plus, perhaps, a tone or two from the given chord itself' (Chapter 25, p. 121). The added triad must not alter the bottom chord's dominant function (Chapter 25, p. 121).",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/polychord-upper-structure-selection"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 121"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-polychord-non-keyboard-alternation",
+      "narrative": "Coker prescribes that non-keyboard players (such as guitarists) achieve polychord effects through rhythmic alternation rather than simultaneous voicing, beginning with Pattern No. 180: 'a large number of polychordal possibilities are investigated as well as methods for putting polychords together in patterns that will permit a non-keyboard instrument to sound two chords together by alternation' (Chapter 25, p. 121). This is the book's specific technical prescription for implementing bitonal harmony on single-line instruments.",
+      "source_principle_ids": [
+        "jerry-coker:patterns-for-jazz:symmetrical-scale-reduction/polychord-upper-structure-selection"
+      ],
+      "source_work_id": "patterns-for-jazz",
+      "references": [
+        {
+          "source": "patterns-for-jazz",
+          "citation": "Chapter 25 p. 121"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}

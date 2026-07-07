@@ -1,0 +1,657 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-benson-vol-7-blues-ideas",
+    "stage": "s5",
+    "source_pdf": "Benson, George - The George Benson Method, Vol 7 (Ultimate Advanced Blues Ideas).pdf",
+    "extracted_at": "2026-07-07T10:24:26+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "benson",
+  "work_id": "method-vol-7-blues-ideas",
+  "usage_notes": [
+    {
+      "chord_quality": "dom7",
+      "function_role": "static-vamp-blues-scale-foundation",
+      "narrative": "Over a D7(9) dominant vamp, begin with Blues Scale ideas as the foundational layer before adding modal or superimposition vocabulary (Chapter 6, p. 27). The Blues Scale is the first of three escalating technique categories, not an advanced option to be skipped.",
+      "source_principle_ids": [
+        "maj7-superimposition-over-dominant",
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 6 p.27"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "static-vamp-mixolydian-lydian-dominant-hybrid",
+      "narrative": "Over D7(9), layer Mixolydian, Lydian Dominant, and Blues ideas simultaneously as a single combined approach -- not sequentially or in isolation (Chapter 6, p. 31). Hybrid ideas drawn from all three sources at once are the prescribed method.",
+      "source_principle_ids": [
+        "minor7-dorian-hybrid-preference",
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 6 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "static-vamp-maj7-arpeggio-superimposition",
+      "narrative": "Over D7(9) or any dominant-7th chord vamp, superimpose major-7th arpeggios while simultaneously drawing on Blues Scale, Mixolydian, and Lydian Dominant scale ideas (Chapter 6, p. 35). This three-layer blend constitutes the most advanced static dominant technique in the book.",
+      "source_principle_ids": [
+        "maj7-superimposition-over-dominant"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 6 p.35"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tempo-conditioned-fmaj7-substitution",
+      "narrative": "Over a dominant-7th chord vamp, the Fmaj7 interchangeable-chord substitution works better at faster tempos (Chapter 7, p. 38). This is one of the book's few explicitly tempo-conditioned substitution rules.",
+      "source_principle_ids": [
+        "regional-interchangeability"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 7 p.38"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-region-interchangeable-chord-substitution",
+      "narrative": "Over any dominant-7th chord, any chord from the same Harmonic Region may be substituted for it as an 'Interchangeable Chord Trick' (Chapter 7, p. 40). The regional relationship -- not voice-leading proximity alone -- licenses the swap.",
+      "source_principle_ids": [
+        "regional-interchangeability"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 7 p.40"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "scale-visualization-context-identity",
+      "narrative": "Even when two scales share enharmonically identical pitch content, they must be visualized differently when the harmonic context changes (Chapter 4, p. 17). For example, G Major Phrygian and C Harmonic Minor are the same pitches but must be mentally pictured as distinct depending on the dominant-chord situation.",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 4 p.17"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "tritone-substitution-of-iv-degree",
+      "narrative": "Over D7(#9) or any dominant with altered tensions, the IV-degree chord (e.g., C7) may be replaced by its tritone substitute (F#7 or Gb7), crossing into an adjacent dominant region (Chapter 8, p. 44).",
+      "source_principle_ids": [
+        "tritone-substitution-traversal"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 8 p.44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "subdominant-minor-region-substitution-gbmaj7",
+      "narrative": "Over D7(#9) -- or Bb7 functioning as the subdominant -- substitute Gbmaj7 derived from the Subdominant Minor region (Bbm) of the home key F (Chapter 8, p. 46). The derivation path is: parallel minor of the subdominant -> its relative chords, yielding Gbmaj7.",
+      "source_principle_ids": [
+        "minor-subdominant-region-traversal"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 8 p.46"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "minor-subdominant-region-emaj7-substitution",
+      "narrative": "Emaj7 can replace Bb7 by extending minor-tonality subdominant region rules into major tonalities: treat the home key's parallel minor (Fm), find its relative major (Ab), and extract Minor Subdominant Region chords from Ab -- yielding Emaj7 (Chapter 8, p. 50). This is the book's densest substitution derivation.",
+      "source_principle_ids": [
+        "minor-subdominant-region-traversal",
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 8 p.50"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "minor-subdominant-bm7-substitution",
+      "narrative": "Bm7 (a Minor Subdominant Region chord) may replace Bb7 (a Major Subdominant Region chord) over an altered dominant context, applying the regional interchangeability principle across subdominant region types (Chapter 8, p. 52).",
+      "source_principle_ids": [
+        "minor-subdominant-region-traversal",
+        "regional-interchangeability"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 8 p.52"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "dorian-scale-identity-for-non-diatonic-minor",
+      "narrative": "Any non-diatonic minor-7th chord used as a substitution (e.g., Bm7 replacing F7) must be treated as Dorian -- not as a diatonic mode of the home key -- because it does not belong to the home key's chord family (Chapter 10, p. 62).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.62"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "dorian-hybrid-preference-over-strict-modal",
+      "narrative": "Over non-diatonic minor-7th substitution chords, hybrid ideas (Dorian combined with altered tensions from the target dominant) tend to sound better than strict modal application (Chapter 9, p. 53; Chapter 10, p. 72). The aesthetic prescription is explicit: 'Usually hybrid ideas tend to sound better.'",
+      "source_principle_ids": [
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        },
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.72"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "superimposed-cadence-v-degree-stripping",
+      "narrative": "When a IIm7-V7-I cadence is superimposed over a dominant chord, strip the V7 degree: it loses tension-bearing capacity and collapses into the IIm7 Dorian, leaving only IIm7 and Imaj7 as active functional identities (Chapter 9, p. 53; Chapter 10, p. 69).",
+      "source_principle_ids": [
+        "superimposition-v-degree-strip"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        },
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "consecutive-minor7-chain-over-dominant",
+      "narrative": "A stepwise chain of consecutive minor-7th chords (e.g., Bbm7-Am7-G#m7) may substitute for a single dominant target; play Dorian or hybrid ideas over each member of the chain (Chapter 10, p. 70). G#m7 Dorian over D7 simultaneously produces a combination of D Altered and D Dominant Diminished sound.",
+      "source_principle_ids": [
+        "consecutive-minor7-chain-traversal",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.70"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "color-note-dual-function-flavor-generation",
+      "narrative": "When a minor-7th substitution chord contains a note that functions simultaneously at two interval roles, identify those dual-function pitches as primary flavor generators and foreground them in the melodic line (Chapter 12, p. 120).",
+      "source_principle_ids": [
+        "color-note-dual-function"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.120"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "dorian-superimposition-over-iim7-cadence",
+      "narrative": "In superimposed cadences, apply Dorian ideas over the IIm7 degree and Lydian ideas over its relative IV chord (Chapter 9, p. 53). For example, in C major: Dorian over Dm7, Lydian over Fmaj7.",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "superimposition-v-degree-strip"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "ebm7-dorian-replacing-bb7-via-minor-subdominant",
+      "narrative": "The cadence Ebm7/Ab7 replacing Bb7 should be considered as a single Ebm7 Dorian or Ebm7 hybrid chord derived from the Minor Subdominant Region (Bbm -> Gbmaj7 -> its relative Ebm7) of the home key (Chapter 11, p. 95).",
+      "source_principle_ids": [
+        "minor-subdominant-region-traversal",
+        "superimposition-v-degree-strip",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 11 p.95"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "cm7-dorian-replacing-half-diminished-via-harmonic-equivalence",
+      "narrative": "Cm7/F7 may replace A half-diminished because Ao is an inversion of Cm6, which equals F7(9); further, Cm7 Dorian and Ao Locrian share the same notes as both derive from the Bb key (Chapter 12, p. 100).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "superimposition-v-degree-strip"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "csharpm7-dorian-altered-tensions-over-c7",
+      "narrative": "C#m7/F#7 substituting for C7 should be read as a single C#m7 Dorian, which produces altered tensions (#9, b9, #11, b13) against C7; the note 'B' (minor 7th of C#m, major 7th of C) is the primary color note (Chapter 12, p. 110).",
+      "source_principle_ids": [
+        "color-note-dual-function",
+        "minor7-dorian-hybrid-preference",
+        "tritone-sub-exception-scale-expand"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.110"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "fsharpm7-dorian-hybrid-dom-dim-plus-alt-over-c7",
+      "narrative": "Reading the C#m7/F#7->C7 cadence as a single F#m7 Dorian or F#m7 hybrid produces a sound that combines C7 Dominant Diminished with C7alt; the note 'B' is again the pivotal color note (Chapter 12, p. 115).",
+      "source_principle_ids": [
+        "tritone-sub-exception-scale-expand",
+        "color-note-dual-function",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.115"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "lydian-scale-identity-for-non-diatonic-major-substitution",
+      "narrative": "Any non-diatonic major-7th chord used as a substitution (e.g., Bmaj7 replacing F7, or Gbmaj7/Emaj7 replacing Bb7) must be treated as Lydian; the Lydian scale over Bmaj7 simultaneously reveals the altered tensions of the target F7 (#9, b9, #11, b13) (Chapter 10, p. 60).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.60"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "superimposed-arpeggio-over-dominant",
+      "narrative": "Superimpose major-7th arpeggios over dominant-7th chord contexts, combining them with Blues Scale, Mixolydian, and Lydian Dominant scale vocabulary simultaneously (Chapter 6, p. 35).",
+      "source_principle_ids": [
+        "maj7-superimposition-over-dominant"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 6 p.35"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "relative-chord-superimposition-color-source",
+      "narrative": "In superimposed IIm7-I cadences, the relative major of the IIm7 (i.e., the IV, e.g., Fmaj7 relative to Dm7) and the relative minor of the Imaj7 (e.g., Am7 relative to Cmaj7) are always available as additional color sources (Chapter 9, p. 53).",
+      "source_principle_ids": [
+        "relative-chord-traversal",
+        "scale-visualization-context-assignment"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "bmaj7-lydian-bb-color-note-over-f7",
+      "narrative": "Bmaj7 substituting for F7 must be treated as Lydian; the note Bb (A#) -- the major 7th of B and the perfect 4th of F -- functions as a special dual-role color note that gives the substitution a distinctive flavor against F7 (Chapter 10, p. 60).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "color-note-dual-function"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.60"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "leading-tone-v7-substitute",
+      "narrative": "Diminished chords built on the root function as V7 substitutes because their notes lie a half step above the notes of the target dominant, creating multiple simultaneous leading tones (Chapter 8, p. 49).",
+      "source_principle_ids": [
+        "leading-tone-diminished-traversal"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 8 p.49"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "whole-step-leading-note-exception",
+      "narrative": "The leading-tone principle governing diminished-as-V7 substitution extends beyond the half-step: a note may function as a leading tone even if it is a whole step from its resolution target (Chapter 10, p. 63).",
+      "source_principle_ids": [
+        "leading-tone-diminished-traversal"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.63"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "b-diminished-as-c7-subdominant-substitute",
+      "narrative": "Bo (= Fo = E7 with different bass) substitutes for the Subdominant Region chord Bb7 by functioning as C7 (Dominant Region chord) leading to Fmaj7, with all notes of E7 (except the flat 7th) a half step from Fmaj7 tones (Chapter 10, p. 63).",
+      "source_principle_ids": [
+        "leading-tone-diminished-traversal",
+        "tritone-substitution-traversal"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.63"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "cm7-dorian-harmonic-equivalence-substitution",
+      "narrative": "A half-diminished chord (e.g., Ao) may be replaced by a Cm7/F7 cadence collapsed into single Cm7 Dorian identity, because Ao is an inversion of Cm6 = F7(9) (Chapter 12, p. 100).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "superimposition-v-degree-strip"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.100"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "lydian-dominant-over-tritone-substitute-v-degree",
+      "narrative": "When the V degree of a superimposed cadence is itself a tritone substitution of a real dominant in the harmony, expand available scale colors beyond Dorian to include Lydian Dominant or Dominant Diminished (Chapter 9, p. 53).",
+      "source_principle_ids": [
+        "tritone-sub-exception-scale-expand"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "ebm7-ab7-tritone-lydian-dominant-or-diminished",
+      "narrative": "The cadence Ebm7/Ab7 replacing D7 permits Ab7 Lydian Dominant or Ab7 Dominant Diminished because Ab7 is the tritone substitute of D7; alternatively, collapse the cadence to single Ebm7 Dorian or hybrid (Chapter 10, p. 72).",
+      "source_principle_ids": [
+        "tritone-sub-exception-scale-expand",
+        "relative-chord-traversal",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.72"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bm7-dorian-dominant-diminished-altered-hybrid-over-f7",
+      "narrative": "Bm7 Dorian substituting for F7 produces a combination sound between F Dominant Diminished and F Altered Scale, leading naturally toward Bb7 (Chapter 10, p. 62).",
+      "source_principle_ids": [
+        "scale-visualization-context-assignment",
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.62"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "turnaround-rest-phrasing",
+      "narrative": "During the turnaround bars (last two bars of the blues form), rest rather than play melodic ideas in order to phrase-separate choruses and create breathing space between melodic 'stories' (Chapter 12, p. 98).",
+      "source_principle_ids": [
+        "turnaround-rest-phrasing"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.98"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "turnaround-avoidance-of-melodic-focus",
+      "narrative": "The book explicitly states it will not focus on melodic possibilities for the short turnaround cadence -- the student should not treat the turnaround as a primary soloing opportunity but as a breathing space between choruses (Chapter 12, p. 98).",
+      "source_principle_ids": [
+        "turnaround-rest-phrasing"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 12 p.98"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "avoid-strict-modal-application-over-substitution-chord",
+      "narrative": "Do not apply strict diatonic modal thinking over non-diatonic minor-7th substitution chords; hybrid ideas (Dorian combined with altered dominant color) tend to sound better than pure modal application (Chapter 9, p. 53).",
+      "source_principle_ids": [
+        "minor7-dorian-hybrid-preference"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 9 p.53"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "avoid-v-degree-tension-in-superimposed-cadence",
+      "narrative": "When superimposing a IIm7-V7-I cadence, do not apply leading dominant 7th scale tensions over the V degree -- the V loses tension-bearing capacity under superimposition and becomes part of the IIm7 Dorian (Chapter 10, p. 69).",
+      "source_principle_ids": [
+        "superimposition-v-degree-strip"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 10 p.69"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "avoid-rote-line-repetition-without-concept-internalization",
+      "narrative": "Do not become a 'parrot' by memorizing and reciting lines without understanding their underlying harmonic concept; the lines are vehicles for internalizing harmony, not ends in themselves (Chapter 4, p. 21).",
+      "source_principle_ids": [
+        "line-to-concept-internalization"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 4 p.21"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "avoid-whole-form-study-before-section-mastery",
+      "narrative": "Do not study the whole blues form at once; each section and each harmonic possibility must be studied and mastered separately before assembling the full form (Chapter 4, p. 21). 'It is extremely important to understand that we should not study the whole form at once.'",
+      "source_principle_ids": [
+        "section-isolation-before-full-form"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 4 p.21"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "fmaj7-tempo-conditioned-substitution-at-slow-tempo",
+      "narrative": "The Fmaj7 interchangeable-chord substitution over a dominant vamp should not be the first-choice option at slower tempos -- the book states it might sound better with faster tempos (Chapter 7, p. 38).",
+      "source_principle_ids": [
+        "regional-interchangeability"
+      ],
+      "source_work_id": "method-vol-7-blues-ideas",
+      "references": [
+        {
+          "source": "method-vol-7-blues-ideas",
+          "citation": "chapter 7 p.38"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    }
+  ]
+}

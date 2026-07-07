@@ -1,0 +1,691 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-coker-elements-jazz-language",
+    "stage": "s5",
+    "source_pdf": "Coker, Jerry - Elements of the Jazz Language.pdf",
+    "extracted_at": "2026-07-07T10:29:37+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jerry-coker",
+  "work_id": "elements-of-the-jazz-language",
+  "usage_notes": [
+    {
+      "chord_quality": "min7",
+      "function_role": "change-running-arpeggiation",
+      "narrative": "Change-running (chord-arpeggiating) is the foundational device for the II-7 chord: the improviser arpeggiates the minor seventh chord to tune the ear to its structure, learn the progression, provide pickup notes, and clarify harmony. Coker states that a change-running phrase 'does not necessarily begin on the root of the chord, it may omit one or more chord members, and its direction can be ascending or descending or both' (p. 9). Practice across all 12 keys against exercise tracks that move in the cycle of fifths and chromatically.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 2 pp.8-9"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "seven-three-resolution-source",
+      "narrative": "The b7 of the II-7 chord is the operative pitch in the 7-3 resolution: it resolves down a half-step to the 3rd of the following V7 chord. Coker explains: 'In both situations the seventh (b7) of the first chord resolves to the third (3) of the second chord, hence the 7-3 designation' (p. 20). He further notes that 'Often the 3rd of the minor seventh chord will be pulled into the embellishment (along with the 7th, of course), since both the 3rd and 7th are crucial notes for determining or establishing chord-types' (p. 22).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 4 p.20"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 5 p.22"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "bebop-scale-dorian-variant",
+      "narrative": "The dorian bebop scale is the prescribed scale for minor seventh chords: it is the dorian mode with a chromatic note added between the 3rd and 4th degrees. Coker identifies this as 'the perfect anachronism to the chord quality with which it is used; that is, a major third against a minor seventh chord' -- the added major 3rd directly contradicts the chord's minor quality, yet is '99% consistent with what we find in analyzing transcribed solos' (p. 33). Even a 3-4 note fragment containing this chromatic note implies bebop-scale use.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.33"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 7 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "bebop-lick-primary-context",
+      "narrative": "The bebop lick 'is a specific melodic phrase, generally taking place on dominant seventh and minor seventh chords, and closely related to the bebop scale, using a portion of that scale in its structure' (p. 40). Coker prescribes: 'Begin, however, by learning the lick (motive) in its isolated form, against exercise tracks and tunes which have a preponderance of minor seventh chords and dominant seventh chords' (p. 44), then integrate it into longer melodic lines.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.40"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "cesh-application",
+      "narrative": "Although CESH's canonical setting is a minor chord of long duration, Coker extends its application to II-7 chords: 'the examples from recorded solos will reveal that improvisers will also use CESH on II-7 chords, V7 chords (the minor CESH will actually be built on the fifth of the V7, as in G [minor CESH] on a C7), or the II-V in combination' (p. 74). Students should practice CESH patterns in all keys against appropriate play-along tracks.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 12 p.74"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "harmonic-generalization-tonic-major",
+      "narrative": "The II-7 chord is fully covered by the tonic major scale as an instance of harmonic generalization: 'A D-7 chord (II of C) is usually interpreted with a D dorian scale, which is a C major scale that is re-circulated from D... Hence a progression of D-7, G7, C [major] could be realized by simply playing a C major scale or a pattern on that scale' (p. 45). This is the safest form of generalization, producing no collision tones.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "pentatonic-generalization",
+      "narrative": "A single C pentatonic scale covers A-7, D-7, and G-7 (among ten chord types total) with no collision tones: 'a C pentatonic scale (C, D, E, G, A) will fit C [major], F [major], Bb [major](+4), A-7, D-7, G-7, C7, G7(sus. 4), D7(sus. 4), and a Gb7 (+5, b9) with not one colliding [pitch]' (p. 45). This makes pentatonic generalization the safest harmonic generalization strategy available.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "practice-regimen-ii-v-cells",
+      "narrative": "Coker prescribes a targeted practice approach for 7-3 resolution work centered on the II-7 chord: 'practice them with exercise tracks and tunes on play-alongs that contain a large number of II-V cells' (p. 24). When using stereo play-alongs, he recommends turning off the piano channel to test effectiveness of 7-3 resolutions without chordal accompaniment, eventually practicing with no accompaniment at all.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 5 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "track-aa-half-diminished-substitution",
+      "narrative": "In Track AA practice contexts, Coker specifies that the half-diminished chord substitutes for the minor seventh: 'the letters of the root sequence for Track AA is the same as that for Track Y (C, F, Bb, Eb, Ab, etc.)' but with half-diminished chords replacing minor sevenths (p. 32). This substitution rule applies specifically to the Track AA exercise context and introduces the minor II chord of the minor II-V progression.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.32"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "seven-three-resolution-target",
+      "narrative": "The 3rd of the V7 chord is the resolution target in the 7-3 device: 'the seventh (b7) of the first chord resolves to the third (3) of the second chord, hence the 7-3 designation' (p. 20). Coker grounds this as primarily a voice-leading and melodic device, not a suspension: 'we are now simply concerned with the smooth connection (voice-leading) of two chords, especially with respect to melodic, rather than harmonic, implications.' Two notes thus imply two chords with maximum efficiency.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 4 p.20"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "three-flat-nine-device",
+      "narrative": "The 3-b9 device targets the dominant seventh chord exclusively: '3-b9 refers to melodic motion from the 3rd of a dominant seventh chord to the flatted 9th of the same chord, an extremely common occurrence in improvised solos' (p. 26). The motion is bidirectional ('Sometimes the soloist will move from the 3rd up to the b9, sometimes from the 3rd down to the b9') and may be executed by leap or with scalar fill. Coker chains it with 7-3: 'The 7-3 resolution by definition, ends on the 3rd of the dominant chord. Therefore that 3rd could now proceed to the b9' (p. 26).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 5 p.26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "device-chaining-pivot-note",
+      "narrative": "The 3rd of the V7 chord serves as a pivot note linking two devices: 'The 7-3 resolution and 3-b9 present our first opportunity to observe that potential... The 7-3 resolution by definition, ends on the 3rd of the dominant chord. Therefore that 3rd could now proceed to the b9, causing the two devices to overlap, with the 3rd serving as both the resolution tone of the 7-3 and the beginning of the 3-b9' (p. 26). This chaining creates compound gestures larger than either device alone.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 5 p.26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bebop-scale-mixolydian-variant",
+      "narrative": "The mixolydian bebop scale is prescribed for dominant seventh chords: the added chromatic note is 'the half-step between the seventh degree and the octave of the first degree' (p. 33). Coker identifies this as 'the perfect anachronism to the chord quality with which it is used; that is... a major seventh against a dominant seventh' -- directly contradicting the chord's b7 quality -- yet it is '99% consistent with what we find in analyzing transcribed solos' (p. 33). Coltrane uses this bebop scale pattern 21 times in an 8-chorus solo on a 16-bar tune.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.33"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 7 pp.45-46"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bebop-lick-primary-context",
+      "narrative": "The bebop lick 'is a specific melodic phrase, generally taking place on dominant seventh and minor seventh chords, and closely related to the bebop scale, using a portion of that scale in its structure' (p. 40). Coker prescribes learning it in isolated form first against tracks with 'a preponderance of minor seventh chords and dominant seventh chords' (p. 44), then weaving it into longer lines. Its application to tritone substitution contexts is a further extension.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.40"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "bebop-lick-tritone-substitution-extension",
+      "narrative": "Coker extends the bebop lick's application beyond its basic dom7 context: 'Another interesting way to apply the bebop lick against dominant seventh chords is to use it as a means of playing tri-tone substitutions (or altered dominants), an element that will be taken up later in this book' (p. 44). This implies playing the bebop lick starting on the root of the tritone-substituted chord while the underlying chord is the original dominant seventh.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "cesh-application-on-fifth",
+      "narrative": "CESH is applicable over V7 chords by constructing the minor CESH on the fifth of the dominant: 'improvisers will also use CESH on... V7 chords (the minor CESH will actually be built on the fifth of the V7, as in G [minor CESH] on a C7)' (p. 74). This extends CESH beyond its canonical minor-chord-of-long-duration context into the II-V motion.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 12 p.74"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "harmonic-generalization-tonic-major",
+      "narrative": "The V7 chord is covered by the tonic major scale under harmonic generalization: 'A G7 chord uses, among other possibilities, a G mixolydian scale, which again, is a C major scale beginning on G. Hence a progression of D-7, G7, C [major] could be realized by simply playing a C major scale or a pattern on that scale' (p. 45). The C pentatonic also covers C7 and G7sus with no collision tones.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tritone-substitution",
+      "narrative": "Dominant seventh chords are the primary target for tritone substitution: 'Tri-tone substitution is the substituting, especially of dominant seventh chords, with a chord of the same type whose root is a tri-tone (diminished fifth or augmented fourth interval, or simply three whole-steps) away from the given chord, as in substituting an F#7 for a C7' (p. 82). The substitutions sound consonant because 'the listener's ear hears the given precedents for the event, instead of the conflict with the V7.'",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.82"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "back-door-progression-substitute",
+      "narrative": "The IV-7 to bVII7 back door progression substitutes for V7: 'The I chord, in a given progression, is often preceded by IV-7 to bVII7, instead of the usual V7 chord. This common practice has led to improvisers using that progression (called the back door progression) even when the given chord is V7' (p. 82). Appendix B prescribes playing CMAR or GBNF starting on the 9th of the substitute chord, or the bebop lick on the 4th.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.82"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 17 p.116"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "sharp-ii-diminished-seventh-substitute",
+      "narrative": "The #II dim7 chord may be used to substitute for V7: 'Like the back door progression, the #II dim7 is often used to precede the I chord (or III-7, a substitute for I) in a given progression, leading to the improvised use of #II dim7 in place of a given V7 chord' (p. 82). Coker explains this works because 'the listener's ear hears the given precedents for the event, instead of the conflict with the V7.'",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.82"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "three-flat-nine-practice-contexts",
+      "narrative": "Coker prescribes specific harmonic contexts for practicing the 3-b9 device against dom7: 'The harmonic settings that are most appropriate are dominant seventh chords, dominant seventh chords moving around the cycle of fifths, II-7 to V7 cells moving downward in whole steps, and II-7 to V7 (alt.) moving downward in whole steps' (p. 31). These four practice contexts systematically cover the most common real-tune dominant-seventh settings.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "cry-me-a-river-lick-starting-point",
+      "narrative": "The Cry Me A River lick starts on the 13th of a dominant seventh chord: the lick 'starts on the: ninth of the -7 chord / thirteenth of the 7 chord / fourth of the [major] chord / augmented ninth of the 7 (+5, +9) chord / major seventh of the [+5 major] chord' (p. 73). Because the lick accommodates five chord types without alteration, its application to dom7 (starting on the 13th) is one of its highest-frequency uses.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.73"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "altered-dominant-definition",
+      "narrative": "Coker defines the altered dominant precisely: 'The altered dominant is a dominant seventh chord which contains, in its complete realization, an augmented fifth (+5), a flatted ninth (b9), an augmented ninth (+9), and an augmented eleventh (+11, or +4). Tri-tone substitutions and altered dominants are nearly identical, as shown below' (p. 82). The structural near-identity to the tritone substitute is the theoretical basis for their interchangeability in improvisation.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.82"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "bebop-lick-extension-to-altered",
+      "narrative": "The bebop lick can be deployed over dom7 chords to imply altered dominant sounds: 'Another interesting way to apply the bebop lick against dominant seventh chords is to use it as a means of playing tri-tone substitutions (or altered dominants), an element that will be taken up later in this book' (p. 44). This makes the bebop lick a gateway to altered harmony without requiring a full structural understanding of the altered dominant.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 8 p.44"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "cry-me-a-river-lick-starting-point",
+      "narrative": "The Cry Me A River lick starts on the +9 of the altered dominant: the lick starts on the 'augmented ninth of the 7 (+5, +9) chord' (p. 73). Since the lick accommodates five chord types without alteration, practitioners should identify and memorize the +9 starting tone for each key to deploy the lick fluently over altered dominant chords. The Gone But Not Forgotten lick is prescribed for the same five chord contexts.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.73"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "track-aa-substitution-for-unaltered-dominant",
+      "narrative": "Track AA prescribes using altered dominants in place of unaltered dominants as a systematic practice context: 'the letters of the root sequence for Track AA is the same as that for Track Y (C, F, Bb, Eb, Ab, etc.)' but with the altered dominant (and half-diminished for minor seventh) substituting throughout (p. 32). This trains the ear to hear and use altered dominants across the cycle of fifths.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.32"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "practice-in-ii-v-alt-whole-step-descent",
+      "narrative": "Coker prescribes a specific practice context for the 3-b9 device leading into altered dominant territory: 'II-7 to V7 (alt.) moving downward in whole steps' (p. 31) is one of the four recommended harmonic sequences. This context prepares the improviser for altered dominant usage in real-tune progressions by drilling the II-V motion with the altered dominant as the target chord.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "pentatonic-generalization-gb7-alt",
+      "narrative": "The C pentatonic scale covers the Gb7 altered dominant without collision tones: 'a C pentatonic scale (C, D, E, G, A) will fit... a Gb7 (+5, b9) with not one colliding [pitch]' (p. 45). This is the most harmonically distant of the ten chord types covered by a single pentatonic and demonstrates the device's particular value for handling tritone-substituted altered dominants.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "change-running-arpeggiation",
+      "narrative": "Change-running over the tonic major chord is the most fundamental improvisational device: 'Change is a synonym for chord. Running is a synonym for arpeggiating' (p. 8). Its functions include tuning the improviser's ear to the chord structure, reinforcing form, and providing pickup notes. Structural freedoms apply: the phrase 'does not necessarily begin on the root of the chord, it may omit one or more chord members, and its direction can be ascending or descending or both' (p. 9).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 2 pp.8-9"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "bebop-scale-major-variant",
+      "narrative": "The major bebop scale is prescribed for major tonic chords: 'The added chromatic note in the major scale is the half-step between the fifth and sixth degrees of the scale' (p. 33). Unlike the dorian and mixolydian variants, the added chromatic note in the major bebop scale does not produce an anachronism -- it does not contradict the chord quality. Practitioners need only a 3-4 note fragment containing the chromatic note to imply bebop scale use (p. 45).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.33"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 7 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "harmonic-generalization-tonic-scale",
+      "narrative": "The tonic major scale is the simplest and safest harmonic generalization, covering II-7, V7, and I in a single scale: 'a progression of D-7, G7, C [major] could be realized by simply playing a C major scale or a pattern on that scale (especially non-terminal patterns). There won't be any wrong notes' (p. 45). This is Coker's first and most accessible harmonic generalization strategy.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "pentatonic-generalization",
+      "narrative": "The C pentatonic covers C major and F major (among ten chord types) without collision tones: 'a C pentatonic scale (C, D, E, G, A) will fit C [major], F [major], Bb [major](+4), A-7, D-7, G-7, C7, G7(sus. 4), D7(sus. 4), and a Gb7 (+5, b9) with not one colliding [pitch]' (p. 45). The pentatonic's five-note structure minimizes risk of harmonic conflict across multiple chord qualities.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj",
+      "function_role": "cry-me-a-river-lick-starting-point",
+      "narrative": "The Cry Me A River lick starts on the 4th of a major chord: the lick 'starts on the... fourth of the [major] chord' (p. 73). The lick's extraordinary versatility -- 'capable of accommodating five different chord-types without being altered' -- makes the 4th-of-major entry one of five equally valid deployment points, each targeting a different chord quality.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.73"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "cesh-canonical-context",
+      "narrative": "CESH's primary harmonic setting is the minor chord of long duration: 'The supposed harmonic setting for a CESH to take place is a minor chord of long duration' (p. 74). Of the four varieties, 'the most common one by far is [the variety] in minor, with the root in motion, and that is the type upon which we will focus for this segment' (p. 62). Students should anchor CESH learning to familiar standard-repertoire melodies that use this device.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 11 p.62"
+        },
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 12 p.74"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "cesh-four-varieties-taxonomy",
+      "narrative": "Coker enumerates four CESH varieties: minor and major, each with either root or fifth in motion -- yielding minor/root-in-motion, minor/fifth-in-motion, major/root-in-motion, and major/fifth-in-motion (p. 62). The minor/root-in-motion variety is 'the most common one by far' and is the primary study focus. Real solos frequently present incomplete or embellished CESH forms: 'Sometimes an improviser will render an incomplete CESH... At other times the player will decorate or embellish a CESH to the point that the novice may have difficulty recognizing it' (p. 62).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 11 p.62"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min",
+      "function_role": "harmonic-minor-over-minor-ii-v-i",
+      "narrative": "The harmonic minor scale may be used over minor II-V-I progressions as a generalization despite producing collision tones. Coker justifies this on three grounds: '(1) most II-V-I progressions in minor transpire about twice as quickly (shorter chord durations) as their major counterpart; (2) although each of the three chords requires a different scale, the sum total of the effect on the hearer is a minor key; and (3) most players instinctively avoid the collision tones, perhaps because their ears warn them in advance of the potential danger' (p. 46).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 pp.45-46"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "track-aa-substitution-for-minor-seventh",
+      "narrative": "Track AA substitutes the half-diminished chord for the minor seventh as a deliberate practice device: 'the letters of the root sequence for Track AA is the same as that for Track Y (C, F, Bb, Eb, Ab, etc.)' but with half-diminished replacing minor seventh chords (p. 32). This prepares improvisers for the minor II chord in minor II-V-I progressions, where the II chord is typically a half-diminished (min7b5) rather than a plain minor seventh.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 6 p.32"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "diminished-scale-generalization-over-minor-ii-v",
+      "narrative": "The diminished scale can generalize over the minor II (half-diminished) and V together: 'another variation comes about when an improviser combines the II and V chords in a minor key (but not the I chord) under a single diminished scale. Again, there are collision tones present, but it can and does work, especially in the hands of the more capable improviser' (p. 46). This is an advanced extension beyond harmonic minor generalization and requires instinctive avoidance of collision tones.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.46"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "sharp-ii-diminished-seventh-as-v7-substitute",
+      "narrative": "The #II dim7 chord is prescribed as a V7 substitute in improvisation: 'Like the back door progression, the #II dim7 is often used to precede the I chord (or III-7, a substitute for I) in a given progression, leading to the improvised use of #II dim7 in place of a given V7 chord' (p. 82). This works perceptually because 'the listener's ear hears the given precedents for the event, instead of the conflict with the V7,' with otherwise anachronistic notes like the 4th and major 7th rendered consonant by the ear's precedent memory.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 15 p.82"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "pentatonic",
+      "function_role": "single-pentatonic-covers-ten-chord-types",
+      "narrative": "A single C pentatonic scale covers ten chord types without any collision tones: 'a C pentatonic scale (C, D, E, G, A) will fit C [major], F [major], Bb [major](+4), A-7, D-7, G-7, C7, G7(sus. 4), D7(sus. 4), and a Gb7 (+5, b9) with not one colliding [pitch]' (p. 45). Coker frames this as the safest harmonic generalization available: 'This reduces the risk of colliding pitches and opens up the possibility of searching for notes that are common to several successive chords.'",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "chapter 9 p.45"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "back-door-iv-minor-seventh",
+      "narrative": "When a Back Door substitution is chosen, Coker prescribes that the improviser may play the Cry Me A River lick or the Gone But Not Forgotten lick starting on the 9th of the BD substitute chord, or alternatively a Bebop Lick starting on the 4th of that chord. The IV-7 chord (e.g., F-7 resolving to bVII7 to I) thus carries specific melodic content: 'Whenever a BD is chosen, CMAR or GBNF may be played, starting on 9th of BD substitute, or a BBL on the 4th' (Chapter 17, p. 119).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "back-door-bvii-dominant-seventh",
+      "narrative": "Within the Back Door substitution (IV-7 to bVII7 replacing V7), the bVII7 dominant chord is the resolution target of the BD move. Coker's melodic rule for this chord states: 'Whenever a BD is chosen, CMAR or GBNF may be played, starting on 9th of BD substitute, or a BBL on the 4th' (Chapter 17, p. 119). The 'BD substitute' referenced is the bVII7 itself, so the 9th of bVII7 and the 4th of bVII7 are the prescribed melodic starting points.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "ii-v-harmonic-generalization-two-beat-chord",
+      "narrative": "When a II-V progression occupies a single measure with two beats per chord, Coker prescribes using only one scale for the entire measure rather than switching scales mid-bar: 'Whenever a II-V progression occurs in one measure (2 beats for each chord), only one scale is given for the whole measure, since both chords are accommodated by the same pitches' (Chapter 17, p. 117).",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 117"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "ii-v-harmonic-generalization-two-beat-chord",
+      "narrative": "When a II-V progression compresses to two beats per chord in a single measure, Coker prescribes a single dorian/mixolydian scale covering both the -7 and the 7 chord: 'the notes of a Bb dorian scale (for a Bb-7) are identical to the notes of the Eb mixolydian or dominant scale (for an Eb7)' (Chapter 17, p. 117). The dominant 7 chord in this context is subsumed into the shared harmonic generalization.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 117"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "tritone-substitute-built-into-urbane-blues",
+      "narrative": "In the annotated play-along progression 'Urbane Blues,' Coker embeds two 'built-in' examples of tri-tone substitution -- one in measure 4, one in measure 10 -- both flagged with the abbreviation TT/AD (Tri-Tone substitution / Altered Dominant) in the second annotated version (Chapter 17, p. 117). This confirms that the altered dominant chord and its tritone substitute are structurally equivalent in Coker's system.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 117"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "root-avoidance-weakest-tone",
+      "narrative": "Coker warns that when all scales are mentally rooted on the chord root, 'the player is more subject to over-using the root, which is a questionable practice, since the root is generally the weakest note of a chord, sounding simplistic and redundant' (Chapter 17, p. 116). The root of any dominant 7 chord is explicitly identified as the weakest tone, and scales in the book sometimes begin off the root to discourage this over-use.",
+      "source_principle_ids": [],
+      "source_work_id": "coker-elements-jazz-language",
+      "references": [
+        {
+          "source": "coker-elements-jazz-language",
+          "citation": "Chapter 17 p. 116"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    }
+  ]
+}

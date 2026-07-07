@@ -1,0 +1,188 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-benson-vol-6-giant-lines",
+    "stage": "s5",
+    "source_pdf": "Benson, George - The George Benson Method, Vol 6 (The Secret of the Giant Lines).pdf",
+    "extracted_at": "2026-07-07T10:07:47+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "benson",
+  "work_id": "method-vol-6-giant-lines",
+  "usage_notes": [
+    {
+      "chord_quality": "dom7",
+      "function_role": "outside-line-superimposition",
+      "narrative": "For a D7 chord, Benson prescribes playing small A7 ideas in the middle of the line to create an outside effect -- the First GB Chord Transition technique. The substitution chord is superimposed momentarily within the single-note line, not comped, to generate harmonic color. Chapter 9, p. 26.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:outside-entry-superimpose"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 9, p. 26"
+        }
+      ],
+      "provenance": "extracted",
+      "cross_ref": [
+        "outside-duration-ceiling-dom7"
+      ]
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "outside-line-duration-limit",
+      "narrative": "Do not stay on the A7 substitution idea too long over D7 -- exceeding the effective threshold destroys the outside effect and tips the line into mere dissonance rather than colorful tension. The outside superimposition is a flash move, not a sustained region. Chapter 9, p. 26.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:outside-duration-limit"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 9, p. 26"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "outside-line-superimposition-dom7"
+      ]
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-i-mini-cadence-inside-line",
+      "narrative": "The Second GB Chord Transition prescribes embedding a mini V7-I cadence within a single-line idea over D7 -- specifically D7 leading to G major -- as an additional outside device distinct from the A7 superimposition. The relative minor (Em for G) then unlocks a further set of dominant scale options for the line. Chapter 9, p. 26.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:v7-i-cadence-superimpose"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 9, p. 26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "outside-line-ending-note-rule",
+      "narrative": "Any single-line idea -- inside or outside -- constructed over D7 must end on a chord tone of D7. This Ending Note Rule applies universally to all the outside-effect lines in the chapter; harmonic coherence is restored at the conclusion of each line regardless of how far outside it travels. Chapter 9, p. 26.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:resolution-note-chord-tone-rule"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 9, p. 26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "mixolydian-family-b7-outside-device",
+      "narrative": "Because D Mixolydian derives from the Em chord family, Benson prescribes using B7 ideas leading to Em as a 'very beautiful' outside device over a single D7. The justification is modal-family coherence: the Mixolydian mode's parent chord family supplies the secondary dominant that generates the outside color. Chapter 9, p. 31.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:modal-family-outside-entry"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 9, p. 31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "static-giant-line-inside-and-outside",
+      "narrative": "For Dm7 in a static (one-chord vamp) context, Benson organizes the melodic vocabulary into both 'inside' and 'outside' categories, presenting worked examples of each as Giant Lines. The student is expected to practice both categories systematically over the sustained Dm7 before moving to active (changing-chord) contexts. Chapter 11, pp. 60-90.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:outside-entry-superimpose"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 11, pp. 60-90"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "active-line-major7-superimposition-for-minor-resolution",
+      "narrative": "When a dominant 7th (A7) resolves to a minor tonic (Dm7), Benson prescribes using major-7th superimposed ideas over A7 to strengthen the pull toward Dm7. These same major-7th superimposed options over C7 leading to Fmaj7 may sound too tense or even incorrect, and are not recommended in that context. Chapter 13, p. 77.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:major7-superimpose-for-minor-resolution"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 13, p. 77"
+        }
+      ],
+      "provenance": "extracted",
+      "cross_ref": [
+        "active-line-major7-superimposition-avoid-major-resolution-dom7"
+      ]
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "active-line-major7-superimposition-avoid-major-resolution",
+      "narrative": "Do not apply major-7th superimposed ideas over C7 when it leads to Fmaj7 -- these options may sound too tense or even incorrect in that cadential context. The major-7th superimposition is prescribed for dominant-to-minor resolutions (A7 -> Dm7) only, not for dominant-to-major resolutions (C7 -> Fmaj7). Chapter 13, p. 77.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:major7-superimpose-for-minor-resolution"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 13, p. 77"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "active-line-major7-superimposition-for-minor-resolution-dom7"
+      ]
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "active-giant-line-guide-chord-visualization",
+      "narrative": "For Dm7 in active (changing-chord) contexts, Benson prescribes mapping single-note melodic fingerings directly onto guide chord shapes as the concrete fretboard method for internalizing Active Giant Lines. The student visualizes the guide chord shape under the fingers while executing the single-line melody. Chapter 13, p. 77.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:single-line-harmony-link"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapter 13, p. 77"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "flux-reflux-tension-and-release",
+      "narrative": "Over a sustained D7(9) vamp, Benson prescribes constructing Giant Lines that create and release harmonic tension within the line itself -- the Flux and Reflux technique. Chapters 5 and 7 deepen this practice progressively, establishing that tension generation and resolution is a trainable melodic skill. Chapters 5 and 7, pp. 15-37.",
+      "source_principle_ids": [
+        "benson:method-vol-6-giant-lines:outside-substitution:outside-entry-superimpose"
+      ],
+      "source_work_id": "method-vol-6-giant-lines",
+      "references": [
+        {
+          "source": "method-vol-6-giant-lines",
+          "citation": "chapters 5 and 7, pp. 15-37"
+        }
+      ],
+      "provenance": "extracted"
+    }
+  ]
+}
