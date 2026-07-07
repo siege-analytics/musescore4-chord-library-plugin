@@ -1,0 +1,928 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-felts-reharmonization-techniques",
+    "stage": "s5",
+    "source_pdf": "Felts, Randy - Reharmonization Techniques (2002).pdf",
+    "extracted_at": "2026-07-07T12:49:16+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "randy-felts",
+  "work_id": "reharmonization-techniques",
+  "usage_notes": [
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-family-member",
+      "narrative": "IMaj7 anchors the tonic family alongside III-7 and VI-7; all three are interchangeable via simple substitution because none contains the fourth scale degree, making them acoustically stable and suited for phrase endings (Chapter 1, p. 6). Any of the three may be chosen as the first chord of a turnaround (Chapter 8, p. 74).",
+      "source_principle_ids": [
+        "TR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.6"
+        },
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 8 p.74"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "notation-seventh-chord-baseline",
+      "narrative": "Seventh chords replace bare triads as the baseline vocabulary in jazz chord notation; writing IMaj7 and IVMaj7 instead of I and IV makes harmonic function analytically legible to performers (Chapter 7, p. 65-66).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.65-66"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "tonic-substitute-via-iii-vi",
+      "narrative": "Chords rooted on III and VI carry tonic function and may substitute for IMaj7 throughout -- in simple substitution, turnarounds, extended endings, and modulatory interludes (Chapter 1, p. 6; Chapter 9, p. 87).",
+      "source_principle_ids": [
+        "TR-TPT-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.6"
+        },
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 9 p.87"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "extended-ending-target",
+      "narrative": "An extended ending must resolve to a final major-seventh chord in a new key via deceptive cadence following the original V7, using motivic melodic material from the song; the target quality is specifically Maj7, not a dominant or minor chord (Chapter 9, p. 86).",
+      "source_principle_ids": [
+        "MR-TPT-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 9 p.86"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "subdominant-tritone-tolerance",
+      "narrative": "IVMaj7 tolerates the #4/tritone in the melody -- unlike its subdominant substitute II-7, which does not -- even though both chords share subdominant function; the presence of a specific melody note can override family-membership substitution permission (Chapter 1, p. 11).",
+      "source_principle_ids": [
+        "TR-FSG-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.11"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "diatonic-tension-notation",
+      "narrative": "Diatonic tensions 9 and 13 are stylistically implied on Maj7 chords in standard jazz style and should be omitted from the chord symbol; writing them out explicitly is considered overkill and implies instead that a specific voicing is being prescribed (Chapter 7, p. 67).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.67"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "line-cliche-primary-target",
+      "narrative": "Line cliches -- chromatic stepwise motion (typically half-steps) between the fifth and root -- are most commonly applied to the tonic (I) chord, which is the normative home of the technique; applying them elsewhere risks causing the listener to hear the embellished chord as a new tonic (Chapter 11, p. 109).",
+      "source_principle_ids": [
+        "MR-VLV-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 11 p.109"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "turnaround-overly-complex-symbol",
+      "narrative": "Overly complex slash chord symbols like E-7/C obscure tonic function; the prescription is to simplify to CMaj7 or G7sus4 when these symbols reveal the same vertical pitches more clearly in terms of harmonic function (Chapter 7, p. 70).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.70"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "bviimaj7-nondiatonic-permitted-substitute",
+      "narrative": "bVIIMaj7 is the one nondiatonic chord permitted in diatonic approach technique; it blends smoothly with diatonic choices because it is diatonic to the parallel Dorian scale and produces a rich sound without overpowering other diatonic chords (Chapter 2, p. 22).",
+      "source_principle_ids": [
+        "TR-FSG-07"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 2 p.22"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "modal-reharmonization-lydian-pedal-requirement",
+      "narrative": "In Lydian modal reharmonization, the #11 (the defining Lydian dissonance) requires a tonic pedal to be heard correctly; without the pedal the #11 is likely to be perceived as a structural error rather than a modal color (Chapter 13, p. 123-145).",
+      "source_principle_ids": [
+        "TR-MCS-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 13 p.123-145"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "third-inversion-prerequisite",
+      "narrative": "Third-inversion Maj7 chords (seventh in the bass) require a root-position form of the same chord immediately before them; without this context the third-inversion voicing is heard as an incomplete voicing built on the bass note rather than as an inversion of the intended chord (Chapter 6, p. 55; Chapter 10, p. 101).",
+      "source_principle_ids": [
+        "TR-VLV-05"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 6 p.55"
+        },
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 10 p.101"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "tonic-or-subdominant-family-member",
+      "narrative": "III-7 and VI-7 belong to the tonic family and may substitute for IMaj7; II-7 belongs to the subdominant family. All three qualify as valid simple substitutions for their respective family members, subject to the b9 and tritone gate conditions (Chapter 1, p. 6-7).",
+      "source_principle_ids": [
+        "TR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.6-7"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "tritone-avoidance-on-ii-7",
+      "narrative": "Avoid using a 13 or b13 in the lead of II-7 chords: the 13 produces a tritone with the chord's third, and reserving that tritone energy for the following V7 produces a more satisfying cadential flow (Chapter 1, p. 11).",
+      "source_principle_ids": [
+        "TR-FSG-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.11"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "tritone-avoidance-general",
+      "narrative": "The tritone (#4/b11) melody/harmony interval on minor seventh chords is disallowed across all substitution contexts because it destroys the chord's subdominant or tonic function by making it sound like a dominant structure (Chapter 1, p. 11).",
+      "source_principle_ids": [
+        "TR-FSG-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.11"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "interpolated-chord-in-dominant-chain",
+      "narrative": "The most common interpolated chord in an extended dominant chain is a minor seventh placed between two dominants; this briefly delays resolution and yields a slightly smoother texture than an unbroken chain of dominant sevenths (Chapter 3, p. 31-33).",
+      "source_principle_ids": [
+        "MR-FSG-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.31-33"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "displacement-special-case-b3-lead",
+      "narrative": "When a min7 chord with b3 in the melody lead is displaced by a II-V7 pattern a half step higher, the b3 is recontextualized as tension 9 on the II-7 of the newly inserted pattern (Chapter 4, p. 40-41).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.40-41"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "displacement-special-case-b5-lead",
+      "narrative": "When a min7 chord with b5 in the melody lead is displaced by a II-V7 pattern a half step higher, the b5 is recontextualized as tension 11 on the II-7 of the newly inserted pattern (Chapter 4, p. 40-41).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.40-41"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "bass-line-chord-tone-rule",
+      "narrative": "In bass-line reharmonization, bass notes generating minor seventh chords must be treated as chord tones (1, 3, 5, or 7), not extensions (9, 11, 13); treating them as extensions produces hybrid voicings or overly complex chord symbols (Chapter 6, p. 54).",
+      "source_principle_ids": [
+        "MR-VLV-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 6 p.54"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "chromatic-ii-v7-pattern",
+      "narrative": "A chromatic II-V7 pattern pairs a minor seventh chord (or min7b5) with a dominant seventh a half step below; the root motion is chromatic and the two chords function as subdominant-to-dominant (Chapter 12, p. 119).",
+      "source_principle_ids": [
+        "TR-FSG-08"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "modal-interchange-minor-melody-clash",
+      "narrative": "Minor-quality modal interchange chords (such as I-7, IV-, V-7) clash with melodies containing the major third, producing a b9 interval; melody compatibility is the governing constraint (Chapter 5, p. 45-52).",
+      "source_principle_ids": [
+        "TR-FSG-07"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 5 p.45-52"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "modal-interchange-three-chord-limit",
+      "narrative": "Use no more than three consecutive modal interchange chords before returning to diatonic harmony; exceeding this limit risks creating tonal ambiguity because the listener loses the sense of the home key (Chapter 5, p. 45-52).",
+      "source_principle_ids": [
+        "TR-FSG-07"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 5 p.45-52"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "dorian-modal-tonic-cadential-approach",
+      "narrative": "In Dorian modal reharmonization, the I-7 chord is placed in strong rhythmic positions and approached by a two-chord cadence specific to Dorian mode (II-7 -> I-7); the modal key must be sustained for at least four bars (Chapter 13, p. 124).",
+      "source_principle_ids": [
+        "TR-MCS-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 13 p.124"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "line-cliche-nontonic-overuse-warning",
+      "narrative": "Repeated use of a line cliche on a chord other than the tonic I may cause the listener to hear the embellished chord as a new I chord, weakening the sense of key; overuse on non-tonic minor seventh chords is specifically warned against (Chapter 11, p. 109).",
+      "source_principle_ids": [
+        "MR-VLV-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 11 p.109"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "dominant-family-member",
+      "narrative": "VII-7(b5) belongs to the dominant family alongside V7, because it shares the tritone formed by scale degrees 4 and 7; it may substitute for V7 in dominant-family contexts (Chapter 1, p. 7).",
+      "source_principle_ids": [
+        "TR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.7"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "displacement-b5-lead-transformation",
+      "narrative": "The b5 displacement rule applies specifically to the min7(b5) chord: when b5 is in the lead, displacement by a half-step II-V7 pattern converts the b5 to tension 11 on the II-7 (Chapter 4, p. 41).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.41"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "chromatic-ii-v7-subdominant-role",
+      "narrative": "A minor 7(b5) may serve as the II chord in a chromatic II-V7 pattern, paired with a dominant seventh a half step below (Chapter 12, p. 119).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "hybrid-upper-layer-forbidden",
+      "narrative": "Do not use a minor 7(b5) structure as the upper layer of a hybrid voicing; when combined with the bass note, it tends to sound like a more traditional chord voicing rather than producing the characteristic ambiguous altered-dominant texture (Chapter 14, p. 147).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.147"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "dominant-family-core-member",
+      "narrative": "V7 is the primary dominant-family chord; its forward motion derives from the tritone formed between scale degrees 4 and 7. Dominant chords almost always precede phrase endings and typically resolve to a tonic-family chord (Chapter 1, p. 7).",
+      "source_principle_ids": [
+        "TR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.7"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "tritone-substitution-target",
+      "narrative": "Any dominant seventh chord may be replaced by the dominant seventh a tritone away (the subV7), because both chords share the same tritone interval (Chapter 3, p. 28).",
+      "source_principle_ids": [
+        "TR-FSG-05"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.28"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "displacement-preferred-target",
+      "narrative": "Cadential dominant seventh chords are the preferred targets for displacement because they anchor phrase structure; displacing them creates a noticeable shift in harmonic shape (Chapter 4, p. 37).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.37"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "displacement-approach-options",
+      "narrative": "Displaced dominant seventh chords may be approached by: a related II-7 forming a II-V7 pattern, another dominant a perfect fifth above, a dominant a half step higher, or any other technique in the book (Chapter 4, p. 37).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.37"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "extended-chain-density-management",
+      "narrative": "Extended dominant chains must not be overused; at medium-to-fast tempos, chords should appear only on strong beats (1 and 3) to maintain the extended-dominant sound while preventing hyperactive harmonic rhythm (Chapter 3, p. 30-32).",
+      "source_principle_ids": [
+        "TR-FSG-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.30-32"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "altered-tension-resolution-direction",
+      "narrative": "Altered tensions (b9, #9, b5, b13) on dominant seventh chords have most often been resolved downward in pop and jazz performance practice; upward motion is possible but must be contextually justified (Chapter 3, p. 29-30).",
+      "source_principle_ids": [
+        "MR-FSG-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.29-30"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "rhythmic-prerequisite-for-ii-v-technique",
+      "narrative": "Extended dominant and extended II-V7 techniques work best when the melody consists mainly of quarter notes, dotted quarter notes, or half notes; with only one or two melody notes per chord, clashes can be quickly resolved (Chapter 3, p. 35).",
+      "source_principle_ids": [
+        "MR-FSG-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.35"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "turnaround-slot-4",
+      "narrative": "The fourth and last slot of every turnaround template must carry dominant function, resolving by strong root motion into the first chord of the new phrase; this slot's identity is non-negotiable (Chapter 8, p. 74).",
+      "source_principle_ids": [
+        "TR-TPT-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 8 p.74"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "diminished-seventh-reharmonization-source",
+      "narrative": "Four dominant seventh chords are related to any given diminished seventh chord; each shares one of the diminished seventh's tritones. Selected by a three-tier hierarchy: shared tritone -> dominant cadence to target -> maximum shared chord tones (Chapter 12, p. 113-119).",
+      "source_principle_ids": [
+        "TR-FSG-08"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.113-119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "voice-leading-3-to-7-resolution",
+      "narrative": "When root motion moves by perfect fourth or perfect fifth (as in II-V-I), resolve chord tone 3 of the dominant to chord tone 7 of the next chord, and chord tone 7 to chord tone 3 of the next (Chapter 10, p. 96).",
+      "source_principle_ids": [
+        "TR-VLV-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 10 p.96"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "b9-universal-proscription",
+      "narrative": "Any substitution that creates a b9 (minor ninth) interval between the melody and any chord tone of a dominant seventh is disallowed; only V7(b9) resolving conventionally to I is exempt (Chapter 1, p. 10; Chapter 2, p. 23).",
+      "source_principle_ids": [
+        "TR-FSG-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.10"
+        },
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 2 p.23"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive",
+      "cross_ref": [
+        "dom7b9/permitted-b9-exception"
+      ]
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "texture-conversion-to-min7-on-strong-beat",
+      "narrative": "In extended dominant chains, dominant seventh chords falling on strong beats may be converted to minor seventh chords to yield a slightly smoother texture; this generates extended II-V7 patterns from extended dominant patterns (Chapter 3, p. 33).",
+      "source_principle_ids": [
+        "MR-FSG-03"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 3 p.33"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "third-inversion-prerequisite",
+      "narrative": "Third-inversion dominant seventh chords (seventh in the bass) require a root-position form immediately before them; without this preceding context the chord will be heard as a type of chord built on the bass note (Chapter 6, p. 55-56).",
+      "source_principle_ids": [
+        "TR-VLV-05"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 6 p.55-56"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "permitted-b9-exception",
+      "narrative": "V7(b9) is the only common exception to the universal rule against b9 melody/harmony intervals; it is acceptable because the b9 is combined with the tritone interval, and both follow established melodic resolution paths into the tonic chord (Chapter 1, p. 10).",
+      "source_principle_ids": [
+        "TR-FSG-02"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.10"
+        }
+      ],
+      "provenance": "extracted",
+      "cross_ref": [
+        "dom7/b9-universal-proscription"
+      ]
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "hybrid-voicing-theoretical-basis",
+      "narrative": "Hybrid chord voicings produce an altered dominant sound derived from the altered dominant scale (1, b9, #9, 3, #4/b5, b6, b7, 1); the upper-layer triad or seventh chord above the bass root is the compositional mechanism (Chapter 14, p. 147).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.147"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "hybrid-voicing-melody-failure-condition",
+      "narrative": "Hybrid voicings producing an altered dominant texture lose their effectiveness when the melody contains a major or minor third above the bass note; this interval destroys the characteristic ambiguous texture (Chapter 14, p. 149).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.149"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7alt",
+      "function_role": "hybrid-voicing-deployment-position",
+      "narrative": "Hybrid voicings producing altered dominant texture work most effectively at phrase endpoints rather than throughout an entire passage; they function best as deliberate tonal tools deployed for contrast (Chapter 14, p. 149).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.149"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7sus4",
+      "function_role": "dual-family-membership",
+      "narrative": "V7sus4 belongs to both the subdominant and dominant families depending on context: subdominant because the suspended fourth eliminates the tritone, but dominant when it resolves directly to IMaj7 (Chapter 1, p. 7).",
+      "source_principle_ids": [
+        "TR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 1 p.7"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7sus4",
+      "function_role": "clash-repair-for-fourth-in-melody",
+      "narrative": "When displacement creates a melody/harmony clash because the melody contains a fourth, adjust the dominant chord's quality to sus4 to accommodate the fourth (Chapter 4, p. 39).",
+      "source_principle_ids": [
+        "MR-FSG-01"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 4 p.39"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7sus4",
+      "function_role": "notation-clarification",
+      "narrative": "Slash chord symbols like D-7/G may be rewritten as G7sus4 when the latter more clearly reveals the chord's harmonic function (Chapter 7, p. 70).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.70"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "reharmonization-via-tritone-sharing",
+      "narrative": "Diminished seventh chords are reharmonized by replacing them with one of four related dominant seventh chords, each sharing one of the diminished seventh's two tritones (Chapter 12, p. 113-115).",
+      "source_principle_ids": [
+        "TR-FSG-08"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.113-115"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "ascending-half-step-resolution-preference",
+      "narrative": "Diminished seventh chords that move up by half step to a chord in root position are most often reharmonized with dominant sevenths a perfect fifth above or a minor second above the target (Chapter 12, p. 116-117).",
+      "source_principle_ids": [
+        "TR-FSG-08"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.116-117"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "fallback-shared-chord-tones",
+      "narrative": "When no obvious dominant cadence leads from the related dominant seventh into the target chord, choose the dominant that shares the greatest number of chord tones with the original diminished seventh (Chapter 12, p. 117-119).",
+      "source_principle_ids": [
+        "TR-FSG-08"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 12 p.117-119"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "notation-enharmonic-respelling",
+      "narrative": "Any diminished seventh can be expressed as four enharmonically equal chord symbols; context and harmonic function determine the correct one (Chapter 7, p. 68-69).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.68-69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "line-cliche-hidden-indicator",
+      "narrative": "Two signals indicate that a line cliche is hidden inside a progression as a series of diminished seventh chords: (1) presence of a secondary dominant chord with an augmented quality, and (2) a diminished seventh that does not resolve by step (Chapter 7, p. 69).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.69"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dim7",
+      "function_role": "hybrid-upper-layer-forbidden",
+      "narrative": "Do not use a diminished structure as the upper layer of a hybrid voicing; it tends to sound like a traditional chord voicing rather than the intended ambiguous altered-dominant texture (Chapter 14, p. 147).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.147"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "aug",
+      "function_role": "hybrid-upper-layer-forbidden",
+      "narrative": "Do not use an augmented triad as the upper layer of a hybrid voicing; augmented structures in the upper layer combine with the bass note to produce sounds resembling traditional chord voicings (Chapter 14, p. 147).",
+      "source_principle_ids": [
+        "TR-VLV-06"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 14 p.147"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "min-maj7",
+      "function_role": "modal-interchange-tonic-color",
+      "narrative": "I-(Maj7) is one of the twelve common modal interchange chords available for substitution in a major key, drawn from parallel harmonic minor; it introduces color via new chord tones (Chapter 5, p. 45-52).",
+      "source_principle_ids": [
+        "TR-FSG-07"
+      ],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 5 p.45-52"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "triad",
+      "function_role": "notation-baseline-inadequacy",
+      "narrative": "Bare triadic chord symbols are inappropriate and stylistically incorrect for jazz standards; seventh chords are the minimum baseline vocabulary (Chapter 7, p. 65).",
+      "source_principle_ids": [],
+      "source_work_id": "reharmonization-techniques",
+      "references": [
+        {
+          "source": "reharmonization-techniques",
+          "citation": "chapter 7 p.65"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    }
+  ]
+}
