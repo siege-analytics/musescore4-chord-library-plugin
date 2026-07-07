@@ -3,7 +3,7 @@ run_id: 2026-05-28T15-05-20-baker-vol-2
 stage: s5
 source_pdf: Baker, Mickey - Complete Course in Jazz Guitar, Book 2.pdf
 model: claude-sonnet
-extracted_at: 2026-06-16T13:36:24+00:00
+extracted_at: 2026-07-07T07:24:47+00:00
 schema_version: 0.1
 ---
 
