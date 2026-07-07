@@ -3,7 +3,7 @@ run_id: 2026-05-28T15-05-20-laukens-tritone-substitution-licks
 stage: s5
 source_pdf: Laukens, Dirk - Tritone Substitution Licks.pdf
 model: claude-sonnet
-extracted_at: 2026-06-11T22:20:17+00:00
+extracted_at: 2026-07-07T07:26:24+00:00
 schema_version: 0.1
 ---
 

@@ -3,7 +3,7 @@ run_id: 2026-05-28T15-05-20-galbraith-jazz-solo-guitar
 stage: s5
 source_pdf: barry-galbraith-jazz-solo-guitar.pdf
 model: claude-sonnet
-extracted_at: 2026-06-11T14:57:01+00:00
+extracted_at: 2026-07-07T07:26:23+00:00
 schema_version: 0.1
 ---
 

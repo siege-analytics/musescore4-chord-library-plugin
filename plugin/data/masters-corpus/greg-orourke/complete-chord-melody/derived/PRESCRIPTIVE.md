@@ -1,0 +1,75 @@
+---
+run_id: 2026-05-23T23-23-45-orourke-complete-chord-melody
+stage: s5
+source_pdf: complete_chord_melody.pdf
+model: claude-sonnet
+extracted_at: 2026-07-07T06:23:09+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons -- greg-orourke x complete-chord-melody
+
+## maj7
+O'Rourke treats maj7 as the I chord of the Major harmonic family, making it the terminal target of the ii-V-I lookup system. Every voicing decision flows through the chord-collection dictionary, indexed by melody string, chord type, and interval; restraint governs all color additions, with substitutions sanctioned only occasionally. In solo-guitar contexts the shell voicing (root, 3rd, 7th) is the irreducible floor, and sparse chord placement -- on long-held notes and at changes, not every melody note -- is the load-bearing aesthetic rule.
+
+- [ch.2 p.33] Maj7 belongs to the Major harmonic family, one of three families every chord must join; this membership determines which ii-V-I collection is consulted for voicing lookup.
+- [ch.2 p.35; ch.4 p.114] Voicings are selected from the Major ii-V-I chord collection, indexed by melody string, chord type, and melody-note interval relative to that chord; the collection covers every diatonic interval on top so no melody note is unharmonizable.
+- [ch.2 p.79] Note-omission priority for maj7: drop the 5th first, then root, 11th, 9th; 3rd and 7th are last-resort omissions only in complex voicings.
+- [ch.8 pp.266-269] Two string-set variants (4321 and 5432) of the Major collection are provided; the arranger selects whichever variant's highest string matches the melody string at that moment.
+- [ch.7 p.220] The Tritone Substitution Rule applies universally: any chord, including a major I, may be replaced by one whose root is a tritone away, justified by shared guide tones that swap places between the two chords.
+- [ch.7 p.224] The I-to-vi substitution rule: the I major chord may be replaced by the vi chord of the key, grounded in the relative-key (shared key signature) relationship.
+- [ch.7 p.225] The I-to-iii substitution rule: a major chord may also be replaced by chord iii of its key; together with the vi rule this gives two licensed major-to-minor reharmonization moves.
+- [ch.7 p.247] The melodic common-tone substitution rule applies to maj7: substitute any chord for another as long as the replacement chord contains the melody note on top.
+- [ch.4 pp.113, 122] Chord voicings go on the first melody note of each bar and at chord changes, not on every melody note; "less is more" is stated as an explicit rule.
+- [ch.5 pp.145-147] In solo-guitar arranging, the shell voicing -- root, 3rd, 7th only, 5th dropped first -- is the irreducible minimum; the 6th may substitute for the 7th for a warmer, more resolved color.
+- [ch.7 p.222] Substitutions and color additions to major chords are for occasional use only; subtlety over density is the explicit aesthetic rule.
+
+## min7
+O'Rourke positions min7 as the ii chord of the major ii-V-I, assigning it to the m7 sub-family of the Minor harmonic family and routing its voicing lookup to the Major collection rather than the Minor collection. The same universal omission priority (5th first) and shell-voicing floor (root, 3rd, 7th) apply; min7 also carries a unique substitution role as a stand-in for any dominant chord built a 5th below it. All five substitution rules are applicable.
+
+- [ch.2 pp.33-34] Min7 belongs to the m7 sub-family of the Minor harmonic family (distinct from m7b5); it functions as the ii chord in a major ii-V-I cadence, determining which collection is used for lookup.
+- [ch.2 p.35; ch.8 pp.266-269] Min7 voicings are selected from the Major ii-V-I chord collections (string sets 4321 and 5432), indexed by melody string, chord type, and melody-note interval; the collection ensures every diatonic interval can appear on top.
+- [ch.2 p.79] Omittable-notes priority for min7 is universal: 5th first, then root, 11th, 9th; 3rd and 7th are last-resort omissions.
+- [ch.7 p.230] A min7 built from the 5th of any dominant chord may substitute for that dominant (borrowed from Pat Martino's minor conversion concept): e.g., Cm7 over F7.
+- [ch.5 pp.145-147; ch.8 p.280] The shell voicing -- root, 3rd, 7th on the 6th string root, 5th omitted -- is the solo-guitar primitive for min7 and the structural backbone of solo comping.
+- [ch.7 p.243] The back-cycling rule licenses inserting additional minor chords by moving backward through the circle of fourths before the target chord.
+- [ch.7 p.220] The Tritone Substitution Rule applies to min7 in the ii position: replacing it with a chord whose root is a tritone away produces reharmonization color.
+- [ch.7 p.247] The melodic common-tone substitution rule applies: substitute any chord for min7 as long as the replacement shares the current melody note on top.
+
+## min7b5
+O'Rourke treats min7b5 as the ii chord of the minor ii-V-i cadence, assigning it to the m7b5 sub-family -- a distinction that routes voicing lookup exclusively to the Minor collections (with b5 and b9 alterations built in) rather than the Major collections. Beyond family placement and the universal omission rule, O'Rourke does not develop min7b5 with additional independent prescriptions.
+
+- [ch.2 pp.33-34] Min7b5 belongs to the m7b5 sub-family of the Minor harmonic family, distinct from m7; it functions as the ii chord in a minor ii-V-i cadence, and this sub-family distinction is what routes lookup to the minor dictionary.
+- [ch.2 p.34; ch.8 pp.272-275] Min7b5 voicings are drawn from the Minor ii-V-i chord collections (string sets 4321 and 5432), which carry the b5 and b9 alterations characteristic of the minor cadence; the major collections are not the correct source.
+- [ch.2 p.79] The universal omittable-notes priority applies: 5th (already altered to b5) first, then root, 11th, 9th; 3rd and 7th are last-resort omissions.
+
+## dom7
+O'Rourke treats the natural dominant as the V chord of the major ii-V-I, drawn from the Major chord collections, and identifies it as the primary target for adding extensions and tensions to produce the "jazzy" sound. Tritone substitution is called "the most useful jazz substitution" and is the canonical dominant reharmonization. All five substitution rules apply; restraint governs their use.
+
+- [ch.2 pp.33-34] Dom7 belongs to the natural-dominant ("7") sub-family of the Dominant harmonic family; it is the V chord in the major ii-V-I progression.
+- [ch.2 pp.34-35; ch.8 pp.266-269] Natural dominant voicings are selected from the Major ii-V-I chord collections (string sets 4321 and 5432), indexed by melody string, chord type, and melody-note interval; the major-cadence collection -- not the minor -- is the correct lookup source.
+- [ch.4 p.127; ch.8 p.278] Dominant chords are the primary target for adding extensions and tensions to produce the "jazzy" sound; the chord dictionary devotes a dedicated section to tensions and extensions on dominants as the method's color resource.
+- [ch.7 pp.214-220] Tritone substitution is the canonical dominant reharmonization: any dominant can be replaced by one whose root is a tritone away, justified by shared guide tones that swap places; O'Rourke calls this "the most useful jazz substitution."
+- [ch.7 p.230] The min7-for-dominant substitution (Pat Martino's minor conversion): substitute the iim7 from the dominant's 5th for the dominant itself.
+- [ch.7 pp.237-243] Back-cycling licenses adding dominants before the target chord by moving backward through the circle of fourths; root movement by a 4th is called "the most common root movement in Western music."
+- [ch.2 p.79] Universal omittable-notes priority: 5th first, then root, 11th, 9th; 3rd and 7th (the guide tones) are last-resort omissions only.
+- [ch.5 pp.145-147; ch.8 pp.280-281] Shell voicing is the solo-guitar floor for dom7: root, 3rd, 7th on the 6th string root, 5th dropped; the 6th may substitute for the 7th for warmer color.
+- [ch.7 p.222] Dominant substitutions are for occasional color only; subtlety over density is the explicit restraint rule.
+
+## dom7alt
+O'Rourke segregates altered dominants into a distinct "7alt" sub-family whose voicings come from the Minor ii-V-i collections and the dedicated tensions-and-extensions dictionary section -- not from the natural-dominant Major collections. Alterations (b9, b13, b5) are the method's designated color vocabulary, but the same restraint rule applies.
+
+- [ch.2 pp.33-34] Altered dominants form the "7alt" sub-family of the Dominant harmonic family; examples include C7(b9), C7(b13b9), C7(b5), and C7alt; this sub-family distinction routes lookup to the minor-cadence collections rather than the major-cadence collections.
+- [ch.8 pp.272-278] Altered dominant voicings are drawn from the Minor ii-V-i collections (string sets 4321 and 5432) and from the dedicated "Tensions and Extensions on Dominant Chords" dictionary section (p. 278); the Major ii-V-I collections are not the correct source.
+- [ch.4 p.127; ch.8 p.278] Altered/extended dominants are the method's primary color resource: "the jazzy sound in arrangements usually comes from adding extensions and tensions to voicings -- particularly to dominant chords"; b9, b13, and b5 are the specific alteration tools.
+
+## dom7b9
+O'Rourke names dom7(b9) as a canonical member of the "7alt" sub-family, routing its voicing lookup to the Minor ii-V-i collections where the b9 alteration is encoded. No additional prescriptions beyond family placement and collection routing are developed for this chord type specifically.
+
+- [ch.2 p.34] Dom7(b9) is a canonical example of the "7alt" altered-dominant sub-family; the b9 alteration marks it as a minor-cadence dominant, distinguishing it from natural dominant voicings.
+- [ch.8 pp.272-275] Dom7(b9) voicings are drawn from the Minor ii-V-i chord collections (string sets 4321 and 5432), which encode the b9 alteration; these sections are the authorized lookup source.
+
+## min-maj7
+O'Rourke does not develop min-maj7 as a named chord type with independent prescriptions; it is accommodated within the Minor harmonic family by virtue of its chord quality, falling under the minor sub-family structure alongside m7 and m7b5.
+
+- [ch.2 pp.33-34] Min-maj7 falls within the Minor harmonic family by chord quality; while not named explicitly in the taxonomy examples, the minor sub-family structure and minor ii-V-i collections accommodate it within the minor harmonic context; O'Rourke does not address it as a distinct chord type beyond this family placement.
