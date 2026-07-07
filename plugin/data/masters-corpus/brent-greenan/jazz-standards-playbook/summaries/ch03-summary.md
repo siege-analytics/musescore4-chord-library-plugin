@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-greenan-jazz-standards-playbook
+stage: s3
+source_pdf: Greenan, Brent - The Jazz Standards Playbook.pdf
+source_pages: 40-52
+model: claude-haiku
+extracted_at: 2026-07-07T03:25:08+00:00
+schema_version: 0.1
+---
+
+# Chapter 3 — Jazz Standard Study #2: Blue Bossa
+
+_Distillation; backed by `chapters/ch03.md`._
+
+Chapter 3 teaches students to analyze and improvise over "Blue Bossa," a 16-bar jazz standard, by establishing foundational distinctions between Bossa Nova rhythm (straight eighth notes, not swung) and standard jazz feel, and by introducing harmonic analysis frameworks such as the iv-VII relationship and key center change definition (clarified through ii-V-I progressions). The master's characteristic move throughout is redirecting students from a scale-first improvisation approach toward melody-first thinking, grounded in the principle that "any chord can follow any chord as long as there is a strong melody in place" -- a rule that legitimizes outside playing when melodic logic is clear. The chapter's load-bearing framework is the three-stage melody-based improv exercise (play straight, embellish, reference), which operationalizes this philosophy by having students establish, then gradually depart from, the tune's melody, introducing concepts like key center change, diatonic harmony, and melodic embellishment.

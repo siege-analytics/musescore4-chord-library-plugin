@@ -1,0 +1,15 @@
+---
+run_id: 2026-05-28T15-05-20-greenan-jazz-standards-playbook
+stage: s3
+source_pdf: Greenan, Brent - The Jazz Standards Playbook.pdf
+source_pages: 102-115
+model: claude-haiku
+extracted_at: 2026-07-07T03:30:15+00:00
+schema_version: 0.1
+---
+
+# Chapter 7 — Jazz Standard Study #6: So What
+
+_Distillation; backed by `chapters/ch07.md`._
+
+Chapter 7 teaches modal harmony as an alternative to the functional harmony that governed previous jazz standards, establishing that "So What" operates entirely in modal space with minimal harmonic movement and therefore no need for guide tones. The chapter's definitional core is the seven modes -- each understood as a scale starting on a different degree of its parent major scale (Ionian) -- with complete intervallic and scale-tone formulas provided for all seven (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian), though D Dorian (parent key C major) and Eb Dorian (parent key Db major) are the operative modes for the tune itself. Greenan's characteristic moves are visible in the practical progression from theory to application: the Modal Arpeggio Exercise teaches students to connect diatonic seventh-chord arpeggios as note-choice vehicles, while the descending-ascending pattern in thirds links modes across intervals of half and whole steps, and the transcription analysis of Miles Davis reveals his restraint with space and his grounding in Dorian mode with occasional chromatic approach notes. The load-bearing terminology -- mode, parent scale, intervallic formula, scale tone formula, diatonic arpeggio, key center -- establishes the technical vocabulary for modal improvisation over non-functional harmony.
