@@ -3,33 +3,64 @@
   "config": "pipelines/master-distillation/configs/martino-tonal-convergence.toml",
   "stages": {
     "s1": {
-      "status": "awaiting-review",
+      "status": "accepted",
       "started_at": "2026-05-28T15:05:20+00:00",
       "ended_at": null,
       "outputs": [
-        "ingested from queue output (50084 bytes)"
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-martino-tonal-convergence/raw-transcript.txt",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-martino-tonal-convergence/pages.json",
+        "re-ingested: 84 pages, 51,399 characters"
       ],
       "error_message": null
     },
     "s2": {
-      "status": "pending",
-      "started_at": null,
-      "ended_at": null,
-      "outputs": [],
+      "status": "accepted",
+      "started_at": "2026-07-07T04:30:18+00:00",
+      "ended_at": "2026-07-07T04:30:19+00:00",
+      "outputs": [
+        "detected 10 chapter(s)",
+        "pipelines/master-distillation/runs/2026-05-28T15-05-20-martino-tonal-convergence/chapter-bounds.json",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch01.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch02.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch03.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch04.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch05.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch06.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch07.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch08.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch09.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/chapters/ch10.md"
+      ],
       "error_message": null
     },
     "s3": {
-      "status": "pending",
-      "started_at": null,
-      "ended_at": null,
-      "outputs": [],
+      "status": "accepted",
+      "started_at": "2026-07-07T04:59:10+00:00",
+      "ended_at": "2026-07-07T04:59:10+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch01-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch02-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch03-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch04-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch05-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch06-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch07-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch08-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch09-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/summaries/ch10-summary.md",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/system-of-tonal-convergence-book-summary.md"
+      ],
       "error_message": null
     },
     "s4": {
-      "status": "pending",
-      "started_at": null,
-      "ended_at": null,
-      "outputs": [],
+      "status": "accepted",
+      "started_at": "2026-07-07T05:17:26+00:00",
+      "ended_at": "2026-07-07T05:17:26+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/derived/systems-draft.json",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/derived/STATEMENT.md",
+        "derived 1 system(s); see systems-draft.json"
+      ],
       "error_message": null
     },
     "sB": {
@@ -37,6 +68,17 @@
       "started_at": null,
       "ended_at": null,
       "outputs": [],
+      "error_message": null
+    },
+    "s5": {
+      "status": "accepted",
+      "started_at": "2026-07-07T05:44:57+00:00",
+      "ended_at": "2026-07-07T05:44:57+00:00",
+      "outputs": [
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/derived/prescriptive-lessons-draft.json",
+        "plugin/data/masters-corpus/pat-martino/system-of-tonal-convergence/derived/PRESCRIPTIVE.md",
+        "extracted 37 prescriptive lesson(s) across 12 distinct chord_quality value(s); see prescriptive-lessons-draft.json"
+      ],
       "error_message": null
     }
   }

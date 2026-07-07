@@ -1,0 +1,423 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-martino-tonal-convergence",
+    "stage": "s4",
+    "source_pdf": "Martino, Pat - A System of Tonal Convergence.pdf",
+    "extracted_at": "2026-07-07T05:17:26+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "pat-martino",
+  "work_id": "system-of-tonal-convergence",
+  "systems": [
+    {
+      "id": "pat-martino:system-of-tonal-convergence:convergence-system",
+      "name": "The Convergence System",
+      "summary": "Martino's convergence system is a unified method for approaching any harmonic destination by deploying any of 24 scale colors -- and the chords extracted from them -- as approach material aimed at a fixed tonal center. The load-bearing engine is the tritone: every scale in the system earns its place by containing the target key's tritone pair, and every scale-derived chord gains its substitution license from sharing that same tritone with the canonical V chord. The system organizes its 24 scale colors in a 360-degree orbit around a single tonal center, permits any internal scale-entry point and any chain-order among scales, and multiplies its harmonic palette through tritone substitution (dominant chords a flatted fifth apart resolve identically), diminished symmetry (one scale serves multiple tonalities), and exhaustive chord extraction (every scale is mined for all constituent voicings as independent convergent devices). The student's practice sequence is: internalize the destination through cadential repetition, execute the approach scale while aurally projecting the resolution, then extract and deploy all constituent chords. The 'no wrong notes' doctrine condenses the system's philosophy: any chromatic pitch is available given key-center fixation, a clear vantage point, interval tonics, resolution intent, and confident execution.",
+      "members": [
+        {
+          "id": "blues-scale",
+          "name": "Blues Scale",
+          "summary": "A blues-quality convergence scale; begins a half step from the target tonal center and contains the E-Bb tritone of the V chord, producing chords such as C7b5 and Cb for cadential approach."
+        },
+        {
+          "id": "diminished-hw",
+          "name": "Diminished Scale (Half-Whole)",
+          "summary": "An eight-note scale with H-W-H-W-H-W-H-W interval structure; contains the E-B and G-Db tritone pairs, permitting convergence into major or minor tonality."
+        },
+        {
+          "id": "diminished-wh",
+          "name": "Diminished Scale (Whole-Half)",
+          "summary": "An eight-note scale with W-H-W-H-W-H-W-H step symmetry; shares the property of symmetrical indifference with the H-W form, allowing it to serve multiple tonal centers by starting on different internal notes."
+        },
+        {
+          "id": "diminished-minor3-raised4",
+          "name": "Diminished Scale (minor 3rd + raised 4th)",
+          "summary": "A third diminished-family variant with a distinct intervallic symmetry (minor 3rd and raised 4th), providing an additional diminished color for convergence not covered by the H-W or W-H types."
+        },
+        {
+          "id": "jazz-melodic-minor",
+          "name": "Jazz Melodic Minor Scale",
+          "summary": "A melodic minor scale used as a convergent source; its last tetrachord overlaps with F major, and it produces chords including G-major, C7b9, and altered extensions that voice-lead into the target key."
+        },
+        {
+          "id": "major-raised4",
+          "name": "Major Scale with Raised 4th (Lydian)",
+          "summary": "A major scale with the 4th degree raised; begins on the 7th of the V chord, forms a complete E-Bb tritone, and generates an EM chord on its 7th modal degree that naturally leads to F major."
+        },
+        {
+          "id": "major-raised4-raised5",
+          "name": "Major Scale with Raised 4th and 5th (Lydian-Augmented)",
+          "summary": "A major scale with both the 4th and 5th degrees raised; its stacked scale-tones yield an E-Bb-type augmented chord and it functions as a source for altered dominant character chords."
+        },
+        {
+          "id": "whole-tone",
+          "name": "Whole Tone Scale",
+          "summary": "A six-note scale of uniform whole-step intervals; its linking chord is C7b5, and it also produces C+7, C69#11, and C7b5 as additional convergent approach chords into F major."
+        },
+        {
+          "id": "pentatonic-descending",
+          "name": "Descending Pentatonic Scale (Scale #1)",
+          "summary": "A pentatonic scale containing the Bb (7th of C7) and the G-Db tritone; the Bb voice-leads to A (the 3rd of F major) and G resolves to F (the root), establishing the template for tritone-based voice-leading in the system."
+        },
+        {
+          "id": "pentatonic-v-chord",
+          "name": "Pentatonic Scale from the 5th of the V Chord (Scale #14)",
+          "summary": "A pentatonic scale beginning on the 5th of the V chord of F major; its five notes map to the 5th, 7th, and root of C7 and the tonic and 9th of F major, making each note carry explicit harmonic function."
+        },
+        {
+          "id": "half-dim-whole-tone-hybrid",
+          "name": "Half-Diminished / Whole-Tone Hybrid Scale (Scale #15)",
+          "summary": "A bi-partite scale whose first half yields diminished color and second half yields whole-tone color; ends on E natural, the leading tone into F, creating a distinct tonal color unavailable from purely diminished or purely whole-tone scales."
+        },
+        {
+          "id": "spanish-scale",
+          "name": "Spanish Scale (Scale #17)",
+          "summary": "A Martino personal scale embodying both F and E-flat tonality simultaneously; begins and ends on F, producing a tension-relaxation feeling within a single scale statement."
+        },
+        {
+          "id": "melodic-minor-dual-tetrachord",
+          "name": "Jazz Melodic Minor Dual-Tetrachord Scale (Scale #18)",
+          "summary": "An F melodic minor scale whose first tetrachord is F minor and second tetrachord is F major; the Ab within it functions simultaneously as the minor 3rd of F minor and the +5 of C7, exemplifying dual harmonic identity."
+        },
+        {
+          "id": "dorian-mode",
+          "name": "Dorian Mode",
+          "summary": "A modal starting point within F major; contains C7, G-7, and EX chords and the E-Bb tritone of the C7 and F#7 chords, making it a valid convergence scale through modal derivation from the target key."
+        },
+        {
+          "id": "personal-scale-11",
+          "name": "Personal Descending Scale (Scale #11)",
+          "summary": "A Martino personal scale containing the E-Bb tritone and the note Bb9, giving it a C7b9 sound; its descending direction adds variety of plane to the approach arsenal."
+        },
+        {
+          "id": "personal-scale-13",
+          "name": "Personal Tritone Scale (Scale #13)",
+          "summary": "A Martino personal scale ending on C (the 5th of F major) and containing the C7b9b5 chord; usable from any internal note, and the most explicit illustration of the system's free-entry-point principle."
+        }
+      ],
+      "traversal_rules": [
+        {
+          "id": "tritone-voice-leading",
+          "name": "Tritone Voice-Leading to Tonal Center",
+          "summary": "When moving from an approach scale or chord to the tonal destination, the two tritone tones of the dominant voice-lead by half step into the root and 5th (or 3rd) of the target key.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Tritone voice leading to tonal center",
+              "quote_excerpt": "c-pb tritone with voice leads to the root & 5th of F major",
+              "page": 36
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Scale #1 -- Descending Pentatonic",
+              "quote_excerpt": "pb resolves (as both of C 7th) To the 5th (C) and the note G resolves to F",
+              "page": 32
+            }
+          ]
+        },
+        {
+          "id": "free-entry-point-chaining",
+          "name": "Free Entry Point and Scale Chaining",
+          "summary": "Any scale in the system may be entered at any internal note, and all scales may be connected together in any order for convergence into a tonal center.",
+          "engine_payload": {
+            "kind": "PositionContinuity"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Scales usable from any note",
+              "quote_excerpt": "It is possible to use this scale from any note within it. All scales in this system may be connected together in different orders",
+              "page": 30
+            }
+          ]
+        },
+        {
+          "id": "ear-preparation-cadential-repetition",
+          "name": "Ear Preparation through Cadential Repetition",
+          "summary": "Before playing any approach scale, the player must first internalize the destination tonality by repeating cadences into the key center.",
+          "engine_payload": {
+            "kind": "_pending:ear-preparation-sequence"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Ear preparation before convergence",
+              "quote_excerpt": "brainwash your ear with the tonality (F major in this case) with several cadences into the key",
+              "page": 32
+            }
+          ]
+        },
+        {
+          "id": "aural-projection-while-executing",
+          "name": "Aural Projection of Destination While Executing Approach",
+          "summary": "While playing an approach scale, the player must simultaneously project their attention to the destination chord, hearing the resolution before it arrives.",
+          "engine_payload": {
+            "kind": "_pending:aural-projection"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Aural projection rule",
+              "quote_excerpt": "project yourself sound wise to it already having your attention (sound attention) on it",
+              "page": 34
+            }
+          ]
+        },
+        {
+          "id": "modal-starting-point-within-target-key",
+          "name": "Modal Starting Point Within Target Key as Convergence Device",
+          "summary": "A mode of the target key itself is a valid approach scale; starting on a different mode within the destination key constitutes a legitimate convergence route.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "Convergence within same scale, different mode",
+              "quote_excerpt": "being within the same scale of (F major) the key you are converging however starting on a different mode of it",
+              "page": 37
+            }
+          ]
+        },
+        {
+          "id": "chromatic-resolution-onto-dominant",
+          "name": "Chromatic Resolution Rule for Scalar Convergence onto Dominant",
+          "summary": "When applying a scale convergently to a dominant 7th chord, target the tritone's defining tones -- the 7th and 3rd of the dominant -- for chromatic resolution.",
+          "engine_payload": {
+            "kind": "VoiceMotion"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Chromatic resolution rule for 7th chord scales",
+              "quote_excerpt": "using chromatic tones to resolve the tritone (7th or 3rd) to use those scales against a 7th chord convergingly",
+              "page": 82
+            }
+          ]
+        },
+        {
+          "id": "circle-of-gravities",
+          "name": "Circle of Gravities: Three Interlocking Tritone Pairs",
+          "summary": "All convergent motion toward a single tonal center is governed by three interlocking tritone pairs; each pair produces a family of approach chords and scales that can bombard the target key.",
+          "engine_payload": {
+            "kind": "_pending:tritone-gravity-lattice"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Circle of Gravities: three tritones",
+              "quote_excerpt": "Three tritones (C-F#),(G-Db)&(E-Bb) are involved. Each chord comes from scale (on same line) and either can converge or bombard the F major tonality chord",
+              "page": 83
+            }
+          ]
+        },
+        {
+          "id": "scale-transposition-all-12-keys",
+          "name": "System-Wide Transposition to All 12 Chromatic Keys",
+          "summary": "The full convergence system -- all 24 scales and their voice-leading logic -- must be transposed and applied equally to all 12 chromatic keys.",
+          "engine_payload": {
+            "kind": "SymmetryMovement"
+          },
+          "references": [
+            {
+              "chapter_n": 6,
+              "topic": "System's pedagogical philosophy",
+              "quote_excerpt": "theoretical justification of each scale of this system has to be applied to all other tonalities in the chromatic scale",
+              "page": 41
+            }
+          ]
+        }
+      ],
+      "modification_rules": [
+        {
+          "id": "tritone-substitution",
+          "name": "Tritone Substitution of Dominant Chords",
+          "summary": "Any dominant chord may be replaced by the dominant chord a flatted 5th (tritone) away, because both chords share the same tritone interval and resolve to the same tonal destination.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 7,
+              "topic": "Tritone substitution resolution",
+              "quote_excerpt": "tritone-related dominant chords (Bb7b5, Gb7b5) are interchangeable and resolve to the same FA7 target",
+              "page": 58
+            },
+            {
+              "chapter_n": 10,
+              "topic": "Tritone substitution: Bb7 for Eb7",
+              "quote_excerpt": "E7 contains the same tritone as Bb7; so several E7 type chords with tensions added... may be used as chord convergers",
+              "page": 80
+            }
+          ]
+        },
+        {
+          "id": "diminished-as-tritone-sharer",
+          "name": "Diminished Chord Substitution via Shared Tritone",
+          "summary": "A diminished seventh chord that shares the tritone of a dominant V chord may substitute for that dominant and voice-lead smoothly into the target chord.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Diminished chord as tritone sharer",
+              "quote_excerpt": "the diminish chord D7 has the same tritone as the Bb7... It smoothly voice leads into the Eb7",
+              "page": 80
+            }
+          ]
+        },
+        {
+          "id": "chord-extraction-from-scales",
+          "name": "Chord Extraction from Every Scale",
+          "summary": "Every scale in the system must be mined for all constituent chords, each of which can independently function as a convergent approach device.",
+          "engine_payload": {
+            "kind": "SubstitutionExpand"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Chord-extraction rule",
+              "quote_excerpt": "Extract all possible chords from all scales for resolution purposes",
+              "page": 34
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Scale-chord raw material principle",
+              "quote_excerpt": "Each scale may be used as raw material for convergent ideas... as well as many chordal sounds extracted from them",
+              "page": 4
+            }
+          ]
+        },
+        {
+          "id": "symmetrical-indifference",
+          "name": "Symmetrical Indifference of Diminished and Augmented Scales",
+          "summary": "Diminished and augmented scales may serve multiple tonal centers simultaneously by starting on different internal notes, multiplying their convergence utility without changing the scale form.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Scale #5 -- Diminished scale (W-H)",
+              "quote_excerpt": "same symmetrical indifference as the #4 scale which permits it to be used (starting on different notes) for converging cadences to several tonalities",
+              "page": 36
+            }
+          ]
+        },
+        {
+          "id": "color-rotation",
+          "name": "Scale-Chord Color Rotation",
+          "summary": "Multiple scale colors (major, minor, augmented, dominant, diminished) and their extracted chords may be combined and rotated in any order against a single chord, generating harmonic variety.",
+          "engine_payload": {
+            "kind": "TextureCycle"
+          },
+          "references": [
+            {
+              "chapter_n": 3,
+              "topic": "Scale combination & color rotation",
+              "quote_excerpt": "These scales & their chords may be combined (several of them together) in several rotas varying their order and making more interesting musical usuage of color",
+              "page": 4
+            },
+            {
+              "chapter_n": 3,
+              "topic": "Multiple scale colors on one chord",
+              "quote_excerpt": "try using many different scale 'color' types on one chord (7th)",
+              "page": 8
+            }
+          ]
+        },
+        {
+          "id": "no-wrong-notes-doctrine",
+          "name": "No Wrong Notes Doctrine (Chromatic Freedom Conditioned on Five Factors)",
+          "summary": "Any chromatic pitch is available as approach material provided the player has established key-center fixation, a clear vantage point, interval tonics, resolution intent, and confident execution.",
+          "engine_payload": {
+            "kind": "OmissionAllow"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "No wrong notes doctrine",
+              "quote_excerpt": "There are no wrong notes when factors such as fixation on a key center, Vantage Point, Interval Tonics, Resolution are considered along with a certain Confidence within the artist himself",
+              "page": 31
+            }
+          ]
+        },
+        {
+          "id": "major-third-scale-on-minor-fifth",
+          "name": "Major-Third Scale Usage Restriction on Minor Chord",
+          "summary": "Any scale containing a major third must be deployed to embellish the fifth of a minor chord rather than the root, preserving the minor quality of the target.",
+          "engine_payload": {
+            "kind": "ColorToneRequire"
+          },
+          "references": [
+            {
+              "chapter_n": 10,
+              "topic": "Scale #3 major 3rd usage restriction",
+              "quote_excerpt": "Scale #3 has a major 3rd already in it so it has to used as above to embellish the 5th of the F minor",
+              "page": 84
+            }
+          ]
+        },
+        {
+          "id": "dual-harmonic-identity",
+          "name": "Dual Harmonic Identity of Scale Tones",
+          "summary": "A single pitch within an approach scale is read simultaneously as a scale degree in the tonal center and as a chord extension or alteration of the dominant, justifying its chromatic presence through two harmonic functions at once.",
+          "engine_payload": {
+            "kind": "NCTHarmonization"
+          },
+          "references": [
+            {
+              "chapter_n": 5,
+              "topic": "Ab as +5 of V chord function",
+              "quote_excerpt": "the note Ab which is the minor 3rd of F minor tonality function in an all important way as the +5 of the V chord (C7th +5)",
+              "page": 35
+            }
+          ]
+        },
+        {
+          "id": "scale-justification-by-tritone-trace",
+          "name": "Scale Justification by Tritone-and-Voice-Leading Trace",
+          "summary": "Each scale is validated for inclusion in the system by tracing every note to its tritone function and its voice-leading path into the target key, not merely by naming the scale's mode or root.",
+          "engine_payload": {
+            "kind": "_pending:scale-justification-trace"
+          },
+          "references": [
+            {
+              "chapter_n": 4,
+              "topic": "Scale #1 -- Descending Pentatonic",
+              "quote_excerpt": "A pentatonic scale having a Dox 7th (of C7 chord) in it which resolves voice leadingly into the note A (The vital 3rd of F major). Also contains... Tritone",
+              "page": 32
+            },
+            {
+              "chapter_n": 4,
+              "topic": "Convergence system definition",
+              "quote_excerpt": "bombard it with 24 scales, a mixture of them, their ideas and constituent chords",
+              "page": 17
+            }
+          ]
+        },
+        {
+          "id": "lydian-whole-tone-family-link",
+          "name": "Lydian-to-Whole-Tone Family Relationship",
+          "summary": "The Lydian scale (major with raised 4th) is theoretically linked to the whole-tone scale, establishing a family relationship between these two convergent scale types within the system's taxonomy.",
+          "engine_payload": {
+            "kind": "FamilyCoherence"
+          },
+          "references": [
+            {
+              "chapter_n": 8,
+              "topic": "Major (#4) / Whole Tone relationship",
+              "quote_excerpt": "Scale #9 MAJOR (#4) -- WHOLE TONE",
+              "page": 65
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
