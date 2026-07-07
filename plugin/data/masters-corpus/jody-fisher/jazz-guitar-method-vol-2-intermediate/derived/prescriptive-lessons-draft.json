@@ -1,0 +1,465 @@
+{
+  "_provenance": {
+    "run_id": "2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2",
+    "stage": "s5",
+    "source_pdf": "Fisher, Jody - Jazz Guitar Method, Vol 2 (Intermediate).pdf",
+    "extracted_at": "2026-07-07T15:43:31+00:00",
+    "schema_version": "0.1",
+    "model": "claude-sonnet"
+  },
+  "master_id": "jody-fisher",
+  "work_id": "jazz-guitar-method-vol-2-intermediate",
+  "usage_notes": [
+    {
+      "chord_quality": "min7",
+      "function_role": "ii-chord-in-ii-v7-i",
+      "narrative": "Fisher prescribes voicing the ii chord (e.g., Dmin9) as a rootless chord on each of the three string sets (6-5-4-3, 5-4-3-2, 4-3-2-1): 'Note that the roots have been omitted from both the Dmin9 and G9 voicings. This is to allow the use of more interesting chords.' The essential 3rd and 7th must be retained; root and 5th are expendable. Chapter 3, p.56.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:essential-tones-floor",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:root-fifth-omission"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.56"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7",
+      "function_role": "ii-chord-lick-target",
+      "narrative": "Fisher prescribes learning sample licks over minor chords, transposing them to all twelve keys, and inserting them into solos immediately: 'Here are some sample licks to use over minor chords. Once again, learn, transpose and insert these into your solos as soon as possible!' Begin each lick phrase on a chord tone, preferring 3rds and 7ths as target notes. Chapter 4, p.64.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:learn-transpose-apply",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:target-note-melodic-motion"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 4 p.64"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "min7b5",
+      "function_role": "half-diminished-ear-training",
+      "narrative": "Fisher introduces the min7b5 (half-diminished) chord as a specific lick target requiring dedicated ear familiarization: 'There are many ways to improvise over min7b5 (half-diminished) chords. Here are just a few licks to help you get used to the sound.' The prescription is to learn the provided licks as an entry point into the unfamiliar sound of the chord before attempting broader substitution strategies. Chapter 4, p.72.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:learn-transpose-apply",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:half-diminished-lick-family"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 4 p.72"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-upper-extension-via-maj7-arpeggio",
+      "narrative": "Fisher prescribes playing a Major 7th arpeggio rooted on the flat-7 of the V7 chord to voice its upper extensions: 'Simply play the notes of a major 7th arpeggio rooted on the b7 degree of the V7 chord in any ii-V7-I progression. For example, if the V7 chord is G7, you can play an FMaj7 arpeggio because F is the b7 of the G7. Notice that this technique works nicely because you are actually just playing the upper extensions of the G7 chord: A is the 9th, C is the 11th and E is the 13th.' The arpeggio need not start on its own root. Chapter 3, p.49.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:maj7-from-b7-arpeggio-over-v7",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:color-tone-upper-extensions"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.49"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-diminished-triad-substitution",
+      "narrative": "Fisher prescribes substituting a diminished triad from the 3rd, 5th, or 7th of the V7 chord to produce altered extensions that resolve into the I chord: 'Play a diminished triad starting at the 3rd, 5th or 7th degree of the V7 chord in any ii-V7-I progression. For instance, if the V7 chord is G7, you can play a Bdim arpeggio, a Ddim arpeggio or an Fdim arpeggio. These tones will resolve nicely into the I chord.' The alteration produces a b9 and a b11 (enharmonic 10) among the extensions. Chapter 3, p.51.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:diminished-substitution-v7"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.51"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-ascending-lines-from-chord-tones",
+      "narrative": "Fisher prescribes playing ascending scale-wise lines beginning on a chord tone of the V7, and alternating these with descending patterns for contour variety: 'Simply play ascending scale-wise patterns starting from chord tones' and 'Alternating ascending and descending patterns will give your line a more interesting contour.' The ascent must be anchored to a chord tone at its start. Chapter 3, p.53-55.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:ascending-lines-from-chord-tones"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.53-55"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-lick-vocabulary-unaltered",
+      "narrative": "Fisher prescribes learning dominant licks over unaltered V7 chords and extending their application to 9th, 11th, and 13th voicings: 'Here are some licks that will work well over unaltered dominant chords. Try using them over dominant 9th, 11th and 13th chords as well. Transpose them and apply them to your solos.' The prescription demands immediate transposition to all twelve keys. Chapter 4, p.68.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:learn-transpose-apply",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:lick-extension-transfer"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 4 p.68"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b5",
+      "function_role": "altered-dominant-v7-variant",
+      "narrative": "Fisher identifies the dom7b5 as 'an extremely important sound in jazz' built from the formula Root-3-b5-b7 (e.g., C-E-Gb-Bb in C). It is described as the familiar V7 chord with a lowered 5th. Fisher's substitution constraint applies: 'context is everything. Just because a substitution is theoretically correct doesn't mean it sounds good in every instance.' Chapter 2, p.18 and p.34.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:context-ear-substitution",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:alteration-scope-rule"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.18"
+        },
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.34"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7b9",
+      "function_role": "altered-dominant-rootless-symmetric",
+      "narrative": "Fisher prescribes the rootless dom7b9 as a symmetric voicing that can be moved at minor-third intervals around the fingerboard without changing chord quality: 'when you drop the root, you can move the same fingering around the fingerboard at intervals of a minor 3rd without changing the chord's quality.' The formula is Root-3-5-b7-b9 (e.g., E-G#-B-D-F in E). Fisher establishes this minor-third symmetry as a practical fingerboard shortcut. Chapter 2, p.24.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:7b9-minor-third-symmetry",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:root-fifth-omission"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.24"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7#5",
+      "function_role": "altered-dominant-v7-variant",
+      "narrative": "Fisher identifies the dom7#5 as 'another very common sound in jazz' that is 'immediately recognizable,' built from the formula Root-3-#5-b7 (e.g., G-B-D#-F in G). It appears under multiple symbols including 7+, 7aug, and 7b13; adding the 9th yields 9#5 or 9+. Fisher's ear-and-context substitution constraint governs its deployment: theoretical correctness alone does not justify its use. Chapter 2, p.21 and p.34.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:context-ear-substitution",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:alteration-scope-rule"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.21"
+        },
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.34"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "i-chord-tonic-resolution-target",
+      "narrative": "Fisher prescribes the maj7 as the tonic resolution target of the ii-V7-I, with the major scale of the I chord governing diatonic improvisation: 'use the major scale of the I chord. If the progression is Gmin7-C7-FMaj7, improvise using the F Major scale.' The maj7 chord's 3rd and 7th must be retained in any voicing; root and 5th may be omitted. Chapter 1, p.8 and Chapter 2, p.17.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:diatonic-scale-rule-with-altered-exception",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:essential-tones-floor"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 1 p.8"
+        },
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.17"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "i-chord-lick-vocabulary",
+      "narrative": "Fisher prescribes learning eight sample licks over major-type chords, immediately transposing them to all twelve keys, and inserting them into real songs: 'These licks are labeled with major 7th chords but will work equally well with major 6th, major 9th and major 13th chords. Experiment and let your ear be your guide.' The lick family is explicitly extended to major 6th, 9th, and 13th voicings. Chapter 4, p.60.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:learn-transpose-apply",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:lick-extension-transfer"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 4 p.60"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "i-chord-altered-exception",
+      "narrative": "Fisher proscribes applying the I-chord major scale rule when the maj7 (or any chord in the ii-V7-I) contains altered tones outside that scale: 'all chords with a raised or lowered 5th, 9th or 11th would make this rule inapplicable, because these altered tones are not diatonic.' When alteration is present, the player must find a scale that accommodates those altered tones rather than defaulting to the major scale. Chapter 1, p.8.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:diatonic-scale-rule-with-altered-exception"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 1 p.8"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-chord-context-substitution-constraint",
+      "narrative": "Fisher proscribes applying any chord substitution -- including theoretically valid ones -- without testing it against musical context and ear: 'Remember that when enhancing or substituting chords, context is everything. Just because a substitution is theoretically correct doesn't mean it sounds good in every instance. Experimentation is the way we find out what works.' This applies specifically to all V7 substitution moves including 7b5, 7#5, 7b9, and diminished triad substitutions. Chapter 2, p.34.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:context-ear-substitution"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.34"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-alteration-scope-constraint",
+      "narrative": "Fisher proscribes altering any chord degree other than the 5th, 9th, or 11th: 'the only notes that can be altered in any chord are the 5th, 9th and the 11th.' This boundary applies across all dominant variants (dom7b5, dom7#5, dom7b9) and governs what extensions are permissible in any ii-V7-I chord. Chapter 2, p.17.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:alteration-scope-rule"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.17"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "comping-no-double-with-keyboard",
+      "narrative": "Fisher proscribes simultaneous free comping by both guitarist and keyboardist: 'When playing with a keyboard player, it is preferable to take turns comping behind the soloist. If both the guitarist and the keyboard player comp freely at the same time the tune will become like a harmonic can of worms.' The prescription is to alternate the comping role and always listen carefully to what is happening around you. Chapter 3, p.47.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:swing-comping-texture:no-double-comp-with-keyboard"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.47"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "comping-swing-strum-technique",
+      "narrative": "Fisher prescribes down strokes on downbeats and up strokes on upbeats for swing comping, with string damping during rests: 'It's a good idea to strum down on the downbeats and to strum up on the upbeats. This will help you keep your place in the measure. Also, try to damp the strings so that the chords don't sustain during the rests.' Damping is achieved by releasing left-hand pressure or stopping strings with the right-hand palm or wrist. Chapter 3, p.47.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:swing-comping-texture:damp-sustain-control"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.47"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "comping-swing-implied-rhythm",
+      "narrative": "Fisher prescribes an improvisatory approach to swing comping where rhythm is implied rather than stated mechanically: 'Unlike rock, pop and country music, the rhythm in a swing feel is implied. The beat is often suggested by the guitarist. Predictable rhythm parts are considered to be trite, so the guitarist is left to accent various parts of each measure, usually with an element of surprise and with a spirit of improvisation.' The comping guitarist must vary accents unpredictably across the measure. Chapter 3, p.47.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:swing-comping-texture:swing-rhythm-implied-accent"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.47"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-rootless-voicing-three-string-sets",
+      "narrative": "Fisher prescribes organizing V7 chord voicings (e.g., G9) across the three string sets (6-5-4-3, 5-4-3-2, 4-3-2-1) as rootless chords to permit more extensions: 'Playing rootless chords often permits the use of more extensions in chord voicings. The various voices can actually imply the sound of the root. Try to hear the root in your head when playing these chords.' In ensemble contexts the bass player provides the root. Chapter 3, p.56.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:root-fifth-omission",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:string-set-shift"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.56"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "b7-arpeggio-technique-over-v7",
+      "narrative": "Fisher prescribes using the major 7th chord as a melodic device over dominant function, specifically playing a Maj7 arpeggio rooted on the b7 of the V7 chord to imply upper extensions (9th, 11th, 13th). The arpeggio need not begin on its own root: 'Notice that you don't have to start the major 7th arpeggio on the root of the Maj7 chord.' This is the primary technique for adding color to V7 lines. Chapter 3, p.49.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:maj7-from-b7-arpeggio-over-v7"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 3 p.49"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "blues-i7-scalar-tool-selection",
+      "narrative": "Fisher prescribes three interchangeable scalar tools for soloing over dominant 7th chords in blues contexts -- the minor pentatonic scale, blues scale, and Mixolydian mode: 'This lesson begins with a review of the minor pentatonic scale, blues scale and Mixolydian mode fingerings.' These are presented in C and must be transposed. Mature application combines these tools fluidly across the entire fingerboard rather than staying in a single position. Chapter 5, p.78-79.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:blues-scale-tool-selection",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:whole-neck-combination"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 5 p.78"
+        },
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 5 p.79"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "turnaround-v7-transposable-lick",
+      "narrative": "Fisher prescribes creating and memorizing transposable licks specifically for V7 chords within turnaround contexts: 'Obviously, if turnarounds are common, you will need to know how to improvise your way through them. Create licks that you know will work over various turnarounds. This will help you make melodically smoother transitions back to the beginnings of your tunes. Memorize and transpose the ones you like.' Chapter 8, p.88.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:learn-transpose-apply",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:turnaround-lick-family"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 8 p.88"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "maj7",
+      "function_role": "i-chord-turnaround-smooth-transition",
+      "narrative": "Fisher prescribes using the I chord as the anchor and goal of turnaround progressions, directing the guitarist to choose among many available turnaround types and lead the ensemble: 'Generally, the guitarist can choose to play any one of the many kinds of turnarounds possible and it's up to the other players to react. For variety's sake, it pays to know a lot of different turnarounds.' When playing four-measure turnarounds, chord durations from two-measure equivalents are simply doubled. Chapter 7, p.86.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:turnaround-lick-family"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 7 p.86"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-target-note-phrase-initiation",
+      "narrative": "Fisher prescribes beginning each improvised phrase on a chord tone of the V7 (or any chord being soloed over), with 3rds and 7ths preferred: 'begin each phrase you play with a note of the chord that you are improvising over. This is called spelling out the changes, targeting chord tones, or using target notes... Improvisors tend to use 3rds and 7ths the most, because these notes are what give a chord its distinctive quality.' Chapter 2, p.26.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:target-note-melodic-motion",
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:ii-v7-i-harmonic-framework:essential-tones-floor"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.26"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "v7-neighbor-tone-approach",
+      "narrative": "Fisher prescribes approaching target chord tones on the V7 with neighbor tones a half step or whole step above or below: 'By far, the most common neighbor tones are the notes one half step below and above the chord tone. Neighbor tones a whole step below and above are common too.' Half-step neighbors are the primary approach device; whole-step neighbors are secondary. Chapter 2, p.31.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:neighbor-tone-approach"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 2 p.31"
+        }
+      ],
+      "provenance": "extracted"
+    },
+    {
+      "chord_quality": "dom7",
+      "function_role": "positional-scale-application-constraint",
+      "narrative": "Fisher proscribes confining scale-based improvisation to organized fingerboard positions: 'At first, we tend to organize them into patterns in different areas of the fingerboard. In actual practice, we usually combine the various tools and utilize the entire fingerboard. This is because the ideas we hear in our heads don't always conform to organized fingering patterns.' The prescription is to combine all scalar tools across the full neck to follow internally heard ideas. Chapter 5, p.79.",
+      "source_principle_ids": [
+        "jody-fisher:jazz-guitar-method-vol-2-intermediate:lick-vocabulary-system:whole-neck-combination"
+      ],
+      "source_work_id": "jazz-guitar-method-vol-2-intermediate",
+      "references": [
+        {
+          "source": "jazz-guitar-method-vol-2-intermediate",
+          "citation": "chapter 5 p.79"
+        }
+      ],
+      "provenance": "extracted",
+      "polarity": "proscriptive"
+    }
+  ]
+}

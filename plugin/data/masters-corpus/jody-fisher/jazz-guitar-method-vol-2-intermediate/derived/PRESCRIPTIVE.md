@@ -1,0 +1,71 @@
+---
+run_id: 2026-05-28T15-05-20-fisher-jazz-guitar-method-vol-2
+stage: s5
+source_pdf: Fisher, Jody - Jazz Guitar Method, Vol 2 (Intermediate).pdf
+model: claude-sonnet
+extracted_at: 2026-07-07T15:43:31+00:00
+schema_version: 0.1
+---
+
+# Prescriptive lessons -- jody-fisher x jazz-guitar-method-vol-2-intermediate
+
+## maj7
+
+Fisher treats the maj7 chord as the harmonic destination of the ii-V7-I, with its 3rd and 7th defined as structurally non-expendable across all voicing contexts. The major scale of the I chord is the default improvisational choice over diatonic progressions, but this rule is hard-suspended the moment any chord in the progression carries an altered tone (raised or lowered 5th, 9th, or 11th). Lick vocabulary for maj7 transfers freely to major 6th, 9th, and 13th voicings, and the maj7 chord form itself does double duty as a melodic device over V7 (Maj7 arpeggio from the b7).
+
+- [ch.1 p.8 / ch.2 p.17] Fisher prescribes the major scale of the I chord as the governing scale for diatonic ii-V7-I improvisation: "use the major scale of the I chord." The maj7 chord's 3rd and 7th must always be retained in voicings; root and 5th are expendable.
+- [ch.4 p.60] Fisher prescribes learning eight sample licks labeled for maj7 chords, immediately transposing to all twelve keys, and inserting them into real songs. The lick family is explicitly extended -- by ear, not theory -- to major 6th, 9th, and 13th voicings.
+- [ch.1 p.8] [PROSCRIPTIVE] Fisher proscribes applying the I-chord major scale rule when any chord in the progression contains altered tones outside that scale: "these altered tones are not diatonic." The player must locate a scale that accommodates the alteration rather than defaulting.
+- [ch.3 p.49] Fisher prescribes using a Maj7 arpeggio rooted on the b7 of the V7 chord as the primary color-tone device for dominant lines -- the arpeggio need not begin on its own root, and it produces the 9th, 11th, and 13th of the V7 as melodic material.
+- [ch.7 p.86] Fisher prescribes using the I chord (maj7 quality) as the anchor and goal of turnaround progressions, with the guitarist authorized to choose any turnaround type and lead the band; four-measure turnarounds simply double the chord durations of their two-measure equivalents.
+
+## min7
+
+Fisher consistently treats the min7 as the ii chord in the ii-V7-I and subjects it to the same rootless voicing logic applied to the V7: retain the 3rd and 7th, drop the root and 5th to free up fingerboard space for extensions. Lick vocabulary for the min7 follows the universal learn-transpose-apply cycle with 3rds and 7ths as the mandatory phrase-entry targets.
+
+- [ch.3 p.56] Fisher prescribes voicing the ii chord (e.g., Dmin9) as a rootless chord across all three string sets (6-5-4-3, 5-4-3-2, 4-3-2-1): "roots have been omitted from both the Dmin9 and G9 voicings. This is to allow the use of more interesting chords." The 3rd and 7th floor is non-negotiable.
+- [ch.4 p.64] Fisher prescribes learning sample licks over minor chords, transposing to all twelve keys, and immediately inserting them into solos. Each lick phrase must begin on a chord tone, with 3rds and 7ths preferred as entry points.
+
+## min7b5
+
+Fisher treats the min7b5 (half-diminished) as a sound requiring dedicated ear familiarization before any substitution strategy is attempted. The prescription is narrower here than for other chord types -- get the sound into your ear first via provided licks; broader strategies come later.
+
+- [ch.4 p.72] Fisher introduces the min7b5 as a specific lick target and prescribes the provided licks as an entry point into an unfamiliar sound: "Here are just a few licks to help you get used to the sound." The learn-transpose-apply cycle applies, but the primary goal at this stage is sonic familiarity, not substitution.
+
+## dom7
+
+Fisher's treatment of the dom7 (V7) is the most fully developed in the book -- it spans voicing, comping technique, melodic devices, lick vocabulary, blues application, and turnaround use. Three distinct melodic techniques for adding extensions are prescribed (Maj7-from-b7 arpeggio, diminished triad substitution, ascending lines from chord tones), and three constraints bound all substitution work (alteration scope, ear-and-context test, no simultaneous comping with keyboard). The learn-transpose-apply cycle and the whole-neck combination principle are both anchored primarily to dom7 contexts.
+
+- [ch.3 p.49] Fisher prescribes playing a Maj7 arpeggio rooted on the b7 of the V7 to voice upper extensions: G7 takes an FMaj7 arpeggio, yielding the 9th (A), 11th (C), and 13th (E). The arpeggio need not start on its root.
+- [ch.3 p.51] Fisher prescribes substituting a diminished triad from the 3rd, 5th, or 7th of the V7 to produce altered extensions (b9, b11) that resolve into the I: over G7, Bdim, Ddim, or Fdim all work.
+- [ch.3 p.53-55] Fisher prescribes ascending scale-wise lines beginning on a chord tone of the V7, alternated with descending patterns for contour variety: "Alternating ascending and descending patterns will give your line a more interesting contour."
+- [ch.3 p.56] Fisher prescribes organizing V7 voicings (e.g., G9) across the three string sets as rootless chords to permit more extensions; in ensemble contexts the bass player supplies the root, and the player must hear it internally.
+- [ch.3 p.47] Fisher prescribes down strokes on downbeats and up strokes on upbeats for swing comping, with left-hand-pressure or right-hand-palm damping to kill sustain during rests.
+- [ch.3 p.47] Fisher prescribes an improvisatory, unpredictable accent pattern for swing comping: "Predictable rhythm parts are considered to be trite." The beat is implied, not stated.
+- [ch.3 p.47] [PROSCRIPTIVE] Fisher proscribes simultaneous free comping by both guitarist and keyboardist: "the tune will become like a harmonic can of worms." The prescription is to alternate the comping role and listen actively.
+- [ch.2 p.17] [PROSCRIPTIVE] Fisher proscribes altering any chord degree other than the 5th, 9th, or 11th: "the only notes that can be altered in any chord are the 5th, 9th and the 11th." This scope rule governs all dominant variants.
+- [ch.2 p.34] [PROSCRIPTIVE] Fisher proscribes applying any substitution -- including theoretically valid ones -- without testing against context and ear: "Just because a substitution is theoretically correct doesn't mean it sounds good in every instance." Covers 7b5, 7#5, 7b9, and diminished substitutions.
+- [ch.2 p.26] Fisher prescribes beginning each improvised phrase on a chord tone, with 3rds and 7ths preferred: "these notes are what give a chord its distinctive quality." This applies to V7 and all other chord types.
+- [ch.2 p.31] Fisher prescribes approaching target chord tones with neighbor tones a half step below or above as the primary device; whole-step neighbors are secondary.
+- [ch.4 p.68] Fisher prescribes learning dominant licks for unaltered V7 chords, immediately transposing to all twelve keys, and extending application to dominant 9th, 11th, and 13th voicings.
+- [ch.5 p.78-79] Fisher prescribes three interchangeable scalar tools for blues dom7 soloing -- minor pentatonic, blues scale, and Mixolydian mode -- applied in C and transposed. Mature use combines all three fluidly across the full neck.
+- [ch.5 p.79] [PROSCRIPTIVE] Fisher proscribes confining improvisation to organized fingerboard positions: "the ideas we hear in our heads don't always conform to organized fingering patterns." The prescription is to combine all scalar tools across the entire neck to follow internally heard ideas.
+- [ch.8 p.88] Fisher prescribes creating and memorizing transposable licks specifically for V7 chords within turnaround contexts to produce "melodically smoother transitions back to the beginnings of your tunes."
+
+## dom7b5
+
+Fisher treats the dom7b5 as an important altered variant of the standard V7 -- formula Root-3-b5-b7 -- and subjects it to the same ear-and-context substitution constraint that governs all dominant alterations. Theoretical correctness is necessary but not sufficient for deployment.
+
+- [ch.2 p.18 / p.34] Fisher identifies the dom7b5 as "an extremely important sound in jazz" (e.g., C-E-Gb-Bb in C7b5). Its use is bound by the same context-and-ear test as all substitutions: theoretical correctness alone does not justify it in any given instance.
+
+## dom7b9
+
+Fisher treats the dom7b9 as a voicing with a practical fingerboard shortcut: dropping the root creates minor-third symmetry that allows the same fingering to move around the neck without changing chord quality. This is presented as the key organizational insight for this alteration.
+
+- [ch.2 p.24] Fisher prescribes the rootless dom7b9 as a symmetric voicing movable at minor-third intervals: "you can move the same fingering around the fingerboard at intervals of a minor 3rd without changing the chord's quality." Formula is Root-3-5-b7-b9 (e.g., E-G#-B-D-F in E7b9).
+
+## dom7#5
+
+Fisher treats the dom7#5 as a common and "immediately recognizable" jazz sound -- formula Root-3-#5-b7 -- with multiple notational aliases (7+, 7aug, 7b13) and a natural extension to 9#5. Like all altered dominants, it is governed by the ear-and-context substitution constraint.
+
+- [ch.2 p.21 / p.34] Fisher identifies the dom7#5 as "another very common sound in jazz" (e.g., G-B-D#-F in G7#5). Multiple symbols cover the same chord (7+, 7aug, 7b13); adding the 9th yields 9#5. The ear-and-context rule applies: theoretical correctness does not guarantee musical fit.
